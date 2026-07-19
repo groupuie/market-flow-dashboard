@@ -73,9 +73,25 @@ a{color:var(--blue)}
 <!-- ===== 資金輪動 Sankey ===== -->
 <section id="sec-rotation" class="sec active">
   <div class="card">
+    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">時間視窗
+      <span id="winbar" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
+      <span id="wincustom" style="display:none;gap:6px;align-items:center">
+        <select id="winFrom" style="background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 6px"></select>
+        →<select id="winTo" style="background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 6px"></select>
+      </span>
+      <span class="sub" id="winnote"></span>
+    </h2>
+    <div class="note">「即時」＝本交易日盤中累計(休市時＝上一交易日全日);「過去 N 日」＝近 N 個交易日全日淨額加總(日檔自部署日起累積,足夠天數後才可選)。</div>
+  </div>
+  <div class="card">
     <h2>類別淨流向（資金在避險還是冒險？）</h2>
     <div id="cattiles" class="tiles"></div>
-    <div class="note">正股/大盤ETF/槓桿ETF 各自的 ⑦ 大單淨流合計。資金淨流向<b>大盤</b>常代表避險/指數化,淨流向<b>槓桿</b>代表在加碼冒險。</div>
+    <div class="note">各類別 ⑦ 大單淨流合計(依所選時間視窗)。淨流向<b>大盤/現金/國債/金</b>＝避險;淨流向<b>槓桿</b>＝加碼冒險。</div>
+  </div>
+  <div class="card">
+    <h2>離開股票之後,錢去了哪?（目的地對照;含誠實殘差）</h2>
+    <div id="dest" style="height:380px"></div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限;機構現金多走 MMF/repo 不經 ETF)、國債＝SHY/IEF/TLT 分天期、金＝GLD、Crypto＝IBIT/ETHA(同一美股磁帶,⑦ 同方法論)、反向＝SQQQ/SOXS/SH/SPXU。灰色「不可觀測殘差」＝各類加總後的缺口(銀行存款/境外/MMF/市值蒸發等)——觀測宇宙不封閉,硬平衡就是說謊。期權 premium 是<b>槓桿曝險、不是停泊資本</b>,不放進本圖(見下方獨立面板)。</div>
   </div>
   <div class="card">
     <h2>機構大單資金輪動 FROM → TO（正股 + 大盤 ETF + 2×3× 槓桿 ETF;連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
@@ -183,15 +199,47 @@ async function load(){
     document.getElementById('status').textContent='抓取失敗：'+e.message;
   }
 }
+function etSession(){
+  // 以瀏覽器時間換算美東,粗判時段(假日以 trade_date 呈現為準)
+  try{
+    const p=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+    if(p.weekday==='Sat'||p.weekday==='Sun')return 'closed';
+    const m=(+p.hour)*60+(+p.minute);
+    if(m>=240&&m<570)return 'pre'; if(m>=570&&m<960)return 'rth'; if(m>=960&&m<1200)return 'after';
+    return 'closed';
+  }catch(e){return 'unknown';}
+}
+function isOpex(dstr){
+  // 月度 OPEX = 第三個週五;3/6/9/12 月為 quad witching
+  if(!dstr)return null;
+  const d=new Date(dstr+'T12:00:00Z'); if(isNaN(d))return null;
+  if(d.getUTCDay()!==5)return null;
+  const nth=Math.ceil(d.getUTCDate()/7);
+  if(nth!==3)return null;
+  const q=[2,5,8,11].includes(d.getUTCMonth());
+  return q?'quad':'monthly';
+}
 function markStatus(){
   const ts=DATA.ts_utc; const t=new Date(ts.replace(' ','T')+'Z');
   const ageMin=(Date.now()-t.getTime())/60000;
   const s=document.getElementById('status');
-  if(ageMin>30){s.className='badge stale';s.textContent='資料偏舊 '+ageMin.toFixed(0)+' 分（Mac 採集器或 OpenD 可能離線）';}
-  else{s.className='badge ok';s.textContent='● 即時（'+ageMin.toFixed(0)+' 分前）';}
-  document.getElementById('updated').textContent='資料時間 '+ts+' UTC';
+  const sess=DATA.session&&DATA.session!=='unknown'?DATA.session:etSession();
+  const td=DATA.trade_date||'';
+  if(sess==='closed'){
+    s.className='badge stale';
+    s.textContent='休市中 · 顯示上一交易日 '+(td||'')+' 收盤資料';
+  }else if(ageMin>30){
+    s.className='badge err';s.textContent='資料偏舊 '+ageMin.toFixed(0)+' 分（Mac 採集器或 OpenD 可能離線）';
+  }else{
+    const lbl={pre:'盤前',rth:'盤中',after:'盤後'}[sess]||'';
+    s.className='badge ok';s.textContent='● '+lbl+'（'+ageMin.toFixed(0)+' 分前更新）';
+  }
+  let meta='採集時間 '+ts+' UTC'+(td?' · ⑦資料屬 '+td:'');
+  const opx=isOpex(td);
+  if(opx) meta+=opx==='quad'?' · ⚠ 四巫日OPEX':' · ⚠ 月度OPEX';
   const errs=(DATA.errors||[]).length;
-  if(errs) document.getElementById('updated').textContent+=' · '+errs+' 個來源異常';
+  if(errs) meta+=' · '+errs+' 個來源異常';
+  document.getElementById('updated').textContent=meta;
 }
 
 // ===== 排序表 =====
@@ -221,21 +269,80 @@ function render(){
 }
 
 
-// ===== 資金輪動 Sankey(用真實 ⑦ 大單淨流,含正股/大盤/槓桿)=====
-const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','ETF':'#d89838'};
-const CATLINK={'正股':'rgba(79,116,200,.3)','大盤':'rgba(63,160,216,.3)','ETF':'rgba(216,152,56,.3)'};
+// ===== 資金輪動 Sankey / 視窗 / 目的地(真實 ⑦ 大單淨流)=====
+const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
+  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','金':'#eab308','Crypto':'#e879a9','其他':'#6b7280'};
 const fmtM=v=>(Math.abs(v)>=1e9?(v/1e9).toFixed(2)+'B':(v/1e6).toFixed(1)+'M');
+// ---- 時間視窗狀態與計算 ----
+let WIN={mode:'live',n:1,from:'',to:''};
+function dailyDates(){return Object.keys(DATA.daily_flows||{}).sort();}
+function winLabel(){
+  if(WIN.mode==='live')return '即時(本交易日累計)';
+  if(WIN.mode==='nd')return '過去 '+WIN.n+' 個交易日';
+  return WIN.from+' → '+WIN.to;
+}
+function flowMap(){
+  // 回傳 {sym:{v:大單淨流(元), r:中小單淨流(元), cat}}
+  const out={};
+  if(WIN.mode==='live'){
+    const cap=DATA.capital_flow||{};
+    Object.keys(cap).forEach(k=>{const s=k.replace('US.','');
+      out[s]={v:cap[k].main_net,r:cap[k].retail_net,cat:cap[k].cat||'正股'};});
+    return out;
+  }
+  const D=DATA.daily_flows||{}; const dates=dailyDates(); if(!dates.length)return out;
+  let use=[];
+  if(WIN.mode==='nd') use=dates.slice(-WIN.n);
+  else use=dates.filter(d=>d>=WIN.from&&d<=WIN.to);
+  use.forEach(d=>{const day=D[d]||{};
+    Object.keys(day).forEach(s=>{
+      if(!out[s])out[s]={v:0,r:0,cat:day[s].c||'正股',_rn:0};
+      out[s].v+=(day[s].m||0)*1e6;
+      if(day[s].r!=null){out[s].r+=day[s].r*1e6;out[s]._rn++;}
+      out[s].cat=day[s].c||out[s].cat;});});
+  Object.values(out).forEach(o=>{if(!o._rn)o.r=null;delete o._rn;});
+  return out;
+}
+function buildWinBar(){
+  const bar=document.getElementById('winbar'); if(!bar)return;
+  const dates=dailyDates(); const nD=dates.length;
+  const opts=[['live','即時'],['1','1日'],['3','3日'],['5','5日'],['10','10日'],['custom','自訂']];
+  bar.innerHTML=opts.map(([k,lbl])=>{
+    const need=k==='live'?0:(k==='custom'?2:+k);
+    const dis=k!=='live'&&nD<Math.max(need,1);
+    const act=(WIN.mode==='live'&&k==='live')||(WIN.mode==='nd'&&k==String(WIN.n))||(WIN.mode==='custom'&&k==='custom');
+    return `<span class="tab ${act?'active':''}" data-w="${k}" style="${dis?'opacity:.35;pointer-events:none':''};padding:3px 10px;font-size:12px">${lbl}</span>`;
+  }).join('');
+  bar.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+    const k=t.dataset.w;
+    if(k==='live')WIN={mode:'live',n:1,from:'',to:''};
+    else if(k==='custom'){const ds=dailyDates();WIN={mode:'custom',n:1,from:ds[Math.max(0,ds.length-5)],to:ds[ds.length-1]};}
+    else WIN={mode:'nd',n:+k,from:'',to:''};
+    render();
+  });
+  const cust=document.getElementById('wincustom');
+  cust.style.display=WIN.mode==='custom'?'inline-flex':'none';
+  if(WIN.mode==='custom'){
+    const mk=(el,val)=>{el.innerHTML=dates.map(d=>`<option ${d===val?'selected':''}>${d}</option>`).join('');};
+    mk(document.getElementById('winFrom'),WIN.from); mk(document.getElementById('winTo'),WIN.to);
+    document.getElementById('winFrom').onchange=e=>{WIN.from=e.target.value;render();};
+    document.getElementById('winTo').onchange=e=>{WIN.to=e.target.value;render();};
+  }
+  document.getElementById('winnote').textContent=nD?('日檔已累積 '+nD+' 個交易日'):'日檔累積中(明起可選多日視窗)';
+}
 function renderRotation(){
-  const cap=DATA.capital_flow||{};
-  const catOf=k=>{const c=cap[k].cat; if(c)return c; const s=k.replace('US.',''); return (DATA.market&&DATA.market[s])?'大盤':(DATA.leveraged&&DATA.leveraged[s])?'ETF':'正股';};
-  const arr=Object.keys(cap).map(k=>({s:k.replace('US.',''),v:cap[k].main_net,cat:catOf(k)})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
-  // 類別淨流向 tiles
-  const catNet={'正股':0,'大盤':0,'ETF':0}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
-  const catLbl={'正股':'正股','大盤':'大盤 ETF','ETF':'2×3× 槓桿 ETF'};
-  document.getElementById('cattiles').innerHTML=['正股','大盤','ETF'].map(c=>{
-    const v=catNet[c]||0, cl=v>0?'up':(v<0?'down':'flat');
-    return `<div class="tile"><div class="lbl">${catLbl[c]}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
-      <div class="chg ${cl}">${v>0?'淨流入':(v<0?'淨流出':'—')}</div></div>`;}).join('');
+  buildWinBar();
+  const FM=flowMap();
+  const arr=Object.keys(FM).map(s=>({s:s,v:FM[s].v,r:FM[s].r,cat:FM[s].cat||'正股'})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
+  // 類別淨流向 tiles(動態:只列有資料的類別)
+  const catNet={}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
+  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto','ETF'];
+  document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
+    const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
+    return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
+      <div class="chg ${cl}">${v>0?'淨流入':(v<0?'淨流出':'—')} · ${winLabel()}</div></div>`;}).join('');
+  // 目的地對照(方案B:diverging bar + 誠實殘差)
+  renderDest(catNet);
   // Sankey:取前 12 大,其餘折成「其他」
   const foldSide=(list,label)=>{
     list.sort((a,b)=>b.v-a.v);
@@ -263,13 +370,35 @@ function renderRotation(){
         hovertemplate:'%{source.label} → %{target.label}<br>%{value:,.0f}<extra></extra>'}}],
       {...PBASE,margin:{l:6,r:6,t:6,b:6},font:{color:C.ink,size:11.5}},CFG);
     const outT=arr.filter(x=>x.v<0).map(x=>({...x,v:-x.v})).sort((a,b)=>b.v-a.v);
-    const inT=arr.filter(x=>x.v>0).sort((a,b)=>b.v-a.v);
+    const inT=arr.filter(x=>x.v>0).map(x=>({...x})).sort((a,b)=>b.v-a.v);
+    const rCol={k:'r',t:'中小單淨流',f:v=>v==null?'–':((v>0?'+':'')+fmtM(v)),cl:v=>v>0?'pos':(v<0?'neg':'')};
     makeTable(document.getElementById('outTable'),
-      [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'流出金額',f:v=>'<span class=neg>'+fmtM(v)+'</span>'}],outT,'v');
+      [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'⑦大單流出',f:v=>'<span class=neg>'+fmtM(v)+'</span>'},rCol],outT,'v');
     makeTable(document.getElementById('inTable'),
-      [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'流入金額',f:v=>'<span class=pos>'+fmtM(v)+'</span>'}],inT,'v');
+      [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'⑦大單流入',f:v=>'<span class=pos>'+fmtM(v)+'</span>'},rCol],inT,'v');
+    // OPEX 警示併入 Sankey 註記
+    const opx=isOpex(DATA.trade_date);
+    if(opx){document.getElementById('sankeynote').innerHTML+=' <b style="color:var(--amber)">⚠ 本資料日為'+(opx==='quad'?'四巫日':'月度')+' OPEX:到期對沖/行權的機械性大單多,主動方向分類失真風險高,流向判讀請打折。</b>';}
+    document.getElementById('sankeynote').innerHTML+=' 量級提醒:⑦只涵蓋「主動性特大+大單」,機構用演算法拆小單與 ETF 申贖不在其中 —— 這是總流量的一角,方向參考、非全貌。';
   }
   renderPersist(); renderOptPrem(); renderInst();
+}
+// ===== 目的地對照(diverging bar + 殘差)=====
+function renderDest(catNet){
+  const el=document.getElementById('dest'); if(!el)return;
+  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto'];
+  const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
+  if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
+  const resid=-rows.reduce((a,b)=>a+b.v,0);
+  rows.push({c:'不可觀測殘差',v:resid,gray:true});
+  Plotly.react('dest',[{type:'bar',orientation:'h',
+    x:rows.map(r=>r.v),y:rows.map(r=>r.c),
+    marker:{color:rows.map(r=>r.gray?'#565a63':(r.v>=0?'#22c55e':'#ef4444'))},
+    text:rows.map(r=>(r.v>0?'+':'')+fmtM(r.v)),textposition:'outside',textfont:{size:11,color:C.ink2},
+    hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'}],
+    {...PBASE,margin:{l:86,r:60,t:8,b:32},
+     xaxis:{title:{text:'← 淨流出   |   淨流入 →('+winLabel()+')',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#666',tickformat:'~s'},
+     yaxis:{gridcolor:C.line,autorange:'reversed'}},CFG);
 }
 // ===== 持續性熱力圖 =====
 function renderPersist(){
