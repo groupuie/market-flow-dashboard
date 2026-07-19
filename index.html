@@ -84,6 +84,20 @@ a{color:var(--blue)}
     <div class="note">「即時」＝本交易日盤中累計(休市時＝上一交易日全日);「過去 N 日」＝近 N 個交易日全日淨額加總(日檔自部署日起累積,足夠天數後才可選)。</div>
   </div>
   <div class="card">
+    <h2>追蹤範圍 — 固定清單 + <span style="color:#f43f5e">成交額 TOP20 闖入者</span>(自動)+ <span style="color:#22d3ee">自訂追蹤</span></h2>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <span id="customchips" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
+      <input id="addsym" placeholder="輸入代號,如 PLTR" style="background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:6px 10px;width:150px;font-size:13px" maxlength="10">
+      <button id="addbtn" class="tab" style="border:none">＋ 加入</button>
+      <span id="customstat" class="sub"></span>
+    </div>
+    <div id="tokrow" style="display:none;margin-top:8px;gap:8px;align-items:center">
+      <input id="ghtok" type="password" placeholder="貼上 GitHub token(只存在你這台瀏覽器,不會出現在網頁原始碼)" style="background:var(--surface2);color:var(--ink);border:1px solid var(--amber);border-radius:7px;padding:6px 10px;width:420px;font-size:12.5px">
+      <button id="tokbtn" class="tab" style="border:none">儲存 token</button>
+    </div>
+    <div class="note">自訂代號寫入你的 gist(custom_symbols.json),Mac 採集器 5 分鐘內自動開始抓它的 ⑦ 大單淨流與 30 日歷史。首次使用需貼一次 GitHub token(gist 權限;僅存於瀏覽器 localStorage,分享網址給別人時對方看不到、也改不了你的清單)。<b style="color:#f43f5e">闖入者</b>=當下美股成交額 TOP20 中不在清單內的標的,自動補抓 ⑦ 並標紅 —— 抓市場當日異常;不做歷史回填(它們是流動名單)。</div>
+  </div>
+  <div class="card">
     <h2>類別淨流向（資金在避險還是冒險？）</h2>
     <div id="cattiles" class="tiles"></div>
     <div class="note">各類別 ⑦ 大單淨流合計(依所選時間視窗)。淨流向<b>大盤/現金/國債/金</b>＝避險;淨流向<b>槓桿</b>＝加碼冒險。</div>
@@ -271,7 +285,49 @@ function render(){
 
 // ===== 資金輪動 Sankey / 視窗 / 目的地(真實 ⑦ 大單淨流)=====
 const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
-  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','金':'#eab308','Crypto':'#e879a9','其他':'#6b7280'};
+  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','金':'#eab308','Crypto':'#e879a9',
+  '自訂':'#22d3ee','闖入':'#f43f5e','其他':'#6b7280'};
+// ---- 自訂追蹤:寫回 gist(token 僅存 localStorage)----
+function gistId(){const m=DATA_URL.match(/gist\.githubusercontent\.com\/[^/]+\/([a-f0-9]+)\//);return m?m[1]:null;}
+async function saveCustom(list){
+  const tok=localStorage.getItem('gh_token');
+  if(!tok){document.getElementById('tokrow').style.display='flex';
+    document.getElementById('customstat').textContent='需要先設定 token';return false;}
+  const id=gistId(); if(!id){document.getElementById('customstat').textContent='找不到 gist id';return false;}
+  document.getElementById('customstat').textContent='儲存中…';
+  try{
+    const r=await fetch('https://api.github.com/gists/'+id,{method:'PATCH',
+      headers:{'Authorization':'token '+tok,'Accept':'application/vnd.github+json'},
+      body:JSON.stringify({files:{'custom_symbols.json':{content:JSON.stringify(list)}}})});
+    if(!r.ok) throw new Error('HTTP '+r.status+(r.status===401?'(token 無效)':r.status===404?'(token 缺 gist 權限)':''));
+    document.getElementById('customstat').textContent='✓ 已儲存,採集器 5 分鐘內生效';
+    DATA.custom_symbols=list; renderCustomChips(); return true;
+  }catch(e){document.getElementById('customstat').textContent='儲存失敗:'+e.message;return false;}
+}
+function renderCustomChips(){
+  const el=document.getElementById('customchips'); if(!el)return;
+  const list=DATA.custom_symbols||[];
+  el.innerHTML=list.map(s=>`<span class="chip" style="background:rgba(34,211,238,.15);color:#22d3ee">${s} <a href="#" data-rm="${s}" style="color:#22d3ee;text-decoration:none">✕</a></span>`).join('')||'<span class="sub">(尚無自訂代號)</span>';
+  el.querySelectorAll('a[data-rm]').forEach(a=>a.onclick=e=>{e.preventDefault();
+    saveCustom((DATA.custom_symbols||[]).filter(x=>x!==a.dataset.rm));});
+}
+function initCustomUI(){
+  const btn=document.getElementById('addbtn'); if(!btn||btn._init)return; btn._init=1;
+  btn.onclick=()=>{
+    const v=(document.getElementById('addsym').value||'').trim().toUpperCase().replace(/^US\./,'');
+    if(!/^[A-Z.]{1,10}$/.test(v)){document.getElementById('customstat').textContent='代號格式不對';return;}
+    const list=[...(DATA.custom_symbols||[])];
+    if(!list.includes(v))list.push(v);
+    saveCustom(list.slice(0,30)); document.getElementById('addsym').value='';
+  };
+  document.getElementById('tokbtn').onclick=()=>{
+    const t=(document.getElementById('ghtok').value||'').trim();
+    if(t.length<20){document.getElementById('customstat').textContent='token 看起來不完整';return;}
+    localStorage.setItem('gh_token',t);
+    document.getElementById('tokrow').style.display='none';
+    document.getElementById('customstat').textContent='token 已存(僅此瀏覽器)。再按一次「加入」即可。';
+  };
+}
 const fmtM=v=>(Math.abs(v)>=1e9?(v/1e9).toFixed(2)+'B':(v/1e6).toFixed(1)+'M');
 // ---- 時間視窗狀態與計算 ----
 let WIN={mode:'live',n:1,from:'',to:''};
@@ -307,19 +363,24 @@ function buildWinBar(){
   const bar=document.getElementById('winbar'); if(!bar)return;
   const dates=dailyDates(); const nD=dates.length;
   const opts=[['live','即時'],['1','1日'],['3','3日'],['5','5日'],['10','10日'],['custom','自訂']];
-  bar.innerHTML=opts.map(([k,lbl])=>{
+  let h=opts.map(([k,lbl])=>{
     const need=k==='live'?0:(k==='custom'?2:+k);
     const dis=k!=='live'&&nD<Math.max(need,1);
     const act=(WIN.mode==='live'&&k==='live')||(WIN.mode==='nd'&&k==String(WIN.n))||(WIN.mode==='custom'&&k==='custom');
     return `<span class="tab ${act?'active':''}" data-w="${k}" style="${dis?'opacity:.35;pointer-events:none':''};padding:3px 10px;font-size:12px">${lbl}</span>`;
   }).join('');
-  bar.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  if(animDates().length>=2)
+    h+=`<span class="tab" id="playbtn" style="padding:3px 12px;font-size:12px;background:rgba(34,197,94,.15);color:#4ade4a;border-color:#22c55e">${ANIM.playing?'⏸ 停止':'▶ 逐日播放'}</span>`;
+  bar.innerHTML=h;
+  bar.querySelectorAll('.tab[data-w]').forEach(t=>t.onclick=()=>{
+    stopAnim(false);
     const k=t.dataset.w;
     if(k==='live')WIN={mode:'live',n:1,from:'',to:''};
     else if(k==='custom'){const ds=dailyDates();WIN={mode:'custom',n:1,from:ds[Math.max(0,ds.length-5)],to:ds[ds.length-1]};}
     else WIN={mode:'nd',n:+k,from:'',to:''};
     render();
   });
+  const pb=document.getElementById('playbtn'); if(pb)pb.onclick=playAnim;
   const cust=document.getElementById('wincustom');
   cust.style.display=WIN.mode==='custom'?'inline-flex':'none';
   if(WIN.mode==='custom'){
@@ -330,45 +391,54 @@ function buildWinBar(){
   }
   document.getElementById('winnote').textContent=nD?('日檔已累積 '+nD+' 個交易日'):'日檔累積中(明起可選多日視窗)';
 }
+// ===== Sankey 繪圖(可重用:整段視窗 or 動畫單日)=====
+function drawSankey(arr, subtitle){
+  const foldSide=list=>{
+    list.sort((a,b)=>b.v-a.v);
+    if(list.length<=13) return list;
+    const top=list.slice(0,12), rest=list.slice(12);
+    return [...top,{s:'其他('+rest.length+')',v:rest.reduce((a,b)=>a+b.v,0),cat:'其他'}];
+  };
+  const outs=foldSide(arr.filter(x=>x.v<0).map(x=>({...x,v:-x.v})));
+  const ins=foldSide(arr.filter(x=>x.v>0).map(x=>({...x})));
+  const el=document.getElementById('sankey');
+  if(!outs.length&&!ins.length){
+    el.innerHTML='<div class="miss" style="padding:40px">'+(subtitle?subtitle+' 無 ⑦ 資料':'Futu ⑦ 大單淨流無法取得（Mac 採集器未推送或 OpenD 離線）')+'</div>';
+    return false;
+  }
+  const HUB=outs.length;
+  const CC2={...CATCOL,'其他':'#6b7280'};
+  const labels=[...outs.map(o=>'▼ '+o.s),'機構大單資金池',...ins.map(i=>'▲ '+i.s)];
+  const colors=[...outs.map(o=>CC2[o.cat]||'#d03b3b'),'#6b7280',...ins.map(i=>CC2[i.cat]||'#0ca30c')];
+  const src=[],tgt=[],val=[],lc=[];
+  outs.forEach((o,i)=>{src.push(i);tgt.push(HUB);val.push(o.v);lc.push('rgba(208,59,59,.3)');});
+  ins.forEach((n,j)=>{src.push(HUB);tgt.push(HUB+1+j);val.push(n.v);lc.push('rgba(12,163,12,.3)');});
+  const ann=subtitle?[{text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.5,y:1.06,showarrow:false,
+    font:{size:20,color:'#9db4e0'},xanchor:'center'}]:[];
+  Plotly.react('sankey',[{type:'sankey',orientation:'h',
+    node:{label:labels,color:colors,pad:16,thickness:16,line:{width:0},
+      hovertemplate:'%{label}<br>%{value:,.0f}<extra></extra>'},
+    link:{source:src,target:tgt,value:val,color:lc,
+      hovertemplate:'%{source.label} → %{target.label}<br>%{value:,.0f}<extra></extra>'}}],
+    {...PBASE,margin:{l:6,r:6,t:subtitle?34:6,b:6},annotations:ann,font:{color:C.ink,size:11.5}},CFG);
+  return true;
+}
 function renderRotation(){
-  buildWinBar();
+  buildWinBar(); initCustomUI(); renderCustomChips();
   const FM=flowMap();
   const arr=Object.keys(FM).map(s=>({s:s,v:FM[s].v,r:FM[s].r,cat:FM[s].cat||'正股'})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
   // 類別淨流向 tiles(動態:只列有資料的類別)
   const catNet={}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
-  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto','ETF'];
+  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
       <div class="chg ${cl}">${v>0?'淨流入':(v<0?'淨流出':'—')} · ${winLabel()}</div></div>`;}).join('');
   // 目的地對照(方案B:diverging bar + 誠實殘差)
   renderDest(catNet);
-  // Sankey:取前 12 大,其餘折成「其他」
-  const foldSide=(list,label)=>{
-    list.sort((a,b)=>b.v-a.v);
-    if(list.length<=13) return list;
-    const top=list.slice(0,12), rest=list.slice(12);
-    const restV=rest.reduce((a,b)=>a+b.v,0);
-    return [...top,{s:'其他('+rest.length+')',v:restV,cat:'其他'}];
-  };
-  const outs=foldSide(arr.filter(x=>x.v<0).map(x=>({...x,v:-x.v})));
-  const ins=foldSide(arr.filter(x=>x.v>0).map(x=>({...x})));
-  const el=document.getElementById('sankey');
-  if(!outs.length&&!ins.length){el.innerHTML='<div class="miss" style="padding:40px">Futu ⑦ 大單淨流無法取得（Mac 採集器未推送或 OpenD 離線）</div>';}
-  else{
-    const HUB=outs.length;
-    const CC2={...CATCOL,'其他':'#6b7280'};
-    const labels=[...outs.map(o=>'▼ '+o.s),'機構大單資金池',...ins.map(i=>'▲ '+i.s)];
-    const colors=[...outs.map(o=>CC2[o.cat]||'#d03b3b'),'#6b7280',...ins.map(i=>CC2[i.cat]||'#0ca30c')];
-    const src=[],tgt=[],val=[],lc=[];
-    outs.forEach((o,i)=>{src.push(i);tgt.push(HUB);val.push(o.v);lc.push('rgba(208,59,59,.3)');});
-    ins.forEach((n,j)=>{src.push(HUB);tgt.push(HUB+1+j);val.push(n.v);lc.push('rgba(12,163,12,.3)');});
-    Plotly.react('sankey',[{type:'sankey',orientation:'h',
-      node:{label:labels,color:colors,pad:16,thickness:16,line:{width:0},
-        hovertemplate:'%{label}<br>%{value:,.0f}<extra></extra>'},
-      link:{source:src,target:tgt,value:val,color:lc,
-        hovertemplate:'%{source.label} → %{target.label}<br>%{value:,.0f}<extra></extra>'}}],
-      {...PBASE,margin:{l:6,r:6,t:6,b:6},font:{color:C.ink,size:11.5}},CFG);
+  // Sankey(可重用;動畫逐日餵單日資料)
+  const hasSankey=drawSankey(arr,null);
+  if(hasSankey){
     const outT=arr.filter(x=>x.v<0).map(x=>({...x,v:-x.v})).sort((a,b)=>b.v-a.v);
     const inT=arr.filter(x=>x.v>0).map(x=>({...x})).sort((a,b)=>b.v-a.v);
     const rCol={k:'r',t:'中小單淨流',f:v=>v==null?'–':((v>0?'+':'')+fmtM(v)),cl:v=>v>0?'pos':(v<0?'neg':'')};
@@ -376,35 +446,89 @@ function renderRotation(){
       [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'⑦大單流出',f:v=>'<span class=neg>'+fmtM(v)+'</span>'},rCol],outT,'v');
     makeTable(document.getElementById('inTable'),
       [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'⑦大單流入',f:v=>'<span class=pos>'+fmtM(v)+'</span>'},rCol],inT,'v');
-    // OPEX 警示併入 Sankey 註記
+    // Sankey 註記:每次重建(避免重繪時重複疊加)
     const opx=isOpex(DATA.trade_date);
-    if(opx){document.getElementById('sankeynote').innerHTML+=' <b style="color:var(--amber)">⚠ 本資料日為'+(opx==='quad'?'四巫日':'月度')+' OPEX:到期對沖/行權的機械性大單多,主動方向分類失真風險高,流向判讀請打折。</b>';}
-    document.getElementById('sankeynote').innerHTML+=' 量級提醒:⑦只涵蓋「主動性特大+大單」,機構用演算法拆小單與 ETF 申贖不在其中 —— 這是總流量的一角,方向參考、非全貌。';
+    let snote='左＝機構淨流出、右＝淨流入,連線寬度＝<b>真實 ⑦ 大單淨流金額</b>(成交額用主動買賣分類後的淨額,非估算)。節點色:正股藍/大盤青/槓桿橙/闖入紅/自訂青。小額標的收斂成「其他」以保持可讀。';
+    if(opx) snote+=' <b style="color:var(--amber)">⚠ 本資料日為'+(opx==='quad'?'四巫日':'月度')+' OPEX:到期對沖/行權的機械性大單多,主動方向分類失真風險高,流向判讀請打折。</b>';
+    snote+=' 量級提醒:⑦只涵蓋「主動性特大+大單」,機構用演算法拆小單與 ETF 申贖不在其中 —— 這是總流量的一角,方向參考、非全貌。';
+    document.getElementById('sankeynote').innerHTML=snote;
   }
   renderPersist(); renderOptPrem(); renderInst();
 }
-// ===== 目的地對照(diverging bar + 殘差)=====
-function renderDest(catNet){
+// ===== 目的地對照(diverging bar + 殘差;支援逐日動畫)=====
+let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
+function renderDest(catNet, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
-  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto'];
+  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto','自訂','闖入'];
   const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
   const resid=-rows.reduce((a,b)=>a+b.v,0);
   rows.push({c:'不可觀測殘差',v:resid,gray:true});
+  const ann=subtitle?[{text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.98,y:0.02,showarrow:false,
+    font:{size:20,color:'#9db4e0'},xanchor:'right'}]:[];
+  const xaxis={title:{text:'← 淨流出   |   淨流入 →('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
+    gridcolor:C.line,zerolinecolor:'#666',tickformat:'~s'};
+  if(fixRange&&DEST_RANGE)xaxis.range=DEST_RANGE;
   Plotly.react('dest',[{type:'bar',orientation:'h',
     x:rows.map(r=>r.v),y:rows.map(r=>r.c),
     marker:{color:rows.map(r=>r.gray?'#565a63':(r.v>=0?'#22c55e':'#ef4444'))},
     text:rows.map(r=>(r.v>0?'+':'')+fmtM(r.v)),textposition:'outside',textfont:{size:11,color:C.ink2},
     hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'}],
-    {...PBASE,margin:{l:86,r:60,t:8,b:32},
-     xaxis:{title:{text:'← 淨流出   |   淨流入 →('+winLabel()+')',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#666',tickformat:'~s'},
+    {...PBASE,margin:{l:86,r:60,t:8,b:32},annotations:ann,xaxis,
      yaxis:{gridcolor:C.line,autorange:'reversed'}},CFG);
 }
-// ===== 持續性熱力圖 =====
+// ===== 逐日播放動畫 =====
+let ANIM={playing:false,idx:0,timer:null};
+function animDates(){
+  const dates=dailyDates();
+  if(WIN.mode==='nd'&&WIN.n>1)return dates.slice(-WIN.n);
+  if(WIN.mode==='custom')return dates.filter(d=>d>=WIN.from&&d<=WIN.to);
+  return [];
+}
+function dayCatNet(date){
+  const day=(DATA.daily_flows||{})[date]||{}; const cn={};
+  Object.keys(day).forEach(s=>{const c=day[s].c||'正股';cn[c]=(cn[c]||0)+(day[s].m||0)*1e6;});
+  return cn;
+}
+function stopAnim(restore){
+  if(ANIM.timer){clearInterval(ANIM.timer);ANIM.timer=null;}
+  ANIM.playing=false;
+  const b=document.getElementById('playbtn'); if(b)b.textContent='▶ 逐日播放';
+  if(restore)render();
+}
+function playAnim(){
+  if(ANIM.playing){stopAnim(true);return;}
+  const ds=animDates(); if(ds.length<2)return;
+  // 先算所有日的最大絕對值,固定 x 軸,動畫才可比
+  let mx=0;
+  ds.forEach(d=>{const cn=dayCatNet(d);const vals=Object.values(cn);const res=-vals.reduce((a,b)=>a+b,0);
+    [...vals,res].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});});
+  DEST_RANGE=[-mx*1.25,mx*1.25];
+  ANIM.playing=true;ANIM.idx=0;
+  const b=document.getElementById('playbtn'); if(b)b.textContent='⏸ 停止';
+  const tick=()=>{
+    if(!ANIM.playing)return;
+    const d=ds[ANIM.idx];
+    renderDest(dayCatNet(d), d+' 單日', true);
+    const day=(DATA.daily_flows||{})[d]||{};
+    const dayArr=Object.keys(day).map(s=>({s:s,v:(day[s].m||0)*1e6,cat:day[s].c||'正股'})).filter(x=>Math.abs(x.v)>1e5);
+    drawSankey(dayArr, d+' 單日 FROM→TO');
+    renderPersistDaily(ds, ANIM.idx);
+    ANIM.idx++;
+    if(ANIM.idx>=ds.length){
+      clearInterval(ANIM.timer);ANIM.timer=null;ANIM.playing=false;
+      if(b)b.textContent='▶ 重播';
+      setTimeout(()=>{if(!ANIM.playing){DEST_RANGE=null;render();}},2200);
+    }
+  };
+  tick(); ANIM.timer=setInterval(tick,850);
+}
+// ===== 持續性熱力圖(即時=盤中滾動;多日視窗=日頻,可被動畫游標掃過)=====
 function renderPersist(){
+  const ds=animDates();
+  if(WIN.mode!=='live'&&ds.length>=2){renderPersistDaily(ds,-1);return;}
   const H=DATA.flow_history||[]; const el=document.getElementById('persist');
   if(H.length<2){el.innerHTML='<div class="miss" style="padding:30px">持續性需累積 ≥2 次更新才顯示(每次採集自動累加,約幾分鐘後出現)</div>';return;}
-  // 取最新一筆的 top 標的(依 |淨流| 排序,最多 18 檔)
   const last=H[H.length-1].f||{};
   const syms=Object.keys(last).sort((a,b)=>Math.abs(last[b])-Math.abs(last[a])).slice(0,18);
   const times=H.map(h=>h.ts);
@@ -415,6 +539,24 @@ function renderPersist(){
     xgap:2,ygap:2,hovertemplate:'%{y} @ %{x}<br>淨流 %{z}M<extra></extra>',
     colorbar:{title:{text:'淨流(M)',font:{size:10,color:C.ink2}},thickness:10,len:0.6}}],
     {...PBASE,margin:{l:52,r:10,t:6,b:28},xaxis:{gridcolor:C.line,tickfont:{size:10}},yaxis:{gridcolor:C.line,tickfont:{size:11},autorange:'reversed'}},CFG);
+}
+function renderPersistDaily(ds, hl){
+  const el=document.getElementById('persist'); if(!el)return;
+  const D=DATA.daily_flows||{};
+  const sums={};
+  ds.forEach(d=>{const day=D[d]||{};Object.keys(day).forEach(s=>{sums[s]=(sums[s]||0)+Math.abs(day[s].m||0);});});
+  const syms=Object.keys(sums).sort((a,b)=>sums[b]-sums[a]).slice(0,18);
+  if(!syms.length){el.innerHTML='<div class="miss" style="padding:30px">此區間無日檔資料</div>';return;}
+  const z=syms.map(s=>ds.map(d=>{const e=(D[d]||{})[s];return e?e.m:null;}));
+  const amax=Math.max(50,...z.flat().filter(v=>v!=null).map(Math.abs));
+  const shapes=hl>=0?[{type:'rect',xref:'x',yref:'paper',x0:hl-0.5,x1:hl+0.5,y0:0,y1:1,
+    line:{color:'#e8e8ec',width:2},fillcolor:'rgba(255,255,255,.05)'}]:[];
+  Plotly.react('persist',[{type:'heatmap',z:z,x:ds.map(d=>d.slice(5)),y:syms,zmid:0,zmin:-amax,zmax:amax,
+    colorscale:[[0,'#b91c1c'],[0.5,'#1a1a19'],[1,'#15803d']],
+    xgap:2,ygap:2,hovertemplate:'%{y} @ %{x}<br>全日淨流 %{z}M<extra></extra>',
+    colorbar:{title:{text:'淨流(M/日)',font:{size:10,color:C.ink2}},thickness:10,len:0.6}}],
+    {...PBASE,margin:{l:52,r:10,t:6,b:30},shapes,
+     xaxis:{gridcolor:C.line,tickfont:{size:10}},yaxis:{gridcolor:C.line,tickfont:{size:11},autorange:'reversed'}},CFG);
 }
 // ===== 選擇權資金傾向(排除指數,避免壓縮)=====
 function renderOptPrem(){
