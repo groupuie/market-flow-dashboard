@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{
   --bg:#0d0d0d; --surface:#1a1a19; --surface2:#222220; --line:#2c2c2a;
@@ -65,7 +64,6 @@ a{color:var(--blue)}
 
 <div class="tabs">
   <div class="tab active" data-sec="rotation">資金輪動 FROM→TO</div>
-  <div class="tab" data-sec="three">3D 金流向量</div>
   <div class="tab" data-sec="options">期權定位</div>
   <div class="tab" data-sec="cross">跨資產總覽</div>
   <div class="tab" data-sec="equities">個股 · 槓桿ETF</div>
@@ -75,22 +73,23 @@ a{color:var(--blue)}
 <!-- ===== 資金輪動 Sankey ===== -->
 <section id="sec-rotation" class="sec active">
   <div class="card">
-    <h2>機構大單資金輪動（FROM → TO；連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
-    <div id="sankey" style="height:520px"></div>
-    <div class="note" id="sankeynote">左＝機構淨流出的部位（資金撤離）、右＝機構淨流入的部位（資金進駐），連線寬度＝真實大單淨流金額（非估算）。中間「機構資金池」為誠實呈現：系統確知每個部位的流入/流出方向與大小是真的，但不宣稱某檔流出的錢「specifically」流向某檔——那是無法觀測的。這正是本系統的核心問題：資金從哪流出、流進哪。</div>
+    <h2>機構大單資金輪動 FROM → TO（正股 + 大盤 ETF + 2×3× 槓桿 ETF;連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
+    <div style="margin-bottom:8px" id="rotfilter">
+      <span class="chip" style="background:#2a3550;color:#9db4e0">● 正股</span>
+      <span class="chip" style="background:#12324a;color:#79c0e0">● 大盤ETF</span>
+      <span class="chip" style="background:#3a2a12;color:#e0b070">● 槓桿ETF</span>
+    </div>
+    <div id="sankey" style="height:560px"></div>
+    <div class="note" id="sankeynote">左＝機構淨流出的部位、右＝淨流入的部位,連線寬度＝真實 ⑦ 大單淨流金額(＝成交額用主動買賣分類後的淨額,非估算)。節點顏色分正股/大盤/槓桿。中間「機構資金池」為誠實呈現:每個部位的流入/流出方向與大小是確知的,但不宣稱某檔的錢 specifically 流向某檔。</div>
+  </div>
+  <div class="card">
+    <h2>選擇權資金傾向（權利金成交額;綠＝看漲 call、紅＝看跌 put;越長＝該標的期權下注越多）</h2>
+    <div id="optprem" style="height:360px"></div>
+    <div class="note">每根 = 一個標的的期權市場:綠色長度＝看漲(call)權利金成交額、紅色＝看跌(put)權利金成交額(Σ 成交量×中價×100,CBOE 延遲約 15 分)。這是誠實版的「期權資金流向」——看得出資金在買漲或買跌的傾向,但非逐筆主動方向。涵蓋個股/大盤/槓桿ETF/波動率/大宗。</div>
   </div>
   <div class="grid g2">
     <div class="card"><h2>流出 TOP（機構在減）</h2><div style="overflow-x:auto"><table id="outTable"></table></div></div>
     <div class="card"><h2>流入 TOP（機構在加）</h2><div style="overflow-x:auto"><table id="inTable"></table></div></div>
-  </div>
-</section>
-
-<!-- ===== 3D 金流向量 ===== -->
-<section id="sec-three" class="sec">
-  <div class="card">
-    <h2>3D 資金流向量 — 水平面＝相對強弱 × 動能;發光垂直柱＝機構 ⑦ 大單淨流(綠↑進駐、紅↓撤離,高度＝金額)</h2>
-    <div id="three" style="height:600px;border-radius:10px;overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 35%, #171a22 0%, #0a0a0e 72%);cursor:grab"></div>
-    <div class="note">拖曳旋轉、滾輪縮放(閒置會自動緩轉)。每根發光柱是一檔持倉:水平位置＝相對強弱(X 軸)與 5 日動能(Z 軸),垂直高度與顏色＝<b>真實 Futu ⑦ 特大+大單淨流</b>(綠色向上=機構進駐、紅色向下=機構撤離),粒子沿柱流動表示資金方向。這是「向量＝方向+大小」的資金流呈現。</div>
   </div>
 </section>
 
@@ -204,129 +203,61 @@ function makeTable(el, cols, rows, defSort){
 function render(){
   if(!DATA)return;
   renderRotation(); renderOptions(); renderCross(); renderEquities(); renderFlow();
-  if(T3.inited && document.getElementById('sec-three').classList.contains('active')) build3D();
 }
 
-// ===== 3D 金流向量(Three.js)=====
-const T3={inited:false,scene:null,cam:null,rend:null,group:null,parts:[],raf:0,
-  R:56,theta:0.7,phi:1.02,drag:false,lx:0,ly:0,auto:true};
-function glowTex(hex){
-  const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
-  const gr=g.createRadialGradient(64,64,0,64,64,64);
-  gr.addColorStop(0,hex);gr.addColorStop(0.2,hex);gr.addColorStop(1,'rgba(0,0,0,0)');
-  g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);
-}
-function labelSprite(txt,color,sz){
-  const c=document.createElement('canvas');c.width=256;c.height=64;const g=c.getContext('2d');
-  g.font='bold 34px system-ui,sans-serif';g.fillStyle=color||'#fff';g.textAlign='center';g.textBaseline='middle';
-  g.fillText(txt,128,32);
-  const t=new THREE.CanvasTexture(c);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false}));
-  s.scale.set(sz||9,(sz||9)/4,1);return s;
-}
-function init3D(){
-  const el=document.getElementById('three');const w=el.clientWidth,h=el.clientHeight||600;
-  T3.scene=new THREE.Scene();T3.scene.fog=new THREE.FogExp2(0x0a0a0e,0.006);
-  T3.cam=new THREE.PerspectiveCamera(50,w/h,0.1,3000);
-  T3.rend=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  T3.rend.setSize(w,h);T3.rend.setPixelRatio(Math.min(devicePixelRatio,2));
-  el.appendChild(T3.rend.domElement);
-  T3.scene.add(new THREE.AmbientLight(0xffffff,0.75));
-  const pl=new THREE.PointLight(0xbcd0ff,0.7);pl.position.set(40,70,40);T3.scene.add(pl);
-  const grid=new THREE.GridHelper(56,14,0x39424f,0x21242c);T3.scene.add(grid);
-  const axX=labelSprite('相對強弱 →','#8ea2c0',11);axX.position.set(30,1.5,0);T3.scene.add(axX);
-  const axZ=labelSprite('5日動能 →','#8ea2c0',11);axZ.position.set(0,1.5,22);T3.scene.add(axZ);
-  const axY=labelSprite('⑦資金流','#8ea2c0',11);axY.position.set(0,23,0);T3.scene.add(axY);
-  T3.group=new THREE.Group();T3.scene.add(T3.group);
-  const cv=T3.rend.domElement;
-  cv.addEventListener('mousedown',e=>{T3.drag=true;T3.auto=false;T3.lx=e.clientX;T3.ly=e.clientY;cv.style.cursor='grabbing';});
-  window.addEventListener('mouseup',()=>{T3.drag=false;if(cv)cv.style.cursor='grab';});
-  window.addEventListener('mousemove',e=>{if(!T3.drag)return;T3.theta-=(e.clientX-T3.lx)*0.008;T3.phi=Math.max(0.25,Math.min(1.5,T3.phi-(e.clientY-T3.ly)*0.006));T3.lx=e.clientX;T3.ly=e.clientY;});
-  cv.addEventListener('wheel',e=>{e.preventDefault();T3.R=Math.max(26,Math.min(130,T3.R+e.deltaY*0.05));},{passive:false});
-  cv.addEventListener('touchstart',e=>{T3.drag=true;T3.auto=false;T3.lx=e.touches[0].clientX;T3.ly=e.touches[0].clientY;},{passive:true});
-  cv.addEventListener('touchmove',e=>{if(!T3.drag)return;T3.theta-=(e.touches[0].clientX-T3.lx)*0.01;T3.phi=Math.max(0.25,Math.min(1.5,T3.phi-(e.touches[0].clientY-T3.ly)*0.008));T3.lx=e.touches[0].clientX;T3.ly=e.touches[0].clientY;},{passive:true});
-  cv.addEventListener('touchend',()=>T3.drag=false);
-  T3.inited=true;animate3D();
-}
-function build3D(){
-  if(!T3.inited)return;
-  while(T3.group.children.length)T3.group.remove(T3.group.children[0]);
-  T3.parts=[];
-  const cap=DATA.capital_flow||{},S=DATA.stocks||{},L=DATA.leveraged||{},M=DATA.market||{};
-  const rec=s=>S[s]||L[s]||M[s]||{};
-  const cx=v=>Math.max(-45,Math.min(45,v||0))/45*24, cz=v=>Math.max(-30,Math.min(30,v||0))/30*17;
-  const items=Object.keys(cap).map(k=>{const s=k.replace('US.','');const r=rec(s);return {s,mn:cap[k].main_net,rs:r.rs_vs_spy,mo:r.chg5d};}).filter(x=>x.mn!=null);
-  if(!items.length)return;
-  const maxAbs=Math.max(1,...items.map(x=>Math.abs(x.mn)));
-  const cy=v=>v/maxAbs*18;
-  // 背景脈絡:全市場個股/ETF 以暗點鋪在強弱×動能平面(無⑦者不畫柱)
-  const capset=new Set(items.map(x=>x.s));
-  const uni={...M,...S,...L};
-  Object.keys(uni).forEach(s=>{
-    if(capset.has(s))return; const r=uni[s]; if(r.rs_vs_spy==null)return;
-    const dot=new THREE.Mesh(new THREE.SphereGeometry(0.32,12,12),new THREE.MeshBasicMaterial({color:0x4a5878}));
-    dot.position.set(cx(r.rs_vs_spy),0,cz(r.chg5d));T3.group.add(dot);
-    const gl=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex('rgba(90,110,160,0.7)'),blending:THREE.AdditiveBlending,depthWrite:false,transparent:true,opacity:0.5}));
-    gl.scale.set(2,2,1);gl.position.copy(dot.position);T3.group.add(gl);
-  });
-  items.forEach(it=>{
-    const x=cx(it.rs),z=cz(it.mo),y=cy(it.mn),up=it.mn>=0;
-    const col=up?0x22c55e:0xef4444, colS=up?'#22c55e':'#ef4444';
-    if(Math.abs(y)>0.2){
-      const arr=new THREE.ArrowHelper(new THREE.Vector3(0,up?1:-1,0),new THREE.Vector3(x,0,z),Math.abs(y),col,Math.min(2.6,Math.abs(y)*0.28+0.8),1.3);
-      T3.group.add(arr);
-    }
-    const size=0.55+Math.abs(it.mn)/maxAbs*1.7;
-    const core=new THREE.Mesh(new THREE.SphereGeometry(size,20,20),new THREE.MeshBasicMaterial({color:col}));
-    core.position.set(x,y,z);T3.group.add(core);
-    const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(colS),blending:THREE.AdditiveBlending,depthWrite:false,transparent:true,opacity:0.9}));
-    glow.scale.set(size*6,size*6,1);glow.position.set(x,y,z);T3.group.add(glow);
-    const lb=labelSprite(it.s,'#eaeaec',8);lb.position.set(x,y+size+1.5,z);T3.group.add(lb);
-    for(let i=0;i<3;i++){
-      const p=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(colS),blending:THREE.AdditiveBlending,depthWrite:false,transparent:true}));
-      p.scale.set(1.5,1.5,1);p.userData={x,z,y,up,t:i/3};T3.group.add(p);T3.parts.push(p);
-    }
-  });
-}
-function animate3D(){
-  T3.raf=requestAnimationFrame(animate3D);
-  if(T3.auto)T3.theta+=0.0016;
-  T3.parts.forEach(p=>{const d=p.userData;d.t=(d.t+0.006)%1;const yy=(d.up?d.t:(1-d.t))*d.y;p.position.set(d.x,yy,d.z);p.material.opacity=0.25+0.65*Math.sin(d.t*Math.PI);});
-  const st=Math.sin(T3.phi);
-  T3.cam.position.set(T3.R*st*Math.sin(T3.theta),T3.R*Math.cos(T3.phi),T3.R*st*Math.cos(T3.theta));
-  T3.cam.lookAt(0,3,0);
-  T3.rend.render(T3.scene,T3.cam);
-}
-function resize3D(){if(!T3.inited)return;const el=document.getElementById('three');const w=el.clientWidth,h=el.clientHeight||600;T3.cam.aspect=w/h;T3.cam.updateProjectionMatrix();T3.rend.setSize(w,h);}
-function ensure3D(){if(typeof THREE==='undefined'){document.getElementById('three').innerHTML='<div class="miss" style="padding:40px">3D 元件載入中…請稍候重新整理</div>';return;}if(!T3.inited)init3D();build3D();resize3D();}
-window.addEventListener('resize',resize3D);
 
-// ===== 資金輪動 Sankey(用真實 ⑦ 大單淨流)=====
+// ===== 資金輪動 Sankey(用真實 ⑦ 大單淨流,含正股/大盤/槓桿)=====
+const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','ETF':'#d89838'};
+const CATLINK={'正股':'rgba(79,116,200,.3)','大盤':'rgba(63,160,216,.3)','ETF':'rgba(216,152,56,.3)'};
+const fmtM=v=>(Math.abs(v)>=1e9?(v/1e9).toFixed(2)+'B':(v/1e6).toFixed(1)+'M');
 function renderRotation(){
   const cap=DATA.capital_flow||{};
-  const arr=Object.keys(cap).map(k=>({s:k.replace('US.',''),v:cap[k].main_net})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
-  const outs=arr.filter(x=>x.v<0).map(x=>({s:x.s,v:-x.v})).sort((a,b)=>b.v-a.v);   // 流出(正值化)
-  const ins=arr.filter(x=>x.v>0).sort((a,b)=>b.v-a.v);                              // 流入
+  const catOf=k=>{const c=cap[k].cat; if(c)return c; const s=k.replace('US.',''); return (DATA.market&&DATA.market[s])?'大盤':(DATA.leveraged&&DATA.leveraged[s])?'ETF':'正股';};
+  const arr=Object.keys(cap).map(k=>({s:k.replace('US.',''),v:cap[k].main_net,cat:catOf(k)})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
+  const outs=arr.filter(x=>x.v<0).map(x=>({...x,v:-x.v})).sort((a,b)=>b.v-a.v);
+  const ins=arr.filter(x=>x.v>0).sort((a,b)=>b.v-a.v);
   const el=document.getElementById('sankey');
-  if(!outs.length&&!ins.length){el.innerHTML='<div class="miss" style="padding:40px">Futu ⑦ 大單淨流無法取得（Mac 採集器未推送或 OpenD 離線）</div>';return;}
-  const HUB=outs.length; // 中間節點索引
-  const labels=[...outs.map(o=>'▼ '+o.s),'機構大單資金池',...ins.map(i=>'▲ '+i.s)];
-  const colors=[...outs.map(()=>'#d03b3b'),'#6b7280',...ins.map(()=>'#0ca30c')];
-  const src=[],tgt=[],val=[],lc=[];
-  outs.forEach((o,i)=>{src.push(i);tgt.push(HUB);val.push(o.v);lc.push('rgba(208,59,59,.35)');});
-  ins.forEach((n,j)=>{src.push(HUB);tgt.push(HUB+1+j);val.push(n.v);lc.push('rgba(12,163,12,.35)');});
-  Plotly.react('sankey',[{type:'sankey',orientation:'h',
-    node:{label:labels,color:colors,pad:14,thickness:16,line:{width:0},
-      hovertemplate:'%{label}<br>%{value:,.0f}<extra></extra>'},
-    link:{source:src,target:tgt,value:val,color:lc,
-      hovertemplate:'%{source.label} → %{target.label}<br>%{value:,.0f}<extra></extra>'}}],
-    {...PBASE,margin:{l:6,r:6,t:6,b:6},font:{color:C.ink,size:12}},CFG);
-  const fmtM=v=>(Math.abs(v)>=1e9?(v/1e9).toFixed(2)+'B':(v/1e6).toFixed(1)+'M');
-  makeTable(document.getElementById('outTable'),
-    [{k:'s',t:'標的'},{k:'v',t:'流出金額',f:v=>'<span class=neg>'+fmtM(v)+'</span>'}],outs,'v');
-  makeTable(document.getElementById('inTable'),
-    [{k:'s',t:'標的'},{k:'v',t:'流入金額',f:v=>'<span class=pos>'+fmtM(v)+'</span>'}],ins,'v');
-  const tot=outs.reduce((a,b)=>a+b.v,0);
-  document.getElementById('sankeynote').innerHTML='左＝機構淨流出（資金撤離）、右＝機構淨流入（資金進駐），連線寬度＝<b>真實 Futu ⑦ 特大+大單淨流金額</b>（非估算）。本時點機構大單淨流出合計約 '+fmtM(tot)+'。中間「機構資金池」為誠實呈現：每個部位的流入/流出方向與大小是確知的,但不宣稱某檔流出的錢 specifically 流向某檔——那無法觀測。';
+  if(!outs.length&&!ins.length){el.innerHTML='<div class="miss" style="padding:40px">Futu ⑦ 大單淨流無法取得（Mac 採集器未推送或 OpenD 離線）</div>';}
+  else{
+    const HUB=outs.length;
+    const labels=[...outs.map(o=>'▼ '+o.s),'機構大單資金池',...ins.map(i=>'▲ '+i.s)];
+    const colors=[...outs.map(o=>CATCOL[o.cat]||'#d03b3b'),'#6b7280',...ins.map(i=>CATCOL[i.cat]||'#0ca30c')];
+    const src=[],tgt=[],val=[],lc=[];
+    outs.forEach((o,i)=>{src.push(i);tgt.push(HUB);val.push(o.v);lc.push('rgba(208,59,59,.32)');});
+    ins.forEach((n,j)=>{src.push(HUB);tgt.push(HUB+1+j);val.push(n.v);lc.push('rgba(12,163,12,.32)');});
+    Plotly.react('sankey',[{type:'sankey',orientation:'h',
+      node:{label:labels,color:colors,pad:12,thickness:16,line:{width:0},
+        customdata:[...outs.map(o=>o.cat),'',...ins.map(i=>i.cat)],
+        hovertemplate:'%{label} (%{customdata})<br>%{value:,.0f}<extra></extra>'},
+      link:{source:src,target:tgt,value:val,color:lc,
+        hovertemplate:'%{source.label} → %{target.label}<br>%{value:,.0f}<extra></extra>'}}],
+      {...PBASE,margin:{l:6,r:6,t:6,b:6},font:{color:C.ink,size:11.5}},CFG);
+    makeTable(document.getElementById('outTable'),
+      [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'流出金額',f:v=>'<span class=neg>'+fmtM(v)+'</span>'}],outs,'v');
+    makeTable(document.getElementById('inTable'),
+      [{k:'s',t:'標的'},{k:'cat',t:'類別'},{k:'v',t:'流入金額',f:v=>'<span class=pos>'+fmtM(v)+'</span>'}],ins,'v');
+    const tot=outs.reduce((a,b)=>a+b.v,0);
+    document.getElementById('sankeynote').innerHTML='左＝機構淨流出、右＝淨流入,連線寬度＝<b>真實 Futu ⑦ 特大+大單淨流金額</b>(成交額用主動買賣分類後的淨額,非估算)。本時點淨流出合計約 '+fmtM(tot)+'。節點色:正股藍/大盤青/槓桿橙。中間「機構資金池」為誠實呈現:方向與大小確知,但不宣稱某檔的錢 specifically 流向某檔。';
+  }
+  renderOptPrem();
+}
+// ===== 選擇權資金傾向(call vs put 權利金成交額)=====
+function renderOptPrem(){
+  const O=DATA.options||{};
+  const rows=Object.keys(O).map(s=>({s:s.replace('_',''),c:O[s].call_prem,p:O[s].put_prem}))
+    .filter(x=>x.c!=null&&x.p!=null&&(x.c+x.p)>0)
+    .sort((a,b)=>(b.c+b.p)-(a.c+a.p)).slice(0,16).reverse();
+  const el=document.getElementById('optprem');
+  if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">期權權利金資料尚未更新（每 15 分計算一次）</div>';return;}
+  Plotly.react('optprem',[
+    {type:'bar',orientation:'h',name:'看漲 call',x:rows.map(r=>r.c),y:rows.map(r=>r.s),marker:{color:'#22c55e'},
+      hovertemplate:'%{y} call 權利金 $%{x:,.0f}<extra></extra>'},
+    {type:'bar',orientation:'h',name:'看跌 put',x:rows.map(r=>-r.p),y:rows.map(r=>r.s),marker:{color:'#ef4444'},
+      hovertemplate:'%{y} put 權利金 $%{x:,.0f}<extra></extra>',customdata:rows.map(r=>r.p)}
+  ],{...PBASE,barmode:'relative',margin:{l:56,r:14,t:8,b:30},
+     legend:{orientation:'h',y:1.08,font:{size:11}},
+     xaxis:{title:{text:'← 看跌權利金   |   看漲權利金 →',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#666',tickformat:'~s'},
+     yaxis:{gridcolor:C.line,automargin:true}},CFG);
 }
 
 // ===== 期權 =====
@@ -445,7 +376,6 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.sec').forEach(x=>x.classList.remove('active'));
   t.classList.add('active');
   document.getElementById('sec-'+t.dataset.sec).classList.add('active');
-  if(t.dataset.sec==='three') setTimeout(ensure3D,60);
   setTimeout(()=>window.dispatchEvent(new Event('resize')),50);
 });
 
