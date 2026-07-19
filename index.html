@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全市場資金部位地圖</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
+<style>
+:root{
+  --bg:#0d0d0d; --surface:#1a1a19; --surface2:#222220; --line:#2c2c2a;
+  --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+  --blue:#3987e5; --green:#0ca30c; --red:#d03b3b; --amber:#fab219; --violet:#9085e9; --aqua:#199e70;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","PingFang TC","Microsoft JhengHei",sans-serif;font-size:14px}
+.wrap{max-width:1440px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
+h1{font-size:19px;margin:0;font-weight:700}
+h2{font-size:14px;margin:0 0 10px;color:var(--ink2);font-weight:600;letter-spacing:.02em}
+.sub{color:var(--muted);font-size:12px}
+.badge{padding:2px 9px;border-radius:12px;font-size:12px;font-variant-numeric:tabular-nums}
+.badge.ok{background:rgba(12,163,12,.16);color:#4ade4a}
+.badge.stale{background:rgba(250,178,25,.18);color:var(--amber)}
+.badge.err{background:rgba(208,59,59,.18);color:#ff6b6b}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.tile .lbl{color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .val{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+.tile .chg{font-size:12px;font-variant-numeric:tabular-nums}
+.up{color:#4ade4a} .down{color:#ff6b6b} .flat{color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+th,td{padding:5px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:600;cursor:pointer;user-select:none;position:sticky;top:0;background:var(--surface)}
+th:first-child,td:first-child{text-align:left}
+th.active::after{content:" ▾";color:var(--blue)}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+.pos{color:#4ade4a}.neg{color:#ff6b6b}
+.chip{display:inline-block;padding:1px 6px;border-radius:4px;font-size:11px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{padding:6px 13px;border-radius:7px;background:var(--surface2);border:1px solid var(--line);cursor:pointer;font-size:13px;color:var(--ink2)}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.note{color:var(--muted);font-size:11.5px;margin-top:8px;line-height:1.5}
+.spark{width:100%;height:30px}
+.sec{display:none}
+.sec.active{display:block}
+a{color:var(--blue)}
+.miss{color:var(--muted);font-style:italic}
+@media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>全市場資金部位地圖</h1>
+  <span class="sub">大盤 · 個股 · 槓桿ETF · <b style="color:var(--ink2)">期權定位</b> · 匯率 · 國債 · 加密 · 大宗商品 · 暗池proxy</span>
+  <span id="status" class="badge stale">載入中…</span>
+  <span class="sub" id="updated"></span>
+  <span class="sub" id="countdown"></span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-sec="options">期權定位</div>
+  <div class="tab" data-sec="cross">跨資產總覽</div>
+  <div class="tab" data-sec="equities">個股 · 槓桿ETF</div>
+  <div class="tab" data-sec="flow">資金流 · 暗池</div>
+</div>
+
+<!-- ===== 期權定位 ===== -->
+<section id="sec-options" class="sec active">
+  <div class="grid g2">
+    <div class="card"><h2>Dealer Gamma 曝險 GEX（負=做市商空gamma→放大波動、脆弱；正=壓波動）</h2><div id="gex" style="height:420px"></div></div>
+    <div class="card"><h2>隱含波動率 IV vs 25Δ Skew（右=下檔避險貴、偏空對沖）</h2><div id="ivskew" style="height:420px"></div></div>
+  </div>
+  <div class="card">
+    <h2>期權定位總表（CBOE 延遲行情；點欄位標題可排序）</h2>
+    <div style="overflow-x:auto;max-height:520px;overflow-y:auto"><table id="optTable"></table></div>
+    <div class="note">GEX＝Σ 各合約 gamma×OI×100×spot²×1%（call +、put −），單位十億美元/1%移動。P/C＝put/call 量比。ATM IV＝spot±3% 履約價均值。Skew＝25Δ put IV − call IV（正=下檔避險需求高）。Max Pain＝OI 內在價值最小的履約價（磁吸位參考）。0DTE＝當日到期合約量佔比。<b>你的 Futu 帳號無美股期權權限，本區改由 CBOE 提供，涵蓋個股／大盤／2×3×槓桿ETF／波動率／大宗。</b></div>
+  </div>
+</section>
+
+<!-- ===== 跨資產總覽 ===== -->
+<section id="sec-cross" class="sec">
+  <div class="card"><h2>關鍵指標</h2><div id="tiles" class="tiles"></div></div>
+  <div class="grid g2">
+    <div class="card"><h2>美債殖利率曲線</h2><div id="curve" style="height:340px"></div></div>
+    <div class="card"><h2>大宗商品（1D / 5D%）</h2><div id="commod" style="height:340px"></div></div>
+  </div>
+</section>
+
+<!-- ===== 個股 · 槓桿ETF ===== -->
+<section id="sec-equities" class="sec">
+  <div class="card">
+    <h2>個股（含相對強弱 RS vs SPY、Futu 大單淨流⑦）</h2>
+    <div style="overflow-x:auto"><table id="stockTable"></table></div>
+  </div>
+  <div class="card">
+    <h2>大型個股／大盤 2× 3× 做多做空 ETF</h2>
+    <div style="overflow-x:auto"><table id="levTable"></table></div>
+    <div class="note">槓桿單股／指數 ETF 有隔夜跳空與波動衰減風險，僅供部位觀察。</div>
+  </div>
+</section>
+
+<!-- ===== 資金流 · 暗池 ===== -->
+<section id="sec-flow" class="sec">
+  <div class="card"><h2>Futu 大單淨流⑦（特大+大單，負=機構在出、散戶在接）</h2><div id="capflow" style="height:420px"></div>
+    <div class="note" id="capnote"></div></div>
+  <div class="card"><h2>暗池 / 賣空 proxy（FINRA 每日賣空量比）</h2><div style="overflow-x:auto"><table id="dpTable"></table></div>
+    <div class="note">真實暗池即時流向無免費資料源；此處以 FINRA 每日全市場賣空量比（short volume / total volume）作機構出貨壓力 proxy，為當日 EOD。真實 ATS/暗池成交量 FINRA 僅週頻、延遲兩週。</div></div>
+</section>
+
+<div class="note">資料由你 Mac 上的採集器每 5 分鐘推送到 GitHub gist，本頁每 60 秒自行抓取更新 —— 開著就會動，不消耗任何 AI token。行情延遲：Futu 個股即時（LV3）、CBOE 期權約 15 分、國債／賣空為 EOD。本頁不構成投資建議。</div>
+</div>
+
+<script>
+// ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
+const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
+const REFRESH_SEC = 60;
+
+const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
+  blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
+const PBASE={paper_bgcolor:C.bg,plot_bgcolor:C.bg,font:{color:C.ink,size:11,family:'system-ui,-apple-system,sans-serif'},
+  margin:{l:50,r:14,t:8,b:34}};
+const CFG={displayModeBar:false,responsive:true};
+const fmt=(x,d=2)=>x==null?'–':(+x).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const sgn=x=>x==null?'':(x>0?'+':'');
+const cls=x=>x==null?'flat':(x>0?'up':(x<0?'down':'flat'));
+const bn=x=>x==null?'–':(Math.abs(x)>=1e9?(x/1e9).toFixed(2)+'B':Math.abs(x)>=1e6?(x/1e6).toFixed(1)+'M':(+x).toLocaleString());
+
+let DATA=null, sortState={};
+
+async function load(){
+  try{
+    const r=await fetch(DATA_URL+"?_="+Date.now(),{cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    DATA=await r.json();
+    render();
+    markStatus();
+  }catch(e){
+    document.getElementById('status').className='badge err';
+    document.getElementById('status').textContent='抓取失敗：'+e.message;
+  }
+}
+function markStatus(){
+  const ts=DATA.ts_utc; const t=new Date(ts.replace(' ','T')+'Z');
+  const ageMin=(Date.now()-t.getTime())/60000;
+  const s=document.getElementById('status');
+  if(ageMin>30){s.className='badge stale';s.textContent='資料偏舊 '+ageMin.toFixed(0)+' 分（Mac 採集器或 OpenD 可能離線）';}
+  else{s.className='badge ok';s.textContent='● 即時（'+ageMin.toFixed(0)+' 分前）';}
+  document.getElementById('updated').textContent='資料時間 '+ts+' UTC';
+  const errs=(DATA.errors||[]).length;
+  if(errs) document.getElementById('updated').textContent+=' · '+errs+' 個來源異常';
+}
+
+// ===== 排序表 =====
+function makeTable(el, cols, rows, defSort){
+  const key=sortState[el.id]||defSort;
+  const dir=sortState[el.id+'_dir']||-1;
+  if(key){rows=rows.slice().sort((a,b)=>{let x=a[key],y=b[key];if(x==null)return 1;if(y==null)return -1;return (x>y?1:x<y?-1:0)*dir;});}
+  let h='<thead><tr>'+cols.map(c=>`<th data-k="${c.k}" class="${c.k===key?'active':''}">${c.t}</th>`).join('')+'</tr></thead><tbody>';
+  h+=rows.map(r=>'<tr>'+cols.map(c=>{
+    let v=c.f?c.f(r[c.k],r):(r[c.k]==null?'<span class=miss>–</span>':r[c.k]);
+    let cl=c.cl?c.cl(r[c.k],r):'';
+    return `<td class="${cl}">${v}</td>`;
+  }).join('')+'</tr>').join('');
+  h+='</tbody>';
+  el.innerHTML=h;
+  el.querySelectorAll('th').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k;
+    if(sortState[el.id]===k) sortState[el.id+'_dir']=-(sortState[el.id+'_dir']||-1);
+    else{sortState[el.id]=k;sortState[el.id+'_dir']=-1;}
+    render();
+  });
+}
+
+function render(){
+  if(!DATA)return;
+  renderOptions(); renderCross(); renderEquities(); renderFlow();
+}
+
+// ===== 期權 =====
+function renderOptions(){
+  const O=DATA.options||{};
+  const syms=Object.keys(O);
+  // GEX 排序條圖
+  const g=syms.map(s=>({s,v:O[s].gex_bn})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
+  Plotly.react('gex',[{type:'bar',orientation:'h',x:g.map(x=>x.v),y:g.map(x=>x.s),
+    marker:{color:g.map(x=>x.v<0?C.red:C.green)},
+    hovertemplate:'%{y}: GEX %{x:+.2f}B<extra></extra>'}],
+    {...PBASE,margin:{l:60,r:14,t:6,b:34},xaxis:{title:{text:'GEX（十億$/1%）',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'},yaxis:{gridcolor:C.line,automargin:true}},CFG);
+  // IV vs skew 散點
+  const pts=syms.filter(s=>O[s].atm_iv!=null&&O[s].skew_25d!=null);
+  Plotly.react('ivskew',[{type:'scatter',mode:'markers+text',x:pts.map(s=>O[s].skew_25d),y:pts.map(s=>O[s].atm_iv),
+    text:pts.map(s=>s.replace('_','')),textposition:'top center',textfont:{size:10,color:C.ink2},
+    marker:{size:11,color:pts.map(s=>O[s].gex_bn<0?C.red:C.blue),line:{width:1,color:C.bg}},
+    hovertemplate:'%{text}<br>ATM IV %{y}% · skew %{x}<extra></extra>'}],
+    {...PBASE,margin:{l:50,r:14,t:6,b:40},xaxis:{title:{text:'25Δ Skew（put−call IV）',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'},yaxis:{title:{text:'ATM IV %',font:{size:11,color:C.ink2}},gridcolor:C.line}},CFG);
+  // 總表
+  const rows=syms.map(s=>({sym:s.replace('_',''),...O[s],mp_diff:(O[s].max_pain&&O[s].spot)?(O[s].max_pain/O[s].spot-1)*100:null}));
+  makeTable(document.getElementById('optTable'),[
+    {k:'sym',t:'標的'},
+    {k:'spot',t:'現價',f:v=>fmt(v,2)},
+    {k:'pc_vol',t:'P/C量',f:v=>fmt(v,2),cl:v=>v>1?'neg':'pos'},
+    {k:'pc_oi',t:'P/C OI',f:v=>fmt(v,2),cl:v=>v>1?'neg':'pos'},
+    {k:'gex_bn',t:'GEX(B)',f:v=>sgn(v)+fmt(v,2),cl:v=>v<0?'neg':'pos'},
+    {k:'atm_iv',t:'ATM IV%',f:v=>fmt(v,1)},
+    {k:'skew_25d',t:'Skew',f:v=>sgn(v)+fmt(v,1),cl:v=>v>0?'neg':'pos'},
+    {k:'zero_dte_share',t:'0DTE%',f:v=>v==null?'–':(v*100).toFixed(0)+'%'},
+    {k:'max_pain',t:'MaxPain',f:v=>fmt(v,0)},
+    {k:'mp_diff',t:'vs現價',f:v=>v==null?'–':sgn(v)+v.toFixed(1)+'%',cl:v=>v<0?'neg':'pos'},
+  ],rows,'gex_bn');
+}
+
+// ===== 跨資產 =====
+function renderCross(){
+  const tiles=[];
+  const push=(lbl,o,suffix='')=>{if(o)tiles.push({lbl,val:o.last,chg:o.chg1d,suffix});};
+  const M=DATA.market||{},X=DATA.fx||{},Cr=DATA.crypto||{},R=DATA.rates||{},O=DATA.options||{};
+  push('S&P 500 (SPY)',M.SPY);push('Nasdaq 100 (QQQ)',M.QQQ);push('道瓊 (DIA)',M.DIA);push('小型股 (IWM)',M.IWM);
+  if(O._VIX)tiles.push({lbl:'VIX',val:O._VIX.spot,chg:null});
+  push('BTC',Cr['BTC-USD']);push('ETH',Cr['ETH-USD']);
+  if(R['2s10s']!=null)tiles.push({lbl:'2s10s 利差',val:R['2s10s'],chg:null,raw:true});
+  if(R['10 Yr']!=null)tiles.push({lbl:'10年債殖利率',val:R['10 Yr'],chg:null,raw:true,suffix:'%'});
+  push('美元指數 DXY',X['DX-Y.NYB']);push('USD/JPY',X['JPY=X']);push('USD/TWD',X['TWD=X']);
+  const el=document.getElementById('tiles');
+  el.innerHTML=tiles.map(t=>{
+    const c=cls(t.chg);
+    const val=t.raw?fmt(t.val,2):fmt(t.val,2);
+    return `<div class="tile"><div class="lbl">${t.lbl}</div><div class="val">${val}${t.suffix||''}</div>
+      <div class="chg ${c}">${t.chg==null?'&nbsp;':sgn(t.chg)+fmt(t.chg,2)+'%'}</div></div>`;
+  }).join('');
+  // 殖利率曲線
+  if(R.Date){
+    const ten=['3 Mo','2 Yr','5 Yr','10 Yr','20 Yr','30 Yr'],lab=['3M','2Y','5Y','10Y','20Y','30Y'];
+    Plotly.react('curve',[{type:'scatter',mode:'lines+markers',x:lab,y:ten.map(t=>R[t]),
+      line:{color:C.blue,width:2},marker:{size:8,color:C.blue},hovertemplate:'%{x}: %{y}%<extra></extra>'}],
+      {...PBASE,xaxis:{gridcolor:C.line},yaxis:{title:{text:'殖利率 %',font:{size:11,color:C.ink2}},gridcolor:C.line,tickformat:'.2f'}},CFG);
+  }
+  // 大宗商品條圖
+  const K=DATA.commodities||{};const ks=Object.keys(K);
+  Plotly.react('commod',[
+    {type:'bar',name:'1D%',x:ks.map(k=>K[k].name||k),y:ks.map(k=>K[k].chg1d),marker:{color:C.blue}},
+    {type:'bar',name:'5D%',x:ks.map(k=>K[k].name||k),y:ks.map(k=>K[k].chg5d),marker:{color:C.aqua}},
+  ],{...PBASE,barmode:'group',legend:{orientation:'h',y:1.1,font:{size:11}},xaxis:{gridcolor:C.line},yaxis:{title:{text:'%',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'}},CFG);
+}
+
+// ===== 個股 / 槓桿 =====
+function equityRows(grp){
+  const G=DATA[grp]||{},cap=DATA.capital_flow||{};
+  return Object.keys(G).map(s=>{
+    const c=cap['US.'+s]; return {sym:s,...G[s],main_net:c?c.main_net:null};
+  });
+}
+function eqCols(){return [
+  {k:'sym',t:'標的'},
+  {k:'last',t:'現價',f:v=>fmt(v,2)},
+  {k:'chg1d',t:'1D%',f:v=>sgn(v)+fmt(v,2),cl:v=>cls(v)==='up'?'pos':cls(v)==='down'?'neg':''},
+  {k:'chg5d',t:'5D%',f:v=>sgn(v)+fmt(v,2),cl:v=>v>0?'pos':'neg'},
+  {k:'chg20d',t:'20D%',f:v=>sgn(v)+fmt(v,2),cl:v=>v>0?'pos':'neg'},
+  {k:'rs_vs_spy',t:'RS vs SPY',f:v=>v==null?'–':sgn(v)+fmt(v,1),cl:v=>v>0?'pos':'neg'},
+  {k:'vol_pace',t:'量能',f:v=>v==null?'–':fmt(v,2)+'×',cl:v=>v>=2?'neg':''},
+  {k:'main_net',t:'⑦大單淨流',f:(v)=>v==null?'<span class=miss>無</span>':bn(v),cl:v=>v==null?'':(v<0?'neg':'pos')},
+];}
+function renderEquities(){
+  makeTable(document.getElementById('stockTable'),eqCols(),equityRows('stocks'),'main_net');
+  makeTable(document.getElementById('levTable'),eqCols().filter(c=>c.k!=='main_net'||true),equityRows('leveraged'),'chg1d');
+}
+
+// ===== 資金流 / 暗池 =====
+function renderFlow(){
+  const cap=DATA.capital_flow||{};
+  const rows=Object.keys(cap).map(s=>({s:s.replace('US.',''),v:cap[s].main_net})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
+  if(rows.length){
+    Plotly.react('capflow',[{type:'bar',orientation:'h',x:rows.map(r=>r.v),y:rows.map(r=>r.s),
+      marker:{color:rows.map(r=>r.v<0?C.red:C.green)},
+      hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'}],
+      {...PBASE,margin:{l:60,r:14,t:6,b:34},xaxis:{title:{text:'特大+大單淨流入（當地幣）',font:{size:11,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'},yaxis:{gridcolor:C.line,automargin:true}},CFG);
+    document.getElementById('capnote').textContent='來源：你 Mac 的 Futu OpenD（get_capital_distribution）。負值=特大+大單淨流出=機構在出、散戶在接。';
+  }else{
+    document.getElementById('capflow').innerHTML='<div class="miss" style="padding:30px">Futu 大單淨流無法取得（Mac 採集器未推送或 OpenD 離線）</div>';
+    document.getElementById('capnote').textContent='';
+  }
+  const dp=DATA.darkpool||{};
+  const drows=Object.keys(dp).filter(k=>k!=='_date').map(k=>({sym:k,...dp[k]}));
+  makeTable(document.getElementById('dpTable'),[
+    {k:'sym',t:'標的'},
+    {k:'short_ratio',t:'賣空量比',f:v=>v==null?'–':(v*100).toFixed(1)+'%',cl:v=>v>=0.55?'neg':''},
+  ],drows,'short_ratio');
+}
+
+// ===== 分頁 =====
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.sec').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('sec-'+t.dataset.sec).classList.add('active');
+  setTimeout(()=>window.dispatchEvent(new Event('resize')),50);
+});
+
+// ===== 自動刷新 =====
+let cd=REFRESH_SEC;
+setInterval(()=>{cd--;if(cd<=0){cd=REFRESH_SEC;load();}document.getElementById('countdown').textContent='· '+cd+'s 後更新';},1000);
+load();
+</script>
+</body>
+</html>
+
