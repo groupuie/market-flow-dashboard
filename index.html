@@ -105,7 +105,16 @@ a{color:var(--blue)}
   <div class="card">
     <h2>離開股票之後,錢去了哪?（目的地對照;含誠實殘差）</h2>
     <div id="dest" style="height:380px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限;機構現金多走 MMF/repo 不經 ETF)、國債＝SHY/IEF/TLT 分天期、金＝GLD、Crypto＝IBIT/ETHA(同一美股磁帶,⑦ 同方法論)、反向＝SQQQ/SOXS/SH/SPXU。灰色「不可觀測殘差」＝各類加總後的缺口(銀行存款/境外/MMF/市值蒸發等)——觀測宇宙不封閉,硬平衡就是說謊。期權 premium 是<b>槓桿曝險、不是停泊資本</b>,不放進本圖(見下方獨立面板)。</div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限;機構現金多走 MMF/repo 不經 ETF)、國債＝SHY/IEF/TLT 分天期、金＝GLD、Crypto＝IBIT/ETHA(同一美股磁帶,⑦ 同方法論)、反向＝SQQQ/SOXS/SH/SPXU。灰色「不可觀測殘差」＝各類加總後的缺口(銀行存款/境外/MMF/市值蒸發等)——觀測宇宙不封閉,硬平衡就是說謊。期權 premium 是<b>槓桿曝險、不是停泊資本</b>,不放進本圖(見下方獨立面板)。<b>「現金」bar 只是 T-bill ETF 的盤中主動流(一角);真實現金池水位見下方獨立卡。</b></div>
+  </div>
+  <div class="card">
+    <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
+    <div id="cashtiles" class="tiles"></div>
+    <div class="grid g2" style="margin-top:10px">
+      <div><div id="mmfTrend" style="height:250px"></div></div>
+      <div><div id="rrpTrend" style="height:250px"></div></div>
+    </div>
+    <div class="note">「等機會的現金」主體停在<b>貨幣市場基金 MMF</b>——散戶券商帳戶的閒置現金每晚被自動掃(sweep)進去,機構亦然——來源 ICI,<b>週頻</b>(週四發布、資料截至週三)。<b>Fed ON RRP</b>＝貨幣基金放回 Fed 的過剩現金,<b>日頻</b>(當日美東 13:15 後有值;2025 年後已近乎排空,代表系統閒錢已回到市場運用,水位主要看 MMF)。券商免佣現金餘額為月頻(FINRA)且無機器可讀源,誠實不納入。<b>盤中的即時現金池水位不存在任何公開資料源——券商帳戶餘額是私有資料。</b>盤中唯一可觀測的是上圖「現金ETF ⑦ 主動流」,方向即時但量級只是冰山一角;水位判讀以本卡的 MMF 週頻為準。</div>
   </div>
   <div class="card">
     <h2>機構大單資金輪動 FROM → TO（正股 + 大盤 ETF + 2×3× 槓桿 ETF;連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
@@ -497,7 +506,53 @@ function renderRotation(){
     snote+=' 量級提醒:⑦只涵蓋「主動性特大+大單」,機構用演算法拆小單與 ETF 申贖不在其中 —— 這是總流量的一角,方向參考、非全貌。';
     document.getElementById('sankeynote').innerHTML=snote;
   }
-  renderPersist(); renderOptPrem(); renderInst();
+  renderPersist(); renderOptPrem(); renderInst(); renderCash();
+}
+// ===== 現金池水位(MMF 週頻 + ON RRP 日頻 + 現金ETF⑦ 對照)=====
+function renderCash(){
+  const el=document.getElementById('cashtiles'); if(!el)return;
+  const CP=DATA.cash_pool||{}; const mmf=CP.mmf||null; const rrp=CP.onrrp||{};
+  const tiles=[];
+  if(mmf&&mmf.total_bn){
+    tiles.push({l:'MMF 總資產（週頻）',v:'$'+(mmf.total_bn/1000).toFixed(2)+'T',c:mmf.chg_bn,
+      cs:(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B/週',d:'截至 '+(mmf.asof||'')});
+    if(mmf.retail_bn)tiles.push({l:'散戶 MMF',v:'$'+(mmf.retail_bn/1000).toFixed(2)+'T',d:'含券商 sweep'});
+    if(mmf.inst_bn)tiles.push({l:'機構 MMF',v:'$'+(mmf.inst_bn/1000).toFixed(2)+'T',d:'機構停泊'});
+  }
+  const rd=Object.keys(rrp).sort();
+  if(rd.length){
+    const lastD=rd[rd.length-1], prev=rd.length>1?rrp[rd[rd.length-2]]:null;
+    const chg=prev!=null?+(rrp[lastD]-prev).toFixed(2):null;
+    tiles.push({l:'Fed ON RRP（日頻）',v:'$'+fmt(rrp[lastD],2)+'B',c:chg,
+      cs:chg==null?'':(chg>0?'+':'')+fmt(chg,2)+'B/日',d:lastD});
+  }
+  const cap=DATA.capital_flow||{}; let cetf=0,has=false;
+  ['US.SGOV','US.BIL'].forEach(k=>{if(cap[k]&&cap[k].main_net!=null){cetf+=cap[k].main_net;has=true;}});
+  if(has)tiles.push({l:'現金ETF ⑦ 今日（即時）',v:(cetf>0?'+':'')+bn(cetf),c:cetf,d:'SGOV+BIL 主動流'});
+  el.innerHTML=tiles.length?tiles.map(t=>{
+    const c=t.c==null?'flat':(t.c>0?'up':(t.c<0?'down':'flat'));
+    return `<div class="tile"><div class="lbl">${t.l}</div><div class="val">${t.v}</div>
+      <div class="chg ${c}">${t.cs||''}${t.d?' · '+t.d:''}</div></div>`;
+  }).join(''):'<div class="miss" style="padding:16px">現金池資料累積中（採集器更新後自動出現）</div>';
+  const mh=CP.mmf_hist||{}; const md=Object.keys(mh).sort();
+  if(md.length>=2){
+    Plotly.react('mmfTrend',[{type:'scatter',mode:'lines+markers',x:md.map(d=>d.slice(5)),
+      y:md.map(d=>+(mh[d]/1000).toFixed(3)),line:{color:C.aqua,width:2},marker:{size:7},
+      hovertemplate:'%{x}: $%{y}T<extra></extra>'}],
+      {...PBASE,margin:{l:52,r:10,t:26,b:28},title:{text:'MMF 總資產（$T,週頻;每週四+1點）',font:{size:11,color:C.ink2}},
+       xaxis:{gridcolor:C.line},yaxis:{gridcolor:C.line,tickformat:'.2f'}},CFG);
+  }else{
+    document.getElementById('mmfTrend').innerHTML='<div class="miss" style="padding:26px">MMF 週頻史累積中（每週四新增一點,現值見上方磚）</div>';
+  }
+  const rds=rd.slice(-30);
+  if(rds.length>=2){
+    Plotly.react('rrpTrend',[{type:'bar',x:rds.map(d=>d.slice(5)),y:rds.map(d=>rrp[d]),
+      marker:{color:C.violet},hovertemplate:'%{x}: $%{y}B<extra></extra>'}],
+      {...PBASE,margin:{l:52,r:10,t:26,b:28},title:{text:'Fed ON RRP 接納額（$B,日頻）',font:{size:11,color:C.ink2}},
+       xaxis:{gridcolor:C.line,tickfont:{size:9}},yaxis:{gridcolor:C.line}},CFG);
+  }else{
+    document.getElementById('rrpTrend').innerHTML='<div class="miss" style="padding:26px">RRP 日頻累積中</div>';
+  }
 }
 // ===== 目的地對照(diverging bar + 殘差;支援逐日動畫)=====
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比

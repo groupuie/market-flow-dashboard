@@ -209,6 +209,51 @@ def live_yields():
         time.sleep(0.1)
     return out
 
+# ============ 現金池水位(層級觀測;「等機會的錢」)============
+def nyfed_rrp(days=40):
+    """Fed ON RRP 接納額(日頻;當日 13:15 ET 後有值)→ 貨幣基金停在 Fed 的過剩現金"""
+    from datetime import timedelta
+    end=datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    start=(datetime.now(timezone.utc)-timedelta(days=days)).strftime("%Y-%m-%d")
+    d=http_json(f"https://markets.newyorkfed.org/api/rp/reverserepo/propositions/search.json?startDate={start}&endDate={end}",20)
+    out={}
+    for o in (d.get("repo",{}) or {}).get("operations",[]) or []:
+        dt=o.get("operationDate"); amt=_f(o.get("totalAmtAccepted"))
+        if dt and amt is not None and "Reverse" in str(o.get("operationType","")):
+            out[dt]=round(amt/1e9,3)   # 十億美元
+    return out
+
+def ici_mmf():
+    """ICI 貨幣市場基金總資產(週頻;週四發布、資料截至週三)= 停泊現金主體
+       句型:'Total money market fund assets decreased by $59.90 billion to $7.89 trillion
+       for the week ended Wednesday, July 15'(週期日不含年;年取自發布日期行)"""
+    import re as _re
+    raw=http_get("https://www.ici.org/research/stats/mmf",25,2)
+    t=_re.sub(r"<[^>]+>"," ",raw).replace("&nbsp;"," ")
+    t=_re.sub(r"\s+"," ",t)
+    def num(x): return float(x.replace(",",""))
+    def to_bn(v,unit): return v*1000 if unit=="trillion" else (v if unit=="billion" else v/1000)
+    r={}
+    m=_re.search(r"Total money market fund assets\s*\d*\s*(increased|decreased)\s+by\s+\$([\d.,]+)\s*(billion|million)\s+to\s+\$([\d.,]+)\s*(trillion|billion)\s+for\s+the\s+week\s+ended\s+Wednesday,?\s*([A-Za-z]+\s+\d+)",t)
+    if not m: return None
+    sign=-1 if m.group(1)=="decreased" else 1
+    r["chg_bn"]=round(sign*to_bn(num(m.group(2)),m.group(3)),2)
+    r["total_bn"]=round(to_bn(num(m.group(4)),m.group(5)),1)
+    wk=m.group(6)
+    my=_re.search(r"([A-Za-z]+\s+\d+,\s*(\d{4}))\s*[—–-]",t)
+    yr=my.group(2) if my else str(datetime.now(timezone.utc).year)
+    r["asof"]=wk+", "+yr
+    try:
+        d=datetime.strptime(wk+" "+yr,"%B %d %Y")
+        if (d-datetime.now()).days>7: d=d.replace(year=d.year-1)   # 跨年保護
+        r["asof_iso"]=d.strftime("%Y-%m-%d")
+    except Exception: pass
+    m2=_re.search(r"retail money market funds\s+(?:increased|decreased)\s+by\s+\$[\d.,]+\s*(?:billion|million)\s+to\s+\$([\d.,]+)\s*(trillion|billion)",t)
+    if m2: r["retail_bn"]=round(to_bn(num(m2.group(1)),m2.group(2)),1)
+    m3=_re.search(r"institutional money market funds\s+(?:increased|decreased)\s+by\s+\$[\d.,]+\s*(?:billion|million)\s+to\s+\$([\d.,]+)\s*(trillion|billion)",t)
+    if m3: r["inst_bn"]=round(to_bn(num(m3.group(1)),m3.group(2)),1)
+    return r
+
 # ============ FINRA 賣空(暗池 proxy)============
 def finra_short():
     from datetime import timedelta
@@ -481,6 +526,25 @@ def run_once(cfg, args):
     try: json.dump(dpd, open(dppath,"w"))
     except Exception: pass
     data["dp_daily"]=dpd
+    # 現金池水位(層級,非盤中流量):ON RRP 日頻每次刷新;ICI MMF 週頻(6 小時節流+滾動半年史)
+    cashpath=args.config+".cashpool.json"
+    try: cash=json.load(open(cashpath))
+    except Exception: cash={}
+    try: cash["onrrp"]=nyfed_rrp()
+    except Exception as e: err("nyfed_rrp",e)
+    if time.time()-cash.get("_mmf_ts",0)>6*3600:
+        try:
+            r=ici_mmf()
+            if r:
+                cash["mmf"]=r; cash["_mmf_ts"]=time.time()
+                h=cash.setdefault("mmf_hist",{})
+                key=r.get("asof_iso") or r.get("asof")
+                if key: h[key]=r["total_bn"]
+                for k in sorted(h)[:-26]: h.pop(k,None)   # 保留半年(26 週)
+        except Exception as e: err("ici_mmf",e)
+    try: json.dump(cash, open(cashpath,"w"), ensure_ascii=False)
+    except Exception: pass
+    data["cash_pool"]=cash
     # Futu 大單淨流 + 機構持股(機構持股跟期權同節流,15 分抓一次;季頻資料低頻足夠)
     fsnap={"ts_utc":data["ts_utc"],"source":"futu-opend","snapshots":{},"capital":{},"errors":[]}
     # 機構持股 15 分一次(季頻資料,低頻足夠;與期權節流解耦——盤中期權已改每次重算)
