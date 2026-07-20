@@ -105,7 +105,7 @@ a{color:var(--blue)}
   <div class="card">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:420px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限)、國債＝SHY/IEF/TLT、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU。<b>正中央 0 線上的細直柱＝即時現金池(取代原「不可觀測殘差」)</b>:即時買賣相減的鏡像——賣壓>買壓時差額最可能落腳帳戶現金/MMF,池柱由中線<b>向上長=入池</b>(琥珀色);買壓>賣壓則<b>向下長=出池進場</b>(青綠色)。所有橫柱由這根池柱向左右兩邊延伸。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU。<b>正中央 0 線上的細直柱＝即時現金池(取代原「不可觀測殘差」與「現金」列)</b>:非現金各類買賣相減的鏡像——賣壓>買壓時差額最可能落腳現金,池柱由中線<b>向上長=入池</b>(琥珀色);買壓>賣壓則<b>向下長=出池進場</b>(青綠色)。所有橫柱由這根池柱向左右兩邊延伸。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(其獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   <div class="card">
     <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
@@ -558,10 +558,11 @@ function renderCash(){
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
 function renderDest(catNet, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
-  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','油','銀','Crypto','自訂','闖入'];
+  // 「現金」(SGOV/BIL)不再單列:T-bill ETF 屬停泊現金,其流動=池內重分配,已併入池推估
+  const order=['正股','大盤','板塊ETF','槓桿','反向','國債','金','油','銀','Crypto','自訂','闖入'];
   const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
-  const pool=-rows.reduce((a,b)=>a+b.v,0);   // 即時現金池 = 即時買賣相減的鏡像
+  const pool=-rows.reduce((a,b)=>a+b.v,0);   // 即時現金池 = 非現金各類買賣相減的鏡像(現金ETF流動隱含在池內)
   // x 軸取對稱範圍 → 0 線落在畫面正中央;池柱=站在 0 線上的細直柱,橫柱從它左右長出
   const M=(fixRange&&DEST_RANGE)?DEST_RANGE[1]:Math.max(...rows.map(r=>Math.abs(r.v)),Math.abs(pool))*1.18;
   const frac=Math.min(1,Math.abs(pool)/M);
@@ -589,9 +590,10 @@ function renderDest(catNet, subtitle, fixRange){
     +',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
     xref:'paper',yref:'paper',x:0.99,y:1.05,showarrow:false,font:{size:10.5,color:C.ink2},xanchor:'right'});
   const xaxis={title:{text:'← 淨流出(賣出側)   |   淨流入(買入側) →('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
-    gridcolor:C.line,zerolinecolor:'#888',zerolinewidth:1,tickformat:'~s',range:[-M,M]};
+    gridcolor:C.line,zerolinecolor:'rgba(0,0,0,0)',tickformat:'~s',range:[-M,M]};
   Plotly.react('dest',[{type:'bar',orientation:'h',
     x:rows.map(r=>r.v),y:rows.map(r=>r.c),
+    base:rows.map(r=>r.v>=0?w:-w),   // 橫柱從池柱邊緣長出,不刺穿中央池柱
     marker:{color:rows.map(r=>r.v>=0?'#22c55e':'#ef4444')},
     text:rows.map(r=>(r.v>0?'+':'')+fmtM(r.v)),textposition:'outside',textfont:{size:11,color:C.ink2},
     hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'}],
@@ -622,7 +624,9 @@ function playAnim(){
   const ds=animDates(); if(ds.length<2)return;
   // 先算所有日的最大絕對值,固定 x 軸,動畫才可比
   let mx=0;
-  ds.forEach(d=>{const cn=dayCatNet(d);const vals=Object.values(cn);const pool=-vals.reduce((a,b)=>a+b,0);
+  ds.forEach(d=>{const cn=dayCatNet(d);
+    const vals=Object.entries(cn).filter(([c])=>c!=='現金').map(([,v])=>v);   // 與 renderDest 同步:現金不入列
+    const pool=-vals.reduce((a,b)=>a+b,0);
     [...vals,pool].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});});
   DEST_RANGE=[-mx*1.25,mx*1.25];
   ANIM.playing=true;ANIM.idx=0;
