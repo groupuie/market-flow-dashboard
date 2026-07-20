@@ -105,7 +105,7 @@ a{color:var(--blue)}
   <div class="card">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:420px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),↑=淨流入、↓=淨流出。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限)、國債＝SHY/IEF/TLT、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU。<b>正中間琥珀色柱＝即時現金池(取代原「不可觀測殘差」)</b>:即時買賣相減的鏡像——觀測宇宙內賣壓>買壓時,差額最可能落腳帳戶現金/MMF,推估「入池」(向上);買壓>賣壓則「出池進場」(向下)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),此推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限)、國債＝SHY/IEF/TLT、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU。<b>正中央 0 線上的細直柱＝即時現金池(取代原「不可觀測殘差」)</b>:即時買賣相減的鏡像——賣壓>買壓時差額最可能落腳帳戶現金/MMF,池柱由中線<b>向上長=入池</b>(琥珀色);買壓>賣壓則<b>向下長=出池進場</b>(青綠色)。所有橫柱由這根池柱向左右兩邊延伸。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   <div class="card">
     <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
@@ -558,30 +558,45 @@ function renderCash(){
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
 function renderDest(catNet, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
-  // 直立式:左半=股票側、正中=即時現金池(0 線上下浮動)、右半=目的地側
-  const L=['正股','大盤','板塊ETF','槓桿','反向'], R=['現金','國債','金','油','銀','Crypto','自訂','闖入'];
-  const lrows=L.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
-  const rrows=R.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
-  if(!lrows.length&&!rrows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
-  const pool=-[...lrows,...rrows].reduce((a,b)=>a+b.v,0);   // 即時現金池 = 買賣相減的鏡像
-  const cats=[...lrows.map(r=>r.c),'即時現金池',...rrows.map(r=>r.c)];
-  const vals=[...lrows.map(r=>r.v),pool,...rrows.map(r=>r.v)];
-  const colors=cats.map((c,i)=>c==='即時現金池'?C.amber:(vals[i]>=0?'#22c55e':'#ef4444'));
+  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','油','銀','Crypto','自訂','闖入'];
+  const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
+  if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
+  const pool=-rows.reduce((a,b)=>a+b.v,0);   // 即時現金池 = 即時買賣相減的鏡像
+  // x 軸取對稱範圍 → 0 線落在畫面正中央;池柱=站在 0 線上的細直柱,橫柱從它左右長出
+  const M=(fixRange&&DEST_RANGE)?DEST_RANGE[1]:Math.max(...rows.map(r=>Math.abs(r.v)),Math.abs(pool))*1.18;
+  const frac=Math.min(1,Math.abs(pool)/M);
+  const w=M*0.016;                     // 細柱半寬
+  const up=pool>=0;
+  const shapes=[
+    {type:'rect',xref:'x',yref:'paper',x0:-w,x1:w,
+     y0:up?0.5:0.5-0.47*frac, y1:up?0.5+0.47*frac:0.5,
+     fillcolor:up?'rgba(250,178,25,.88)':'rgba(52,211,153,.88)',line:{width:0},layer:'above'},
+    {type:'rect',xref:'x',yref:'paper',x0:-w*1.8,x1:w*1.8,y0:0.493,y1:0.507,
+     fillcolor:'#777',line:{width:0},layer:'above'}
+  ];
+  const ann=[
+    {text:'<b>即時現金池 '+(pool>0?'+':'')+fmtM(pool)+'</b>'+(up?'(入池)':'(出池進場)'),
+     xref:'x',yref:'paper',x:0,
+     y:up?Math.min(0.965,0.5+0.47*frac+0.015):Math.max(0.035,0.5-0.47*frac-0.015),
+     yanchor:up?'bottom':'top',showarrow:false,
+     font:{size:12.5,color:up?'#fab219':'#34d399'},xanchor:'center',
+     bgcolor:'rgba(13,13,13,.72)',borderpad:2}
+  ];
+  if(subtitle)ann.push({text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.98,y:0.02,showarrow:false,
+    font:{size:20,color:'#9db4e0'},xanchor:'right'});
   const mmf=(DATA.cash_pool||{}).mmf||null;
-  const ann=[];
-  if(subtitle)ann.push({text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.02,y:0.05,showarrow:false,
-    font:{size:20,color:'#9db4e0'},xanchor:'left'});
-  if(mmf&&mmf.total_bn)ann.push({text:'現金池基準水位:MMF $'+(mmf.total_bn/1000).toFixed(2)+'T('+(mmf.asof||'')
+  if(mmf&&mmf.total_bn)ann.push({text:'池基準水位:MMF $'+(mmf.total_bn/1000).toFixed(2)+'T('+(mmf.asof||'')
     +',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
-    xref:'paper',yref:'paper',x:0.99,y:1.06,showarrow:false,font:{size:10.5,color:C.ink2},xanchor:'right'});
-  const yaxis={title:{text:'↑ 淨流入/入池   |   ↓ 淨流出('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
-    gridcolor:C.line,zerolinecolor:'#999',zerolinewidth:2,tickformat:'~s'};
-  if(fixRange&&DEST_RANGE)yaxis.range=DEST_RANGE;
-  Plotly.react('dest',[{type:'bar',x:cats,y:vals,marker:{color:colors},
-    text:vals.map(v=>(v>0?'+':'')+fmtM(v)),textposition:'outside',textfont:{size:11,color:C.ink2},
-    hovertemplate:'%{x}: %{y:,.0f}<extra></extra>'}],
-    {...PBASE,margin:{l:56,r:14,t:26,b:70},annotations:ann,
-     xaxis:{gridcolor:C.line,tickangle:-32,tickfont:{size:10.5}},yaxis},CFG);
+    xref:'paper',yref:'paper',x:0.99,y:1.05,showarrow:false,font:{size:10.5,color:C.ink2},xanchor:'right'});
+  const xaxis={title:{text:'← 淨流出(賣出側)   |   淨流入(買入側) →('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
+    gridcolor:C.line,zerolinecolor:'#888',zerolinewidth:1,tickformat:'~s',range:[-M,M]};
+  Plotly.react('dest',[{type:'bar',orientation:'h',
+    x:rows.map(r=>r.v),y:rows.map(r=>r.c),
+    marker:{color:rows.map(r=>r.v>=0?'#22c55e':'#ef4444')},
+    text:rows.map(r=>(r.v>0?'+':'')+fmtM(r.v)),textposition:'outside',textfont:{size:11,color:C.ink2},
+    hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'}],
+    {...PBASE,margin:{l:86,r:60,t:24,b:32},annotations:ann,xaxis,shapes,
+     yaxis:{gridcolor:C.line,autorange:'reversed'}},CFG);
 }
 // ===== 逐日播放動畫 =====
 let ANIM={playing:false,idx:0,timer:null};
