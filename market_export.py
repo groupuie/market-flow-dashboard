@@ -355,8 +355,10 @@ def pull_daily_hist(q, syms, days=45):
                     out.setdefault(dt,{})[sym]={"m":round(m/1e6,1),
                         "r":round(rr/1e6,1) if rr is not None else None,
                         "c":CAP_CAT.get(sym,"正股")}
+            elif ret!=RET_OK:
+                err(f"histflow {s}", RuntimeError(str(d)[:40]))   # 之前靜默吞掉→清單尾端被限流看不見
         except Exception as e: err(f"histflow {s}",e)
-        time.sleep(0.5)
+        time.sleep(1.1)   # Futu 歷史資金流配額約 30 次/30 秒;0.5s 會超限→尾端(目的地ETF)全失敗
     return out
 
 def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
