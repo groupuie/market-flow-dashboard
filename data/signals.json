@@ -1,49 +1,49 @@
 {
- "updated_utc": "2026-07-20 17:42:24",
+ "updated_utc": "2026-07-20 19:49:20",
  "mode": "intraday",
  "market": {
   "regime_light": "🟡",
-  "vix": 18.25,
+  "vix": 18.48,
   "spy_vs_20dma": -0.26,
   "spy_vs_50dma": 0.95,
   "notes": [
    "SPY 低於 20DMA -0.26%",
-   "VIX 18.25",
-   "SMH-SPY 20日相對 -13.8%"
+   "VIX 18.48",
+   "SMH-SPY 20日相對 -14.7%"
   ],
-  "asof": "2026-07-20 17:42:24"
+  "asof": "2026-07-20 19:49:20"
  },
  "symbols": {
   "MU": {
    "computed_tech": {
-    "close": 893.135,
+    "close": 887.0,
     "d": "2026-07-20",
-    "ema5": 894.381,
-    "ema10": 927.726,
-    "ema20": 959.999,
-    "ema50": 898.12,
-    "ema120": 703.794,
-    "ema200": 566.274,
-    "vs_ema20_pct": -6.96,
-    "vs_ema50_pct": -0.56,
-    "rsi6": 40.5,
-    "rsi12": 43.5,
-    "boll_mid": 1011.376,
-    "boll_up": 1227.315,
-    "boll_lo": 795.436,
+    "ema5": 892.334,
+    "ema10": 926.592,
+    "ema20": 959.361,
+    "ema50": 897.784,
+    "ema120": 703.558,
+    "ema200": 566.045,
+    "vs_ema20_pct": -7.54,
+    "vs_ema50_pct": -1.2,
+    "rsi6": 39.0,
+    "rsi12": 42.9,
+    "boll_mid": 1010.992,
+    "boll_up": 1227.475,
+    "boll_lo": 794.51,
     "boll_bw_pctile": 67.0,
     "obv_above_ma": false,
-    "vol_pace": 0.38,
-    "turnover_rate": null,
-    "chg1d": 5.2,
-    "chg5d": -4.68,
-    "chg20d": -21.24,
-    "off_60d_high_pct": -28.8,
-    "swing_hi": 1255.0,
-    "swing_lo": 471.8,
+    "vol_pace": 0.47,
+    "turnover_rate": 0.023,
+    "chg1d": 4.48,
+    "chg5d": -5.34,
+    "chg20d": -21.77,
+    "off_60d_high_pct": -29.3,
+    "swing_hi": 1254.807,
+    "swing_lo": 471.727,
     "td_setup_now": -4,
     "td_buy_cd": 0,
-    "td_sell_cd": 5,
+    "td_sell_cd": 0,
     "td_events_60d": [
      {
       "d": "2026-05-04",
@@ -66,22 +66,24 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 891.98,
-    "gex_bn": -0.007,
+    "spot": 864.63,
+    "gex_bn": -0.127,
     "flip": null,
-    "call_wall": 1000.0,
+    "call_wall": 900.0,
     "put_wall": 800.0,
     "max_pain": 770.0,
-    "atm_iv": 99.4,
-    "pc_vol": 0.872,
-    "call_share": 0.534,
-    "zero_dte_share": 0.487,
-    "squeeze_score": 40,
+    "atm_iv": 103.2,
+    "pc_vol": 1.076,
+    "call_share": 0.482,
+    "zero_dte_share": 0.456,
+    "squeeze_score": 65,
     "squeeze_why": [
      "dealer 空gamma(+30)",
-     "0DTE佔比高(+10)"
+     "距call牆<6%(+15)",
+     "0DTE佔比高(+10)",
+     "IV>100%(+10)"
     ],
-    "asof": "2026-07-20 17:42:25"
+    "asof": "2026-07-20 19:49:21"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -124,9 +126,9 @@
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "futu7": {
-    "d1": -55067519.0,
-    "d5": -503.8,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -100548677.0,
+    "d5": -549.2,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -196,12 +198,26 @@
       ]
      },
      "px": 893
+    },
+    {
+     "d": "2026-07-20",
+     "kind": "alert",
+     "title": "⑦大單盤中累計−100M創新低,反彈尾盤消風",
+     "reasons": {
+      "futu": [
+       "盤中3(15:43 ET)⑦累計−100.5M,較盤中2(−54.8M)近倍增"
+      ],
+      "tech": [
+       "日內漲幅+4.6%→+1.9%腰斬,pace 0.62縮量"
+      ]
+     },
+     "conf": 2
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:26",
+   "engine_updated_utc": "2026-07-20 19:49:22",
    "stance": "觀望(等TD9買入結構或⑦翻正)",
    "conf": 2,
-   "stance_note": "反彈僅至EMA5(894),EMA10/20(928/960)仍壓頂;下跌TD Setup第4根,買入結構最快7/23-24完成。⑦大單連3場淨賣且盤中2加速(13:37 ET累計−55M、5日−504M)+內部人90天賣104筆$1.30億、零買入——機構逢反彈出貨未止,不接刀。",
+   "stance_note": "反彈尾盤消風(+4.6%→+1.9%),僅至EMA5下方;EMA10/20(928/960)仍壓頂;下跌TD Setup第4根,買入結構最快7/23-24完成。⑦大單連4場淨賣且尾盤加速(15:43 ET累計−100.5M創本日新低、5日−549M)+內部人90天賣104筆$1.30億、零買入——機構逢反彈出貨未止,不接刀。",
    "plan": {
     "entry": [
      {
@@ -283,29 +299,29 @@
   },
   "SNDK": {
    "computed_tech": {
-    "close": 1439.91,
+    "close": 1431.29,
     "d": "2026-07-20",
-    "ema5": 1500.712,
-    "ema10": 1614.064,
-    "ema20": 1718.227,
-    "ema50": 1638.854,
-    "ema120": 1258.601,
-    "ema200": 973.008,
-    "vs_ema20_pct": -16.2,
-    "vs_ema50_pct": -12.14,
-    "rsi6": 34.9,
-    "rsi12": 40.2,
-    "boll_mid": 1839.747,
-    "boll_up": 2394.174,
-    "boll_lo": 1285.32,
+    "ema5": 1497.838,
+    "ema10": 1612.497,
+    "ema20": 1717.406,
+    "ema50": 1638.516,
+    "ema120": 1258.458,
+    "ema200": 972.922,
+    "vs_ema20_pct": -16.66,
+    "vs_ema50_pct": -12.65,
+    "rsi6": 34.2,
+    "rsi12": 39.8,
+    "boll_mid": 1839.316,
+    "boll_up": 2394.998,
+    "boll_lo": 1283.634,
     "boll_bw_pctile": 76.0,
     "obv_above_ma": false,
-    "vol_pace": 0.53,
+    "vol_pace": 0.65,
     "turnover_rate": null,
-    "chg1d": 6.28,
-    "chg5d": -13.98,
-    "chg20d": -34.09,
-    "off_60d_high_pct": -38.8,
+    "chg1d": 5.64,
+    "chg5d": -14.5,
+    "chg20d": -34.49,
+    "off_60d_high_pct": -39.2,
     "swing_hi": 2354.39,
     "swing_lo": 926.11,
     "td_setup_now": -4,
@@ -325,23 +341,22 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 1431.56,
-    "gex_bn": -0.118,
+    "spot": 1390.33,
+    "gex_bn": -0.132,
     "flip": null,
     "call_wall": 1500.0,
     "put_wall": 1390.0,
     "max_pain": 1420.0,
-    "atm_iv": 145.8,
-    "pc_vol": 1.504,
-    "call_share": 0.399,
+    "atm_iv": 144.2,
+    "pc_vol": 1.571,
+    "call_share": 0.389,
     "zero_dte_share": 0.0,
-    "squeeze_score": 55,
+    "squeeze_score": 40,
     "squeeze_why": [
      "dealer 空gamma(+30)",
-     "距call牆<6%(+15)",
      "IV>100%(+10)"
     ],
-    "asof": "2026-07-20 17:42:28"
+    "asof": "2026-07-20 19:49:23"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -386,9 +401,9 @@
    "next_earnings": "2026-08-05",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 4634512.0,
-    "d5": -142.3,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -41594727.0,
+    "d5": -188.5,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -443,12 +458,26 @@
       ]
      },
      "px": 1440
+    },
+    {
+     "d": "2026-07-20",
+     "kind": "alert",
+     "title": "⑦大單尾盤逆轉:+7M→−42M(兩小時−49M)",
+     "reasons": {
+      "futu": [
+       "盤中2→盤中3 ⑦由+7.3M轉−41.6M"
+      ],
+      "opt": [
+       "P/C 1.637(Δ+0.204)反彈中避險加重"
+      ]
+     },
+     "conf": 2
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:29",
+   "engine_updated_utc": "2026-07-20 19:49:24",
    "stance": "觀望偏多(觸發:TD9完成或收復1500)",
    "conf": 2,
-   "stance_note": "自高點-39%後首日反彈+6.3%。下跌Setup第4根,TD9買入結構最快7/23完成;期權定價區間極窄(put牆1390/MaxPain 1420/call牆1500),dealer空gamma+IV 145%→突破1500前雙向波動都會被放大。8/5(est)財報是下一個定價事件。",
+   "stance_note": "自高點-39%後反彈日,但尾盤消風(+5.3%→+2.8%)且⑦大單尾盤逆轉(13:37 +7.3M→15:43 −41.6M,兩小時−49M)——反彈被機構賣壓吸收。下跌Setup第4根,TD9買入結構最快7/23完成;期權定價區間極窄(put牆1390/MaxPain 1420/call牆1500),dealer空gamma→突破1500前雙向波動放大;P/C盤中再升(1.637,Δ+0.20)。8/5(est)財報是下一個定價事件。觸發條件不變:TD9完成或收復1500,且⑦需翻正。",
    "plan": {
     "entry": [
      {
@@ -536,31 +565,31 @@
   },
   "WDC": {
    "computed_tech": {
-    "close": 500.9,
+    "close": 495.09,
     "d": "2026-07-20",
-    "ema5": 504.76,
-    "ema10": 528.571,
-    "ema20": 553.298,
-    "ema50": 534.204,
-    "ema120": 435.876,
-    "ema200": 355.74,
-    "vs_ema20_pct": -9.47,
-    "vs_ema50_pct": -6.23,
-    "rsi6": 39.0,
-    "rsi12": 42.0,
-    "boll_mid": 581.757,
-    "boll_up": 718.428,
-    "boll_lo": 445.087,
-    "boll_bw_pctile": 79.0,
+    "ema5": 502.823,
+    "ema10": 527.514,
+    "ema20": 552.738,
+    "ema50": 533.939,
+    "ema120": 435.697,
+    "ema200": 355.57,
+    "vs_ema20_pct": -10.43,
+    "vs_ema50_pct": -7.28,
+    "rsi6": 36.9,
+    "rsi12": 41.0,
+    "boll_mid": 581.467,
+    "boll_up": 718.846,
+    "boll_lo": 444.087,
+    "boll_bw_pctile": 80.0,
     "obv_above_ma": false,
-    "vol_pace": 0.29,
-    "turnover_rate": null,
-    "chg1d": 4.96,
-    "chg5d": -9.84,
-    "chg20d": -32.88,
-    "off_60d_high_pct": -37.4,
+    "vol_pace": 0.35,
+    "turnover_rate": 0.01,
+    "chg1d": 3.74,
+    "chg5d": -10.88,
+    "chg20d": -33.65,
+    "off_60d_high_pct": -38.1,
     "swing_hi": 799.87,
-    "swing_lo": 374.02,
+    "swing_lo": 373.923,
     "td_setup_now": -4,
     "td_buy_cd": 0,
     "td_sell_cd": 0,
@@ -586,23 +615,24 @@
     "obv_bull_div": true
    },
    "gamma": {
-    "spot": 497.41,
-    "gex_bn": -0.001,
+    "spot": 487.6,
+    "gex_bn": -0.004,
     "flip": null,
     "call_wall": 500.0,
     "put_wall": 460.0,
     "max_pain": 450.0,
-    "atm_iv": 116.6,
-    "pc_vol": 0.888,
-    "call_share": 0.53,
+    "atm_iv": 116.9,
+    "pc_vol": 0.687,
+    "call_share": 0.593,
     "zero_dte_share": 0.0,
-    "squeeze_score": 55,
+    "squeeze_score": 75,
     "squeeze_why": [
      "dealer 空gamma(+30)",
+     "call量佔比59%(+20)",
      "距call牆<6%(+15)",
      "IV>100%(+10)"
     ],
-    "asof": "2026-07-20 17:42:30"
+    "asof": "2026-07-20 19:49:25"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -614,9 +644,9 @@
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "futu7": {
-    "d1": 5269852.0,
-    "d5": 37.8,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -1635294.0,
+    "d5": 30.9,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -687,7 +717,7 @@
      }
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:31",
+   "engine_updated_utc": "2026-07-20 19:49:26",
    "stance": "分批觀察買進(板塊中底部證據最多)",
    "conf": 2,
    "stance_note": "TD9買入結構7/6已完成、OBV正背離、⑦大單5日+40M(持倉中少數翻正)——底部訊號最完整的一檔;但仍受板塊🔴支配,小倉分批、嚴守440。",
@@ -771,31 +801,31 @@
   },
   "MRVL": {
    "computed_tech": {
-    "close": 200.71,
+    "close": 197.12,
     "d": "2026-07-20",
-    "ema5": 202.505,
-    "ema10": 216.026,
-    "ema20": 232.29,
-    "ema50": 225.48,
-    "ema120": 181.053,
-    "ema200": 152.108,
-    "vs_ema20_pct": -13.6,
-    "vs_ema50_pct": -10.99,
-    "rsi6": 34.6,
-    "rsi12": 38.3,
-    "boll_mid": 245.965,
-    "boll_up": 315.371,
-    "boll_lo": 176.558,
+    "ema5": 201.305,
+    "ema10": 215.358,
+    "ema20": 231.916,
+    "ema50": 225.293,
+    "ema120": 180.931,
+    "ema200": 151.983,
+    "vs_ema20_pct": -15.0,
+    "vs_ema50_pct": -12.51,
+    "rsi6": 31.0,
+    "rsi12": 36.8,
+    "boll_mid": 245.742,
+    "boll_up": 315.578,
+    "boll_lo": 175.906,
     "boll_bw_pctile": 77.0,
     "obv_above_ma": true,
-    "vol_pace": 0.35,
-    "turnover_rate": null,
-    "chg1d": 6.38,
-    "chg5d": -7.73,
-    "chg20d": -35.38,
-    "off_60d_high_pct": -39.2,
-    "swing_hi": 329.88,
-    "swing_lo": 146.85,
+    "vol_pace": 0.41,
+    "turnover_rate": 0.02,
+    "chg1d": 4.47,
+    "chg5d": -9.38,
+    "chg20d": -36.52,
+    "off_60d_high_pct": -40.2,
+    "swing_hi": 329.799,
+    "swing_lo": 146.814,
     "td_setup_now": -4,
     "td_buy_cd": 0,
     "td_sell_cd": 0,
@@ -821,22 +851,22 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 198.0,
-    "gex_bn": 0.004,
+    "spot": 195.07,
+    "gex_bn": 0.001,
     "flip": null,
     "call_wall": 200.0,
     "put_wall": 180.0,
     "max_pain": 185.0,
-    "atm_iv": 98.0,
-    "pc_vol": 0.455,
-    "call_share": 0.687,
+    "atm_iv": 96.0,
+    "pc_vol": 0.426,
+    "call_share": 0.701,
     "zero_dte_share": 0.0,
     "squeeze_score": 35,
     "squeeze_why": [
-     "call量佔比69%(+20)",
+     "call量佔比70%(+20)",
      "距call牆<6%(+15)"
     ],
-    "asof": "2026-07-20 17:42:31"
+    "asof": "2026-07-20 19:49:26"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -869,9 +899,9 @@
    "next_earnings": "2026-08-27",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 12336363.0,
-    "d5": -39.9,
-    "asof": "2026-07-20 17:36:03"
+    "d1": 4148782.0,
+    "d5": -48.1,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -938,7 +968,7 @@
      }
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:32",
+   "engine_updated_utc": "2026-07-20 19:49:27",
    "stance": "觀望偏多(等回踩;⑦5日仍負)",
    "conf": 1,
    "stance_note": "TD9買入結構7/14完成、今+6.4%且⑦今日+18.1M——但5日⑦仍-34M、CEO與高層7/15-16在反彈中賣股,回踩185-195再接較穩。",
@@ -1028,29 +1058,29 @@
   },
   "LITE": {
    "computed_tech": {
-    "close": 791.27,
+    "close": 774.59,
     "d": "2026-07-20",
-    "ema5": 760.391,
-    "ema10": 765.569,
-    "ema20": 788.568,
-    "ema50": 820.891,
-    "ema120": 740.727,
-    "ema200": 624.124,
-    "vs_ema20_pct": 0.34,
-    "vs_ema50_pct": -3.61,
-    "rsi6": 55.6,
-    "rsi12": 49.6,
-    "boll_mid": 788.629,
-    "boll_up": 902.478,
-    "boll_lo": 674.78,
+    "ema5": 754.831,
+    "ema10": 762.536,
+    "ema20": 786.979,
+    "ema50": 820.237,
+    "ema120": 740.451,
+    "ema200": 623.958,
+    "vs_ema20_pct": -1.57,
+    "vs_ema50_pct": -5.57,
+    "rsi6": 52.5,
+    "rsi12": 47.8,
+    "boll_mid": 787.795,
+    "boll_up": 901.799,
+    "boll_lo": 673.791,
     "boll_bw_pctile": 42.0,
     "obv_above_ma": true,
-    "vol_pace": 0.54,
-    "turnover_rate": null,
-    "chg1d": 7.98,
-    "chg5d": 3.01,
-    "chg20d": -6.91,
-    "off_60d_high_pct": -27.1,
+    "vol_pace": 0.73,
+    "turnover_rate": 0.046,
+    "chg1d": 5.7,
+    "chg5d": 0.84,
+    "chg20d": -8.87,
+    "off_60d_high_pct": -28.7,
     "swing_hi": 1085.68,
     "swing_lo": 650.82,
     "td_setup_now": -4,
@@ -1061,15 +1091,15 @@
     "obv_bull_div": true
    },
    "gamma": {
-    "spot": 788.76,
-    "gex_bn": -0.006,
+    "spot": 772.08,
+    "gex_bn": -0.009,
     "flip": null,
     "call_wall": 800.0,
     "put_wall": 700.0,
     "max_pain": 750.0,
-    "atm_iv": 107.6,
-    "pc_vol": 1.049,
-    "call_share": 0.488,
+    "atm_iv": 108.0,
+    "pc_vol": 1.257,
+    "call_share": 0.443,
     "zero_dte_share": 0.0,
     "squeeze_score": 55,
     "squeeze_why": [
@@ -1077,7 +1107,7 @@
      "距call牆<6%(+15)",
      "IV>100%(+10)"
     ],
-    "asof": "2026-07-20 17:42:33"
+    "asof": "2026-07-20 19:49:28"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -1110,9 +1140,9 @@
    "next_earnings": "2026-08-11",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 8037134.0,
-    "d5": -21.5,
-    "asof": "2026-07-20 17:36:03"
+    "d1": 12655995.0,
+    "d5": -16.8,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -1133,7 +1163,7 @@
      "px": 791
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:34",
+   "engine_updated_utc": "2026-07-20 19:49:29",
    "stance": "持有偏多(板塊相對強勢股)",
    "conf": 2,
    "stance_note": "唯一站回EMA20之上的持倉(+0.3%)、RS對SMH為Leading、OBV在均線上+正背離;5日+3.0%逆板塊走強。回踩760-790可加,700(put牆)為防線。8/11財報。",
@@ -1218,29 +1248,29 @@
   },
   "COHR": {
    "computed_tech": {
-    "close": 295.07,
+    "close": 290.69,
     "d": "2026-07-20",
-    "ema5": 293.518,
-    "ema10": 307.294,
-    "ema20": 328.845,
-    "ema50": 342.276,
-    "ema120": 306.876,
-    "ema200": 265.281,
-    "vs_ema20_pct": -10.27,
-    "vs_ema50_pct": -13.79,
-    "rsi6": 38.1,
-    "rsi12": 38.0,
-    "boll_mid": 343.025,
-    "boll_up": 431.652,
-    "boll_lo": 254.398,
-    "boll_bw_pctile": 95.0,
+    "ema5": 292.058,
+    "ema10": 306.498,
+    "ema20": 328.427,
+    "ema50": 342.104,
+    "ema120": 306.803,
+    "ema200": 265.237,
+    "vs_ema20_pct": -11.49,
+    "vs_ema50_pct": -15.03,
+    "rsi6": 34.2,
+    "rsi12": 36.3,
+    "boll_mid": 342.806,
+    "boll_up": 431.927,
+    "boll_lo": 253.685,
+    "boll_bw_pctile": 96.0,
     "obv_above_ma": true,
-    "vol_pace": 0.37,
-    "turnover_rate": null,
-    "chg1d": 6.29,
-    "chg5d": -4.01,
-    "chg20d": -24.26,
-    "off_60d_high_pct": -32.9,
+    "vol_pace": 0.47,
+    "turnover_rate": 0.013,
+    "chg1d": 4.72,
+    "chg5d": -5.43,
+    "chg20d": -25.38,
+    "off_60d_high_pct": -33.9,
     "swing_hi": 440.0,
     "swing_lo": 255.14,
     "td_setup_now": -4,
@@ -1260,15 +1290,15 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 292.85,
+    "spot": 292.53,
     "gex_bn": -0.006,
     "flip": null,
     "call_wall": 300.0,
     "put_wall": 250.0,
     "max_pain": 310.0,
-    "atm_iv": 108.2,
-    "pc_vol": 1.239,
-    "call_share": 0.447,
+    "atm_iv": 107.9,
+    "pc_vol": 1.293,
+    "call_share": 0.436,
     "zero_dte_share": 0.0,
     "squeeze_score": 55,
     "squeeze_why": [
@@ -1276,7 +1306,7 @@
      "距call牆<6%(+15)",
      "IV>100%(+10)"
     ],
-    "asof": "2026-07-20 17:42:34"
+    "asof": "2026-07-20 19:49:29"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -1320,9 +1350,9 @@
    },
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -480600.0,
-    "d5": -55.5,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -283003.0,
+    "d5": -55.3,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -1362,7 +1392,7 @@
      }
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:35",
+   "engine_updated_utc": "2026-07-20 19:49:30",
    "earnings_note_auto": "下季日期公司尚未公告(最近一次 2026-05-06)",
    "stance": "觀望(等回踩不破270)",
    "conf": 1,
@@ -1454,29 +1484,29 @@
   },
   "AAOI": {
    "computed_tech": {
-    "close": 105.11,
+    "close": 103.07,
     "d": "2026-07-20",
-    "ema5": 107.259,
-    "ema10": 113.679,
-    "ema20": 126.207,
-    "ema50": 140.787,
-    "ema120": 124.011,
-    "ema200": 102.122,
-    "vs_ema20_pct": -16.72,
-    "vs_ema50_pct": -25.34,
-    "rsi6": 36.4,
-    "rsi12": 37.3,
-    "boll_mid": 127.33,
-    "boll_up": 164.467,
-    "boll_lo": 90.193,
+    "ema5": 106.579,
+    "ema10": 113.308,
+    "ema20": 126.012,
+    "ema50": 140.707,
+    "ema120": 123.977,
+    "ema200": 102.102,
+    "vs_ema20_pct": -18.21,
+    "vs_ema50_pct": -26.75,
+    "rsi6": 33.2,
+    "rsi12": 36.0,
+    "boll_mid": 127.228,
+    "boll_up": 164.619,
+    "boll_lo": 89.837,
     "boll_bw_pctile": 68.0,
     "obv_above_ma": false,
-    "vol_pace": 0.29,
-    "turnover_rate": null,
-    "chg1d": 2.64,
-    "chg5d": -6.05,
-    "chg20d": -35.06,
-    "off_60d_high_pct": -55.0,
+    "vol_pace": 0.36,
+    "turnover_rate": 0.051,
+    "chg1d": 0.64,
+    "chg5d": -7.87,
+    "chg20d": -36.32,
+    "off_60d_high_pct": -55.9,
     "swing_hi": 233.67,
     "swing_lo": 91.501,
     "td_setup_now": -4,
@@ -1492,23 +1522,22 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 105.02,
-    "gex_bn": 0.001,
+    "spot": 102.97,
+    "gex_bn": 0.0,
     "flip": null,
     "call_wall": 110.0,
     "put_wall": 100.0,
     "max_pain": 110.0,
-    "atm_iv": 144.8,
-    "pc_vol": 0.512,
-    "call_share": 0.661,
+    "atm_iv": 142.2,
+    "pc_vol": 0.488,
+    "call_share": 0.672,
     "zero_dte_share": 0.0,
-    "squeeze_score": 45,
+    "squeeze_score": 30,
     "squeeze_why": [
-     "call量佔比66%(+20)",
-     "距call牆<6%(+15)",
+     "call量佔比67%(+20)",
      "IV>100%(+10)"
     ],
-    "asof": "2026-07-20 17:42:35"
+    "asof": "2026-07-20 19:49:31"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -1553,9 +1582,9 @@
    "next_earnings": "2026-08-06",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -4718508.0,
-    "d5": 0.4,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -6345107.0,
+    "d5": -1.2,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -1583,7 +1612,7 @@
      }
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:36",
+   "engine_updated_utc": "2026-07-20 19:49:32",
    "stance": "避開(內部人連環賣+無承接證據)",
    "conf": 2,
    "stance_note": "自高點-55%,內部人90天賣9筆$39.7M(對其市值比例沉重)且7/10仍在賣;call量佔比67%顯示散戶投機搶反彈。要投機僅極小倉,嚴守100。",
@@ -1689,24 +1718,24 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 203.78,
-    "gex_bn": 0.803,
-    "flip": 212.0,
+    "spot": 203.18,
+    "gex_bn": 0.762,
+    "flip": 212.5,
     "call_wall": 210.0,
     "put_wall": 200.0,
     "max_pain": 185.0,
-    "atm_iv": 42.1,
-    "pc_vol": 0.541,
-    "call_share": 0.649,
-    "zero_dte_share": 0.557,
+    "atm_iv": 43.7,
+    "pc_vol": 0.578,
+    "call_share": 0.634,
+    "zero_dte_share": 0.538,
     "squeeze_score": 60,
     "squeeze_why": [
      "價在翻轉位下(波動放大區,+15)",
-     "call量佔比65%(+20)",
+     "call量佔比63%(+20)",
      "距call牆<6%(+15)",
      "0DTE佔比高(+10)"
     ],
-    "asof": "2026-07-20 17:42:37"
+    "asof": "2026-07-20 19:49:32"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -1720,9 +1749,9 @@
    "next_earnings": "2026-08-26",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -57167583.0,
-    "d5": -76.3,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -76337014.0,
+    "d5": -95.4,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -1766,10 +1795,10 @@
      "px": 205
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:38",
+   "engine_updated_utc": "2026-07-20 19:49:33",
    "stance": "觀望(⑦連2場大賣是主警訊)",
    "conf": 2,
-   "stance_note": "價格貼著210~212(gamma翻轉位=call牆)下方整理、均線糾結;但⑦大單連3場淨賣且加速(盤中2累計−57M,價漲量縮)與價格背離。站上210-212且⑦翻正才順勢;跌破200(put牆)減碼。8/26財報。",
+   "stance_note": "價格貼著210~212(gamma翻轉位212.5=call牆210)下方整理、均線糾結;但⑦大單連4場淨賣且加速(盤中3累計−76.3M,價平量縮)與價格背離。站上210-212且⑦翻正才順勢;跌破200(put牆)減碼。8/26財報。",
    "plan": {
     "entry": [
      {
@@ -1851,30 +1880,30 @@
   },
   "AVGO": {
    "computed_tech": {
-    "close": 382.74,
+    "close": 381.38,
     "d": "2026-07-20",
-    "ema5": 381.116,
-    "ema10": 382.392,
-    "ema20": 384.864,
-    "ema50": 389.503,
-    "ema120": 377.118,
-    "ema200": 358.082,
-    "vs_ema20_pct": -0.55,
-    "vs_ema50_pct": -1.74,
-    "rsi6": 50.2,
-    "rsi12": 48.6,
-    "boll_mid": 380.409,
-    "boll_up": 402.315,
-    "boll_lo": 358.503,
+    "ema5": 380.661,
+    "ema10": 382.132,
+    "ema20": 384.647,
+    "ema50": 389.137,
+    "ema120": 376.412,
+    "ema200": 357.065,
+    "vs_ema20_pct": -0.85,
+    "vs_ema50_pct": -1.99,
+    "rsi6": 49.1,
+    "rsi12": 48.1,
+    "boll_mid": 380.341,
+    "boll_up": 402.227,
+    "boll_lo": 358.455,
     "boll_bw_pctile": 32.0,
     "obv_above_ma": false,
-    "vol_pace": 0.22,
-    "turnover_rate": null,
-    "chg1d": 3.21,
-    "chg5d": -0.34,
-    "chg20d": -6.96,
-    "off_60d_high_pct": -22.7,
-    "swing_hi": 495.0,
+    "vol_pace": 0.27,
+    "turnover_rate": 0.002,
+    "chg1d": 2.85,
+    "chg5d": -0.7,
+    "chg20d": -7.14,
+    "off_60d_high_pct": -22.8,
+    "swing_hi": 494.218,
     "swing_lo": 356.43,
     "td_setup_now": -4,
     "td_buy_cd": 0,
@@ -1893,24 +1922,23 @@
     "obv_bull_div": true
    },
    "gamma": {
-    "spot": 381.83,
-    "gex_bn": 0.055,
-    "flip": 495.0,
+    "spot": 379.41,
+    "gex_bn": 0.012,
+    "flip": null,
     "call_wall": 400.0,
     "put_wall": 350.0,
     "max_pain": 370.0,
-    "atm_iv": 55.5,
-    "pc_vol": 0.561,
-    "call_share": 0.641,
-    "zero_dte_share": 0.446,
-    "squeeze_score": 60,
+    "atm_iv": 56.3,
+    "pc_vol": 0.597,
+    "call_share": 0.626,
+    "zero_dte_share": 0.42,
+    "squeeze_score": 45,
     "squeeze_why": [
-     "價在翻轉位下(波動放大區,+15)",
-     "call量佔比64%(+20)",
+     "call量佔比63%(+20)",
      "距call牆<6%(+15)",
      "0DTE佔比高(+10)"
     ],
-    "asof": "2026-07-20 17:42:38"
+    "asof": "2026-07-20 19:49:34"
    },
    "insider_90d": {
     "p_cnt": 1,
@@ -1955,9 +1983,9 @@
    "next_earnings": "2026-09-03",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 14023356.0,
-    "d5": -29.6,
-    "asof": "2026-07-20 17:36:03"
+    "d1": 5865668.0,
+    "d5": -37.7,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -1999,7 +2027,7 @@
      "px": 383
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:39",
+   "engine_updated_utc": "2026-07-20 19:49:35",
    "stance": "觀望偏多(雙正背離,權值中結構最好)",
    "conf": 2,
    "stance_note": "RSI與OBV同時正背離(引擎自動偵測)、布林帶寬32%收斂中;回踩358-370分批,350(put牆)防線,400(call牆)第一目標。內部人賣量大($284M/90天)但AVGO高管10b5-1屬常態,不作主導因子。9/3財報。",
@@ -2079,29 +2107,29 @@
   },
   "SMH": {
    "computed_tech": {
-    "close": 566.651,
+    "close": 561.16,
     "d": "2026-07-20",
-    "ema5": 573.558,
-    "ema10": 584.614,
-    "ema20": 594.979,
-    "ema50": 579.602,
-    "ema120": 515.099,
-    "ema200": 462.692,
-    "vs_ema20_pct": -4.76,
-    "vs_ema50_pct": -2.23,
-    "rsi6": 37.3,
-    "rsi12": 42.3,
-    "boll_mid": 606.265,
-    "boll_up": 662.443,
-    "boll_lo": 550.087,
-    "boll_bw_pctile": 68.0,
+    "ema5": 571.727,
+    "ema10": 583.615,
+    "ema20": 594.456,
+    "ema50": 579.383,
+    "ema120": 514.914,
+    "ema200": 462.391,
+    "vs_ema20_pct": -5.6,
+    "vs_ema50_pct": -3.15,
+    "rsi6": 33.3,
+    "rsi12": 40.7,
+    "boll_mid": 605.991,
+    "boll_up": 662.988,
+    "boll_lo": 548.993,
+    "boll_bw_pctile": 69.0,
     "obv_above_ma": false,
-    "vol_pace": 0.28,
-    "turnover_rate": null,
-    "chg1d": 1.82,
-    "chg5d": -3.24,
-    "chg20d": -14.13,
-    "off_60d_high_pct": -15.7,
+    "vol_pace": 0.4,
+    "turnover_rate": 0.04,
+    "chg1d": 0.83,
+    "chg5d": -4.18,
+    "chg20d": -14.96,
+    "off_60d_high_pct": -16.5,
     "swing_hi": 671.83,
     "swing_lo": 475.19,
     "td_setup_now": -4,
@@ -2125,26 +2153,26 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 563.43,
-    "gex_bn": -0.929,
+    "spot": 559.74,
+    "gex_bn": -0.981,
     "flip": null,
     "call_wall": 600.0,
     "put_wall": 500.0,
     "max_pain": 562.5,
-    "atm_iv": 56.2,
-    "pc_vol": 2.254,
-    "call_share": 0.307,
-    "zero_dte_share": 0.091,
+    "atm_iv": 58.8,
+    "pc_vol": 3.243,
+    "call_share": 0.236,
+    "zero_dte_share": 0.057,
     "squeeze_score": 30,
     "squeeze_why": [
      "dealer 空gamma(+30)"
     ],
-    "asof": "2026-07-20 17:42:40"
+    "asof": "2026-07-20 19:49:36"
    },
    "futu7": {
-    "d1": 92321.0,
-    "d5": 35.3,
-    "asof": "2026-07-20 17:36:03"
+    "d1": 9654967.0,
+    "d5": 44.9,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -2184,7 +2212,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:41",
+   "engine_updated_utc": "2026-07-20 19:49:37",
    "stance": "觀望(板塊風向標,回綠三條件未齊)",
    "conf": 2,
    "stance_note": "回綠條件:①收復EMA20(595) ②⑦大單連場翻正 ③亞洲鏈止穩——三者今日皆未達成。P/C 2.0顯示避險倉仍重,MaxPain 562.5就在現價下方。",
@@ -2256,31 +2284,31 @@
   },
   "SOXX": {
    "computed_tech": {
-    "close": 533.99,
+    "close": 528.23,
     "d": "2026-07-20",
-    "ema5": 539.809,
-    "ema10": 552.937,
-    "ema20": 565.839,
-    "ema50": 548.101,
-    "ema120": 475.878,
-    "ema200": 420.828,
-    "vs_ema20_pct": -5.63,
-    "vs_ema50_pct": -2.57,
-    "rsi6": 37.6,
-    "rsi12": 42.3,
-    "boll_mid": 580.877,
-    "boll_up": 651.23,
-    "boll_lo": 510.524,
-    "boll_bw_pctile": 65.0,
+    "ema5": 537.889,
+    "ema10": 551.888,
+    "ema20": 565.267,
+    "ema50": 547.777,
+    "ema120": 475.547,
+    "ema200": 420.357,
+    "vs_ema20_pct": -6.55,
+    "vs_ema50_pct": -3.57,
+    "rsi6": 33.9,
+    "rsi12": 40.9,
+    "boll_mid": 580.589,
+    "boll_up": 651.75,
+    "boll_lo": 509.428,
+    "boll_bw_pctile": 68.0,
     "obv_above_ma": false,
-    "vol_pace": 0.34,
-    "turnover_rate": null,
-    "chg1d": 2.33,
-    "chg5d": -3.54,
-    "chg20d": -16.49,
-    "off_60d_high_pct": -18.6,
+    "vol_pace": 0.44,
+    "turnover_rate": 0.053,
+    "chg1d": 1.23,
+    "chg5d": -4.58,
+    "chg20d": -17.39,
+    "off_60d_high_pct": -19.5,
     "swing_hi": 655.95,
-    "swing_lo": 431.74,
+    "swing_lo": 431.535,
     "td_setup_now": -4,
     "td_buy_cd": 0,
     "td_sell_cd": 0,
@@ -2306,26 +2334,26 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 531.15,
-    "gex_bn": -0.053,
+    "spot": 525.85,
+    "gex_bn": -0.058,
     "flip": null,
     "call_wall": 600.0,
     "put_wall": 500.0,
     "max_pain": 545.0,
-    "atm_iv": 62.4,
-    "pc_vol": 2.967,
-    "call_share": 0.252,
+    "atm_iv": 62.8,
+    "pc_vol": 3.132,
+    "call_share": 0.242,
     "zero_dte_share": 0.0,
     "squeeze_score": 30,
     "squeeze_why": [
      "dealer 空gamma(+30)"
     ],
-    "asof": "2026-07-20 17:42:42"
+    "asof": "2026-07-20 19:49:38"
    },
    "futu7": {
-    "d1": -116674904.0,
-    "d5": 7.4,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -118712510.0,
+    "d5": 5.4,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -2391,10 +2419,10 @@
      "px": 531.15
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:43",
+   "engine_updated_utc": "2026-07-20 19:49:39",
    "stance": "觀望(同SMH)",
    "conf": 1,
-   "stance_note": "P/C(量)2.97避險極重;⑦盤中2單日−117M(ETF口徑,申贖經一級市場,參考性打折),與SMH ⑦持平分歧、但與板塊⑦合計−176M同向。以SMH的回綠三條件為準。",
+   "stance_note": "P/C(量)避險極重;⑦連2日單日逾−117M(今−118.7M;ETF口徑,申贖經一級市場,參考性打折),與板塊⑦合計−313M同向且創新低。以SMH的回綠三條件為準。",
    "plan": {
     "entry": [],
     "stop": {
@@ -2500,27 +2528,27 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 744.08,
-    "gex_bn": -9.644,
+    "spot": 742.97,
+    "gex_bn": -11.828,
     "flip": null,
     "call_wall": 800.0,
     "put_wall": 660.0,
     "max_pain": 740.0,
-    "atm_iv": 16.8,
-    "pc_vol": 1.167,
-    "call_share": 0.462,
-    "zero_dte_share": 0.705,
+    "atm_iv": 17.3,
+    "pc_vol": 1.173,
+    "call_share": 0.46,
+    "zero_dte_share": 0.71,
     "squeeze_score": 40,
     "squeeze_why": [
      "dealer 空gamma(+30)",
      "0DTE佔比高(+10)"
     ],
-    "asof": "2026-07-20 17:42:45"
+    "asof": "2026-07-20 19:49:41"
    },
    "futu7": {
-    "d1": -111790167.0,
-    "d5": 610.8,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -219128332.0,
+    "d5": 503.5,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -2548,7 +2576,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:46",
+   "engine_updated_utc": "2026-07-20 19:49:42",
    "stance": "中性(大盤溫和,風險在板塊)",
    "conf": 2,
    "stance_note": "貼平20DMA(-0.05%)、VIX 17.6、50DMA上方+1.1%——大盤結構仍健康;dealer空gamma -6.6B+0DTE 70%代表日內波動會被放大,MaxPain 740。",
@@ -2660,27 +2688,27 @@
     "obv_bull_div": false
    },
    "gamma": {
-    "spot": 700.17,
-    "gex_bn": -3.047,
+    "spot": 698.2,
+    "gex_bn": -3.844,
     "flip": null,
     "call_wall": 800.0,
     "put_wall": 660.0,
     "max_pain": 700.0,
-    "atm_iv": 26.3,
-    "pc_vol": 1.2,
-    "call_share": 0.454,
-    "zero_dte_share": 0.727,
+    "atm_iv": 27.1,
+    "pc_vol": 1.198,
+    "call_share": 0.455,
+    "zero_dte_share": 0.736,
     "squeeze_score": 40,
     "squeeze_why": [
      "dealer 空gamma(+30)",
      "0DTE佔比高(+10)"
     ],
-    "asof": "2026-07-20 17:42:49"
+    "asof": "2026-07-20 19:49:44"
    },
    "futu7": {
-    "d1": -70597633.0,
-    "d5": -449.2,
-    "asof": "2026-07-20 17:36:03"
+    "d1": -143454394.0,
+    "d5": -522.1,
+    "asof": "2026-07-20 19:19:34"
    },
    "marks": [
     {
@@ -2732,7 +2760,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-07-20 17:42:50",
+   "engine_updated_utc": "2026-07-20 19:49:45",
    "stance": "中性偏觀望(RSI正背離但均線壓頂)",
    "conf": 1,
    "stance_note": "RSI正背離(引擎偵測)+今+1.1%,但EMA10/20(711/715)壓頂;收復715前反彈視為修復。",
@@ -2797,7 +2825,7 @@
   {
    "source": "market_data",
    "ok": true,
-   "note": "ts=2026-07-20 17:36:03"
+   "note": "ts=2026-07-20 19:19:34"
   },
   {
    "source": "kline",
