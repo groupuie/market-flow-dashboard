@@ -58,8 +58,8 @@ CAP_SYMS = [
   "US.TQQQ","US.SOXL","US.NVDL","US.TSLL","US.MUU","US.SNXX","US.MVLL",
   # 反向(做空)
   "US.SQQQ","US.SOXS","US.SH","US.SPXU",
-  # 目的地:現金 T-bill / 國債分天期 / 金 / crypto 現貨 ETF
-  "US.SGOV","US.BIL","US.SHY","US.IEF","US.TLT","US.GLD","US.IBIT","US.ETHA"]
+  # 目的地:現金 T-bill / 國債分天期 / 金・油・銀 / crypto 現貨 ETF
+  "US.SGOV","US.BIL","US.SHY","US.IEF","US.TLT","US.GLD","US.USO","US.SLV","US.IBIT","US.ETHA"]
 # 類別對照(前端分組/上色/目的地圖用)
 CAP_CAT = {}
 for _s in ["SPY","QQQ","IWM","DIA"]: CAP_CAT[_s]="大盤"
@@ -69,6 +69,8 @@ for _s in ["SQQQ","SOXS","SH","SPXU"]: CAP_CAT[_s]="反向"
 for _s in ["SGOV","BIL"]: CAP_CAT[_s]="現金"
 for _s in ["SHY","IEF","TLT"]: CAP_CAT[_s]="國債"
 CAP_CAT["GLD"]="金"
+CAP_CAT["USO"]="油"
+CAP_CAT["SLV"]="銀"
 for _s in ["IBIT","ETHA"]: CAP_CAT[_s]="Crypto"
 
 FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ"}
@@ -559,7 +561,12 @@ def run_once(cfg, args):
     except Exception: _nd=0
     try: _age=time.time()-os.path.getmtime(histmark)
     except OSError: _age=1e9
-    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600)
+    # 清單新增標的(如 USO/SLV)時,最近日檔缺其資料 → 立即補回填
+    try:
+        _d0=json.load(open(dailypath0)); _last=sorted(_d0)[-1]
+        _newsyms=bool({x.replace("US.","") for x in CAP_SYMS}-set(_d0[_last].keys()))
+    except Exception: _newsyms=False
+    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or _newsyms)
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
@@ -615,6 +622,9 @@ def run_once(cfg, args):
     # 先併入歷史回填(不覆蓋既有日期;今日之後由 live upsert 蓋最新值)
     for dt,day in histfill.items():
         if dt not in daily: daily[dt]=day
+        else:
+            for s_,e_ in day.items():
+                if s_ not in daily[dt]: daily[dt][s_]=e_   # 新標的補進既有日期,不覆蓋原值
     if data["capital_flow"] and data["trade_date"] and data["session"] in ("rth","after"):
         # 只在盤中/盤後歸檔:避免盤前把前日累計寫進新日期(原已知bug,現根治)
         daily[data["trade_date"]]={k.replace("US.",""):{

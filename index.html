@@ -103,9 +103,12 @@ a{color:var(--blue)}
     <div class="note">各類別 ⑦ 大單淨流合計(依所選時間視窗)。淨流向<b>大盤/現金/國債/金</b>＝避險;淨流向<b>槓桿</b>＝加碼冒險。</div>
   </div>
   <div class="card">
-    <h2>離開股票之後,錢去了哪?（目的地對照;含誠實殘差）</h2>
-    <div id="dest" style="height:380px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限;機構現金多走 MMF/repo 不經 ETF)、國債＝SHY/IEF/TLT 分天期、金＝GLD、Crypto＝IBIT/ETHA(同一美股磁帶,⑦ 同方法論)、反向＝SQQQ/SOXS/SH/SPXU。灰色「不可觀測殘差」＝各類加總後的缺口(銀行存款/境外/MMF/市值蒸發等)——觀測宇宙不封閉,硬平衡就是說謊。期權 premium 是<b>槓桿曝險、不是停泊資本</b>,不放進本圖(見下方獨立面板)。<b>「現金」bar 只是 T-bill ETF 的盤中主動流(一角);真實現金池水位見下方獨立卡。</b></div>
+    <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <div id="dest" style="height:400px;flex:1.7;min-width:380px"></div>
+      <div id="pool" style="height:400px;flex:1;min-width:270px"></div>
+    </div>
+    <div class="note">左＝同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出)。目的地 proxy:現金＝SGOV/BIL(T-bill ETF,偏 retail 下限)、國債＝SHY/IEF/TLT、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU。<b>右＝現金池推估(取代原「不可觀測殘差」)</b>:各類淨流加總的鏡像——觀測宇宙內賣壓>買壓時,差額最可能落腳帳戶現金/MMF,故推估為「入池」;反之為「出池進場」。柱高愈高＝市場愈在囤現金。基準水位錨定 ICI MMF 週頻(見下卡);此推估僅涵蓋 ⑦ 清單的主動大單,<b>量級遠小於全市場、必然不準,但浮動方向可觀測</b>。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   <div class="card">
     <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
@@ -338,7 +341,7 @@ function render(){
 
 // ===== 資金輪動 Sankey / 視窗 / 目的地(真實 ⑦ 大單淨流)=====
 const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
-  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','金':'#eab308','Crypto':'#e879a9',
+  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','金':'#eab308','油':'#c2703e','銀':'#9aa4b2','Crypto':'#e879a9',
   '自訂':'#22d3ee','闖入':'#f43f5e','其他':'#6b7280'};
 // ---- 自訂追蹤:寫回 gist(token 僅存 localStorage)----
 function gistId(){const m=DATA_URL.match(/gist\.githubusercontent\.com\/[^/]+\/([a-f0-9]+)\//);return m?m[1]:null;}
@@ -482,7 +485,7 @@ function renderRotation(){
   const arr=Object.keys(FM).map(s=>({s:s,v:FM[s].v,r:FM[s].r,cat:FM[s].cat||'正股'})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
   // 類別淨流向 tiles(動態:只列有資料的類別)
   const catNet={}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
-  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto','自訂','闖入','ETF'];
+  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','油','銀','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
@@ -558,11 +561,10 @@ function renderCash(){
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
 function renderDest(catNet, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
-  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','Crypto','自訂','闖入'];
+  const order=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','油','銀','Crypto','自訂','闖入'];
   const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
-  const resid=-rows.reduce((a,b)=>a+b.v,0);
-  rows.push({c:'不可觀測殘差',v:resid,gray:true});
+  const pool=-rows.reduce((a,b)=>a+b.v,0);   // 現金池推估變動 = 觀測宇宙淨流的鏡像(原「殘差」重新詮釋)
   const ann=subtitle?[{text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.98,y:0.02,showarrow:false,
     font:{size:20,color:'#9db4e0'},xanchor:'right'}]:[];
   const xaxis={title:{text:'← 淨流出   |   淨流入 →('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
@@ -570,11 +572,45 @@ function renderDest(catNet, subtitle, fixRange){
   if(fixRange&&DEST_RANGE)xaxis.range=DEST_RANGE;
   Plotly.react('dest',[{type:'bar',orientation:'h',
     x:rows.map(r=>r.v),y:rows.map(r=>r.c),
-    marker:{color:rows.map(r=>r.gray?'#565a63':(r.v>=0?'#22c55e':'#ef4444'))},
+    marker:{color:rows.map(r=>r.v>=0?'#22c55e':'#ef4444')},
     text:rows.map(r=>(r.v>0?'+':'')+fmtM(r.v)),textposition:'outside',textfont:{size:11,color:C.ink2},
     hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'}],
     {...PBASE,margin:{l:86,r:60,t:8,b:32},annotations:ann,xaxis,
      yaxis:{gridcolor:C.line,autorange:'reversed'}},CFG);
+  renderPool(pool, subtitle, fixRange);
+}
+// ===== 中央現金池(上下浮動柱):即時推估 + 近10日浮動 + MMF 週水位錨定 =====
+let POOL_RANGE=null;
+function poolDaily(){
+  const D=DATA.daily_flows||{};
+  return Object.keys(D).sort().map(dt=>{
+    let s=0; Object.values(D[dt]).forEach(e=>{s+=(e.m||0);});
+    return {d:dt, v:-s*1e6};
+  });
+}
+function renderPool(delta, subtitle, fix){
+  const el=document.getElementById('pool'); if(!el)return;
+  const hist=poolDaily().slice(-10);
+  const mmf=(DATA.cash_pool||{}).mmf||null;
+  const x=[...hist.map(h=>h.d.slice(5)),(subtitle?subtitle.replace(' 單日',''):'現在')];
+  const y=[...hist.map(h=>h.v),null];
+  const cur=Array(hist.length).fill(null); cur.push(delta);
+  const traces=[
+    {type:'bar',x:x,y:y,marker:{color:hist.map(h=>h.v>=0?'rgba(250,178,25,.4)':'rgba(25,158,112,.4)')},
+     hovertemplate:'%{x} 推估:%{y:,.0f}<extra></extra>'},
+    {type:'bar',x:x,y:cur,marker:{color:delta>=0?C.amber:C.aqua},
+     text:cur.map(v=>v==null?'':(v>0?'+':'')+fmtM(v)),textposition:'outside',textfont:{size:13,color:C.ink},
+     hovertemplate:'%{x}:%{y:,.0f}<extra></extra>'}
+  ];
+  const base=mmf&&mmf.total_bn?('基準水位 MMF $'+(mmf.total_bn/1000).toFixed(2)+'T('+(mmf.asof||'')+',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)'):'基準水位:MMF 週頻累積中';
+  const ann=[{text:'<b>現金池推估變動</b> · '+base,xref:'paper',yref:'paper',x:0.5,y:1.08,showarrow:false,
+    font:{size:10.5,color:C.ink2},xanchor:'center'}];
+  const yaxis={title:{text:'↑ 入池(賣壓>買壓)  |  ↓ 出池進場',font:{size:10.5,color:C.ink2}},
+    gridcolor:C.line,zerolinecolor:'#999',zerolinewidth:2,tickformat:'~s'};
+  if(fix&&POOL_RANGE)yaxis.range=POOL_RANGE;
+  Plotly.react('pool',traces,{...PBASE,barmode:'overlay',showlegend:false,
+    margin:{l:56,r:8,t:34,b:42},annotations:ann,
+    xaxis:{gridcolor:C.line,tickfont:{size:9},tickangle:-38},yaxis},CFG);
 }
 // ===== 逐日播放動畫 =====
 let ANIM={playing:false,idx:0,timer:null};
@@ -599,10 +635,11 @@ function playAnim(){
   if(ANIM.playing){stopAnim(true);return;}
   const ds=animDates(); if(ds.length<2)return;
   // 先算所有日的最大絕對值,固定 x 軸,動畫才可比
-  let mx=0;
-  ds.forEach(d=>{const cn=dayCatNet(d);const vals=Object.values(cn);const res=-vals.reduce((a,b)=>a+b,0);
-    [...vals,res].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});});
-  DEST_RANGE=[-mx*1.25,mx*1.25];
+  let mx=0,mp=0;
+  ds.forEach(d=>{const cn=dayCatNet(d);const vals=Object.values(cn);const pool=-vals.reduce((a,b)=>a+b,0);
+    vals.forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});
+    if(Math.abs(pool)>mp)mp=Math.abs(pool);});
+  DEST_RANGE=[-mx*1.25,mx*1.25]; POOL_RANGE=[-mp*1.3,mp*1.3];
   ANIM.playing=true;ANIM.idx=0;
   const b=document.getElementById('playbtn'); if(b)b.textContent='⏸ 停止';
   const tick=()=>{
@@ -617,7 +654,7 @@ function playAnim(){
     if(ANIM.idx>=ds.length){
       clearInterval(ANIM.timer);ANIM.timer=null;ANIM.playing=false;
       if(b)b.textContent='▶ 重播';
-      setTimeout(()=>{if(!ANIM.playing){DEST_RANGE=null;render();}},2200);
+      setTimeout(()=>{if(!ANIM.playing){DEST_RANGE=null;POOL_RANGE=null;render();}},2200);
     }
   };
   tick(); ANIM.timer=setInterval(tick,850);
