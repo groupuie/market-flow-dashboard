@@ -120,7 +120,7 @@ a{color:var(--blue)}
   <div class="card">
     <h2>持續性 — 各標的近幾次淨流向（判斷趨勢 vs 雜訊）</h2>
     <div id="persist" style="height:420px"></div>
-    <div class="note">每一列是一檔標的,由左到右是最近幾次更新的 ⑦ 淨流向(綠=流入、紅=流出,越深金額越大)。<b>整列同色＝持續性高(趨勢);顏色跳動＝雜訊。</b>你系統的核心原則:連續同向 ≥3 次才算趨勢。</div>
+    <div class="note">每一列是一檔標的,由左到右是最近幾次更新的 ⑦ 淨流向(綠=流入、紅=流出,越深金額越大)。橫軸為<b>美東時間</b>(09:30=開盤)。<b>整列同色＝持續性高(趨勢);顏色跳動＝雜訊。</b>你系統的核心原則:連續同向 ≥3 次才算趨勢。</div>
   </div>
   <div class="card">
     <h2>選擇權資金傾向（權利金成交額;綠＝看漲 call、紅＝看跌 put）</h2>
@@ -227,6 +227,17 @@ function ago(ts){  // 'YYYY-MM-DD HH:MM:SS'(UTC) → 「X 分前」
   const m=Math.round((Date.now()-t)/60000);
   return m<1?'剛剛':(m<60?m+' 分前':Math.floor(m/60)+' 小時 '+(m%60)+' 分前');
 }
+function etTime(hm){  // 熱力圖橫軸:'HH:MM'(UTC,屬 trade_date)→ 美東 'HH:MM'
+  try{
+    const d=new Date((DATA.trade_date||new Date().toISOString().slice(0,10))+'T'+hm+':00Z');
+    if(isNaN(d))return hm;
+    return new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,hour:'2-digit',minute:'2-digit'}).format(d);
+  }catch(e){return hm;}
+}
+function tzTime(ts,tz){  // 'YYYY-MM-DD HH:MM:SS'(UTC) → 指定時區 'MM/DD HH:MM'
+  const d=new Date(ts.replace(' ','T')+'Z'); if(isNaN(d))return ts;
+  return new Intl.DateTimeFormat('zh-TW',{timeZone:tz,hour12:false,month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(d);
+}
 function rangeBar(elId,cur,onpick){
   const el=document.getElementById(elId); if(!el)return;
   el.innerHTML=[[5,'5日'],[10,'10日'],[30,'30日']].map(([n,l])=>
@@ -281,7 +292,7 @@ function markStatus(){
     const lbl={pre:'盤前',rth:'盤中',after:'盤後'}[sess]||'';
     s.className='badge ok';s.textContent='● '+lbl+'（'+ageMin.toFixed(0)+' 分前更新）';
   }
-  let meta='採集時間 '+ts+' UTC'+(td?' · ⑦資料屬 '+td:'');
+  let meta='採集 美東 '+tzTime(ts,'America/New_York')+' · 台灣 '+tzTime(ts,'Asia/Taipei')+(td?' · ⑦資料屬 '+td:'');
   const opx=isOpex(td);
   if(opx) meta+=opx==='quad'?' · ⚠ 四巫日OPEX':' · ⚠ 月度OPEX';
   const errs=(DATA.errors||[]).length;
@@ -565,7 +576,7 @@ function renderPersist(){
   if(H.length<2){el.innerHTML='<div class="miss" style="padding:30px">持續性需累積 ≥2 次更新才顯示(每次採集自動累加,約幾分鐘後出現)</div>';return;}
   const last=H[H.length-1].f||{};
   const syms=Object.keys(last).sort((a,b)=>Math.abs(last[b])-Math.abs(last[a])).slice(0,18);
-  const times=H.map(h=>h.ts);
+  const times=H.map(h=>etTime(h.ts));
   const z=syms.map(s=>H.map(h=>(h.f&&h.f[s]!=null)?h.f[s]:null));
   const amax=Math.max(50,...z.flat().filter(v=>v!=null).map(Math.abs));
   Plotly.react('persist',[{type:'heatmap',z:z,x:times,y:syms,zmid:0,zmin:-amax,zmax:amax,
