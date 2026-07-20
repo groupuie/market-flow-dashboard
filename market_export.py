@@ -34,7 +34,8 @@ def http_json(url, timeout=15, retries=3): return json.loads(http_get(url, timeo
 WL = {
   "market":    ["SPY","QQQ","DIA","IWM"],
   "stocks":    ["NVDA","MSFT","AAPL","AMZN","META","AVGO","GOOGL","TSLA","JPM","LLY",
-                "MU","SNDK","WDC","MRVL","LITE","COHR","AAOI","SMH","SOXX"],
+                "MU","SNDK","WDC","MRVL","LITE","COHR","AAOI","SMH","SOXX",
+                "AMD","PLTR","COIN","MSTR","NFLX","INTC","ORCL","TSM"],
   "leveraged": ["TQQQ","SQQQ","SOXL","SOXS","NVDL","NVDS","TSLL","TSLZ","FNGU","FNGD",
                 "SPXL","SPXS","UPRO","SPXU","TNA","TZA","UDOW","SDOW","MUU","SNXX","MVLL"],
   "fx":        ["DX-Y.NYB","JPY=X","CNH=X","TWD=X","EURUSD=X"],
@@ -44,34 +45,41 @@ WL = {
 }
 # 期權聚合對象(CBOE;個股/大盤/槓桿ETF/波動率/大宗)
 OPT_SYMS = ["_SPX","_VIX","SPY","QQQ","IWM","NVDA","TSLA","AAPL","MSFT","AVGO","META","AMZN",
-            "MU","SMH","TQQQ","SQQQ","SOXL","SOXS","NVDL","TSLL","GLD","SLV","USO"]
+            "MU","SMH","TQQQ","SQQQ","SOXL","SOXS","NVDL","TSLL","GLD","SLV","USO",
+            "AMD","PLTR","COIN","MSTR"]
 # Futu 大單淨流對象(⑦)= 正股 + 大盤 + 板塊 + 槓桿/反向 + 資金目的地(現金/債/金/crypto 現貨ETF)
 CAP_SYMS = [
   # 大盤 ETF
   "US.SPY","US.QQQ","US.IWM","US.DIA",
-  # 正股(megacap + 持倉)
+  # 正股(megacap + 持倉 + 高成交額常駐)
   "US.NVDA","US.MSFT","US.AAPL","US.AMZN","US.META","US.GOOGL","US.AVGO","US.TSLA",
   "US.MU","US.SNDK","US.WDC","US.MRVL","US.LITE","US.COHR","US.AAOI",
-  # 板塊 ETF
-  "US.SMH","US.SOXX",
+  "US.AMD","US.PLTR","US.COIN","US.MSTR","US.NFLX","US.INTC","US.ORCL","US.TSM",
+  # 板塊 ETF(半導體 + 大板塊輪動:科技/金融/能源/醫療)
+  "US.SMH","US.SOXX","US.XLK","US.XLF","US.XLE","US.XLV",
   # 槓桿多方
-  "US.TQQQ","US.SOXL","US.NVDL","US.TSLL","US.MUU","US.SNXX","US.MVLL",
+  "US.TQQQ","US.SOXL","US.NVDL","US.TSLL","US.MUU","US.SNXX","US.MVLL","US.SPXL","US.TNA",
   # 反向(做空)
-  "US.SQQQ","US.SOXS","US.SH","US.SPXU",
-  # 目的地:現金 T-bill / 國債分天期 / 金 / crypto 現貨 ETF
-  "US.SGOV","US.BIL","US.SHY","US.IEF","US.TLT","US.GLD","US.IBIT","US.ETHA"]
+  "US.SQQQ","US.SOXS","US.SH","US.SPXU","US.TZA",
+  # 信用債(風險偏好目的地:垃圾債/投等債)
+  "US.HYG","US.LQD",
+  # 目的地:現金 T-bill / 國債分天期 / 金・油・銀 / crypto 現貨 ETF
+  "US.SGOV","US.BIL","US.SHY","US.IEF","US.TLT","US.GLD","US.USO","US.SLV","US.IBIT","US.ETHA"]
 # 類別對照(前端分組/上色/目的地圖用)
 CAP_CAT = {}
 for _s in ["SPY","QQQ","IWM","DIA"]: CAP_CAT[_s]="大盤"
-for _s in ["SMH","SOXX"]: CAP_CAT[_s]="板塊ETF"
-for _s in ["TQQQ","SOXL","NVDL","TSLL","MUU","SNXX","MVLL"]: CAP_CAT[_s]="槓桿"
-for _s in ["SQQQ","SOXS","SH","SPXU"]: CAP_CAT[_s]="反向"
+for _s in ["SMH","SOXX","XLK","XLF","XLE","XLV"]: CAP_CAT[_s]="板塊ETF"
+for _s in ["TQQQ","SOXL","NVDL","TSLL","MUU","SNXX","MVLL","SPXL","TNA"]: CAP_CAT[_s]="槓桿"
+for _s in ["SQQQ","SOXS","SH","SPXU","TZA"]: CAP_CAT[_s]="反向"
+for _s in ["HYG","LQD"]: CAP_CAT[_s]="信用債"
 for _s in ["SGOV","BIL"]: CAP_CAT[_s]="現金"
 for _s in ["SHY","IEF","TLT"]: CAP_CAT[_s]="國債"
 CAP_CAT["GLD"]="金"
+CAP_CAT["USO"]="油"
+CAP_CAT["SLV"]="銀"
 for _s in ["IBIT","ETHA"]: CAP_CAT[_s]="Crypto"
 
-FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ"}
+FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ","AMD"}
 
 def _f(x):
     try:
@@ -295,158 +303,6 @@ def finra_short_hist(days=30):
 INST_SYMS = ["US.NVDA","US.MU","US.SNDK","US.WDC","US.MRVL","US.AVGO","US.TSLA","US.SMH","US.SOXX",
              "US.AAPL","US.MSFT","US.AMZN","US.META","US.GOOGL"]
 
-# ============ 個股K線層(stock.html 個股頁用) ============
-KL_HIST_DAYS = 1250     # 保留約 5 年日K
-def kline_symbols(custom):
-    base = WL["market"] + WL["stocks"] + WL["leveraged"]
-    out = []
-    for s in list(base) + [c for c in (custom or [])]:
-        s = str(s).replace("US.", "")
-        if s and s not in out: out.append(s)
-    return out
-
-def yahoo_ohlc(sym, rng="5y"):
-    q = urllib.parse.quote(sym)
-    d = http_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{q}?range={rng}&interval=1d", 15)
-    r = d["chart"]["result"][0]; ind = r["indicators"]["quote"][0]; ts = r.get("timestamp") or []
-    off = r.get("meta", {}).get("gmtoffset", -14400)
-    bars = []
-    for i, t in enumerate(ts):
-        o = (ind.get("open") or [None]*len(ts))[i]; h = (ind.get("high") or [None]*len(ts))[i]
-        l = (ind.get("low") or [None]*len(ts))[i]; c = (ind.get("close") or [None]*len(ts))[i]
-        v = (ind.get("volume") or [None]*len(ts))[i]
-        if None in (o, h, l, c): continue
-        dt = datetime.fromtimestamp(t + off, timezone.utc).strftime("%Y-%m-%d")
-        bars.append([dt, round(o, 3), round(h, 3), round(l, 3), round(c, 3), int(v or 0), None])
-    return bars
-
-def futu_hist_bars(q, sym, start, end):
-    """富途歷史日K(前復權,含真實週轉率);自動翻頁"""
-    from futu import RET_OK, KLType, AuType
-    code = sym if sym.startswith("US.") else "US." + sym
-    bars = []; page = None
-    while True:
-        ret, d, page = q.request_history_kline(code, start=start, end=end, ktype=KLType.K_DAY,
-                                               autype=AuType.QFQ, max_count=1000, page_req_key=page)
-        if ret != RET_OK: raise RuntimeError(str(d)[:80])
-        for _, r in d.iterrows():
-            dt = str(r.get("time_key", ""))[:10]
-            o, h, l, c = _f(r.get("open")), _f(r.get("high")), _f(r.get("low")), _f(r.get("close"))
-            v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
-            if dt and None not in (o, h, l, c):
-                bars.append([dt, round(o, 3), round(h, 3), round(l, 3), round(c, 3), int(v or 0),
-                             None if tr is None else round(tr, 3)])
-        if not page: break
-        time.sleep(0.4)
-    return bars
-
-def merge_bars(old, new):
-    """按日期 upsert;新 bar 無週轉率而舊有 → 保留舊值(避免 Yahoo 增量洗掉 Futu 週轉率)"""
-    m = {b[0]: list(b) for b in (old or [])}
-    for b in (new or []):
-        b = list(b); ob = m.get(b[0])
-        if ob and b[6] is None and len(ob) > 6 and ob[6] is not None: b[6] = ob[6]
-        m[b[0]] = b
-    return [m[k] for k in sorted(m)]
-
-def snapshot_today(kl_syms):
-    """當日K(每5分):開高低收/量/週轉率 → market_data.json 的 kline_today"""
-    from futu import OpenQuoteContext, RET_OK
-    q = OpenQuoteContext(host="127.0.0.1", port=11111)
-    out = {}
-    try:
-        fs = ["US." + s for s in kl_syms]
-        for i in range(0, len(fs), 200):
-            ret, d = q.get_market_snapshot(fs[i:i+200])
-            if ret == RET_OK:
-                for _, r in d.iterrows():
-                    sym = str(r.get("code", "")).replace("US.", "")
-                    dt = str(r.get("update_time") or "")[:10]
-                    o, h, l, c = _f(r.get("open_price")), _f(r.get("high_price")), _f(r.get("low_price")), _f(r.get("last_price"))
-                    v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
-                    if dt and None not in (o, h, l, c):
-                        out[sym] = [dt, o, h, l, c, int(v or 0), tr]
-            time.sleep(0.3)
-    finally:
-        q.close()
-    return out
-
-def refresh_klines(cfg, args, kl_syms):
-    """日K歷史維護:首次全量(Futu 前復權,失敗退 Yahoo);之後盤後每日增量(含復權偵測,漂移>2%全量重抓);
-       新自訂標的每輪最多補抓 3 檔(≈10 分內上線)。變動檔分塊推 gist(kline_SYM.json)。"""
-    kdir = args.config + ".klines"
-    os.makedirs(kdir, exist_ok=True)
-    mark = args.config + ".klmark"
-    try: age = time.time() - os.path.getmtime(mark)
-    except OSError: age = 1e9
-    sess = market_session()
-    daily_due = age > 20*3600 and sess in ("after", "closed")
-    missing = [s for s in kl_syms if not os.path.exists(os.path.join(kdir, s + ".json"))][:3]
-    todo = list(kl_syms) if daily_due else missing
-    if not todo: return
-    from datetime import timedelta
-    end = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    start5 = (datetime.now(timezone.utc) - timedelta(days=int(KL_HIST_DAYS*1.55))).strftime("%Y-%m-%d")
-    q = None
-    if not args.no_futu:
-        try:
-            from futu import OpenQuoteContext
-            q = OpenQuoteContext(host="127.0.0.1", port=11111)
-        except Exception as e: err("kline-ctx", e)
-    changed = {}
-    try:
-        for s in todo:
-            path = os.path.join(kdir, s + ".json")
-            try: cache = json.load(open(path))
-            except Exception: cache = None
-            bars = None; src = None
-            try:
-                if q:
-                    if cache and cache.get("bars"):
-                        st = (datetime.now(timezone.utc) - timedelta(days=40)).strftime("%Y-%m-%d")
-                        newb = futu_hist_bars(q, s, st, end); src = "futu-qfq"
-                        om = {b[0]: b[4] for b in cache["bars"]}
-                        drift = [b for b in newb if b[0] in om and om[b[0]] and abs(b[4]/om[b[0]]-1) > 0.02]
-                        bars = futu_hist_bars(q, s, start5, end) if drift else merge_bars(cache["bars"], newb)
-                        if drift: src = "futu-qfq(復權重抓)"
-                    else:
-                        bars = futu_hist_bars(q, s, start5, end); src = "futu-qfq"
-                else:
-                    raise RuntimeError("no futu ctx")
-            except Exception as e:
-                if not isinstance(e, RuntimeError) or "no futu ctx" not in str(e): err(f"kline {s}", e)
-                try:
-                    if cache and cache.get("bars"):
-                        newb = yahoo_ohlc(s, "3mo")
-                        om = {b[0]: b[4] for b in cache["bars"]}
-                        drift = [b for b in newb if b[0] in om and om[b[0]] and abs(b[4]/om[b[0]]-1) > 0.02]
-                        bars = merge_bars(cache["bars"], yahoo_ohlc(s, "5y")) if drift else merge_bars(cache["bars"], newb)
-                    else:
-                        bars = yahoo_ohlc(s, "5y")
-                    src = "yahoo備援" if q else "yahoo"
-                except Exception as e2:
-                    err(f"kline-yh {s}", e2); bars = None
-            if bars:
-                payload = {"sym": s, "src": src, "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-                           "bars": bars[-KL_HIST_DAYS:]}
-                try: json.dump(payload, open(path, "w"), ensure_ascii=False, separators=(",", ":"))
-                except Exception: pass
-                changed["kline_" + s + ".json"] = payload
-            time.sleep(0.6 if q else 0.35)
-    finally:
-        if q:
-            try: q.close()
-            except Exception: pass
-    if daily_due:
-        try: open(mark, "w").write(str(time.time()))
-        except Exception: pass
-    if changed and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
-        names = sorted(changed)
-        for i in range(0, len(names), 8):
-            try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
-            except Exception as e: err("kline-push", e); break
-    log(f"klines updated: {len(changed)}/{len(todo)}")
-
 # ============ 自訂追蹤清單(存於同一 gist 的 custom_symbols.json,由網頁寫入)============
 def fetch_custom_syms(cfg):
     try:
@@ -505,8 +361,10 @@ def pull_daily_hist(q, syms, days=45):
                     out.setdefault(dt,{})[sym]={"m":round(m/1e6,1),
                         "r":round(rr/1e6,1) if rr is not None else None,
                         "c":CAP_CAT.get(sym,"正股")}
+            elif ret!=RET_OK:
+                err(f"histflow {s}", RuntimeError(str(d)[:40]))   # 之前靜默吞掉→清單尾端被限流看不見
         except Exception as e: err(f"histflow {s}",e)
-        time.sleep(0.5)
+        time.sleep(1.1)   # Futu 歷史資金流配額約 30 次/30 秒;0.5s 會超限→尾端(目的地ETF)全失敗
     return out
 
 def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
@@ -711,7 +569,17 @@ def run_once(cfg, args):
     except Exception: _nd=0
     try: _age=time.time()-os.path.getmtime(histmark)
     except OSError: _age=1e9
-    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600)
+    # 清單新增標的(如 USO/SLV)時,近 5 個歷史日缺其資料 → 補回填(每小時限速,避免 Futu 無該檔日頻資料時反覆重拉)
+    _missing=[]
+    try:
+        _d0=json.load(open(dailypath0))
+        _core={x.replace("US.","") for x in CAP_SYMS}
+        for _dt in sorted(_d0)[-6:-1] or sorted(_d0):
+            _missing+= list(_core-set(_d0[_dt].keys()))
+        _missing=sorted(set(_missing))
+    except Exception: _missing=[]
+    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or (bool(_missing) and _age>3600))
+    data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1)}
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
@@ -767,6 +635,9 @@ def run_once(cfg, args):
     # 先併入歷史回填(不覆蓋既有日期;今日之後由 live upsert 蓋最新值)
     for dt,day in histfill.items():
         if dt not in daily: daily[dt]=day
+        else:
+            for s_,e_ in day.items():
+                if s_ not in daily[dt]: daily[dt][s_]=e_   # 新標的補進既有日期,不覆蓋原值
     if data["capital_flow"] and data["trade_date"] and data["session"] in ("rth","after"):
         # 只在盤中/盤後歸檔:避免盤前把前日累計寫進新日期(原已知bug,現根治)
         daily[data["trade_date"]]={k.replace("US.",""):{
@@ -777,17 +648,9 @@ def run_once(cfg, args):
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
-    # 個股K線層(stock.html):當日K快照(每5分)+日K歷史維護(盤後每日增量;新自訂標的即時補抓)
-    kl_syms=kline_symbols(data.get("custom_symbols") or [])
-    if not args.no_futu:
-        try: data["kline_today"]=snapshot_today(kl_syms)
-        except Exception as e: err("kline_today",e)
-    try: refresh_klines(cfg,args,kl_syms)
-    except Exception as e: err("klines",e)
     data["errors"]=ERRORS
     data["meta"]={"futu_ok":len(data["capital_flow"])>0,"n_opt":len(data["options"]),
                   "n_inst":len(data.get("institutions",{})),
-                  "n_kl_today":len(data.get("kline_today",{})),
                   "n_stocks":len(data["stocks"])+len(data["leveraged"])+len(data["market"])}
     return data, fsnap
 

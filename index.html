@@ -106,7 +106,7 @@ a{color:var(--blue)}
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:400px"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU。<b>底部琥珀色「Σ 即時現金池」列(取代原「不可觀測殘差」與「現金」列)</b>=上方各列買賣相減的鏡像,和所有橫柱同一把尺、可直接比長短——右伸=入池(賣壓>買壓)、左伸=出池進場。<b>下方「池水位線」</b>=即時模式顯示今日盤中池水位的累積曲線(每 ~6 分一點,看得到池子漲落);多日視窗則顯示逐日水位。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部琥珀色「Σ 即時現金池」列(取代原「不可觀測殘差」與「現金」列)</b>=上方各列買賣相減的鏡像,和所有橫柱同一把尺、可直接比長短——右伸=入池(賣壓>買壓)、左伸=出池進場。<b>下方「池水位線」</b>=即時模式顯示今日盤中池水位的累積曲線(每 ~6 分一點,看得到池子漲落);多日視窗則顯示逐日水位。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   <div class="card">
     <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
@@ -339,7 +339,7 @@ function render(){
 
 // ===== 資金輪動 Sankey / 視窗 / 目的地(真實 ⑦ 大單淨流)=====
 const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
-  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','金':'#eab308','油':'#c2703e','銀':'#9aa4b2','Crypto':'#e879a9',
+  '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','信用債':'#0e7490','金':'#eab308','油':'#c2703e','銀':'#9aa4b2','Crypto':'#e879a9',
   '自訂':'#22d3ee','闖入':'#f43f5e','其他':'#6b7280'};
 // ---- 自訂追蹤:寫回 gist(token 僅存 localStorage)----
 function gistId(){const m=DATA_URL.match(/gist\.githubusercontent\.com\/[^/]+\/([a-f0-9]+)\//);return m?m[1]:null;}
@@ -483,7 +483,7 @@ function renderRotation(){
   const arr=Object.keys(FM).map(s=>({s:s,v:FM[s].v,r:FM[s].r,cat:FM[s].cat||'正股'})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
   // 類別淨流向 tiles(動態:只列有資料的類別)
   const catNet={}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
-  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','金','油','銀','Crypto','自訂','闖入','ETF'];
+  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
@@ -560,7 +560,7 @@ let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
 function renderDest(catNet, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
   // 「現金」(SGOV/BIL)不再單列:T-bill ETF 屬停泊現金,其流動=池內重分配,已併入池推估
-  const order=['正股','大盤','板塊ETF','槓桿','反向','國債','金','油','銀','Crypto','自訂','闖入'];
+  const order=['正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入'];
   const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
   const pool=-rows.reduce((a,b)=>a+b.v,0);   // 即時現金池 = 非現金各類買賣相減的鏡像(現金ETF流動隱含在池內)
