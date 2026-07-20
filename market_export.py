@@ -561,12 +561,17 @@ def run_once(cfg, args):
     except Exception: _nd=0
     try: _age=time.time()-os.path.getmtime(histmark)
     except OSError: _age=1e9
-    # 清單新增標的(如 USO/SLV)時,最近日檔缺其資料 → 立即補回填
+    # 清單新增標的(如 USO/SLV)時,近 5 個歷史日缺其資料 → 補回填(每小時限速,避免 Futu 無該檔日頻資料時反覆重拉)
+    _missing=[]
     try:
-        _d0=json.load(open(dailypath0)); _last=sorted(_d0)[-1]
-        _newsyms=bool({x.replace("US.","") for x in CAP_SYMS}-set(_d0[_last].keys()))
-    except Exception: _newsyms=False
-    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or _newsyms)
+        _d0=json.load(open(dailypath0))
+        _core={x.replace("US.","") for x in CAP_SYMS}
+        for _dt in sorted(_d0)[-6:-1] or sorted(_d0):
+            _missing+= list(_core-set(_d0[_dt].keys()))
+        _missing=sorted(set(_missing))
+    except Exception: _missing=[]
+    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or (bool(_missing) and _age>3600))
+    data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1)}
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
