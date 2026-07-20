@@ -527,7 +527,8 @@ function playAnim(){
 function renderPersist(){
   const ds=animDates();
   if(WIN.mode!=='live'&&ds.length>=2){renderPersistDaily(ds,-1);return;}
-  const H=DATA.flow_history||[]; const el=document.getElementById('persist');
+  let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
+  const el=document.getElementById('persist');
   if(H.length<2){el.innerHTML='<div class="miss" style="padding:30px">持續性需累積 ≥2 次更新才顯示(每次採集自動累加,約幾分鐘後出現)</div>';return;}
   const last=H[H.length-1].f||{};
   const syms=Object.keys(last).sort((a,b)=>Math.abs(last[b])-Math.abs(last[a])).slice(0,18);
