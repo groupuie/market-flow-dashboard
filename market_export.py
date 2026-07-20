@@ -800,13 +800,17 @@ def run_once(cfg, args):
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
-    # 個股K線層(stock.html):當日K快照(每5分)+日K歷史維護(盤後每日增量;新自訂標的即時補抓)
-    kl_syms=kline_symbols(data.get("custom_symbols") or [])
+    # 個股K線層(stock.html):當日K快照+日K歷史維護 —— Mac 專屬,public-out(Actions 備援)跳過
+    if getattr(args,"public_out",None):
+        kl_syms=[]
+    else:
+        kl_syms=kline_symbols(data.get("custom_symbols") or [])
     if not args.no_futu:
         try: data["kline_today"]=snapshot_today(kl_syms)
         except Exception as e: err("kline_today",e)
-    try: refresh_klines(cfg,args,kl_syms)
-    except Exception as e: err("klines",e)
+    if kl_syms:
+        try: refresh_klines(cfg,args,kl_syms)
+        except Exception as e: err("klines",e)
     data["errors"]=ERRORS
     data["meta"]={"futu_ok":len(data["capital_flow"])>0,"n_opt":len(data["options"]),
                   "n_inst":len(data.get("institutions",{})),
@@ -827,6 +831,7 @@ def main():
     ap.add_argument("--no-futu",action="store_true")
     ap.add_argument("--no-push",action="store_true")
     ap.add_argument("--force-options",action="store_true")
+    ap.add_argument("--public-out",default=None,help="公開源-only 模式:跳過 Futu/K線/gist 推送,結果寫入指定 JSON(GitHub Actions 備援採集用)")
     a=ap.parse_args()
     # 看門狗:Futu SDK 斷線(網絡中斷)時可能無限期掛住,會卡死 launchd 排程 →
     # 單輪超過 7 分鐘就自我了斷,交給 launchd 下一輪全新重啟(2026-07-20 事故對策)
@@ -836,8 +841,15 @@ def main():
             log("WATCHDOG: 本輪超時,自我重啟交給下一輪"); os._exit(3)
         _sig.signal(_sig.SIGALRM,_wd); _sig.alarm(420)
     except Exception: pass
+    if a.public_out:
+        a.no_futu=True; a.no_push=True   # 備援模式:純公開源
     cfg=json.load(open(a.config)) if os.path.exists(a.config) else {}
     data,fsnap=run_once(cfg,a)
+    if a.public_out:
+        data["source"]="gh-actions-public"
+        json.dump(data, open(a.public_out,"w"), ensure_ascii=False, separators=(",",":"))
+        log(f"public-out 寫入 {a.public_out}: options={len(data.get('options',{}))} rates_live={bool(data.get('rates_live'))}")
+        return
     log(f"collected: stocks={data['meta']['n_stocks']} opt={data['meta']['n_opt']} "
         f"cap={len(data['capital_flow'])} errs={len(data['errors'])}")
     if a.no_push:

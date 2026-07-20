@@ -255,17 +255,44 @@ function rangeBar(elId,cur,onpick){
   el.querySelectorAll('.tab').forEach(t=>t.onclick=()=>onpick(+t.dataset.n));
 }
 
-async function load(){
-  try{
-    const r=await fetch(DATA_URL,{cache:"no-store"});
-    if(!r.ok) throw new Error("HTTP "+r.status);
-    DATA=await r.json();
-    render();
-    markStatus();
-  }catch(e){
-    document.getElementById('status').className='badge err';
-    document.getElementById('status').textContent='抓取失敗：'+e.message;
+const PUB_URL="https://raw.githubusercontent.com/groupuie/market-flow-dashboard/data/market_public.json";
+function tsAgeMin(ts){const t=Date.parse((ts||'').replace(' ','T')+'Z');return isNaN(t)?1e9:(Date.now()-t)/60000;}
+function mergeSources(mac,pub){
+  // Mac=全量(含⑦);Actions=公開源備援。Mac 休眠時公開區塊由備援接手,⑦ 誠實凍結
+  if(!pub&&!mac)return null;
+  if(!pub){mac._macAge=tsAgeMin(mac.ts_utc);mac._pubAge=1e9;return mac;}
+  if(!mac){pub._macAge=1e9;pub._pubAge=tsAgeMin(pub.ts_utc);return pub;}
+  const ma=tsAgeMin(mac.ts_utc), pa=tsAgeMin(pub.ts_utc);
+  const base=(ma<=pa)?{...mac}:{...pub};
+  // ⑦/Mac 專屬:永遠取 Mac(唯一來源)
+  ['capital_flow','flow_history','daily_flows','custom_symbols','institutions','kline_today',
+   'trade_date','_hist_state','opt_daily','meta'].forEach(k=>{if(mac[k]!==undefined)base[k]=mac[k];});
+  if(pa<ma){
+    // 公開區塊:備援較新就用備援
+    ['market','stocks','leveraged','options','_options_ts','_options_cached','fx','rates',
+     'rates_live','crypto','commodities','darkpool','session'].forEach(k=>{if(pub[k]!==undefined)base[k]=pub[k];});
+    if(ma>120){   // Mac 睡超過 2 小時:日頻類也交給備援(保留 Mac 的 MMF 週史)
+      if(pub.dp_daily)base.dp_daily=pub.dp_daily;
+      if(pub.cash_pool)base.cash_pool={...pub.cash_pool,
+        mmf_hist:((mac.cash_pool||{}).mmf_hist)||pub.cash_pool.mmf_hist};
+    }
   }
+  if(base.dp_daily===undefined&&mac.dp_daily)base.dp_daily=mac.dp_daily;
+  if(base.cash_pool===undefined&&mac.cash_pool)base.cash_pool=mac.cash_pool;
+  base.ts_utc=(ma<=pa)?mac.ts_utc:pub.ts_utc;
+  base._macAge=ma; base._pubAge=pa;
+  return base;
+}
+async function load(){
+  const f=async u=>{try{const r=await fetch(u,{cache:"no-store"});return r.ok?await r.json():null;}catch(e){return null;}};
+  const [mac,pub]=await Promise.all([f(DATA_URL),f(PUB_URL)]);
+  const m=mergeSources(mac,pub);
+  if(!m){
+    document.getElementById('status').className='badge err';
+    document.getElementById('status').textContent='抓取失敗：兩個資料源皆不可達';
+    return;
+  }
+  DATA=m; render(); markStatus();
 }
 function etSession(){
   // 以瀏覽器時間換算美東,粗判時段(假日以 trade_date 呈現為準)
@@ -289,7 +316,7 @@ function isOpex(dstr){
 }
 function markStatus(){
   const ts=DATA.ts_utc; const t=new Date(ts.replace(' ','T')+'Z');
-  const ageMin=(Date.now()-t.getTime())/60000;
+  const ageMin=Math.min((Date.now()-t.getTime())/60000, DATA._pubAge!=null?DATA._pubAge:1e9);
   const s=document.getElementById('status');
   const sess=DATA.session&&DATA.session!=='unknown'?DATA.session:etSession();
   const td=DATA.trade_date||'';
@@ -303,6 +330,10 @@ function markStatus(){
     s.className='badge ok';s.textContent='● '+lbl+'（'+ageMin.toFixed(0)+' 分前更新）';
   }
   let meta='採集 美東 '+tzTime(ts,'America/New_York')+' · 台灣 '+tzTime(ts,'Asia/Taipei')+(td?' · ⑦資料屬 '+td:'');
+  const _ma=DATA._macAge, _pa=DATA._pubAge;
+  if(_ma!=null&&_pa!=null&&_ma>30&&_pa<30)
+    meta+=(_ma>=1e8)?' · ⚠ ⑦大單流離線(等待 Mac):其餘資料由雲端備援即時更新'
+      :' · ⚠ Mac 休眠中:⑦大單流凍結於 '+(_ma<120?Math.round(_ma)+' 分':(_ma/60).toFixed(1)+' 小時')+'前,其餘資料由雲端備援即時更新';
   const opx=isOpex(td);
   if(opx) meta+=opx==='quad'?' · ⚠ 四巫日OPEX':' · ⚠ 月度OPEX';
   const errs=(DATA.errors||[]).length;
