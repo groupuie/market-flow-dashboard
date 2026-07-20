@@ -106,7 +106,7 @@ a{color:var(--blue)}
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:400px"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部琥珀色「Σ 即時現金池」列(取代原「不可觀測殘差」與「現金」列)</b>=上方各列買賣相減的鏡像,和所有橫柱同一把尺、可直接比長短——右伸=入池(賣壓>買壓)、左伸=出池進場。<b>下方「池水位線」</b>=即時模式顯示今日盤中池水位的累積曲線(每 ~6 分一點,看得到池子漲落);多日視窗則顯示逐日水位。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。此推估僅涵蓋 ⑦ 主動大單,量級遠小於全市場、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部琥珀色「Σ 即時現金池」列(取代原「不可觀測殘差」與「現金」列)</b>=上方各列買賣相減的鏡像,和所有橫柱同一把尺、可直接比長短——右伸=入池(賣壓>買壓)、左伸=出池進場。<b>下方「池水位線」</b>=即時模式顯示今日盤中池水位的累積曲線(每 ~6 分一點,看得到池子漲落);多日視窗則顯示逐日水位。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   <div class="card">
     <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
@@ -512,15 +512,21 @@ function renderRotation(){
   buildWinBar(); initCustomUI(); renderCustomChips();
   const FM=flowMap();
   const arr=Object.keys(FM).map(s=>({s:s,v:FM[s].v,r:FM[s].r,cat:FM[s].cat||'正股'})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
-  // 類別淨流向 tiles(動態:只列有資料的類別)
+  // 類別淨流向 tiles(動態:只列有資料的類別)—— ⑦大單口徑(機構視角)
   const catNet={}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
+  // 目的地圖/池:全單口徑(特大+大+中+小)= 完整主動淨流;分類噪音在加總中互銷
+  const catNetAll={};
+  Object.keys(FM).forEach(s=>{const e=FM[s]; if(e.v==null)return;
+    const tot=e.v+(e.r||0);
+    if(Math.abs(tot)<=1e5)return;
+    const c=e.cat||'正股'; catNetAll[c]=(catNetAll[c]||0)+tot;});
   const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
       <div class="chg ${cl}">${v>0?'淨流入':(v<0?'淨流出':'—')} · ${winLabel()}</div></div>`;}).join('');
-  // 目的地對照(diverging bar + 底部池合計列)+ 池水位線
-  renderDest(catNet); renderPoolTide();
+  // 目的地對照(diverging bar + 底部池合計列;全單口徑)+ 池水位線
+  renderDest(catNetAll); renderPoolTide();
   // Sankey(可重用;動畫逐日餵單日資料)
   const hasSankey=drawSankey(arr,null);
   if(hasSankey){
@@ -607,7 +613,7 @@ function renderDest(catNet, subtitle, fixRange){
   // 合計分隔線(池列之上)
   const shapes=[{type:'line',xref:'paper',yref:'paper',x0:0.005,x1:0.995,
     y0:1/nRow*1.02,y1:1/nRow*1.02,line:{color:'#4a4a46',width:1,dash:'dot'}}];
-  const xaxis={title:{text:'← 淨流出(賣出側)   |   淨流入(買入側) →('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
+  const xaxis={title:{text:'← 淨流出(賣出側)   |   淨流入(買入側) →全單主動淨流('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
     gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',range:[-M,M]};
   Plotly.react('dest',[
     {type:'bar',orientation:'h',x:rows.map(r=>r.v),y:rows.map(r=>r.c),
@@ -631,12 +637,15 @@ function renderPoolTide(){
   if(WIN.mode==='live'){
     let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
     x=H.map(h=>etTime(h.ts));
-    y=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return -s*1e6;});
+    y=H.map(h=>{let s=0;
+      Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});
+      Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});   // 中小單(新欄位,舊點自動退回大單口徑)
+      return -s*1e6;});
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
     const use=WIN.mode==='nd'?dates.slice(-WIN.n):dates.filter(d=>d>=WIN.from&&d<=WIN.to);
     x=use.map(d=>d.slice(5)); mode=winLabel()+'逐日';
-    y=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=(day[k].m||0);});return -s*1e6;});
+    y=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=((day[k].m||0)+(day[k].r||0));});return -s*1e6;});
   }
   if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">池水位線累積中(每次採集自動加點)</div>';return;}
   const last=y[y.length-1];
@@ -663,6 +672,12 @@ function dayCatNet(date){
   Object.keys(day).forEach(s=>{const c=day[s].c||'正股';cn[c]=(cn[c]||0)+(day[s].m||0)*1e6;});
   return cn;
 }
+function dayCatNetAll(date){  // 全單口徑(m+r;r 缺值時退回 m)
+  const day=(DATA.daily_flows||{})[date]||{}; const cn={};
+  Object.keys(day).forEach(s=>{const c=day[s].c||'正股';
+    cn[c]=(cn[c]||0)+((day[s].m||0)+(day[s].r||0))*1e6;});
+  return cn;
+}
 function stopAnim(restore){
   if(ANIM.timer){clearInterval(ANIM.timer);ANIM.timer=null;}
   ANIM.playing=false;
@@ -674,7 +689,7 @@ function playAnim(){
   const ds=animDates(); if(ds.length<2)return;
   // 先算所有日的最大絕對值,固定 x 軸,動畫才可比
   let mx=0;
-  ds.forEach(d=>{const cn=dayCatNet(d);
+  ds.forEach(d=>{const cn=dayCatNetAll(d);
     const vals=Object.entries(cn).filter(([c])=>c!=='現金').map(([,v])=>v);   // 與 renderDest 同步:現金不入列
     const pool=-vals.reduce((a,b)=>a+b,0);
     [...vals,pool].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});});
@@ -684,7 +699,7 @@ function playAnim(){
   const tick=()=>{
     if(!ANIM.playing)return;
     const d=ds[ANIM.idx];
-    renderDest(dayCatNet(d), d+' 單日', true);
+    renderDest(dayCatNetAll(d), d+' 單日', true);
     const day=(DATA.daily_flows||{})[d]||{};
     const dayArr=Object.keys(day).map(s=>({s:s,v:(day[s].m||0)*1e6,cat:day[s].c||'正股'})).filter(x=>Math.abs(x.v)>1e5);
     drawSankey(dayArr, d+' 單日 FROM→TO');

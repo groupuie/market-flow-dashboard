@@ -773,7 +773,8 @@ def run_once(cfg, args):
     if data["capital_flow"] and data["session"]=="rth":
         hist=[h for h in hist if h.get("d")==data["trade_date"]]   # 換日清除他日/盤前殘留欄(修週一首欄顯示上週五終值)
         snap={"ts":data["ts_utc"][11:16],"d":data["trade_date"],
-              "f":{k.replace("US.",""):round(v["main_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("main_net") is not None}}
+              "f":{k.replace("US.",""):round(v["main_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("main_net") is not None},
+              "fr":{k.replace("US.",""):round(v["retail_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("retail_net") is not None}}
         if not hist or hist[-1].get("f")!=snap["f"]:
             hist.append(snap); hist=hist[-48:]
     try: json.dump(hist, open(histpath,"w"))
