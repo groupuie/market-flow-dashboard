@@ -192,6 +192,23 @@ def treasury():
     row["2s10s"]=round(row["10 Yr"]-row["2 Yr"],2)
     return row
 
+# ============ 盤中即時殖利率(CBOE 殖利率指數 via Yahoo;報價=殖利率×10)============
+def live_yields():
+    """^IRX 13週 / ^FVX 5年 / ^TNX 10年 / ^TYX 30年 → 盤中即時;官方曲線(EOD)另存 rates"""
+    out={}
+    for ysym,label in (("^IRX","3M"),("^FVX","5Y"),("^TNX","10Y"),("^TYX","30Y")):
+        try:
+            c,_,_=yahoo_hist(ysym,"1mo")
+            if not c: continue
+            k=10.0 if c[-1]>20 else 1.0   # 自動判斷刻度(CBOE 慣例=殖利率×10;Yahoo 有時已除回)
+            y=round(c[-1]/k,3)
+            prev=c[-2]/k if len(c)>1 else None
+            out[label]={"y":y,"chg_bp":round((y-prev)*100,1) if prev is not None else None,
+                        "spark":[round(x/k,3) for x in c[-20:]]}
+        except Exception as e: err(f"yield {ysym}",e)
+        time.sleep(0.1)
+    return out
+
 # ============ FINRA 賣空(暗池 proxy)============
 def finra_short():
     from datetime import timedelta
@@ -208,6 +225,26 @@ def finra_short():
             if len(out)>1: return out
         except Exception: continue
     return {}
+
+def finra_short_hist(days=30):
+    """FINRA 每日賣空比回填(近 days 個有檔交易日)→ 暗池趨勢圖首日即可用"""
+    from datetime import timedelta
+    out={}; back=0
+    while len(out)<days and back<55:
+        dt=datetime.now(timezone.utc)-timedelta(days=back); back+=1
+        if dt.weekday()>=5: continue
+        ds=dt.strftime("%Y%m%d")
+        try: txt=http_get(f"https://cdn.finra.org/equity/regsho/daily/CNMSshvol{ds}.txt",12,1)
+        except Exception: continue
+        day={}
+        for line in txt.splitlines()[1:]:
+            q=line.split("|")
+            if len(q)>=5 and q[1] in FINRA_SYMS:
+                sv,tv=_f(q[2]),_f(q[4])
+                if sv is not None and tv: day[q[1]]=round(sv/tv,3)
+        if day: out[ds]=day
+        time.sleep(0.25)
+    return out
 
 # 機構持股(13F,季頻;僅美股正股/基金)監控清單
 INST_SYMS = ["US.NVDA","US.MU","US.SNDK","US.WDC","US.MRVL","US.AVGO","US.TSLA","US.SMH","US.SOXX",
@@ -345,12 +382,16 @@ def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
 
 # ============ 主流程 ============
 def options_due(state_path, force):
-    """期權每 ~15 分更新一次(重、且 OI 慢變);用 marker 檔跨 launchd 呼叫記時"""
+    """期權更新節奏(即時性優先、兼顧 CBOE 速率):
+       盤中 rth=每次採集都重算(即時到 CBOE ~15 分源延遲上限);盤前/盤後=15 分;休市=60 分"""
     if force: return True
+    sess=market_session()
+    if sess=="rth": return True
+    interval=900 if sess in ("pre","after") else 3600
     mk=state_path+".optmark"
     now=time.time()
     try:
-        if now-os.path.getmtime(mk) < 900: return False
+        if now-os.path.getmtime(mk) < interval: return False
     except OSError: pass
     open(mk,"w").write(str(now)); return True
 
@@ -383,9 +424,11 @@ def run_once(cfg, args):
         b=quote_block(s)
         if b: data["crypto"][s]=b
         time.sleep(0.1)
-    # 國債
+    # 國債(官方 EOD 曲線 + 盤中即時殖利率)
     try: data["rates"]=treasury()
     except Exception as e: err("treasury",e)
+    try: data["rates_live"]=live_yields()
+    except Exception as e: err("live_yields",e)
     # 期權(節流每 15 分;跳過時沿用上次快取,避免推空把 gist 期權洗掉)
     optcache=args.config+".optcache.json"
     if options_due(args.config, args.force_options):
@@ -403,12 +446,48 @@ def run_once(cfg, args):
             c=json.load(open(optcache)); data["options"]=c.get("options",{}); data["_options_ts"]=c.get("ts"); data["_options_cached"]=True
         except Exception:
             data["_options_skipped"]=True
-    # 暗池 proxy
+    # 期權日檔歸檔(30 交易日;盤中=今日至此刻、收盤後=全日終值)→ 盤後可選日期區間看趨勢
+    optdaily=args.config+".optdaily.json"
+    try: optd=json.load(open(optdaily))
+    except Exception: optd={}
+    if data.get("options") and market_session() in ("rth","after"):
+        try:
+            from zoneinfo import ZoneInfo
+            et_date=datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+        except Exception: et_date=None
+        if et_date:
+            optd[et_date]={s:{k:o.get(k) for k in
+                ("spot","gex_bn","pc_vol","pc_oi","atm_iv","skew_25d","max_pain","zero_dte_share","call_prem","put_prem")}
+                for s,o in data["options"].items()}
+            for d_ in sorted(optd)[:-30]: optd.pop(d_,None)
+            try: json.dump(optd, open(optdaily,"w"), ensure_ascii=False)
+            except Exception: pass
+    data["opt_daily"]=optd
+    # 暗池 proxy(最新日)
     try: data["darkpool"]=finra_short()
     except Exception as e: err("finra",e)
+    # 暗池日檔(30 交易日;首次自動回填 FINRA 歷史檔,之後逐日 upsert)
+    dppath=args.config+".dpdaily.json"
+    try: dpd=json.load(open(dppath))
+    except Exception: dpd={}
+    if len(dpd)<10:
+        try: dpd.update(finra_short_hist(30))
+        except Exception as e: err("finra_hist",e)
+    dp=data.get("darkpool") or {}
+    if dp.get("_date"):
+        dpd[dp["_date"]]={k:v["short_ratio"] for k,v in dp.items()
+                          if isinstance(v,dict) and v.get("short_ratio") is not None}
+    dpd={k:dpd[k] for k in sorted(dpd)[-30:]}
+    try: json.dump(dpd, open(dppath,"w"))
+    except Exception: pass
+    data["dp_daily"]=dpd
     # Futu 大單淨流 + 機構持股(機構持股跟期權同節流,15 分抓一次;季頻資料低頻足夠)
     fsnap={"ts_utc":data["ts_utc"],"source":"futu-opend","snapshots":{},"capital":{},"errors":[]}
-    want_inst = bool(data.get("_options_ts"))  # 只在有更新期權那次(每15分)順便抓機構,省 API
+    # 機構持股 15 分一次(季頻資料,低頻足夠;與期權節流解耦——盤中期權已改每次重算)
+    instmark=args.config+".instmark"
+    try: _instage=time.time()-os.path.getmtime(instmark)
+    except OSError: _instage=1e9
+    want_inst = _instage>900
     # 歷史回填:日檔不足 10 天,或距上次回填 >20 小時
     histmark=args.config+".histmark"
     dailypath0=args.config+".dailyflows.json"
@@ -424,7 +503,10 @@ def run_once(cfg, args):
         try:
             cap,_,inst,histfill=pull_futu(want_inst=want_inst, want_hist=want_hist, extra_syms=custom)
             data["capital_flow"]=cap
-            if inst: data["institutions"]=inst
+            if inst:
+                data["institutions"]=inst
+                try: open(instmark,"w").write(str(time.time()))
+                except Exception: pass
             if histfill:
                 try: open(histmark,"w").write(str(time.time()))
                 except Exception: pass

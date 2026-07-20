@@ -140,9 +140,21 @@ a{color:var(--blue)}
 
 <!-- ===== 期權定位 ===== -->
 <section id="sec-options" class="sec">
+  <div class="note" id="optfresh" style="margin:0 0 10px"></div>
   <div class="grid g2">
     <div class="card"><h2>Dealer Gamma 曝險 GEX（負=做市商空gamma→放大波動、脆弱；正=壓波動）</h2><div id="gex" style="height:420px"></div></div>
     <div class="card"><h2>隱含波動率 IV vs 25Δ Skew（右=下檔避險貴、偏空對沖）</h2><div id="ivskew" style="height:420px"></div></div>
+  </div>
+  <div class="card">
+    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">期權定位趨勢（日頻歸檔；選日期區間）
+      <span id="optTrendBar" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
+      <select id="optTrendSym" style="background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px"></select>
+    </h2>
+    <div class="grid g2">
+      <div><div id="optTrend1" style="height:300px"></div></div>
+      <div><div id="optTrend2" style="height:300px"></div></div>
+    </div>
+    <div class="note">左＝GEX（柱）與 Max Pain 相對現價%（線）；右＝P/C 量比與 ATM IV。盤中含「今日至此刻」的即時值，收盤後即為全日終值。日檔自 2026-07-20 起累積（CBOE 無免費歷史回填源，天數會逐日變多）。</div>
   </div>
   <div class="card">
     <h2>期權定位總表（CBOE 延遲行情；點欄位標題可排序）</h2>
@@ -155,7 +167,7 @@ a{color:var(--blue)}
 <section id="sec-cross" class="sec">
   <div class="card"><h2>關鍵指標</h2><div id="tiles" class="tiles"></div></div>
   <div class="grid g2">
-    <div class="card"><h2>美債殖利率曲線</h2><div id="curve" style="height:340px"></div></div>
+    <div class="card"><h2>美債殖利率曲線 <span class="sub" id="ratefresh"></span></h2><div id="curve" style="height:340px"></div></div>
     <div class="card"><h2>大宗商品（1D / 5D%）</h2><div id="commod" style="height:340px"></div></div>
   </div>
 </section>
@@ -179,9 +191,17 @@ a{color:var(--blue)}
     <div class="note" id="capnote"></div></div>
   <div class="card"><h2>暗池 / 賣空 proxy（FINRA 每日賣空量比）</h2><div style="overflow-x:auto"><table id="dpTable"></table></div>
     <div class="note">真實暗池即時流向無免費資料源；此處以 FINRA 每日全市場賣空量比（short volume / total volume）作機構出貨壓力 proxy，為當日 EOD。真實 ATS/暗池成交量 FINRA 僅週頻、延遲兩週。</div></div>
+  <div class="card">
+    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">賣空比趨勢（FINRA 日頻，T+1；選日期區間）
+      <span id="dpTrendBar" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
+      <span class="sub">最新資料日：<span id="dpdate">–</span></span>
+    </h2>
+    <div id="dpTrend" style="height:360px"></div>
+    <div class="note">各標的每日賣空量比走勢（已回填近 30 個交易日）。虛線 55%＝經驗壓力線；持續高於此常伴隨機構出貨/避險放大。點圖例可隱藏/顯示個別標的。</div>
+  </div>
 </section>
 
-<div class="note">資料由你 Mac 上的採集器每 5 分鐘推送到 GitHub gist，本頁每 60 秒自行抓取更新 —— 開著就會動，不消耗任何 AI token。行情延遲：Futu 個股即時（LV3）、CBOE 期權約 15 分、國債／賣空為 EOD。本頁不構成投資建議。</div>
+<div class="note">資料由你 Mac 上的採集器每 5 分鐘推送到 GitHub gist，本頁每 60 秒自行抓取更新 —— 開著就會動，不消耗任何 AI token。<b>盤中即時性</b>：Futu ⑦／個股價格＝即時（LV3）、期權＝每次採集重算（CBOE 源延遲約 15 分）、殖利率＝即時指數＋官方 EOD 曲線；賣空／暗池為 FINRA T+1（物理上限，無免費即時源）。<b>盤後</b>：資金輪動、期權趨勢、賣空趨勢皆可選日期區間。本頁不構成投資建議。</div>
 </div>
 
 <script>
@@ -200,6 +220,19 @@ const cls=x=>x==null?'flat':(x>0?'up':(x<0?'down':'flat'));
 const bn=x=>x==null?'–':(Math.abs(x)>=1e9?(x/1e9).toFixed(2)+'B':Math.abs(x)>=1e6?(x/1e6).toFixed(1)+'M':(+x).toLocaleString());
 
 let DATA=null, sortState={};
+let OPTWIN=10, DPWIN=10;
+function ago(ts){  // 'YYYY-MM-DD HH:MM:SS'(UTC) → 「X 分前」
+  if(!ts)return '–';
+  const t=Date.parse(ts.replace(' ','T')+'Z'); if(isNaN(t))return ts;
+  const m=Math.round((Date.now()-t)/60000);
+  return m<1?'剛剛':(m<60?m+' 分前':Math.floor(m/60)+' 小時 '+(m%60)+' 分前');
+}
+function rangeBar(elId,cur,onpick){
+  const el=document.getElementById(elId); if(!el)return;
+  el.innerHTML=[[5,'5日'],[10,'10日'],[30,'30日']].map(([n,l])=>
+    `<span class="tab ${cur===n?'active':''}" data-n="${n}" style="padding:3px 10px;font-size:12px">${l}</span>`).join('');
+  el.querySelectorAll('.tab').forEach(t=>t.onclick=()=>onpick(+t.dataset.n));
+}
 
 async function load(){
   try{
@@ -593,9 +626,48 @@ function renderInst(){
 }
 
 // ===== 期權 =====
+function renderOptTrend(){
+  const D=DATA.opt_daily||{}; const dates=Object.keys(D).sort();
+  const selEl=document.getElementById('optTrendSym'); if(!selEl)return;
+  rangeBar('optTrendBar',OPTWIN,n=>{OPTWIN=n;renderOptTrend();});
+  if(!dates.length){
+    document.getElementById('optTrend1').innerHTML='<div class="miss" style="padding:30px">日檔累積中（今日收盤後出現首日）</div>';
+    document.getElementById('optTrend2').innerHTML='';
+    return;
+  }
+  const lastDay=D[dates[dates.length-1]]||{};
+  const syms=Object.keys(lastDay).sort();
+  const built=selEl.dataset.built||'';
+  if(built!==syms.join()){
+    const cur=selEl.value||'SPY';
+    selEl.innerHTML=syms.map(s=>`<option ${s===cur?'selected':''}>${s}</option>`).join('');
+    selEl.dataset.built=syms.join(); selEl.onchange=renderOptTrend;
+  }
+  const use=dates.slice(-OPTWIN);
+  const s=selEl.value||syms[0];
+  const xs=use.map(d=>d.slice(5));
+  const get=k=>use.map(d=>{const e=(D[d]||{})[s];return e&&e[k]!=null?e[k]:null;});
+  const mpd=use.map(d=>{const e=(D[d]||{})[s];
+    return (e&&e.max_pain&&e.spot)?+((e.max_pain/e.spot-1)*100).toFixed(2):null;});
+  Plotly.react('optTrend1',[
+    {type:'bar',name:'GEX(B)',x:xs,y:get('gex_bn'),marker:{color:get('gex_bn').map(v=>v<0?C.red:C.green)}},
+    {type:'scatter',mode:'lines+markers',name:'MaxPain vs 現價%',x:xs,y:mpd,yaxis:'y2',line:{color:C.amber}}
+  ],{...PBASE,legend:{orientation:'h',y:1.14,font:{size:10.5}},margin:{l:46,r:50,t:22,b:30},
+    xaxis:{gridcolor:C.line},yaxis:{title:{text:'GEX(B)',font:{size:10.5,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'},
+    yaxis2:{title:{text:'MaxPain偏離%',font:{size:10.5,color:C.ink2}},overlaying:'y',side:'right',zerolinecolor:'#555'}},CFG);
+  Plotly.react('optTrend2',[
+    {type:'scatter',mode:'lines+markers',name:'P/C 量比',x:xs,y:get('pc_vol'),line:{color:C.violet}},
+    {type:'scatter',mode:'lines+markers',name:'ATM IV %',x:xs,y:get('atm_iv'),yaxis:'y2',line:{color:C.aqua}}
+  ],{...PBASE,legend:{orientation:'h',y:1.14,font:{size:10.5}},margin:{l:46,r:50,t:22,b:30},
+    xaxis:{gridcolor:C.line},yaxis:{title:{text:'P/C',font:{size:10.5,color:C.ink2}},gridcolor:C.line},
+    yaxis2:{title:{text:'IV %',font:{size:10.5,color:C.ink2}},overlaying:'y',side:'right'}},CFG);
+}
 function renderOptions(){
   const O=DATA.options||{};
   const syms=Object.keys(O);
+  const of=document.getElementById('optfresh');
+  if(of) of.innerHTML='期權快照更新：<b style="color:var(--ink2)">'+ago(DATA._options_ts)+'</b>'
+    +'（盤中每次採集重算，即時性上限＝CBOE 來源延遲約 15 分'+(DATA._options_cached?'；本輪沿用最近一次計算':'')+'）';
   // GEX 排序條圖
   const g=syms.map(s=>({s,v:O[s].gex_bn})).filter(x=>x.v!=null).sort((a,b)=>a.v-b.v);
   Plotly.react('gex',[{type:'bar',orientation:'h',x:g.map(x=>x.v),y:g.map(x=>x.s),
@@ -623,18 +695,20 @@ function renderOptions(){
     {k:'max_pain',t:'MaxPain',f:v=>fmt(v,0)},
     {k:'mp_diff',t:'vs現價',f:v=>v==null?'–':sgn(v)+v.toFixed(1)+'%',cl:v=>v<0?'neg':'pos'},
   ],rows,'gex_bn');
+  renderOptTrend();
 }
 
 // ===== 跨資產 =====
 function renderCross(){
   const tiles=[];
   const push=(lbl,o,suffix='')=>{if(o)tiles.push({lbl,val:o.last,chg:o.chg1d,suffix});};
-  const M=DATA.market||{},X=DATA.fx||{},Cr=DATA.crypto||{},R=DATA.rates||{},O=DATA.options||{};
+  const M=DATA.market||{},X=DATA.fx||{},Cr=DATA.crypto||{},R=DATA.rates||{},O=DATA.options||{},RL=DATA.rates_live||{};
   push('S&P 500 (SPY)',M.SPY);push('Nasdaq 100 (QQQ)',M.QQQ);push('道瓊 (DIA)',M.DIA);push('小型股 (IWM)',M.IWM);
   if(O._VIX)tiles.push({lbl:'VIX',val:O._VIX.spot,chg:null});
   push('BTC',Cr['BTC-USD']);push('ETH',Cr['ETH-USD']);
   if(R['2s10s']!=null)tiles.push({lbl:'2s10s 利差',val:R['2s10s'],chg:null,raw:true});
-  if(R['10 Yr']!=null)tiles.push({lbl:'10年債殖利率',val:R['10 Yr'],chg:null,raw:true,suffix:'%'});
+  if(RL['10Y']&&RL['10Y'].y!=null)tiles.push({lbl:'10年殖利率（即時）'+(RL['10Y'].chg_bp!=null?'  '+sgn(RL['10Y'].chg_bp)+RL['10Y'].chg_bp+'bp':''),val:RL['10Y'].y,chg:null,raw:true,suffix:'%'});
+  else if(R['10 Yr']!=null)tiles.push({lbl:'10年債殖利率',val:R['10 Yr'],chg:null,raw:true,suffix:'%'});
   push('美元指數 DXY',X['DX-Y.NYB']);push('USD/JPY',X['JPY=X']);push('USD/TWD',X['TWD=X']);
   const el=document.getElementById('tiles');
   el.innerHTML=tiles.map(t=>{
@@ -643,12 +717,24 @@ function renderCross(){
     return `<div class="tile"><div class="lbl">${t.lbl}</div><div class="val">${val}${t.suffix||''}</div>
       <div class="chg ${c}">${t.chg==null?'&nbsp;':sgn(t.chg)+fmt(t.chg,2)+'%'}</div></div>`;
   }).join('');
-  // 殖利率曲線
-  if(R.Date){
-    const ten=['3 Mo','2 Yr','5 Yr','10 Yr','20 Yr','30 Yr'],lab=['3M','2Y','5Y','10Y','20Y','30Y'];
-    Plotly.react('curve',[{type:'scatter',mode:'lines+markers',x:lab,y:ten.map(t=>R[t]),
-      line:{color:C.blue,width:2},marker:{size:8,color:C.blue},hovertemplate:'%{x}: %{y}%<extra></extra>'}],
-      {...PBASE,xaxis:{gridcolor:C.line},yaxis:{title:{text:'殖利率 %',font:{size:11,color:C.ink2}},gridcolor:C.line,tickformat:'.2f'}},CFG);
+  // 殖利率曲線:官方 EOD 曲線 + 盤中即時點(^IRX/^FVX/^TNX/^TYX)
+  const rf=document.getElementById('ratefresh');
+  if(rf) rf.textContent='· 官方 EOD '+(R.Date||'–')+' ｜ 即時點更新 '+ago(DATA.ts_utc);
+  if(R.Date||Object.keys(RL).length){
+    const traces=[];
+    if(R.Date){
+      const ten=['3 Mo','2 Yr','5 Yr','10 Yr','20 Yr','30 Yr'],lab=['3M','2Y','5Y','10Y','20Y','30Y'];
+      traces.push({type:'scatter',mode:'lines+markers',name:'官方 EOD（'+R.Date+'）',x:lab,y:ten.map(t=>R[t]),
+        line:{color:C.blue,width:2},marker:{size:8,color:C.blue},hovertemplate:'%{x}: %{y}%<extra></extra>'});
+    }
+    const ll=['3M','5Y','10Y','30Y'].filter(k=>RL[k]&&RL[k].y!=null);
+    if(ll.length) traces.push({type:'scatter',mode:'markers+text',name:'盤中即時',x:ll,y:ll.map(k=>RL[k].y),
+      marker:{size:11,color:C.amber,symbol:'diamond'},text:ll.map(k=>RL[k].y.toFixed(2)),
+      textposition:'top center',textfont:{size:10,color:C.amber},
+      hovertemplate:'%{x} 即時: %{y}%'+'<extra></extra>'});
+    Plotly.react('curve',traces,
+      {...PBASE,legend:{orientation:'h',y:1.12,font:{size:10.5}},xaxis:{gridcolor:C.line},
+       yaxis:{title:{text:'殖利率 %',font:{size:11,color:C.ink2}},gridcolor:C.line,tickformat:'.2f'}},CFG);
   }
   // 大宗商品條圖
   const K=DATA.commodities||{};const ks=Object.keys(K);
@@ -700,6 +786,25 @@ function renderFlow(){
     {k:'sym',t:'標的'},
     {k:'short_ratio',t:'賣空量比',f:v=>v==null?'–':(v*100).toFixed(1)+'%',cl:v=>v>=0.55?'neg':''},
   ],drows,'short_ratio');
+  renderDpTrend();
+}
+function renderDpTrend(){
+  const el=document.getElementById('dpTrend'); if(!el)return;
+  rangeBar('dpTrendBar',DPWIN,n=>{DPWIN=n;renderDpTrend();});
+  const dd=document.getElementById('dpdate');
+  if(dd) dd.textContent=((DATA.darkpool||{})._date||'–');
+  const D=DATA.dp_daily||{}; const dates=Object.keys(D).sort();
+  if(dates.length<2){el.innerHTML='<div class="miss" style="padding:30px">日檔累積/回填中（採集器更新後自動出現近 30 日）</div>';return;}
+  const use=dates.slice(-DPWIN);
+  const syms=Object.keys(D[dates[dates.length-1]]||{}).sort();
+  const traces=syms.map(s=>({type:'scatter',mode:'lines+markers',name:s,
+    x:use.map(d=>d.slice(4,6)+'/'+d.slice(6,8)),
+    y:use.map(d=>{const v=(D[d]||{})[s];return v!=null?+(v*100).toFixed(1):null;}),
+    marker:{size:5}}));
+  Plotly.react('dpTrend',traces,
+    {...PBASE,legend:{orientation:'h',y:1.16,font:{size:10}},margin:{l:46,r:10,t:30,b:30},
+     xaxis:{gridcolor:C.line},yaxis:{title:{text:'賣空量比 %',font:{size:10.5,color:C.ink2}},gridcolor:C.line},
+     shapes:[{type:'line',xref:'paper',x0:0,x1:1,y0:55,y1:55,line:{color:C.amber,dash:'dot',width:1}}]},CFG);
 }
 
 // ===== 分頁 =====
