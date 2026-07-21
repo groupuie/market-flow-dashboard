@@ -106,7 +106,7 @@ a{color:var(--blue)}
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:400px"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部琥珀色「Σ 即時現金池」列(取代原「不可觀測殘差」與「現金」列)</b>=上方各列買賣相減的鏡像,和所有橫柱同一把尺、可直接比長短——右伸=入池(賣壓>買壓)、左伸=出池進場。<b>下方「池水位線」</b>=即時模式顯示今日盤中池水位的累積曲線(每 ~6 分一點,看得到池子漲落);多日視窗則顯示逐日水位。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的鏡像,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池——右伸=入池、左伸=出池;兩段反向=機構與散戶對現金的動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=逐日。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   <div class="card">
     <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
@@ -514,19 +514,21 @@ function renderRotation(){
   const arr=Object.keys(FM).map(s=>({s:s,v:FM[s].v,r:FM[s].r,cat:FM[s].cat||'正股'})).filter(x=>x.v!=null&&Math.abs(x.v)>1e5);
   // 類別淨流向 tiles(動態:只列有資料的類別)—— ⑦大單口徑(機構視角)
   const catNet={}; arr.forEach(x=>{catNet[x.cat]=(catNet[x.cat]||0)+x.v;});
-  // 目的地圖/池:全單口徑(特大+大+中+小)= 完整主動淨流;分類噪音在加總中互銷
-  const catNetAll={};
-  Object.keys(FM).forEach(s=>{const e=FM[s]; if(e.v==null)return;
-    const tot=e.v+(e.r||0);
-    if(Math.abs(tot)<=1e5)return;
-    const c=e.cat||'正股'; catNetAll[c]=(catNetAll[c]||0)+tot;});
+  // 目的地圖/池:大單(機構)與中小單(散戶)分離堆疊 —— 大小單反向=轉折觀察訊號 ⚡
+  const catSplit={};
+  Object.keys(FM).forEach(s=>{const e=FM[s]; if(e.v==null&&e.r==null)return;
+    const c=e.cat||'正股'; const o=catSplit[c]=catSplit[c]||{m:0,r:0};
+    o.m+=e.v||0; o.r+=e.r||0;});
+  delete catSplit['現金'];   // 現金ETF=池內重分配,不入列(併入池)
+  Object.keys(catSplit).forEach(c=>{const o=catSplit[c];
+    if(Math.abs(o.m)<=1e5&&Math.abs(o.r)<=1e5&&Math.abs(o.m+o.r)<=1e5)delete catSplit[c];});
   const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
       <div class="chg ${cl}">${v>0?'淨流入':(v<0?'淨流出':'—')} · ${winLabel()}</div></div>`;}).join('');
-  // 目的地對照(diverging bar + 底部池合計列;全單口徑)+ 池水位線
-  renderDest(catNetAll); renderPoolTide();
+  // 目的地對照(大單深色+中小單淺色堆疊;⚡=反向)+ 池水位線(全單+大單雙線)
+  renderDest(catSplit); renderPoolTide();
   // Sankey(可重用;動畫逐日餵單日資料)
   const hasSankey=drawSankey(arr,null);
   if(hasSankey){
@@ -594,68 +596,84 @@ function renderCash(){
 }
 // ===== 目的地對照(diverging bar + 殘差;支援逐日動畫)=====
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
-function renderDest(catNet, subtitle, fixRange){
+function renderDest(catSplit, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
-  // 「現金」(SGOV/BIL)不再單列:T-bill ETF 屬停泊現金,其流動=池內重分配,已併入池推估
   const order=['正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入'];
-  const rows=order.filter(c=>catNet[c]!=null).map(c=>({c,v:catNet[c]}));
+  const rows=order.filter(c=>catSplit[c]).map(c=>({c,m:catSplit[c].m||0,r:catSplit[c].r||0}));
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
-  const pool=-rows.reduce((a,b)=>a+b.v,0);   // 即時現金池 = 非現金各類買賣相減的鏡像(現金ETF流動隱含在池內)
-  const M=(fixRange&&DEST_RANGE)?DEST_RANGE[1]:Math.max(...rows.map(r=>Math.abs(r.v)),Math.abs(pool))*1.18;
-  const nRow=rows.length+1;
+  // 池:大單池 + 中小單池(各為對應淨流的鏡像;合計=全單池)
+  const poolM=-rows.reduce((a,b)=>a+b.m,0), poolR=-rows.reduce((a,b)=>a+b.r,0);
+  const cats=[...rows.map(x=>x.c),'Σ 即時現金池'];
+  const mV=[...rows.map(x=>x.m),poolM], rV=[...rows.map(x=>x.r),poolR];
+  const isPool=i=>cats[i]==='Σ 即時現金池';
+  const mCol=cats.map((c,i)=>isPool(i)?'#f59e0b':(mV[i]>=0?'#16a34a':'#dc2626'));       // 深=大單(機構)
+  const rCol=cats.map((c,i)=>isPool(i)?'#fde68a':(rV[i]>=0?'#86efac':'#fca5a5'));       // 淺=中小單(散戶)
+  const nRow=cats.length;
+  const M=(fixRange&&DEST_RANGE)?DEST_RANGE[1]
+    :Math.max(...cats.map((c,i)=>Math.max(Math.abs(mV[i]+rV[i]),Math.abs(mV[i]),Math.abs(rV[i]))))*1.2;
   const ann=[];
+  // 淨額標籤 + ⚡分歧(大小單反向且較小方 >2M)
+  cats.forEach((c,i)=>{
+    const net=mV[i]+rV[i];
+    const pos=Math.max(0,mV[i])+Math.max(0,rV[i]), neg=Math.min(0,mV[i])+Math.min(0,rV[i]);
+    const dv=!isPool(i)&&mV[i]*rV[i]<0&&Math.min(Math.abs(mV[i]),Math.abs(rV[i]))>2e6;
+    ann.push({text:(net>0?'+':'')+fmtM(net)+(dv?' ⚡':''),xref:'x',yref:'y',
+      x:(net>=0?pos:neg), y:c, xanchor:net>=0?'left':'right',showarrow:false,
+      font:{size:10.5,color:dv?'#fbbf24':(isPool(i)?C.amber:C.ink2)},xshift:net>=0?4:-4});
+  });
+  ann.push({text:'深色=大單(機構)・淺色=中小單(散戶)|紅=流出 綠=流入|⚡=大小單反向(轉折觀察)',
+    xref:'paper',yref:'paper',x:0.01,y:1.05,showarrow:false,font:{size:10,color:C.muted},xanchor:'left'});
   if(subtitle)ann.push({text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.98,y:0.08,showarrow:false,
     font:{size:20,color:'#9db4e0'},xanchor:'right'});
   const mmf=(DATA.cash_pool||{}).mmf||null;
   if(mmf&&mmf.total_bn)ann.push({text:'池基準水位:MMF $'+(mmf.total_bn/1000).toFixed(2)+'T('+(mmf.asof||'')
     +',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
     xref:'paper',yref:'paper',x:0.99,y:1.05,showarrow:false,font:{size:10.5,color:C.ink2},xanchor:'right'});
-  // 合計分隔線(池列之上)
   const shapes=[{type:'line',xref:'paper',yref:'paper',x0:0.005,x1:0.995,
     y0:1/nRow*1.02,y1:1/nRow*1.02,line:{color:'#4a4a46',width:1,dash:'dot'}}];
   const xaxis={title:{text:'← 淨流出(賣出側)   |   淨流入(買入側) →全單主動淨流('+(subtitle||winLabel())+')',font:{size:11,color:C.ink2}},
     gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',range:[-M,M]};
   Plotly.react('dest',[
-    {type:'bar',orientation:'h',x:rows.map(r=>r.v),y:rows.map(r=>r.c),
-     marker:{color:rows.map(r=>r.v>=0?'#22c55e':'#ef4444')},
-     text:rows.map(r=>(r.v>0?'+':'')+fmtM(r.v)),textposition:'outside',textfont:{size:11,color:C.ink2},
-     hovertemplate:'%{y}: %{x:,.0f}<extra></extra>'},
-    {type:'bar',orientation:'h',x:[pool],y:['Σ 即時現金池'],
-     marker:{color:C.amber},
-     text:[(pool>0?'+':'')+fmtM(pool)+(pool>=0?'(入池)':'(出池進場)')],textposition:'outside',
-     textfont:{size:12,color:C.amber},
-     hovertemplate:'即時現金池:%{x:,.0f}<extra></extra>'}
+    {type:'bar',orientation:'h',name:'大單(機構)',x:mV,y:cats,marker:{color:mCol},
+     hovertemplate:'%{y} 大單:%{x:,.0f}<extra></extra>'},
+    {type:'bar',orientation:'h',name:'中小單(散戶)',x:rV,y:cats,marker:{color:rCol},
+     hovertemplate:'%{y} 中小單:%{x:,.0f}<extra></extra>'}
   ],
-    {...PBASE,margin:{l:96,r:76,t:24,b:32},annotations:ann,xaxis,shapes,showlegend:false,
+    {...PBASE,barmode:'relative',margin:{l:96,r:80,t:30,b:32},annotations:ann,xaxis,shapes,showlegend:false,
      yaxis:{gridcolor:C.line,autorange:'reversed'}},CFG);
 }
 // ===== 池水位線:即時=今日盤中累積水位曲線;多日視窗=逐日水位 =====
 function renderPoolTide(){
   const el=document.getElementById('pooltide'); if(!el)return;
   const CASH=new Set(['SGOV','BIL']);
-  let x=[],y=[],mode='今日盤中累積';
+  let x=[],yAll=[],yMain=[],mode='今日盤中累積';
   if(WIN.mode==='live'){
     let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
     x=H.map(h=>etTime(h.ts));
-    y=H.map(h=>{let s=0;
-      Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});
-      Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});   // 中小單(新欄位,舊點自動退回大單口徑)
-      return -s*1e6;});
+    yMain=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return -s*1e6;});
+    yAll=H.map((h,i)=>{let s=0;Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});return yMain[i]-s*1e6;});
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
     const use=WIN.mode==='nd'?dates.slice(-WIN.n):dates.filter(d=>d>=WIN.from&&d<=WIN.to);
     x=use.map(d=>d.slice(5)); mode=winLabel()+'逐日';
-    y=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=((day[k].m||0)+(day[k].r||0));});return -s*1e6;});
+    yMain=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=(day[k].m||0);});return -s*1e6;});
+    yAll=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=((day[k].m||0)+(day[k].r||0));});return -s*1e6;});
   }
   if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">池水位線累積中(每次採集自動加點)</div>';return;}
-  const last=y[y.length-1];
-  Plotly.react('pooltide',[{type:'scatter',mode:'lines+markers',x:x,y:y,
-    line:{color:C.amber,width:2,shape:'spline'},marker:{size:4},
-    fill:'tozeroy',fillcolor:'rgba(250,178,25,.16)',
-    hovertemplate:'%{x} 池水位:%{y:,.0f}<extra></extra>'}],
-    {...PBASE,margin:{l:96,r:76,t:24,b:26},
-     annotations:[{text:'<b>池水位線</b>('+mode+')· 目前 '+(last>0?'+':'')+fmtM(last),
-       xref:'paper',yref:'paper',x:0.01,y:1.12,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
+  const lastA=yAll[yAll.length-1], lastM=yMain[yMain.length-1];
+  Plotly.react('pooltide',[
+    {type:'scatter',mode:'lines+markers',name:'全單池',x:x,y:yAll,
+     line:{color:C.amber,width:2,shape:'spline'},marker:{size:4},
+     fill:'tozeroy',fillcolor:'rgba(250,178,25,.14)',
+     hovertemplate:'%{x} 全單池:%{y:,.0f}<extra></extra>'},
+    {type:'scatter',mode:'lines',name:'大單池(機構)',x:x,y:yMain,
+     line:{color:'#c2703e',width:2,dash:'dot'},
+     hovertemplate:'%{x} 大單池:%{y:,.0f}<extra></extra>'}
+  ],
+    {...PBASE,margin:{l:96,r:80,t:26,b:26},showlegend:false,
+     annotations:[{text:'<b>池水位線</b>('+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
+       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> — 兩線背離=機構與散戶反向',
+       xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{gridcolor:C.line,tickfont:{size:9.5}},
      yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑入池/↓出池',font:{size:10,color:C.ink2}}}},CFG);
 }
@@ -672,11 +690,12 @@ function dayCatNet(date){
   Object.keys(day).forEach(s=>{const c=day[s].c||'正股';cn[c]=(cn[c]||0)+(day[s].m||0)*1e6;});
   return cn;
 }
-function dayCatNetAll(date){  // 全單口徑(m+r;r 缺值時退回 m)
-  const day=(DATA.daily_flows||{})[date]||{}; const cn={};
+function dayCatSplit(date){  // 大單/中小單分離(供堆疊圖;r 缺值=0)
+  const day=(DATA.daily_flows||{})[date]||{}; const cs={};
   Object.keys(day).forEach(s=>{const c=day[s].c||'正股';
-    cn[c]=(cn[c]||0)+((day[s].m||0)+(day[s].r||0))*1e6;});
-  return cn;
+    const o=cs[c]=cs[c]||{m:0,r:0};
+    o.m+=(day[s].m||0)*1e6; o.r+=(day[s].r||0)*1e6;});
+  return cs;
 }
 function stopAnim(restore){
   if(ANIM.timer){clearInterval(ANIM.timer);ANIM.timer=null;}
@@ -689,17 +708,19 @@ function playAnim(){
   const ds=animDates(); if(ds.length<2)return;
   // 先算所有日的最大絕對值,固定 x 軸,動畫才可比
   let mx=0;
-  ds.forEach(d=>{const cn=dayCatNetAll(d);
-    const vals=Object.entries(cn).filter(([c])=>c!=='現金').map(([,v])=>v);   // 與 renderDest 同步:現金不入列
-    const pool=-vals.reduce((a,b)=>a+b,0);
-    [...vals,pool].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});});
+  ds.forEach(d=>{const cs=dayCatSplit(d);
+    let pm=0,pr=0;
+    Object.entries(cs).forEach(([c,o])=>{if(c==='現金')return;
+      pm+=o.m; pr+=o.r;
+      [o.m+o.r,o.m,o.r].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(v);});});
+    [pm+pr,pm,pr].forEach(v=>{if(Math.abs(v)>mx)mx=Math.abs(-v);});});
   DEST_RANGE=[-mx*1.25,mx*1.25];
   ANIM.playing=true;ANIM.idx=0;
   const b=document.getElementById('playbtn'); if(b)b.textContent='⏸ 停止';
   const tick=()=>{
     if(!ANIM.playing)return;
     const d=ds[ANIM.idx];
-    renderDest(dayCatNetAll(d), d+' 單日', true);
+    (function(){const cs=dayCatSplit(d); delete cs['現金']; renderDest(cs, d+' 單日', true);})();
     const day=(DATA.daily_flows||{})[d]||{};
     const dayArr=Object.keys(day).map(s=>({s:s,v:(day[s].m||0)*1e6,cat:day[s].c||'正股'})).filter(x=>Math.abs(x.v)>1e5);
     drawSankey(dayArr, d+' 單日 FROM→TO');
