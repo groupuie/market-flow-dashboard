@@ -668,6 +668,14 @@ function renderCash(){
 }
 // ===== 目的地對照(diverging bar + 殘差;支援逐日動畫)=====
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
+let SPYK=null,SPYK_req=false;   // SPY 日K(日期→收盤)快取,池水位線多日疊圖用
+function ensureSpyK(){
+  if(SPYK||SPYK_req)return; SPYK_req=true;
+  fetch(DATA_URL.replace('market_data.json','kline_SPY.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&d.bars){SPYK={};d.bars.forEach(b=>{SPYK[b[0]]=b[4];});render();}})
+    .catch(()=>{});
+}
 let POOLR=null;   // 動畫時池軌的固定範圍(與 DEST_RANGE 成對)
 function renderDest(catSplit, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
@@ -745,22 +753,25 @@ function renderDest(catSplit, subtitle, fixRange){
 function renderPoolTide(){
   const el=document.getElementById('pooltide'); if(!el)return;
   const CASH=new Set(['SGOV','BIL']);
-  let x=[],yAll=[],yMain=[],mode='今日盤中累積';
+  let x=[],yAll=[],yMain=[],idx=[],mode='今日盤中累積';
   if(WIN.mode==='live'){
     let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
     x=H.map(h=>etTime(h.ts));
     yMain=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return -s*1e6;});
     yAll=H.map((h,i)=>{let s=0;Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});return yMain[i]-s*1e6;});
+    idx=H.map(h=>h.px!=null?h.px:null);   // 盤中 SPY(px 自 07-22 起逐點累積)
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
     const use=WIN.mode==='nd'?dates.slice(-WIN.n):dates.filter(d=>d>=WIN.from&&d<=WIN.to);
     x=use.map(d=>d.slice(5)); mode=winLabel()+'逐日';
     yMain=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=(day[k].m||0);});return -s*1e6;});
     yAll=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=((day[k].m||0)+(day[k].r||0));});return -s*1e6;});
+    ensureSpyK();
+    idx=use.map(d=>SPYK?(SPYK[d]!=null?SPYK[d]:null):null);
   }
   if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">池水位線累積中(每次採集自動加點)</div>';return;}
   const lastA=yAll[yAll.length-1], lastM=yMain[yMain.length-1];
-  Plotly.react('pooltide',[
+  const traces=[
     {type:'scatter',mode:'lines+markers',name:'全單池',x:x,y:yAll,
      line:{color:C.amber,width:2,shape:'spline'},marker:{size:4},
      fill:'tozeroy',fillcolor:'rgba(250,178,25,.14)',
@@ -768,16 +779,23 @@ function renderPoolTide(){
     {type:'scatter',mode:'lines',name:'大單池(機構)',x:x,y:yMain,
      line:{color:'#c2703e',width:2,dash:'dot'},
      hovertemplate:'%{x} 大單池:%{y:,.0f}<extra></extra>'}
-  ],
+  ];
+  const hasIdx=idx.some(v=>v!=null);
+  if(hasIdx)traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:idx,yaxis:'y2',
+     connectgaps:true,line:{color:'#8ab4f8',width:1.6},
+     hovertemplate:'%{x} SPY:%{y:,.2f}<extra></extra>'});
+  Plotly.react('pooltide',traces,
     {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:96,r:((window.innerWidth||1024)<680)?14:80,t:26,b:26},showlegend:false,
      annotations:[{text:((window.innerWidth||1024)<680)
         ?'<b>池水位</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
         :'<b>池水位線</b>('+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
-       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> — 兩線背離=機構與散戶反向',
+       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> — 池升+指數平=派發;池降+指數升=場外資金進場',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
        font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{gridcolor:C.line,tickfont:{size:9.5}},
-     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑入池/↓出池',font:{size:10,color:C.ink2}}}},CFG);
+     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑入池/↓出池',font:{size:10,color:C.ink2}}},
+     yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},
+       title:{text:'SPY',font:{size:10,color:'#8ab4f8'}}}},CFG);
 }
 // ===== 逐日播放動畫 =====
 let ANIM={playing:false,idx:0,timer:null};
