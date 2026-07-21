@@ -218,6 +218,51 @@ def live_yields():
         time.sleep(0.1)
     return out
 
+# ============ 多空槓桿資金(部位層;美股版期貨多空/融券)============
+def cftc_cot():
+    """CFTC TFF 期貨多空(週頻;週五發布週二資料):ES/NQ 槓桿基金與資產管理人部位(口)"""
+    import urllib.parse as _p
+    out={}
+    for name,label in (("E-MINI S&P 500","ES"),("NASDAQ MINI","NQ"),("NASDAQ-100 STOCK INDEX (MINI)","NQ")):
+        if label in out: continue
+        try:
+            q=_p.urlencode({"$where":f"contains(market_and_exchange_names,'{name}')",
+                            "$order":"report_date_as_yyyy_mm_dd DESC","$limit":"1"})
+            d=http_json(f"https://publicreporting.cftc.gov/resource/gpe5-46if.json?{q}",25,2)
+            if not d: continue
+            r=d[0]; g=lambda k: int(float(r.get(k) or 0))
+            out[label]={"date":str(r.get("report_date_as_yyyy_mm_dd",""))[:10],
+                "lev_long":g("lev_money_positions_long"),"lev_short":g("lev_money_positions_short"),
+                "am_long":g("asset_mgr_positions_long"),"am_short":g("asset_mgr_positions_short"),
+                "d_lev_long":g("change_in_lev_money_long"),"d_lev_short":g("change_in_lev_money_short")}
+        except Exception as e: err(f"cftc {label}",e)
+        time.sleep(0.4)
+    return out
+
+def yahoo_short_pos(syms):
+    """個股/ETF 空方部位(半月頻,交易所申報;Yahoo defaultKeyStatistics)。
+       需 cookie+crumb;住宅 IP(Mac)穩定,資料中心 IP 可能 429(Actions 備援允許失敗)"""
+    import http.cookiejar, urllib.parse as _p
+    cj=http.cookiejar.CookieJar()
+    op=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+    try: op.open(urllib.request.Request("https://fc.yahoo.com",headers=UA),timeout=12)
+    except Exception: pass
+    crumb=op.open(urllib.request.Request("https://query1.finance.yahoo.com/v1/test/getcrumb",headers=UA),timeout=12).read().decode()
+    out={}
+    for s in syms:
+        try:
+            u=(f"https://query1.finance.yahoo.com/v10/finance/quoteSummary/{_p.quote(s)}"
+               f"?modules=defaultKeyStatistics&crumb={_p.quote(crumb)}")
+            ks=json.loads(op.open(urllib.request.Request(u,headers=UA),timeout=12).read())["quoteSummary"]["result"][0]["defaultKeyStatistics"]
+            g=lambda k:(ks.get(k) or {}).get("raw")
+            if g("sharesShort") is not None:
+                out[s]={"sh":g("sharesShort"),"sh_prior":g("sharesShortPriorMonth"),
+                        "ratio":g("shortRatio"),"pct_float":g("shortPercentOfFloat"),
+                        "asof":(ks.get("dateShortInterest") or {}).get("fmt")}
+        except Exception as e: err(f"shortpos {s}",e)
+        time.sleep(0.5)
+    return out
+
 # ============ 現金池水位(層級觀測;「等機會的錢」)============
 def nyfed_rrp(days=40):
     """Fed ON RRP 接納額(日頻;當日 13:15 ET 後有值)→ 貨幣基金停在 Fed 的過剩現金"""
@@ -664,7 +709,8 @@ def run_once(cfg, args):
         except Exception: et_date=None
         if et_date:
             optd[et_date]={s:{k:o.get(k) for k in
-                ("spot","gex_bn","pc_vol","pc_oi","atm_iv","skew_25d","max_pain","zero_dte_share","call_prem","put_prem")}
+                ("spot","gex_bn","pc_vol","pc_oi","atm_iv","skew_25d","max_pain","zero_dte_share",
+                 "call_prem","put_prem","call_oi","put_oi","call_vol","put_vol")}
                 for s,o in data["options"].items()}
             for d_ in sorted(optd)[:-30]: optd.pop(d_,None)
             try: json.dump(optd, open(optdaily,"w"), ensure_ascii=False)
@@ -707,6 +753,23 @@ def run_once(cfg, args):
     try: json.dump(cash, open(cashpath,"w"), ensure_ascii=False)
     except Exception: pass
     data["cash_pool"]=cash
+    # 多空槓桿資金層(部位;長頻快取:COT 20h、空方部位 20h 檢查一次)
+    levpath=args.config+".levpos.json"
+    try: lev=json.load(open(levpath))
+    except Exception: lev={}
+    if time.time()-lev.get("_cot_ts",0)>20*3600:
+        try:
+            c=cftc_cot()
+            if c: lev["cot"]=c; lev["_cot_ts"]=time.time()
+        except Exception as e: err("cftc",e)
+    if time.time()-lev.get("_short_ts",0)>20*3600:
+        try:
+            sp=yahoo_short_pos(WL["market"]+[x for x in WL["stocks"] if x not in ("SMH","SOXX")][:26]+["SMH","SOXX"])
+            if sp: lev["short_pos"]=sp; lev["_short_ts"]=time.time()
+        except Exception as e: err("shortpos",e)
+    try: json.dump(lev,open(levpath,"w"),ensure_ascii=False)
+    except Exception: pass
+    data["lev_pos"]=lev
     # Futu 大單淨流 + 機構持股(機構持股跟期權同節流,15 分抓一次;季頻資料低頻足夠)
     fsnap={"ts_utc":data["ts_utc"],"source":"futu-opend","snapshots":{},"capital":{},"errors":[]}
     # 機構持股 15 分一次(季頻資料,低頻足夠;與期權節流解耦——盤中期權已改每次重算)

@@ -118,6 +118,12 @@ a{color:var(--blue)}
     <div class="note">「等機會的現金」主體停在<b>貨幣市場基金 MMF</b>——散戶券商帳戶的閒置現金每晚被自動掃(sweep)進去,機構亦然——來源 ICI,<b>週頻</b>(週四發布、資料截至週三)。<b>Fed ON RRP</b>＝貨幣基金放回 Fed 的過剩現金,<b>日頻</b>(當日美東 13:15 後有值;2025 年後已近乎排空,代表系統閒錢已回到市場運用,水位主要看 MMF)。券商免佣現金餘額為月頻(FINRA)且無機器可讀源,誠實不納入。<b>盤中的即時現金池水位不存在任何公開資料源——券商帳戶餘額是私有資料。</b>盤中唯一可觀測的是上圖「現金ETF ⑦ 主動流」,方向即時但量級只是冰山一角;水位判讀以本卡的 MMF 週頻為準。</div>
   </div>
   <div class="card">
+    <h2>多空槓桿資金(美股版「期貨多空・融券」;部位層,非日內流)</h2>
+    <div id="levtiles" class="tiles"></div>
+    <div style="overflow-x:auto;margin-top:10px;max-height:340px;overflow-y:auto"><table id="shortTable"></table></div>
+    <div class="note"><b>做空也是資金進場</b>——本卡呈現美股可公開觀測的多空「部位」:<b>期貨多空</b>=CFTC COT(TFF 報告,週頻:週五發布週二值;槓桿基金≈投機方、資產管理人≈長線多方,$ 估算=口數×合約乘數×指數)。<b>個股空方部位</b>=交易所半月申報(Yahoo 轉載),空方部位$=空單股數×現價;Δ=與上期比較=空方資金增減。<b>期權新倉資金</b>=T+1 粗估(ΔOI×當日平均權利金;call 新倉≈多方資金、put 新倉≈空方/避險資金)——OI 日檔自 2026-07-22 起累積,兩日後自動顯示。<b>誠實邊界</b>:美股沒有台股那種日頻融資融券——放空「流量」僅有 FINRA 日賣空量比(見暗池分頁),放空「部位」半月一次;各數據頻率不同,<b>不與上方日內現金池混算</b>,分層對照判讀。</div>
+  </div>
+  <div class="card">
     <h2>機構大單資金輪動 FROM → TO（正股 + 大盤 ETF + 2×3× 槓桿 ETF;連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
     <div style="margin-bottom:8px">
       <span class="chip" style="background:#2a3550;color:#9db4e0">● 正股</span>
@@ -546,7 +552,73 @@ function renderRotation(){
     snote+=' 量級提醒:⑦只涵蓋「主動性特大+大單」,機構用演算法拆小單與 ETF 申贖不在其中 —— 這是總流量的一角,方向參考、非全貌。';
     document.getElementById('sankeynote').innerHTML=snote;
   }
-  renderPersist(); renderOptPrem(); renderInst(); renderCash();
+  renderPersist(); renderOptPrem(); renderInst(); renderCash(); renderLev();
+}
+// ===== 多空槓桿資金(期貨COT週頻 + 空方部位半月 + 期權新倉T+1)=====
+function renderLev(){
+  const el=document.getElementById('levtiles'); if(!el)return;
+  const LP=DATA.lev_pos||{}; const cot=LP.cot||{}; const sp=LP.short_pos||{};
+  const O=DATA.options||{};
+  const spx=(O._SPX||{}).spot||((DATA.market||{}).SPY||{}).last*10||0;
+  const ndx=(((DATA.market||{}).QQQ||{}).last||0)*41.1;   // NDX≈QQQ×41.1(近似)
+  const tiles=[];
+  if(cot.ES){
+    const n=cot.ES.lev_long-cot.ES.lev_short, dn=cot.ES.d_lev_long-cot.ES.d_lev_short;
+    tiles.push({l:'ES 期貨・槓桿基金淨部位',v:(n>0?'+':'')+n.toLocaleString()+' 口',
+      c:n,cs:'≈'+(n>0?'+':'')+bn(n*50*spx)+(dn?' · 週變 '+(dn>0?'+':'')+dn.toLocaleString()+'口':''),d:cot.ES.date});
+    const a=cot.ES.am_long-cot.ES.am_short;
+    tiles.push({l:'ES・資產管理人淨部位',v:(a>0?'+':'')+a.toLocaleString()+' 口',c:a,cs:'≈'+(a>0?'+':'')+bn(a*50*spx),d:cot.ES.date});
+  }
+  if(cot.NQ){
+    const n=cot.NQ.lev_long-cot.NQ.lev_short;
+    tiles.push({l:'NQ 期貨・槓桿基金淨部位',v:(n>0?'+':'')+n.toLocaleString()+' 口',
+      c:n,cs:'≈'+(n>0?'+':'')+bn(n*20*ndx),d:cot.NQ.date});
+  }
+  // 個股空方部位合計
+  const px=s2=>{const b=(DATA.stocks||{})[s2]||(DATA.market||{})[s2]; return b?b.last:null;};
+  let tot=0,dtot=0,rows=[];
+  Object.keys(sp).forEach(s2=>{
+    const e=sp[s2], p=px(s2); if(!p||e.sh==null)return;
+    const v=e.sh*p, dv=(e.sh_prior!=null)?(e.sh-e.sh_prior)*p:null;
+    tot+=v; if(dv!=null)dtot+=dv;
+    rows.push({sym:s2,v:v,dv:dv,pf:e.pct_float!=null?e.pct_float*100:null,ratio:e.ratio,asof:e.asof||''});
+  });
+  if(rows.length){
+    const asof=rows[0].asof;
+    tiles.push({l:'個股空方部位合計(觀測清單)',v:'$'+bn(tot),c:-1,
+      cs:'半月Δ '+(dtot>0?'+':'')+bn(dtot),d:'申報日 '+asof});
+  }
+  // 期權新倉資金(T+1;需 opt_daily 兩日含 OI)
+  const OD=DATA.opt_daily||{}; const ds=Object.keys(OD).sort();
+  let optNew=null;
+  if(ds.length>=2){
+    const A=OD[ds[ds.length-1]],B=OD[ds[ds.length-2]]; let cN=0,pN=0,ok=false;
+    Object.keys(A).forEach(s2=>{
+      const a2=A[s2],b2=B[s2];
+      if(a2&&b2&&a2.call_oi!=null&&b2.call_oi!=null){
+        ok=true;
+        const cAvg=(a2.call_vol>0)?a2.call_prem/a2.call_vol:0, pAvg=(a2.put_vol>0)?a2.put_prem/a2.put_vol:0;
+        cN+=(a2.call_oi-b2.call_oi)*cAvg; pN+=(a2.put_oi-b2.put_oi)*pAvg;
+      }});
+    if(ok)optNew={c:cN,p:pN,d:ds[ds.length-1]};
+  }
+  tiles.push(optNew?{l:'期權新倉資金(T+1 粗估)',v:(optNew.c>0?'+':'')+bn(optNew.c)+' call',
+      c:optNew.c-optNew.p,cs:'put '+(optNew.p>0?'+':'')+bn(optNew.p)+'(空方/避險)',d:optNew.d}
+    :{l:'期權新倉資金(T+1 粗估)',v:'累積中',c:null,cs:'OI 日檔自 07-22 起,兩日後顯示',d:''});
+  el.innerHTML=tiles.length?tiles.map(t=>{
+    const c=t.c==null?'flat':(t.c>0?'up':(t.c<0?'down':'flat'));
+    return `<div class="tile"><div class="lbl">${t.l}</div><div class="val" style="font-size:16px">${t.v}</div>
+      <div class="chg ${c}">${t.cs||''}${t.d?' · '+t.d:''}</div></div>`;
+  }).join(''):'<div class="miss" style="padding:16px">多空部位資料累積中(採集器更新後自動出現)</div>';
+  rows.sort((a,b)=>b.v-a.v);
+  makeTable(document.getElementById('shortTable'),[
+    {k:'sym',t:'標的'},
+    {k:'v',t:'空方部位$',f:v=>'$'+bn(v)},
+    {k:'dv',t:'半月Δ$',f:v=>v==null?'–':((v>0?'+':'')+bn(v)),cl:v=>v>0?'neg':'pos'},
+    {k:'pf',t:'佔流通%',f:v=>v==null?'–':v.toFixed(1)+'%',cl:v=>v>=10?'neg':''},
+    {k:'ratio',t:'回補天數',f:v=>v==null?'–':fmt(v,1)},
+    {k:'asof',t:'申報日'},
+  ],rows.slice(0,14),'v');
 }
 // ===== 現金池水位(MMF 週頻 + ON RRP 日頻 + 現金ETF⑦ 對照)=====
 function renderCash(){
