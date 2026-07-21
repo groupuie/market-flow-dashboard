@@ -298,7 +298,7 @@ async function load(){
     document.getElementById('status').textContent='抓取失敗：兩個資料源皆不可達';
     return;
   }
-  DATA=m; render(); markStatus();
+  DATA=m; mergeDeep(); render(); markStatus(); ensureDeepDaily();
 }
 function etSession(){
   // 以瀏覽器時間換算美東,粗判時段(假日以 trade_date 呈現為準)
@@ -453,7 +453,7 @@ function flowMap(){
 function buildWinBar(){
   const bar=document.getElementById('winbar'); if(!bar)return;
   const dates=dailyDates(); const nD=dates.length;
-  const opts=[['live','即時'],['1','1日'],['3','3日'],['5','5日'],['10','10日'],['custom','自訂']];
+  const opts=[['live','即時'],['1','1日'],['3','3日'],['5','5日'],['10','10日'],['30','30日'],['60','60日'],['custom','自訂']];
   let h=opts.map(([k,lbl])=>{
     const need=k==='live'?0:(k==='custom'?2:+k);
     const dis=k!=='live'&&nD<Math.max(need,1);
@@ -652,7 +652,7 @@ function renderCash(){
       y:md.map(d=>+(mh[d]/1000).toFixed(3)),line:{color:C.aqua,width:2},marker:{size:7},
       hovertemplate:'%{x}: $%{y}T<extra></extra>'}],
       {...PBASE,margin:{l:52,r:10,t:26,b:28},title:{text:'MMF 總資產（$T,週頻;每週四+1點）',font:{size:11,color:C.ink2}},
-       xaxis:{gridcolor:C.line},yaxis:{gridcolor:C.line,tickformat:'.2f'}},CFG);
+       xaxis:{type:'category',gridcolor:C.line},yaxis:{gridcolor:C.line,tickformat:'.2f'}},CFG);
   }else{
     document.getElementById('mmfTrend').innerHTML='<div class="miss" style="padding:26px">MMF 週頻史累積中（每週四新增一點,現值見上方磚）</div>';
   }
@@ -661,7 +661,7 @@ function renderCash(){
     Plotly.react('rrpTrend',[{type:'bar',x:rds.map(d=>d.slice(5)),y:rds.map(d=>rrp[d]),
       marker:{color:C.violet},hovertemplate:'%{x}: $%{y}B<extra></extra>'}],
       {...PBASE,margin:{l:52,r:10,t:26,b:28},title:{text:'Fed ON RRP 接納額（$B,日頻）',font:{size:11,color:C.ink2}},
-       xaxis:{gridcolor:C.line,tickfont:{size:9}},yaxis:{gridcolor:C.line}},CFG);
+       xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},yaxis:{gridcolor:C.line}},CFG);
   }else{
     document.getElementById('rrpTrend').innerHTML='<div class="miss" style="padding:26px">RRP 日頻累積中</div>';
   }
@@ -675,6 +675,23 @@ function ensureSpyK(){
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d&&d.bars){SPYK={};d.bars.forEach(b=>{SPYK[b[0]]=b[4];});render();}})
     .catch(()=>{});
+}
+let DFULL=null,DFULL_req=0;   // 深歷史日檔(daily_flows.json,≤250 交易日;主檔只嵌 30 日)
+function ensureDeepDaily(){
+  const now=Date.now();
+  if(DFULL_req&&now-DFULL_req<15*60*1000)return;   // 15 分節流(檔案≈每日才變)
+  DFULL_req=now;
+  fetch(DATA_URL.replace('market_data.json','daily_flows.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(j=>{const df=j&&j.daily_flows;
+      if(df&&Object.keys(df).length>Object.keys(DFULL||{}).length){DFULL=df;if(DATA){mergeDeep();render();}}})
+    .catch(()=>{});
+}
+function mergeDeep(){
+  if(!DFULL||!DATA)return;
+  const cur=DATA.daily_flows||{};
+  if(Object.keys(DFULL).length>Object.keys(cur).length)
+    DATA.daily_flows={...DFULL,...cur};   // 近 30 日以主檔為準(今日盤中值較新),深檔補尾段
 }
 let POOLR=null;   // 動畫時池軌的固定範圍(與 DEST_RANGE 成對)
 function renderDest(catSplit, subtitle, fixRange){
@@ -713,8 +730,8 @@ function renderDest(catSplit, subtitle, fixRange){
   const pDv=poolM*poolR2<0&&Math.min(Math.abs(poolM),Math.abs(poolR2))>2e6;
   ann.push(tipLab(pNet,pPos,pNeg,Mp,'y2','Σ 即時現金池',(pNet>=0?'(入池)':'(出池)')+(pDv?' ⚡':''),MB?9.5:11.5,C.amber));
   // 上緣資訊分兩層:圖例(左上,低層)與 MMF 錨定(右上,高層),手機用精簡文案
-  ann.push({text:MB?'深=大單 淺=散戶|⚡=反向|下軌=池刻度'
-      :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出 綠=流入|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度',
+  ann.push({text:'【'+(subtitle||winLabel())+'】'+(MB?'深=大單 淺=散戶|⚡=反向|下軌=池'
+      :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出(賣) 綠=流入(買)|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度'),
     xref:'paper',yref:'paper',x:0.01,y:1.035,showarrow:false,font:{size:MB?8.5:10,color:C.muted},xanchor:'left'});
   const mmf=(DATA.cash_pool||{}).mmf||null;
   if(mmf&&mmf.total_bn){
@@ -738,10 +755,7 @@ function renderDest(catSplit, subtitle, fixRange){
     {...PBASE,barmode:'relative',
      margin:{l:MB?60:96,r:MB?14:56,t:MB?46:52,b:MB?32:40},
      annotations:ann,showlegend:false,
-     xaxis:{title:{text:MB?'←流出|流入→('+(subtitle||winLabel())+')'
-         :'← 淨流出(賣出側) | 淨流入(買入側) →('+(subtitle||winLabel())+',類別刻度)',
-         font:{size:MB?9:10.5,color:C.ink2}},
-       gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
+     xaxis:{gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
        range:[-Mc,Mc],anchor:'y'},
      yaxis:{gridcolor:C.line,autorange:'reversed',domain:[0.20,1],tickfont:{size:MB?9.5:12}},
      xaxis2:{gridcolor:'#26261f',zerolinecolor:C.amber,zerolinewidth:1.5,tickformat:'~s',
@@ -792,7 +806,7 @@ function renderPoolTide(){
        +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> — 池升+指數平=派發;池降+指數升=場外資金進場',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
        font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
-     xaxis:{gridcolor:C.line,tickfont:{size:9.5}},
+     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
      yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑入池/↓出池',font:{size:10,color:C.ink2}}},
      yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},
        title:{text:'SPY',font:{size:10,color:'#8ab4f8'}}}},CFG);
@@ -871,7 +885,7 @@ function renderPersist(){
     colorscale:[[0,'#b91c1c'],[0.5,'#1a1a19'],[1,'#15803d']],
     xgap:2,ygap:2,hovertemplate:'%{y} @ %{x}<br>淨流 %{z}M<extra></extra>',
     colorbar:{title:{text:'淨流(M)',font:{size:10,color:C.ink2}},thickness:10,len:0.6}}],
-    {...PBASE,margin:{l:52,r:10,t:6,b:28},xaxis:{gridcolor:C.line,tickfont:{size:10}},yaxis:{gridcolor:C.line,tickfont:{size:11},autorange:'reversed'}},CFG);
+    {...PBASE,margin:{l:52,r:10,t:6,b:28},xaxis:{type:'category',gridcolor:C.line,tickfont:{size:10}},yaxis:{gridcolor:C.line,tickfont:{size:11},autorange:'reversed'}},CFG);
 }
 function renderPersistDaily(ds, hl){
   const el=document.getElementById('persist'); if(!el)return;
@@ -889,7 +903,7 @@ function renderPersistDaily(ds, hl){
     xgap:2,ygap:2,hovertemplate:'%{y} @ %{x}<br>全日淨流 %{z}M<extra></extra>',
     colorbar:{title:{text:'淨流(M/日)',font:{size:10,color:C.ink2}},thickness:10,len:0.6}}],
     {...PBASE,margin:{l:52,r:10,t:6,b:30},shapes,
-     xaxis:{gridcolor:C.line,tickfont:{size:10}},yaxis:{gridcolor:C.line,tickfont:{size:11},autorange:'reversed'}},CFG);
+     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:10}},yaxis:{gridcolor:C.line,tickfont:{size:11},autorange:'reversed'}},CFG);
 }
 // ===== 選擇權資金傾向(排除指數,避免壓縮)=====
 function renderOptPrem(){
@@ -952,13 +966,13 @@ function renderOptTrend(){
     {type:'bar',name:'GEX(B)',x:xs,y:get('gex_bn'),marker:{color:get('gex_bn').map(v=>v<0?C.red:C.green)}},
     {type:'scatter',mode:'lines+markers',name:'MaxPain vs 現價%',x:xs,y:mpd,yaxis:'y2',line:{color:C.amber}}
   ],{...PBASE,legend:{orientation:'h',y:1.14,font:{size:10.5}},margin:{l:46,r:50,t:22,b:30},
-    xaxis:{gridcolor:C.line},yaxis:{title:{text:'GEX(B)',font:{size:10.5,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'},
+    xaxis:{type:'category',gridcolor:C.line},yaxis:{title:{text:'GEX(B)',font:{size:10.5,color:C.ink2}},gridcolor:C.line,zerolinecolor:'#555'},
     yaxis2:{title:{text:'MaxPain偏離%',font:{size:10.5,color:C.ink2}},overlaying:'y',side:'right',zerolinecolor:'#555'}},CFG);
   Plotly.react('optTrend2',[
     {type:'scatter',mode:'lines+markers',name:'P/C 量比',x:xs,y:get('pc_vol'),line:{color:C.violet}},
     {type:'scatter',mode:'lines+markers',name:'ATM IV %',x:xs,y:get('atm_iv'),yaxis:'y2',line:{color:C.aqua}}
   ],{...PBASE,legend:{orientation:'h',y:1.14,font:{size:10.5}},margin:{l:46,r:50,t:22,b:30},
-    xaxis:{gridcolor:C.line},yaxis:{title:{text:'P/C',font:{size:10.5,color:C.ink2}},gridcolor:C.line},
+    xaxis:{type:'category',gridcolor:C.line},yaxis:{title:{text:'P/C',font:{size:10.5,color:C.ink2}},gridcolor:C.line},
     yaxis2:{title:{text:'IV %',font:{size:10.5,color:C.ink2}},overlaying:'y',side:'right'}},CFG);
 }
 function renderOptions(){
@@ -1102,7 +1116,7 @@ function renderDpTrend(){
     marker:{size:5}}));
   Plotly.react('dpTrend',traces,
     {...PBASE,legend:{orientation:'h',y:1.16,font:{size:10}},margin:{l:46,r:10,t:30,b:30},
-     xaxis:{gridcolor:C.line},yaxis:{title:{text:'賣空量比 %',font:{size:10.5,color:C.ink2}},gridcolor:C.line},
+     xaxis:{type:'category',gridcolor:C.line},yaxis:{title:{text:'賣空量比 %',font:{size:10.5,color:C.ink2}},gridcolor:C.line},
      shapes:[{type:'line',xref:'paper',x0:0,x1:1,y0:55,y1:55,line:{color:C.amber,dash:'dot',width:1}}]},CFG);
 }
 

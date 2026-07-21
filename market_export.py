@@ -8,7 +8,7 @@
 只讀行情、永不下單、永不 unlock_trade。
 用法:python market_export.py --config config.json   [--no-futu] [--no-push] [--force-options]
 """
-import json, sys, os, time, argparse, math, urllib.request, urllib.parse
+import json, sys, os, time, argparse, math, hashlib, urllib.request, urllib.parse
 from datetime import datetime, timezone
 
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
@@ -535,16 +535,20 @@ def pull_top_turnover(q, topn=20):
         if code: out.append(code)
     return out
 
-def pull_daily_hist(q, syms, days=45):
-    """歷史日頻資金流回填(get_capital_flow period_type=DAY):讓 1/3/5/10 日視窗立即可用"""
+def pull_daily_hist(q, syms, days=400):
+    """歷史日頻資金流回填(get_capital_flow period_type=DAY):要 400 天,Futu 給多深收多深 → 視窗/池水位可回溯到源頭上限"""
     from futu import RET_OK, PeriodType
     from datetime import timedelta
     end=datetime.now(timezone.utc).strftime("%Y-%m-%d")
     start=(datetime.now(timezone.utc)-timedelta(days=days)).strftime("%Y-%m-%d")
+    start_s=(datetime.now(timezone.utc)-timedelta(days=170)).strftime("%Y-%m-%d")
     out={}
     for s in syms:
         try:
             ret,d=q.get_capital_flow(s, period_type=PeriodType.DAY, start=start, end=end)
+            if ret!=RET_OK and days>200:
+                time.sleep(1.1)   # 深區間個別被拒時縮 170 天重試一次(正常時零成本)
+                ret,d=q.get_capital_flow(s, period_type=PeriodType.DAY, start=start_s, end=end)
             if ret==RET_OK and len(d):
                 sym=s.replace("US.","")
                 for _,r in d.iterrows():
@@ -793,8 +797,9 @@ def run_once(cfg, args):
             _missing+= list(_core-set(_d0[_dt].keys()))
         _missing=sorted(set(_missing))
     except Exception: _missing=[]
-    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or (bool(_missing) and _age>3600))
-    data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1)}
+    _deep=not os.path.exists(args.config+".histdeep2")   # 一次性深回填(400天)尚未做過
+    want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or (bool(_missing) and _age>3600) or (_deep and _age>1800))
+    data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1),"deep_pending":_deep}
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
@@ -808,6 +813,8 @@ def run_once(cfg, args):
                 except Exception: pass
             if histfill:
                 try: open(histmark,"w").write(str(time.time()))
+                except Exception: pass
+                try: open(args.config+".histdeep2","w").write(str(time.time()))   # 深回填(400天)已完成
                 except Exception: pass
             fsnap["capital"]=cap; fsnap["n_cap"]=len(cap); fsnap["n_snap"]=0
         except Exception as e:
@@ -837,13 +844,14 @@ def run_once(cfg, args):
         hist=[h for h in hist if h.get("d")==data["trade_date"]]   # 換日清除他日/盤前殘留欄(修週一首欄顯示上週五終值)
         snap={"ts":data["ts_utc"][11:16],"d":data["trade_date"],
               "f":{k.replace("US.",""):round(v["main_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("main_net") is not None},
-              "fr":{k.replace("US.",""):round(v["retail_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("retail_net") is not None}}
+              "fr":{k.replace("US.",""):round(v["retail_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("retail_net") is not None},
+              "px":((data.get("market",{}).get("SPY") or {}).get("last"))}
         if not hist or hist[-1].get("f")!=snap["f"]:
             hist.append(snap); hist=hist[-48:]
     try: json.dump(hist, open(histpath,"w"))
     except Exception: pass
     data["flow_history"]=hist
-    # 日檔歸檔:⑦ 為當日盤中累計 → 以 trade_date upsert(當日最後值=全日淨額),留 30 個交易日
+    # 日檔歸檔:⑦ 為當日盤中累計 → 以 trade_date upsert(當日最後值=全日淨額),留 250 個交易日(全量走 daily_flows.json 分檔)
     # 前端「過去 N 個交易日」視窗由此加總
     dailypath=args.config+".dailyflows.json"
     try: daily=json.load(open(dailypath))
@@ -854,13 +862,17 @@ def run_once(cfg, args):
         else:
             for s_,e_ in day.items():
                 if s_ not in daily[dt]: daily[dt][s_]=e_   # 新標的補進既有日期,不覆蓋原值
+    if histfill:
+        for d_ in sorted(daily)[:-250]: daily.pop(d_,None)
+        try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)   # 回填立即落盤:非盤中回填也持久化,否則下一輪讀舊檔又縮回
+        except Exception: pass
     if data["capital_flow"] and data["trade_date"] and data["session"] in ("rth","after"):
         # 只在盤中/盤後歸檔:避免盤前把前日累計寫進新日期(原已知bug,現根治)
         daily[data["trade_date"]]={k.replace("US.",""):{
             "m":round((v.get("main_net") or 0)/1e6,1),
             "r":round((v.get("retail_net") or 0)/1e6,1) if v.get("retail_net") is not None else None,
             "c":v.get("cat","正股")} for k,v in data["capital_flow"].items() if v.get("main_net") is not None}
-        for d_ in sorted(daily)[:-30]: daily.pop(d_,None)
+        for d_ in sorted(daily)[:-250]: daily.pop(d_,None)
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
@@ -918,9 +930,26 @@ def main():
         f"cap={len(data['capital_flow'])} errs={len(data['errors'])}")
     if a.no_push:
         print(json.dumps(data,ensure_ascii=False,indent=1)[:3000]); return
+    files={"market_data.json":data,"futu_snapshot.json":fsnap}
+    _dfull=data.get("daily_flows") or {}
+    _dfh=_dfhf=None
+    if len(_dfull)>35:
+        # 深歷史分檔:主檔只嵌最近 30 日(行動端載入輕),全量另推 daily_flows.json;
+        # 尾段(除最新日外)有變才推(≈每日一次),前端 lazy 抓取後合併
+        files["market_data.json"]=dict(data, daily_flows={d:_dfull[d] for d in sorted(_dfull)[-30:]})
+        _dfstable={d:_dfull[d] for d in sorted(_dfull)[:-1]}
+        _dfh=hashlib.sha1(json.dumps(_dfstable,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
+        _dfhf=a.config+".dfhash"
+        try: _dfold=open(_dfhf).read().strip()
+        except Exception: _dfold=""
+        if _dfh!=_dfold:
+            files["daily_flows.json"]={"ts_utc":data["ts_utc"],"n_days":len(_dfull),"daily_flows":_dfull}
     try:
-        push_gist(cfg,{"market_data.json":data,"futu_snapshot.json":fsnap})
-        log("pushed market_data.json + futu_snapshot.json")
+        push_gist(cfg,files)
+        log("pushed "+" + ".join(files))
+        if "daily_flows.json" in files and _dfhf:
+            try: open(_dfhf,"w").write(_dfh)
+            except Exception: pass
     except Exception as e:
         log("PUSH ERROR:",type(e).__name__,e)
 
