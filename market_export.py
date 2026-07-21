@@ -78,6 +78,13 @@ CAP_CAT["GLD"]="金"
 CAP_CAT["USO"]="油"
 CAP_CAT["SLV"]="銀"
 for _s in ["IBIT","ETHA"]: CAP_CAT[_s]="Crypto"
+# 正股再細分板塊(前端 SECTOR 對照表為即時真源、含歷史;此處同步原始資料)
+for _s in ["NVDA","AMD","AVGO","MRVL","INTC","TSM"]: CAP_CAT[_s]="半導體"
+for _s in ["MU","SNDK","WDC"]: CAP_CAT[_s]="記憶體"
+for _s in ["LITE","COHR","AAOI"]: CAP_CAT[_s]="光通信"
+for _s in ["MSFT","AAPL","AMZN","META","GOOGL","ORCL","NFLX","PLTR"]: CAP_CAT[_s]="軟體平台"
+for _s in ["COIN","MSTR"]: CAP_CAT[_s]="加密股"
+CAP_CAT["TSLA"]="電動車"
 
 FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ","AMD"}
 KL_HIST_DAYS = 1250     # 保留約 5 年日K

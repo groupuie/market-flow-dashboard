@@ -375,7 +375,7 @@ function render(){
 
 
 // ===== 資金輪動 Sankey / 視窗 / 目的地(真實 ⑦ 大單淨流)=====
-const CATCOL={'正股':'#4f74c8','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
+const CATCOL={'正股':'#4f74c8','半導體':'#4f74c8','記憶體':'#6d8ad9','光通信':'#5aa9e6','軟體平台':'#6d9eeb','加密股':'#b07de6','電動車':'#e0673e','◇期權做多':'#2dd4bf','◇期權做空':'#c084fc','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
   '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','信用債':'#0e7490','金':'#eab308','油':'#c2703e','銀':'#9aa4b2','Crypto':'#e879a9',
   '自訂':'#22d3ee','闖入':'#f43f5e','其他':'#6b7280'};
 // ---- 自訂追蹤:寫回 gist(token 僅存 localStorage)----
@@ -428,13 +428,18 @@ function winLabel(){
   if(WIN.mode==='nd')return '過去 '+WIN.n+' 個交易日';
   return WIN.from+' → '+WIN.to;
 }
+const SECTOR={NVDA:'半導體',AMD:'半導體',AVGO:'半導體',MRVL:'半導體',INTC:'半導體',TSM:'半導體',
+  MU:'記憶體',SNDK:'記憶體',WDC:'記憶體',LITE:'光通信',COHR:'光通信',AAOI:'光通信',
+  MSFT:'軟體平台',AAPL:'軟體平台',AMZN:'軟體平台',META:'軟體平台',GOOGL:'軟體平台',ORCL:'軟體平台',NFLX:'軟體平台',PLTR:'軟體平台',
+  COIN:'加密股',MSTR:'加密股',TSLA:'電動車'};
+function catOf(sym,storedC){return SECTOR[sym]||storedC||'正股';}   // 正股再細分板塊;歷史(250天)即時重歸類
 function flowMap(){
   // 回傳 {sym:{v:大單淨流(元), r:中小單淨流(元), cat}}
   const out={};
   if(WIN.mode==='live'){
     const cap=DATA.capital_flow||{};
     Object.keys(cap).forEach(k=>{const s=k.replace('US.','');
-      out[s]={v:cap[k].main_net,r:cap[k].retail_net,cat:cap[k].cat||'正股'};});
+      out[s]={v:cap[k].main_net,r:cap[k].retail_net,cat:catOf(s,cap[k].cat)};});
     return out;
   }
   const D=DATA.daily_flows||{}; const dates=dailyDates(); if(!dates.length)return out;
@@ -443,10 +448,10 @@ function flowMap(){
   else use=dates.filter(d=>d>=WIN.from&&d<=WIN.to);
   use.forEach(d=>{const day=D[d]||{};
     Object.keys(day).forEach(s=>{
-      if(!out[s])out[s]={v:0,r:0,cat:day[s].c||'正股',_rn:0};
+      if(!out[s])out[s]={v:0,r:0,cat:catOf(s,day[s].c),_rn:0};
       out[s].v+=(day[s].m||0)*1e6;
       if(day[s].r!=null){out[s].r+=day[s].r*1e6;out[s]._rn++;}
-      out[s].cat=day[s].c||out[s].cat;});});
+      out[s].cat=catOf(s,day[s].c);});});
   Object.values(out).forEach(o=>{if(!o._rn)o.r=null;delete o._rn;});
   return out;
 }
@@ -528,12 +533,15 @@ function renderRotation(){
   delete catSplit['現金'];   // 現金ETF=池內重分配,不入列(併入池)
   Object.keys(catSplit).forEach(c=>{const o=catSplit[c];
     if(Math.abs(o.m)<=1e5&&Math.abs(o.r)<=1e5&&Math.abs(o.m+o.r)<=1e5)delete catSplit[c];});
-  const catOrder=['正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
+  const catOrder=['半導體','記憶體','光通信','軟體平台','加密股','電動車','正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
       <div class="chg ${cl}">${v>0?'淨流入':(v<0?'淨流出':'—')} · ${winLabel()}</div></div>`;}).join('');
   // 目的地對照(大單深色+中小單淺色堆疊;⚡=反向)+ 池水位線(全單+大單雙線)
+  const _on=optNewCap();
+  if(_on){if(Math.abs(_on.callNew)>1e5)catSplit['◇期權做多']={m:_on.callNew,r:0,_opt:true};
+    if(Math.abs(_on.putNew)>1e5)catSplit['◇期權做空']={m:-_on.putNew,r:0,_opt:true};}
   renderDest(catSplit); renderPoolTide();
   // Sankey(可重用;動畫逐日餵單日資料)
   const hasSankey=drawSankey(arr,null);
@@ -694,13 +702,30 @@ function mergeDeep(){
     DATA.daily_flows={...DFULL,...cur};   // 近 30 日以主檔為準(今日盤中值較新),深檔補尾段
 }
 let POOLR=null;   // 動畫時池軌的固定範圍(與 DEST_RANGE 成對)
+function optNewCap(){
+  // 期權新資金:ΔOI × 每口權利金(T+1;OI 隔日更新)。做多=call 新增未平倉資金,做空=put。
+  const OD=DATA.opt_daily||{}; const ad=Object.keys(OD).sort();
+  if(ad.length<2)return null;
+  let use;
+  if(WIN.mode==='live'){use=[ad[ad.length-1]];}
+  else{const dd=dailyDates();
+    let w=WIN.mode==='nd'?dd.slice(-WIN.n):dd.filter(d=>d>=WIN.from&&d<=WIN.to);
+    use=w.filter(d=>ad.indexOf(d)>=1); if(!use.length)use=[ad[ad.length-1]];}
+  let cN=0,pN=0,any=false;
+  use.forEach(d=>{const i=ad.indexOf(d); if(i<1)return; const c=OD[d],p=OD[ad[i-1]];
+    Object.keys(c).forEach(s=>{if(s[0]==='_')return; const a=c[s],b=p[s]; if(!b)return;
+      const cpp=a.call_vol?a.call_prem/a.call_vol:0, ppp=a.put_vol?a.put_prem/a.put_vol:0;
+      cN+=((a.call_oi||0)-(b.call_oi||0))*cpp; pN+=((a.put_oi||0)-(b.put_oi||0))*ppp; any=true;});});
+  return any?{callNew:cN,putNew:pN,n:use.length}:null;
+}
 function renderDest(catSplit, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;   // 手機模式:字縮、文案精簡、長柱標籤入柱
-  const order=['正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入'];
-  const rows=order.filter(c=>catSplit[c]).map(c=>({c,m:catSplit[c].m||0,r:catSplit[c].r||0}));
+  const order=['半導體','記憶體','光通信','軟體平台','加密股','電動車','正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入','◇期權做多','◇期權做空'];
+  const rows=order.filter(c=>catSplit[c]).map(c=>({c,m:catSplit[c].m||0,r:catSplit[c].r||0,opt:!!catSplit[c]._opt}));
+  const hasOpt=rows.some(x=>x.opt);
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
-  const poolM=-rows.reduce((a,b)=>a+b.m,0), poolR2=-rows.reduce((a,b)=>a+b.r,0);
+  const poolM=-rows.filter(x=>!x.opt).reduce((a,b)=>a+b.m,0), poolR2=-rows.filter(x=>!x.opt).reduce((a,b)=>a+b.r,0);
   const cats=rows.map(x=>x.c);
   const mV=rows.map(x=>x.m), rV=rows.map(x=>x.r);
   const mCol=mV.map(v=>v>=0?'#16a34a':'#dc2626');
@@ -731,7 +756,8 @@ function renderDest(catSplit, subtitle, fixRange){
   ann.push(tipLab(pNet,pPos,pNeg,Mp,'y2','Σ 即時現金池',(pNet>=0?'(入池)':'(出池)')+(pDv?' ⚡':''),MB?9.5:11.5,C.amber));
   // 上緣資訊分兩層:圖例(左上,低層)與 MMF 錨定(右上,高層),手機用精簡文案
   ann.push({text:'【'+(subtitle||winLabel())+'】'+(MB?'深=大單 淺=散戶|⚡=反向|下軌=池'
-      :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出(賣) 綠=流入(買)|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度'),
+      :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出(賣) 綠=流入(買)|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度')
+      +(hasOpt?(MB?' |◇期權新資金T+1':' |◇期權做多/做空=新增未平倉資金 ΔOI×權利金(T+1·不入池)'):''),
     xref:'paper',yref:'paper',x:0.01,y:1.035,showarrow:false,font:{size:MB?8.5:10,color:C.muted},xanchor:'left'});
   const mmf=(DATA.cash_pool||{}).mmf||null;
   if(mmf&&mmf.total_bn){
@@ -824,12 +850,12 @@ function animDates(){
 }
 function dayCatNet(date){
   const day=(DATA.daily_flows||{})[date]||{}; const cn={};
-  Object.keys(day).forEach(s=>{const c=day[s].c||'正股';cn[c]=(cn[c]||0)+(day[s].m||0)*1e6;});
+  Object.keys(day).forEach(s=>{const c=catOf(s,day[s].c);cn[c]=(cn[c]||0)+(day[s].m||0)*1e6;});
   return cn;
 }
 function dayCatSplit(date){  // 大單/中小單分離(供堆疊圖;r 缺值=0)
   const day=(DATA.daily_flows||{})[date]||{}; const cs={};
-  Object.keys(day).forEach(s=>{const c=day[s].c||'正股';
+  Object.keys(day).forEach(s=>{const c=catOf(s,day[s].c);
     const o=cs[c]=cs[c]||{m:0,r:0};
     o.m+=(day[s].m||0)*1e6; o.r+=(day[s].r||0)*1e6;});
   return cs;
@@ -860,7 +886,7 @@ function playAnim(){
     const d=ds[ANIM.idx];
     (function(){const cs=dayCatSplit(d); delete cs['現金']; renderDest(cs, d+' 單日', true);})();
     const day=(DATA.daily_flows||{})[d]||{};
-    const dayArr=Object.keys(day).map(s=>({s:s,v:(day[s].m||0)*1e6,cat:day[s].c||'正股'})).filter(x=>Math.abs(x.v)>1e5);
+    const dayArr=Object.keys(day).map(s=>({s:s,v:(day[s].m||0)*1e6,cat:catOf(s,day[s].c)})).filter(x=>Math.abs(x.v)>1e5);
     drawSankey(dayArr, d+' 單日 FROM→TO');
     renderPersistDaily(ds, ANIM.idx);
     ANIM.idx++;
