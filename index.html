@@ -599,42 +599,52 @@ let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
 let POOLR=null;   // 動畫時池軌的固定範圍(與 DEST_RANGE 成對)
 function renderDest(catSplit, subtitle, fixRange){
   const el=document.getElementById('dest'); if(!el)return;
+  const MB=(window.innerWidth||1024)<680;   // 手機模式:字縮、文案精簡、長柱標籤入柱
   const order=['正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入'];
   const rows=order.filter(c=>catSplit[c]).map(c=>({c,m:catSplit[c].m||0,r:catSplit[c].r||0}));
   if(!rows.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
   const poolM=-rows.reduce((a,b)=>a+b.m,0), poolR2=-rows.reduce((a,b)=>a+b.r,0);
   const cats=rows.map(x=>x.c);
   const mV=rows.map(x=>x.m), rV=rows.map(x=>x.r);
-  const mCol=mV.map(v=>v>=0?'#16a34a':'#dc2626');        // 深=大單(機構)
-  const rCol=rV.map(v=>v>=0?'#86efac':'#fca5a5');        // 淺=中小單(散戶)
-  // 類別軸:只用類別的量體(池不再拉伸類別刻度)
+  const mCol=mV.map(v=>v>=0?'#16a34a':'#dc2626');
+  const rCol=rV.map(v=>v>=0?'#86efac':'#fca5a5');
   const Mc=(fixRange&&DEST_RANGE)?DEST_RANGE[1]
     :Math.max(...rows.map(x=>Math.max(Math.abs(x.m+x.r),Math.abs(x.m),Math.abs(x.r))))*1.2;
-  // 池軌:池的專屬刻度
   const Mp=(fixRange&&POOLR)?POOLR[1]
     :(Math.max(Math.abs(poolM+poolR2),Math.abs(poolM),Math.abs(poolR2))*1.25||1);
   const ann=[];
-  rows.forEach((x,i)=>{
+  // 淨額標籤:柱長 >58% 軸長 → 移入柱內(半透明底),否則柱外 —— 永不遮圖、永不出界
+  const tipLab=(net,pos,neg,M,yref,y,extra,fsz,col)=>{
+    const tip=net>=0?pos:neg;
+    const inside=Math.abs(tip)>0.58*M;
+    return {text:(net>0?'+':'')+fmtM(net)+extra,xref:yref==='y'?'x':'x2',yref:yref,x:tip,y:y,
+      xanchor:net>=0?(inside?'right':'left'):(inside?'left':'right'),
+      xshift:net>=0?(inside?-3:4):(inside?3:-4),showarrow:false,
+      font:{size:fsz,color:col},
+      bgcolor:inside?'rgba(13,13,13,.68)':undefined,borderpad:inside?1:undefined};
+  };
+  rows.forEach(x=>{
     const net=x.m+x.r;
     const pos=Math.max(0,x.m)+Math.max(0,x.r), neg=Math.min(0,x.m)+Math.min(0,x.r);
     const dv=x.m*x.r<0&&Math.min(Math.abs(x.m),Math.abs(x.r))>2e6;
-    ann.push({text:(net>0?'+':'')+fmtM(net)+(dv?' ⚡':''),xref:'x',yref:'y',
-      x:(net>=0?pos:neg), y:x.c, xanchor:net>=0?'left':'right',showarrow:false,
-      font:{size:10.5,color:dv?'#fbbf24':C.ink2},xshift:net>=0?4:-4});
+    ann.push(tipLab(net,pos,neg,Mc,'y',x.c,dv?' ⚡':'',MB?9:10.5,dv?'#fbbf24':C.ink2));
   });
   const pNet=poolM+poolR2, pPos=Math.max(0,poolM)+Math.max(0,poolR2), pNeg=Math.min(0,poolM)+Math.min(0,poolR2);
   const pDv=poolM*poolR2<0&&Math.min(Math.abs(poolM),Math.abs(poolR2))>2e6;
-  ann.push({text:'<b>'+(pNet>0?'+':'')+fmtM(pNet)+'</b>'+(pNet>=0?'(入池)':'(出池)')+(pDv?' ⚡':''),
-    xref:'x2',yref:'y2',x:(pNet>=0?pPos:pNeg),y:'Σ 即時現金池',xanchor:pNet>=0?'left':'right',
-    showarrow:false,font:{size:11.5,color:C.amber},xshift:pNet>=0?4:-4});
-  ann.push({text:'深色=大單(機構)・淺色=中小單(散戶)|紅=流出 綠=流入|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度',
-    xref:'paper',yref:'paper',x:0.01,y:1.05,showarrow:false,font:{size:10,color:C.muted},xanchor:'left'});
-  if(subtitle)ann.push({text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.98,y:0.14,showarrow:false,
-    font:{size:20,color:'#9db4e0'},xanchor:'right'});
+  ann.push(tipLab(pNet,pPos,pNeg,Mp,'y2','Σ 即時現金池',(pNet>=0?'(入池)':'(出池)')+(pDv?' ⚡':''),MB?9.5:11.5,C.amber));
+  // 上緣資訊分兩層:圖例(左上,低層)與 MMF 錨定(右上,高層),手機用精簡文案
+  ann.push({text:MB?'深=大單 淺=散戶|⚡=反向|下軌=池刻度'
+      :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出 綠=流入|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度',
+    xref:'paper',yref:'paper',x:0.01,y:1.035,showarrow:false,font:{size:MB?8.5:10,color:C.muted},xanchor:'left'});
   const mmf=(DATA.cash_pool||{}).mmf||null;
-  if(mmf&&mmf.total_bn)ann.push({text:'池基準水位:MMF $'+(mmf.total_bn/1000).toFixed(2)+'T('+(mmf.asof||'')
-    +',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
-    xref:'paper',yref:'paper',x:0.99,y:1.05,showarrow:false,font:{size:10.5,color:C.ink2},xanchor:'right'});
+  if(mmf&&mmf.total_bn){
+    const short='MMF $'+(mmf.total_bn/1000).toFixed(2)+'T';
+    ann.push({text:MB?short+'('+String(mmf.asof_iso||'').slice(5)+')'
+        :'池基準水位:'+short+'('+(mmf.asof||'')+',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
+      xref:'paper',yref:'paper',x:0.99,y:1.10,showarrow:false,font:{size:MB?8.5:10.5,color:C.ink2},xanchor:'right'});
+  }
+  if(subtitle)ann.push({text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.97,y:0.20,showarrow:false,
+    font:{size:MB?14:20,color:'#9db4e0'},xanchor:'right'});
   Plotly.react('dest',[
     {type:'bar',orientation:'h',x:mV,y:cats,marker:{color:mCol},
      hovertemplate:'%{y} 大單:%{x:,.0f}<extra></extra>'},
@@ -645,14 +655,19 @@ function renderDest(catSplit, subtitle, fixRange){
     {type:'bar',orientation:'h',x:[poolR2],y:['Σ 即時現金池'],xaxis:'x2',yaxis:'y2',
      marker:{color:'#fde68a'},hovertemplate:'中小單池:%{x:,.0f}<extra></extra>'}
   ],
-    {...PBASE,barmode:'relative',margin:{l:96,r:84,t:30,b:40},annotations:ann,showlegend:false,
-     xaxis:{title:{text:'← 淨流出(賣出側) | 淨流入(買入側) →('+(subtitle||winLabel())+',類別刻度)',font:{size:10.5,color:C.ink2}},
-       gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:9},range:[-Mc,Mc],
-       anchor:'y'},
-     yaxis:{gridcolor:C.line,autorange:'reversed',domain:[0.20,1]},
-     xaxis2:{gridcolor:'#26261f',zerolinecolor:C.amber,zerolinewidth:1.5,tickformat:'~s',tickfont:{size:9,color:'#a68a3f'},
-       range:[-Mp,Mp],anchor:'y2'},
-     yaxis2:{domain:[0,0.115],tickfont:{size:11,color:C.amber}}},CFG);
+    {...PBASE,barmode:'relative',
+     margin:{l:MB?60:96,r:MB?14:56,t:MB?46:52,b:MB?32:40},
+     annotations:ann,showlegend:false,
+     xaxis:{title:{text:MB?'←流出|流入→('+(subtitle||winLabel())+')'
+         :'← 淨流出(賣出側) | 淨流入(買入側) →('+(subtitle||winLabel())+',類別刻度)',
+         font:{size:MB?9:10.5,color:C.ink2}},
+       gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
+       range:[-Mc,Mc],anchor:'y'},
+     yaxis:{gridcolor:C.line,autorange:'reversed',domain:[0.20,1],tickfont:{size:MB?9.5:12}},
+     xaxis2:{gridcolor:'#26261f',zerolinecolor:C.amber,zerolinewidth:1.5,tickformat:'~s',
+       tickfont:{size:MB?8:9,color:'#a68a3f'},range:[-Mp,Mp],anchor:'y2'},
+     yaxis2:{domain:[0,0.115],tickmode:'array',tickvals:['Σ 即時現金池'],
+       ticktext:[MB?'Σ池':'Σ 即時現金池'],tickfont:{size:MB?9.5:11,color:C.amber}}},CFG);
 }
 // ===== 池水位線:即時=今日盤中累積水位曲線;多日視窗=逐日水位 =====
 function renderPoolTide(){
@@ -682,10 +697,13 @@ function renderPoolTide(){
      line:{color:'#c2703e',width:2,dash:'dot'},
      hovertemplate:'%{x} 大單池:%{y:,.0f}<extra></extra>'}
   ],
-    {...PBASE,margin:{l:96,r:80,t:26,b:26},showlegend:false,
-     annotations:[{text:'<b>池水位線</b>('+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
+    {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:96,r:((window.innerWidth||1024)<680)?14:80,t:26,b:26},showlegend:false,
+     annotations:[{text:((window.innerWidth||1024)<680)
+        ?'<b>池水位</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
+        :'<b>池水位線</b>('+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
        +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> — 兩線背離=機構與散戶反向',
-       xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
+       xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
+       font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{gridcolor:C.line,tickfont:{size:9.5}},
      yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑入池/↓出池',font:{size:10,color:C.ink2}}}},CFG);
 }
