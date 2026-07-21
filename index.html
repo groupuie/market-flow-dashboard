@@ -777,9 +777,12 @@ function renderPoolTide(){
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
     const use=WIN.mode==='nd'?dates.slice(-WIN.n):dates.filter(d=>d>=WIN.from&&d<=WIN.to);
-    x=use.map(d=>d.slice(5)); mode=winLabel()+'逐日';
-    yMain=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=(day[k].m||0);});return -s*1e6;});
-    yAll=use.map(d=>{let s=0;const day=D[d]||{};Object.keys(day).forEach(k=>{if(day[k].c!=='現金')s+=((day[k].m||0)+(day[k].r||0));});return -s*1e6;});
+    x=use.map(d=>d.slice(5)); mode=winLabel()+' 累積水位';
+    // 累積水位:從區間起點(前一日=0)逐日累加各日淨流鏡像 → 真正的「水位」而非每日 flux(與盤中同義,判讀文字才成立)
+    let cmM=0,cmA=0;
+    use.forEach(d=>{const day=D[d]||{};let dm=0,da=0;
+      Object.keys(day).forEach(k=>{if(day[k].c!=='現金'){dm+=(day[k].m||0);da+=((day[k].m||0)+(day[k].r||0));}});
+      cmM+=-dm*1e6; cmA+=-da*1e6; yMain.push(cmM); yAll.push(cmA);});
     ensureSpyK();
     idx=use.map(d=>SPYK?(SPYK[d]!=null?SPYK[d]:null):null);
   }
