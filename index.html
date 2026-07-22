@@ -224,7 +224,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-22T15:40Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-22T16:05Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -813,12 +813,13 @@ function renderDest(catSplit, subtitle, fixRange){
 function renderPoolTide(){
   const el=document.getElementById('pooltide'); if(!el)return;
   const CASH=new Set(['SGOV','BIL']);
-  let x=[],yAll=[],yMain=[],idx=[],mode='今日盤中累積';
+  let x=[],yAll=[],yMain=[],idx=[],barA=[],mode='今日盤中累積';
   if(WIN.mode==='live'){
     let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
     x=H.map(h=>etTime(h.ts));
     yMain=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return s*1e6;});
     yAll=H.map((h,i)=>{let s=0;Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});return yMain[i]+s*1e6;});
+    barA=yAll.map((v,i)=>i?v-yAll[i-1]:v);   // 當日各時段淨進出(累積差分)
     idx=H.map(h=>h.px!=null?h.px:null);   // 盤中 SPY(px 自 07-22 起逐點累積)
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
@@ -828,20 +829,22 @@ function renderPoolTide(){
     let cmM=0,cmA=0;
     use.forEach(d=>{const day=D[d]||{};let dm=0,da=0;
       Object.keys(day).forEach(k=>{if(day[k].c!=='現金'){dm+=(day[k].m||0);da+=((day[k].m||0)+(day[k].r||0));}});
-      cmM+=dm*1e6; cmA+=da*1e6; yMain.push(cmM); yAll.push(cmA);});
+      cmM+=dm*1e6; cmA+=da*1e6; yMain.push(cmM); yAll.push(cmA); barA.push(da*1e6);});
     ensureSpyK();
     idx=use.map(d=>SPYK?(SPYK[d]!=null?SPYK[d]:null):null);
   }
   if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">場內資金線累積中(每次採集自動加點)</div>';return;}
   const lastA=yAll[yAll.length-1], lastM=yMain[yMain.length-1];
   const traces=[
+    {type:'bar',name:'當日淨進出',x:x,y:barA,
+     marker:{color:barA.map(v=>v>=0?'rgba(34,197,94,.55)':'rgba(239,68,68,.5)'),line:{width:0}},
+     hovertemplate:'%{x} 當日淨進出:%{y:,.0f}<extra></extra>'},
     {type:'scatter',mode:'lines+markers',name:'全單進場',x:x,y:yAll,
-     line:{color:C.amber,width:2,shape:'spline'},marker:{size:4},
-     fill:'tozeroy',fillcolor:'rgba(250,178,25,.14)',
-     hovertemplate:'%{x} 全單淨進場:%{y:,.0f}<extra></extra>'},
+     line:{color:C.amber,width:2.2,shape:'spline'},marker:{size:4},
+     hovertemplate:'%{x} 全單累積:%{y:,.0f}<extra></extra>'},
     {type:'scatter',mode:'lines',name:'大單進場(機構)',x:x,y:yMain,
      line:{color:'#c2703e',width:2,dash:'dot'},
-     hovertemplate:'%{x} 大單淨進場:%{y:,.0f}<extra></extra>'}
+     hovertemplate:'%{x} 大單累積:%{y:,.0f}<extra></extra>'}
   ];
   const hasIdx=idx.some(v=>v!=null);
   if(hasIdx)traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:idx,yaxis:'y2',
@@ -852,7 +855,7 @@ function renderPoolTide(){
      annotations:[{text:((window.innerWidth||1024)<680)
         ?'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
         :'<b>場內資金線</b>(現金池反向·'+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
-       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> — ↑資金進場↓離場,與 SPY 同向=資金確認價;背離(線降·指數升=價漲⑦卻撤)=轉折警訊',
+       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> · 柱=當日淨進出(綠進紅出) — 線=累積(↑進場↓離場),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
        font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
