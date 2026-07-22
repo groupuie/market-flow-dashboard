@@ -224,7 +224,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-22T14:56Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-22T15:40Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -809,7 +809,7 @@ function renderDest(catSplit, subtitle, fixRange){
   Plotly.react('dest',traces,layout,CFG);
 }
 
-// ===== 池水位線:即時=今日盤中累積水位曲線;多日視窗=從區間起點逐日累積水位 =====
+// ===== 場內資金線(=現金池反向,與指數同向):即時=今日盤中累積;多日視窗=區間累積 =====
 function renderPoolTide(){
   const el=document.getElementById('pooltide'); if(!el)return;
   const CASH=new Set(['SGOV','BIL']);
@@ -817,31 +817,31 @@ function renderPoolTide(){
   if(WIN.mode==='live'){
     let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
     x=H.map(h=>etTime(h.ts));
-    yMain=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return -s*1e6;});
-    yAll=H.map((h,i)=>{let s=0;Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});return yMain[i]-s*1e6;});
+    yMain=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return s*1e6;});
+    yAll=H.map((h,i)=>{let s=0;Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});return yMain[i]+s*1e6;});
     idx=H.map(h=>h.px!=null?h.px:null);   // 盤中 SPY(px 自 07-22 起逐點累積)
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
     const use=WIN.mode==='nd'?dates.slice(-WIN.n):dates.filter(d=>d>=WIN.from&&d<=WIN.to);
-    x=use.map(d=>d.slice(5)); mode=winLabel()+' 累積水位';
+    x=use.map(d=>d.slice(5)); mode=winLabel()+' 累積';
     // 累積水位:從區間起點(前一日=0)逐日累加各日淨流鏡像 → 真正的「水位」而非每日 flux(與盤中同義,判讀文字才成立)
     let cmM=0,cmA=0;
     use.forEach(d=>{const day=D[d]||{};let dm=0,da=0;
       Object.keys(day).forEach(k=>{if(day[k].c!=='現金'){dm+=(day[k].m||0);da+=((day[k].m||0)+(day[k].r||0));}});
-      cmM+=-dm*1e6; cmA+=-da*1e6; yMain.push(cmM); yAll.push(cmA);});
+      cmM+=dm*1e6; cmA+=da*1e6; yMain.push(cmM); yAll.push(cmA);});
     ensureSpyK();
     idx=use.map(d=>SPYK?(SPYK[d]!=null?SPYK[d]:null):null);
   }
-  if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">池水位線累積中(每次採集自動加點)</div>';return;}
+  if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">場內資金線累積中(每次採集自動加點)</div>';return;}
   const lastA=yAll[yAll.length-1], lastM=yMain[yMain.length-1];
   const traces=[
-    {type:'scatter',mode:'lines+markers',name:'全單池',x:x,y:yAll,
+    {type:'scatter',mode:'lines+markers',name:'全單進場',x:x,y:yAll,
      line:{color:C.amber,width:2,shape:'spline'},marker:{size:4},
      fill:'tozeroy',fillcolor:'rgba(250,178,25,.14)',
-     hovertemplate:'%{x} 全單池:%{y:,.0f}<extra></extra>'},
-    {type:'scatter',mode:'lines',name:'大單池(機構)',x:x,y:yMain,
+     hovertemplate:'%{x} 全單淨進場:%{y:,.0f}<extra></extra>'},
+    {type:'scatter',mode:'lines',name:'大單進場(機構)',x:x,y:yMain,
      line:{color:'#c2703e',width:2,dash:'dot'},
-     hovertemplate:'%{x} 大單池:%{y:,.0f}<extra></extra>'}
+     hovertemplate:'%{x} 大單淨進場:%{y:,.0f}<extra></extra>'}
   ];
   const hasIdx=idx.some(v=>v!=null);
   if(hasIdx)traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:idx,yaxis:'y2',
@@ -850,13 +850,13 @@ function renderPoolTide(){
   Plotly.react('pooltide',traces,
     {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:96,r:((window.innerWidth||1024)<680)?14:80,t:26,b:26},showlegend:false,
      annotations:[{text:((window.innerWidth||1024)<680)
-        ?'<b>池水位</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
-        :'<b>池水位線</b>('+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
-       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> — 池升+指數平=派發;池降+指數升=場外資金進場',
+        ?'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
+        :'<b>場內資金線</b>(現金池反向·'+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
+       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> — ↑資金進場↓離場,與 SPY 同向=資金確認價;背離(線降·指數升=價漲⑦卻撤)=轉折警訊',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
        font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
-     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑入池/↓出池',font:{size:10,color:C.ink2}}},
+     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑淨進場/↓淨離場',font:{size:10,color:C.ink2}}},
      yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},
        title:{text:'SPY',font:{size:10,color:'#8ab4f8'}}}},CFG);
 }
