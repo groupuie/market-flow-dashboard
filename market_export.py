@@ -908,41 +908,42 @@ def push_gist(cfg, files):
         headers={"Authorization":f"token {tok}","Accept":"application/vnd.github+json","User-Agent":"market-export"})
     urllib.request.urlopen(req,timeout=25).read(); return "ok"
 
-def main():
-    ap=argparse.ArgumentParser()
-    ap.add_argument("--config",default=os.path.join(os.path.dirname(os.path.abspath(__file__)),"config.json"))
-    ap.add_argument("--no-futu",action="store_true")
-    ap.add_argument("--no-push",action="store_true")
-    ap.add_argument("--force-options",action="store_true")
-    ap.add_argument("--public-out",default=None,help="公開源-only 模式:跳過 Futu/K線/gist 推送,結果寫入指定 JSON(GitHub Actions 備援採集用)")
-    a=ap.parse_args()
-    # 看門狗:Futu SDK 斷線(網絡中斷)時可能無限期掛住,會卡死 launchd 排程 →
-    # 單輪超過 7 分鐘就自我了斷,交給 launchd 下一輪全新重啟(2026-07-20 事故對策)
+def collect_light(cfg, args, base):
+    """盤中快循環:只重刷 ⑦ 大單流 + SPY 即時價,其餘(報價/期權/K線/歷史/daily_flows)沿用上次全量 base。
+       目的:類別淨流/目的地圖/現金池的『當前值』每分鐘更新;歷史曲線 flow_history 維持全量輪(~5分)節奏、檔案不膨脹。"""
+    now=datetime.now(timezone.utc)
+    data=dict(base)                       # 淺拷貝:沿用所有慢速區塊(唯讀,不 mutate)
+    data["ts_utc"]=now.strftime("%Y-%m-%d %H:%M:%S")
+    data["source"]="mac-market-export"
+    data["session"]=market_session()
+    custom=fetch_custom_syms(cfg) if not args.no_futu else []
+    data["custom_symbols"]=[s.replace("US.","") for s in custom]
+    if not args.no_futu:
+        try:
+            cap,_,_,_=pull_futu(want_inst=False, want_hist=False, extra_syms=custom)
+            if cap:
+                data["capital_flow"]=cap
+                uts=[v.get("update_time","") for v in cap.values() if v.get("update_time")]
+                if uts: data["trade_date"]=max(uts)[:10]
+        except Exception as e: err("futu-light",e)
+    # SPY 即時價(池水位末點/概覽用;單一 Yahoo 呼叫)—— 只覆蓋 last,保留其餘欄位、不 mutate base
     try:
-        import signal as _sig
-        def _wd(s,f):
-            log("WATCHDOG: 本輪超時,自我重啟交給下一輪"); os._exit(3)
-        _sig.signal(_sig.SIGALRM,_wd); _sig.alarm(420)
-    except Exception: pass
-    if a.public_out:
-        a.no_futu=True; a.no_push=True   # 備援模式:純公開源
-    cfg=json.load(open(a.config)) if os.path.exists(a.config) else {}
-    data,fsnap=run_once(cfg,a)
-    if a.public_out:
-        data["source"]="gh-actions-public"
-        json.dump(data, open(a.public_out,"w"), ensure_ascii=False, separators=(",",":"))
-        log(f"public-out 寫入 {a.public_out}: options={len(data.get('options',{}))} rates_live={bool(data.get('rates_live'))}")
-        return
-    log(f"collected: stocks={data['meta']['n_stocks']} opt={data['meta']['n_opt']} "
-        f"cap={len(data['capital_flow'])} errs={len(data['errors'])}")
-    if a.no_push:
-        print(json.dumps(data,ensure_ascii=False,indent=1)[:3000]); return
+        c,_,_=yahoo_hist("SPY")
+        if c:
+            mk=dict(data.get("market") or {})
+            sp=dict(mk.get("SPY") or {}); sp["last"]=round(c[-1],4); mk["SPY"]=sp
+            data["market"]=mk
+    except Exception as e: err("spy-light",e)
+    m=dict(data.get("meta") or {}); m["futu_ok"]=len(data.get("capital_flow") or {})>0; data["meta"]=m
+    data["errors"]=list(ERRORS)
+    return data
+
+def push_full(cfg, data, fsnap, a):
+    """全量推送:主檔嵌最近 30 日 daily_flows,全量另推 daily_flows.json(尾段變才推)。回傳實際推出的 slim market_data(供快循環沿用)。"""
     files={"market_data.json":data,"futu_snapshot.json":fsnap}
     _dfull=data.get("daily_flows") or {}
     _dfh=_dfhf=None
     if len(_dfull)>35:
-        # 深歷史分檔:主檔只嵌最近 30 日(行動端載入輕),全量另推 daily_flows.json;
-        # 尾段(除最新日外)有變才推(≈每日一次),前端 lazy 抓取後合併
         files["market_data.json"]=dict(data, daily_flows={d:_dfull[d] for d in sorted(_dfull)[-30:]})
         _dfstable={d:_dfull[d] for d in sorted(_dfull)[:-1]}
         _dfh=hashlib.sha1(json.dumps(_dfstable,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
@@ -959,7 +960,65 @@ def main():
             except Exception: pass
     except Exception as e:
         log("PUSH ERROR:",type(e).__name__,e)
+    return files["market_data.json"]
+
+def main():
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--config",default=os.path.join(os.path.dirname(os.path.abspath(__file__)),"config.json"))
+    ap.add_argument("--no-futu",action="store_true")
+    ap.add_argument("--no-push",action="store_true")
+    ap.add_argument("--force-options",action="store_true")
+    ap.add_argument("--public-out",default=None,help="公開源-only 模式:跳過 Futu/K線/gist 推送,結果寫入指定 JSON(GitHub Actions 備援採集用)")
+    ap.add_argument("--once",action="store_true",help="停用盤中快循環,只跑單次全量(除錯用)")
+    a=ap.parse_args()
+    # 看門狗:單輪超過 7 分鐘自我了斷(2026-07-20 事故對策);快循環每輪重置計時
+    _has_wd=False
+    try:
+        import signal as _sig
+        def _wd(s,f):
+            log("WATCHDOG: 本輪超時,自我重啟交給下一輪"); os._exit(3)
+        _sig.signal(_sig.SIGALRM,_wd); _sig.alarm(420); _has_wd=True
+    except Exception: pass
+    if a.public_out:
+        a.no_futu=True; a.no_push=True   # 備援模式:純公開源
+    cfg=json.load(open(a.config)) if os.path.exists(a.config) else {}
+
+    # 公開源備援:單次全量,寫檔不推 gist
+    if a.public_out:
+        data,fsnap=run_once(cfg,a)
+        data["source"]="gh-actions-public"
+        json.dump(data, open(a.public_out,"w"), ensure_ascii=False, separators=(",",":"))
+        log(f"public-out 寫入 {a.public_out}: options={len(data.get('options',{}))} rates_live={bool(data.get('rates_live'))}")
+        return
+
+    # 盤中 1 分鐘更新:每個 launchd 週期(5 分)首輪全量(重刷報價/期權/K線/歷史),
+    # 之後每 ~60s 只重刷 ⑦ 大單流+SPY 價(輕量,~30-40s)並推 market_data.json;跑 ~4.5 分後交棒下一輪。
+    # 非盤中(pre/after/closed)=單次全量即結束,交回 launchd 5 分節奏。
+    loop_start=time.time(); base=None; LOOP_BUDGET=270
+    while True:
+        it=time.time()
+        try:
+            if _has_wd: _sig.alarm(420)
+        except Exception: pass
+        ERRORS.clear()
+        if base is None:
+            data,fsnap=run_once(cfg,a)
+            log(f"collected(full): stocks={data['meta']['n_stocks']} opt={data['meta']['n_opt']} "
+                f"cap={len(data['capital_flow'])} errs={len(data['errors'])}")
+            if a.no_push:
+                print(json.dumps(data,ensure_ascii=False,indent=1)[:3000]); return
+            base=push_full(cfg,data,fsnap,a)
+        else:
+            data=collect_light(cfg,a,base)
+            try:
+                push_gist(cfg,{"market_data.json":data})
+                log(f"pushed(light ⑦): cap={len(data.get('capital_flow') or {})} errs={len(data.get('errors') or [])} ts={data['ts_utc'][11:]}")
+            except Exception as e:
+                log("LIGHT PUSH ERROR:",type(e).__name__,e)
+            base=data
+        if a.once or market_session()!="rth" or (time.time()-loop_start)>=LOOP_BUDGET:
+            break
+        time.sleep(max(3, 60-(time.time()-it)))
 
 if __name__=="__main__":
     main()
-

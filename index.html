@@ -223,7 +223,7 @@ a{color:var(--blue)}
 <script>
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
-const REFRESH_SEC = 60;
+const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -290,7 +290,7 @@ function mergeSources(mac,pub){
   return base;
 }
 async function load(){
-  const f=async u=>{try{const r=await fetch(u,{cache:"no-store"});return r.ok?await r.json():null;}catch(e){return null;}};
+  const f=async u=>{try{const cb=u+(u.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/15000);const r=await fetch(cb,{cache:"no-store"});return r.ok?await r.json():null;}catch(e){return null;}};
   const [mac,pub]=await Promise.all([f(DATA_URL),f(PUB_URL)]);
   const m=mergeSources(mac,pub);
   if(!m){
