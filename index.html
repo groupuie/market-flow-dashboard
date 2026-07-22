@@ -105,6 +105,7 @@ a{color:var(--blue)}
   <div class="card">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:480px"></div>
+    <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
     <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的鏡像,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——右伸=入池、左伸=出池;兩段反向=機構與散戶對現金的動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
@@ -224,7 +225,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-22T16:05Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-22T16:25Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -685,6 +686,22 @@ function ensureSpyK(){
     .then(d=>{if(d&&d.bars){SPYK={};d.bars.forEach(b=>{SPYK[b[0]]=b[4];});render();}})
     .catch(()=>{});
 }
+let QQQK=null,QQQK_req=false;   // QQQ 日K快取(池水位線多日疊圖)
+function ensureQQQK(){
+  if(QQQK||QQQK_req)return; QQQK_req=true;
+  fetch(DATA_URL.replace('market_data.json','kline_QQQ.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&d.bars){QQQK={};d.bars.forEach(b=>{QQQK[b[0]]=b[4];});render();}})
+    .catch(()=>{});
+}
+let IDX_SHOW={SPY:true,QQQ:true};   // 疊加指數線顯示開關(使用者可切)
+function buildIdxToggle(){
+  const el=document.getElementById('idxtoggle'); if(!el)return;
+  el.innerHTML='<span style="color:var(--muted)">疊加指數</span>'+
+    [['SPY','#8ab4f8'],['QQQ','#c084fc']].map(function(a){var k=a[0],c=a[1];
+      return '<span class="idxchip" data-idx="'+k+'" style="cursor:pointer;padding:2px 11px;border-radius:10px;border:1px solid '+c+';'+(IDX_SHOW[k]?('background:'+c+'26;color:'+c):'color:var(--muted);opacity:.55')+'">'+k+'</span>';}).join('');
+  el.querySelectorAll('.idxchip').forEach(function(t){t.onclick=function(){IDX_SHOW[t.dataset.idx]=!IDX_SHOW[t.dataset.idx];renderPoolTide();};});
+}
 let DFULL=null,DFULL_req=0;   // 深歷史日檔(daily_flows.json,≤250 交易日;主檔只嵌 30 日)
 function ensureDeepDaily(){
   const now=Date.now();
@@ -812,15 +829,17 @@ function renderDest(catSplit, subtitle, fixRange){
 // ===== 場內資金線(=現金池反向,與指數同向):即時=今日盤中累積;多日視窗=區間累積 =====
 function renderPoolTide(){
   const el=document.getElementById('pooltide'); if(!el)return;
+  buildIdxToggle();
   const CASH=new Set(['SGOV','BIL']);
-  let x=[],yAll=[],yMain=[],idx=[],barA=[],mode='今日盤中累積';
+  const toPct=a=>{const b=a.find(v=>v!=null);return b==null?a.map(()=>null):a.map(v=>v!=null?+((v/b-1)*100).toFixed(3):null);};
+  let x=[],yAll=[],yMain=[],idxSPY=[],idxQQQ=[],barA=[],mode='今日盤中累積';
   if(WIN.mode==='live'){
     let H=DATA.flow_history||[]; const _td=H.filter(h=>h.d===DATA.trade_date); if(_td.length>=2)H=_td;
     x=H.map(h=>etTime(h.ts));
     yMain=H.map(h=>{let s=0;Object.keys(h.f||{}).forEach(k=>{if(!CASH.has(k))s+=h.f[k];});return s*1e6;});
     yAll=H.map((h,i)=>{let s=0;Object.keys(h.fr||{}).forEach(k=>{if(!CASH.has(k))s+=h.fr[k];});return yMain[i]+s*1e6;});
     barA=yAll.map((v,i)=>i?v-yAll[i-1]:v);   // 當日各時段淨進出(累積差分)
-    idx=H.map(h=>h.px!=null?h.px:null);   // 盤中 SPY(px 自 07-22 起逐點累積)
+    idxSPY=toPct(H.map(h=>h.px!=null?h.px:null)); idxQQQ=toPct(H.map(h=>h.pxq!=null?h.pxq:null));   // 盤中 SPY/QQQ %改(px/pxq)
   }else{
     const D=DATA.daily_flows||{}; const dates=dailyDates();
     const use=WIN.mode==='nd'?dates.slice(-WIN.n):dates.filter(d=>d>=WIN.from&&d<=WIN.to);
@@ -830,8 +849,8 @@ function renderPoolTide(){
     use.forEach(d=>{const day=D[d]||{};let dm=0,da=0;
       Object.keys(day).forEach(k=>{if(day[k].c!=='現金'){dm+=(day[k].m||0);da+=((day[k].m||0)+(day[k].r||0));}});
       cmM+=dm*1e6; cmA+=da*1e6; yMain.push(cmM); yAll.push(cmA); barA.push(da*1e6);});
-    ensureSpyK();
-    idx=use.map(d=>SPYK?(SPYK[d]!=null?SPYK[d]:null):null);
+    ensureSpyK(); ensureQQQK();
+    idxSPY=toPct(use.map(d=>SPYK&&SPYK[d]!=null?SPYK[d]:null)); idxQQQ=toPct(use.map(d=>QQQK&&QQQK[d]!=null?QQQK[d]:null));
   }
   if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">場內資金線累積中(每次採集自動加點)</div>';return;}
   const lastA=yAll[yAll.length-1], lastM=yMain[yMain.length-1];
@@ -846,22 +865,22 @@ function renderPoolTide(){
      line:{color:'#c2703e',width:2,dash:'dot'},
      hovertemplate:'%{x} 大單累積:%{y:,.0f}<extra></extra>'}
   ];
-  const hasIdx=idx.some(v=>v!=null);
-  if(hasIdx)traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:idx,yaxis:'y2',
-     connectgaps:true,line:{color:'#8ab4f8',width:1.6},
-     hovertemplate:'%{x} SPY:%{y:,.2f}<extra></extra>'});
+  if(IDX_SHOW.SPY&&idxSPY.some(v=>v!=null))traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:idxSPY,yaxis:'y2',
+     connectgaps:true,line:{color:'#8ab4f8',width:1.6},hovertemplate:'%{x} SPY %{y:+.2f}%<extra></extra>'});
+  if(IDX_SHOW.QQQ&&idxQQQ.some(v=>v!=null))traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:idxQQQ,yaxis:'y2',
+     connectgaps:true,line:{color:'#c084fc',width:1.6},hovertemplate:'%{x} QQQ %{y:+.2f}%<extra></extra>'});
   Plotly.react('pooltide',traces,
     {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:96,r:((window.innerWidth||1024)<680)?14:80,t:26,b:26},showlegend:false,
      annotations:[{text:((window.innerWidth||1024)<680)
         ?'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
         :'<b>場內資金線</b>(現金池反向·'+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
-       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span> · 柱=當日淨進出(綠進紅出) — 線=累積(↑進場↓離場),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
+       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span>·<span style="color:#c084fc">紫=QQQ</span>(%改) · 柱=當日淨進出(綠進紅出) — 線=累積(↑進場↓離場),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
        font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
      yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑淨進場/↓淨離場',font:{size:10,color:C.ink2}}},
      yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},
-       title:{text:'SPY',font:{size:10,color:'#8ab4f8'}}}},CFG);
+       title:{text:'指數 %',font:{size:10,color:'#9db4e0'}}}},CFG);
 }
 // ===== 逐日播放動畫 =====
 let ANIM={playing:false,idx:0,timer:null};

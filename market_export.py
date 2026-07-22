@@ -852,7 +852,8 @@ def run_once(cfg, args):
         snap={"ts":data["ts_utc"][11:16],"d":data["trade_date"],
               "f":{k.replace("US.",""):round(v["main_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("main_net") is not None},
               "fr":{k.replace("US.",""):round(v["retail_net"]/1e6,1) for k,v in data["capital_flow"].items() if v.get("retail_net") is not None},
-              "px":((data.get("market",{}).get("SPY") or {}).get("last"))}
+              "px":((data.get("market",{}).get("SPY") or {}).get("last")),
+              "pxq":((data.get("market",{}).get("QQQ") or {}).get("last"))}
         if not hist or hist[-1].get("f")!=snap["f"]:
             hist.append(snap); hist=hist[-48:]
     try: json.dump(hist, open(histpath,"w"))
