@@ -224,6 +224,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
+const BUILD='2026-07-22T14:56Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1177,6 +1178,24 @@ document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   setTimeout(()=>window.dispatchEvent(new Event('resize')),50);
 });
 
+// ===== 版本自動偵測:部署新版後 ≤2.5 分自動套用,免手動硬重整 =====
+let _verChip=false;
+async function checkVersion(){
+  try{
+    const r=await fetch((location.pathname||'/')+'?v='+Math.floor(Date.now()/60000),{cache:'no-store'});
+    if(!r.ok)return;
+    const m=(await r.text()).match(/const BUILD='([^']+)'/);
+    if(!m||!(m[1]>BUILD))return;   // 只在偵測到「更新的」build 才動作(ISO 字串比較,防 CDN 抖動迴圈)
+    if(typeof WIN!=='undefined'&&WIN.mode==='live'){location.reload();return;}   // 被動監看→無縫自動更新
+    if(_verChip)return; _verChip=true;   // 分析中(視窗模式)→ 顯示可點 chip,不打斷
+    const st=document.getElementById('status');
+    const b=document.createElement('span'); b.className='badge';
+    b.style.cssText='background:rgba(56,189,248,.2);color:#38bdf8;cursor:pointer;margin-left:6px';
+    b.textContent='🔄 新版就緒·點此更新'; b.onclick=()=>location.reload();
+    st.parentNode.insertBefore(b, st.nextSibling);
+  }catch(e){}
+}
+setInterval(checkVersion,150000);
 // ===== 自動刷新 =====
 let cd=REFRESH_SEC;
 setInterval(()=>{cd--;if(cd<=0){cd=REFRESH_SEC;load();}document.getElementById('countdown').textContent='· '+cd+'s 後更新';},1000);
