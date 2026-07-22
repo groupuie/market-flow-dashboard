@@ -991,23 +991,40 @@ def main():
         log(f"public-out 寫入 {a.public_out}: options={len(data.get('options',{}))} rates_live={bool(data.get('rates_live'))}")
         return
 
-    # 盤中 1 分鐘更新:每個 launchd 週期(5 分)首輪全量(重刷報價/期權/K線/歷史),
-    # 之後每 ~60s 只重刷 ⑦ 大單流+SPY 價(輕量,~30-40s)並推 market_data.json;跑 ~4.5 分後交棒下一輪。
-    # 非盤中(pre/after/closed)=單次全量即結束,交回 launchd 5 分節奏。
-    loop_start=time.time(); base=None; LOOP_BUDGET=270
+    # 盤中 1 分鐘更新(強韌版):慢區塊(報價/期權/K線/finra 等)每 ~7 分全刷一次(run_once,~2-3 分),
+    # 其餘時間純快輪 collect_light 只刷 ⑦+SPY、每 ~60s 推 market_data.json。
+    # base(上次全量的慢區塊)落地磁碟、跨 launchd 週期沿用 → 就算某週期不全刷、就算全刷很慢,⑦ 仍每分鐘更新。
+    # 全刷前先用舊 base 推一版新鮮 ⑦,避免 run_once 執行那 ~3 分空窗。非盤中=單次全量即結束。
+    BASECACHE=a.config+".lastfull.json"; FULLMARK=a.config+".fullmark"
+    try: base=json.load(open(BASECACHE))
+    except Exception: base=None
+    def _persist(b):
+        try: json.dump(b, open(BASECACHE,"w"), ensure_ascii=False)
+        except Exception: pass
+    def _full_due():
+        if base is None: return True
+        try: return (time.time()-os.path.getmtime(FULLMARK))>420
+        except OSError: return True
+    _did_full=False
+    loop_start=time.time(); LOOP_BUDGET=285
     while True:
         it=time.time()
         try:
             if _has_wd: _sig.alarm(420)
         except Exception: pass
         ERRORS.clear()
-        if base is None:
+        if (base is None) or (_full_due() and not _did_full):
+            if base is not None and not a.no_push:   # 全刷前先推新鮮 ⑦(用上輪慢區塊),補上 run_once 那段空窗
+                try: push_gist(cfg,{"market_data.json":collect_light(cfg,a,base)})
+                except Exception as e: log("prelight:",type(e).__name__,e)
             data,fsnap=run_once(cfg,a)
             log(f"collected(full): stocks={data['meta']['n_stocks']} opt={data['meta']['n_opt']} "
                 f"cap={len(data['capital_flow'])} errs={len(data['errors'])}")
             if a.no_push:
                 print(json.dumps(data,ensure_ascii=False,indent=1)[:3000]); return
-            base=push_full(cfg,data,fsnap,a)
+            base=push_full(cfg,data,fsnap,a); _did_full=True; _persist(base)
+            try: open(FULLMARK,"w").write(str(time.time()))
+            except Exception: pass
         else:
             data=collect_light(cfg,a,base)
             try:
@@ -1015,10 +1032,10 @@ def main():
                 log(f"pushed(light ⑦): cap={len(data.get('capital_flow') or {})} errs={len(data.get('errors') or [])} ts={data['ts_utc'][11:]}")
             except Exception as e:
                 log("LIGHT PUSH ERROR:",type(e).__name__,e)
-            base=data
+            base=data; _persist(base)
         if a.once or market_session()!="rth" or (time.time()-loop_start)>=LOOP_BUDGET:
             break
-        time.sleep(max(3, 60-(time.time()-it)))
+        time.sleep(max(2, 60-(time.time()-it)))
 
 if __name__=="__main__":
     main()
