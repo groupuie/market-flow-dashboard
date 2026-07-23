@@ -699,6 +699,68 @@ def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
         q.close()
     return cap, snaps, inst, hist
 
+def _pct(vals, p):
+    """簡易百分位(線性內插)。vals 非空。"""
+    if not vals: return 0.0
+    s=sorted(vals); k=(len(s)-1)*p/100.0; f=int(k); c=min(f+1,len(s)-1)
+    return s[f]+(s[c]-s[f])*(k-f)
+
+def accumulate_ticks(norm, acc):
+    """把一批逐筆(norm=list of {price,volume,turnover,ticker_direction,sequence})累加進當日累加器 acc(就地)。
+       去重:只取 sequence > acc.last_seq 的新筆(逐筆序號日內遞增)。
+       自動大單門檻:max($100k, 該批 P95 成交額)→ 分大單/散戶兩桶,各累 Σvol、Σ(價×量)、主動買/賣量。"""
+    last=acc.get("last_seq",0) or 0
+    fresh=[t for t in norm if (t.get("sequence") or 0) > last]
+    if not fresh: return acc
+    turns=[]
+    for t in fresh:
+        p=t.get("price"); v=t.get("volume")
+        if p is None or v is None: continue
+        to=t.get("turnover"); to=to if (to is not None and to>0) else p*v
+        turns.append(to)
+    thr=max(1e5, _pct(turns,95)) if turns else 1e5
+    for cls in ("big","small"):
+        acc.setdefault(cls,{"vol":0.0,"pv":0.0,"n":0,"buyvol":0.0,"sellvol":0.0})
+    mx=last
+    for t in fresh:
+        p=t.get("price"); v=t.get("volume")
+        if p is None or v is None: continue
+        to=t.get("turnover"); to=to if (to is not None and to>0) else p*v
+        d=str(t.get("ticker_direction") or "").upper()
+        tgt=acc["big"] if to>=thr else acc["small"]
+        tgt["vol"]+=v; tgt["pv"]+=p*v; tgt["n"]+=1
+        if "BUY" in d: tgt["buyvol"]+=v
+        elif "SELL" in d: tgt["sellvol"]+=v
+        seq=t.get("sequence") or 0
+        if seq>mx: mx=seq
+    acc["last_seq"]=mx; acc["thr_last"]=round(thr,0)
+    return acc
+
+def pull_ticks(syms, tickacc):
+    """逐筆輪詢(大戶/散戶盤中均價):訂閱 TICKER→get_rt_ticker(1000)→accumulate_ticks 累加進當日 tickacc[sym]。只讀。"""
+    from futu import OpenQuoteContext, RET_OK, SubType
+    q=OpenQuoteContext(host="127.0.0.1",port=11111)
+    try:
+        try: q.subscribe(syms,[SubType.TICKER])
+        except Exception as e: err("tick-sub",e)
+        time.sleep(1.5)
+        for s in syms:
+            try:
+                ret,d=q.get_rt_ticker(s,num=1000)
+                if ret!=RET_OK or d is None or not len(d): continue
+                norm=[]
+                for i in range(len(d)):
+                    r=d.iloc[i]
+                    norm.append({"price":_f(r.get("price")),"volume":_f(r.get("volume")),
+                                 "turnover":_f(r.get("turnover")),"ticker_direction":r.get("ticker_direction"),
+                                 "sequence":_f(r.get("sequence"))})
+                accumulate_ticks(norm, tickacc.setdefault(s.replace("US.",""),{}))
+            except Exception as e: err(f"tick {s}",e)
+            time.sleep(0.3)
+    finally:
+        q.close()
+    return tickacc
+
 def pull_ext_flow(syms):
     """擴充清單 ⑦ 現金池(個股籌碼分頁專用):回傳 {sym:{m,r,c}}(m/r 單位=$M,與 daily_flows 同格式)。
        只在完整輪呼叫、獨立於 CAP_SYMS,不進大盤 capital_flow/匯總。"""
@@ -1017,6 +1079,57 @@ def run_once(cfg, args):
                         except Exception as e: log("EXT PUSH ERR:",type(e).__name__,e)
         except Exception as e: err("ext_flow",e)
     data["ext_days"]=len(extdaily)
+    # 大戶/散戶盤中均價(逐筆輪詢,自動門檻;完整輪、~5 分節流;只在 rth)→ chips_vwap.json + 當日嵌 market_data
+    tickpath=args.config+".tickacc.json"
+    try: tickacc=json.load(open(tickpath))
+    except Exception: tickacc={}
+    if tickacc.get("_date")!=data.get("trade_date"):
+        tickacc={"_date":data.get("trade_date")}   # 換日重置(逐筆序號日內重置)
+    tickmark=args.config+".tickmark"
+    try: _tkage=time.time()-os.path.getmtime(tickmark)
+    except OSError: _tkage=1e9
+    cvtodaycache=args.config+".cvtoday.json"
+    if (not args.no_futu) and _tkage>300 and data.get("trade_date") and data["session"]=="rth":
+        try:
+            pull_ticks(INST_SYMS, tickacc)
+            try: json.dump(tickacc, open(tickpath,"w"), ensure_ascii=False)
+            except Exception: pass
+            try: open(tickmark,"w").write(str(time.time()))
+            except Exception: pass
+            def _vw(x): return round(x["pv"]/x["vol"],3) if x.get("vol") else None
+            today={}
+            for sym,a in tickacc.items():
+                if sym.startswith("_") or not isinstance(a,dict): continue
+                b=a.get("big") or {}; sm=a.get("small") or {}
+                if not (b.get("vol") or sm.get("vol")): continue
+                today[sym]={"bvwap":_vw(b),"bvol":round(b.get("vol",0)),"bnet":round(b.get("buyvol",0)-b.get("sellvol",0)),
+                            "svwap":_vw(sm),"svol":round(sm.get("vol",0)),"snet":round(sm.get("buyvol",0)-sm.get("sellvol",0)),
+                            "thr":round(a.get("thr_last",0)),"bn":b.get("n",0),"sn":sm.get("n",0)}
+            data["chips_vwap_today"]=today
+            try: json.dump(today, open(cvtodaycache,"w"), ensure_ascii=False)
+            except Exception: pass
+            # 日檔 chips_vwap.json:當日 upsert,穩定段(非今日)雜湊 gate,只在新日定案時重推整檔
+            cvpath=args.config+".chipsvwap.json"
+            try: cvdaily=json.load(open(cvpath))
+            except Exception: cvdaily={}
+            if today and data.get("trade_date"):
+                cvdaily[data["trade_date"]]=today
+                for d_ in sorted(cvdaily)[:-250]: cvdaily.pop(d_,None)
+                try: json.dump(cvdaily, open(cvpath,"w"), ensure_ascii=False)
+                except Exception: pass
+                if not args.no_push and len(cvdaily)>1:
+                    _cs={d:cvdaily[d] for d in sorted(cvdaily)[:-1]}
+                    _ch=hashlib.sha1(json.dumps(_cs,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
+                    _chf=args.config+".cvhash"
+                    try: _cold=open(_chf).read().strip()
+                    except Exception: _cold=""
+                    if _ch!=_cold:
+                        try: push_gist(cfg,{"chips_vwap.json":{"ts_utc":data["ts_utc"],"daily":cvdaily}}); open(_chf,"w").write(_ch); log(f"pushed chips_vwap.json: {len(cvdaily)} 日")
+                        except Exception as e: log("CV PUSH ERR:",type(e).__name__,e)
+        except Exception as e: err("ticks",e)
+    else:
+        try: data["chips_vwap_today"]=json.load(open(cvtodaycache))   # 跳過那輪沿用今日快取(隨 60s 快輪 base 帶著走)
+        except Exception: pass
     # 個股K線層(stock.html):當日K快照+日K歷史維護 —— Mac 專屬,public-out(Actions 備援)跳過
     if getattr(args,"public_out",None):
         kl_syms=[]

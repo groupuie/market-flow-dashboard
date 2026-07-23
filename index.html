@@ -4,14 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>全市場資金部位地圖</title>
-<meta name="theme-color" content="#0d0d0d">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="資金流">
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./icon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
 <style>
 :root{
@@ -436,6 +428,22 @@ function chipSyms(){   // 全追蹤宇宙:主清單(固定＋闖入＋自訂)∪
   Object.keys(D).forEach(d=>Object.keys(D[d]||{}).forEach(s=>{if((D[d][s]||{}).c!=='現金')set.add(s);}));
   return [...set].sort();
 }
+let CHIPV=null,CHIPV_req=0;   // 大戶/散戶 盤中均價日檔(chips_vwap.json)
+function ensureChipVwap(){
+  if(CHIPV||(Date.now()/1000-CHIPV_req)<90)return; CHIPV_req=Date.now()/1000;
+  fetch(DATA_URL.replace('market_data.json','chips_vwap.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null).then(j=>{const dd=j&&j.daily; if(dd){CHIPV=dd; if(DATA)renderChips();}}).catch(()=>{});
+}
+function chipVwapFor(sym, dates){   // 對 window 內日期量加權彙總 → 大戶/散戶均價 + 淨方向(今日用 market_data 嵌入的最新值)
+  const hist=CHIPV||{}, today=(DATA&&DATA.chips_vwap_today)||{}, td=DATA&&DATA.trade_date;
+  let bpv=0,bvol=0,bn=0,bnet=0, spv=0,svol=0,sn=0,snet=0, days=0;
+  dates.forEach(d=>{ let e=(hist[d]||{})[sym]; if(d===td&&today[sym])e=today[sym]; if(!e)return;
+    if(e.bvol){bpv+=(e.bvwap||0)*e.bvol; bvol+=e.bvol; bn+=e.bn||0; bnet+=e.bnet||0;}
+    if(e.svol){spv+=(e.svwap||0)*e.svol; svol+=e.svol; sn+=e.sn||0; snet+=e.snet||0;} days++; });
+  if(!bvol&&!svol)return null;
+  return {big:bvol?+(bpv/bvol).toFixed(2):null, small:svol?+(spv/svol).toFixed(2):null,
+          bnet:bnet, snet:snet, bn:bn, sn:sn, days:days};
+}
 let CHIP_IDX={SPY:false,QQQ:false};   // 現金池圖疊加 SPY/QQQ 趨勢(預設關,使用者可切)
 function buildChipIdx(){
   const el=document.getElementById('chipidx'); if(!el)return;
@@ -523,6 +531,15 @@ function renderChipCost(){
   hline(vwW,C.amber,'均價'+bars.length+'d','dot');
   hline(v60,'#8ab4f8','VWAP60','dash');
   hline(v120,'#b07de6','VWAP120','dash');
+  // 大戶/散戶 盤中均價(逐筆,自動門檻;僅有資料時;粗實線+▲▼淨方向)
+  const vwd=chipVwapFor(CHIP_SYM, bars.map(b=>b[0]));
+  if(vwd){
+    const ar=n=>n>0?'▲':n<0?'▼':'';
+    if(vwd.big!=null){shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:vwd.big,y1:vwd.big,line:{color:'#f472b6',width:2.4}});
+      ann.push({xref:'paper',x:1,yref:'y',y:vwd.big,text:'大戶均 '+ar(vwd.bnet)+vwd.big.toFixed(1),showarrow:false,xanchor:'right',yanchor:'bottom',font:{size:9.5,color:'#f472b6'},bgcolor:'rgba(13,13,13,.62)'});}
+    if(vwd.small!=null){shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:vwd.small,y1:vwd.small,line:{color:'#22d3ee',width:2.4}});
+      ann.push({xref:'paper',x:1,yref:'y',y:vwd.small,text:'散戶均 '+ar(vwd.snet)+vwd.small.toFixed(1),showarrow:false,xanchor:'right',yanchor:'bottom',font:{size:9.5,color:'#22d3ee'},bgcolor:'rgba(13,13,13,.62)'});}
+  }
   ann.push({xref:'paper',x:0,yref:'y',y:pocP,text:'POC '+pocP.toFixed(1),showarrow:false,xanchor:'left',yanchor:'bottom',font:{size:9.5,color:'#f59e0b'},bgcolor:'rgba(13,13,13,.6)'});
   ann.push({xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,xanchor:'left',font:{size:11,color:'#9db4e0'},
     text:'<b>'+CHIP_SYM+'</b> 籌碼成本分佈 · 近 '+bars.length+' 日 · POC '+pocP.toFixed(1)+' · 值區 '+vaLo.toFixed(0)+'–'+vaHi.toFixed(0)+((vwW&&px>=vwW)?' · <span style="color:#4ade80">價在均價上(獲利盤多·下檔支撐)</span>':(vwW?' · <span style="color:#f87171">價在均價下(套牢盤多·上檔壓力)</span>':''))});
@@ -533,7 +550,7 @@ function renderChipCost(){
 }
 function renderChips(){
   const el=document.getElementById('chipflow'); if(!el)return;
-  ensureExtDaily();
+  ensureExtDaily(); ensureChipVwap();
   const D=chipDaily(); const dates=Object.keys(D).sort();
   const syms=chipSyms();
   if(!syms.length){chartMsg(el,'個股日檔累積中(需採集器歷史回填)',30);return;}
@@ -596,7 +613,7 @@ function renderChips(){
     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}, y2?{range:y2.range}:{})},CFG);
   buildChipOffs();
   const note=document.getElementById('chipnote');
-  if(note)note.innerHTML='<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>誠實標注</b>:成本分佈與均價是「近期成交均價」近似,非個別持有成本;大戶vs散戶「盤中均價拆分」需逐筆資料,待今晚盤中覆蓋度驗證後再定(見對話)。';
+  if(note)note.innerHTML='<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>大戶均(粉)/散戶均(青)</b>=逐筆成交按自動門檻(≥$10萬或當批前5%)分大單/散戶的成交量加權均價,<b>▲=該群淨買、▼=淨賣</b>;比較兩條與現價,可看誰的成本卡在哪、誰在追高/誰在派發。<b>誠實標注</b>:成本分佈/均價是「近期成交均價」近似、非個別持有成本;大戶/散戶均價的逐筆在熱門股是<b>抽樣估計</b>(NVDA 類約 15% 覆蓋、均價仍近似不偏,但股數不宣稱精確)、中低量股近完整;此兩線自建置日起逐日累積,頭幾天樣本少。';
 }
 function render(){
   if(!DATA)return;
@@ -1454,9 +1471,6 @@ setInterval(checkVersion,150000);
 let cd=REFRESH_SEC;
 setInterval(()=>{cd--;if(cd<=0){cd=REFRESH_SEC;load();}document.getElementById('countdown').textContent='· '+cd+'s 後更新';},1000);
 load();
-</script>
-<script>
-if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){})})}
 </script>
 </body>
 </html>
