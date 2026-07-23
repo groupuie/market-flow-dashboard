@@ -86,6 +86,44 @@ for _s in ["MSFT","AAPL","AMZN","META","GOOGL","ORCL","NFLX","PLTR"]: CAP_CAT[_s
 for _s in ["COIN","MSTR"]: CAP_CAT[_s]="加密股"
 CAP_CAT["TSLA"]="電動車"
 
+# ============ 擴充追蹤清單(個股籌碼分頁專用;只在完整輪抓、不進 1 分鐘即時迴圈、不併入大盤匯總)============
+# 常見高成交量美股 —— ⑦ 現金池推到獨立 ext_flows.json,前端只在個股籌碼分頁合併,主儀表板不受影響
+EXT_SYMS = [
+  # 大型科技/軟體/網路
+  "US.CRM","US.ADBE","US.CSCO","US.IBM","US.NOW","US.INTU","US.UBER","US.ABNB","US.SHOP","US.SNOW",
+  "US.PANW","US.CRWD","US.DDOG","US.NET","US.ANET","US.DELL","US.APP","US.SMCI",
+  # 半導體
+  "US.QCOM","US.TXN","US.ADI","US.MCHP","US.ON","US.ARM","US.ASML","US.KLAC","US.LRCX","US.AMAT",
+  # 金融
+  "US.JPM","US.BAC","US.WFC","US.GS","US.MS","US.C","US.V","US.MA","US.AXP","US.SCHW","US.PYPL","US.SOFI","US.HOOD",
+  # 醫療
+  "US.LLY","US.UNH","US.JNJ","US.ABBV","US.PFE","US.MRK","US.TMO","US.AMGN","US.GILD",
+  # 消費/零售
+  "US.WMT","US.COST","US.HD","US.MCD","US.NKE","US.SBUX","US.DIS","US.KO","US.PEP","US.PG",
+  # 能源
+  "US.XOM","US.CVX","US.OXY","US.SLB","US.COP",
+  # 工業/汽車
+  "US.BA","US.CAT","US.GE","US.F","US.GM","US.RIVN","US.LCID",
+  # 中概
+  "US.BABA","US.PDD","US.NIO","US.JD","US.BIDU",
+  # 加密礦/相關
+  "US.MARA","US.RIOT","US.CLSK",
+  # 熱門板塊 ETF
+  "US.ARKK","US.XLY","US.XLI","US.XLU","US.GDX","US.KRE","US.XBI",
+]
+EXT_CAT = {}
+for _s in ["QCOM","TXN","ADI","MCHP","ON","ARM","ASML","KLAC","LRCX","AMAT"]: EXT_CAT[_s]="半導體"
+for _s in ["CRM","ADBE","CSCO","IBM","NOW","INTU","UBER","ABNB","SHOP","SNOW","PANW","CRWD","DDOG","NET","ANET","DELL","APP","SMCI"]: EXT_CAT[_s]="軟體平台"
+for _s in ["JPM","BAC","WFC","GS","MS","C","V","MA","AXP","SCHW","PYPL","SOFI","HOOD"]: EXT_CAT[_s]="金融"
+for _s in ["LLY","UNH","JNJ","ABBV","PFE","MRK","TMO","AMGN","GILD"]: EXT_CAT[_s]="醫療"
+for _s in ["WMT","COST","HD","MCD","NKE","SBUX","DIS","KO","PEP","PG"]: EXT_CAT[_s]="消費"
+for _s in ["XOM","CVX","OXY","SLB","COP"]: EXT_CAT[_s]="能源"
+for _s in ["BA","CAT","GE"]: EXT_CAT[_s]="工業"
+for _s in ["F","GM","RIVN","LCID"]: EXT_CAT[_s]="電動車"
+for _s in ["BABA","PDD","NIO","JD","BIDU"]: EXT_CAT[_s]="中概"
+for _s in ["MARA","RIOT","CLSK"]: EXT_CAT[_s]="加密股"
+for _s in ["ARKK","XLY","XLI","XLU","GDX","KRE","XBI"]: EXT_CAT[_s]="板塊ETF"
+
 FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ","AMD"}
 KL_HIST_DAYS = 1250     # 保留約 5 年日K
 
@@ -661,6 +699,37 @@ def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
         q.close()
     return cap, snaps, inst, hist
 
+def pull_ext_flow(syms):
+    """擴充清單 ⑦ 現金池(個股籌碼分頁專用):回傳 {sym:{m,r,c}}(m/r 單位=$M,與 daily_flows 同格式)。
+       只在完整輪呼叫、獨立於 CAP_SYMS,不進大盤 capital_flow/匯總。"""
+    from futu import OpenQuoteContext, RET_OK
+    _core={x.replace("US.","") for x in CAP_SYMS}
+    q=OpenQuoteContext(host="127.0.0.1",port=11111)
+    out={}
+    try:
+        for s in syms:
+            sym=s.replace("US.","")
+            if sym in _core: continue   # 已在主清單者不重覆抓
+            try:
+                ret,d=q.get_capital_distribution(s)
+                if ret==RET_OK and len(d):
+                    r=d.iloc[0]
+                    si,bi=_f(r.get("capital_in_super")),_f(r.get("capital_in_big"))
+                    so,bo=_f(r.get("capital_out_super")),_f(r.get("capital_out_big"))
+                    mi,sm=_f(r.get("capital_in_mid")),_f(r.get("capital_in_small"))
+                    mo,so2=_f(r.get("capital_out_mid")),_f(r.get("capital_out_small"))
+                    mn=round((si+bi)-(so+bo),0) if None not in (si,bi,so,bo) else None
+                    rn=round((mi+sm)-(mo+so2),0) if None not in (mi,sm,mo,so2) else None
+                    if mn is not None:
+                        out[sym]={"m":round(mn/1e6,1),
+                                  "r":round(rn/1e6,1) if rn is not None else None,
+                                  "c":EXT_CAT.get(sym,"正股")}
+            except Exception as e: err(f"ext {s}", e)
+            time.sleep(0.5)
+    finally:
+        q.close()
+    return out
+
 # ============ 主流程 ============
 def options_due(state_path, force):
     """期權更新節奏(即時性優先、兼顧 CBOE 速率):
@@ -919,6 +988,35 @@ def run_once(cfg, args):
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
+    # 擴充清單 ⑦(個股籌碼分頁專用,獨立 ext_flows.json;只在完整輪、~20 分節流;不進大盤 capital_flow/匯總)
+    extpath=args.config+".extdaily.json"
+    try: extdaily=json.load(open(extpath))
+    except Exception: extdaily={}
+    extmark=args.config+".extmark"
+    try: _extage=time.time()-os.path.getmtime(extmark)
+    except OSError: _extage=1e9
+    if (not args.no_futu) and _extage>1200 and data.get("trade_date") and data["session"] in ("rth","after"):
+        try:
+            extflow=pull_ext_flow(EXT_SYMS)
+            if extflow:
+                extdaily[data["trade_date"]]={**extdaily.get(data["trade_date"],{}), **extflow}
+                for d_ in sorted(extdaily)[:-250]: extdaily.pop(d_,None)
+                try: json.dump(extdaily, open(extpath,"w"), ensure_ascii=False)
+                except Exception: pass
+                try: open(extmark,"w").write(str(time.time()))
+                except Exception: pass
+                if not args.no_push:   # 推獨立檔(整檔雜湊,含當日 → 當日累積也會更新;20 分一次不膨脹)
+                    _eh=hashlib.sha1(json.dumps(extdaily,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
+                    _ehf=args.config+".exthash"
+                    try: _eold=open(_ehf).read().strip()
+                    except Exception: _eold=""
+                    if _eh!=_eold:
+                        try:
+                            push_gist(cfg,{"ext_flows.json":{"ts_utc":data["ts_utc"],"n_days":len(extdaily),"daily_flows":extdaily}})
+                            open(_ehf,"w").write(_eh); log(f"pushed ext_flows.json: {len(extflow)} 擴充標的")
+                        except Exception as e: log("EXT PUSH ERR:",type(e).__name__,e)
+        except Exception as e: err("ext_flow",e)
+    data["ext_days"]=len(extdaily)
     # 個股K線層(stock.html):當日K快照+日K歷史維護 —— Mac 專屬,public-out(Actions 備援)跳過
     if getattr(args,"public_out",None):
         kl_syms=[]

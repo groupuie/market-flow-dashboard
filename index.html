@@ -410,8 +410,21 @@ function fmtShares(n){ if(n==null||isNaN(n))return '—';
 function chartMsg(el,msg,pad){ if(!el)return;
   try{ if(window.Plotly&&(el._fullLayout||el.data))Plotly.purge(el); }catch(e){}
   el.innerHTML='<div class="miss" style="padding:'+(pad||24)+'px">'+msg+'</div>'; }
-function chipSyms(){   // 全追蹤宇宙:250 日內出現過的所有非現金標的(固定清單＋每日成交額前20闖入者＋自訂)
-  const D=DATA.daily_flows||{}; const set=new Set();
+let EXTDF=null,EXTDF_req=0;   // 擴充清單 ⑦(獨立 ext_flows.json,個股籌碼分頁專用;不進大盤匯總)
+function ensureExtDaily(){
+  if(EXTDF||(Date.now()/1000-EXTDF_req)<90)return; EXTDF_req=Date.now()/1000;
+  fetch(DATA_URL.replace('market_data.json','ext_flows.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(j=>{const df=j&&j.daily_flows; if(df){EXTDF=df; if(DATA)renderChips();}})
+    .catch(()=>{});
+}
+function chipDaily(){   // 個股籌碼分頁資料源 = 主 daily_flows ∪ 擴充 ext_flows(逐日合併;主儀表板 DATA.daily_flows 不動)
+  const A=DATA.daily_flows||{}; if(!EXTDF)return A;
+  const out={}; new Set([...Object.keys(A),...Object.keys(EXTDF)]).forEach(d=>{out[d]=Object.assign({},A[d]||{},EXTDF[d]||{});});
+  return out;
+}
+function chipSyms(){   // 全追蹤宇宙:主清單(固定＋闖入＋自訂)∪ 擴充清單,250 日內出現過的非現金標的
+  const D=chipDaily(); const set=new Set();
   Object.keys(D).forEach(d=>Object.keys(D[d]||{}).forEach(s=>{if((D[d][s]||{}).c!=='現金')set.add(s);}));
   return [...set].sort();
 }
@@ -454,7 +467,7 @@ function renderChipStock(){
   // 存量分解:流通股(所有籌碼) = 大戶(機構持股 13F) + 非機構(散戶+內部人)。季度變動。
   const el=document.getElementById('chipstock'); if(!el)return;
   const M=(DATA.chips_meta||{})[CHIP_SYM];
-  if(!M){el.innerHTML='<div class="note" style="opacity:.6">籌碼存量採集中（機構持股 13F + 流通股，Mac 採集器約 15 分內產生）</div>';return;}
+  if(!M){el.innerHTML='<div class="note" style="opacity:.6">存量分解(流通股／13F 大戶持股)僅涵蓋主要追蹤股;<b>擴充清單標的暫不採集此項</b> —— ⑦ 現金池與成本分佈不受影響。(主要股若剛加入,約 15 分內產生)</div>';return;}
   if(M.float==null){el.innerHTML='<div class="note" style="opacity:.6">'+CHIP_SYM+'：ETF／無個股持股結構（存量分解僅適用正股）</div>';return;}
   const fl=M.float, iq=Math.max(0,M.inst_q||0);
   const ipF=fl?Math.min(100,iq/fl*100):0, npct=Math.max(0,100-ipF), nonInst=Math.max(0,fl-iq);
@@ -512,7 +525,8 @@ function renderChipCost(){
 }
 function renderChips(){
   const el=document.getElementById('chipflow'); if(!el)return;
-  const D=DATA.daily_flows||{}; const dates=Object.keys(D).sort();
+  ensureExtDaily();
+  const D=chipDaily(); const dates=Object.keys(D).sort();
   const syms=chipSyms();
   if(!syms.length){chartMsg(el,'個股日檔累積中(需採集器歷史回填)',30);return;}
   if(!CHIP_SYM)CHIP_SYM=syms.includes('NVDA')?'NVDA':syms[0];
