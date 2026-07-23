@@ -434,15 +434,18 @@ function ensureChipVwap(){
   fetch(DATA_URL.replace('market_data.json','chips_vwap.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null).then(j=>{const dd=j&&j.daily; if(dd){CHIPV=dd; if(DATA)renderChips();}}).catch(()=>{});
 }
-function chipVwapFor(sym, dates){   // 對 window 內日期量加權彙總 → 大戶/散戶均價 + 淨方向(今日用 market_data 嵌入的最新值)
+function chipVwapFor(sym, dates){   // 對 window 內日期量加權彙總 → 大戶/散戶均價 + 淨方向
   const hist=CHIPV||{}, today=(DATA&&DATA.chips_vwap_today)||{}, td=DATA&&DATA.trade_date;
-  let bpv=0,bvol=0,bn=0,bnet=0, spv=0,svol=0,sn=0,snet=0, days=0;
-  dates.forEach(d=>{ let e=(hist[d]||{})[sym]; if(d===td&&today[sym])e=today[sym]; if(!e)return;
-    if(e.bvol){bpv+=(e.bvwap||0)*e.bvol; bvol+=e.bvol; bn+=e.bn||0; bnet+=e.bnet||0;}
-    if(e.svol){spv+=(e.svwap||0)*e.svol; svol+=e.svol; sn+=e.sn||0; snet+=e.snet||0;} days++; });
+  const use={};
+  dates.forEach(d=>{ const e=(hist[d]||{})[sym]; if(e)use[d]=e; });
+  if(td&&today[sym])use[td]=today[sym];   // 今日 VWAP 一定納入(日K可能還沒今日這根 → 否則整條線會消失)
+  const es=Object.values(use); if(!es.length)return null;
+  let bpv=0,bvol=0,bn=0,bnet=0, spv=0,svol=0,sn=0,snet=0;
+  es.forEach(e=>{ if(e.bvol){bpv+=(e.bvwap||0)*e.bvol; bvol+=e.bvol; bn+=e.bn||0; bnet+=e.bnet||0;}
+    if(e.svol){spv+=(e.svwap||0)*e.svol; svol+=e.svol; sn+=e.sn||0; snet+=e.snet||0;} });
   if(!bvol&&!svol)return null;
   return {big:bvol?+(bpv/bvol).toFixed(2):null, small:svol?+(spv/svol).toFixed(2):null,
-          bnet:bnet, snet:snet, bn:bn, sn:sn, days:days};
+          bnet:bnet, snet:snet, bn:bn, sn:sn, days:es.length};
 }
 let CHIP_IDX={SPY:false,QQQ:false};   // 現金池圖疊加 SPY/QQQ 趨勢(預設關,使用者可切)
 function buildChipIdx(){
