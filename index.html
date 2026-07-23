@@ -68,6 +68,7 @@ a{color:var(--blue)}
   <div class="tab" data-sec="cross">跨資產總覽</div>
   <div class="tab" data-sec="equities">個股 · 槓桿ETF</div>
   <div class="tab" data-sec="flow">資金流 · 暗池</div>
+  <div class="tab" data-sec="chips">個股籌碼</div>
 </div>
 
 <!-- ===== 資金輪動 Sankey ===== -->
@@ -218,6 +219,18 @@ a{color:var(--blue)}
   </div>
 </section>
 
+<section id="sec-chips" class="sec">
+  <div class="card">
+    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">個股籌碼追蹤 — 單檔現金池累積(大單 vs 全單)
+      <span class="sub">標的</span>
+      <select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
+      <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
+    </h2>
+    <div id="chipflow" style="height:440px"></div>
+    <div id="chipnote" class="note"></div>
+  </div>
+</section>
+
 <div class="note">資料由你 Mac 上的採集器每 5 分鐘推送到 GitHub gist，本頁每 60 秒自行抓取更新 —— 開著就會動，不消耗任何 AI token。<b>盤中即時性</b>：Futu ⑦／個股價格＝即時（LV3）、期權＝每次採集重算（CBOE 源延遲約 15 分）、殖利率＝即時指數＋官方 EOD 曲線；賣空／暗池為 FINRA T+1（物理上限，無免費即時源）。<b>盤後</b>：資金輪動、期權趨勢、賣空趨勢皆可選日期區間。本頁不構成投資建議。</div>
 </div>
 
@@ -225,7 +238,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-22T16:25Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-22T16:55Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -370,9 +383,64 @@ function makeTable(el, cols, rows, defSort){
   });
 }
 
+// ===== 個股籌碼追蹤:單檔現金池累積(過去 N 日,大單 vs 全單)+ 價格%疊加 =====
+let CHIP_SYM='', CHIP_WIN=60;
+const CHIPK={};   // 單檔日K收盤快取 {sym:{date:close}}
+function ensureChipK(sym){
+  if(!sym||CHIPK[sym]||CHIPK[sym+'_r'])return; CHIPK[sym+'_r']=true;
+  fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});CHIPK[sym]=m;renderChips();}})
+    .catch(()=>{});
+}
+function chipSyms(){
+  const D=DATA.daily_flows||{}; const dates=Object.keys(D).sort(); const set=new Set();
+  dates.slice(-8).forEach(d=>Object.keys(D[d]||{}).forEach(s=>{if((D[d][s]||{}).c!=='現金')set.add(s);}));
+  return [...set].sort();
+}
+function renderChips(){
+  const el=document.getElementById('chipflow'); if(!el)return;
+  const D=DATA.daily_flows||{}; const dates=Object.keys(D).sort();
+  const syms=chipSyms();
+  if(!syms.length){el.innerHTML='<div class="miss" style="padding:30px">個股日檔累積中(需採集器歷史回填)</div>';return;}
+  if(!CHIP_SYM||!syms.includes(CHIP_SYM))CHIP_SYM=syms.includes('NVDA')?'NVDA':syms[0];
+  const sel=document.getElementById('chipSym');
+  if(sel&&sel.dataset.built!==syms.join()){
+    sel.innerHTML=syms.map(x=>'<option'+(x===CHIP_SYM?' selected':'')+'>'+x+'</option>').join('');
+    sel.dataset.built=syms.join(); sel.onchange=()=>{CHIP_SYM=sel.value;renderChips();};
+  } else if(sel){sel.value=CHIP_SYM;}
+  const rb=document.getElementById('chipRange');
+  if(rb){rb.innerHTML=[30,60,120,250].map(n=>{
+      const dis=dates.length<Math.min(n,10); const act=CHIP_WIN===n;
+      return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('');
+    rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=+t.dataset.cn;renderChips();});}
+  const use=dates.slice(-CHIP_WIN);
+  let cmM=0,cmA=0; const x=[],barA=[],lineM=[],lineA=[];
+  use.forEach(d=>{const e=(D[d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, r=(e&&e.r!=null)?e.r:0;
+    const da=(m+r)*1e6; cmM+=m*1e6; cmA+=da; x.push(d.slice(5)); barA.push(da); lineM.push(cmM); lineA.push(cmA);});
+  if(x.length<2){el.innerHTML='<div class="miss" style="padding:30px">此標的區間內日檔不足</div>';return;}
+  ensureChipK(CHIP_SYM);
+  const K=CHIPK[CHIP_SYM]; const praw=use.map(d=>K&&K[d]!=null?K[d]:null);
+  const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
+  const lastM=lineM[lineM.length-1], lastA=lineA[lineA.length-1];
+  const traces=[
+    {type:'bar',name:'當日淨進出',x:x,y:barA,marker:{color:barA.map(v=>v>=0?'rgba(34,197,94,.55)':'rgba(239,68,68,.5)'),line:{width:0}},hovertemplate:'%{x} 當日:%{y:,.0f}<extra></extra>'},
+    {type:'scatter',mode:'lines',name:'全單累積',x:x,y:lineA,line:{color:C.amber,width:2.2,shape:'spline'},hovertemplate:'%{x} 全單累積:%{y:,.0f}<extra></extra>'},
+    {type:'scatter',mode:'lines',name:'大單累積(機構)',x:x,y:lineM,line:{color:'#c2703e',width:2,dash:'dot'},hovertemplate:'%{x} 大單累積:%{y:,.0f}<extra></extra>'}
+  ];
+  if(ppct.some(v=>v!=null))traces.push({type:'scatter',mode:'lines',name:'價格%',x:x,y:ppct,yaxis:'y2',connectgaps:true,line:{color:'#8ab4f8',width:1.7},hovertemplate:'%{x} 價 %{y:+.2f}%<extra></extra>'});
+  Plotly.react('chipflow',traces,{...PBASE,barmode:'overlay',margin:{l:70,r:64,t:26,b:34},showlegend:false,
+    annotations:[{text:'<b>'+CHIP_SYM+'</b> 過去 '+use.length+' 日 · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span> — ↑資金進場↓離場;柱=當日淨進出',
+      xref:'paper',yref:'paper',x:0.01,y:1.1,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
+    xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
+    yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'現金池累積(↑進↓出)',font:{size:10,color:C.ink2}}},
+    yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}},CFG);
+  const note=document.getElementById('chipnote');
+  if(note)note.innerHTML='單檔<b>現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單=特大+大單≈機構、全單=再含中小單≈散戶)。↑=資金淨進場(買盤累積)、↓=淨離場。與<b>價格%</b>疊看:量價同向=資金確認;<b>背離</b>(價漲·池降=⑦資金在撤/派發;價跌·池升=有人在接)=轉折觀察。柱=當日淨進出。<b>注意</b>:此為 ⑦ 主動方向<b>淨額</b>,非持股成本;大戶/散戶「籌碼均價」需逐筆成交資料另建(見對話說明)。';
+}
 function render(){
   if(!DATA)return;
-  renderRotation(); renderOptions(); renderCross(); renderEquities(); renderFlow();
+  renderRotation(); renderOptions(); renderCross(); renderEquities(); renderFlow(); renderChips();
 }
 
 
