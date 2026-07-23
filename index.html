@@ -502,10 +502,10 @@ function renderChips(){
     annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+use.length+' 日 · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span> — ↑資金進場↓離場;柱=當日淨進出',
       xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
-    yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'現金池累積(↑進↓出)',font:{size:10,color:C.ink2}}},
+    yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
     yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}},CFG);
   const note=document.getElementById('chipnote');
-  if(note)note.innerHTML='<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);↑淨進場↓淨離場,與<b>價格%</b>背離=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>誠實標注</b>:成本分佈與均價是「近期成交均價」近似,非個別持有成本;大戶vs散戶「盤中均價拆分」需逐筆資料,待今晚盤中覆蓋度驗證後再定(見對話)。';
+  if(note)note.innerHTML='<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>誠實標注</b>:成本分佈與均價是「近期成交均價」近似,非個別持有成本;大戶vs散戶「盤中均價拆分」需逐筆資料,待今晚盤中覆蓋度驗證後再定(見對話)。';
 }
 function render(){
   if(!DATA)return;
@@ -1011,11 +1011,11 @@ function renderPoolTide(){
      annotations:[{text:((window.innerWidth||1024)<680)
         ?'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
         :'<b>場內資金線</b>(現金池反向·'+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
-       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span>·<span style="color:#c084fc">紫=QQQ</span>(%改) · 柱=當日淨進出(綠進紅出) — 線=累積(↑進場↓離場),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
+       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span>·<span style="color:#c084fc">紫=QQQ</span>(%改) · 柱=當日淨進出(綠進紅出) — 線=累積(<b>+y=現金離池進場、−y=現金入池了結</b>),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
        font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
-     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑淨進場/↓淨離場',font:{size:10,color:C.ink2}}},
+     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
      yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},
        title:{text:'指數 %',font:{size:10,color:'#9db4e0'}}}},CFG);
 }
