@@ -538,10 +538,11 @@ function renderChipCost(){
   const vwd=chipVwapFor(CHIP_SYM, bars.map(b=>b[0]));
   if(vwd){
     const ar=n=>n>0?'▲':n<0?'▼':'';
-    if(vwd.big!=null){shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:vwd.big,y1:vwd.big,line:{color:'#f472b6',width:2.4}});
-      ann.push({xref:'paper',x:1,yref:'y',y:vwd.big,text:'大戶均 '+ar(vwd.bnet)+vwd.big.toFixed(1),showarrow:false,xanchor:'right',yanchor:'bottom',font:{size:9.5,color:'#f472b6'},bgcolor:'rgba(13,13,13,.62)'});}
-    if(vwd.small!=null){shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:vwd.small,y1:vwd.small,line:{color:'#22d3ee',width:2.4}});
-      ann.push({xref:'paper',x:1,yref:'y',y:vwd.small,text:'散戶均 '+ar(vwd.snet)+vwd.small.toFixed(1),showarrow:false,xanchor:'right',yanchor:'bottom',font:{size:9.5,color:'#22d3ee'},bgcolor:'rgba(13,13,13,.62)'});}
+    // 大戶=粗實粉線(標籤置線上方)、散戶=虛青線(標籤置線下方)→ 兩者近乎重疊(同股常見)時仍都看得見
+    if(vwd.big!=null){shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:vwd.big,y1:vwd.big,line:{color:'#f472b6',width:3}});
+      ann.push({xref:'paper',x:1,yref:'y',y:vwd.big,text:'大戶均 '+ar(vwd.bnet)+vwd.big.toFixed(1),showarrow:false,xanchor:'right',yanchor:'bottom',font:{size:9.5,color:'#f472b6'},bgcolor:'rgba(13,13,13,.72)'});}
+    if(vwd.small!=null){shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:vwd.small,y1:vwd.small,line:{color:'#22d3ee',width:2,dash:'dash'}});
+      ann.push({xref:'paper',x:1,yref:'y',y:vwd.small,text:'散戶均 '+ar(vwd.snet)+vwd.small.toFixed(1),showarrow:false,xanchor:'right',yanchor:'top',font:{size:9.5,color:'#22d3ee'},bgcolor:'rgba(13,13,13,.72)'});}
   }
   ann.push({xref:'paper',x:0,yref:'y',y:pocP,text:'POC '+pocP.toFixed(1),showarrow:false,xanchor:'left',yanchor:'bottom',font:{size:9.5,color:'#f59e0b'},bgcolor:'rgba(13,13,13,.6)'});
   ann.push({xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,xanchor:'left',font:{size:11,color:'#9db4e0'},
