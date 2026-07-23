@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>個股K線 · AI訊號</title>
+<meta name="theme-color" content="#0d0d0d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="個股K線">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <script src="./klinecharts.min.js"></script>
 <style>
 :root{
@@ -706,6 +714,9 @@ async function boot(){
 }
 boot();
 window._dbg={get chart(){return chart},get SIG(){return SIG},get overlayIds(){return overlayIds},get dayBars(){return dayBars},get MKT(){return MKT}};
+</script>
+<script>
+if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){})})}
 </script>
 </body>
 </html>
