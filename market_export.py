@@ -353,8 +353,11 @@ def finra_short_hist(days=30):
     return out
 
 # 機構持股(13F,季頻;僅美股正股/基金)監控清單
-INST_SYMS = ["US.NVDA","US.MU","US.SNDK","US.WDC","US.MRVL","US.AVGO","US.TSLA","US.SMH","US.SOXX",
-             "US.AAPL","US.MSFT","US.AMZN","US.META","US.GOOGL"]
+# 機構持股(13F)+ 流通股(snapshot)對象 = 個股籌碼分頁的正股宇宙(ETF 無持股結構故排除)
+INST_SYMS = ["US.NVDA","US.AMD","US.AVGO","US.MRVL","US.INTC","US.TSM",
+             "US.MU","US.SNDK","US.WDC","US.LITE","US.COHR","US.AAOI",
+             "US.MSFT","US.AAPL","US.AMZN","US.META","US.GOOGL","US.ORCL","US.NFLX","US.PLTR",
+             "US.COIN","US.MSTR","US.TSLA","US.JPM","US.LLY"]
 
 # ============ 個股K線層(stock.html 用;另一 session 開發,已合併)============
 def kline_symbols(custom):
@@ -600,7 +603,7 @@ def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
                             "cat":_cat,"update_time":str(r.get("update_time") or "")}
             except Exception as e: err(f"capdist {s}", e)
             time.sleep(0.5)
-        # 機構持股變動(13F,季頻;節流:每次執行只在 want_inst 時抓)
+        # 機構持股變動(13F,季頻;節流:每次執行只在 want_inst 時抓)+ 流通股/發行股(snapshot,個股籌碼分頁用)
         if want_inst:
             for s in INST_SYMS:
                 try:
@@ -611,9 +614,24 @@ def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
                             "pct":_f(r.get("holder_pct")), "pct_chg":_f(r.get("holder_pct_change")),
                             "inst_chg":_f(r.get("institution_quantity_change")),
                             "qty_chg":_f(r.get("holder_quantity_change")),
+                            "holder_q":_f(r.get("holder_quantity")),          # 機構持股「股數」=大戶籌碼數量
+                            "inst_n":_f(r.get("institution_quantity")),        # 機構「家數」
                             "period":str(r.get("period_text") or "")}
                 except Exception as e: err(f"inst {s}", e)
                 time.sleep(0.4)
+            # 流通股/發行股本(一次批次快照;所有籌碼數量=流通股)
+            try:
+                ret,d=q.get_market_snapshot(INST_SYMS)
+                if ret==RET_OK and len(d):
+                    for i in range(len(d)):
+                        r=d.iloc[i]; code=str(r.get("code") or "").replace("US.","")
+                        if not code: continue
+                        snaps[code]={"float":_f(r.get("outstanding_shares")),   # 流通股
+                                     "issued":_f(r.get("issued_shares")),        # 發行股本
+                                     "px":_f(r.get("last_price")),
+                                     "circ_mv":_f(r.get("circular_market_val")),
+                                     "tot_mv":_f(r.get("total_market_val"))}
+            except Exception as e: err("chips-snap", e)
         # 排行闖入者:美股成交額 TOP20,清單外的自動補抓 ⑦
         try:
             ranked=pull_top_turnover(q, topn=20)
@@ -812,12 +830,21 @@ def run_once(cfg, args):
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
     if not args.no_futu:
         try:
-            cap,_,inst,histfill=pull_futu(want_inst=want_inst, want_hist=want_hist, extra_syms=custom)
+            cap,snaps,inst,histfill=pull_futu(want_inst=want_inst, want_hist=want_hist, extra_syms=custom)
             data["capital_flow"]=cap
             if inst:
                 data["institutions"]=inst
                 try: open(instmark,"w").write(str(time.time()))
                 except Exception: pass
+            # 個股籌碼存量分解:流通股 / 大戶(機構)持股 / 非機構 —— 合併 13F 持股 + snapshot 流通股
+            if inst or snaps:
+                cm={}
+                for s in set(list(inst.keys())+list(snaps.keys())):
+                    ii=inst.get(s,{}); sn=snaps.get(s,{})
+                    cm[s]={"float":sn.get("float"),"issued":sn.get("issued"),"px":sn.get("px"),
+                           "inst_q":ii.get("holder_q"),"inst_pct":ii.get("pct"),"inst_n":ii.get("inst_n"),
+                           "inst_q_chg":ii.get("qty_chg"),"inst_pct_chg":ii.get("pct_chg"),"period":ii.get("period")}
+                data["chips_meta"]=cm
             if histfill:
                 try: open(histmark,"w").write(str(time.time()))
                 except Exception: pass
@@ -833,6 +860,14 @@ def run_once(cfg, args):
         except Exception: pass
     else:
         try: data["institutions"]=json.load(open(instcache))
+        except Exception: pass
+    # 個股籌碼存量快取:跳過 want_inst 那些輪沿用上次(季頻資料,不需每輪重抓)
+    chipscache=args.config+".chipsmeta.json"
+    if data.get("chips_meta"):
+        try: json.dump(data["chips_meta"], open(chipscache,"w"), ensure_ascii=False)
+        except Exception: pass
+    else:
+        try: data["chips_meta"]=json.load(open(chipscache))
         except Exception: pass
     # 時段誠實化:fetch 時間 vs 資料所屬交易日分開
     data["session"]=market_session()

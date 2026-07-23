@@ -221,12 +221,14 @@ a{color:var(--blue)}
 
 <section id="sec-chips" class="sec">
   <div class="card">
-    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">個股籌碼追蹤 — 單檔現金池累積(大單 vs 全單)
+    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">個股籌碼追蹤 — 存量分解 · 現金池累積 · 成本分佈
       <span class="sub">標的</span>
       <select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
     </h2>
+    <div id="chipstock" style="margin:6px 0 10px"></div>
     <div id="chipflow" style="height:440px"></div>
+    <div id="chipcost" style="height:460px;margin-top:8px"></div>
     <div id="chipnote" class="note"></div>
   </div>
 </section>
@@ -385,18 +387,83 @@ function makeTable(el, cols, rows, defSort){
 
 // ===== 個股籌碼追蹤:單檔現金池累積(過去 N 日,大單 vs 全單)+ 價格%疊加 =====
 let CHIP_SYM='', CHIP_WIN=60;
-const CHIPK={};   // 單檔日K收盤快取 {sym:{date:close}}
+const CHIPK={};   // 單檔日K快取 {sym:{close:{date:c}, bars:[[date,o,h,l,c,v,..],..]}}
 function ensureChipK(sym){
   if(!sym||CHIPK[sym]||CHIPK[sym+'_r'])return; CHIPK[sym+'_r']=true;
   fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});CHIPK[sym]=m;renderChips();}})
+    .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
+      CHIPK[sym]={close:m,bars:d.bars};renderChips();}})
     .catch(()=>{});
 }
+function fmtShares(n){ if(n==null||isNaN(n))return '—';
+  const a=Math.abs(n);
+  if(a>=1e8)return (n/1e8).toFixed(2)+'億股';
+  if(a>=1e4)return (n/1e4).toFixed(0)+'萬股';
+  return Math.round(n)+'股'; }
 function chipSyms(){
   const D=DATA.daily_flows||{}; const dates=Object.keys(D).sort(); const set=new Set();
   dates.slice(-8).forEach(d=>Object.keys(D[d]||{}).forEach(s=>{if((D[d][s]||{}).c!=='現金')set.add(s);}));
   return [...set].sort();
+}
+function renderChipStock(){
+  // 存量分解:流通股(所有籌碼) = 大戶(機構持股 13F) + 非機構(散戶+內部人)。季度變動。
+  const el=document.getElementById('chipstock'); if(!el)return;
+  const M=(DATA.chips_meta||{})[CHIP_SYM];
+  if(!M){el.innerHTML='<div class="note" style="opacity:.6">籌碼存量採集中（機構持股 13F + 流通股，Mac 採集器約 15 分內產生）</div>';return;}
+  if(M.float==null){el.innerHTML='<div class="note" style="opacity:.6">'+CHIP_SYM+'：ETF／無個股持股結構（存量分解僅適用正股）</div>';return;}
+  const fl=M.float, iq=Math.max(0,M.inst_q||0);
+  const ipF=fl?Math.min(100,iq/fl*100):0, npct=Math.max(0,100-ipF), nonInst=Math.max(0,fl-iq);
+  const qchg=M.inst_q_chg, pchg=M.inst_pct_chg;
+  const seg=(w,col)=>'<div style="width:'+w+'%;background:'+col+';height:100%"></div>';
+  const chg=(qchg!=null&&qchg!==0)?('<span style="color:'+(qchg>0?'#4ade80':'#f87171')+'">機構季變 '+(qchg>0?'▲ +':'▼ ')+fmtShares(Math.abs(qchg))+(pchg!=null?'（'+(pchg>0?'+':'')+(+pchg).toFixed(2)+'pt）':'')+'</span>'):'';
+  el.innerHTML=
+    '<div style="font-size:11.5px;color:#9db4e0;margin-bottom:3px">籌碼存量分解 · 流通股 <b>'+fmtShares(fl)+'</b>（發行 '+fmtShares(M.issued)+'）'+(M.period?' · 13F '+M.period:'')+'</div>'+
+    '<div style="height:20px;border-radius:4px;overflow:hidden;display:flex;border:1px solid var(--line)">'+seg(ipF,'#c2703e')+seg(npct,'#3a4358')+'</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:16px;font-size:12px;margin-top:5px">'+
+      '<span><b style="color:#c2703e">■ 大戶(機構)</b> '+fmtShares(iq)+' · '+ipF.toFixed(1)+'%'+(M.inst_n?' · '+Math.round(M.inst_n).toLocaleString()+' 家':'')+'</span>'+
+      '<span><b style="color:#8792a6">■ 非機構</b>(散戶+內部人) '+fmtShares(nonInst)+' · '+npct.toFixed(1)+'%</span>'+
+      (chg?'<span>'+chg+'</span>':'')+'</div>';
+}
+function renderChipCost(){
+  // 籌碼成本分佈(量價分佈)+ 均價線 —— 純從既有日K(OHLCV)算,免逐筆、免額外採集。
+  const el=document.getElementById('chipcost'); if(!el)return;
+  const K=CHIPK[CHIP_SYM];
+  if(!K||!K.bars||!K.bars.length){el.innerHTML='<div class="miss" style="padding:24px">日K載入中…</div>';return;}
+  const all=K.bars, bars=all.slice(-CHIP_WIN);
+  if(bars.length<5){el.innerHTML='<div class="miss" style="padding:24px">此區間日K不足</div>';return;}
+  let pmin=Infinity,pmax=-Infinity;
+  bars.forEach(b=>{if(b[3]<pmin)pmin=b[3]; if(b[2]>pmax)pmax=b[2];});
+  if(!(pmax>pmin)){el.innerHTML='<div class="miss" style="padding:24px">價格區間異常</div>';return;}
+  const NB=Math.min(50,Math.max(24,Math.round(bars.length))), bs=(pmax-pmin)/NB;
+  const vol=new Array(NB).fill(0); let sTPV=0,sV=0;
+  bars.forEach(b=>{const lo=b[3],hi=b[2],c=b[4],v=b[5]||0; sTPV+=((hi+lo+c)/3)*v; sV+=v;
+    let k0=Math.max(0,Math.min(NB-1,Math.floor((lo-pmin)/bs))), k1=Math.max(0,Math.min(NB-1,Math.floor((hi-pmin)/bs)));
+    const each=v/(k1-k0+1); for(let k=k0;k<=k1;k++)vol[k]+=each;});
+  const centers=vol.map((_,k)=>pmin+(k+0.5)*bs);
+  let poc=0; vol.forEach((x,k)=>{if(x>vol[poc])poc=k;});
+  const total=vol.reduce((a,b)=>a+b,0)||1; let lo=poc,hi=poc,acc=vol[poc];
+  while(acc<0.7*total&&(lo>0||hi<NB-1)){const dn=lo>0?vol[lo-1]:-1,up=hi<NB-1?vol[hi+1]:-1; if(up>=dn){hi++;acc+=vol[hi];}else{lo--;acc+=vol[lo];}}
+  const vaLo=pmin+lo*bs, vaHi=pmin+(hi+1)*bs, pocP=centers[poc], px=bars[bars.length-1][4];
+  const vwapN=n=>{const bb=all.slice(-n); if(bb.length<Math.min(n,5))return null; let a=0,b=0; bb.forEach(x=>{a+=((x[2]+x[3]+x[4])/3)*(x[5]||0);b+=x[5]||0;}); return b?a/b:null;};
+  const vwW=sV?sTPV/sV:null, v60=vwapN(60), v120=vwapN(120);
+  const colors=centers.map((c,k)=>k===poc?'#f59e0b':(c<=px?'rgba(34,197,94,.5)':'rgba(239,68,68,.42)'));
+  const trace={type:'bar',orientation:'h',x:vol,y:centers,marker:{color:colors},hovertemplate:'價 $%{y:.2f}<br>量 %{x:,.0f}<extra></extra>'};
+  const shapes=[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y',y0:vaLo,y1:vaHi,fillcolor:'rgba(245,158,11,.07)',line:{width:0},layer:'below'}];
+  const ann=[];
+  const hline=(P,col,lab,dash)=>{if(P==null)return; shapes.push({type:'line',xref:'paper',x0:0,x1:1,yref:'y',y0:P,y1:P,line:{color:col,width:1.4,dash:dash}});
+    ann.push({xref:'paper',x:1,yref:'y',y:P,text:lab+' '+P.toFixed(1),showarrow:false,xanchor:'right',yanchor:'bottom',font:{size:9.5,color:col},bgcolor:'rgba(13,13,13,.6)'});};
+  hline(px,'#e6e9ef','現價','solid');
+  hline(vwW,C.amber,'均價'+bars.length+'d','dot');
+  hline(v60,'#8ab4f8','VWAP60','dash');
+  hline(v120,'#b07de6','VWAP120','dash');
+  ann.push({xref:'paper',x:0,yref:'y',y:pocP,text:'POC '+pocP.toFixed(1),showarrow:false,xanchor:'left',yanchor:'bottom',font:{size:9.5,color:'#f59e0b'},bgcolor:'rgba(13,13,13,.6)'});
+  ann.push({xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,xanchor:'left',font:{size:11,color:'#9db4e0'},
+    text:'<b>'+CHIP_SYM+'</b> 籌碼成本分佈 · 近 '+bars.length+' 日 · POC '+pocP.toFixed(1)+' · 值區 '+vaLo.toFixed(0)+'–'+vaHi.toFixed(0)+((vwW&&px>=vwW)?' · <span style="color:#4ade80">價在均價上(獲利盤多·下檔支撐)</span>':(vwW?' · <span style="color:#f87171">價在均價下(套牢盤多·上檔壓力)</span>':''))});
+  Plotly.react('chipcost',[trace],{...PBASE,barmode:'overlay',bargap:0.05,margin:{l:46,r:58,t:30,b:36},showlegend:false,
+    xaxis:{gridcolor:C.line,tickformat:'~s',zeroline:false,title:{text:'累積成交量(量價分佈)',font:{size:10,color:C.ink2}}},
+    yaxis:{gridcolor:C.line,tickfont:{size:9.5},title:{text:'價位 $',font:{size:10,color:C.ink2}}},
+    shapes:shapes,annotations:ann},CFG);
 }
 function renderChips(){
   const el=document.getElementById('chipflow'); if(!el)return;
@@ -414,13 +481,15 @@ function renderChips(){
       const dis=dates.length<Math.min(n,10); const act=CHIP_WIN===n;
       return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('');
     rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=+t.dataset.cn;renderChips();});}
+  ensureChipK(CHIP_SYM);
+  renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
+  renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-CHIP_WIN);
   let cmM=0,cmA=0; const x=[],barA=[],lineM=[],lineA=[];
   use.forEach(d=>{const e=(D[d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, r=(e&&e.r!=null)?e.r:0;
     const da=(m+r)*1e6; cmM+=m*1e6; cmA+=da; x.push(d.slice(5)); barA.push(da); lineM.push(cmM); lineA.push(cmA);});
   if(x.length<2){el.innerHTML='<div class="miss" style="padding:30px">此標的區間內日檔不足</div>';return;}
-  ensureChipK(CHIP_SYM);
-  const K=CHIPK[CHIP_SYM]; const praw=use.map(d=>K&&K[d]!=null?K[d]:null);
+  const K=CHIPK[CHIP_SYM], cl=K&&K.close; const praw=use.map(d=>cl&&cl[d]!=null?cl[d]:null);
   const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
   const lastM=lineM[lineM.length-1], lastA=lineA[lineA.length-1];
   const traces=[
@@ -436,7 +505,7 @@ function renderChips(){
     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'現金池累積(↑進↓出)',font:{size:10,color:C.ink2}}},
     yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}},CFG);
   const note=document.getElementById('chipnote');
-  if(note)note.innerHTML='單檔<b>現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單=特大+大單≈機構、全單=再含中小單≈散戶)。↑=資金淨進場(買盤累積)、↓=淨離場。與<b>價格%</b>疊看:量價同向=資金確認;<b>背離</b>(價漲·池降=⑦資金在撤/派發;價跌·池升=有人在接)=轉折觀察。柱=當日淨進出。<b>注意</b>:此為 ⑦ 主動方向<b>淨額</b>,非持股成本;大戶/散戶「籌碼均價」需逐筆成交資料另建(見對話說明)。';
+  if(note)note.innerHTML='<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);↑淨進場↓淨離場,與<b>價格%</b>背離=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>誠實標注</b>:成本分佈與均價是「近期成交均價」近似,非個別持有成本;大戶vs散戶「盤中均價拆分」需逐筆資料,待今晚盤中覆蓋度驗證後再定(見對話)。';
 }
 function render(){
   if(!DATA)return;
