@@ -16,19 +16,15 @@
 :root{
   --bg:#0d0d0d; --surface:#1a1a19; --surface2:#222220; --line:#2c2c2a;
   --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
-  --blue:#3987e5; --green:#4ade4a; --red:#ff6b6b; --amber:#fab219; --violet:#9085e9;
+  --blue:#3987e5; --green:#4ade4a; --red:#ff6b6b; --amber:#fab219; --violet:#9085e9; --aqua:#199e70;
+  --mainline:#c2703e; --spy:#8ab4f8; --qqq:#c084fc;
   --safe-t:env(safe-area-inset-top); --safe-b:env(safe-area-inset-bottom);
   --bar-h:50px; --tab-h:54px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;overscroll-behavior:none}
-body{background:var(--bg);color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
-  font-size:15px;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
-.appbar{position:fixed;top:0;left:0;right:0;z-index:40;padding-top:var(--safe-t);
-  height:calc(var(--bar-h) + var(--safe-t));
-  background:rgba(13,13,13,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px;padding-left:16px;padding-right:12px}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:15px;-webkit-font-smoothing:antialiased;-webkit-user-select:none;user-select:none}
+.appbar{position:fixed;top:0;left:0;right:0;z-index:40;padding-top:var(--safe-t);height:calc(var(--bar-h) + var(--safe-t));background:rgba(13,13,13,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px;padding-left:16px;padding-right:12px}
 .appbar .logo{width:24px;height:24px;border-radius:6px;flex:0 0 auto}
 .appbar h1{font-size:17px;font-weight:700;margin:0}
 .appbar .spacer{flex:1}
@@ -38,21 +34,17 @@ body{background:var(--bg);color:var(--ink);
 .refresh{background:none;border:none;color:var(--ink2);font-size:18px;padding:6px;cursor:pointer;line-height:1}
 .refresh.spin{animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-main{position:fixed;left:0;right:0;top:calc(var(--bar-h) + var(--safe-t));bottom:calc(var(--tab-h) + var(--safe-b));
-  overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px 24px}
+main{position:fixed;left:0;right:0;top:calc(var(--bar-h) + var(--safe-t));bottom:calc(var(--tab-h) + var(--safe-b));overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px 24px}
 section{display:none}
 section.on{display:block;animation:fade .22s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:40;padding-bottom:var(--safe-b);
-  height:calc(var(--tab-h) + var(--safe-b));
-  background:rgba(18,18,17,.9);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-top:1px solid var(--line);display:flex}
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:40;padding-bottom:var(--safe-b);height:calc(var(--tab-h) + var(--safe-b));background:rgba(18,18,17,.9);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line);display:flex}
 .tabbar button{flex:1;background:none;border:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;cursor:pointer;padding-top:7px}
 .tabbar button svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.9}
 .tabbar button.on{color:var(--blue)}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
 .card h2{font-size:12px;color:var(--muted);margin:0 0 11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.card h2 .r{text-transform:none;font-weight:600;font-variant-numeric:tabular-nums}
+.card h2 .r{text-transform:none;font-weight:700;font-variant-numeric:tabular-nums}
 .big-light{display:flex;align-items:center;gap:14px}
 .big-light .emo{font-size:40px;line-height:1}
 .big-light .lab{font-size:23px;font-weight:800}
@@ -70,7 +62,6 @@ section.on{display:block;animation:fade .22s ease}
 .flowline{font-size:14px;line-height:1.6;font-variant-numeric:tabular-nums}
 .flowline .o{color:var(--red);font-weight:600}.flowline .i{color:var(--green);font-weight:600}
 .arrow{color:var(--muted);margin:0 7px}
-/* 時間視窗 chips + 分段控制 */
 .wchips{display:flex;gap:7px;overflow-x:auto;padding:0 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .wchips::-webkit-scrollbar{display:none}
 .wchip{flex:0 0 auto;padding:7px 15px;border-radius:19px;background:var(--surface);border:1px solid var(--line);font-size:13.5px;color:var(--ink2);white-space:nowrap;cursor:pointer;font-weight:600}
@@ -78,12 +69,12 @@ section.on{display:block;animation:fade .22s ease}
 .seg{display:inline-flex;background:var(--surface2);border:1px solid var(--line);border-radius:9px;overflow:hidden}
 .seg button{padding:5px 13px;font-size:12.5px;background:none;border:none;color:var(--ink2);cursor:pointer}
 .seg button.on{background:var(--blue);color:#fff}
-/* 圖表 */
 .chartwrap{width:100%}
 .chartwrap svg{display:block;width:100%}
 .xlab{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:4px;font-variant-numeric:tabular-nums}
-.legend{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.5}
-/* 類別橫條 */
+.legend{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.55}
+.legdot{display:inline-block;width:9px;height:3px;border-radius:2px;vertical-align:middle;margin:0 3px 0 6px}
+.picker{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:13px}
 .bar-row{display:flex;align-items:center;gap:9px;margin:7px 0;font-size:13px}
 .bar-row .bl{width:64px;flex:0 0 auto;color:var(--ink2);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar-row .track{flex:1;height:16px;background:var(--surface2);border-radius:5px;position:relative;overflow:hidden}
@@ -91,7 +82,6 @@ section.on{display:block;animation:fade .22s ease}
 .bar-row .bv{width:74px;flex:0 0 auto;text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px}
 .mv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px;font-variant-numeric:tabular-nums}
 .mv:last-child{border-bottom:none}.mv .s{font-weight:600}
-/* 個股列表 */
 .srow{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-bottom:9px;cursor:pointer;transition:background .12s}
 .srow:active{background:var(--surface2)}
 .srow .l{flex:1;min-width:0}
@@ -106,7 +96,6 @@ section.on{display:block;animation:fade .22s ease}
 .st-wait{background:rgba(250,178,25,.15);color:var(--amber)}
 .st-neu{background:var(--surface2);color:var(--ink2)}
 .chev{color:var(--muted);font-size:17px;flex:0 0 auto}
-/* 連結列 / 更多 */
 .linkrow{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px;margin-bottom:9px;color:var(--ink);text-decoration:none}
 .linkrow .ic{font-size:20px;width:26px;text-align:center;flex:0 0 auto}
 .linkrow .lt{flex:1}.linkrow .lt b{font-size:15px;font-weight:600}
@@ -116,14 +105,12 @@ section.on{display:block;animation:fade .22s ease}
 .kv:last-child{border-bottom:none}.kv span:first-child{color:var(--muted)}.kv span:last-child{font-variant-numeric:tabular-nums}
 .disc{font-size:11.5px;color:var(--muted);line-height:1.55;margin-top:10px}
 .updated{text-align:center;font-size:11px;color:var(--muted);padding:6px 0 2px}
-/* 啟動畫面 */
 #splash{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .4s}
 #splash.hide{opacity:0;pointer-events:none}
 #splash img{width:86px;height:86px;border-radius:20px}
 #splash .nm{font-size:19px;font-weight:800}
 #splash .ring{width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
-.skel{color:var(--muted);font-size:13px;text-align:center;padding:26px 0}
-/* 個股明細覆蓋頁 */
+.skel{color:var(--muted);font-size:13px;text-align:center;padding:24px 0}
 .detail{position:fixed;inset:0;z-index:60;background:var(--bg);transform:translateX(100%);transition:transform .28s ease;display:flex;flex-direction:column}
 .detail.on{transform:none}
 .dbar{padding-top:var(--safe-t);height:calc(var(--bar-h) + var(--safe-t));display:flex;align-items:center;gap:8px;padding-left:6px;padding-right:14px;border-bottom:1px solid var(--line);background:rgba(13,13,13,.9)}
@@ -152,16 +139,26 @@ section.on{display:block;animation:fade .22s ease}
     <div class="card" id="ovLight"><div class="skel">載入中…</div></div>
     <div class="card"><h2>關鍵行情</h2><div class="tiles" id="ovTiles"></div></div>
     <div class="card"><h2>此刻資金流向（⑦ 大單）</h2><div class="flowline" id="ovFlow">—</div></div>
-    <div class="card"><h2>現金池水位</h2><div id="ovCash"></div></div>
+    <div class="card"><h2>現金池水位（MMF）</h2><div id="ovCash"></div></div>
   </section>
 
   <section id="fl">
     <div class="wchips" id="flWin"></div>
-    <div class="card"><h2>資金池水位 · 累積大單淨流 <span class="r" id="flCumEnd"></span></h2>
-      <div class="chartwrap" id="flTrend"></div><div class="xlab" id="flTrendX"></div>
-      <div class="legend">線上升＝機構(⑦大單)淨買入/資金流入；下降＝淨賣出/派發。0＝區間起點。</div></div>
+    <div class="card"><h2>現金池 · 場內資金線 <span class="r" id="flPoolEnd"></span></h2>
+      <div class="chartwrap" id="flPool"></div><div class="xlab" id="flPoolX"></div>
+      <div class="legend" id="flPoolLeg"></div></div>
+    <div class="card"><h2>入池 / 出池 · 每期淨進出</h2>
+      <div class="chartwrap" id="flPoolBars"></div><div class="xlab" id="flPoolBarsX"></div>
+      <div class="legend"><span class="legdot" style="background:var(--green)"></span>綠＝資金進場買貨（現金<b>出池</b>）　<span class="legdot" style="background:var(--red)"></span>紅＝了結離場（現金<b>入池</b>）</div></div>
     <div class="card"><h2>大單淨流 · 柱狀 <span class="seg" id="flMode"><button data-m="cat" class="on">依類別</button><button data-m="sym">依個股</button></span></h2><div id="flBars"></div></div>
-    <div class="card"><h2>現金池（彈藥水位）</h2><div id="flCash"></div></div>
+    <div class="card"><h2>期權定位趨勢 <select class="picker" id="optSym"></select></h2>
+      <div class="chartwrap" id="optChart"></div><div class="xlab" id="optChartX"></div>
+      <div class="legend" id="optLeg"></div></div>
+    <div class="card"><h2>賣空量比趨勢</h2>
+      <div class="legend" id="dpLeg" style="margin:0 0 8px"></div>
+      <div class="chartwrap" id="dpChart"></div><div class="xlab" id="dpChartX"></div>
+      <div class="legend">虛線＝55% 高檔警戒線。比率＝FINRA 每日賣空量 / 總量（T+1）。</div></div>
+    <div class="card"><h2>MMF 現金水位（彈藥）</h2><div id="flMmf"></div></div>
     <a class="linkrow" href="./index.html"><span class="ic">🗺️</span><span class="lt"><b>完整資金向量圖</b><small>3D 向量圖 / RRG / 目的地 / 逐日動畫</small></span><span class="chev">›</span></a>
   </section>
 
@@ -175,8 +172,8 @@ section.on{display:block;animation:fade .22s ease}
     <a class="linkrow" href="./stock.html"><span class="ic">📈</span><span class="lt"><b>個股 K 線頁</b><small>富途風格 K 線 + 指標 + AI 買賣點</small></span><span class="chev">›</span></a>
     <div class="card"><h2>資料狀態</h2><div id="moStatus"></div></div>
     <div class="card"><h2>關於</h2>
-      <div class="disc">資金流 App v2 · 沿用即時資料架構（每 ~20 秒更新）。<br>
-      <b>誠實邊界</b>：⑦=二級市場主動大單淨額，個股較可信、ETF 配合官方申贖；期權延遲 ~15 分；現金池盤中無公開即時源，水位看 MMF 週頻。歷史保留 250 交易日。<br>
+      <div class="disc">資金流 App v3 · 沿用即時資料架構（每 ~20 秒更新）。<br>
+      <b>誠實邊界</b>：⑦=二級市場主動大單淨額，個股較可信、ETF 配合官方申贖；期權延遲 ~15 分；現金池盤中無公開即時源，MMF 週頻。歷史保留 250 交易日。<br>
       個股 AI 訊號＝引擎事實＋判讀，<b>不構成投資建議</b>。</div>
       <div class="updated" id="moUpdated"></div></div>
   </section>
@@ -202,108 +199,111 @@ section.on{display:block;animation:fade .22s ease}
 const GIST="https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const DEEP="https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/daily_flows.json";
 const SIGURL="./data/signals.json";
-let MD=null, SIG=null, DFdeep=null, curTab="ov", firstLoad=true;
-let flWin="live", flMode="cat", detSym=null, detWin="live";
+let MD=null,SIG=null,DFdeep=null,SPYK=null,QQQK=null,curTab="ov",firstLoad=true;
+let flWin="live",flMode="cat",optSym="SPY",detSym=null,detWin="live";
 const WINS=[["live","即時"],["5","5日"],["10","10日"],["30","30日"],["60","60日"]];
 const LIGHT={"🟢":{lab:"正常",c:"var(--green)"},"🟡":{lab:"留意",c:"var(--amber)"},"🔴":{lab:"警戒",c:"var(--red)"}};
 const SESS={rth:"盤中",pre:"盤前",after:"盤後",closed:"休市",pause:"暫停"};
+const DPCOL=["#8ab4f8","#4ade4a","#fab219","#c084fc","#199e70","#ff6b6b","#3987e5","#e0b070","#22d3ee","#f7a8b8"];
+const CASH=new Set(["SGOV","BIL"]);
 const $=s=>document.querySelector(s);
 const cls=v=>v>0?"up":v<0?"down":"flat";
 function money(n){const a=Math.abs(n);if(a>=1e9)return(n/1e9).toFixed(2)+"B";if(a>=1e6)return(n/1e6).toFixed(0)+"M";if(a>=1e3)return(n/1e3).toFixed(0)+"K";return n.toFixed(0);}
 const dollarsSigned=n=>(n>0?"+":"")+money(n);
-function fM(v){const a=Math.abs(v);const s=v>0?"+":"";return a>=1000?s+(v/1000).toFixed(2)+"B":s+v.toFixed(0)+"M";} // 輸入為百萬
+function fM(v){const a=Math.abs(v);const s=v>0?"+":"";return a>=1000?s+(v/1000).toFixed(2)+"B":s+v.toFixed(0)+"M";}
 function pct(v){return(v>0?"+":"")+(v==null?"–":v.toFixed(2))+"%";}
 function ago(t){if(!t)return{txt:"—",min:9999};const ms=new Date(t.replace(" ","T")+"Z").getTime();const m=Math.max(0,Math.round((Date.now()-ms)/60000));return{txt:m<1?"剛剛":m+" 分前",min:m};}
+const toPct=a=>{const b=a.find(v=>v!=null);return b==null?a.map(()=>null):a.map(v=>v!=null?+((v/b-1)*100).toFixed(3):null);};
 function spark(arr,w,h,color){if(!arr||arr.length<2)return"";const mn=Math.min(...arr),mx=Math.max(...arr),r=(mx-mn)||1;const d=arr.map((v,i)=>(i?"L":"M")+((i/(arr.length-1))*w).toFixed(1)+" "+(h-((v-mn)/r)*h).toFixed(1)).join(" ");return`<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><path d="${d}" fill="none" stroke="${color}" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;}
 function getQuote(sym){if(!MD)return null;for(const k of["market","stocks","leveraged","crypto"]){if(MD[k]&&MD[k][sym])return MD[k][sym];if(MD[k]&&MD[k][sym+"-USD"])return MD[k][sym+"-USD"];}if(MD.options&&MD.options[sym]&&MD.options[sym].spot!=null)return{last:MD.options[sym].spot,chg1d:null};return null;}
+function xlabHtml(labs){if(!labs||!labs.length)return"";const a=labs[0],b=labs[labs.length-1],m=labs[Math.floor(labs.length/2)];return`<span>${a}</span><span>${labs.length>2?m:""}</span><span>${b}</span>`;}
 
-/* ---- 面積折線圖（累積趨勢/資金池水位）---- */
-function areaChart(vals,color){
-  const W=340,H=132;
-  if(!vals||vals.length<2)return '<div class="skel">此區間資料不足</div>';
-  const mn=Math.min(0,...vals),mx=Math.max(0,...vals),r=(mx-mn)||1;
-  const X=i=>(i/(vals.length-1))*W, Y=v=>H-((v-mn)/r)*H;
-  const ln=vals.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
-  const ar=ln+` L ${W} ${Y(mn)} L 0 ${Y(mn)} Z`, zy=Y(0).toFixed(1);
-  const up=vals[vals.length-1]>=0, col=color||(up?"var(--green)":"var(--red)");
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:132px">
-    <defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".33"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
-    <line x1="0" y1="${zy}" x2="${W}" y2="${zy}" stroke="var(--muted)" stroke-opacity=".5" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>
-    <path d="${ar}" fill="url(#ag)"/>
-    <path d="${ln}" fill="none" stroke="${col}" stroke-width="2" vector-effect="non-scaling-stroke"/>
-    <circle cx="${X(vals.length-1).toFixed(1)}" cy="${Y(vals[vals.length-1]).toFixed(1)}" r="3.2" fill="${col}"/></svg>`;
+/* ====== 通用 SVG 圖 ====== */
+const CW=340,CH=150;
+function dualLine(x,left,right,h){
+  h=h||CH;const n=x.length;if(n<2)return'<div class="skel">此區間資料不足</div>';
+  const lv=[];left.forEach(s=>s.vals.forEach(v=>{if(Number.isFinite(v))lv.push(v)}));
+  let lmin=Math.min(0,...lv),lmax=Math.max(0,...lv);if(!isFinite(lmin))lmin=0;if(!isFinite(lmax))lmax=1;const lr=(lmax-lmin)||1;
+  const rv=[];right.forEach(s=>s.vals.forEach(v=>{if(Number.isFinite(v))rv.push(v)}));
+  let rmin=Math.min(...rv),rmax=Math.max(...rv);if(!isFinite(rmin)){rmin=-1;rmax=1}const rr=(rmax-rmin)||1;
+  const X=i=>(i/(n-1))*CW,YL=v=>h-((v-lmin)/lr)*h,YR=v=>h-((v-rmin)/rr)*h;
+  const path=(vals,Y)=>{let d="",st=false;vals.forEach((v,i)=>{if(!Number.isFinite(v))return;d+=(st?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";st=true;});return d.trim();};
+  let svg=`<line x1="0" y1="${YL(0).toFixed(1)}" x2="${CW}" y2="${YL(0).toFixed(1)}" stroke="var(--muted)" stroke-opacity=".45" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>`;
+  left.forEach(s=>{const d=path(s.vals,YL);if(!d)return;
+    if(s.fill){const fin=s.vals.map((v,i)=>[v,i]).filter(p=>Number.isFinite(p[0]));if(fin.length){const x0=X(fin[0][1]).toFixed(1),x1=X(fin[fin.length-1][1]).toFixed(1);svg+=`<path d="${d} L ${x1} ${YL(0).toFixed(1)} L ${x0} ${YL(0).toFixed(1)} Z" fill="${s.color}" fill-opacity=".16" stroke="none"/>`;}}
+    svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}"${s.dash?` stroke-dasharray="${s.dash}"`:""} vector-effect="non-scaling-stroke"/>`;
+    if(s.dot){const fin=s.vals.map((v,i)=>[v,i]).filter(p=>Number.isFinite(p[0]));if(fin.length){const l=fin[fin.length-1];svg+=`<circle cx="${X(l[1]).toFixed(1)}" cy="${YL(l[0]).toFixed(1)}" r="3" fill="${s.color}"/>`;}}});
+  right.forEach(s=>{const d=path(s.vals,YR);if(d)svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;});
+  return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px">${svg}</svg>`;
 }
-/* ---- 垂直柱狀（每日淨流，0 在中）---- */
-function vbars(vals){
-  const W=340,H=132;
-  if(!vals||!vals.length)return '<div class="skel">此區間資料不足</div>';
-  const mx=Math.max(1,...vals.map(v=>Math.abs(v))), n=vals.length, slot=W/n, bw=Math.max(1.5,slot*0.62), mid=H/2;
-  let r="";
-  for(let i=0;i<n;i++){const v=vals[i],hh=Math.abs(v)/mx*(H/2-2),x=(i*slot+(slot-bw)/2);
-    const y=v>=0?mid-hh:mid,col=v>=0?"var(--green)":"var(--red)";
-    r+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.6,hh).toFixed(1)}" rx="1" fill="${col}"/>`;}
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="height:132px">
-    <line x1="0" y1="${mid}" x2="${W}" y2="${mid}" stroke="var(--muted)" stroke-opacity=".5" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>${r}</svg>`;
+function vbars(vals,h){
+  h=h||CH;if(!vals||!vals.length)return'<div class="skel">此區間資料不足</div>';
+  const mx=Math.max(1,...vals.map(v=>Math.abs(v))),n=vals.length,slot=CW/n,bw=Math.max(1.5,slot*0.62),mid=h/2;
+  let r="";for(let i=0;i<n;i++){const v=vals[i]||0,hh=Math.abs(v)/mx*(h/2-2),x=(i*slot+(slot-bw)/2),y=v>=0?mid-hh:mid,col=v>=0?"var(--green)":"var(--red)";r+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.6,hh).toFixed(1)}" rx="1" fill="${col}"/>`;}
+  return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px"><line x1="0" y1="${mid}" x2="${CW}" y2="${mid}" stroke="var(--muted)" stroke-opacity=".45" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>${r}</svg>`;
+}
+function barsLine(x,bars,line,lineColor,h){
+  h=h||140;const n=x.length;if(!n)return'<div class="skel">此區間資料不足</div>';
+  const bmax=Math.max(1,...bars.map(v=>Math.abs(v||0))),slot=CW/n,bw=Math.max(2,slot*0.5),mid=h/2;
+  let svg=`<line x1="0" y1="${mid}" x2="${CW}" y2="${mid}" stroke="var(--muted)" stroke-opacity=".45" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>`;
+  for(let i=0;i<n;i++){const v=bars[i]||0,hh=Math.abs(v)/bmax*(h/2-2),x=(i*slot+(slot-bw)/2),y=v>=0?mid-hh:mid,col=v>=0?"rgba(74,222,74,.75)":"rgba(255,107,107,.7)";svg+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.6,hh).toFixed(1)}" fill="${col}"/>`;}
+  const lv=line.filter(Number.isFinite);if(lv.length){let lmin=Math.min(...lv),lmax=Math.max(...lv);const lr=(lmax-lmin)||1;const X=i=>(i/(n-1))*CW,Y=v=>h-((v-lmin)/lr)*h;let d="",st=false;line.forEach((v,i)=>{if(!Number.isFinite(v))return;d+=(st?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";st=true;});if(d)svg+=`<path d="${d}" fill="none" stroke="${lineColor}" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`;}
+  return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px">${svg}</svg>`;
+}
+function multiLine(x,series,ref,h){
+  h=h||CH;const n=x.length;if(n<2)return'<div class="skel">此區間資料不足</div>';
+  const all=[];series.forEach(s=>s.vals.forEach(v=>{if(Number.isFinite(v))all.push(v)}));if(ref!=null)all.push(ref);
+  let mn=Math.min(...all),mx=Math.max(...all);if(!isFinite(mn)){mn=0;mx=1}const r=(mx-mn)||1;
+  const X=i=>(i/(n-1))*CW,Y=v=>h-((v-mn)/r)*h;
+  let svg="";if(ref!=null)svg+=`<line x1="0" y1="${Y(ref).toFixed(1)}" x2="${CW}" y2="${Y(ref).toFixed(1)}" stroke="var(--amber)" stroke-opacity=".7" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`;
+  series.forEach(s=>{let d="",st=false;s.vals.forEach((v,i)=>{if(!Number.isFinite(v))return;d+=(st?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";st=true;});if(d)svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="1.7" vector-effect="non-scaling-stroke"/>`;});
+  return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px">${svg}</svg>`;
 }
 
-/* ---- 資料：日頻 map ---- */
+/* ====== 資料層 ====== */
 function dfMap(){return DFdeep||(MD&&MD.daily_flows)||{};}
-function winDates(n){const ks=Object.keys(dfMap()).filter(k=>k[0]==="2").sort();return ks.slice(-n);}
-function needDeep(n){ if(n>=60 && !DFdeep){ loadDeep(); } }
-async function loadDeep(){ if(DFdeep) return; try{const j=await fetch(DEEP+"?t="+Math.floor(Date.now()/60000),{cache:"no-store"}).then(r=>r.json()); DFdeep=j.daily_flows||j; if(curTab==="fl")renderFl(); if($("#detail").classList.contains("on"))renderDetail();}catch(e){} }
-
-/* 市場：累積淨流序列 */
-function mktCum(win){
-  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[]};
-    const vals=fh.map(c=>Object.values(c.f||{}).reduce((a,b)=>a+(typeof b==="number"?b:0),0));
-    return{vals,labs:fh.map(c=>c.ts)};}
-  const dates=winDates(+win),m=dfMap();let run=0;const vals=[],labs=[];
-  for(const d of dates){let s=0;const day=m[d]||{};for(const k in day)s+=(day[k].m||0);run+=s;vals.push(run);labs.push(d.slice(5));}
-  return{vals,labs};
+function winDates(n){return Object.keys(dfMap()).filter(k=>k[0]==="2").sort().slice(-n);}
+function needDeep(n){if(n>=60&&!DFdeep)loadDeep();}
+async function loadDeep(){if(DFdeep)return;try{const j=await fetch(DEEP+"?t="+Math.floor(Date.now()/60000),{cache:"no-store"}).then(r=>r.json());DFdeep=j.daily_flows||j;rerender();}catch(e){}}
+async function ensureKline(){
+  if(!SPYK)fetch(GIST.replace("market_data.json","kline_SPY.json")+"?t="+Math.floor(Date.now()/300000),{cache:"no-store"}).then(r=>r.json()).then(d=>{if(d&&d.bars){SPYK={};d.bars.forEach(b=>SPYK[b[0]]=b[4]);rerender();}}).catch(()=>{});
+  if(!QQQK)fetch(GIST.replace("market_data.json","kline_QQQ.json")+"?t="+Math.floor(Date.now()/300000),{cache:"no-store"}).then(r=>r.json()).then(d=>{if(d&&d.bars){QQQK={};d.bars.forEach(b=>QQQK[b[0]]=b[4]);rerender();}}).catch(()=>{});
 }
-/* 市場：區間柱狀（依類別或個股）*/
+function rerender(){if(curTab==="fl")renderFl();if($("#detail").classList.contains("on"))renderDetail();}
+
+/* 現金池：場內資金線（= 網頁版 pooltide）*/
+function poolSeries(win){
+  if(win==="live"){
+    let H=(MD&&MD.flow_history)||[];const td=H.filter(h=>h.d===(MD&&MD.trade_date));if(td.length>=2)H=td;
+    const x=H.map(h=>h.ts);
+    const yMain=H.map(h=>{let s=0;const f=h.f||{};for(const k in f)if(!CASH.has(k))s+=f[k];return s;});
+    const yAll=H.map((h,i)=>{let s=0;const fr=h.fr||{};for(const k in fr)if(!CASH.has(k))s+=fr[k];return yMain[i]+s;});
+    const barA=yAll.map((v,i)=>i?+(v-yAll[i-1]).toFixed(1):v);
+    return{x,yAll,yMain,barA,spy:toPct(H.map(h=>h.px!=null?h.px:null)),qqq:toPct(H.map(h=>h.pxq!=null?h.pxq:null))};
+  }
+  const D=dfMap(),dates=winDates(+win);let cmM=0,cmA=0;const x=[],yMain=[],yAll=[],barA=[];
+  for(const d of dates){const day=D[d]||{};let dm=0,da=0;for(const k in day){if(day[k].c!=="現金"){dm+=(day[k].m||0);da+=((day[k].m||0)+(day[k].r||0));}}cmM+=dm;cmA+=da;yMain.push(cmM);yAll.push(cmA);barA.push(+da.toFixed(1));x.push(d.slice(5));}
+  return{x,yAll,yMain,barA,spy:toPct(dates.map(d=>SPYK&&SPYK[d]!=null?SPYK[d]:null)),qqq:toPct(dates.map(d=>QQQK&&QQQK[d]!=null?QQQK[d]:null))};
+}
 function mktBars(win,mode){
   const agg={};
-  if(win==="live"){const cf=MD&&MD.capital_flow||{};for(const k in cf){const key=mode==="cat"?(cf[k].cat||"其他"):k.replace("US.","");agg[key]=(agg[key]||0)+((cf[k].main_net||0)/1e6);}}
+  if(win==="live"){const cf=(MD&&MD.capital_flow)||{};for(const k in cf){const key=mode==="cat"?(cf[k].cat||"其他"):k.replace("US.","");agg[key]=(agg[key]||0)+((cf[k].main_net||0)/1e6);}}
   else{const dates=winDates(+win),m=dfMap();for(const d of dates){const day=m[d]||{};for(const k in day){const key=mode==="cat"?(day[k].c||"其他"):k;agg[key]=(agg[key]||0)+(day[k].m||0);}}}
   return Object.entries(agg).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
 }
-/* 個股：累積淨流序列 */
-function stkCum(sym,win){
-  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[]};
-    return{vals:fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0),labs:fh.map(c=>c.ts)};}
-  const dates=winDates(+win),m=dfMap();let run=0;const vals=[],labs=[];
-  for(const d of dates){const rec=(m[d]||{})[sym];run+=rec?(rec.m||0):0;vals.push(run);labs.push(d.slice(5));}
-  return{vals,labs};
-}
-/* 個股：每日/每時段柱狀 */
-function stkDay(sym,win){
-  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[]};
-    const cum=fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0);
-    const vals=cum.map((v,i)=>i?+(v-cum[i-1]).toFixed(1):v);return{vals,labs:fh.map(c=>c.ts)};}
-  const dates=winDates(+win),m=dfMap();const vals=[],labs=[];
-  for(const d of dates){const rec=(m[d]||{})[sym];vals.push(rec?(rec.m||0):0);labs.push(d.slice(5));}
-  return{vals,labs};
-}
-function xlabHtml(labs){if(!labs||!labs.length)return"";const a=labs[0],b=labs[labs.length-1],m=labs[Math.floor(labs.length/2)];return`<span>${a}</span><span>${labs.length>2?m:""}</span><span>${b}</span>`;}
+function optSeries(sym,win){const D=(MD&&MD.opt_daily)||{};const dates=Object.keys(D).sort();const n=win==="live"?10:+win;const use=dates.slice(-n);const g=k=>use.map(d=>{const e=(D[d]||{})[sym];return e&&e[k]!=null?e[k]:null;});const mp=use.map(d=>{const e=(D[d]||{})[sym];return(e&&e.max_pain&&e.spot)?+((e.max_pain/e.spot-1)*100).toFixed(2):null;});return{x:use.map(d=>d.slice(5)),gex:g("gex_bn"),pcv:g("pc_vol"),iv:g("atm_iv"),mp};}
+function dpSeries(win){const D=(MD&&MD.dp_daily)||{};const dates=Object.keys(D).sort();if(!dates.length)return{x:[],series:[]};const n=win==="live"?12:+win;const use=dates.slice(-n);const syms=Object.keys(D[dates[dates.length-1]]||{}).sort();const series=syms.map((s,i)=>({name:s,color:DPCOL[i%DPCOL.length],vals:use.map(d=>{const v=(D[d]||{})[s];return v!=null?+(v*100).toFixed(1):null;})}));return{x:use.map(d=>d.slice(4,6)+"/"+d.slice(6,8)),series};}
 
+/* ====== 載入 ====== */
 async function load(){
   const rb=$("#refreshBtn");if(rb)rb.classList.add("spin");
   const bust="?t="+Math.floor(Date.now()/15000);
-  try{const [md,sg]=await Promise.all([
-    fetch(GIST+bust,{cache:"no-store"}).then(r=>r.json()),
-    fetch(SIGURL+bust,{cache:"no-store"}).then(r=>r.json()).catch(()=>SIG)]);
-    if(md)MD=md;if(sg)SIG=sg;
-  }catch(e){}
+  try{const[md,sg]=await Promise.all([fetch(GIST+bust,{cache:"no-store"}).then(r=>r.json()),fetch(SIGURL+bust,{cache:"no-store"}).then(r=>r.json()).catch(()=>SIG)]);if(md)MD=md;if(sg)SIG=sg;}catch(e){}
   renderHeader();renderTab(curTab);if($("#detail").classList.contains("on"))renderDetail();
   if(firstLoad){firstLoad=false;setTimeout(()=>$("#splash").classList.add("hide"),150);}
   if(rb)setTimeout(()=>rb.classList.remove("spin"),400);
 }
-function renderHeader(){
-  const lg=SIG&&SIG.market&&SIG.market.regime_light;const L=LIGHT[lg]||{lab:"—",c:"var(--muted)"};
-  $("#lightLab").textContent=L.lab;$("#lightPill").querySelector(".dot").style.background=L.c;
-  $("#sessPill").textContent=SESS[MD&&MD.session]||(MD&&MD.session)||"—";
-}
+function renderHeader(){const lg=SIG&&SIG.market&&SIG.market.regime_light;const L=LIGHT[lg]||{lab:"—",c:"var(--muted)"};$("#lightLab").textContent=L.lab;$("#lightPill").querySelector(".dot").style.background=L.c;$("#sessPill").textContent=SESS[MD&&MD.session]||(MD&&MD.session)||"—";}
 function renderTab(t){if(t==="ov")renderOv();else if(t==="fl")renderFl();else if(t==="st")renderSt();else if(t==="mo")renderMo();}
 
 function renderOv(){
@@ -311,8 +311,7 @@ function renderOv(){
   $("#ovLight").innerHTML=`<div class="big-light"><div class="emo">${lg||"⚪"}</div><div><div class="lab" style="color:${L.c}">${L.lab}</div><div class="sub">大盤風險燈 · 更新於 ${fresh.txt}</div></div></div>`+(m&&m.notes&&m.notes.length?`<ul class="notes">${m.notes.slice(0,4).map(n=>`<li>${n}</li>`).join("")}</ul>`:"");
   const want=[["SPY","SPY"],["QQQ","QQQ"],["NVDA","NVDA"],["MU","MU"],["BTC","BTC"],["IWM","IWM"]];
   $("#ovTiles").innerHTML=want.map(([sym,lab])=>{const q=getQuote(sym);if(!q)return"";const c=q.chg1d,col=c>0?"var(--green)":c<0?"var(--red)":"var(--muted)";return`<div class="tile"><div class="t-sym">${lab}</div><div class="t-px">${q.last!=null?(+q.last).toLocaleString(undefined,{maximumFractionDigits:2}):"—"}</div><div class="t-chg ${cls(c)}">${c==null?"":pct(c)}</div>${spark(q.spark,52,20,col)}</div>`;}).join("");
-  $("#ovFlow").innerHTML=flowLine();
-  $("#ovCash").innerHTML=cashHtml(true);
+  $("#ovFlow").innerHTML=flowLine();$("#ovCash").innerHTML=mmfHtml(true);
 }
 function topMovers(){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{inn:[],out:[]};const f=fh[fh.length-1].f||{};const arr=Object.entries(f).filter(([k,v])=>typeof v==="number").sort((a,b)=>b[1]-a[1]);return{inn:arr.filter(x=>x[1]>0).slice(0,6),out:arr.filter(x=>x[1]<0).reverse().slice(0,6)};}
 function flowLine(){const{inn,out}=topMovers();if(!inn.length&&!out.length)return"—";const o=out.slice(0,2).map(([k,v])=>`${k} ${v.toFixed(0)}M`).join("、")||"—";const i=inn.slice(0,2).map(([k,v])=>`${k} +${v.toFixed(0)}M`).join("、")||"—";return`<span class="o">流出 ${o}</span><span class="arrow">▸</span><span class="i">流入 ${i}</span>`;}
@@ -320,29 +319,49 @@ function flowLine(){const{inn,out}=topMovers();if(!inn.length&&!out.length)retur
 function winChipsHtml(cur){return WINS.map(([v,l])=>`<div class="wchip ${v===cur?"on":""}" data-w="${v}">${l}</div>`).join("");}
 function renderFl(){
   $("#flWin").innerHTML=winChipsHtml(flWin);
-  const cum=mktCum(flWin);
-  $("#flTrend").innerHTML=areaChart(cum.vals);
-  $("#flTrendX").innerHTML=xlabHtml(cum.labs);
-  $("#flCumEnd").innerHTML=cum.vals.length?`<span class="${cls(cum.vals[cum.vals.length-1])}">${fM(cum.vals[cum.vals.length-1])}</span>`:"";
+  const P=poolSeries(flWin);
+  const last=P.yAll.length?P.yAll[P.yAll.length-1]:0, lastM=P.yMain.length?P.yMain[P.yMain.length-1]:0;
+  $("#flPoolEnd").innerHTML=P.yAll.length?`<span class="${cls(last)}">全單 ${fM(last)}</span>`:"";
+  $("#flPool").innerHTML=dualLine(P.x,
+    [{vals:P.yAll,color:"var(--amber)",width:2.2,fill:true,dot:true},{vals:P.yMain,color:"var(--mainline)",width:1.8,dash:"3 3"}],
+    [{vals:P.spy,color:"var(--spy)"},{vals:P.qqq,color:"var(--qqq)"}]);
+  $("#flPoolX").innerHTML=xlabHtml(P.x);
+  const hasK=(P.spy&&P.spy.some(v=>v!=null));
+  $("#flPoolLeg").innerHTML=`<span class="legdot" style="background:var(--amber)"></span>全單場內資金 ${fM(last)}　<span class="legdot" style="background:var(--mainline)"></span>大單(機構) ${fM(lastM)}　<span class="legdot" style="background:var(--spy)"></span>SPY　<span class="legdot" style="background:var(--qqq)"></span>QQQ（%改）${hasK?"":"<br><span style='color:var(--muted)'>（SPY/QQQ 日K 載入中…）</span>"}<br><b>+y＝現金離池進場、−y＝現金入池了結</b>；與 SPY 同向＝資金確認，背離（線降·指數升）＝轉折警訊。`;
+  $("#flPoolBars").innerHTML=vbars(P.barA);$("#flPoolBarsX").innerHTML=xlabHtml(P.x);
   document.querySelectorAll("#flMode button").forEach(b=>b.classList.toggle("on",b.dataset.m===flMode));
-  const bars=mktBars(flWin,flMode).slice(0,flMode==="cat"?20:14);
-  const mx=Math.max(1,...bars.map(b=>Math.abs(b[1])));
+  const bars=mktBars(flWin,flMode).slice(0,flMode==="cat"?20:14),mx=Math.max(1,...bars.map(b=>Math.abs(b[1])));
   $("#flBars").innerHTML=bars.map(([c,v])=>{const w=Math.max(3,Math.abs(v)/mx*100),col=v>0?"var(--green)":"var(--red)",side=v>0?"left:50%":"right:50%";return`<div class="bar-row"><div class="bl">${c}</div><div class="track"><div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)"></div><div class="fill" style="${side};width:${w/2}%;background:${col}"></div></div><div class="bv ${cls(v)}">${fM(v)}</div></div>`;}).join("")||'<div class="skel">無資料</div>';
-  $("#flCash").innerHTML=cashHtml(false);
+  renderOpt();renderDp();
+  $("#flMmf").innerHTML=mmfHtml(false);
 }
-function cashHtml(compact){
+function renderOpt(){
+  const D=(MD&&MD.opt_daily)||{};const dates=Object.keys(D).sort();const sel=$("#optSym");
+  if(!dates.length){$("#optChart").innerHTML='<div class="skel">期權日檔累積中（收盤後首日出現）</div>';$("#optChartX").innerHTML="";$("#optLeg").innerHTML="";return;}
+  const syms=Object.keys(D[dates[dates.length-1]]||{}).sort();
+  if(sel.dataset.built!==syms.join()){if(!syms.includes(optSym))optSym=syms.includes("SPY")?"SPY":syms[0];sel.innerHTML=syms.map(s=>`<option ${s===optSym?"selected":""}>${s}</option>`).join("");sel.dataset.built=syms.join();}
+  const O=optSeries(optSym,flWin);
+  $("#optChart").innerHTML=barsLine(O.x,O.gex,O.pcv,"var(--violet)");
+  $("#optChartX").innerHTML=xlabHtml(O.x);
+  $("#optLeg").innerHTML=`<span class="legdot" style="background:var(--green)"></span>GEX>0　<span class="legdot" style="background:var(--red)"></span>GEX<0（柱，十億$/1%）　<span class="legdot" style="background:var(--violet)"></span>P/C 量比（線）`;
+}
+function renderDp(){
+  const S=dpSeries(flWin);
+  if(!S.x.length){$("#dpChart").innerHTML='<div class="skel">賣空日檔累積中</div>';$("#dpChartX").innerHTML="";$("#dpLeg").innerHTML="";return;}
+  $("#dpChart").innerHTML=multiLine(S.x,S.series,55);
+  $("#dpChartX").innerHTML=xlabHtml(S.x);
+  $("#dpLeg").innerHTML=S.series.map(s=>`<span class="legdot" style="background:${s.color}"></span>${s.name}`).join(" ");
+}
+function mmfHtml(compact){
   const cp=MD&&MD.cash_pool;if(!cp||!cp.mmf)return'<div class="skel">—</div>';const m=cp.mmf;
   let h=`<div class="kv"><span>MMF 貨幣基金總額</span><span>$${(m.total_bn/1000).toFixed(2)}T</span></div><div class="kv"><span>週變化</span><span class="${cls(m.chg_bn)}">${(m.chg_bn>0?"+":"")}$${m.chg_bn}B</span></div>`;
-  if(!compact){h+=`<div class="kv"><span>散戶 / 機構</span><span>$${(m.retail_bn/1000).toFixed(2)}T / $${(m.inst_bn/1000).toFixed(2)}T</span></div>`;
-    const rr=cp.onrrp;if(rr&&Object.keys(rr).length){const dts=Object.keys(rr).sort();const last=rr[dts[dts.length-1]];h+=`<div class="kv"><span>Fed ON RRP（日頻）</span><span>$${(+last).toFixed(2)}B</span></div>`;}
-    h+=`<div class="kv"><span>資料日</span><span>${m.asof||"—"}</span></div>`;}
+  if(!compact){h+=`<div class="kv"><span>散戶 / 機構</span><span>$${(m.retail_bn/1000).toFixed(2)}T / $${(m.inst_bn/1000).toFixed(2)}T</span></div>`;const rr=cp.onrrp;if(rr&&Object.keys(rr).length){const dts=Object.keys(rr).sort();h+=`<div class="kv"><span>Fed ON RRP（日頻）</span><span>$${(+rr[dts[dts.length-1]]).toFixed(2)}B</span></div>`;}h+=`<div class="kv"><span>資料日</span><span>${m.asof||"—"}</span></div>`;}
   return h;
 }
 function stanceClass(s){if(!s)return"st-neu";const t=s.replace(/\(.*/,"");if(/買|多|進|加碼|突破/.test(t))return"st-buy";if(/賣|空|出|減碼|停損|避開/.test(t))return"st-sell";if(/觀望|等|中性|留意|持有/.test(t))return"st-wait";return"st-neu";}
 function renderSt(){
   const syms=SIG&&SIG.symbols;if(!syms){$("#stList").innerHTML='<div class="skel">載入中…</div>';return;}
-  $("#stList").innerHTML=Object.keys(syms).map(sym=>{const s=syms[sym]||{},q=getQuote(sym),c=q&&q.chg1d,px=q&&q.last,note=(s.stance_note||"").split(/[;。\n]/)[0].slice(0,40);
-    return`<div class="srow" onclick="openDetail('${sym}')"><div class="l"><div class="sym">${sym}</div><span class="stance ${stanceClass(s.stance)}">${s.stance||"—"}</span>${note?`<div class="note">${note}</div>`:""}</div><div class="r"><div class="px">${px!=null?(+px).toLocaleString(undefined,{maximumFractionDigits:2}):"—"}</div><div class="chg ${cls(c)}">${c==null?"":pct(c)}</div></div><div class="chev">›</div></div>`;}).join("");
+  $("#stList").innerHTML=Object.keys(syms).map(sym=>{const s=syms[sym]||{},q=getQuote(sym),c=q&&q.chg1d,px=q&&q.last,note=(s.stance_note||"").split(/[;。\n]/)[0].slice(0,40);return`<div class="srow" onclick="openDetail('${sym}')"><div class="l"><div class="sym">${sym}</div><span class="stance ${stanceClass(s.stance)}">${s.stance||"—"}</span>${note?`<div class="note">${note}</div>`:""}</div><div class="r"><div class="px">${px!=null?(+px).toLocaleString(undefined,{maximumFractionDigits:2}):"—"}</div><div class="chg ${cls(c)}">${c==null?"":pct(c)}</div></div><div class="chev">›</div></div>`;}).join("");
 }
 function renderMo(){
   const me=(MD&&MD.meta)||{},fresh=ago(MD&&MD.ts_utc);
@@ -350,39 +369,42 @@ function renderMo(){
   $("#moUpdated").textContent="資料時間 "+((MD&&MD.ts_utc)||"—")+" UTC";
 }
 
-/* ---- 個股明細 ---- */
-function openDetail(sym){detSym=sym;detWin="live";$("#detail").classList.add("on");history.pushState({d:1},"");renderDetail();}
+/* ====== 個股明細 ====== */
+function openDetail(sym){detSym=sym;detWin="live";$("#detail").classList.add("on");history.pushState({d:1},"");ensureKline();renderDetail();}
 function closeDetail(){$("#detail").classList.remove("on");}
 window.addEventListener("popstate",()=>{if($("#detail").classList.contains("on"))$("#detail").classList.remove("on");});
+function stkCum(sym,win){
+  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[],spy:[],qqq:[]};return{vals:fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0),labs:fh.map(c=>c.ts),spy:toPct(fh.map(c=>c.px!=null?c.px:null)),qqq:toPct(fh.map(c=>c.pxq!=null?c.pxq:null))};}
+  const dates=winDates(+win),m=dfMap();let run=0;const vals=[],labs=[];for(const d of dates){const rec=(m[d]||{})[sym];run+=rec?(rec.m||0):0;vals.push(run);labs.push(d.slice(5));}
+  return{vals,labs,spy:toPct(dates.map(d=>SPYK&&SPYK[d]!=null?SPYK[d]:null)),qqq:toPct(dates.map(d=>QQQK&&QQQK[d]!=null?QQQK[d]:null))};
+}
+function stkDay(sym,win){
+  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[]};const cum=fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0);return{vals:cum.map((v,i)=>i?+(v-cum[i-1]).toFixed(1):v),labs:fh.map(c=>c.ts)};}
+  const dates=winDates(+win),m=dfMap();const vals=[],labs=[];for(const d of dates){const rec=(m[d]||{})[sym];vals.push(rec?(rec.m||0):0);labs.push(d.slice(5));}return{vals,labs};
+}
 function renderDetail(){
   const sym=detSym;if(!sym)return;const q=getQuote(sym),s=(SIG&&SIG.symbols&&SIG.symbols[sym])||{};
-  $("#dSym").textContent=sym;
-  $("#dPx").textContent=q&&q.last!=null?(+q.last).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  $("#dSym").textContent=sym;$("#dPx").textContent=q&&q.last!=null?(+q.last).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
   const c=q&&q.chg1d;const chg=$("#dChg");chg.textContent=c==null?"":pct(c);chg.className="chg "+cls(c);
   $("#dK").href="./stock.html?sym="+encodeURIComponent(sym);
-  const cum=stkCum(sym,detWin),day=stkDay(sym,detWin);
-  const end=cum.vals.length?cum.vals[cum.vals.length-1]:0;
-  const f7=s.futu7||{};
-  // 區間 main vs retail
+  const cum=stkCum(sym,detWin),day=stkDay(sym,detWin);const end=cum.vals.length?cum.vals[cum.vals.length-1]:0;const f7=s.futu7||{};
   let sumM=0,sumR=0;if(detWin!=="live"){const dates=winDates(+detWin),m=dfMap();for(const d of dates){const rec=(m[d]||{})[sym];if(rec){sumM+=rec.m||0;sumR+=rec.r||0;}}}
+  const hasK=cum.spy&&cum.spy.some(v=>v!=null);
   $("#dBody").innerHTML=
     (s.stance?`<div class="card" style="padding:12px 14px"><span class="stance ${stanceClass(s.stance)}" style="max-width:none;white-space:normal">${s.stance}</span>${s.stance_note?`<div class="disc" style="margin-top:8px;color:var(--ink2)">${s.stance_note.slice(0,140)}</div>`:""}</div>`:"")
     +`<div class="wchips" id="dWin">${winChipsHtml(detWin)}</div>`
-    +`<div class="card"><h2>資金池水位 · 累積⑦淨流 <span class="r ${cls(end)}">${fM(end)}</span></h2><div class="chartwrap">${areaChart(cum.vals)}</div><div class="xlab">${xlabHtml(cum.labs)}</div><div class="legend">此檔機構大單累積淨流。上升＝資金淨流入本檔；下降＝派發流出。</div></div>`
-    +`<div class="card"><h2>每日大單淨流 · 柱狀</h2><div class="chartwrap">${vbars(day.vals)}</div><div class="xlab">${xlabHtml(day.labs)}</div><div class="legend">綠＝當日淨流入、紅＝淨流出（${detWin==="live"?"盤中各時點增量":"每日"}）。</div></div>`
-    +`<div class="card"><h2>資金池讀數</h2>`
-      +`<div class="kv"><span>區間累積⑦淨流</span><span class="${cls(end)}">${fM(end)}</span></div>`
-      +(detWin!=="live"?`<div class="kv"><span>機構(大單) vs 散戶</span><span><span class="${cls(sumM)}">${fM(sumM)}</span> / <span class="${cls(sumR)}">${fM(sumR)}</span></span></div>`:"")
-      +`<div class="kv"><span>⑦ 今日 / 5日</span><span><span class="${cls(f7.d1)}">${f7.d1!=null?dollarsSigned(f7.d1):"—"}</span> / <span class="${cls(f7.d5)}">${f7.d5!=null?fM(f7.d5):"—"}</span></span></div>`
-    +`</div>`
+    +`<div class="card"><h2>現金池 · 累積⑦淨流 <span class="r ${cls(end)}">${fM(end)}</span></h2><div class="chartwrap">${dualLine(cum.labs,[{vals:cum.vals,color:"var(--amber)",width:2.2,fill:true,dot:true}],[{vals:cum.spy,color:"var(--spy)"},{vals:cum.qqq,color:"var(--qqq)"}])}</div><div class="xlab">${xlabHtml(cum.labs)}</div><div class="legend"><span class="legdot" style="background:var(--amber)"></span>本檔累積⑦淨流　<span class="legdot" style="background:var(--spy)"></span>SPY　<span class="legdot" style="background:var(--qqq)"></span>QQQ（%改）${hasK?"":" <span style='color:var(--muted)'>·日K載入中</span>"}<br>線上升＝資金淨流入本檔；與大盤背離＝個股獨立資金訊號。</div></div>`
+    +`<div class="card"><h2>每日大單淨流 · 入池/出池柱狀</h2><div class="chartwrap">${vbars(day.vals)}</div><div class="xlab">${xlabHtml(day.labs)}</div><div class="legend"><span class="legdot" style="background:var(--green)"></span>綠＝當日淨流入　<span class="legdot" style="background:var(--red)"></span>紅＝淨流出（${detWin==="live"?"盤中各時點增量":"每日"}）</div></div>`
+    +`<div class="card"><h2>資金池讀數</h2><div class="kv"><span>區間累積⑦淨流</span><span class="${cls(end)}">${fM(end)}</span></div>${detWin!=="live"?`<div class="kv"><span>機構(大單) vs 散戶</span><span><span class="${cls(sumM)}">${fM(sumM)}</span> / <span class="${cls(sumR)}">${fM(sumR)}</span></span></div>`:""}<div class="kv"><span>⑦ 今日 / 5日</span><span><span class="${cls(f7.d1)}">${f7.d1!=null?dollarsSigned(f7.d1):"—"}</span> / <span class="${cls(f7.d5)}">${f7.d5!=null?fM(f7.d5):"—"}</span></span></div></div>`
     +`<a class="linkrow" href="./stock.html?sym=${encodeURIComponent(sym)}"><span class="ic">📈</span><span class="lt"><b>完整 K 線頁</b><small>K線 + 指標 + AI 買賣點 + 期權定位</small></span><span class="chev">›</span></a>`;
   document.querySelectorAll("#dWin .wchip").forEach(ch=>ch.addEventListener("click",()=>{detWin=ch.dataset.w;needDeep(+detWin||0);renderDetail();}));
 }
 
-/* ---- 事件 ---- */
-document.querySelectorAll(".tabbar button").forEach(b=>{b.addEventListener("click",()=>{const t=b.dataset.tab;if(t===curTab){$("main").scrollTo({top:0,behavior:"smooth"});return;}curTab=t;document.querySelectorAll(".tabbar button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll("main > section").forEach(s=>s.classList.toggle("on",s.id===t));$("main").scrollTop=0;if(t==="fl")loadDeep();renderTab(t);});});
-$("#flWin").addEventListener("click",e=>{const c=e.target.closest(".wchip");if(!c)return;flWin=c.dataset.w;needDeep(+flWin||0);renderFl();});
+/* ====== 事件 ====== */
+document.querySelectorAll(".tabbar button").forEach(b=>{b.addEventListener("click",()=>{const t=b.dataset.tab;if(t===curTab){$("main").scrollTo({top:0,behavior:"smooth"});return;}curTab=t;document.querySelectorAll(".tabbar button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll("main > section").forEach(s=>s.classList.toggle("on",s.id===t));$("main").scrollTop=0;if(t==="fl"){loadDeep();ensureKline();}renderTab(t);});});
+$("#flWin").addEventListener("click",e=>{const c=e.target.closest(".wchip");if(!c)return;flWin=c.dataset.w;needDeep(+flWin||0);ensureKline();renderFl();});
 $("#flMode").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;flMode=b.dataset.m;renderFl();});
+$("#optSym").addEventListener("change",e=>{optSym=e.target.value;renderOpt();});
 $("#refreshBtn").addEventListener("click",()=>load());
 load();setInterval(load,20000);
 if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
