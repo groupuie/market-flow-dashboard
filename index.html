@@ -393,14 +393,19 @@ function ensureChipK(sym){
   fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
-      CHIPK[sym]={close:m,bars:d.bars};renderChips();}})
-    .catch(()=>{});
+      CHIPK[sym]={close:m,bars:d.bars};renderChips();}
+      else{CHIPK[sym+'_none']=true;renderChips();}})   // 無此K線檔(非K線追蹤標的)→標記,避免永久「載入中」
+    .catch(()=>{CHIPK[sym+'_none']=true;renderChips();});
 }
 function fmtShares(n){ if(n==null||isNaN(n))return '—';
   const a=Math.abs(n);
   if(a>=1e8)return (n/1e8).toFixed(2)+'億股';
   if(a>=1e4)return (n/1e4).toFixed(0)+'萬股';
   return Math.round(n)+'股'; }
+// 佔位訊息:先 purge 既有 Plotly 實例(否則直接覆寫 innerHTML 會殘留 Plotly 狀態,換股後 Plotly.react 失效→卡「載入中」)
+function chartMsg(el,msg,pad){ if(!el)return;
+  try{ if(window.Plotly&&(el._fullLayout||el.data))Plotly.purge(el); }catch(e){}
+  el.innerHTML='<div class="miss" style="padding:'+(pad||24)+'px">'+msg+'</div>'; }
 function chipSyms(){
   const D=DATA.daily_flows||{}; const dates=Object.keys(D).sort(); const set=new Set();
   dates.slice(-8).forEach(d=>Object.keys(D[d]||{}).forEach(s=>{if((D[d][s]||{}).c!=='現金')set.add(s);}));
@@ -429,12 +434,13 @@ function renderChipCost(){
   // 籌碼成本分佈(量價分佈)+ 均價線 —— 純從既有日K(OHLCV)算,免逐筆、免額外採集。
   const el=document.getElementById('chipcost'); if(!el)return;
   const K=CHIPK[CHIP_SYM];
-  if(!K||!K.bars||!K.bars.length){el.innerHTML='<div class="miss" style="padding:24px">日K載入中…</div>';return;}
+  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'此標的無日K線資料(非K線追蹤清單,成本分佈不適用)');return;}
+  if(!K||!K.bars||!K.bars.length){chartMsg(el,'日K載入中…');return;}
   const all=K.bars, bars=all.slice(-CHIP_WIN);
-  if(bars.length<5){el.innerHTML='<div class="miss" style="padding:24px">此區間日K不足</div>';return;}
+  if(bars.length<5){chartMsg(el,'此區間日K不足');return;}
   let pmin=Infinity,pmax=-Infinity;
   bars.forEach(b=>{if(b[3]<pmin)pmin=b[3]; if(b[2]>pmax)pmax=b[2];});
-  if(!(pmax>pmin)){el.innerHTML='<div class="miss" style="padding:24px">價格區間異常</div>';return;}
+  if(!(pmax>pmin)){chartMsg(el,'價格區間異常');return;}
   const NB=Math.min(50,Math.max(24,Math.round(bars.length))), bs=(pmax-pmin)/NB;
   const vol=new Array(NB).fill(0); let sTPV=0,sV=0;
   bars.forEach(b=>{const lo=b[3],hi=b[2],c=b[4],v=b[5]||0; sTPV+=((hi+lo+c)/3)*v; sV+=v;
@@ -469,7 +475,7 @@ function renderChips(){
   const el=document.getElementById('chipflow'); if(!el)return;
   const D=DATA.daily_flows||{}; const dates=Object.keys(D).sort();
   const syms=chipSyms();
-  if(!syms.length){el.innerHTML='<div class="miss" style="padding:30px">個股日檔累積中(需採集器歷史回填)</div>';return;}
+  if(!syms.length){chartMsg(el,'個股日檔累積中(需採集器歷史回填)',30);return;}
   if(!CHIP_SYM||!syms.includes(CHIP_SYM))CHIP_SYM=syms.includes('NVDA')?'NVDA':syms[0];
   const sel=document.getElementById('chipSym');
   if(sel&&sel.dataset.built!==syms.join()){
@@ -488,7 +494,7 @@ function renderChips(){
   let cmM=0,cmA=0; const x=[],barA=[],lineM=[],lineA=[];
   use.forEach(d=>{const e=(D[d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, r=(e&&e.r!=null)?e.r:0;
     const da=(m+r)*1e6; cmM+=m*1e6; cmA+=da; x.push(d.slice(5)); barA.push(da); lineM.push(cmM); lineA.push(cmA);});
-  if(x.length<2){el.innerHTML='<div class="miss" style="padding:30px">此標的區間內日檔不足</div>';return;}
+  if(x.length<2){chartMsg(el,'此標的區間內日檔不足',30);return;}
   const K=CHIPK[CHIP_SYM], cl=K&&K.close; const praw=use.map(d=>cl&&cl[d]!=null?cl[d]:null);
   const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
   const lastM=lineM[lineM.length-1], lastA=lineA[lineA.length-1];
