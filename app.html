@@ -120,6 +120,21 @@ section.on{display:block;animation:fade .22s ease}
 .dtitle .chg{font-size:12.5px;font-variant-numeric:tabular-nums}
 .dk{color:var(--blue);text-decoration:none;font-size:13px;flex:0 0 auto}
 .dbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px calc(24px + var(--safe-b))}
+.sbar{flex:1;height:18px;background:var(--surface2);border-radius:5px;position:relative;overflow:hidden}
+.sbar .cl{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--muted);opacity:.5}
+.sbar .sg{position:absolute;top:2px;bottom:2px}
+.bv2{width:92px;flex:0 0 auto;text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px;line-height:1.2}
+.bv2 .sub{font-size:10px;color:var(--muted);margin-top:1px}
+.idxrow{display:flex;gap:8px;margin:2px 0 10px;flex-wrap:wrap}
+.idxchip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 11px;border-radius:16px;border:1px solid var(--line);background:var(--surface2);cursor:pointer;color:var(--ink2);font-weight:600}
+.idxchip .d{width:8px;height:8px;border-radius:50%}
+.idxchip.off{opacity:.36}
+.snaprow{display:flex;align-items:center;gap:9px;margin:6px 0;font-size:13px}
+.snaprow .sn{width:54px;flex:0 0 auto;font-weight:600}
+.snaprow .st{flex:1;height:14px;background:var(--surface2);border-radius:4px;overflow:hidden;position:relative}
+.snaprow .sf{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.snaprow .sv{width:98px;flex:0 0 auto;text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px}
+.snaprow .sv small{color:var(--muted);font-size:10.5px;margin-left:4px}
 </style>
 </head>
 <body>
@@ -145,6 +160,7 @@ section.on{display:block;animation:fade .22s ease}
   <section id="fl">
     <div class="wchips" id="flWin"></div>
     <div class="card"><h2>現金池 · 場內資金線 <span class="r" id="flPoolEnd"></span></h2>
+      <div class="idxrow" id="poolIdx"></div>
       <div class="chartwrap" id="flPool"></div><div class="xlab" id="flPoolX"></div>
       <div class="legend" id="flPoolLeg"></div></div>
     <div class="card"><h2>入池 / 出池 · 每期淨進出</h2>
@@ -154,10 +170,9 @@ section.on{display:block;animation:fade .22s ease}
     <div class="card"><h2>期權定位趨勢 <select class="picker" id="optSym"></select></h2>
       <div class="chartwrap" id="optChart"></div><div class="xlab" id="optChartX"></div>
       <div class="legend" id="optLeg"></div></div>
-    <div class="card"><h2>賣空量比趨勢</h2>
-      <div class="legend" id="dpLeg" style="margin:0 0 8px"></div>
-      <div class="chartwrap" id="dpChart"></div><div class="xlab" id="dpChartX"></div>
-      <div class="legend">虛線＝55% 高檔警戒線。比率＝FINRA 每日賣空量 / 總量（T+1）。</div></div>
+    <div class="card"><h2>賣空量比 · 最新排行 <span class="r" style="font-weight:400;color:var(--muted)" id="dpDate"></span></h2>
+      <div id="dpSnap"></div>
+      <div class="legend">越高＝空方越擁擠；<b style="color:var(--red)">≥55% 標紅</b>＝高檔（軋空燃料／空頭壓力）。FINRA 每日賣空量 / 總量（T+1）。</div></div>
     <div class="card"><h2>MMF 現金水位（彈藥）</h2><div id="flMmf"></div></div>
     <a class="linkrow" href="./index.html"><span class="ic">🗺️</span><span class="lt"><b>完整資金向量圖</b><small>3D 向量圖 / RRG / 目的地 / 逐日動畫</small></span><span class="chev">›</span></a>
   </section>
@@ -206,6 +221,10 @@ const LIGHT={"🟢":{lab:"正常",c:"var(--green)"},"🟡":{lab:"留意",c:"var(
 const SESS={rth:"盤中",pre:"盤前",after:"盤後",closed:"休市",pause:"暫停"};
 const DPCOL=["#8ab4f8","#4ade4a","#fab219","#c084fc","#199e70","#ff6b6b","#3987e5","#e0b070","#22d3ee","#f7a8b8"];
 const CASH=new Set(["SGOV","BIL"]);
+let IDX_SHOW={SPY:true,QQQ:true};
+const CATORDER=["半導體","記憶體","光通信","軟體平台","加密股","電動車","正股","大盤","板塊ETF","槓桿","反向","國債","信用債","金","油","銀","Crypto","自訂","闖入","現金","其他"];
+const SEGC={dm:"#16a34a",dr:"#dc2626",lm:"#86efac",lr:"#fca5a5"};   // 大單深綠/深紅、中小單淺綠/淺紅
+const OVR={SPY:"rgba(138,180,248,.5)",QQQ:"rgba(192,132,252,.45)"}; // 疊加線調淡
 const $=s=>document.querySelector(s);
 const cls=v=>v>0?"up":v<0?"down":"flat";
 function money(n){const a=Math.abs(n);if(a>=1e9)return(n/1e9).toFixed(2)+"B";if(a>=1e6)return(n/1e6).toFixed(0)+"M";if(a>=1e3)return(n/1e3).toFixed(0)+"K";return n.toFixed(0);}
@@ -233,7 +252,7 @@ function dualLine(x,left,right,h){
     if(s.fill){const fin=s.vals.map((v,i)=>[v,i]).filter(p=>Number.isFinite(p[0]));if(fin.length){const x0=X(fin[0][1]).toFixed(1),x1=X(fin[fin.length-1][1]).toFixed(1);svg+=`<path d="${d} L ${x1} ${YL(0).toFixed(1)} L ${x0} ${YL(0).toFixed(1)} Z" fill="${s.color}" fill-opacity=".16" stroke="none"/>`;}}
     svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width||2}"${s.dash?` stroke-dasharray="${s.dash}"`:""} vector-effect="non-scaling-stroke"/>`;
     if(s.dot){const fin=s.vals.map((v,i)=>[v,i]).filter(p=>Number.isFinite(p[0]));if(fin.length){const l=fin[fin.length-1];svg+=`<circle cx="${X(l[1]).toFixed(1)}" cy="${YL(l[0]).toFixed(1)}" r="3" fill="${s.color}"/>`;}}});
-  right.forEach(s=>{const d=path(s.vals,YR);if(d)svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;});
+  right.forEach(s=>{const d=path(s.vals,YR);if(d)svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width||1.3}" vector-effect="non-scaling-stroke"/>`;});
   return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px">${svg}</svg>`;
 }
 function vbars(vals,h){
@@ -291,6 +310,30 @@ function mktBars(win,mode){
   else{const dates=winDates(+win),m=dfMap();for(const d of dates){const day=m[d]||{};for(const k in day){const key=mode==="cat"?(day[k].c||"其他"):k;agg[key]=(agg[key]||0)+(day[k].m||0);}}}
   return Object.entries(agg).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
 }
+function mktStack(win,mode){
+  const agg={};const add=(k,m,r)=>{const o=agg[k]||(agg[k]={m:0,r:0});o.m+=m;o.r+=r;};
+  if(win==="live"){const cf=(MD&&MD.capital_flow)||{};for(const k in cf){const key=mode==="cat"?(cf[k].cat||"其他"):k.replace("US.","");add(key,(cf[k].main_net||0)/1e6,(cf[k].retail_net||0)/1e6);}}
+  else{const dates=winDates(+win),D=dfMap();for(const d of dates){const day=D[d]||{};for(const k in day){const key=mode==="cat"?(day[k].c||"其他"):k;add(key,day[k].m||0,day[k].r||0);}}}
+  return agg;
+}
+function renderStackBars(win,mode){
+  const agg=mktStack(win,mode);let ents=Object.entries(agg).map(([k,o])=>({k,m:o.m,r:o.r,net:o.m+o.r}));
+  if(!ents.length)return'<div class="skel">無資料</div>';
+  if(mode==="cat")ents.sort((a,b)=>{const ia=CATORDER.indexOf(a.k),ib=CATORDER.indexOf(b.k);return(ia<0?99:ia)-(ib<0?99:ib);});
+  else ents=ents.sort((a,b)=>Math.abs(b.net)-Math.abs(a.net)).slice(0,14);
+  const mx=Math.max(1,...ents.map(x=>Math.max(Math.abs(x.net),Math.abs(x.m),Math.abs(x.r))));
+  const P=v=>(Math.abs(v)/mx*50).toFixed(2);
+  return ents.map(x=>{
+    const posM=Math.max(0,x.m),negM=Math.min(0,x.m),posR=Math.max(0,x.r),negR=Math.min(0,x.r);
+    const dv=x.m*x.r<0&&Math.min(Math.abs(x.m),Math.abs(x.r))>2;
+    const segs=
+      `<div class="sg" style="left:50%;width:${P(posM)}%;background:${SEGC.dm}"></div>`
+     +`<div class="sg" style="left:${(50+ +P(posM)).toFixed(2)}%;width:${P(posR)}%;background:${SEGC.lm}"></div>`
+     +`<div class="sg" style="right:50%;width:${P(negM)}%;background:${SEGC.dr}"></div>`
+     +`<div class="sg" style="right:${(50+ +P(negM)).toFixed(2)}%;width:${P(negR)}%;background:${SEGC.lr}"></div>`;
+    return`<div class="bar-row"><div class="bl">${x.k}${dv?' <span style="color:var(--amber)">⚡</span>':''}</div><div class="sbar"><div class="cl"></div>${segs}</div><div class="bv2"><div class="${cls(x.net)}">${fM(x.net)}</div><div class="sub">大單 ${fM(x.m)}</div></div></div>`;
+  }).join("");
+}
 function optSeries(sym,win){const D=(MD&&MD.opt_daily)||{};const dates=Object.keys(D).sort();const n=win==="live"?10:+win;const use=dates.slice(-n);const g=k=>use.map(d=>{const e=(D[d]||{})[sym];return e&&e[k]!=null?e[k]:null;});const mp=use.map(d=>{const e=(D[d]||{})[sym];return(e&&e.max_pain&&e.spot)?+((e.max_pain/e.spot-1)*100).toFixed(2):null;});return{x:use.map(d=>d.slice(5)),gex:g("gex_bn"),pcv:g("pc_vol"),iv:g("atm_iv"),mp};}
 function dpSeries(win){const D=(MD&&MD.dp_daily)||{};const dates=Object.keys(D).sort();if(!dates.length)return{x:[],series:[]};const n=win==="live"?12:+win;const use=dates.slice(-n);const syms=Object.keys(D[dates[dates.length-1]]||{}).sort();const series=syms.map((s,i)=>({name:s,color:DPCOL[i%DPCOL.length],vals:use.map(d=>{const v=(D[d]||{})[s];return v!=null?+(v*100).toFixed(1):null;})}));return{x:use.map(d=>d.slice(4,6)+"/"+d.slice(6,8)),series};}
 
@@ -322,17 +365,16 @@ function renderFl(){
   const P=poolSeries(flWin);
   const last=P.yAll.length?P.yAll[P.yAll.length-1]:0, lastM=P.yMain.length?P.yMain[P.yMain.length-1]:0;
   $("#flPoolEnd").innerHTML=P.yAll.length?`<span class="${cls(last)}">全單 ${fM(last)}</span>`:"";
-  $("#flPool").innerHTML=dualLine(P.x,
-    [{vals:P.yAll,color:"var(--amber)",width:2.2,fill:true,dot:true},{vals:P.yMain,color:"var(--mainline)",width:1.8,dash:"3 3"}],
-    [{vals:P.spy,color:"var(--spy)"},{vals:P.qqq,color:"var(--qqq)"}]);
+  $("#poolIdx").innerHTML=["SPY","QQQ"].map(k=>`<span class="idxchip ${IDX_SHOW[k]?"":"off"}" data-idx="${k}"><span class="d" style="background:${k==="SPY"?"#8ab4f8":"#c084fc"}"></span>${k}</span>`).join("");
+  const ov=[];if(IDX_SHOW.SPY)ov.push({vals:P.spy,color:OVR.SPY,width:1.3});if(IDX_SHOW.QQQ)ov.push({vals:P.qqq,color:OVR.QQQ,width:1.3});
+  $("#flPool").innerHTML=dualLine(P.x,[{vals:P.yAll,color:"var(--amber)",width:2.4,fill:true,dot:true},{vals:P.yMain,color:"var(--mainline)",width:1.6,dash:"3 3"}],ov);
   $("#flPoolX").innerHTML=xlabHtml(P.x);
   const hasK=(P.spy&&P.spy.some(v=>v!=null));
-  $("#flPoolLeg").innerHTML=`<span class="legdot" style="background:var(--amber)"></span>全單場內資金 ${fM(last)}　<span class="legdot" style="background:var(--mainline)"></span>大單(機構) ${fM(lastM)}　<span class="legdot" style="background:var(--spy)"></span>SPY　<span class="legdot" style="background:var(--qqq)"></span>QQQ（%改）${hasK?"":"<br><span style='color:var(--muted)'>（SPY/QQQ 日K 載入中…）</span>"}<br><b>+y＝現金離池進場、−y＝現金入池了結</b>；與 SPY 同向＝資金確認，背離（線降·指數升）＝轉折警訊。`;
+  $("#flPoolLeg").innerHTML=`<span class="legdot" style="background:var(--amber)"></span>全單場內資金 ${fM(last)}　<span class="legdot" style="background:var(--mainline)"></span>大單(機構) ${fM(lastM)}${(IDX_SHOW.SPY||IDX_SHOW.QQQ)&&!hasK?"　<span style='color:var(--muted)'>SPY/QQQ 日K 載入中…</span>":""}<br><b>+y＝現金離池進場、−y＝現金入池了結</b>；與 SPY 同向＝資金確認，背離（線降·指數升）＝轉折警訊。`;
   $("#flPoolBars").innerHTML=vbars(P.barA);$("#flPoolBarsX").innerHTML=xlabHtml(P.x);
   document.querySelectorAll("#flMode button").forEach(b=>b.classList.toggle("on",b.dataset.m===flMode));
-  const bars=mktBars(flWin,flMode).slice(0,flMode==="cat"?20:14),mx=Math.max(1,...bars.map(b=>Math.abs(b[1])));
-  $("#flBars").innerHTML=bars.map(([c,v])=>{const w=Math.max(3,Math.abs(v)/mx*100),col=v>0?"var(--green)":"var(--red)",side=v>0?"left:50%":"right:50%";return`<div class="bar-row"><div class="bl">${c}</div><div class="track"><div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)"></div><div class="fill" style="${side};width:${w/2}%;background:${col}"></div></div><div class="bv ${cls(v)}">${fM(v)}</div></div>`;}).join("")||'<div class="skel">無資料</div>';
-  renderOpt();renderDp();
+  $("#flBars").innerHTML=renderStackBars(flWin,flMode);
+  renderOpt();renderDpSnap();
   $("#flMmf").innerHTML=mmfHtml(false);
 }
 function renderOpt(){
@@ -345,12 +387,14 @@ function renderOpt(){
   $("#optChartX").innerHTML=xlabHtml(O.x);
   $("#optLeg").innerHTML=`<span class="legdot" style="background:var(--green)"></span>GEX>0　<span class="legdot" style="background:var(--red)"></span>GEX<0（柱，十億$/1%）　<span class="legdot" style="background:var(--violet)"></span>P/C 量比（線）`;
 }
-function renderDp(){
-  const S=dpSeries(flWin);
-  if(!S.x.length){$("#dpChart").innerHTML='<div class="skel">賣空日檔累積中</div>';$("#dpChartX").innerHTML="";$("#dpLeg").innerHTML="";return;}
-  $("#dpChart").innerHTML=multiLine(S.x,S.series,55);
-  $("#dpChartX").innerHTML=xlabHtml(S.x);
-  $("#dpLeg").innerHTML=S.series.map(s=>`<span class="legdot" style="background:${s.color}"></span>${s.name}`).join(" ");
+function renderDpSnap(){
+  const D=(MD&&MD.dp_daily)||{};const dates=Object.keys(D).sort();const el=$("#dpSnap");
+  if(!dates.length){el.innerHTML='<div class="skel">賣空日檔累積中</div>';$("#dpDate").textContent="";return;}
+  const last=D[dates[dates.length-1]]||{},prev=D[dates[dates.length-2]]||{};
+  $("#dpDate").textContent=dates[dates.length-1].slice(4,6)+"/"+dates[dates.length-1].slice(6,8);
+  const rows=Object.entries(last).map(([s,v])=>({s,v:v*100,dv:prev[s]!=null?(v-prev[s])*100:null})).sort((a,b)=>b.v-a.v);
+  const scale=Math.max(70,...rows.map(r=>r.v));
+  el.innerHTML=rows.map(r=>{const hi=r.v>=55,col=hi?"var(--red)":r.v>=45?"var(--amber)":"var(--aqua)";return`<div class="snaprow"><div class="sn">${r.s}</div><div class="st"><div class="sf" style="width:${(r.v/scale*100).toFixed(1)}%;background:${col}"></div></div><div class="sv" style="${hi?"color:var(--red)":""}">${r.v.toFixed(1)}%${r.dv!=null&&Math.abs(r.dv)>=0.1?`<small>${r.dv>0?"▲":"▼"}${Math.abs(r.dv).toFixed(1)}</small>`:""}</div></div>`;}).join("");
 }
 function mmfHtml(compact){
   const cp=MD&&MD.cash_pool;if(!cp||!cp.mmf)return'<div class="skel">—</div>';const m=cp.mmf;
@@ -393,7 +437,7 @@ function renderDetail(){
   $("#dBody").innerHTML=
     (s.stance?`<div class="card" style="padding:12px 14px"><span class="stance ${stanceClass(s.stance)}" style="max-width:none;white-space:normal">${s.stance}</span>${s.stance_note?`<div class="disc" style="margin-top:8px;color:var(--ink2)">${s.stance_note.slice(0,140)}</div>`:""}</div>`:"")
     +`<div class="wchips" id="dWin">${winChipsHtml(detWin)}</div>`
-    +`<div class="card"><h2>現金池 · 累積⑦淨流 <span class="r ${cls(end)}">${fM(end)}</span></h2><div class="chartwrap">${dualLine(cum.labs,[{vals:cum.vals,color:"var(--amber)",width:2.2,fill:true,dot:true}],[{vals:cum.spy,color:"var(--spy)"},{vals:cum.qqq,color:"var(--qqq)"}])}</div><div class="xlab">${xlabHtml(cum.labs)}</div><div class="legend"><span class="legdot" style="background:var(--amber)"></span>本檔累積⑦淨流　<span class="legdot" style="background:var(--spy)"></span>SPY　<span class="legdot" style="background:var(--qqq)"></span>QQQ（%改）${hasK?"":" <span style='color:var(--muted)'>·日K載入中</span>"}<br>線上升＝資金淨流入本檔；與大盤背離＝個股獨立資金訊號。</div></div>`
+    +`<div class="card"><h2>現金池 · 累積⑦淨流 <span class="r ${cls(end)}">${fM(end)}</span></h2><div class="chartwrap">${dualLine(cum.labs,[{vals:cum.vals,color:"var(--amber)",width:2.4,fill:true,dot:true}],[...(IDX_SHOW.SPY?[{vals:cum.spy,color:OVR.SPY,width:1.3}]:[]),...(IDX_SHOW.QQQ?[{vals:cum.qqq,color:OVR.QQQ,width:1.3}]:[])])}</div><div class="xlab">${xlabHtml(cum.labs)}</div><div class="legend"><span class="legdot" style="background:var(--amber)"></span>本檔累積⑦淨流　<span class="legdot" style="background:var(--spy)"></span>SPY　<span class="legdot" style="background:var(--qqq)"></span>QQQ（%改）${hasK?"":" <span style='color:var(--muted)'>·日K載入中</span>"}<br>線上升＝資金淨流入本檔；與大盤背離＝個股獨立資金訊號。</div></div>`
     +`<div class="card"><h2>每日大單淨流 · 入池/出池柱狀</h2><div class="chartwrap">${vbars(day.vals)}</div><div class="xlab">${xlabHtml(day.labs)}</div><div class="legend"><span class="legdot" style="background:var(--green)"></span>綠＝當日淨流入　<span class="legdot" style="background:var(--red)"></span>紅＝淨流出（${detWin==="live"?"盤中各時點增量":"每日"}）</div></div>`
     +`<div class="card"><h2>資金池讀數</h2><div class="kv"><span>區間累積⑦淨流</span><span class="${cls(end)}">${fM(end)}</span></div>${detWin!=="live"?`<div class="kv"><span>機構(大單) vs 散戶</span><span><span class="${cls(sumM)}">${fM(sumM)}</span> / <span class="${cls(sumR)}">${fM(sumR)}</span></span></div>`:""}<div class="kv"><span>⑦ 今日 / 5日</span><span><span class="${cls(f7.d1)}">${f7.d1!=null?dollarsSigned(f7.d1):"—"}</span> / <span class="${cls(f7.d5)}">${f7.d5!=null?fM(f7.d5):"—"}</span></span></div></div>`
     +`<a class="linkrow" href="./stock.html?sym=${encodeURIComponent(sym)}"><span class="ic">📈</span><span class="lt"><b>完整 K 線頁</b><small>K線 + 指標 + AI 買賣點 + 期權定位</small></span><span class="chev">›</span></a>`;
@@ -404,6 +448,7 @@ function renderDetail(){
 document.querySelectorAll(".tabbar button").forEach(b=>{b.addEventListener("click",()=>{const t=b.dataset.tab;if(t===curTab){$("main").scrollTo({top:0,behavior:"smooth"});return;}curTab=t;document.querySelectorAll(".tabbar button").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll("main > section").forEach(s=>s.classList.toggle("on",s.id===t));$("main").scrollTop=0;if(t==="fl"){loadDeep();ensureKline();}renderTab(t);});});
 $("#flWin").addEventListener("click",e=>{const c=e.target.closest(".wchip");if(!c)return;flWin=c.dataset.w;needDeep(+flWin||0);ensureKline();renderFl();});
 $("#flMode").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;flMode=b.dataset.m;renderFl();});
+$("#poolIdx").addEventListener("click",e=>{const c=e.target.closest(".idxchip");if(!c)return;IDX_SHOW[c.dataset.idx]=!IDX_SHOW[c.dataset.idx];renderFl();if($("#detail").classList.contains("on"))renderDetail();});
 $("#optSym").addEventListener("change",e=>{optSym=e.target.value;renderOpt();});
 $("#refreshBtn").addEventListener("click",()=>load());
 load();setInterval(load,20000);
