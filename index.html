@@ -226,7 +226,7 @@ a{color:var(--blue)}
       <select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
     </h2>
-    <div id="chipstock" style="margin:6px 0 10px"></div>
+    <div id="chipstock" style="margin:6px 0 22px"></div>
     <div id="chipflow" style="height:440px"></div>
     <div id="chipcost" style="height:460px;margin-top:8px"></div>
     <div id="chipnote" class="note"></div>
@@ -498,9 +498,9 @@ function renderChips(){
     {type:'scatter',mode:'lines',name:'大單累積(機構)',x:x,y:lineM,line:{color:'#c2703e',width:2,dash:'dot'},hovertemplate:'%{x} 大單累積:%{y:,.0f}<extra></extra>'}
   ];
   if(ppct.some(v=>v!=null))traces.push({type:'scatter',mode:'lines',name:'價格%',x:x,y:ppct,yaxis:'y2',connectgaps:true,line:{color:'#8ab4f8',width:1.7},hovertemplate:'%{x} 價 %{y:+.2f}%<extra></extra>'});
-  Plotly.react('chipflow',traces,{...PBASE,barmode:'overlay',margin:{l:70,r:64,t:26,b:34},showlegend:false,
-    annotations:[{text:'<b>'+CHIP_SYM+'</b> 過去 '+use.length+' 日 · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span> — ↑資金進場↓離場;柱=當日淨進出',
-      xref:'paper',yref:'paper',x:0.01,y:1.1,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
+  Plotly.react('chipflow',traces,{...PBASE,barmode:'overlay',margin:{l:70,r:64,t:40,b:34},showlegend:false,
+    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+use.length+' 日 · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span> — ↑資金進場↓離場;柱=當日淨進出',
+      xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'現金池累積(↑進↓出)',font:{size:10,color:C.ink2}}},
     yaxis2:{overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}},CFG);
