@@ -135,6 +135,11 @@ section.on{display:block;animation:fade .22s ease}
 .snaprow .sf{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
 .snaprow .sv{width:98px;flex:0 0 auto;text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px}
 .snaprow .sv small{color:var(--muted);font-size:10.5px;margin-left:4px}
+.wchips{position:sticky;top:0;z-index:25;background:var(--bg);padding:12px 0;margin-top:-12px}
+.wchip,.idxchip,.seg button,.srow,.linkrow,.tabbar button{transition:transform .08s}
+.wchip:active,.idxchip:active,.seg button:active,.linkrow:active{transform:scale(.96)}
+.srow:active{transform:scale(.985)}
+.srow .f7{font-size:10.5px;margin-top:2px;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -219,7 +224,6 @@ let flWin="live",flMode="cat",optSym="SPY",detSym=null,detWin="live";
 const WINS=[["live","即時"],["5","5日"],["10","10日"],["30","30日"],["60","60日"]];
 const LIGHT={"🟢":{lab:"正常",c:"var(--green)"},"🟡":{lab:"留意",c:"var(--amber)"},"🔴":{lab:"警戒",c:"var(--red)"}};
 const SESS={rth:"盤中",pre:"盤前",after:"盤後",closed:"休市",pause:"暫停"};
-const DPCOL=["#8ab4f8","#4ade4a","#fab219","#c084fc","#199e70","#ff6b6b","#3987e5","#e0b070","#22d3ee","#f7a8b8"];
 const CASH=new Set(["SGOV","BIL"]);
 let IDX_SHOW={SPY:true,QQQ:true};
 const CATORDER=["半導體","記憶體","光通信","軟體平台","加密股","電動車","正股","大盤","板塊ETF","槓桿","反向","國債","信用債","金","油","銀","Crypto","自訂","闖入","現金","其他"];
@@ -229,7 +233,7 @@ const $=s=>document.querySelector(s);
 const cls=v=>v>0?"up":v<0?"down":"flat";
 function money(n){const a=Math.abs(n);if(a>=1e9)return(n/1e9).toFixed(2)+"B";if(a>=1e6)return(n/1e6).toFixed(0)+"M";if(a>=1e3)return(n/1e3).toFixed(0)+"K";return n.toFixed(0);}
 const dollarsSigned=n=>(n>0?"+":"")+money(n);
-function fM(v){const a=Math.abs(v);const s=v>0?"+":"";return a>=1000?s+(v/1000).toFixed(2)+"B":s+v.toFixed(0)+"M";}
+function fM(v){const a=Math.abs(v);const s=v>0?"+":"";if(a>=1000)return s+(v/1000).toFixed(2)+"B";if(a>=10)return s+v.toFixed(0)+"M";return s+v.toFixed(1)+"M";}
 function pct(v){return(v>0?"+":"")+(v==null?"–":v.toFixed(2))+"%";}
 function ago(t){if(!t)return{txt:"—",min:9999};const ms=new Date(t.replace(" ","T")+"Z").getTime();const m=Math.max(0,Math.round((Date.now()-ms)/60000));return{txt:m<1?"剛剛":m+" 分前",min:m};}
 const toPct=a=>{const b=a.find(v=>v!=null);return b==null?a.map(()=>null):a.map(v=>v!=null?+((v/b-1)*100).toFixed(3):null);};
@@ -266,16 +270,7 @@ function barsLine(x,bars,line,lineColor,h){
   const bmax=Math.max(1,...bars.map(v=>Math.abs(v||0))),slot=CW/n,bw=Math.max(2,slot*0.5),mid=h/2;
   let svg=`<line x1="0" y1="${mid}" x2="${CW}" y2="${mid}" stroke="var(--muted)" stroke-opacity=".45" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>`;
   for(let i=0;i<n;i++){const v=bars[i]||0,hh=Math.abs(v)/bmax*(h/2-2),x=(i*slot+(slot-bw)/2),y=v>=0?mid-hh:mid,col=v>=0?"rgba(74,222,74,.75)":"rgba(255,107,107,.7)";svg+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.6,hh).toFixed(1)}" fill="${col}"/>`;}
-  const lv=line.filter(Number.isFinite);if(lv.length){let lmin=Math.min(...lv),lmax=Math.max(...lv);const lr=(lmax-lmin)||1;const X=i=>(i/(n-1))*CW,Y=v=>h-((v-lmin)/lr)*h;let d="",st=false;line.forEach((v,i)=>{if(!Number.isFinite(v))return;d+=(st?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";st=true;});if(d)svg+=`<path d="${d}" fill="none" stroke="${lineColor}" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`;}
-  return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px">${svg}</svg>`;
-}
-function multiLine(x,series,ref,h){
-  h=h||CH;const n=x.length;if(n<2)return'<div class="skel">此區間資料不足</div>';
-  const all=[];series.forEach(s=>s.vals.forEach(v=>{if(Number.isFinite(v))all.push(v)}));if(ref!=null)all.push(ref);
-  let mn=Math.min(...all),mx=Math.max(...all);if(!isFinite(mn)){mn=0;mx=1}const r=(mx-mn)||1;
-  const X=i=>(i/(n-1))*CW,Y=v=>h-((v-mn)/r)*h;
-  let svg="";if(ref!=null)svg+=`<line x1="0" y1="${Y(ref).toFixed(1)}" x2="${CW}" y2="${Y(ref).toFixed(1)}" stroke="var(--amber)" stroke-opacity=".7" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>`;
-  series.forEach(s=>{let d="",st=false;s.vals.forEach((v,i)=>{if(!Number.isFinite(v))return;d+=(st?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";st=true;});if(d)svg+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="1.7" vector-effect="non-scaling-stroke"/>`;});
+  const lv=line.filter(Number.isFinite);if(n>=2&&lv.length){let lmin=Math.min(...lv),lmax=Math.max(...lv);const lr=(lmax-lmin)||1;const X=i=>(i/(n-1))*CW,Y=v=>h-((v-lmin)/lr)*h;let d="",st=false;line.forEach((v,i)=>{if(!Number.isFinite(v))return;d+=(st?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";st=true;});if(d)svg+=`<path d="${d}" fill="none" stroke="${lineColor}" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`;}
   return`<svg viewBox="0 0 ${CW} ${h}" preserveAspectRatio="none" style="height:${h}px">${svg}</svg>`;
 }
 
@@ -304,12 +299,6 @@ function poolSeries(win){
   for(const d of dates){const day=D[d]||{};let dm=0,da=0;for(const k in day){if(day[k].c!=="現金"){dm+=(day[k].m||0);da+=((day[k].m||0)+(day[k].r||0));}}cmM+=dm;cmA+=da;yMain.push(cmM);yAll.push(cmA);barA.push(+da.toFixed(1));x.push(d.slice(5));}
   return{x,yAll,yMain,barA,spy:toPct(dates.map(d=>SPYK&&SPYK[d]!=null?SPYK[d]:null)),qqq:toPct(dates.map(d=>QQQK&&QQQK[d]!=null?QQQK[d]:null))};
 }
-function mktBars(win,mode){
-  const agg={};
-  if(win==="live"){const cf=(MD&&MD.capital_flow)||{};for(const k in cf){const key=mode==="cat"?(cf[k].cat||"其他"):k.replace("US.","");agg[key]=(agg[key]||0)+((cf[k].main_net||0)/1e6);}}
-  else{const dates=winDates(+win),m=dfMap();for(const d of dates){const day=m[d]||{};for(const k in day){const key=mode==="cat"?(day[k].c||"其他"):k;agg[key]=(agg[key]||0)+(day[k].m||0);}}}
-  return Object.entries(agg).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
-}
 function mktStack(win,mode){
   const agg={};const add=(k,m,r)=>{const o=agg[k]||(agg[k]={m:0,r:0});o.m+=m;o.r+=r;};
   if(win==="live"){const cf=(MD&&MD.capital_flow)||{};for(const k in cf){const key=mode==="cat"?(cf[k].cat||"其他"):k.replace("US.","");add(key,(cf[k].main_net||0)/1e6,(cf[k].retail_net||0)/1e6);}}
@@ -335,7 +324,6 @@ function renderStackBars(win,mode){
   }).join("");
 }
 function optSeries(sym,win){const D=(MD&&MD.opt_daily)||{};const dates=Object.keys(D).sort();const n=win==="live"?10:+win;const use=dates.slice(-n);const g=k=>use.map(d=>{const e=(D[d]||{})[sym];return e&&e[k]!=null?e[k]:null;});const mp=use.map(d=>{const e=(D[d]||{})[sym];return(e&&e.max_pain&&e.spot)?+((e.max_pain/e.spot-1)*100).toFixed(2):null;});return{x:use.map(d=>d.slice(5)),gex:g("gex_bn"),pcv:g("pc_vol"),iv:g("atm_iv"),mp};}
-function dpSeries(win){const D=(MD&&MD.dp_daily)||{};const dates=Object.keys(D).sort();if(!dates.length)return{x:[],series:[]};const n=win==="live"?12:+win;const use=dates.slice(-n);const syms=Object.keys(D[dates[dates.length-1]]||{}).sort();const series=syms.map((s,i)=>({name:s,color:DPCOL[i%DPCOL.length],vals:use.map(d=>{const v=(D[d]||{})[s];return v!=null?+(v*100).toFixed(1):null;})}));return{x:use.map(d=>d.slice(4,6)+"/"+d.slice(6,8)),series};}
 
 /* ====== 載入 ====== */
 async function load(){
@@ -405,7 +393,7 @@ function mmfHtml(compact){
 function stanceClass(s){if(!s)return"st-neu";const t=s.replace(/\(.*/,"");if(/買|多|進|加碼|突破/.test(t))return"st-buy";if(/賣|空|出|減碼|停損|避開/.test(t))return"st-sell";if(/觀望|等|中性|留意|持有/.test(t))return"st-wait";return"st-neu";}
 function renderSt(){
   const syms=SIG&&SIG.symbols;if(!syms){$("#stList").innerHTML='<div class="skel">載入中…</div>';return;}
-  $("#stList").innerHTML=Object.keys(syms).map(sym=>{const s=syms[sym]||{},q=getQuote(sym),c=q&&q.chg1d,px=q&&q.last,note=(s.stance_note||"").split(/[;。\n]/)[0].slice(0,40);return`<div class="srow" onclick="openDetail('${sym}')"><div class="l"><div class="sym">${sym}</div><span class="stance ${stanceClass(s.stance)}">${s.stance||"—"}</span>${note?`<div class="note">${note}</div>`:""}</div><div class="r"><div class="px">${px!=null?(+px).toLocaleString(undefined,{maximumFractionDigits:2}):"—"}</div><div class="chg ${cls(c)}">${c==null?"":pct(c)}</div></div><div class="chev">›</div></div>`;}).join("");
+  $("#stList").innerHTML=Object.keys(syms).map(sym=>{const s=syms[sym]||{},q=getQuote(sym),c=q&&q.chg1d,px=q&&q.last,note=(s.stance_note||"").split(/[;。\n]/)[0].slice(0,40);const d1=s.futu7&&s.futu7.d1;return`<div class="srow" onclick="openDetail('${sym}')"><div class="l"><div class="sym">${sym}</div><span class="stance ${stanceClass(s.stance)}">${s.stance||"—"}</span>${note?`<div class="note">${note}</div>`:""}</div><div class="r"><div class="px">${px!=null?(+px).toLocaleString(undefined,{maximumFractionDigits:2}):"—"}</div><div class="chg ${cls(c)}">${c==null?"":pct(c)}</div>${d1!=null?`<div class="f7 ${cls(d1)}">⑦ ${dollarsSigned(d1)}</div>`:""}</div><div class="chev">›</div></div>`;}).join("");
 }
 function renderMo(){
   const me=(MD&&MD.meta)||{},fresh=ago(MD&&MD.ts_utc);
@@ -415,15 +403,15 @@ function renderMo(){
 
 /* ====== 個股明細 ====== */
 function openDetail(sym){detSym=sym;detWin="live";$("#detail").classList.add("on");history.pushState({d:1},"");ensureKline();renderDetail();}
-function closeDetail(){$("#detail").classList.remove("on");}
-window.addEventListener("popstate",()=>{if($("#detail").classList.contains("on"))$("#detail").classList.remove("on");});
+function closeDetail(){if(history.state&&history.state.d)history.back();else $("#detail").classList.remove("on");}
+window.addEventListener("popstate",()=>{$("#detail").classList.remove("on");});
 function stkCum(sym,win){
-  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[],spy:[],qqq:[]};return{vals:fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0),labs:fh.map(c=>c.ts),spy:toPct(fh.map(c=>c.px!=null?c.px:null)),qqq:toPct(fh.map(c=>c.pxq!=null?c.pxq:null))};}
+  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length||!fh.some(c=>c.f&&typeof c.f[sym]==="number"))return{vals:[],labs:[],spy:[],qqq:[]};return{vals:fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0),labs:fh.map(c=>c.ts),spy:toPct(fh.map(c=>c.px!=null?c.px:null)),qqq:toPct(fh.map(c=>c.pxq!=null?c.pxq:null))};}
   const dates=winDates(+win),m=dfMap();let run=0;const vals=[],labs=[];for(const d of dates){const rec=(m[d]||{})[sym];run+=rec?(rec.m||0):0;vals.push(run);labs.push(d.slice(5));}
   return{vals,labs,spy:toPct(dates.map(d=>SPYK&&SPYK[d]!=null?SPYK[d]:null)),qqq:toPct(dates.map(d=>QQQK&&QQQK[d]!=null?QQQK[d]:null))};
 }
 function stkDay(sym,win){
-  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length)return{vals:[],labs:[]};const cum=fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0);return{vals:cum.map((v,i)=>i?+(v-cum[i-1]).toFixed(1):v),labs:fh.map(c=>c.ts)};}
+  if(win==="live"){const fh=MD&&MD.flow_history;if(!fh||!fh.length||!fh.some(c=>c.f&&typeof c.f[sym]==="number"))return{vals:[],labs:[]};const cum=fh.map(c=>(c.f&&typeof c.f[sym]==="number")?c.f[sym]:0);return{vals:cum.map((v,i)=>i?+(v-cum[i-1]).toFixed(1):v),labs:fh.map(c=>c.ts)};}
   const dates=winDates(+win),m=dfMap();const vals=[],labs=[];for(const d of dates){const rec=(m[d]||{})[sym];vals.push(rec?(rec.m||0):0);labs.push(d.slice(5));}return{vals,labs};
 }
 function renderDetail(){

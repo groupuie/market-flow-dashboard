@@ -8,9 +8,9 @@
  *   - 導覽（HTML 頁面）→ 網路優先，成功即更新外殼快取；離線才回退快取
  *   - 其餘同網域靜態（klinecharts.min.js / icon / manifest）→ 快取優先 + 背景更新
  */
-const V = 'mfd-v1';
+const V = 'mfd-v2';
 const SHELL = [
-  './', './index.html', './stock.html',
+  './', './index.html', './app.html', './stock.html',
   './klinecharts.min.js', './manifest.json',
   './icon-180.png', './icon-192.png', './icon-512.png'
 ];
