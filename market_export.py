@@ -743,7 +743,7 @@ def pull_ticks(syms, tickacc):
     try:
         try: q.subscribe(syms,[SubType.TICKER])
         except Exception as e: err("tick-sub",e)
-        time.sleep(1.5)
+        time.sleep(1.0)
         for s in syms:
             try:
                 ret,d=q.get_rt_ticker(s,num=1000)
@@ -756,7 +756,7 @@ def pull_ticks(syms, tickacc):
                                  "sequence":_f(r.get("sequence"))})
                 accumulate_ticks(norm, tickacc.setdefault(s.replace("US.",""),{}))
             except Exception as e: err(f"tick {s}",e)
-            time.sleep(0.3)
+            time.sleep(0.25)
     finally:
         q.close()
     return tickacc
@@ -787,7 +787,7 @@ def pull_ext_flow(syms):
                                   "r":round(rn/1e6,1) if rn is not None else None,
                                   "c":EXT_CAT.get(sym,"正股")}
             except Exception as e: err(f"ext {s}", e)
-            time.sleep(0.5)
+            time.sleep(0.4)
     finally:
         q.close()
     return out
@@ -809,6 +809,7 @@ def options_due(state_path, force):
 
 def run_once(cfg, args):
     now=datetime.now(timezone.utc)
+    _run_t0=time.time()   # 全輪時間預算:ext/ticks 只在預算內執行,確保單輪 <420s 看門狗(2026-07-27 停推事故對策)
     data={"ts_utc":now.strftime("%Y-%m-%d %H:%M:%S"),"source":"mac-market-export",
           "market":{},"stocks":{},"leveraged":{},"options":{},"fx":{},"rates":{},
           "crypto":{},"commodities":{},"darkpool":{},"capital_flow":{},"errors":[]}
@@ -1050,16 +1051,24 @@ def run_once(cfg, args):
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
-    # 擴充清單 ⑦(個股籌碼分頁專用,獨立 ext_flows.json;只在完整輪、~20 分節流;不進大盤 capital_flow/匯總)
+    # 擴充清單 ⑦(個股籌碼分頁專用,獨立 ext_flows.json;完整輪輪轉分塊 30 檔/輪、~21 分輪完;不進大盤 capital_flow/匯總)
     extpath=args.config+".extdaily.json"
     try: extdaily=json.load(open(extpath))
     except Exception: extdaily={}
     extmark=args.config+".extmark"
     try: _extage=time.time()-os.path.getmtime(extmark)
     except OSError: _extage=1e9
-    if (not args.no_futu) and _extage>1200 and data.get("trade_date") and data["session"] in ("rth","after"):
+    if (not args.no_futu) and _extage>300 and (time.time()-_run_t0)<240 and data.get("trade_date") and data["session"] in ("rth","after"):
         try:
-            extflow=pull_ext_flow(EXT_SYMS)
+            # 輪轉分塊:每個完整輪只抓 30 檔(~25s),3 輪(~21 分)輪完 87 檔 —— 單輪永不超時
+            _rotf=args.config+".extrot"
+            try: _rot=int(open(_rotf).read().strip())
+            except Exception: _rot=0
+            _chunk=[EXT_SYMS[(_rot+i)%len(EXT_SYMS)] for i in range(min(30,len(EXT_SYMS)))]
+            extflow=pull_ext_flow(_chunk)
+            try: open(_rotf,"w").write(str((_rot+30)%len(EXT_SYMS)))
+            except Exception: pass
+            log(f"ext chunk @{_rot}: {len(extflow)} 檔 ({time.time()-_run_t0:.0f}s into full)")
             if extflow:
                 extdaily[data["trade_date"]]={**extdaily.get(data["trade_date"],{}), **extflow}
                 for d_ in sorted(extdaily)[:-250]: extdaily.pop(d_,None)
@@ -1089,9 +1098,10 @@ def run_once(cfg, args):
     try: _tkage=time.time()-os.path.getmtime(tickmark)
     except OSError: _tkage=1e9
     cvtodaycache=args.config+".cvtoday.json"
-    if (not args.no_futu) and _tkage>300 and data.get("trade_date") and data["session"]=="rth":
+    if (not args.no_futu) and _tkage>300 and (time.time()-_run_t0)<300 and data.get("trade_date") and data["session"]=="rth":
         try:
             pull_ticks(INST_SYMS, tickacc)
+            log(f"ticks: 25 檔 ({time.time()-_run_t0:.0f}s into full)")
             try: json.dump(tickacc, open(tickpath,"w"), ensure_ascii=False)
             except Exception: pass
             try: open(tickmark,"w").write(str(time.time()))
