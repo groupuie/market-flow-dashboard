@@ -118,7 +118,7 @@ a{color:var(--blue)}
   <div class="card" id="infocard"><h2>事件 · 資金 · Gamma</h2><div id="infobody" class="miss">–</div></div>
 </div>
 <div class="note" id="footnote">
-K線：日K由你 Mac 的採集器每日以富途<b>前復權</b>K線更新（含真實週轉率），盤中當日K每 5 分鐘刷新；週K/月K由日K聚合。神奇九轉＝TD Sequential：Setup 1–9（綠＝下跌轉折醞釀、洋紅＝上漲轉折醞釀），9 之後接 Countdown 至 13（青＝買方倒數、橘＝賣方倒數，簡化版）。AI 標註由雲端排程在<b>盤後產生隔日買賣建議、盤中場次即時增補</b>：綜合技術指標、期權 gamma 定位（翻轉位/call牆/put牆/Max Pain/擠壓分數）、財報與營收事件、內部人申報、大盤水位；滑鼠移到 ▲▼◆ 標記看完整理由。<b>本頁為研究工具，不構成投資建議；槓桿ETF 有隔夜跳空與衰減風險。</b>
+K線：日K由你 Mac 的採集器每日以富途<b>前復權</b>K線更新（含真實週轉率），盤中當日K每 5 分鐘刷新；週K/月K由日K聚合。神奇九轉＝TD Sequential：Setup 1–9（綠＝下跌轉折醞釀、洋紅＝上漲轉折醞釀），9 之後接 Countdown 至 13（青＝買方倒數、橘＝賣方倒數，簡化版）。AI 標註由雲端排程在<b>盤後產生隔日買賣建議、盤中場次即時增補</b>：綜合技術指標、期權 gamma 定位（翻轉位/call牆/put牆/Max Pain/擠壓分數）、財報與營收事件、內部人申報、大盤水位；滑鼠移到 ▲▼◆ 標記看完整理由。<b>CTA</b>＝趨勢跟蹤機械流近似（僅日K）：主圖三條虛線＝短(50D)/中(100D)/長(200D)趨勢翻轉價（SMA 交叉規則的今日解＝前 N−1 日收盤均值），標籤含距現價%；指數（SPY/QQQ/IWM/DIA）標「CTA·」＝期貨端有真實規則性買賣壓，個股與板塊 ETF 標「趨勢位階·」＝間接機制（動能因子門檻、平台基金部位規則、自我實現），方向意義同、因果強度不同。副圖分數＝六子訊號（3 條 SMA＋3 個動能回看 63/126/252）±1 平均 ×100；<span style="color:var(--amber)">琥珀色背景</span>＝20 日實現波動位於自身兩年第 80 百分位以上＝vol-scaling 部位機械性縮減壓力區。<b>本頁為研究工具，不構成投資建議；槓桿ETF 有隔夜跳空與衰減風險。</b>
 </div>
 </div>
 <script>
@@ -140,6 +140,7 @@ let AION=localStorage.getItem("kl_ai")!=="0";
 let IND=null;
 try{IND=JSON.parse(localStorage.getItem("kl_ind")||"null");}catch(e){}
 if(!IND)IND={main:{MA:false,EMA:true,BOLL:false,NINE:true},sub:{VOL:true,TOR:true,OBV:true,KDJ:false,RSI:true,MFI:false}};
+if(IND.cta===undefined)IND.cta=true;
 let RAW=null,MKT=null,SIG=null,chart=null;
 let dayBars=[];            // 合併當日K後的日K {timestamp,open,high,low,close,volume,tor}
 let overlayIds=[];         // AI 標註 overlay ids
@@ -250,6 +251,94 @@ klinecharts.registerIndicator({
     }
     ctx.restore();return true;}
 });
+// ===== CTA 趨勢跟蹤層(前端自算;僅日K有定義) =====
+// 六子訊號:SMA50/100/200 交叉 + 動能回看 63/126/252;分數=±1平均×100
+// 翻轉價:SMA規則=前N−1日收盤均值(今收=含今日N日均線的解);動能規則=K日前收盤
+// 語意分級:SPY/QQQ/IWM/DIA=CTA觸發(指數期貨有真實機械流);其餘=趨勢位階(間接機制)
+const CTA_IDX={SPY:1,QQQ:1,IWM:1,DIA:1};
+function ctaSeries(list){
+  const n=list.length,C=list.map(b=>b.close),out=new Array(n).fill(null),rv=new Array(n).fill(null);
+  let s50=0,s100=0,s200=0;
+  for(let i=0;i<n;i++){
+    s50+=C[i];if(i>=50)s50-=C[i-50];
+    s100+=C[i];if(i>=100)s100-=C[i-100];
+    s200+=C[i];if(i>=200)s200-=C[i-200];
+    if(i>=20){
+      let m=0;const rets=[];
+      for(let j=i-19;j<=i;j++){const r=Math.log(C[j]/C[j-1]);rets.push(r);m+=r;}
+      m/=20;let v=0;for(const r of rets)v+=(r-m)*(r-m);v/=19;
+      rv[i]=Math.sqrt(v)*15.8745*100; // √252
+    }
+    if(i<252)continue;
+    const sig={ma50:C[i]>s50/50?1:-1,ma100:C[i]>s100/100?1:-1,ma200:C[i]>s200/200?1:-1,
+               mom63:C[i]>C[i-63]?1:-1,mom126:C[i]>C[i-126]?1:-1,mom252:C[i]>C[i-252]?1:-1};
+    const score=Math.round(100*(sig.ma50+sig.ma100+sig.ma200+sig.mom63+sig.mom126+sig.mom252)/6);
+    const trig={ma50:(s50-C[i])/49,ma100:(s100-C[i])/99,ma200:(s200-C[i])/199,
+                mom63:C[i-63],mom126:C[i-126],mom252:C[i-252]};
+    let rvp=null;
+    if(rv[i]!=null){let c=0,t=0;for(let j=Math.max(20,i-504);j<=i;j++){if(rv[j]!=null){t++;if(rv[j]<=rv[i])c++;}}if(t>=60)rvp=Math.round(100*c/t);}
+    out[i]={score,sig,trig,rv20:rv[i]==null?null:+rv[i].toFixed(1),rvp};
+  }
+  return out;
+}
+// 副圖:趨勢分數(−100~+100)+RV百分位;RV≥80 背景=縮部位壓力區(vol-scaling 部位∝1/波動)
+klinecharts.registerIndicator({
+  name:"CTA",shortName:"CTA趨勢分數",precision:0,minValue:-115,maxValue:115,
+  figures:[{key:"score",title:"分數: ",type:"line"},{key:"rvp",title:"RV20百分位: ",type:"line"}],
+  calc:list=>{
+    if(PERIOD!=="day")return list.map(()=>({}));
+    const s=ctaSeries(list);
+    return list.map((k,i)=>s[i]?{score:s[i].score,rvp:s[i].rvp}:{});
+  },
+  draw:({ctx,kLineDataList,indicator,visibleRange,bounding,barSpace,xAxis,yAxis})=>{
+    const res=indicator.result||[];
+    const from=Math.max(0,Math.floor(visibleRange.from)),to=Math.min(kLineDataList.length,Math.ceil(visibleRange.to));
+    ctx.save();
+    const half=Math.max(2,((barSpace&&barSpace.bar)||8)/2+1);
+    ctx.fillStyle="rgba(250,178,25,.12)";
+    for(let i=from;i<to;i++){const d=res[i];
+      if(d&&d.rvp!=null&&d.rvp>=80)ctx.fillRect(xAxis.convertToPixel(i)-half,0,half*2,bounding.height);}
+    const y0=yAxis.convertToPixel(0);
+    ctx.strokeStyle="#3a3a38";ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(0,y0);ctx.lineTo(bounding.width,y0);ctx.stroke();ctx.setLineDash([]);
+    ctx.lineWidth=1.6;
+    let px=null,py=null,pv=null;
+    for(let i=from;i<to;i++){
+      const d=res[i];if(!d||d.score==null){px=py=pv=null;continue;}
+      const x=xAxis.convertToPixel(i),y=yAxis.convertToPixel(d.score);
+      if(px!=null){ctx.strokeStyle=(d.score>=0&&pv>=0)?"#22c55e":(d.score<0&&pv<0)?"#ef4444":"#fab219";
+        ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(x,y);ctx.stroke();}
+      px=x;py=y;pv=d.score;
+    }
+    ctx.restore();return true;}
+});
+// 主圖:三條觸發水平虛線(50/100/200 翻轉價)+距離%標籤
+klinecharts.registerIndicator({
+  name:"CTATRIG",shortName:"觸發線",figures:[],
+  calc:list=>{
+    if(PERIOD!=="day")return list.map(()=>({}));
+    const s=ctaSeries(list),last=s[list.length-1];
+    return list.map((k,i)=>(i===list.length-1&&last)?{t:last.trig,sig:last.sig}:{});
+  },
+  draw:({ctx,kLineDataList,indicator,bounding,yAxis})=>{
+    const res=indicator.result||[],d=res[res.length-1];
+    if(!d||!d.t)return true;
+    const pre=CTA_IDX[SYM]?"CTA·":"趨勢位階·";
+    const c=kLineDataList.length?kLineDataList[kLineDataList.length-1].close:null;
+    ctx.save();ctx.font="10.5px system-ui";
+    [["ma50","短期50D","#22d3ee"],["ma100","中期100D","#fab219"],["ma200","長期200D","#e04ad2"]].forEach(([k,lab,col])=>{
+      const v=d.t[k];if(v==null)return;
+      const y=yAxis.convertToPixel(v);
+      if(y<10||y>bounding.height-4)return;
+      ctx.strokeStyle=col;ctx.setLineDash([7,5]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(bounding.width,y);ctx.stroke();ctx.setLineDash([]);
+      const dist=c?100*(v/c-1):null;
+      const txt=pre+lab+" "+fmt(v,v<20?3:2)+(dist==null?"":"("+sgn(dist)+dist.toFixed(1)+"%)")+(d.sig&&d.sig[k]===-1?" ⚠下方":"");
+      const w=ctx.measureText(txt).width+10;
+      ctx.fillStyle="rgba(13,13,13,.78)";ctx.fillRect(4,y-14,w,13);
+      ctx.fillStyle=col;ctx.textBaseline="bottom";ctx.fillText(txt,9,y-2);
+    });
+    ctx.restore();return true;}
+});
 // AI 買賣點標記 overlay
 klinecharts.registerOverlay({
   name:"sigMark",totalStep:1,lock:true,needDefaultPointFigure:false,
@@ -304,7 +393,7 @@ function initChart(){
   chart=klinecharts.init("chart",{styles:CHART_STYLES});
   chart.setTimezone("UTC");                       // 日K以日期為準
   chart.setPriceVolumePrecision(2,0);
-  applyMainInds();applySubInds();
+  applyMainInds();applySubInds();applyCTA();
   const el=$("chartwrap");
   el.addEventListener("mousemove",e=>{const r=el.getBoundingClientRect();lastXY={x:e.clientX-r.left,y:e.clientY-r.top};});
 }
@@ -327,6 +416,14 @@ function applySubInds(){
     else chart.createIndicator(mkname[n],false,{id:pid,height:SUBH[n]});
     subPane[n]=pid;
   });
+}
+function applyCTA(){
+  try{chart.removeIndicator("candle_pane","CTATRIG");}catch(e){}
+  try{chart.removeIndicator("pane_CTA");}catch(e){}
+  if(IND.cta){
+    chart.createIndicator("CTATRIG",true,{id:"candle_pane"});
+    chart.createIndicator("CTA",false,{id:"pane_CTA",height:64});
+  }
 }
 // ================= 資料 =================
 function toBars(raw){
@@ -369,11 +466,27 @@ function aggregate(bars,period){
 }
 function curBars(){return aggregate(dayBars,PERIOD);}
 function fitRecent(){
+  // 只設定縮放,須在 applyNewData「之前」呼叫 —— 資料替換後立即操作縮放/捲動
+  // 會與指標的非同步重算競態,輸了整個畫布凍在舊幀(2026-07-30 於週K+多副圖實測定位)
   try{
     const w=$("chart").clientWidth||1200,n=PERIOD==="day"?92:PERIOD==="week"?120:90;
     chart.setBarSpace(Math.max(5,Math.floor(w*0.8/n)));
-    chart.scrollToRealTime();
   }catch(e){}
+}
+function rebuildChart(){
+  // 換週期/換標的一律整個重建:klinecharts 9.8 在「面板多×資料長」時 applyNewData 的
+  // 指標重算鏈會間歇性掉鏈(畫布凍在舊幀;2026-07-30 二分法實測,與特定指標無關)。
+  // 首次載入路徑(先建指標、後餵資料)從未出錯 → 重建=每次都走安全路徑。
+  try{if(chart)klinecharts.dispose("chart");}catch(e){}
+  chart=klinecharts.init("chart",{styles:CHART_STYLES});
+  chart.setTimezone("UTC");
+  const prec=dayBars.length&&dayBars[dayBars.length-1].close<20?3:2;
+  chart.setPriceVolumePrecision(prec,0);
+  applyMainInds();applySubInds();applyCTA();
+  fitRecent();
+  chart.applyNewData(curBars());
+  setTimeout(()=>{try{chart.scrollToRealTime();}catch(e){}},250);
+  drawSignals();
 }
 async function loadKline(){
   RAW=null;
@@ -385,11 +498,8 @@ async function loadKline(){
     RAW=null;
   }
   dayBars=RAW?mergeLive(toBars(RAW)):[];
-  const prec=dayBars.length&&dayBars[dayBars.length-1].close<20?3:2;
-  chart.setPriceVolumePrecision(prec,0);
-  chart.applyNewData(curBars());
-  fitRecent();
-  drawSignals();renderHeader();
+  rebuildChart();
+  renderHeader();
   $("status").className="badge "+(RAW?"ok":"err");
   $("status").textContent=RAW?"● K線已載入":"此標的尚未收錄K線";
   if(!RAW){
@@ -681,19 +791,20 @@ function bindBars(){
     t.classList.toggle("active",t.dataset.p===PERIOD);
     t.onclick=()=>{PERIOD=t.dataset.p;localStorage.setItem("kl_period",PERIOD);
       document.querySelectorAll(".ptab").forEach(x=>x.classList.toggle("active",x.dataset.p===PERIOD));
-      chart.applyNewData(curBars());fitRecent();drawSignals();};
+      rebuildChart();};
   });
-  const togs=[["MA","main"],["EMA","main"],["BOLL","main"],["NINE","main"],["VOL","sub"],["TOR","sub"],["OBV","sub"],["KDJ","sub"],["RSI","sub"],["MFI","sub"]];
+  const togs=[["MA","main"],["EMA","main"],["BOLL","main"],["NINE","main"],["CTA","cta"],["VOL","sub"],["TOR","sub"],["OBV","sub"],["KDJ","sub"],["RSI","sub"],["MFI","sub"]];
   $("indtogs").innerHTML=togs.map(([n])=>'<span class="itog" data-i="'+n+'">'+(n==="NINE"?"九轉":n)+"</span>").join(" ");
+  const grpOf=n=>n==="CTA"?"cta":(["MA","EMA","BOLL","NINE"].includes(n)?"main":"sub");
   const paint=()=>{document.querySelectorAll(".itog[data-i]").forEach(el=>{
-    const n=el.dataset.i,grp=["MA","EMA","BOLL","NINE"].includes(n)?"main":"sub";
-    el.classList.toggle("on",!!IND[grp][n]);});};
+    const n=el.dataset.i,grp=grpOf(n);
+    el.classList.toggle("on",grp==="cta"?!!IND.cta:!!IND[grp][n]);});};
   paint();
   document.querySelectorAll(".itog[data-i]").forEach(el=>el.onclick=()=>{
-    const n=el.dataset.i,grp=["MA","EMA","BOLL","NINE"].includes(n)?"main":"sub";
-    IND[grp][n]=!IND[grp][n];
+    const n=el.dataset.i,grp=grpOf(n);
+    if(grp==="cta")IND.cta=!IND.cta;else IND[grp][n]=!IND[grp][n];
     localStorage.setItem("kl_ind",JSON.stringify(IND));
-    if(grp==="main")applyMainInds();else applySubInds();
+    if(grp==="cta")applyCTA();else if(grp==="main")applyMainInds();else applySubInds();
     paint();
   });
   const ai=$("aitog");

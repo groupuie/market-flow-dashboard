@@ -435,8 +435,9 @@ def futu_hist_bars(q, sym, start, end):
             o, h, l, c = _f(r.get("open")), _f(r.get("high")), _f(r.get("low")), _f(r.get("close"))
             v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
             if dt and None not in (o, h, l, c):
+                # 富途歷史K turnover_rate 為小數(0.045=4.5%),快照為百分比 → 統一存百分比
                 bars.append([dt, round(o, 3), round(h, 3), round(l, 3), round(c, 3), int(v or 0),
-                             None if tr is None else round(tr, 3)])
+                             None if tr is None else round(tr*100, 3)])
         if not page: break
         time.sleep(0.4)
     return bars
@@ -529,7 +530,7 @@ def refresh_klines(cfg, args, kl_syms):
                     err(f"kline-yh {s}", e2); bars = None
             if bars:
                 payload = {"sym": s, "src": src, "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-                           "bars": bars[-KL_HIST_DAYS:]}
+                           "tor_unit": "pct", "bars": bars[-KL_HIST_DAYS:]}
                 try: json.dump(payload, open(path, "w"), ensure_ascii=False, separators=(",", ":"))
                 except Exception: pass
                 changed["kline_" + s + ".json"] = payload
@@ -1038,7 +1039,7 @@ def run_once(cfg, args):
             for s_,e_ in day.items():
                 if s_ not in daily[dt]: daily[dt][s_]=e_   # 新標的補進既有日期,不覆蓋原值
     if histfill:
-        for d_ in sorted(daily)[:-250]: daily.pop(d_,None)
+        for d_ in sorted(daily)[:-260]: daily.pop(d_,None)
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)   # 回填立即落盤:非盤中回填也持久化,否則下一輪讀舊檔又縮回
         except Exception: pass
     if data["capital_flow"] and data["trade_date"] and data["session"] in ("rth","after"):
@@ -1047,7 +1048,7 @@ def run_once(cfg, args):
             "m":round((v.get("main_net") or 0)/1e6,1),
             "r":round((v.get("retail_net") or 0)/1e6,1) if v.get("retail_net") is not None else None,
             "c":v.get("cat","正股")} for k,v in data["capital_flow"].items() if v.get("main_net") is not None}
-        for d_ in sorted(daily)[:-250]: daily.pop(d_,None)
+        for d_ in sorted(daily)[:-260]: daily.pop(d_,None)
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
@@ -1071,7 +1072,7 @@ def run_once(cfg, args):
             log(f"ext chunk @{_rot}: {len(extflow)} 檔 ({time.time()-_run_t0:.0f}s into full)")
             if extflow:
                 extdaily[data["trade_date"]]={**extdaily.get(data["trade_date"],{}), **extflow}
-                for d_ in sorted(extdaily)[:-250]: extdaily.pop(d_,None)
+                for d_ in sorted(extdaily)[:-260]: extdaily.pop(d_,None)
                 try: json.dump(extdaily, open(extpath,"w"), ensure_ascii=False)
                 except Exception: pass
                 try: open(extmark,"w").write(str(time.time()))
@@ -1124,7 +1125,7 @@ def run_once(cfg, args):
             except Exception: cvdaily={}
             if today and data.get("trade_date"):
                 cvdaily[data["trade_date"]]=today
-                for d_ in sorted(cvdaily)[:-250]: cvdaily.pop(d_,None)
+                for d_ in sorted(cvdaily)[:-260]: cvdaily.pop(d_,None)
                 try: json.dump(cvdaily, open(cvpath,"w"), ensure_ascii=False)
                 except Exception: pass
                 if not args.no_push and len(cvdaily)>1:
