@@ -250,7 +250,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T09:44Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T19:04Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -431,8 +431,8 @@ function chipBars(sym){   // 日K檔 + 今日盤中K(kline_today,60s 隨主檔�
   return K.bars;
 }
 let EXTDF=null,EXTDF_req=0;   // 擴充清單 ⑦(獨立 ext_flows.json,個股籌碼分頁專用;不進大盤匯總)
-function ensureExtDaily(){   // ~3 分重抓(擴充 ⑦ 盤中每完整輪更新);首載立即重繪,其後由主 20s 迴圈自然帶到新值
-  const _n=Date.now()/1000; if(_n-EXTDF_req<180)return; EXTDF_req=_n;
+function ensureExtDaily(){   // ~10 分重抓(檔案回填後達 ~2MB,gzip 傳輸;日頻資料低頻即可;首載立即重繪)
+  const _n=Date.now()/1000; if(_n-EXTDF_req<600)return; EXTDF_req=_n;
   fetch(DATA_URL.replace('market_data.json','ext_flows.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
     .then(j=>{const df=j&&j.daily_flows; if(df){const first=!EXTDF; EXTDF=df; if(first&&DATA)renderChips();}})
@@ -567,8 +567,11 @@ function renderCockpit(){
   if(!rows||rows.length<10){chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
   const win=Math.max(30,Math.min(CHIP_WIN,250));
   const R=rows.slice(-win);
-  const D=chipDaily(); let cm=0,ca=0; const pm=[],pa=[],pbar=[];
-  R.forEach(r=>{const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
+  const D=chipDaily();
+  let fi7=R.findIndex(r=>((D[r.d]||{})[CHIP_SYM])!=null); if(fi7<0)fi7=R.length;   // ⑦ 覆蓋起點:之前不畫 0(新入列回補中)
+  let cm=0,ca=0; const pm=[],pa=[],pbar=[];
+  R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
+    const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
   const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d');
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
@@ -632,9 +635,9 @@ function renderCockpit(){
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'轉速 <span style="color:#c084fc">RVPOS</span>(紅帶≥90)· <span style="color:#9aa6b8">RSI14</span>'},
     {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:MB?'檔位 ±100/67/33(負=倒車)':'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
-    {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+C.amber+'">全單累積</span>·<span style="color:#c2703e">大單累積</span>·柱=當日'},
-    {x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:C.amber}},
+    {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+C.amber+'">全單累積</span>·<span style="color:#c2703e">大單累積</span>·柱=當日'+((fi7>0&&fi7<R.length)?' · <span style="color:#f59e0b">自 '+R[fi7].d.slice(5)+' 起·回補中</span>':'')},
   ];
+  if(pa[li]!=null)ann.push({x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:C.amber}});
   // CTA 4 條煞車線:右緣直接標注 名稱+觸發價(相近時往上錯開,顏色對線)
   (function(){const L=[['短50D',R[li].t50,'#93c5fd'],['中100D',R[li].t100,'#60a5fa'],['長200D',R[li].t200,'#3b82f6'],['動63D',R[li].t63,'#cbd5e1']].sort((a,b)=>a[1]-b[1]);
     let pv=-Infinity; L.forEach(p=>{let y=p[1]; if(y-pv<rng*0.052)y=pv+rng*0.052; pv=y;
@@ -781,10 +784,15 @@ function renderChips(){
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-CHIP_WIN);
+  // ⑦ 覆蓋起點:自「該標的第一個有資料的日子」起畫;之前=無資料 → null 不畫(誠實呈現,避免新入列標的變成假的平地+突刺)
+  let fi=use.findIndex(d=>((D[d]||{})[CHIP_SYM])!=null); if(fi<0)fi=use.length;
   let cmM=0,cmA=0; const x=[],barA=[],lineM=[],lineA=[];
-  use.forEach(d=>{const e=(D[d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, r=(e&&e.r!=null)?e.r:0;
-    const da=(m+r)*1e6; cmM+=m*1e6; cmA+=da; x.push(d.slice(5)); barA.push(da); lineM.push(cmM); lineA.push(cmA);});
-  if(x.length<2){chartMsg(el,'此標的區間內日檔不足',30);return;}
+  use.forEach((d,ui)=>{ x.push(d.slice(5));
+    if(ui<fi){barA.push(null);lineM.push(null);lineA.push(null);return;}
+    const e=(D[d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, r=(e&&e.r!=null)?e.r:0;
+    const da=(m+r)*1e6; cmM+=m*1e6; cmA+=da; barA.push(da); lineM.push(cmM); lineA.push(cmA);});
+  if(x.length<2||fi>=use.length){chartMsg(el,'此標的 ⑦ 日檔還沒有(新入列標的歷史回補中,約數小時內補到 250 日)',30);return;}
+  const covN=fi>0?' · <span style="color:#f59e0b">⑦自 '+use[fi].slice(5)+' 起·歷史回補中</span>':'';
   const K=CHIPK[CHIP_SYM], cl=K&&K.close, _tb=((DATA&&DATA.kline_today)||{})[CHIP_SYM];
   const praw=use.map(d=>{ if(cl&&cl[d]!=null)return cl[d]; if(_tb&&_tb[0]===d)return _tb[4]; return null; });
   const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
@@ -808,7 +816,7 @@ function renderChips(){
     traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:off(qqqS,'QQQ'),yaxis:'y2',connectgaps:true,line:{color:'#c084fc',width:1.4,dash:'dot'},hovertemplate:'QQQ %{y:+.2f}%<extra></extra>'});}
   freshPlot('chipflow');
   Plotly.react('chipflow',traces,{...PBASE,barmode:'overlay',margin:{l:70,r:64,t:40,b:34},showlegend:false,
-    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+use.length+' 日 · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIP_IDX.SPY?' <span style="color:#2dd4bf">┈SPY</span>':'')+(CHIP_IDX.QQQ?' <span style="color:#c084fc">┈QQQ</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出',
+    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+(use.length-fi)+' 日'+covN+' · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIP_IDX.SPY?' <span style="color:#2dd4bf">┈SPY</span>':'')+(CHIP_IDX.QQQ?' <span style="color:#c084fc">┈QQQ</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出',
       xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
