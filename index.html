@@ -250,7 +250,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T19:04Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T22:00Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -759,13 +759,15 @@ function renderChips(){
   if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 一鍵加入自訂追蹤(寫 gist custom_symbols.json,採集器 5 分內生效)
     const _tok=localStorage.getItem('gh_token');
     chartMsg(el,'「'+CHIP_SYM+'」還不在追蹤宇宙('+syms.length+' 檔)。'
-      +'<div style="margin-top:10px"><button id="chipAddBtn" style="background:#164e63;color:#22d3ee;border:1px solid #22d3ee;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer">＋ 加入自訂追蹤 '+CHIP_SYM+'</button>'
+      +'<div style="margin-top:10px"><button id="chipLkBtn" style="background:#3f2d0c;color:#facc15;border:1px solid #facc15;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer">⚡ 點播查詢 '+CHIP_SYM+'(~90秒,不占名額)</button>'
+      +' <button id="chipAddBtn" style="background:#164e63;color:#22d3ee;border:1px solid #22d3ee;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer">＋ 加入自訂追蹤(持續採)</button>'
       +' <span id="chipAddStat" style="font-size:12px"></span></div>'
-      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">加入後由 Mac 自動採:⑦ 大單流(即時+歷史回填)、日K/駕駛艙/成本分佈(~10 分)、今日盤中K。自訂上限 30 檔,可在「追蹤範圍」區塊管理。</div>'
+      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">⚡點播=現抓一次:日K/駕駛艙/成本分佈+⑦ 現金池 250 日歷史+今日盤中 ⑦,之後不持續更新。＋自訂=長期追蹤(⑦ 即時+歷史、日K、今日K;上限 30 檔,「追蹤範圍」區塊可管理)。兩者共用同一個 token。</div>'
       +(_tok?'':'<div style="margin-top:8px;font-size:11.5px">首次使用:貼一次 GitHub token(需 gist 權限;<b>只存在這台裝置的瀏覽器</b>,不會上傳)<br>'
         +'<input id="chipTokIn" type="password" placeholder="ghp_…" style="width:200px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:12px">'
         +' <button id="chipTokBtn" style="background:#1f2937;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:12px;cursor:pointer">儲存</button></div>'),40);
     const ab=document.getElementById('chipAddBtn'); if(ab)ab.onclick=()=>chipAddCustom(CHIP_SYM);
+    const lb=document.getElementById('chipLkBtn'); if(lb)lb.onclick=()=>chipLookup(CHIP_SYM);
     const tb=document.getElementById('chipTokBtn'); if(tb)tb.onclick=()=>{
       const t=(document.getElementById('chipTokIn').value||'').trim();
       const st=document.getElementById('chipAddStat');
@@ -792,7 +794,11 @@ function renderChips(){
     const e=(D[d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, r=(e&&e.r!=null)?e.r:0;
     const da=(m+r)*1e6; cmM+=m*1e6; cmA+=da; barA.push(da); lineM.push(cmM); lineA.push(cmA);});
   if(x.length<2||fi>=use.length){chartMsg(el,'此標的 ⑦ 日檔還沒有(新入列標的歷史回補中,約數小時內補到 250 日)',30);return;}
-  const covN=fi>0?' · <span style="color:#f59e0b">⑦自 '+use[fi].slice(5)+' 起·歷史回補中</span>':'';
+  const _lastMain=Object.keys((DATA&&DATA.daily_flows)||{}).sort().slice(-1)[0];
+  const isSnap=!(((DATA&&DATA.ext_universe)||[]).includes(CHIP_SYM))&&!(((DATA&&DATA.custom_symbols)||[]).includes(CHIP_SYM))
+    &&!(_lastMain&&(DATA.daily_flows[_lastMain]||{})[CHIP_SYM]);
+  const covN=(fi>0?' · <span style="color:#f59e0b">⑦自 '+use[fi].slice(5)+' 起·歷史回補中</span>':'')
+    +(isSnap?' · <span style="color:#facc15">⚡點播快照·不持續更新(長期追蹤→加自訂)</span>':'');
   const K=CHIPK[CHIP_SYM], cl=K&&K.close, _tb=((DATA&&DATA.kline_today)||{})[CHIP_SYM];
   const praw=use.map(d=>{ if(cl&&cl[d]!=null)return cl[d]; if(_tb&&_tb[0]===d)return _tb[4]; return null; });
   const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
@@ -856,6 +862,28 @@ async function saveCustom(list){
   const r=await saveCustomCore(list);
   document.getElementById('customstat').textContent=(r===true)?'✓ 已儲存,採集器 5 分鐘內生效':'儲存失敗:'+r;
   return r===true;
+}
+async function chipLookup(sym){   // ⚡ 點播:寫 lookup_request.json → Mac 現抓 日K+⑦歷史250日+今日⑦ 推回(~60-90秒;不占追蹤名額)
+  const st=document.getElementById('chipAddStat');
+  const tok=localStorage.getItem('gh_token');
+  if(!tok){if(st)st.textContent='← 請先貼一次 token(與自訂追蹤共用)';return;}
+  const id=gistId(); if(!id){if(st)st.textContent='找不到 gist id';return;}
+  if(st)st.textContent='送出點播…';
+  try{
+    const r=await fetch('https://api.github.com/gists/'+id,{method:'PATCH',
+      headers:{'Authorization':'token '+tok,'Accept':'application/vnd.github+json'},
+      body:JSON.stringify({files:{'lookup_request.json':{content:JSON.stringify({sym:sym,ts:new Date().toISOString()})}}})});
+    if(!r.ok){if(st)st.textContent='送出失敗 HTTP '+r.status;return;}
+    if(st)st.textContent='⚡ 已送出,Mac 現抓中(約 60-90 秒;含 ⑦ 現金池 250 日歷史)…';
+    let tries=0;
+    const tick=()=>{tries++;
+      delete CHIPK[sym+'_none']; delete CHIPK[sym+'_r']; EXTDF_req=0; ensureExtDaily();
+      if(DATA)renderChips();
+      if(chipSyms().includes(sym))return;   // 資料到了 → renderChips 已切成正常視圖
+      if(tries>12){const s2=document.getElementById('chipAddStat');if(s2)s2.textContent='逾時:Mac 可能離線或代號無資料;稍後再試或改「加入自訂」。';return;}
+      setTimeout(tick,15000);};
+    setTimeout(tick,20000);
+  }catch(e){if(st)st.textContent='送出失敗:'+e.message;}
 }
 async function chipAddCustom(sym){   // 個股籌碼分頁:一鍵把自填代號加入自訂追蹤(⑦+日K+今日K 全自動開始採)
   const st=document.getElementById('chipAddStat');
