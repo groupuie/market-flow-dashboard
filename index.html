@@ -229,7 +229,8 @@ a{color:var(--blue)}
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span>
     </h2>
-    <div id="chipstock" style="margin:6px 0 22px"></div>
+    <div id="cockpit" style="height:960px"></div>
+    <div id="chipstock" style="margin:14px 0 22px"></div>
     <div id="chipflow" style="height:440px"></div>
     <div id="chipoffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
     <div id="chipcost" style="height:460px;margin-top:8px"></div>
@@ -244,7 +245,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-30T14:19Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T07:06Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -490,6 +491,111 @@ function buildChipOffs(){ buildOffs('chipoffs','chipflow',CHIP_TREND,CHIP_OFF,
 function buildPoolOffs(){ buildOffs('pooloffs','pooltide',POOL_TREND,POOL_OFF,
   [['SPY','SPY','#8ab4f8'],['QQQ','QQQ','#c084fc']],
   function(){POOL_OFF={SPY:0,QQQ:0};var e=document.getElementById('pooloffs');if(e)e.dataset.sig='';renderPoolTide();}); }
+// ===== 駕駛艙:CTA score/RVPOS/TD/RSI/燈號 全前端自算(與回測同定義;快取避免每 20s 重算)=====
+const CKC={};
+function cockpitRows(sym){
+  const bars=chipBars(sym); if(!bars||bars.length<260)return null;
+  const cch=CKC[sym];
+  if(cch&&cch.n===bars.length&&cch.last===+bars[bars.length-1][4])return cch.rows;
+  const n=bars.length, C=bars.map(b=>+b[4]), V=bars.map(b=>+(b[5]||0));
+  const P=new Array(n+1).fill(0), PV=new Array(n+1).fill(0);
+  for(let i=0;i<n;i++){P[i+1]=P[i]+C[i];PV[i+1]=PV[i]+V[i];}
+  const rv=new Array(n).fill(null);
+  for(let i=20;i<n;i++){const rets=[];
+    for(let j=i-19;j<=i;j++)if(C[j-1]>0)rets.push(Math.log(C[j]/C[j-1]));
+    if(rets.length<2)continue;
+    const m=rets.reduce((a,b)=>a+b,0)/rets.length;
+    const va=rets.reduce((a,x)=>a+(x-m)*(x-m),0)/(rets.length-1);
+    rv[i]=Math.sqrt(va)*Math.sqrt(252)*100;}
+  const rvp=new Array(n).fill(null);
+  for(let i=0;i<n;i++){if(rv[i]==null)continue;let c=0,t=0;
+    for(let j=Math.max(0,i-504);j<=i;j++)if(rv[j]!=null){t++;if(rv[j]<=rv[i])c++;}
+    if(t>=60)rvp[i]=Math.round(100*c/t);}
+  const tds=new Array(n).fill(0), tdb=new Array(n).fill(0);
+  for(let i=4;i<n;i++){tds[i]=C[i]>C[i-4]?tds[i-1]+1:0; tdb[i]=C[i]<C[i-4]?tdb[i-1]+1:0;}
+  const rsi=new Array(n).fill(null); let ag=null,al=null;
+  for(let i=1;i<n;i++){const ch=C[i]-C[i-1],g=Math.max(ch,0),l=Math.max(-ch,0);
+    if(i<14){ag=ag==null?g:ag+g; al=al==null?l:al+l; if(i===13){ag/=14;al/=14;rsi[i]=100-100/(1+ag/(al||1e-9));}}
+    else{ag=(ag*13+g)/14; al=(al*13+l)/14; rsi[i]=100-100/(1+ag/(al||1e-9));}}
+  const rows=[];
+  for(let i=252;i<n;i++){
+    const s50=(P[i+1]-P[i+1-50])/50, s100=(P[i+1]-P[i+1-100])/100, s200=(P[i+1]-P[i+1-200])/200;
+    let sc=(C[i]>s50?1:-1)+(C[i]>s100?1:-1)+(C[i]>s200?1:-1)
+          +(C[i]>C[i-63]?1:-1)+(C[i]>C[i-126]?1:-1)+(C[i]>C[i-252]?1:-1);
+    const v60=(PV[i+1]-PV[i+1-60])/60, v5=(PV[i+1]-PV[i+1-5])/5;
+    rows.push({d:bars[i][0],o:+bars[i][1],h:+bars[i][2],l:+bars[i][3],c:C[i],v:V[i],
+      sc:Math.round(100*sc/6),rv:rvp[i],rsi:rsi[i],
+      t50:(P[i]-P[i-49])/49,t100:(P[i]-P[i-99])/99,t200:(P[i]-P[i-199])/199,
+      tds:Math.max(tds[i],tds[i-1],tds[i-2]),tdb:Math.max(tdb[i],tdb[i-1],tdb[i-2]),
+      tds0:tds[i],tdb0:tdb[i],volr:v60>0?V[i]/v60:1,volr5:v60>0?v5/v60:1,c5:i>=5?C[i-5]:null});
+  }
+  CKC[sym]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
+  return rows;
+}
+function renderCockpit(){
+  const el=document.getElementById('cockpit'); if(!el)return;
+  const MB=(window.innerWidth||1024)<680;
+  el.style.height=MB?'720px':'960px';
+  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'此標的無日K線(駕駛艙不適用;下方 ⑦ 現金池圖仍可看)');return;}
+  const rows=cockpitRows(CHIP_SYM);
+  if(!rows||rows.length<10){chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
+  const win=Math.max(30,Math.min(CHIP_WIN,250));
+  const R=rows.slice(-win);
+  const D=chipDaily(); let cm=0,ca=0; const pm=[],pa=[],pbar=[];
+  R.forEach(r=>{const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
+    cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
+  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0);
+  if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
+  el.dataset.sig=sig;
+  const x=R.map(r=>r.d.slice(5));
+  const topY=[],botY=[],t9s=[],t9b=[];
+  R.forEach(r=>{
+    const TOP=(r.sc===100?1:0)+(r.rv>=90?1:0)+(r.tds>=9?1:0)+(r.volr5>=1.5?1:0);
+    const dn=r.c5!=null&&r.c<r.c5;
+    const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+(r.sc<66?1:0);
+    topY.push(TOP>=3?r.h*1.065:null); botY.push(BOT>=3?r.l*0.94:null);
+    t9s.push(r.tds0===9?r.h*1.02:null); t9b.push(r.tdb0===9?r.l*0.98:null);});
+  const GRID2='#1c2027', MUT2='#8792a6';
+  const traces=[
+    {type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
+     increasing:{line:{color:'#4ade80',width:1}},decreasing:{line:{color:'#f87171',width:1}},name:CHIP_SYM,showlegend:false},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t50),line:{color:'#93c5fd',width:1.3,dash:'dot'},name:'短期煞車線',hovertemplate:'50D觸發 %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t100),line:{color:'#60a5fa',width:1.3,dash:'dot'},name:'中期',hovertemplate:'100D觸發 %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t200),line:{color:'#3b82f6',width:1.3,dash:'dot'},name:'長期',hovertemplate:'200D觸發 %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'text',x:x,y:t9s,text:t9s.map(v=>v?'9':''),textfont:{size:10.5,color:'#fb923c'},hoverinfo:'skip',showlegend:false},
+    {type:'scatter',mode:'text',x:x,y:t9b,text:t9b.map(v=>v?'9':''),textfont:{size:10.5,color:'#22d3ee'},hoverinfo:'skip',showlegend:false},
+    {type:'scatter',mode:'markers',x:x,y:topY,marker:{symbol:'triangle-down',size:9,color:'#f87171'},name:'減碼',hovertemplate:'🔴 TOP≥3 強制減碼<extra></extra>'},
+    {type:'scatter',mode:'markers',x:x,y:botY,marker:{symbol:'triangle-up',size:9,color:'#4ade80'},name:'抄底',hovertemplate:'🟢 BOT≥3 抄底階梯<extra></extra>'},
+    {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?'#f59e0b':(r.c>=r.o?'rgba(74,222,128,.42)':'rgba(248,113,113,.38)'))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:'#c084fc',width:2},fill:'tozeroy',fillcolor:'rgba(192,132,252,.07)',showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rsi==null?null:+r.rsi.toFixed(1)),yaxis:'y8',line:{color:'#9aa6b8',width:1.1},showlegend:false,hovertemplate:'RSI14 %{y}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.sc),yaxis:'y9',line:{color:'#e6e9ef',width:1.7,shape:'hv'},showlegend:false,hovertemplate:'score %{y}<extra></extra>'},
+    {type:'bar',x:x,y:pbar,yaxis:'y10',marker:{color:pbar.map(v=>v>=0?'rgba(74,222,128,.5)':'rgba(248,113,113,.45)')},showlegend:false,hovertemplate:'⑦當日 %{y:.0f}M<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:pa,yaxis:'y10',line:{color:C.amber,width:2},showlegend:false,hovertemplate:'全單累積 %{y:.0f}M<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:pm,yaxis:'y10',line:{color:'#c2703e',width:1.7,dash:'dot'},showlegend:false,hovertemplate:'大單累積 %{y:.0f}M<extra></extra>'}
+  ];
+  const li=R.length-1;
+  const ann=[
+    {xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:MB?10.5:12.5,color:'#e6e9ef'},
+     text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線(量化觸發價)</span> · <span style="color:#fb923c">9=TD賣</span>/<span style="color:#22d3ee">9=TD買</span> · <span style="color:#f87171">▼減碼(TOP≥3)</span> <span style="color:#4ade80">▲抄底(BOT≥3)</span>'},
+    {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
+    {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'轉速 <span style="color:#c084fc">RVPOS</span>(紅帶≥90)· <span style="color:#9aa6b8">RSI14</span>'},
+    {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'檔位 score(+100=六檔全咬合,負=倒車)'},
+    {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+C.amber+'">全單累積</span>·<span style="color:#c2703e">大單累積</span>·柱=當日'},
+    {x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:C.amber}},
+  ];
+  Plotly.react('cockpit',traces,{...PBASE,showlegend:false,
+    margin:{l:MB?42:52,r:MB?46:64,t:34,b:30},
+    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10'},
+    yaxis:{domain:[0.46,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
+    yaxis7:{domain:[0.375,0.445],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
+    yaxis8:{domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},range:[0,104],side:'right',tickvals:[0,50,80,100]},
+    yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:8,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,0,100],zerolinecolor:'#39404d'},
+    yaxis10:{domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
+    shapes:[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
+            {type:'line',xref:'paper',x0:0,x1:1,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}],
+    annotations:ann},CFG);
+}
 function renderChipStock(){
   // 存量分解:流通股(所有籌碼) = 大戶(機構持股 13F) + 非機構(散戶+內部人)。季度變動。
   const el=document.getElementById('chipstock'); if(!el)return;
@@ -585,11 +691,13 @@ function renderChips(){
   if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 誠實訊息(⑦ 僅涵蓋採集清單,無公開回補)
     chartMsg(el,'「'+CHIP_SYM+'」不在 ⑦ 追蹤清單('+syms.length+' 檔:固定觀察＋每日成交額前 20 闖入者)。<br>要長期追蹤,跟我說「加入 '+CHIP_SYM+'」即可納入每日自動採集(⑦ 自加入日起累積,不回補歷史)。',40);
     chartMsg(document.getElementById('chipcost'),'—');
+    chartMsg(document.getElementById('cockpit'),'—');
     const st=document.getElementById('chipstock'); if(st)st.innerHTML='';
     const nt=document.getElementById('chipnote'); if(nt)nt.innerHTML='';
     return;
   }
   ensureChipK(CHIP_SYM);
+  renderCockpit();     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-CHIP_WIN);
@@ -626,7 +734,7 @@ function renderChips(){
     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}, y2?{range:y2.range}:{})},CFG);
   buildChipOffs();
   const note=document.getElementById('chipnote');
-  if(note)note.innerHTML='<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>大戶均(粉)/散戶均(青)</b>=逐筆成交按自動門檻(≥$10萬或當批前5%)分大單/散戶的成交量加權均價,<b>▲=該群淨買、▼=淨賣</b>;比較兩條與現價,可看誰的成本卡在哪、誰在追高/誰在派發。<b>誠實標注</b>:成本分佈/均價是「近期成交均價」近似、非個別持有成本;大戶/散戶均價的逐筆在熱門股是<b>抽樣估計</b>(NVDA 類約 15% 覆蓋、均價仍近似不偏,但股數不宣稱精確)、中低量股近完整;此兩線自建置日起逐日累積,頭幾天樣本少。';
+  if(note)note.innerHTML='<b>⓪駕駛艙</b>:K線疊<b>煞車線</b>(短/中/長期量化觸發價=CTA 部位翻轉位,碰線=機械賣壓啟動)、<b>TD9</b>(橘=賣方九轉/青=買方九轉)與<b>燈號</b>——▼=TOP≥3(score100+RVPOS≥90+TD賣9+爆量 湊3,回測:高beta股後10日續跌×2.0-2.3)強制減碼階梯;▲=BOT≥3(TD買9+RVPOS≥80+殺量竭盡+score&lt;66 湊3,回測:後10日反彈51%、20日69%)抄底階梯。副軌:量(琥珀=爆量)、轉速RVPOS(紅帶=紅線區,無餘裕)+RSI(灰=背景)、檔位score(降檔=訊號斷裂)、⑦現金池(與K線對齊看背離)。<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>大戶均(粉)/散戶均(青)</b>=逐筆成交按自動門檻(≥$10萬或當批前5%)分大單/散戶的成交量加權均價,<b>▲=該群淨買、▼=淨賣</b>;比較兩條與現價,可看誰的成本卡在哪、誰在追高/誰在派發。<b>誠實標注</b>:成本分佈/均價是「近期成交均價」近似、非個別持有成本;大戶/散戶均價的逐筆在熱門股是<b>抽樣估計</b>(NVDA 類約 15% 覆蓋、均價仍近似不偏,但股數不宣稱精確)、中低量股近完整;此兩線自建置日起逐日累積,頭幾天樣本少。';
 }
 function render(){
   if(!DATA)return;
