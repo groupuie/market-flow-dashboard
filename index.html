@@ -245,7 +245,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T07:57Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T08:43Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -532,6 +532,17 @@ function cockpitRows(sym){
   CKC[sym]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
   return rows;
 }
+function tdVis(cn){
+  // 神奇九轉顯示規則:cn=每根的 setup 計數(斷=0)。一「段」= 連續遞增的計數。
+  // 顯示條件:該段最終數到 ≥9(成形,含其 1-8 起數過程),或 段仍進行中(最後一根未斷,例如今天數到6 → 繼續顯示)。
+  // 過去數不到 9 就斷的段 → 整段隱藏。
+  const n=cn.length, out=new Array(n).fill(false); let mx=0,lv=false;
+  for(let i=n-1;i>=0;i--){const c=cn[i];
+    if(c>0){ if(i===n-1||cn[i+1]!==c+1){mx=c;lv=(i===n-1);} out[i]=(mx>=9)||lv; }
+    else {mx=0;lv=false;}
+  }
+  return out;
+}
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
@@ -552,20 +563,22 @@ function renderCockpit(){
   const o1=rng*0.016, o2=rng*0.036, o3=rng*0.088;      // TD小字 / TD強調 / 燈號 位移(依可視價幅,換區間不跑位)
   const smallF=win>120?6.5:7.5, midF=win>120?8:9;      // 大區間縮字,避免連續計數糊成一團
   const topY=[],botY=[],topT=[],botT=[],tsY=[],tsT=[],tsS=[],tsC=[],tbY=[],tbT=[],tbS=[],tbC=[];
+  const visS=tdVis(R.map(r=>r.tds0)), visB=tdVis(R.map(r=>r.tdb0));
   let pT=false,pB=false;
-  R.forEach(r=>{
+  R.forEach((r,ri)=>{
     const TOP=(r.sc===100?1:0)+(r.rv>=90?1:0)+(r.tds>=9?1:0)+(r.volr5>=1.5?1:0);
     const dn=r.c5!=null&&r.c<r.c5;
     const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+(r.sc<66?1:0);
     const isT=TOP>=3, isB=BOT>=3;
     topY.push(isT?r.h+o3:null); topT.push(isT&&!pT?'減碼':'');   // 連續齊發只標首日字樣,其餘只留菱形
     botY.push(isB?r.l-o3:null); botT.push(isB&&!pB?'抄底':''); pT=isT; pB=isB;
-    // 神奇九轉:1-8 淡小字、9 強調;規則延續(連續 close>4日前收)10-12 淡、13/14/15 強調
+    // 神奇九轉(按規則):只顯示「最終數到≥9的段」(含起數1-8過程)與「進行中的段」;過去數不到9就斷的段整段隱藏。
+    // 段內 1-8 淡小字、9 強調、10-12 次亮、13/14/15…強調(規則延續就繼續數,不封頂);上漲(賣橘)/下跌(買青)都標。
     const s=r.tds0, b=r.tdb0, emS=s===9||s>=13, emB=b===9||b>=13;
-    if(s>=1&&s<=15){tsY.push(r.h+(emS?o2:o1)); tsT.push(String(s)); tsS.push(s>=13?12.5:s===9?11.5:s>=7?midF:smallF);
+    if(s>=1&&visS[ri]){tsY.push(r.h+(emS?o2:o1)); tsT.push(String(s)); tsS.push(s>=13?12.5:s===9?11.5:s>=7?midF:smallF);
       tsC.push(emS?'#fb923c':s>=7?'rgba(251,146,60,.8)':'rgba(251,146,60,.42)');}
     else{tsY.push(null);tsT.push('');tsS.push(smallF);tsC.push('rgba(0,0,0,0)');}
-    if(b>=1&&b<=15){tbY.push(r.l-(emB?o2:o1)); tbT.push(String(b)); tbS.push(b>=13?12.5:b===9?11.5:b>=7?midF:smallF);
+    if(b>=1&&visB[ri]){tbY.push(r.l-(emB?o2:o1)); tbT.push(String(b)); tbS.push(b>=13?12.5:b===9?11.5:b>=7?midF:smallF);
       tbC.push(emB?'#22d3ee':b>=7?'rgba(34,211,238,.8)':'rgba(34,211,238,.42)');}
     else{tbY.push(null);tbT.push('');tbS.push(smallF);tbC.push('rgba(0,0,0,0)');}
   });
@@ -594,7 +607,7 @@ function renderCockpit(){
   const li=R.length-1;
   const ann=[
     {xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:MB?10.5:12.5,color:'#e6e9ef'},
-     text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線×4(量化觸發價)</span> · <span style="color:#fb923c">TD賣1→9·13+</span>/<span style="color:#22d3ee">TD買1→9·13+</span> · <span style="color:#e879f9">◆減碼(TOP≥3)</span> <span style="color:#facc15">★抄底(BOT≥3)</span>'},
+     text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線×4(量化觸發價)</span> · <span style="color:#fb923c">TD賣</span>/<span style="color:#22d3ee">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:#e879f9">◆減碼(TOP≥3)</span> <span style="color:#facc15">★抄底(BOT≥3)</span>'},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'轉速 <span style="color:#c084fc">RVPOS</span>(紅帶≥90)· <span style="color:#9aa6b8">RSI14</span>'},
     {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
