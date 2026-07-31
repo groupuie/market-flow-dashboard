@@ -245,7 +245,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T07:06Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T07:57Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -525,7 +525,7 @@ function cockpitRows(sym){
     const v60=(PV[i+1]-PV[i+1-60])/60, v5=(PV[i+1]-PV[i+1-5])/5;
     rows.push({d:bars[i][0],o:+bars[i][1],h:+bars[i][2],l:+bars[i][3],c:C[i],v:V[i],
       sc:Math.round(100*sc/6),rv:rvp[i],rsi:rsi[i],
-      t50:(P[i]-P[i-49])/49,t100:(P[i]-P[i-99])/99,t200:(P[i]-P[i-199])/199,
+      t50:(P[i]-P[i-49])/49,t100:(P[i]-P[i-99])/99,t200:(P[i]-P[i-199])/199,t63:C[i-63],
       tds:Math.max(tds[i],tds[i-1],tds[i-2]),tdb:Math.max(tdb[i],tdb[i-1],tdb[i-2]),
       tds0:tds[i],tdb0:tdb[i],volr:v60>0?V[i]/v60:1,volr5:v60>0?v5/v60:1,c5:i>=5?C[i-5]:null});
   }
@@ -548,24 +548,41 @@ function renderCockpit(){
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   const x=R.map(r=>r.d.slice(5));
-  const topY=[],botY=[],t9s=[],t9b=[];
+  const rng=Math.max(...R.map(r=>r.h))-Math.min(...R.map(r=>r.l))||1;
+  const o1=rng*0.016, o2=rng*0.036, o3=rng*0.088;      // TD小字 / TD強調 / 燈號 位移(依可視價幅,換區間不跑位)
+  const smallF=win>120?6.5:7.5, midF=win>120?8:9;      // 大區間縮字,避免連續計數糊成一團
+  const topY=[],botY=[],topT=[],botT=[],tsY=[],tsT=[],tsS=[],tsC=[],tbY=[],tbT=[],tbS=[],tbC=[];
+  let pT=false,pB=false;
   R.forEach(r=>{
     const TOP=(r.sc===100?1:0)+(r.rv>=90?1:0)+(r.tds>=9?1:0)+(r.volr5>=1.5?1:0);
     const dn=r.c5!=null&&r.c<r.c5;
     const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+(r.sc<66?1:0);
-    topY.push(TOP>=3?r.h*1.065:null); botY.push(BOT>=3?r.l*0.94:null);
-    t9s.push(r.tds0===9?r.h*1.02:null); t9b.push(r.tdb0===9?r.l*0.98:null);});
+    const isT=TOP>=3, isB=BOT>=3;
+    topY.push(isT?r.h+o3:null); topT.push(isT&&!pT?'減碼':'');   // 連續齊發只標首日字樣,其餘只留菱形
+    botY.push(isB?r.l-o3:null); botT.push(isB&&!pB?'抄底':''); pT=isT; pB=isB;
+    // 神奇九轉:1-8 淡小字、9 強調;規則延續(連續 close>4日前收)10-12 淡、13/14/15 強調
+    const s=r.tds0, b=r.tdb0, emS=s===9||s>=13, emB=b===9||b>=13;
+    if(s>=1&&s<=15){tsY.push(r.h+(emS?o2:o1)); tsT.push(String(s)); tsS.push(s>=13?12.5:s===9?11.5:s>=7?midF:smallF);
+      tsC.push(emS?'#fb923c':s>=7?'rgba(251,146,60,.8)':'rgba(251,146,60,.42)');}
+    else{tsY.push(null);tsT.push('');tsS.push(smallF);tsC.push('rgba(0,0,0,0)');}
+    if(b>=1&&b<=15){tbY.push(r.l-(emB?o2:o1)); tbT.push(String(b)); tbS.push(b>=13?12.5:b===9?11.5:b>=7?midF:smallF);
+      tbC.push(emB?'#22d3ee':b>=7?'rgba(34,211,238,.8)':'rgba(34,211,238,.42)');}
+    else{tbY.push(null);tbT.push('');tbS.push(smallF);tbC.push('rgba(0,0,0,0)');}
+  });
   const GRID2='#1c2027', MUT2='#8792a6';
   const traces=[
     {type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
      increasing:{line:{color:'#4ade80',width:1}},decreasing:{line:{color:'#f87171',width:1}},name:CHIP_SYM,showlegend:false},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t50),line:{color:'#93c5fd',width:1.3,dash:'dot'},name:'短期煞車線',hovertemplate:'50D觸發 %{y:.1f}<extra></extra>'},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t100),line:{color:'#60a5fa',width:1.3,dash:'dot'},name:'中期',hovertemplate:'100D觸發 %{y:.1f}<extra></extra>'},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t200),line:{color:'#3b82f6',width:1.3,dash:'dot'},name:'長期',hovertemplate:'200D觸發 %{y:.1f}<extra></extra>'},
-    {type:'scatter',mode:'text',x:x,y:t9s,text:t9s.map(v=>v?'9':''),textfont:{size:10.5,color:'#fb923c'},hoverinfo:'skip',showlegend:false},
-    {type:'scatter',mode:'text',x:x,y:t9b,text:t9b.map(v=>v?'9':''),textfont:{size:10.5,color:'#22d3ee'},hoverinfo:'skip',showlegend:false},
-    {type:'scatter',mode:'markers',x:x,y:topY,marker:{symbol:'triangle-down',size:9,color:'#f87171'},name:'減碼',hovertemplate:'🔴 TOP≥3 強制減碼<extra></extra>'},
-    {type:'scatter',mode:'markers',x:x,y:botY,marker:{symbol:'triangle-up',size:9,color:'#4ade80'},name:'抄底',hovertemplate:'🟢 BOT≥3 抄底階梯<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t50),line:{color:'#93c5fd',width:1.3,dash:'dot'},name:'短50D',hovertemplate:'短期煞車線(50D觸發) %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t100),line:{color:'#60a5fa',width:1.3,dash:'dot'},name:'中100D',hovertemplate:'中期煞車線(100D觸發) %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t200),line:{color:'#3b82f6',width:1.3,dash:'dot'},name:'長200D',hovertemplate:'長期煞車線(200D觸發) %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t63),line:{color:'rgba(226,232,240,.55)',width:1.2,dash:'dash'},name:'動63D',hovertemplate:'動能煞車線(=63日前收盤) %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'text',x:x,y:tsY,text:tsT,textfont:{size:tsS,color:tsC},hoverinfo:'skip',showlegend:false},
+    {type:'scatter',mode:'text',x:x,y:tbY,text:tbT,textfont:{size:tbS,color:tbC},hoverinfo:'skip',showlegend:false},
+    {type:'scatter',mode:'markers+text',x:x,y:topY,text:topT,textposition:'top center',textfont:{size:8.5,color:'#e879f9'},
+     marker:{symbol:'diamond',size:11,color:'#e879f9',line:{width:2,color:'#0d0d0d'}},name:'減碼',hovertemplate:'◆ TOP≥3 訊號齊發:強制減碼<extra></extra>'},
+    {type:'scatter',mode:'markers+text',x:x,y:botY,text:botT,textposition:'bottom center',textfont:{size:8.5,color:'#facc15'},
+     marker:{symbol:'star',size:12,color:'#facc15',line:{width:1.5,color:'#0d0d0d'}},name:'抄底',hovertemplate:'★ BOT≥3 訊號齊發:抄底階梯<extra></extra>'},
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?'#f59e0b':(r.c>=r.o?'rgba(74,222,128,.42)':'rgba(248,113,113,.38)'))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:'#c084fc',width:2},fill:'tozeroy',fillcolor:'rgba(192,132,252,.07)',showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rsi==null?null:+r.rsi.toFixed(1)),yaxis:'y8',line:{color:'#9aa6b8',width:1.1},showlegend:false,hovertemplate:'RSI14 %{y}<extra></extra>'},
@@ -577,20 +594,28 @@ function renderCockpit(){
   const li=R.length-1;
   const ann=[
     {xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:MB?10.5:12.5,color:'#e6e9ef'},
-     text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線(量化觸發價)</span> · <span style="color:#fb923c">9=TD賣</span>/<span style="color:#22d3ee">9=TD買</span> · <span style="color:#f87171">▼減碼(TOP≥3)</span> <span style="color:#4ade80">▲抄底(BOT≥3)</span>'},
+     text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線×4(量化觸發價)</span> · <span style="color:#fb923c">TD賣1→9·13+</span>/<span style="color:#22d3ee">TD買1→9·13+</span> · <span style="color:#e879f9">◆減碼(TOP≥3)</span> <span style="color:#facc15">★抄底(BOT≥3)</span>'},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'轉速 <span style="color:#c084fc">RVPOS</span>(紅帶≥90)· <span style="color:#9aa6b8">RSI14</span>'},
-    {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'檔位 score(+100=六檔全咬合,負=倒車)'},
+    {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
     {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+C.amber+'">全單累積</span>·<span style="color:#c2703e">大單累積</span>·柱=當日'},
     {x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:C.amber}},
   ];
+  // CTA 4 條煞車線:右緣直接標注 名稱+觸發價(相近時往上錯開,顏色對線)
+  (function(){const L=[['短50D',R[li].t50,'#93c5fd'],['中100D',R[li].t100,'#60a5fa'],['長200D',R[li].t200,'#3b82f6'],['動63D',R[li].t63,'#cbd5e1']].sort((a,b)=>a[1]-b[1]);
+    let pv=-Infinity; L.forEach(p=>{let y=p[1]; if(y-pv<rng*0.052)y=pv+rng*0.052; pv=y;
+      ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y',y:y,yanchor:'middle',showarrow:false,
+        text:p[0]+' '+(p[1]>=1000?p[1].toFixed(0):p[1].toFixed(1)),font:{size:8.5,color:p[2]},bgcolor:'rgba(13,13,13,.68)'});});})();
+  // 現在檔位:score 線尾直接標注(綠=前進檔、紅=倒車檔)
+  ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y9',y:Math.max(-95,Math.min(95,R[li].sc)),yanchor:'middle',showarrow:false,
+    text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?'#4ade80':R[li].sc<0?'#f87171':'#e6e9ef'},bgcolor:'rgba(13,13,13,.68)'});
   Plotly.react('cockpit',traces,{...PBASE,showlegend:false,
     margin:{l:MB?42:52,r:MB?46:64,t:34,b:30},
     xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10'},
     yaxis:{domain:[0.46,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
     yaxis7:{domain:[0.375,0.445],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
     yaxis8:{domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},range:[0,104],side:'right',tickvals:[0,50,80,100]},
-    yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:8,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,0,100],zerolinecolor:'#39404d'},
+    yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},
     yaxis10:{domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
     shapes:[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
             {type:'line',xref:'paper',x0:0,x1:1,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}],
@@ -683,7 +708,7 @@ function renderChips(){
     const go=()=>{const v=(inp.value||'').trim().toUpperCase();if(v){CHIP_SYM=v;inp.value='';renderChips();}};
     inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();}); inp.addEventListener('change',go);}
   const rb=document.getElementById('chipRange');
-  if(rb){rb.innerHTML=[10,30,50,60,120,250].map(n=>{
+  if(rb){rb.innerHTML=[10,30,50,60,100,120,200,250].map(n=>{
       const dis=dates.length<Math.min(n,10); const act=CHIP_WIN===n;
       return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('');
     rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=+t.dataset.cn;renderChips();});}
