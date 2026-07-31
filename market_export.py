@@ -727,7 +727,8 @@ def serve_lookup(cfg, args):
         except Exception: served = {}
         if served.get(sym) == ts: return              # 此請求已服務過
         _known = {x.replace("US.", "") for x in CAP_SYMS} | {x.replace("US.", "") for x in EXT_SYMS} \
-                 | set(kline_symbols([])) | {x.replace("US.", "") for x in fetch_custom_syms(cfg)}
+                 | set(kline_symbols([])) | {x.replace("US.", "") for x in fetch_custom_syms(cfg)} \
+                 | {x.replace("US.", "") for x in fetch_watchlist_syms()}
         t0 = time.time()
         files = {}
         if sym in _known:
@@ -792,6 +793,28 @@ def serve_lookup(cfg, args):
         try: json.dump(served, open(servedp, "w"))
         except Exception: pass
     except Exception as e: err("lookup", e)
+
+# ============ 富途自選分組 = 免 token 自訂來源(在牛牛 App 把股票加進「追蹤」分組即自動開採)============
+def fetch_watchlist_syms():
+    """讀富途自選分組「追蹤」(或 dashboard)的美股代號 → 與 custom_symbols 同等待遇。
+       只讀、不需任何 token(走本機 OpenD 登入態);無分組/無 OpenD → 靜默回空。上限 40 檔保護時間預算。"""
+    out = []
+    try:
+        from futu import OpenQuoteContext, RET_OK
+        q = OpenQuoteContext(host="127.0.0.1", port=11111)
+        try:
+            for grp in ("追蹤", "dashboard"):
+                try:
+                    ret, d = q.get_user_security(grp)
+                    if ret == RET_OK and d is not None and len(d):
+                        for i in range(len(d)):
+                            code = str(d.iloc[i].get("code") or "")
+                            if code.startswith("US.") and code not in out: out.append(code)
+                except Exception: pass
+        finally:
+            q.close()
+    except Exception: pass
+    return out[:40]
 
 # ============ 自訂追蹤清單(存於同一 gist 的 custom_symbols.json,由網頁寫入)============
 def fetch_custom_syms(cfg):
@@ -1204,6 +1227,10 @@ def run_once(cfg, args):
     data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1),"deep_pending":_deep}
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
+    if not args.no_futu:   # 富途自選分組「追蹤」= 免 token 自訂來源(牛牛 App 加自選即自動開採)
+        for _w in fetch_watchlist_syms():
+            if _w not in custom: custom.append(_w)
+        custom=custom[:60]
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
     if not args.no_futu:
         try:
@@ -1455,6 +1482,10 @@ def collect_light(cfg, args, base):
     data["source"]="mac-market-export"
     data["session"]=market_session()
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
+    if not args.no_futu:
+        for _w in fetch_watchlist_syms():
+            if _w not in custom: custom.append(_w)
+        custom=custom[:60]
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
     if not args.no_futu:
         try:
