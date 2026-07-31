@@ -229,7 +229,8 @@ a{color:var(--blue)}
     <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">個股籌碼追蹤 — 存量分解 · 現金池累積 · 成本分佈
       <span class="sub">標的</span>
       <select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
-      <input id="chipInput" placeholder="或輸入代號 ↵" style="width:110px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
+      <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
+      <datalist id="chipDL"></datalist>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span>
     </h2>
@@ -249,7 +250,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T09:18Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T09:44Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -300,7 +301,7 @@ function mergeSources(mac,pub){
   const base=(ma<=pa)?{...mac}:{...pub};
   // ⑦/Mac 專屬:永遠取 Mac(唯一來源)
   ['capital_flow','flow_history','daily_flows','custom_symbols','institutions','kline_today',
-   'trade_date','_hist_state','opt_daily','meta'].forEach(k=>{if(mac[k]!==undefined)base[k]=mac[k];});
+   'trade_date','_hist_state','opt_daily','meta','ext_universe','ext_days'].forEach(k=>{if(mac[k]!==undefined)base[k]=mac[k];});
   if(pa<ma){
     // 公開區塊:備援較新就用備援
     ['market','stocks','leveraged','options','_options_ts','_options_cached','fx','rates',
@@ -400,7 +401,10 @@ function makeTable(el, cols, rows, defSort){
 let CHIP_SYM='', CHIP_WIN=60;
 const CHIPK={};   // 單檔日K快取 {sym:{close:{date:c}, bars:[[date,o,h,l,c,v,..],..]}}
 function ensureChipK(sym){
-  if(!sym||CHIPK[sym]||CHIPK[sym+'_r'])return; CHIPK[sym+'_r']=true;
+  if(!sym)return;
+  // 「無K線」非永久:擴充/自訂標的的日K由 Mac 輪補,10 分後重試一次(檔案長出來就自動點亮)
+  if(CHIPK[sym+'_none']&&Date.now()-(CHIPK[sym+'_t']||0)>600e3){delete CHIPK[sym+'_none'];delete CHIPK[sym+'_r'];}
+  if(CHIPK[sym]||CHIPK[sym+'_r'])return; CHIPK[sym+'_r']=true; CHIPK[sym+'_t']=Date.now();
   fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
@@ -439,9 +443,11 @@ function chipDaily(){   // 個股籌碼分頁資料源 = 主 daily_flows ∪ 擴
   const out={}; new Set([...Object.keys(A),...Object.keys(EXTDF)]).forEach(d=>{out[d]=Object.assign({},A[d]||{},EXTDF[d]||{});});
   return out;
 }
-function chipSyms(){   // 全追蹤宇宙:主清單(固定＋闖入＋自訂)∪ 擴充清單,250 日內出現過的非現金標的
+function chipSyms(){   // 全追蹤宇宙:主清單(固定＋闖入＋自訂)∪ 擴充清單(⑦已有資料)∪ ext_universe(已入列,資料輪補中)∪ 自訂
   const D=chipDaily(); const set=new Set();
   Object.keys(D).forEach(d=>Object.keys(D[d]||{}).forEach(s=>{if((D[d][s]||{}).c!=='現金')set.add(s);}));
+  ((DATA&&DATA.ext_universe)||[]).forEach(s=>set.add(s));
+  ((DATA&&DATA.custom_symbols)||[]).forEach(s=>set.add(s));
   return [...set].sort();
 }
 let CHIPV=null,CHIPV_req=0;   // 大戶/散戶 盤中均價日檔(chips_vwap.json)
@@ -556,7 +562,7 @@ function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'980px':'960px';   // 直立手機:加高,五軌才有正確比例(窄螢幕靠垂直空間)
-  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'此標的無日K線(駕駛艙不適用;下方 ⑦ 現金池圖仍可看)');return;}
+  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'日K輪補中(擴充/自訂標的由 Mac 每輪自動補 8 檔,新標的最快 ~10 分、全清單數小時內補齊;每 10 分自動重試)。若久候未出現=來源無此代號日K。下方 ⑦ 現金池圖不受影響。');return;}
   const rows=cockpitRows(CHIP_SYM);
   if(!rows||rows.length<10){chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
   const win=Math.max(30,Math.min(CHIP_WIN,250));
@@ -676,7 +682,7 @@ function renderChipCost(){
   // 籌碼成本分佈(量價分佈)+ 均價線 —— 純從既有日K(OHLCV)算,免逐筆、免額外採集。
   const el=document.getElementById('chipcost'); if(!el)return;
   const K=CHIPK[CHIP_SYM];
-  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'此標的無日K線資料(非K線追蹤清單,成本分佈不適用)');return;}
+  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'日K輪補中(同上;補齊後自動顯示成本分佈)…');return;}
   if(!K||!K.bars||!K.bars.length){chartMsg(el,'日K載入中…');return;}
   const all=chipBars(CHIP_SYM)||K.bars, bars=all.slice(-CHIP_WIN);
   if(bars.length<5){chartMsg(el,'此區間日K不足');return;}
@@ -735,6 +741,7 @@ function renderChips(){
   if(sel&&sel.dataset.built!==syms.join()){
     sel.innerHTML=syms.map(x=>'<option'+(x===CHIP_SYM?' selected':'')+'>'+x+'</option>').join('');
     sel.dataset.built=syms.join(); sel.onchange=()=>{CHIP_SYM=sel.value;renderChips();};
+    const dl=document.getElementById('chipDL'); if(dl)dl.innerHTML=syms.map(x=>'<option value="'+x+'">').join('');   // 輸入框自動完成
   } else if(sel){sel.value=syms.includes(CHIP_SYM)?CHIP_SYM:'';}
   const inp=document.getElementById('chipInput');   // 自填代號:輸入任意市場標的 ↵
   if(inp&&!inp.dataset.bound){inp.dataset.bound='1';
@@ -746,8 +753,23 @@ function renderChips(){
       return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('');
     rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=+t.dataset.cn;renderChips();});}
   buildChipIdx();
-  if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 誠實訊息(⑦ 僅涵蓋採集清單,無公開回補)
-    chartMsg(el,'「'+CHIP_SYM+'」不在 ⑦ 追蹤清單('+syms.length+' 檔:固定觀察＋每日成交額前 20 闖入者)。<br>要長期追蹤,跟我說「加入 '+CHIP_SYM+'」即可納入每日自動採集(⑦ 自加入日起累積,不回補歷史)。',40);
+  if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 一鍵加入自訂追蹤(寫 gist custom_symbols.json,採集器 5 分內生效)
+    const _tok=localStorage.getItem('gh_token');
+    chartMsg(el,'「'+CHIP_SYM+'」還不在追蹤宇宙('+syms.length+' 檔)。'
+      +'<div style="margin-top:10px"><button id="chipAddBtn" style="background:#164e63;color:#22d3ee;border:1px solid #22d3ee;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer">＋ 加入自訂追蹤 '+CHIP_SYM+'</button>'
+      +' <span id="chipAddStat" style="font-size:12px"></span></div>'
+      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">加入後由 Mac 自動採:⑦ 大單流(即時+歷史回填)、日K/駕駛艙/成本分佈(~10 分)、今日盤中K。自訂上限 30 檔,可在「追蹤範圍」區塊管理。</div>'
+      +(_tok?'':'<div style="margin-top:8px;font-size:11.5px">首次使用:貼一次 GitHub token(需 gist 權限;<b>只存在這台裝置的瀏覽器</b>,不會上傳)<br>'
+        +'<input id="chipTokIn" type="password" placeholder="ghp_…" style="width:200px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:12px">'
+        +' <button id="chipTokBtn" style="background:#1f2937;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:12px;cursor:pointer">儲存</button></div>'),40);
+    const ab=document.getElementById('chipAddBtn'); if(ab)ab.onclick=()=>chipAddCustom(CHIP_SYM);
+    const tb=document.getElementById('chipTokBtn'); if(tb)tb.onclick=()=>{
+      const t=(document.getElementById('chipTokIn').value||'').trim();
+      const st=document.getElementById('chipAddStat');
+      if(t.length<20){if(st)st.textContent='token 看起來不完整';return;}
+      localStorage.setItem('gh_token',t);
+      if(st)st.textContent='token 已存(僅此瀏覽器)。再按一次「加入」。';
+    };
     chartMsg(document.getElementById('chipcost'),'—');
     chartMsg(document.getElementById('cockpit'),'—');
     const st=document.getElementById('chipstock'); if(st)st.innerHTML='';
@@ -807,20 +829,35 @@ const CATCOL={'正股':'#4f74c8','半導體':'#4f74c8','記憶體':'#6d8ad9','�
   '自訂':'#22d3ee','闖入':'#f43f5e','其他':'#6b7280'};
 // ---- 自訂追蹤:寫回 gist(token 僅存 localStorage)----
 function gistId(){const m=DATA_URL.match(/gist\.githubusercontent\.com\/[^/]+\/([a-f0-9]+)\//);return m?m[1]:null;}
-async function saveCustom(list){
-  const tok=localStorage.getItem('gh_token');
-  if(!tok){document.getElementById('tokrow').style.display='flex';
-    document.getElementById('customstat').textContent='需要先設定 token';return false;}
-  const id=gistId(); if(!id){document.getElementById('customstat').textContent='找不到 gist id';return false;}
-  document.getElementById('customstat').textContent='儲存中…';
+async function saveCustomCore(list){   // 共用核心(追蹤範圍區塊+個股籌碼自填);回傳 true 或錯誤字串
+  const tok=localStorage.getItem('gh_token'); if(!tok)return 'token 未設定';
+  const id=gistId(); if(!id)return '找不到 gist id';
   try{
     const r=await fetch('https://api.github.com/gists/'+id,{method:'PATCH',
       headers:{'Authorization':'token '+tok,'Accept':'application/vnd.github+json'},
       body:JSON.stringify({files:{'custom_symbols.json':{content:JSON.stringify(list)}}})});
-    if(!r.ok) throw new Error('HTTP '+r.status+(r.status===401?'(token 無效)':r.status===404?'(token 缺 gist 權限)':''));
-    document.getElementById('customstat').textContent='✓ 已儲存,採集器 5 分鐘內生效';
+    if(!r.ok) return 'HTTP '+r.status+(r.status===401?'(token 無效)':r.status===404?'(token 缺 gist 權限)':'');
     DATA.custom_symbols=list; renderCustomChips(); return true;
-  }catch(e){document.getElementById('customstat').textContent='儲存失敗:'+e.message;return false;}
+  }catch(e){return e.message;}
+}
+async function saveCustom(list){
+  const tok=localStorage.getItem('gh_token');
+  if(!tok){document.getElementById('tokrow').style.display='flex';
+    document.getElementById('customstat').textContent='需要先設定 token';return false;}
+  document.getElementById('customstat').textContent='儲存中…';
+  const r=await saveCustomCore(list);
+  document.getElementById('customstat').textContent=(r===true)?'✓ 已儲存,採集器 5 分鐘內生效':'儲存失敗:'+r;
+  return r===true;
+}
+async function chipAddCustom(sym){   // 個股籌碼分頁:一鍵把自填代號加入自訂追蹤(⑦+日K+今日K 全自動開始採)
+  const st=document.getElementById('chipAddStat');
+  if(!localStorage.getItem('gh_token')){if(st)st.textContent='← 請先在下方貼一次 token';return;}
+  const list=[...(DATA.custom_symbols||[])]; if(!list.includes(sym))list.push(sym);
+  if(list.length>30){if(st)st.textContent='自訂已滿 30 檔,請先在「追蹤範圍」移除一些';return;}
+  if(st)st.textContent='儲存中…';
+  const r=await saveCustomCore(list);
+  if(st)st.textContent=(r===true)?'✓ 已加入!Mac 採集器 ~5 分內開始:⑦ 即時+歷史回填、日K(~10 分)。晚點回來看即可。':'失敗:'+r;
+  if(r===true)setTimeout(renderChips,1200);
 }
 function renderCustomChips(){
   const el=document.getElementById('customchips'); if(!el)return;
