@@ -599,6 +599,56 @@ def refresh_klines(cfg, args, kl_syms):
             except Exception as e: err("kline-push", e); break
     log(f"klines updated: {len(changed)}/{len(todo)}")
 
+def ext_hist_todo(extdaily, syms, min_days=30, batch=10):
+    """⑦ 歷史回填待辦:extdaily 中覆蓋 < min_days 天的擴充標的(依清單序,取前 batch)"""
+    cov = {}
+    for dt in extdaily:
+        for s in extdaily[dt]: cov[s] = cov.get(s, 0) + 1
+    return [s for s in syms if cov.get(s.replace("US.", ""), 0) < min_days][:batch]
+
+def merge_ext_hist(extdaily, hist):
+    """回填合併:不覆蓋既有 (日期,標的) 值(當日 live 值/既有值優先);回傳新增筆數"""
+    n = 0
+    for dt, day in hist.items():
+        cur = extdaily.setdefault(dt, {})
+        for s, e in day.items():
+            if s not in cur: cur[s] = e; n += 1
+    return n
+
+def pull_ext_hist(syms, days=250):
+    """擴充標的 ⑦ 歷史日頻回填(get_capital_flow DAY;一次性輪轉):修「新入列標的池線=平地+突刺」。
+       與核心 pull_daily_hist 同 API 同節流(~30次/30秒 → 1.1s/檔)。"""
+    from futu import OpenQuoteContext, RET_OK, PeriodType
+    from datetime import timedelta
+    end = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    start = (datetime.now(timezone.utc) - timedelta(days=int(days*1.55))).strftime("%Y-%m-%d")
+    q = OpenQuoteContext(host="127.0.0.1", port=11111)
+    out = {}
+    try:
+        for s in syms:
+            sym = s.replace("US.", "")
+            try:
+                ret, d = q.get_capital_flow(s, period_type=PeriodType.DAY, start=start, end=end)
+                if ret == RET_OK and len(d):
+                    for _, r in d.iterrows():
+                        dt = str(r.get("capital_flow_item_time", ""))[:10]
+                        if not dt or dt < "2000": continue
+                        si, bi = _f(r.get("super_in_flow")), _f(r.get("big_in_flow"))
+                        mi, sm = _f(r.get("mid_in_flow")), _f(r.get("sml_in_flow"))
+                        m = (si+bi) if None not in (si, bi) else _f(r.get("main_in_flow"))
+                        rr = (mi+sm) if None not in (mi, sm) else None
+                        if m is None: continue
+                        out.setdefault(dt, {})[sym] = {"m": round(m/1e6, 1),
+                            "r": round(rr/1e6, 1) if rr is not None else None,
+                            "c": EXT_CAT.get(sym, "正股")}
+                elif ret != RET_OK:
+                    err(f"exthist {s}", RuntimeError(str(d)[:40]))
+            except Exception as e: err(f"exthist {s}", e)
+            time.sleep(1.1)
+    finally:
+        q.close()
+    return out
+
 EXT_KL_KEEP = 800   # 擴充標的日K保留根數(駕駛艙 250 日視窗需 ~502 根;Yahoo 5y 抓、存尾 800)
 def refresh_ext_klines(cfg, args, t0, budget=330):
     """擴充清單日K(Yahoo 來源、零 Futu 歷史配額):每輪最多 8 檔輪轉 → kline_SYM.json(與核心同格式)。
@@ -1187,6 +1237,37 @@ def run_once(cfg, args):
                             open(_ehf,"w").write(_eh); log(f"pushed ext_flows.json: {len(extflow)} 擴充標的")
                         except Exception as e: log("EXT PUSH ERR:",type(e).__name__,e)
         except Exception as e: err("ext_flow",e)
+    # 擴充標的 ⑦ 歷史回填(一次性輪轉,10 檔/輪 ~13s;任何時段可跑;修「池線平地+突刺」)
+    if (not args.no_futu) and (time.time()-_run_t0)<270:
+        try:
+            _ehb=args.config+".exthistbad"
+            try: _ebad=json.load(open(_ehb))
+            except Exception: _ebad={}
+            _nowh=time.time()
+            _cand=[s for s in EXT_SYMS if _nowh-(_ebad.get(s.replace("US.",""),0))>6*3600]
+            _todo=ext_hist_todo(extdaily,_cand,min_days=30,batch=10)
+            if _todo:
+                _hh=pull_ext_hist(_todo)
+                _okset=set()
+                for _dt in _hh: _okset.update(_hh[_dt].keys())
+                for _s in _todo:
+                    if _s.replace("US.","") not in _okset: _ebad[_s.replace("US.","")]=_nowh
+                try: json.dump(_ebad,open(_ehb,"w"))
+                except Exception: pass
+                _nadd=merge_ext_hist(extdaily,_hh)
+                if _nadd:
+                    for d_ in sorted(extdaily)[:-260]: extdaily.pop(d_,None)
+                    try: json.dump(extdaily, open(extpath,"w"), ensure_ascii=False)
+                    except Exception: pass
+                    log(f"ext hist backfill: +{_nadd} 筆({len(_okset)}/{len(_todo)} 檔)")
+                    if not args.no_push:
+                        try:
+                            push_gist(cfg,{"ext_flows.json":{"ts_utc":data["ts_utc"],"n_days":len(extdaily),"daily_flows":extdaily}})
+                            _eh2=hashlib.sha1(json.dumps(extdaily,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
+                            try: open(args.config+".exthash","w").write(_eh2)
+                            except Exception: pass
+                        except Exception as e: log("EXTHIST PUSH ERR:",type(e).__name__,e)
+        except Exception as e: err("exthist",e)
     data["ext_days"]=len(extdaily)
     # 大戶/散戶盤中均價(逐筆輪詢,自動門檻;完整輪、~5 分節流;只在 rth)→ chips_vwap.json + 當日嵌 market_data
     tickpath=args.config+".tickacc.json"
