@@ -153,7 +153,8 @@ for _s in ["BABA","PDD","NIO","JD","BIDU"]: EXT_CAT[_s]="中概"
 for _s in ["MARA","RIOT","CLSK"]: EXT_CAT[_s]="加密股"
 for _s in ["ARKK","XLY","XLI","XLU","GDX","KRE","XBI"]: EXT_CAT[_s]="板塊ETF"
 # 2026-07-31 擴編分類
-for _s in ["MPWR","NXPI","TER","ENTG","SNPS","CDNS","GFS","QRVO","SWKS","MTSI","CRDO","ALAB","CIEN"]: EXT_CAT[_s]="半導體"
+for _s in ["MPWR","NXPI","TER","ENTG","SNPS","CDNS","GFS","QRVO","SWKS","MTSI"]: EXT_CAT[_s]="半導體"
+for _s in ["ALAB","CRDO","CIEN"]: EXT_CAT[_s]="光通信"   # AI 連接/光模組生態,與 LITE/COHR/AAOI 同組
 EXT_CAT["STX"]="記憶體"
 for _s in ["CRWV","NBIS","APLD","VRT","ETN"]: EXT_CAT[_s]="AI基建"
 for _s in ["CEG","VST","NRG","SMR","OKLO","TLN"]: EXT_CAT[_s]="電力"
@@ -618,7 +619,7 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
         except OSError: age = 1e9
         if age > 1e8: due.append((age, s))                                   # 缺檔:隨時補
         elif age > 20*3600 and sess in ("after", "closed"): due.append((age, s))  # 日更:盤後
-    due.sort(reverse=True)
+    due.sort(key=lambda t: (-t[0], t[1]))   # 最舊優先;同齡按 A→Z(缺檔補齊順序可預期)
     batch = [s for _, s in due[:8]]
     if not batch: return
     changed = {}
