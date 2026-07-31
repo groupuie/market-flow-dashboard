@@ -250,7 +250,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T22:00Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-07-31T22:42Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -562,9 +562,10 @@ function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'980px':'960px';   // 直立手機:加高,五軌才有正確比例(窄螢幕靠垂直空間)
-  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'日K輪補中(擴充/自訂標的由 Mac 每輪自動補 8 檔,新標的最快 ~10 分、全清單數小時內補齊;每 10 分自動重試)。若久候未出現=來源無此代號日K。下方 ⑦ 現金池圖不受影響。');return;}
+  el.dataset.unt='';   // 離開「未追蹤動作區」狀態
+  if(CHIPK[CHIP_SYM+'_none']){el.style.height='auto';chartMsg(el,'日K輪補中(擴充/自訂標的由 Mac 每輪自動補 8 檔,新標的最快 ~10 分、全清單數小時內補齊;每 10 分自動重試)。若久候未出現=來源無此代號日K。下方 ⑦ 現金池圖不受影響。');return;}
   const rows=cockpitRows(CHIP_SYM);
-  if(!rows||rows.length<10){chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
+  if(!rows||rows.length<10){el.style.height='auto';chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
   const win=Math.max(30,Math.min(CHIP_WIN,250));
   const R=rows.slice(-win);
   const D=chipDaily();
@@ -756,16 +757,22 @@ function renderChips(){
       return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('');
     rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=+t.dataset.cn;renderChips();});}
   buildChipIdx();
-  if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 一鍵加入自訂追蹤(寫 gist custom_symbols.json,採集器 5 分內生效)
+  if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 動作區「置頂」渲染在駕駛艙位置(不用捲動);20s 迴圈不重繪(保留輸入中的 token)
+    const ck=document.getElementById('cockpit');
+    if(ck&&ck.dataset.unt===CHIP_SYM&&document.getElementById('chipAddBtn')){
+      chartMsg(el,'—'); return;   // 同標的動作區已在,勿重繪(打字中的 token 會被洗掉)
+    }
+    if(ck){ck.style.height='auto';ck.dataset.unt=CHIP_SYM;}
     const _tok=localStorage.getItem('gh_token');
-    chartMsg(el,'「'+CHIP_SYM+'」還不在追蹤宇宙('+syms.length+' 檔)。'
+    chartMsg(ck,'「'+CHIP_SYM+'」還不在追蹤宇宙('+syms.length+' 檔)。'
       +'<div style="margin-top:10px"><button id="chipLkBtn" style="background:#3f2d0c;color:#facc15;border:1px solid #facc15;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer">⚡ 點播查詢 '+CHIP_SYM+'(~90秒,不占名額)</button>'
       +' <button id="chipAddBtn" style="background:#164e63;color:#22d3ee;border:1px solid #22d3ee;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer">＋ 加入自訂追蹤(持續採)</button>'
       +' <span id="chipAddStat" style="font-size:12px"></span></div>'
-      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">⚡點播=現抓一次:日K/駕駛艙/成本分佈+⑦ 現金池 250 日歷史+今日盤中 ⑦,之後不持續更新。＋自訂=長期追蹤(⑦ 即時+歷史、日K、今日K;上限 30 檔,「追蹤範圍」區塊可管理)。兩者共用同一個 token。</div>'
-      +(_tok?'':'<div style="margin-top:8px;font-size:11.5px">首次使用:貼一次 GitHub token(需 gist 權限;<b>只存在這台裝置的瀏覽器</b>,不會上傳)<br>'
+      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">⚡點播=現抓一次:日K/駕駛艙/成本分佈+⑦ 現金池 250 日歷史+今日盤中 ⑦,之後不持續更新。＋自訂=長期追蹤(⑦ 即時+歷史、日K、今日K;「追蹤範圍」區塊可管理)。</div>'
+      +'<div style="margin-top:6px;font-size:11.5px;color:#4ade80">💡 免 token 加追蹤:在<b>富途牛牛 App</b> 把 '+CHIP_SYM+' 加入自選分組「<b>追蹤</b>」(沒有就建一個),Mac 每分鐘自動同步開採,手機兩下搞定。</div>'
+      +(_tok?'':'<div style="margin-top:8px;font-size:11.5px">上面兩顆按鈕需要 GitHub token(gist 權限;<b>每台裝置只需貼一次</b>——iPhone 主畫面 App 和 Safari 是分開的儲存空間,各要貼一次;token 只存本機瀏覽器,不上傳)<br>'
         +'<input id="chipTokIn" type="password" placeholder="ghp_…" style="width:200px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:12px">'
-        +' <button id="chipTokBtn" style="background:#1f2937;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:12px;cursor:pointer">儲存</button></div>'),40);
+        +' <button id="chipTokBtn" style="background:#1f2937;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:12px;cursor:pointer">儲存</button></div>'),24);
     const ab=document.getElementById('chipAddBtn'); if(ab)ab.onclick=()=>chipAddCustom(CHIP_SYM);
     const lb=document.getElementById('chipLkBtn'); if(lb)lb.onclick=()=>chipLookup(CHIP_SYM);
     const tb=document.getElementById('chipTokBtn'); if(tb)tb.onclick=()=>{
@@ -775,8 +782,8 @@ function renderChips(){
       localStorage.setItem('gh_token',t);
       if(st)st.textContent='token 已存(僅此瀏覽器)。再按一次「加入」。';
     };
+    chartMsg(el,'—');   // chipflow/chipcost 讓位;動作區已置頂在駕駛艙位置
     chartMsg(document.getElementById('chipcost'),'—');
-    chartMsg(document.getElementById('cockpit'),'—');
     const st=document.getElementById('chipstock'); if(st)st.innerHTML='';
     const nt=document.getElementById('chipnote'); if(nt)nt.innerHTML='';
     return;
