@@ -110,6 +110,35 @@ EXT_SYMS = [
   "US.MARA","US.RIOT","US.CLSK",
   # 熱門板塊 ETF
   "US.ARKK","US.XLY","US.XLI","US.XLU","US.GDX","US.KRE","US.XBI",
+  # ===== 2026-07-31 擴編(87→243):目標=常用美股「輸入即有」;⑦ 輪轉分塊自動涵蓋、日K由 Yahoo 輪補 =====
+  # 半導體/設備/網通
+  "US.MPWR","US.NXPI","US.TER","US.ENTG","US.SNPS","US.CDNS","US.GFS","US.QRVO","US.SWKS","US.MTSI","US.CRDO","US.ALAB","US.CIEN","US.STX",
+  # AI 基建/雲算力/電力
+  "US.CRWV","US.NBIS","US.APLD","US.VRT","US.ETN","US.CEG","US.VST","US.NRG","US.SMR","US.OKLO","US.TLN",
+  # 量子
+  "US.IONQ","US.RGTI","US.QBTS",
+  # 軟體/網路
+  "US.GOOG","US.TEAM","US.WDAY","US.ZS","US.OKTA","US.MDB","US.TWLO","US.RBLX","US.U","US.DASH","US.LYFT","US.PINS","US.SNAP","US.SPOT","US.ROKU","US.TTD","US.AFRM","US.UPST","US.PATH","US.AI","US.SOUN","US.BBAI",
+  # 消費/旅遊/航空
+  "US.TGT","US.LOW","US.TJX","US.LULU","US.CMG","US.BKNG","US.MAR","US.DKNG","US.RCL","US.CCL","US.NCLH","US.UAL","US.DAL","US.AAL","US.LUV",
+  # 高波動/迷因
+  "US.GME","US.AMC","US.DJT","US.RDDT","US.CVNA","US.OPEN",
+  # 金融/資管/交易所
+  "US.BLK","US.KKR","US.BX","US.APO","US.COF","US.USB","US.PNC","US.ALLY","US.IBKR","US.CME","US.ICE","US.SPGI","US.MCO",
+  # 醫療
+  "US.ISRG","US.MRNA","US.BNTX","US.NVO","US.HIMS","US.CVS","US.CI","US.BMY","US.VRTX","US.REGN",
+  # 原物料/能源/新能源
+  "US.FCX","US.NEM","US.AA","US.NUE","US.CLF","US.DVN","US.HAL","US.BKR","US.ENPH","US.FSLR","US.RUN",
+  # 工業/防務/物流
+  "US.LMT","US.RTX","US.NOC","US.GD","US.HON","US.DE","US.UNP","US.UPS","US.FDX","US.MMM","US.PWR","US.ROK",
+  # 太空/eVTOL
+  "US.RKLB","US.ASTS","US.ACHR","US.JOBY","US.LUNR",
+  # EV/中概
+  "US.XPEV","US.LI","US.BILI","US.TME","US.FUTU",
+  # 加密生態
+  "US.HUT","US.CORZ","US.IREN","US.WULF","US.CIFR","US.BTBT","US.BITF","US.GLXY","US.CRCL","US.SBET","US.BMNR",
+  # ETF(寬基/區域/主題)
+  "US.VOO","US.VTI","US.EEM","US.EFA","US.FXI","US.EWJ","US.EWT","US.INDA","US.URA","US.LIT","US.KWEB","US.XLC","US.XLP","US.XLB","US.XME","US.XOP","US.OIH","US.IBB","US.VNQ",
 ]
 EXT_CAT = {}
 for _s in ["QCOM","TXN","ADI","MCHP","ON","ARM","ASML","KLAC","LRCX","AMAT"]: EXT_CAT[_s]="半導體"
@@ -123,6 +152,27 @@ for _s in ["F","GM","RIVN","LCID"]: EXT_CAT[_s]="電動車"
 for _s in ["BABA","PDD","NIO","JD","BIDU"]: EXT_CAT[_s]="中概"
 for _s in ["MARA","RIOT","CLSK"]: EXT_CAT[_s]="加密股"
 for _s in ["ARKK","XLY","XLI","XLU","GDX","KRE","XBI"]: EXT_CAT[_s]="板塊ETF"
+# 2026-07-31 擴編分類
+for _s in ["MPWR","NXPI","TER","ENTG","SNPS","CDNS","GFS","QRVO","SWKS","MTSI","CRDO","ALAB","CIEN"]: EXT_CAT[_s]="半導體"
+EXT_CAT["STX"]="記憶體"
+for _s in ["CRWV","NBIS","APLD","VRT","ETN"]: EXT_CAT[_s]="AI基建"
+for _s in ["CEG","VST","NRG","SMR","OKLO","TLN"]: EXT_CAT[_s]="電力"
+for _s in ["IONQ","RGTI","QBTS"]: EXT_CAT[_s]="量子"
+for _s in ["GOOG","TEAM","WDAY","ZS","OKTA","MDB","TWLO","RBLX","U","DASH","LYFT","PINS","SNAP","SPOT","ROKU","TTD","AFRM","UPST","PATH","AI","SOUN","BBAI"]: EXT_CAT[_s]="軟體平台"
+for _s in ["TGT","LOW","TJX","LULU","CMG","BKNG","MAR","DKNG","RCL","CCL","NCLH"]: EXT_CAT[_s]="消費"
+for _s in ["UAL","DAL","AAL","LUV"]: EXT_CAT[_s]="航空"
+for _s in ["GME","AMC","DJT","RDDT","CVNA","OPEN"]: EXT_CAT[_s]="高波動"
+for _s in ["BLK","KKR","BX","APO","COF","USB","PNC","ALLY","IBKR","CME","ICE","SPGI","MCO"]: EXT_CAT[_s]="金融"
+for _s in ["ISRG","MRNA","BNTX","NVO","HIMS","CVS","CI","BMY","VRTX","REGN"]: EXT_CAT[_s]="醫療"
+for _s in ["FCX","NEM","AA","NUE","CLF"]: EXT_CAT[_s]="原物料"
+for _s in ["DVN","HAL","BKR"]: EXT_CAT[_s]="能源"
+for _s in ["ENPH","FSLR","RUN"]: EXT_CAT[_s]="新能源"
+for _s in ["LMT","RTX","NOC","GD","HON","DE","UNP","UPS","FDX","MMM","PWR","ROK"]: EXT_CAT[_s]="工業"
+for _s in ["RKLB","ASTS","ACHR","JOBY","LUNR"]: EXT_CAT[_s]="太空"
+for _s in ["XPEV","LI"]: EXT_CAT[_s]="電動車"
+for _s in ["BILI","TME","FUTU"]: EXT_CAT[_s]="中概"
+for _s in ["HUT","CORZ","IREN","WULF","CIFR","BTBT","BITF","GLXY","CRCL","SBET","BMNR"]: EXT_CAT[_s]="加密股"
+for _s in ["VOO","VTI","EEM","EFA","FXI","EWJ","EWT","INDA","URA","LIT","KWEB","XLC","XLP","XLB","XME","XOP","OIH","IBB","VNQ"]: EXT_CAT[_s]="板塊ETF"
 
 FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ","AMD"}
 KL_HIST_DAYS = 1250     # 保留約 5 年日K
@@ -435,9 +485,8 @@ def futu_hist_bars(q, sym, start, end):
             o, h, l, c = _f(r.get("open")), _f(r.get("high")), _f(r.get("low")), _f(r.get("close"))
             v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
             if dt and None not in (o, h, l, c):
-                # 富途歷史K turnover_rate 為小數(0.045=4.5%),快照為百分比 → 統一存百分比
                 bars.append([dt, round(o, 3), round(h, 3), round(l, 3), round(c, 3), int(v or 0),
-                             None if tr is None else round(tr*100, 3)])
+                             None if tr is None else round(tr, 3)])
         if not page: break
         time.sleep(0.4)
     return bars
@@ -530,7 +579,7 @@ def refresh_klines(cfg, args, kl_syms):
                     err(f"kline-yh {s}", e2); bars = None
             if bars:
                 payload = {"sym": s, "src": src, "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-                           "tor_unit": "pct", "bars": bars[-KL_HIST_DAYS:]}
+                           "bars": bars[-KL_HIST_DAYS:]}
                 try: json.dump(payload, open(path, "w"), ensure_ascii=False, separators=(",", ":"))
                 except Exception: pass
                 changed["kline_" + s + ".json"] = payload
@@ -548,6 +597,55 @@ def refresh_klines(cfg, args, kl_syms):
             try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
             except Exception as e: err("kline-push", e); break
     log(f"klines updated: {len(changed)}/{len(todo)}")
+
+EXT_KL_KEEP = 800   # 擴充標的日K保留根數(駕駛艙 250 日視窗需 ~502 根;Yahoo 5y 抓、存尾 800)
+def refresh_ext_klines(cfg, args, t0, budget=330):
+    """擴充清單日K(Yahoo 來源、零 Futu 歷史配額):每輪最多 8 檔輪轉 → kline_SYM.json(與核心同格式)。
+       缺檔隨時補(新標的最快 ~10 分上線);已有檔者盤後日更(>20h 且 after/closed,存完整 EOD bar)。
+       失敗代號記 .extklbad 退避 6h,壞代號不空轉。核心清單(Futu qfq 路徑)不經此函式。"""
+    kdir = args.config + ".klines"; os.makedirs(kdir, exist_ok=True)
+    core = set(kline_symbols([]))
+    syms = [s.replace("US.", "") for s in EXT_SYMS if s.replace("US.", "") not in core]
+    badp = args.config + ".extklbad"
+    try: bad = json.load(open(badp))
+    except Exception: bad = {}
+    now = time.time(); sess = market_session()
+    due = []
+    for s in syms:
+        if now - (bad.get(s) or 0) < 6*3600: continue
+        p = os.path.join(kdir, s + ".json")
+        try: age = now - os.path.getmtime(p)
+        except OSError: age = 1e9
+        if age > 1e8: due.append((age, s))                                   # 缺檔:隨時補
+        elif age > 20*3600 and sess in ("after", "closed"): due.append((age, s))  # 日更:盤後
+    due.sort(reverse=True)
+    batch = [s for _, s in due[:8]]
+    if not batch: return
+    changed = {}
+    for s in batch:
+        if time.time() - t0 > budget: break
+        try:
+            bars = yahoo_ohlc(s, "5y")
+            if bars and len(bars) >= 200:
+                payload = {"sym": s, "src": "yahoo-ext", "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                           "tor_unit": "pct", "bars": bars[-EXT_KL_KEEP:]}
+                try: json.dump(payload, open(os.path.join(kdir, s + ".json"), "w"), ensure_ascii=False, separators=(",", ":"))
+                except Exception: pass
+                changed["kline_" + s + ".json"] = payload
+                bad.pop(s, None)
+            else:
+                bad[s] = now   # 太短/無資料 → 退避(可能下市或代號不存在)
+        except Exception as e:
+            err(f"extkl {s}", e); bad[s] = now
+        time.sleep(0.35)
+    try: json.dump(bad, open(badp, "w"))
+    except Exception: pass
+    if changed and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
+        names = sorted(changed)
+        for i in range(0, len(names), 8):
+            try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
+            except Exception as e: err("extkl-push", e); break
+    log(f"ext klines updated: {len(changed)}/{len(batch)} (bad={len(bad)})")
 
 # ============ 自訂追蹤清單(存於同一 gist 的 custom_symbols.json,由網頁寫入)============
 def fetch_custom_syms(cfg):
@@ -1039,7 +1137,7 @@ def run_once(cfg, args):
             for s_,e_ in day.items():
                 if s_ not in daily[dt]: daily[dt][s_]=e_   # 新標的補進既有日期,不覆蓋原值
     if histfill:
-        for d_ in sorted(daily)[:-260]: daily.pop(d_,None)
+        for d_ in sorted(daily)[:-250]: daily.pop(d_,None)
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)   # 回填立即落盤:非盤中回填也持久化,否則下一輪讀舊檔又縮回
         except Exception: pass
     if data["capital_flow"] and data["trade_date"] and data["session"] in ("rth","after"):
@@ -1048,7 +1146,7 @@ def run_once(cfg, args):
             "m":round((v.get("main_net") or 0)/1e6,1),
             "r":round((v.get("retail_net") or 0)/1e6,1) if v.get("retail_net") is not None else None,
             "c":v.get("cat","正股")} for k,v in data["capital_flow"].items() if v.get("main_net") is not None}
-        for d_ in sorted(daily)[:-260]: daily.pop(d_,None)
+        for d_ in sorted(daily)[:-250]: daily.pop(d_,None)
         try: json.dump(daily, open(dailypath,"w"), ensure_ascii=False)
         except Exception: pass
     data["daily_flows"]=daily
@@ -1072,7 +1170,7 @@ def run_once(cfg, args):
             log(f"ext chunk @{_rot}: {len(extflow)} 檔 ({time.time()-_run_t0:.0f}s into full)")
             if extflow:
                 extdaily[data["trade_date"]]={**extdaily.get(data["trade_date"],{}), **extflow}
-                for d_ in sorted(extdaily)[:-260]: extdaily.pop(d_,None)
+                for d_ in sorted(extdaily)[:-250]: extdaily.pop(d_,None)
                 try: json.dump(extdaily, open(extpath,"w"), ensure_ascii=False)
                 except Exception: pass
                 try: open(extmark,"w").write(str(time.time()))
@@ -1125,7 +1223,7 @@ def run_once(cfg, args):
             except Exception: cvdaily={}
             if today and data.get("trade_date"):
                 cvdaily[data["trade_date"]]=today
-                for d_ in sorted(cvdaily)[:-260]: cvdaily.pop(d_,None)
+                for d_ in sorted(cvdaily)[:-250]: cvdaily.pop(d_,None)
                 try: json.dump(cvdaily, open(cvpath,"w"), ensure_ascii=False)
                 except Exception: pass
                 if not args.no_push and len(cvdaily)>1:
@@ -1152,6 +1250,11 @@ def run_once(cfg, args):
     if kl_syms:
         try: refresh_klines(cfg,args,kl_syms)
         except Exception as e: err("klines",e)
+    # 擴充清單日K(Yahoo 輪補;個股籌碼分頁「內容空白」根治):預算內每輪 8 檔
+    if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
+        try: refresh_ext_klines(cfg,args,_run_t0,budget=330)
+        except Exception as e: err("extkl",e)
+    data["ext_universe"]=sorted(s.replace("US.","") for s in EXT_SYMS)   # 前端選單/自動完成用(輸入即可選,資料輪補)
     data["errors"]=ERRORS
     data["meta"]={"futu_ok":len(data["capital_flow"])>0,"n_opt":len(data["options"]),
                   "n_inst":len(data.get("institutions",{})),
