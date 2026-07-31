@@ -698,6 +698,101 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
             except Exception as e: err("extkl-push", e); break
     log(f"ext klines updated: {len(changed)}/{len(batch)} (bad={len(bad)})")
 
+# ============ 點播通道(lookup_request.json 由網頁寫入;Mac 現抓現推,不占追蹤名額)============
+def fetch_gist_file(cfg, name):
+    """讀 gist 單一小檔內容(認證 API;小檔不會被截斷)。無檔/無設定→None。"""
+    if not cfg.get("gist_id") or not cfg.get("gist_token"): return None
+    req = urllib.request.Request(f"https://api.github.com/gists/{cfg['gist_id']}",
+        headers={"Authorization": f"token {cfg['gist_token']}", "User-Agent": "market-export",
+                 "Accept": "application/vnd.github+json"})
+    d = json.load(urllib.request.urlopen(req, timeout=15))
+    return d.get("files", {}).get(name, {}).get("content")
+
+def serve_lookup(cfg, args):
+    """⚡ 點播:網頁把 {sym,ts} 寫進 lookup_request.json → 這裡現抓該檔的
+       日K(Yahoo 5y,零配額)+ ⑦ 歷史 250 日(get_capital_flow DAY)+ 今日 ⑦(capital_distribution),
+       合併進 extdaily 並推 ext_flows.json + kline_SYM.json → 前端既有讀取路徑直接點亮。
+       去重:.lookupserved 記 (sym,ts);已在追蹤宇宙者跳過(本來就有);純快照,不加入持續追蹤。"""
+    import re as _re
+    try:
+        raw = fetch_gist_file(cfg, "lookup_request.json")
+        if not raw: return
+        try: r = json.loads(raw)
+        except Exception: return
+        sym = str(r.get("sym", "")).strip().upper().replace("US.", "")
+        ts = str(r.get("ts", ""))[:40]
+        if not _re.fullmatch(r"[A-Z.]{1,10}", sym or ""): return
+        servedp = args.config + ".lookupserved.json"
+        try: served = json.load(open(servedp))
+        except Exception: served = {}
+        if served.get(sym) == ts: return              # 此請求已服務過
+        _known = {x.replace("US.", "") for x in CAP_SYMS} | {x.replace("US.", "") for x in EXT_SYMS} \
+                 | set(kline_symbols([])) | {x.replace("US.", "") for x in fetch_custom_syms(cfg)}
+        t0 = time.time()
+        files = {}
+        if sym in _known:
+            log(f"lookup skip(已在追蹤宇宙): {sym}")
+        else:
+            # 日K(Yahoo;駕駛艙需 ≥260 根,不足也照推,前端會誠實顯示)
+            try:
+                bars = yahoo_ohlc(sym, "5y")
+                if bars and len(bars) >= 30:
+                    files["kline_" + sym + ".json"] = {"sym": sym, "src": "yahoo-lookup",
+                        "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                        "tor_unit": "pct", "bars": bars[-EXT_KL_KEEP:]}
+            except Exception as e: err(f"lookup-kl {sym}", e)
+            # ⑦:歷史 250 日 + 今日盤中(現金池同步更新)
+            extpath = args.config + ".extdaily.json"
+            try: extd = json.load(open(extpath))
+            except Exception: extd = {}
+            nadd = 0
+            if not args.no_futu:
+                try:
+                    fl = pull_ext_hist(["US." + sym])
+                    for _dt in fl:
+                        if sym in fl[_dt]: fl[_dt][sym]["c"] = "點播"
+                    nadd = merge_ext_hist(extd, fl)
+                except Exception as e: err(f"lookup-flow {sym}", e)
+                try:
+                    from futu import OpenQuoteContext, RET_OK
+                    q = OpenQuoteContext(host="127.0.0.1", port=11111)
+                    try:
+                        ret, d = q.get_capital_distribution("US." + sym)
+                        if ret == RET_OK and len(d):
+                            rr = d.iloc[0]
+                            si, bi = _f(rr.get("capital_in_super")), _f(rr.get("capital_in_big"))
+                            so, bo = _f(rr.get("capital_out_super")), _f(rr.get("capital_out_big"))
+                            mi, sm = _f(rr.get("capital_in_mid")), _f(rr.get("capital_in_small"))
+                            mo, so2 = _f(rr.get("capital_out_mid")), _f(rr.get("capital_out_small"))
+                            mn = round((si+bi)-(so+bo), 0) if None not in (si, bi, so, bo) else None
+                            rn = round((mi+sm)-(mo+so2), 0) if None not in (mi, sm, mo, so2) else None
+                            tdate = str(rr.get("update_time") or "")[:10]
+                            if mn is not None and tdate:
+                                extd.setdefault(tdate, {})[sym] = {"m": round(mn/1e6, 1),
+                                    "r": round(rn/1e6, 1) if rn is not None else None, "c": "點播"}
+                                nadd += 1
+                    finally: q.close()
+                except Exception as e: err(f"lookup-dist {sym}", e)
+            if nadd:
+                for d_ in sorted(extd)[:-260]: extd.pop(d_, None)
+                try: json.dump(extd, open(extpath, "w"), ensure_ascii=False)
+                except Exception: pass
+                files["ext_flows.json"] = {"ts_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                                           "n_days": len(extd), "daily_flows": extd}
+            if files and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
+                try:
+                    push_gist(cfg, files)
+                    if "ext_flows.json" in files:
+                        _lh = hashlib.sha1(json.dumps(extd, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+                        try: open(args.config + ".exthash", "w").write(_lh)
+                        except Exception: pass
+                except Exception as e: log("LOOKUP PUSH ERR:", type(e).__name__, e)
+            log(f"lookup served: {sym} ({time.time()-t0:.0f}s, ⑦+{nadd}筆, kline={'kline_'+sym+'.json' in files})")
+        served[sym] = ts
+        try: json.dump(served, open(servedp, "w"))
+        except Exception: pass
+    except Exception as e: err("lookup", e)
+
 # ============ 自訂追蹤清單(存於同一 gist 的 custom_symbols.json,由網頁寫入)============
 def fetch_custom_syms(cfg):
     try:
@@ -1476,6 +1571,10 @@ def main():
             except Exception as e:
                 log("LIGHT PUSH ERROR:",type(e).__name__,e)
             base=data; _persist(base)
+        # ⚡ 點播通道:每輪(快/全)檢查一次 lookup_request.json,新請求現抓現推(~60-90 秒內出圖)
+        if not a.no_futu or True:
+            try: serve_lookup(cfg, a)
+            except Exception as e: log("lookup:", type(e).__name__, e)
         if a.once or market_session()!="rth" or (time.time()-loop_start)>=LOOP_BUDGET:
             break
         time.sleep(max(2, 60-(time.time()-it)))
