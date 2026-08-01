@@ -251,7 +251,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T03:27Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T06:50Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -513,12 +513,170 @@ function chipVwapFor(sym, dates){   // 對 window 內日期量加權彙總 → �
           bnet:bnet, snet:snet, bn:bn, sn:sn, days:es.length};
 }
 let CHIP_IDX={SPY:false,QQQ:false};   // 現金池圖疊加 SPY/QQQ 趨勢(預設關,使用者可切)
+let CHIP_TL=true;   // 駕駛艙自動趨勢線層開關(2026-08-01;預設開,記在 JS 變數即可)
 function buildChipIdx(){
   const el=document.getElementById('chipidx'); if(!el)return;
   const cols={SPY:'#2dd4bf',QQQ:'#c084fc'};
   el.innerHTML='<span style="color:var(--muted)">疊加指數</span> '+['SPY','QQQ'].map(function(k){var c=cols[k];
-    return '<span class="cidxchip" data-k="'+k+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+c+';'+(CHIP_IDX[k]?('background:'+c+'26;color:'+c):'color:var(--muted);opacity:.55')+'">'+k+'</span>';}).join(' ');
+    return '<span class="cidxchip" data-k="'+k+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+c+';'+(CHIP_IDX[k]?('background:'+c+'26;color:'+c):'color:var(--muted);opacity:.55')+'">'+k+'</span>';}).join(' ')
+    +' <span class="cidxchip2" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #4ade80;'+(CHIP_TL?'background:rgba(74,222,128,.15);color:#4ade80':'color:var(--muted);opacity:.55')+'">趨勢線</span>';
   el.querySelectorAll('.cidxchip').forEach(function(t){t.onclick=function(){var k=t.dataset.k;CHIP_IDX[k]=!CHIP_IDX[k];if(CHIP_IDX[k]){k==='SPY'?ensureSpyK():ensureQQQK();}renderChips();};});
+  var t2=el.querySelector('.cidxchip2'); if(t2)t2.onclick=function(){CHIP_TL=!CHIP_TL;renderChips();};
+}
+// ===== 自動趨勢線偵測(TrendSpider 式;移植 trendln/pytrendline 思路;2026-08-01)=====
+// 輸入 R=cockpit 渲染視窗切片(與畫面逐根一致);N<50 回 null 不啟用。
+// 與 scripts/auto_trendline.py 同參數同演算法(一致性驗證:端點價差<0.1%、觸及數相同)。
+function autoTrendlines(R){
+  'use strict';
+  var N=R.length;
+  if(N<50)return null;
+  var W=Math.max(3,Math.min(7,Math.round(N/40)));            // pivot 滑窗半徑
+  var BRK=0.01;                                              // 實體穿越 >1% = 突破
+  var MINSPAN=Math.max(5,W);                                 // 兩 pivot 最小間距
+  var MAXPER=2;                                              // 每側最多 2 條
+  var STALE=Math.max(12,Math.round(N*0.12));                 // 突破陳舊門檻(基準)
+  var DISTCAP=0.18;                                          // active 線端點距現價 >18% 不顯示
+  var atr=0,cnt=0,k0=Math.max(1,N-14);
+  for(var a=k0;a<N;a++){
+    var tr=Math.max(R[a].h-R[a].l,Math.abs(R[a].h-R[a-1].c),Math.abs(R[a].l-R[a-1].c));
+    atr+=tr;cnt++;
+  }
+  atr=cnt?atr/cnt:0;
+  var px=R[N-1].c;
+  var TOL=Math.max(0.006,0.25*atr/Math.max(px,1e-9));        // 觸及容忍 max(0.6%, 0.25×ATR14/價)
+  var pivH=[],pivL=[];
+  for(var i=W;i<N-W;i++){
+    var hi=true,lo=true;
+    for(var k=i-W;k<=i+W;k++){
+      if(k===i)continue;
+      if(R[k].h>R[i].h)hi=false;
+      if(R[k].l<R[i].l)lo=false;
+      if(!hi&&!lo)break;
+    }
+    if(hi)pivH.push(i);
+    if(lo)pivL.push(i);
+  }
+  function scan(i,y1,slope,side){   // 沿線觸及計數(連續併一次)+ 實體穿越判突破
+    var touches=0,errSum=0,lastTouch=-1,run=false,brkIdx=-1;
+    for(var k=i;k<N;k++){
+      var ly=y1+slope*(k-i);
+      if(ly<=0)return null;
+      var body=side==='sup'?Math.min(R[k].o,R[k].c):Math.max(R[k].o,R[k].c);
+      var dBrk=side==='sup'?(ly-body)/ly:(body-ly)/ly;
+      if(dBrk>BRK){brkIdx=k;break;}
+      var pv=side==='sup'?R[k].l:R[k].h;
+      var d=Math.abs(pv-ly)/ly;
+      if(d<=TOL){if(!run){touches++;errSum+=d;lastTouch=k;}else if(k>lastTouch){lastTouch=k;}run=true;}
+      else run=false;
+    }
+    return {touches:touches,err:touches?errSum/touches:1,lastTouch:lastTouch,brkIdx:brkIdx};
+  }
+  function mkLine(kind,side,i,j,y1,y2){
+    var slope=(j>i)?(y2-y1)/(j-i):0;
+    var s=scan(i,y1,slope,side);
+    if(!s||s.touches<3)return null;
+    var active=s.brkIdx<0;
+    var staleAllow=Math.min(STALE*(1+Math.min(1,(s.touches-3)/4)),30);   // 大結構突破後多留,絕對上限 ~6 週
+    if(!active&&(N-1-s.brkIdx)>staleAllow)return null;
+    var endIdx=active?N-1:s.brkIdx;
+    var yEnd=y1+slope*(endIdx-i);
+    var dist=Math.abs(yEnd/px-1);
+    if(active&&dist>DISTCAP)return null;                     // 離戰場太遠的延伸線=雜訊
+    var score=s.touches+2.0*(s.lastTouch/(N-1))+(active?0.6:0)-(s.err/TOL)
+             -(active?1.2*Math.min(1,dist/DISTCAP):0);       // 評分=觸及+近期權重−誤差−距離
+    return {kind:kind,side:side,i:i,j:j,y1:+y1,slope:slope,endIdx:endIdx,yEnd:+yEnd,
+            touches:s.touches,err_pct:+(s.err*100).toFixed(3),score:+score.toFixed(3),
+            active:active,brkIdx:s.brkIdx,x1_d:R[i].d,x2_d:R[endIdx].d,y2:+yEnd,
+            broken_d:active?null:R[s.brkIdx].d,lastTouch:s.lastTouch};
+  }
+  function slants(pivs,side){   // pivot 兩兩成線 O(pivot²)
+    var out=[];
+    for(var a2=0;a2<pivs.length;a2++)for(var b2=a2+1;b2<pivs.length;b2++){
+      var i2=pivs[a2],j2=pivs[b2];
+      if(j2-i2<MINSPAN)continue;
+      var y1=side==='sup'?R[i2].l:R[i2].h,y2=side==='sup'?R[j2].l:R[j2].h;
+      var L=mkLine('line',side,i2,j2,y1,y2);
+      if(L)out.push(L);
+    }
+    return out;
+  }
+  function hlines(pivs,side){   // 水平 S/R:pivot 價位群聚(容忍 0.5%)
+    var pts=pivs.map(function(i2){return {i:i2,p:side==='sup'?R[i2].l:R[i2].h};})
+                .sort(function(x,y){return x.p-y.p;});
+    var out=[],cur=[];
+    function flush(){
+      if(cur.length>=3){
+        var mean=0;cur.forEach(function(x){mean+=x.p;});mean/=cur.length;
+        var idxs=cur.map(function(x){return x.i;}).sort(function(x,y){return x-y;});
+        var L=mkLine('hline',side,idxs[0],idxs[idxs.length-1],mean,mean);
+        if(L)out.push(L);
+      }
+      cur=[];
+    }
+    for(var t=0;t<pts.length;t++){
+      if(!cur.length){cur.push(pts[t]);continue;}
+      var mean=0;cur.forEach(function(x){mean+=x.p;});mean/=cur.length;
+      if(Math.abs(pts[t].p-mean)/mean<=0.005)cur.push(pts[t]);
+      else{flush();cur=[pts[t]];}
+    }
+    flush();
+    return out;
+  }
+  function similar(A,B){   // 同走廊去重:三取樣點值差皆 <1.5×TOL;同起點同一次突破事件亦視為同線
+    if(A.side!==B.side)return false;
+    if(A.i===B.i&&!A.active&&!B.active&&Math.abs(A.brkIdx-B.brkIdx)<=6)return true;
+    var s=Math.max(A.i,B.i),e=Math.min(A.endIdx,B.endIdx);
+    if(e<=s)return false;
+    var pts=[s,(s+e)>>1,e];
+    for(var q=0;q<3;q++){
+      var k=pts[q];
+      var ya=A.y1+A.slope*(k-A.i),yb=B.y1+B.slope*(k-B.i);
+      if(Math.abs(ya-yb)/Math.max(ya,1e-9)>1.5*TOL)return false;
+    }
+    return true;
+  }
+  function pick(cands){
+    cands.sort(function(x,y){return y.score-x.score;});
+    var out=[];
+    for(var c=0;c<cands.length&&out.length<MAXPER;c++){
+      var ok=true;
+      for(var u=0;u<out.length;u++)if(similar(cands[c],out[u])){ok=false;break;}
+      if(ok)out.push(cands[c]);
+    }
+    return out;
+  }
+  var supL=pick(slants(pivL,'sup')),resL=pick(slants(pivH,'res'));
+  var supH=pick(hlines(pivL,'sup')),resH=pick(hlines(pivH,'res'));
+  function dropDup(hs,ls){   // 水平線與已選斜線同走廊 → 略(斜線資訊量較高)
+    return hs.filter(function(h){
+      for(var u=0;u<ls.length;u++)if(similar(h,ls[u]))return false;
+      return true;
+    });
+  }
+  supH=dropDup(supH,supL);resH=dropDup(resH,resL);
+  return {lines:supL.concat(resL,supH,resH),meta:{w:W,tol:TOL,px:px}};
+}
+// 趨勢線 → Plotly traces(支撐綠/壓力紅細實線半透明;✂短虛線=已突破止於突破日;active 右延伸至最後一根)
+function tlTraces(R,x){
+  var out=[];
+  var res=autoTrendlines(R);
+  if(!res)return out;
+  res.lines.forEach(function(L){
+    var col=L.side==='sup'?'74,222,128':'248,113,113';
+    var xs=[],ys=[];
+    for(var k=L.i;k<=L.endIdx;k++){xs.push(x[k]);ys.push(+(L.y1+L.slope*(k-L.i)).toFixed(3));}
+    var name=(L.side==='sup'?'支撐':'壓力')+(L.kind==='hline'?'水平':'斜線');
+    var dist=(L.yEnd/res.meta.px-1)*100;
+    var hov=L.active
+      ? name+' · 觸及'+L.touches+' · 距現價'+(dist>0?'+':'−')+Math.abs(dist).toFixed(1)+'%'
+      : name+'(✂已突破 '+String(L.broken_d).slice(5)+') · 觸及'+L.touches;
+    out.push({type:'scatter',mode:'lines',x:xs,y:ys,showlegend:false,
+      line:{color:'rgba('+col+',.75)',width:1.6,dash:L.active?'solid':'dash'},
+      hovertemplate:hov+'<extra></extra>'});
+    if(!L.active)out.push({type:'scatter',mode:'text',x:[x[L.endIdx]],y:[ys[ys.length-1]],
+      text:['✂'],textfont:{size:12,color:'rgba('+col+',.95)'},showlegend:false,hoverinfo:'skip'});
+  });
+  return out;
 }
 // ===== 趨勢線上下微調(可任意移動疊加線;柱狀圖與現金池累積線固定不動)=====
 let CHIP_OFF={price:0,SPY:0,QQQ:0}, CHIP_TREND={};   // {key:{idx:traceIndex, base:[原始%值]}}
@@ -617,7 +775,7 @@ function renderCockpit(){
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d');
+  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0');
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   const x=R.map(r=>r.d.slice(5));
@@ -670,12 +828,14 @@ function renderCockpit(){
     {type:'scatter',mode:'lines',x:x,y:pa,yaxis:'y10',line:{color:C.amber,width:2},showlegend:false,hovertemplate:'全單累積 %{y:.0f}M<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:pm,yaxis:'y10',line:{color:'#c2703e',width:1.7,dash:'dot'},showlegend:false,hovertemplate:'大單累積 %{y:.0f}M<extra></extra>'}
   ];
+  // 自動趨勢線層:追加於既有 traces 之後(疊於K線上層;不動既有 trace 順序;<50 根 tlTraces 內部靜默不啟用)
+  if(CHIP_TL&&R.length>=50){try{tlTraces(R,x).forEach(t=>traces.push(t));}catch(e){}}
   const li=R.length-1;
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.028,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:'#e6e9ef'},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:'#e6e9ef'},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線×4(量化觸發價)</span> · <span style="color:#fb923c">TD賣</span>/<span style="color:#22d3ee">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:#e879f9">◆減碼(TOP≥3)</span> <span style="color:#facc15">★抄底(BOT≥3)</span>'},
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:#93c5fd">┈煞車線×4(量化觸發價)</span> · <span style="color:#fb923c">TD賣</span>/<span style="color:#22d3ee">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:#e879f9">◆減碼(TOP≥3)</span> <span style="color:#facc15">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:#4ade80">─撐</span><span style="color:#f87171">─壓</span>趨勢線(觸及≥3·✂破)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'轉速 <span style="color:#c084fc">RVPOS</span>(紅帶≥90)· <span style="color:#9aa6b8">RSI14</span>'},
     {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:MB?'檔位 ±100/67/33(負=倒車)':'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
@@ -692,7 +852,7 @@ function renderCockpit(){
     text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?'#4ade80':R[li].sc<0?'#f87171':'#e6e9ef'},bgcolor:'rgba(13,13,13,.68)'});
   // 直立手機:標題精簡成兩行(第二行=圖例),避免單行過長被切掉
   if(MB)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-    text:'<span style="color:#93c5fd">┈煞車×4</span> · <span style="color:#fb923c">TD賣</span>/<span style="color:#22d3ee">買</span>1→9·13+ · <span style="color:#e879f9">◆減碼</span> <span style="color:#facc15">★抄底</span>'});
+    text:'<span style="color:#93c5fd">┈煞車×4</span> · <span style="color:#fb923c">TD賣</span>/<span style="color:#22d3ee">買</span>1→9·13+ · <span style="color:#e879f9">◆減碼</span> <span style="color:#facc15">★抄底</span>'+(CHIP_TL?' · <span style="color:#4ade80">─撐</span><span style="color:#f87171">─壓</span>✂':'')});
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   Plotly.react('cockpit',traces,{...PBASE,showlegend:false,
     margin:{l:MB?40:52,r:MB?44:64,t:MB?50:34,b:30},
