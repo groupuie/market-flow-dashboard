@@ -1,8 +1,8 @@
 {
- "updated_utc": "2026-08-01 10:13:07",
+ "updated_utc": "2026-08-01 16:20:48",
  "win": 200,
  "n": 51,
- "elapsed_s": 18.9,
+ "elapsed_s": 22.6,
  "note": "掃描=機械條件比對(趨勢線/型態/煞車線/52週/Fib/CTA/擠壓);score 僅供排序,非買賣建議",
  "rows": [
   {
@@ -12,7 +12,7 @@
    "chg1d": 2.93,
    "chg5d": -2.94,
    "chg20d": 3.04,
-   "vol_pace": 1.08,
+   "vol_pace": 1.09,
    "hi52": 236.54,
    "lo52": 164.079,
    "pct_from_hi52": -15.13,
@@ -31,6 +31,11 @@
    },
    "pattern_hits": [
     {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
      "type": "頭肩頂",
      "state": "confirmed",
      "dir": -1
@@ -44,11 +49,6 @@
      "type": "雙重底",
      "state": "confirmed",
      "dir": 1
-    },
-    {
-     "type": "雙重頂",
-     "state": "confirmed",
-     "dir": -1
     }
    ],
    "candle_hits": [
@@ -90,10 +90,10 @@
    "score": 20.0,
    "why": [
     "趨勢線突破(支撐·觸及4)",
+    "下降楔形 已確認",
     "頭肩頂 已確認",
     "逆頭肩 已確認",
     "雙重底 已確認",
-    "雙重頂 已確認",
     "近3日蠟燭偏多",
     "距中期100D煞車線 -0.2%",
     "近10日CTA事件:收復長期(200D)、收復中期(100D)、3月動能轉正"
@@ -125,6 +125,11 @@
    },
    "pattern_hits": [
     {
+     "type": "上升三角",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
      "type": "逆頭肩",
      "state": "confirmed",
      "dir": 1
@@ -138,11 +143,6 @@
      "type": "雙重底",
      "state": "confirmed",
      "dir": 1
-    },
-    {
-     "type": "雙重頂",
-     "state": "forming",
-     "dir": -1
     }
    ],
    "candle_hits": [
@@ -174,147 +174,16 @@
     "跌破中期(100D)",
     "3月動能轉負"
    ],
-   "score": 17.0,
+   "score": 19.0,
    "why": [
     "趨勢線突破(壓力·觸及5)",
+    "上升三角 已確認",
     "逆頭肩 已確認",
     "頭肩頂 已確認",
     "雙重底 已確認",
-    "雙重頂 形成中",
     "近3日蠟燭偏空",
     "距短期50D煞車線 -1.2%",
     "近10日CTA事件:收復中期(100D)、跌破中期(100D)、3月動能轉負"
-   ]
-  },
-  {
-   "sym": "AVGO",
-   "d": "2026-07-31",
-   "px": 389.28,
-   "chg1d": 0.37,
-   "chg5d": 1.93,
-   "chg20d": 8.0,
-   "vol_pace": 0.97,
-   "hi52": 494.218,
-   "lo52": 289.502,
-   "pct_from_hi52": -21.23,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-29",
-    "touches": 4
-   },
-   "near_trendline": {
-    "side": "res",
-    "px": 398.027,
-    "dist_pct": 2.25,
-    "touches": 4
-   },
-   "pattern_hits": [
-    {
-     "type": "逆頭肩",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "對稱三角",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "頭肩頂",
-     "state": "forming",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "短期50D",
-    "px": 395.15,
-    "dist_pct": 1.51
-   },
-   "cta_score": 33,
-   "rv_pct": 47,
-   "cta_events": [
-    "分數翻負",
-    "跌破中期(100D)",
-    "收復中期(100D)"
-   ],
-   "fib_zone": {
-    "lab": "50%",
-    "px": 391.86,
-    "dist_pct": 0.66
-   },
-   "squeeze": 30,
-   "gex_bn": 0.175,
-   "score": 15.0,
-   "why": [
-    "趨勢線突破(支撐·觸及4)",
-    "逆頭肩 已確認",
-    "對稱三角 已確認",
-    "頭肩頂 形成中",
-    "距短期50D煞車線 1.5%",
-    "CTA分數 +33(易翻轉區)",
-    "近10日CTA事件:分數翻負、跌破中期(100D)、收復中期(100D)",
-    "貼近 Fib 50%"
-   ]
-  },
-  {
-   "sym": "AMZN",
-   "d": "2026-07-31",
-   "px": 271.58,
-   "chg1d": 15.32,
-   "chg5d": 17.0,
-   "chg20d": 11.91,
-   "vol_pace": 3.09,
-   "hi52": 278.56,
-   "lo52": 196.0,
-   "pct_from_hi52": -2.51,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-27",
-    "touches": 3
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重底",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "下降三角",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "雙重頂",
-     "state": "confirmed",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "動能63D",
-    "px": 265.06,
-    "dist_pct": -2.4
-   },
-   "cta_score": 100,
-   "rv_pct": 97,
-   "cta_events": [
-    "收復中期(100D)",
-    "3月動能轉正",
-    "6月動能轉正"
-   ],
-   "score": 14.0,
-   "why": [
-    "趨勢線突破(支撐·觸及3)",
-    "雙重底 已確認",
-    "下降三角 已確認",
-    "雙重頂 已確認",
-    "RV第97百分位(縮部位壓力)",
-    "近10日CTA事件:收復中期(100D)、3月動能轉正、6月動能轉正"
    ]
   },
   {
@@ -324,7 +193,7 @@
    "chg1d": 5.83,
    "chg5d": -6.57,
    "chg20d": 4.25,
-   "vol_pace": 1.03,
+   "vol_pace": 1.05,
    "hi52": 43.273,
    "lo52": 21.537,
    "pct_from_hi52": -32.01,
@@ -343,6 +212,11 @@
    },
    "pattern_hits": [
     {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
      "type": "頭肩頂",
      "state": "confirmed",
      "dir": -1
@@ -354,11 +228,6 @@
     },
     {
      "type": "雙重底",
-     "state": "forming",
-     "dir": 1
-    },
-    {
-     "type": "下降旗形",
      "state": "forming",
      "dir": 1
     }
@@ -402,16 +271,762 @@
     "px": 29.84,
     "dist_pct": 1.43
    },
-   "score": 14.0,
+   "score": 16.0,
    "why": [
     "趨勢線突破(支撐·觸及4)",
+    "下降楔形 已確認",
     "頭肩頂 已確認",
     "雙重頂 已確認",
     "雙重底 形成中",
-    "下降旗形 形成中",
     "近3日蠟燭偏多",
     "近10日CTA事件:3月動能轉負、6月動能轉負、12月動能轉負",
     "貼近 Fib 38.2%"
+   ]
+  },
+  {
+   "sym": "AVGO",
+   "d": "2026-07-31",
+   "px": 389.28,
+   "chg1d": 0.37,
+   "chg5d": 1.93,
+   "chg20d": 8.0,
+   "vol_pace": 0.98,
+   "hi52": 494.218,
+   "lo52": 289.502,
+   "pct_from_hi52": -21.23,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-29",
+    "touches": 4
+   },
+   "near_trendline": {
+    "side": "res",
+    "px": 398.027,
+    "dist_pct": 2.25,
+    "touches": 4
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "forming",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 395.15,
+    "dist_pct": 1.51
+   },
+   "cta_score": 33,
+   "rv_pct": 47,
+   "cta_events": [
+    "分數翻負",
+    "跌破中期(100D)",
+    "收復中期(100D)"
+   ],
+   "fib_zone": {
+    "lab": "50%",
+    "px": 391.86,
+    "dist_pct": 0.66
+   },
+   "squeeze": 30,
+   "gex_bn": 0.175,
+   "score": 15.0,
+   "why": [
+    "趨勢線突破(支撐·觸及4)",
+    "對稱三角 已確認",
+    "逆頭肩 已確認",
+    "頭肩頂 形成中",
+    "距短期50D煞車線 1.5%",
+    "CTA分數 +33(易翻轉區)",
+    "近10日CTA事件:分數翻負、跌破中期(100D)、收復中期(100D)",
+    "貼近 Fib 50%"
+   ]
+  },
+  {
+   "sym": "LITE",
+   "d": "2026-07-31",
+   "px": 713.94,
+   "chg1d": 2.99,
+   "chg5d": -6.43,
+   "chg20d": -1.97,
+   "vol_pace": 1.04,
+   "hi52": 1085.68,
+   "lo52": 152.54,
+   "pct_from_hi52": -34.24,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-29",
+    "touches": 7
+   },
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "黑三兵",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-30",
+     "name": "看漲反衝",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "長期200D",
+    "px": 600.583,
+    "dist_pct": -15.88
+   },
+   "cta_score": 0,
+   "rv_pct": 84,
+   "cta_events": [
+    "收復中期(100D)",
+    "分數翻負",
+    "跌破中期(100D)"
+   ],
+   "squeeze": 40,
+   "gex_bn": -0.017,
+   "score": 15.0,
+   "why": [
+    "趨勢線突破(支撐·觸及7)",
+    "下降楔形 已確認",
+    "雙重頂 已確認",
+    "頭肩頂 已確認",
+    "CTA分數 +0(易翻轉區)",
+    "RV第84百分位(縮部位壓力)",
+    "近10日CTA事件:收復中期(100D)、分數翻負、跌破中期(100D)"
+   ]
+  },
+  {
+   "sym": "IWM",
+   "d": "2026-07-31",
+   "px": 291.2,
+   "chg1d": -0.48,
+   "chg5d": 0.01,
+   "chg20d": -2.14,
+   "vol_pace": 1.34,
+   "hi52": 302.72,
+   "lo52": 227.189,
+   "pct_from_hi52": -3.81,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "sup",
+    "px": 286.954,
+    "dist_pct": -1.46,
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "上升楔形",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "杯柄",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-31",
+     "name": "烏雲蓋頂",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 292.488,
+    "dist_pct": 0.44
+   },
+   "cta_score": 67,
+   "rv_pct": 4,
+   "cta_events": [
+    "跌破短期(50D)",
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 15.0,
+   "why": [
+    "上升楔形 已確認",
+    "雙重底 已確認",
+    "逆頭肩 已確認",
+    "杯柄 已確認",
+    "距短期50D煞車線 0.4%",
+    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "AMZN",
+   "d": "2026-07-31",
+   "px": 271.58,
+   "chg1d": 15.32,
+   "chg5d": 17.0,
+   "chg20d": 11.91,
+   "vol_pace": 3.11,
+   "hi52": 278.56,
+   "lo52": 196.0,
+   "pct_from_hi52": -2.51,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-27",
+    "touches": 3
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "動能63D",
+    "px": 265.06,
+    "dist_pct": -2.4
+   },
+   "cta_score": 100,
+   "rv_pct": 97,
+   "cta_events": [
+    "收復中期(100D)",
+    "3月動能轉正",
+    "6月動能轉正"
+   ],
+   "score": 14.0,
+   "why": [
+    "趨勢線突破(支撐·觸及3)",
+    "對稱三角 已確認",
+    "雙重底 已確認",
+    "雙重頂 已確認",
+    "RV第97百分位(縮部位壓力)",
+    "近10日CTA事件:收復中期(100D)、3月動能轉正、6月動能轉正"
+   ]
+  },
+  {
+   "sym": "AMD",
+   "d": "2026-07-31",
+   "px": 476.15,
+   "chg1d": -1.9,
+   "chg5d": -8.77,
+   "chg20d": -8.05,
+   "vol_pace": 0.95,
+   "hi52": 584.73,
+   "lo52": 188.22,
+   "pct_from_hi52": -18.57,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-28",
+    "touches": 4
+   },
+   "pattern_hits": [
+    {
+     "type": "上升楔形",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "黑三兵",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-30",
+     "name": "看漲反衝",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 512.943,
+    "dist_pct": 7.73
+   },
+   "cta_score": 67,
+   "rv_pct": 85,
+   "cta_events": [
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 14.0,
+   "why": [
+    "趨勢線突破(支撐·觸及4)",
+    "上升楔形 已確認",
+    "雙重頂 已確認",
+    "雙重底 已確認",
+    "RV第85百分位(縮部位壓力)",
+    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "INTC",
+   "d": "2026-07-31",
+   "px": 90.2,
+   "chg1d": -1.02,
+   "chg5d": -2.3,
+   "chg20d": -25.05,
+   "vol_pace": 0.93,
+   "hi52": 142.35,
+   "lo52": 32.89,
+   "pct_from_hi52": -36.64,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-28",
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "上升楔形",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "中期100D",
+    "px": 92.478,
+    "dist_pct": 2.53
+   },
+   "cta_score": 0,
+   "rv_pct": 73,
+   "cta_events": [
+    "跌破中期(100D)",
+    "分數翻負",
+    "3月動能轉負"
+   ],
+   "score": 14.0,
+   "why": [
+    "趨勢線突破(支撐·觸及5)",
+    "上升楔形 已確認",
+    "頭肩頂 已確認",
+    "雙重底 已確認",
+    "CTA分數 +0(易翻轉區)",
+    "近10日CTA事件:跌破中期(100D)、分數翻負、3月動能轉負"
+   ]
+  },
+  {
+   "sym": "SPXL",
+   "d": "2026-07-31",
+   "px": 268.2,
+   "chg1d": 2.01,
+   "chg5d": 3.0,
+   "chg20d": -0.23,
+   "vol_pace": 1.47,
+   "hi52": 288.44,
+   "lo52": 167.715,
+   "pct_from_hi52": -7.02,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-29",
+    "touches": 4
+   },
+   "near_trendline": {
+    "side": "res",
+    "px": 277.985,
+    "dist_pct": 3.65,
+    "touches": 3
+   },
+   "pattern_hits": [
+    {
+     "type": "上升楔形",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "forming",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "forming",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 269.317,
+    "dist_pct": 0.42
+   },
+   "cta_score": 67,
+   "rv_pct": 45,
+   "cta_events": [
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 14.0,
+   "why": [
+    "趨勢線突破(支撐·觸及4)",
+    "上升楔形 已確認",
+    "雙重頂 已確認",
+    "雙重底 形成中",
+    "逆頭肩 形成中",
+    "距短期50D煞車線 0.4%",
+    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "UPRO",
+   "d": "2026-07-31",
+   "px": 140.28,
+   "chg1d": 1.97,
+   "chg5d": 2.94,
+   "chg20d": -0.35,
+   "vol_pace": 1.38,
+   "hi52": 151.075,
+   "lo52": 87.95,
+   "pct_from_hi52": -7.15,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-29",
+    "touches": 4
+   },
+   "near_trendline": {
+    "side": "res",
+    "px": 162.299,
+    "dist_pct": 15.7,
+    "touches": 4
+   },
+   "pattern_hits": [
+    {
+     "type": "上升楔形",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "forming",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "forming",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 141.01,
+    "dist_pct": 0.52
+   },
+   "cta_score": 67,
+   "rv_pct": 45,
+   "cta_events": [
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 14.0,
+   "why": [
+    "趨勢線突破(支撐·觸及4)",
+    "上升楔形 已確認",
+    "雙重頂 已確認",
+    "雙重底 形成中",
+    "逆頭肩 形成中",
+    "距短期50D煞車線 0.5%",
+    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "MSFT",
+   "d": "2026-07-31",
+   "px": 464.72,
+   "chg1d": 3.02,
+   "chg5d": 21.75,
+   "chg20d": 19.01,
+   "vol_pace": 1.72,
+   "hi52": 550.235,
+   "lo52": 349.2,
+   "pct_from_hi52": -15.54,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "res",
+    "broken_d": "2026-07-31",
+    "touches": 7
+   },
+   "near_trendline": {
+    "side": "res",
+    "px": 465.304,
+    "dist_pct": 0.13,
+    "touches": 6
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "看跌吞噬",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "長期200D",
+    "px": 432.093,
+    "dist_pct": -7.02
+   },
+   "cta_score": 67,
+   "rv_pct": 100,
+   "cta_events": [
+    "收復長期(200D)",
+    "3月動能轉正",
+    "6月動能轉正"
+   ],
+   "score": 14.0,
+   "why": [
+    "趨勢線突破(壓力·觸及7)",
+    "對稱三角 已確認",
+    "逆頭肩 已確認",
+    "雙重底 已確認",
+    "RV第100百分位(縮部位壓力)",
+    "近10日CTA事件:收復長期(200D)、3月動能轉正、6月動能轉正"
+   ]
+  },
+  {
+   "sym": "SNDK",
+   "d": "2026-07-31",
+   "px": 1214.83,
+   "chg1d": -5.09,
+   "chg5d": -15.43,
+   "chg20d": -30.38,
+   "vol_pace": 1.33,
+   "hi52": 2354.39,
+   "lo52": 517.0,
+   "pct_from_hi52": -48.4,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-29",
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "黑三兵",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-30",
+     "name": "看漲反衝",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "中期100D",
+    "px": 1333.12,
+    "dist_pct": 9.74
+   },
+   "cta_score": 33,
+   "rv_pct": 99,
+   "cta_events": [
+    "跌破中期(100D)"
+   ],
+   "fib_zone": {
+    "lab": "38.2%",
+    "px": 1218.883,
+    "dist_pct": 0.33
+   },
+   "squeeze": 40,
+   "gex_bn": -0.038,
+   "score": 13.0,
+   "why": [
+    "趨勢線突破(支撐·觸及5)",
+    "頭肩頂 已確認",
+    "下降楔形 已確認",
+    "CTA分數 +33(易翻轉區)",
+    "RV第99百分位(縮部位壓力)",
+    "近10日CTA事件:跌破中期(100D)",
+    "貼近 Fib 38.2%"
+   ]
+  },
+  {
+   "sym": "NFLX",
+   "d": "2026-07-31",
+   "px": 71.71,
+   "chg1d": -2.0,
+   "chg5d": 2.31,
+   "chg20d": -7.65,
+   "vol_pace": 0.72,
+   "hi52": 124.86,
+   "lo52": 65.08,
+   "pct_from_hi52": -42.57,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "res",
+    "broken_d": "2026-07-28",
+    "touches": 8
+   },
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "鑷頂",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "紡錘線",
+     "dir": 0
+    },
+    {
+     "d": "2026-07-31",
+     "name": "看跌孕線",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 77.221,
+    "dist_pct": 7.69
+   },
+   "cta_score": -100,
+   "rv_pct": 65,
+   "cta_events": [],
+   "score": 13.0,
+   "why": [
+    "趨勢線突破(壓力·觸及8)",
+    "下降楔形 已確認",
+    "頭肩頂 已確認",
+    "逆頭肩 已確認",
+    "近3日蠟燭偏空"
    ]
   },
   {
@@ -421,7 +1036,7 @@
    "chg1d": -0.53,
    "chg5d": -3.95,
    "chg20d": -5.36,
-   "vol_pace": 1.21,
+   "vol_pace": 1.22,
    "hi52": 1249.45,
    "lo52": 780.049,
    "pct_from_hi52": -8.05,
@@ -440,7 +1055,7 @@
    },
    "pattern_hits": [
     {
-     "type": "對稱三角",
+     "type": "上升楔形",
      "state": "confirmed",
      "dir": -1
     },
@@ -483,7 +1098,7 @@
    "score": 12.0,
    "why": [
     "趨勢線突破(支撐·觸及5)",
-    "對稱三角 已確認",
+    "上升楔形 已確認",
     "雙重頂 已確認",
     "雙重頂 形成中",
     "距短期50D煞車線 -0.1%"
@@ -496,7 +1111,7 @@
    "chg1d": 2.21,
    "chg5d": 4.82,
    "chg20d": 1.08,
-   "vol_pace": 1.29,
+   "vol_pace": 1.3,
    "hi52": 799.87,
    "lo52": 112.347,
    "pct_from_hi52": -31.88,
@@ -504,14 +1119,14 @@
    "is_52w_low": false,
    "pattern_hits": [
     {
-     "type": "頭肩頂",
+     "type": "對稱三角",
      "state": "confirmed",
      "dir": -1
     },
     {
-     "type": "下降楔形",
+     "type": "頭肩頂",
      "state": "confirmed",
-     "dir": 1
+     "dir": -1
     },
     {
      "type": "逆頭肩",
@@ -540,78 +1155,12 @@
    "gex_bn": 0.006,
    "score": 12.0,
    "why": [
+    "對稱三角 已確認",
     "頭肩頂 已確認",
-    "下降楔形 已確認",
     "逆頭肩 已確認",
     "RV第95百分位(縮部位壓力)",
     "近10日CTA事件:收復短期(50D)、跌破短期(50D)",
     "貼近 Fib 61.8%"
-   ]
-  },
-  {
-   "sym": "LITE",
-   "d": "2026-07-31",
-   "px": 713.94,
-   "chg1d": 2.99,
-   "chg5d": -6.43,
-   "chg20d": -1.97,
-   "vol_pace": 1.04,
-   "hi52": 1085.68,
-   "lo52": 152.54,
-   "pct_from_hi52": -34.24,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-29",
-    "touches": 7
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重頂",
-     "state": "confirmed",
-     "dir": -1
-    },
-    {
-     "type": "頭肩頂",
-     "state": "confirmed",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-29",
-     "name": "黑三兵",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-30",
-     "name": "看漲反衝",
-     "dir": 1
-    }
-   ],
-   "near_line": {
-    "name": "長期200D",
-    "px": 600.583,
-    "dist_pct": -15.88
-   },
-   "cta_score": 0,
-   "rv_pct": 84,
-   "cta_events": [
-    "收復中期(100D)",
-    "分數翻負",
-    "跌破中期(100D)"
-   ],
-   "squeeze": 40,
-   "gex_bn": -0.017,
-   "score": 12.0,
-   "why": [
-    "趨勢線突破(支撐·觸及7)",
-    "雙重頂 已確認",
-    "頭肩頂 已確認",
-    "CTA分數 +0(易翻轉區)",
-    "RV第84百分位(縮部位壓力)",
-    "近10日CTA事件:收復中期(100D)、分數翻負、跌破中期(100D)"
    ]
   },
   {
@@ -621,7 +1170,7 @@
    "chg1d": 0.0,
    "chg5d": -16.15,
    "chg20d": -36.78,
-   "vol_pace": 1.35,
+   "vol_pace": 1.39,
    "hi52": 302.0,
    "lo52": 28.12,
    "pct_from_hi52": -62.01,
@@ -636,7 +1185,7 @@
     {
      "type": "下降楔形",
      "state": "confirmed",
-     "dir": 1
+     "dir": -1
     },
     {
      "type": "雙重頂",
@@ -668,181 +1217,567 @@
    ]
   },
   {
-   "sym": "AMD",
+   "sym": "TZA",
    "d": "2026-07-31",
-   "px": 476.15,
-   "chg1d": -1.9,
-   "chg5d": -8.77,
-   "chg20d": -8.05,
-   "vol_pace": 0.94,
-   "hi52": 584.73,
-   "lo52": 188.22,
-   "pct_from_hi52": -18.57,
+   "px": 41.8,
+   "chg1d": 1.46,
+   "chg5d": -0.07,
+   "chg20d": 6.63,
+   "vol_pace": 0.38,
+   "hi52": 93.089,
+   "lo52": 37.1,
+   "pct_from_hi52": -55.1,
    "is_52w_high": false,
    "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-28",
-    "touches": 4
-   },
    "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
     {
      "type": "雙重頂",
      "state": "confirmed",
      "dir": -1
     },
     {
-     "type": "雙重底",
+     "type": "逆頭肩",
      "state": "confirmed",
      "dir": 1
     }
    ],
    "candle_hits": [
     {
-     "d": "2026-07-29",
-     "name": "黑三兵",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-30",
-     "name": "看漲反衝",
+     "d": "2026-07-31",
+     "name": "曙光初現",
      "dir": 1
     }
    ],
    "near_line": {
     "name": "短期50D",
-    "px": 512.943,
-    "dist_pct": 7.73
+    "px": 41.477,
+    "dist_pct": -0.77
+   },
+   "cta_score": -67,
+   "rv_pct": 3,
+   "cta_events": [
+    "收復短期(50D)",
+    "跌破短期(50D)",
+    "收復短期(50D)"
+   ],
+   "score": 12.0,
+   "why": [
+    "下降楔形 已確認",
+    "雙重頂 已確認",
+    "逆頭肩 已確認",
+    "距短期50D煞車線 -0.8%",
+    "近10日CTA事件:收復短期(50D)、跌破短期(50D)、收復短期(50D)"
+   ]
+  },
+  {
+   "sym": "COIN",
+   "d": "2026-07-31",
+   "px": 146.26,
+   "chg1d": -10.59,
+   "chg5d": -7.6,
+   "chg20d": -11.61,
+   "vol_pace": 3.12,
+   "hi52": 373.25,
+   "lo52": 139.11,
+   "pct_from_hi52": -60.81,
+   "is_52w_high": false,
+   "is_52w_low": true,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-31",
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "看漲孕線",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 164.719,
+    "dist_pct": 12.62
+   },
+   "cta_score": -100,
+   "rv_pct": 52,
+   "cta_events": [
+    "跌破短期(50D)",
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 12.0,
+   "why": [
+    "52週新低",
+    "趨勢線突破(支撐·觸及5)",
+    "對稱三角 已確認",
+    "逆頭肩 已確認",
+    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "JPM",
+   "d": "2026-07-31",
+   "px": 351.79,
+   "chg1d": 0.27,
+   "chg5d": -0.4,
+   "chg20d": 5.65,
+   "vol_pace": 0.7,
+   "hi52": 359.3,
+   "lo52": 276.434,
+   "pct_from_hi52": -2.09,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "res",
+    "px": 357.952,
+    "dist_pct": 1.75,
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "上升三角",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "VCP 波動收縮",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "看漲孕線",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 326.325,
+    "dist_pct": -7.24
+   },
+   "cta_score": 100,
+   "rv_pct": 60,
+   "cta_events": [],
+   "score": 12.0,
+   "why": [
+    "上升三角 已確認",
+    "逆頭肩 已確認",
+    "VCP 波動收縮 已確認",
+    "雙重頂 已確認"
+   ]
+  },
+  {
+   "sym": "SPY",
+   "d": "2026-07-31",
+   "px": 747.03,
+   "chg1d": 0.72,
+   "chg5d": 1.1,
+   "chg20d": 0.3,
+   "vol_pace": 1.31,
+   "hi52": 760.4,
+   "lo52": 627.663,
+   "pct_from_hi52": -1.76,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "res",
+    "px": 771.582,
+    "dist_pct": 3.29,
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "上升三角",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "VCP 波動收縮",
+     "state": "forming",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "forming",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 744.948,
+    "dist_pct": -0.28
+   },
+   "cta_score": 100,
+   "rv_pct": 45,
+   "cta_events": [
+    "收復短期(50D)",
+    "跌破短期(50D)",
+    "收復短期(50D)"
+   ],
+   "squeeze": 15,
+   "gex_bn": 6.172,
+   "score": 11.0,
+   "why": [
+    "上升三角 已確認",
+    "VCP 波動收縮 形成中",
+    "雙重底 已確認",
+    "雙重頂 形成中",
+    "距短期50D煞車線 -0.3%",
+    "近10日CTA事件:收復短期(50D)、跌破短期(50D)、收復短期(50D)"
+   ]
+  },
+  {
+   "sym": "SPXS",
+   "d": "2026-07-31",
+   "px": 26.57,
+   "chg1d": -2.06,
+   "chg5d": -3.35,
+   "chg20d": -0.49,
+   "vol_pace": 1.79,
+   "hi52": 44.433,
+   "lo52": 25.304,
+   "pct_from_hi52": -40.2,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "sup",
+    "px": 25.774,
+    "dist_pct": -2.99,
+    "touches": 4
+   },
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "forming",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "forming",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 26.802,
+    "dist_pct": 0.87
+   },
+   "cta_score": -100,
+   "rv_pct": 47,
+   "cta_events": [
+    "跌破短期(50D)",
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 11.0,
+   "why": [
+    "下降楔形 已確認",
+    "雙重底 已確認",
+    "雙重底 形成中",
+    "雙重頂 形成中",
+    "距短期50D煞車線 0.9%",
+    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "SPXU",
+   "d": "2026-07-31",
+   "px": 37.27,
+   "chg1d": -1.95,
+   "chg5d": -3.19,
+   "chg20d": -0.35,
+   "vol_pace": 1.26,
+   "hi52": 62.225,
+   "lo52": 35.464,
+   "pct_from_hi52": -40.1,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "sup",
+    "px": 32.822,
+    "dist_pct": -11.94,
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "forming",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "forming",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 37.537,
+    "dist_pct": 0.72
+   },
+   "cta_score": -100,
+   "rv_pct": 46,
+   "cta_events": [
+    "跌破短期(50D)",
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 11.0,
+   "why": [
+    "下降楔形 已確認",
+    "雙重底 已確認",
+    "雙重底 形成中",
+    "雙重頂 形成中",
+    "距短期50D煞車線 0.7%",
+    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "AAOI",
+   "d": "2026-07-31",
+   "px": 94.32,
+   "chg1d": 4.67,
+   "chg5d": -5.82,
+   "chg20d": -22.02,
+   "vol_pace": 1.08,
+   "hi52": 233.67,
+   "lo52": 18.5,
+   "pct_from_hi52": -59.64,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "sup",
+    "broken_d": "2026-07-28",
+    "touches": 7
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "光頭光腳陰線",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "長期200D",
+    "px": 90.009,
+    "dist_pct": -4.57
+   },
+   "cta_score": 0,
+   "rv_pct": 70,
+   "cta_events": [
+    "跌破長期(200D)",
+    "分數翻正",
+    "收復長期(200D)"
+   ],
+   "squeeze": 45,
+   "gex_bn": 0.005,
+   "score": 11.0,
+   "why": [
+    "趨勢線突破(支撐·觸及7)",
+    "對稱三角 已確認",
+    "頭肩頂 已確認",
+    "CTA分數 +0(易翻轉區)",
+    "近10日CTA事件:跌破長期(200D)、分數翻正、收復長期(200D)"
+   ]
+  },
+  {
+   "sym": "AAPL",
+   "d": "2026-07-31",
+   "px": 308.91,
+   "chg1d": -7.35,
+   "chg5d": -7.24,
+   "chg20d": 0.09,
+   "vol_pace": 2.61,
+   "hi52": 344.57,
+   "lo52": 242.969,
+   "pct_from_hi52": -10.35,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "sup",
+    "px": 284.347,
+    "dist_pct": -7.95,
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "十字星",
+     "dir": 0
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 309.511,
+    "dist_pct": 0.19
    },
    "cta_score": 67,
-   "rv_pct": 85,
+   "rv_pct": 93,
+   "cta_events": [
+    "跌破短期(50D)"
+   ],
+   "fib_zone": {
+    "lab": "61.8%",
+    "px": 305.758,
+    "dist_pct": -1.02
+   },
+   "score": 11.0,
+   "why": [
+    "逆頭肩 已確認",
+    "雙重頂 已確認",
+    "距短期50D煞車線 0.2%",
+    "RV第93百分位(縮部位壓力)",
+    "近10日CTA事件:跌破短期(50D)",
+    "貼近 Fib 61.8%"
+   ]
+  },
+  {
+   "sym": "PLTR",
+   "d": "2026-07-31",
+   "px": 123.06,
+   "chg1d": 0.65,
+   "chg5d": 0.11,
+   "chg20d": -4.83,
+   "vol_pace": 0.82,
+   "hi52": 207.52,
+   "lo52": 106.37,
+   "pct_from_hi52": -40.7,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "res",
+    "broken_d": "2026-07-27",
+    "touches": 3
+   },
+   "pattern_hits": [
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "forming",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "夜星",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "錘子線",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 130.875,
+    "dist_pct": 6.35
+   },
+   "cta_score": -100,
+   "rv_pct": 28,
    "cta_events": [
     "收復短期(50D)",
     "跌破短期(50D)"
    ],
    "score": 11.0,
    "why": [
-    "趨勢線突破(支撐·觸及4)",
-    "雙重頂 已確認",
-    "雙重底 已確認",
-    "RV第85百分位(縮部位壓力)",
+    "趨勢線突破(壓力·觸及3)",
+    "逆頭肩 已確認",
+    "對稱三角 已確認",
+    "頭肩頂 形成中",
     "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "INTC",
-   "d": "2026-07-31",
-   "px": 90.2,
-   "chg1d": -1.02,
-   "chg5d": -2.3,
-   "chg20d": -25.05,
-   "vol_pace": 0.89,
-   "hi52": 142.35,
-   "lo52": 32.89,
-   "pct_from_hi52": -36.64,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-28",
-    "touches": 5
-   },
-   "pattern_hits": [
-    {
-     "type": "頭肩頂",
-     "state": "confirmed",
-     "dir": -1
-    },
-    {
-     "type": "雙重底",
-     "state": "confirmed",
-     "dir": 1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "中期100D",
-    "px": 92.478,
-    "dist_pct": 2.53
-   },
-   "cta_score": 0,
-   "rv_pct": 73,
-   "cta_events": [
-    "跌破中期(100D)",
-    "分數翻負",
-    "3月動能轉負"
-   ],
-   "score": 11.0,
-   "why": [
-    "趨勢線突破(支撐·觸及5)",
-    "頭肩頂 已確認",
-    "雙重底 已確認",
-    "CTA分數 +0(易翻轉區)",
-    "近10日CTA事件:跌破中期(100D)、分數翻負、3月動能轉負"
-   ]
-  },
-  {
-   "sym": "SNDK",
-   "d": "2026-07-31",
-   "px": 1214.83,
-   "chg1d": -5.09,
-   "chg5d": -15.43,
-   "chg20d": -30.38,
-   "vol_pace": 1.32,
-   "hi52": 2354.39,
-   "lo52": 517.0,
-   "pct_from_hi52": -48.4,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-29",
-    "touches": 5
-   },
-   "pattern_hits": [
-    {
-     "type": "頭肩頂",
-     "state": "confirmed",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-29",
-     "name": "黑三兵",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-30",
-     "name": "看漲反衝",
-     "dir": 1
-    }
-   ],
-   "near_line": {
-    "name": "中期100D",
-    "px": 1333.12,
-    "dist_pct": 9.74
-   },
-   "cta_score": 33,
-   "rv_pct": 99,
-   "cta_events": [
-    "跌破中期(100D)"
-   ],
-   "fib_zone": {
-    "lab": "38.2%",
-    "px": 1218.883,
-    "dist_pct": 0.33
-   },
-   "squeeze": 40,
-   "gex_bn": -0.038,
-   "score": 10.0,
-   "why": [
-    "趨勢線突破(支撐·觸及5)",
-    "頭肩頂 已確認",
-    "CTA分數 +33(易翻轉區)",
-    "RV第99百分位(縮部位壓力)",
-    "近10日CTA事件:跌破中期(100D)",
-    "貼近 Fib 38.2%"
    ]
   },
   {
@@ -852,7 +1787,7 @@
    "chg1d": 2.32,
    "chg5d": -3.43,
    "chg20d": -23.52,
-   "vol_pace": 1.05,
+   "vol_pace": 1.06,
    "hi52": 329.799,
    "lo52": 70.632,
    "pct_from_hi52": -43.13,
@@ -900,24 +1835,299 @@
    ]
   },
   {
-   "sym": "NFLX",
+   "sym": "GOOGL",
    "d": "2026-07-31",
-   "px": 71.71,
-   "chg1d": -2.0,
-   "chg5d": 2.31,
-   "chg20d": -7.65,
-   "vol_pace": 0.71,
-   "hi52": 124.86,
-   "lo52": 65.08,
-   "pct_from_hi52": -42.57,
+   "px": 356.13,
+   "chg1d": 6.73,
+   "chg5d": 11.38,
+   "chg20d": -1.05,
+   "vol_pace": 1.6,
+   "hi52": 408.366,
+   "lo52": 240.04,
+   "pct_from_hi52": -12.79,
    "is_52w_high": false,
    "is_52w_low": false,
-   "trendline_break": {
+   "near_trendline": {
     "side": "res",
-    "broken_d": "2026-07-28",
-    "touches": 8
+    "px": 369.228,
+    "dist_pct": 3.68,
+    "touches": 3
    },
    "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "forming",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "紡錘線",
+     "dir": 0
+    },
+    {
+     "d": "2026-07-30",
+     "name": "十字星",
+     "dir": 0
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 358.736,
+    "dist_pct": 0.73
+   },
+   "cta_score": 33,
+   "rv_pct": 96,
+   "cta_events": [
+    "分數翻正",
+    "收復中期(100D)",
+    "6月動能轉正"
+   ],
+   "fib_zone": {
+    "lab": "61.8%",
+    "px": 355.576,
+    "dist_pct": -0.16
+   },
+   "score": 10.0,
+   "why": [
+    "對稱三角 已確認",
+    "逆頭肩 形成中",
+    "距短期50D煞車線 0.7%",
+    "CTA分數 +33(易翻轉區)",
+    "RV第96百分位(縮部位壓力)",
+    "近10日CTA事件:分數翻正、收復中期(100D)、6月動能轉正",
+    "貼近 Fib 61.8%"
+   ]
+  },
+  {
+   "sym": "TSLZ",
+   "d": "2026-07-31",
+   "px": 17.25,
+   "chg1d": -1.43,
+   "chg5d": 0.52,
+   "chg20d": 44.35,
+   "vol_pace": 0.49,
+   "hi52": 19.03,
+   "lo52": 9.658,
+   "pct_from_hi52": -9.35,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-29",
+     "name": "看漲吞噬",
+     "dir": 1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "十字星",
+     "dir": 0
+    }
+   ],
+   "near_line": {
+    "name": "動能63D",
+    "px": 14.42,
+    "dist_pct": -16.41
+   },
+   "cta_score": 67,
+   "rv_pct": 70,
+   "cta_events": [
+    "收復長期(200D)",
+    "3月動能轉正",
+    "6月動能轉正"
+   ],
+   "fib_zone": {
+    "lab": "78.6%",
+    "px": 17.024,
+    "dist_pct": -1.31
+   },
+   "score": 10.0,
+   "why": [
+    "下降楔形 已確認",
+    "雙重底 已確認",
+    "頭肩頂 已確認",
+    "近10日CTA事件:收復長期(200D)、3月動能轉正、6月動能轉正"
+   ]
+  },
+  {
+   "sym": "TNA",
+   "d": "2026-07-31",
+   "px": 67.6,
+   "chg1d": -1.37,
+   "chg5d": -0.29,
+   "chg20d": -7.22,
+   "vol_pace": 1.27,
+   "hi52": 76.839,
+   "lo52": 36.947,
+   "pct_from_hi52": -12.02,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "pattern_hits": [
+    {
+     "type": "上升楔形",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "看漲孕線",
+     "dir": 1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "看跌吞噬",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 69.44,
+    "dist_pct": 2.72
+   },
+   "cta_score": 67,
+   "rv_pct": 4,
+   "cta_events": [
+    "跌破短期(50D)",
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "fib_zone": {
+    "lab": "78.6%",
+    "px": 68.366,
+    "dist_pct": 1.13
+   },
+   "score": 10.0,
+   "why": [
+    "上升楔形 已確認",
+    "雙重底 已確認",
+    "頭肩頂 已確認",
+    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "META",
+   "d": "2026-07-31",
+   "px": 556.71,
+   "chg1d": 3.28,
+   "chg5d": -6.47,
+   "chg20d": -4.49,
+   "vol_pace": 1.28,
+   "hi52": 757.186,
+   "lo52": 519.778,
+   "pct_from_hi52": -26.48,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "sup",
+    "px": 498.926,
+    "dist_pct": -10.38,
+    "touches": 3
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "forming",
+     "dir": 1
+    },
+    {
+     "type": "雙重底",
+     "state": "forming",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "短期50D",
+    "px": 602.918,
+    "dist_pct": 8.3
+   },
+   "cta_score": -100,
+   "rv_pct": 90,
+   "cta_events": [
+    "跌破中期(100D)",
+    "6月動能轉負",
+    "跌破短期(50D)"
+   ],
+   "score": 10.0,
+   "why": [
+    "對稱三角 已確認",
+    "頭肩頂 已確認",
+    "逆頭肩 形成中",
+    "雙重底 形成中",
+    "RV第90百分位(縮部位壓力)",
+    "近10日CTA事件:跌破中期(100D)、6月動能轉負、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "TSLA",
+   "d": "2026-07-31",
+   "px": 311.21,
+   "chg1d": 0.76,
+   "chg5d": -0.58,
+   "chg20d": -20.9,
+   "vol_pace": 0.85,
+   "hi52": 498.83,
+   "lo52": 297.38,
+   "pct_from_hi52": -37.61,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "sup",
+    "px": 299.29,
+    "dist_pct": -3.83,
+    "touches": 4
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": -1
+    },
     {
      "type": "頭肩頂",
      "state": "confirmed",
@@ -931,101 +2141,34 @@
    ],
    "candle_hits": [
     {
-     "d": "2026-07-29",
-     "name": "鑷頂",
-     "dir": -1
-    },
-    {
      "d": "2026-07-31",
      "name": "紡錘線",
      "dir": 0
     },
     {
      "d": "2026-07-31",
-     "name": "看跌孕線",
-     "dir": -1
+     "name": "鑷底",
+     "dir": 1
     }
    ],
    "near_line": {
-    "name": "短期50D",
-    "px": 77.221,
-    "dist_pct": 7.69
+    "name": "動能63D",
+    "px": 381.63,
+    "dist_pct": 22.63
    },
    "cta_score": -100,
-   "rv_pct": 65,
-   "cta_events": [],
+   "rv_pct": 75,
+   "cta_events": [
+    "12月動能轉負",
+    "12月動能轉正",
+    "12月動能轉負"
+   ],
    "score": 10.0,
    "why": [
-    "趨勢線突破(壓力·觸及8)",
+    "對稱三角 已確認",
     "頭肩頂 已確認",
     "逆頭肩 已確認",
-    "近3日蠟燭偏空"
-   ]
-  },
-  {
-   "sym": "SPY",
-   "d": "2026-07-31",
-   "px": 747.03,
-   "chg1d": 0.72,
-   "chg5d": 1.1,
-   "chg20d": 0.3,
-   "vol_pace": 1.23,
-   "hi52": 760.4,
-   "lo52": 627.663,
-   "pct_from_hi52": -1.76,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 771.582,
-    "dist_pct": 3.29,
-    "touches": 5
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重底",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "雙重頂",
-     "state": "forming",
-     "dir": -1
-    },
-    {
-     "type": "雙重底",
-     "state": "forming",
-     "dir": 1
-    },
-    {
-     "type": "上升三角",
-     "state": "forming",
-     "dir": 1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "短期50D",
-    "px": 744.948,
-    "dist_pct": -0.28
-   },
-   "cta_score": 100,
-   "rv_pct": 45,
-   "cta_events": [
-    "收復短期(50D)",
-    "跌破短期(50D)",
-    "收復短期(50D)"
-   ],
-   "squeeze": 15,
-   "gex_bn": 6.172,
-   "score": 9.0,
-   "why": [
-    "雙重底 已確認",
-    "雙重頂 形成中",
-    "雙重底 形成中",
-    "上升三角 形成中",
-    "距短期50D煞車線 -0.3%",
-    "近10日CTA事件:收復短期(50D)、跌破短期(50D)、收復短期(50D)"
+    "近10日CTA事件:12月動能轉負、12月動能轉正、12月動能轉負"
    ]
   },
   {
@@ -1035,7 +2178,7 @@
    "chg1d": -5.9,
    "chg5d": -10.63,
    "chg20d": -15.62,
-   "vol_pace": 1.14,
+   "vol_pace": 1.16,
    "hi52": 1254.807,
    "lo52": 186.068,
    "pct_from_hi52": -34.41,
@@ -1049,12 +2192,12 @@
    },
    "pattern_hits": [
     {
-     "type": "頭肩頂",
+     "type": "上升楔形",
      "state": "confirmed",
      "dir": -1
     },
     {
-     "type": "下降三角",
+     "type": "頭肩頂",
      "state": "confirmed",
      "dir": -1
     }
@@ -1091,8 +2234,8 @@
    "gex_bn": -0.643,
    "score": 9.0,
    "why": [
+    "上升楔形 已確認",
     "頭肩頂 已確認",
-    "下降三角 已確認",
     "近3日蠟燭偏空",
     "RV第91百分位(縮部位壓力)",
     "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
@@ -1105,7 +2248,7 @@
    "chg1d": 0.23,
    "chg5d": 0.21,
    "chg20d": -6.89,
-   "vol_pace": 0.77,
+   "vol_pace": 0.78,
    "hi52": 479.0,
    "lo52": 264.791,
    "pct_from_hi52": -15.61,
@@ -1151,262 +2294,107 @@
    ]
   },
   {
-   "sym": "SPXS",
+   "sym": "MSTR",
    "d": "2026-07-31",
-   "px": 26.56,
-   "chg1d": -2.1,
-   "chg5d": -3.38,
-   "chg20d": -0.52,
-   "vol_pace": 1.75,
-   "hi52": 44.433,
-   "lo52": 25.304,
-   "pct_from_hi52": -40.22,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "sup",
-    "px": 25.774,
-    "dist_pct": -2.96,
-    "touches": 4
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重底",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "雙重底",
-     "state": "forming",
-     "dir": 1
-    },
-    {
-     "type": "下降三角",
-     "state": "forming",
-     "dir": -1
-    },
-    {
-     "type": "雙重頂",
-     "state": "forming",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "短期50D",
-    "px": 26.802,
-    "dist_pct": 0.91
-   },
-   "cta_score": -100,
-   "rv_pct": 47,
-   "cta_events": [
-    "跌破短期(50D)",
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 9.0,
-   "why": [
-    "雙重底 已確認",
-    "雙重底 形成中",
-    "下降三角 形成中",
-    "雙重頂 形成中",
-    "距短期50D煞車線 0.9%",
-    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "SPXU",
-   "d": "2026-07-31",
-   "px": 37.27,
-   "chg1d": -1.95,
-   "chg5d": -3.19,
-   "chg20d": -0.35,
+   "px": 93.28,
+   "chg1d": -4.56,
+   "chg5d": 1.76,
+   "chg20d": -7.43,
    "vol_pace": 1.23,
-   "hi52": 62.225,
-   "lo52": 35.464,
-   "pct_from_hi52": -40.1,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "sup",
-    "px": 32.822,
-    "dist_pct": -11.94,
-    "touches": 5
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重底",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "雙重底",
-     "state": "forming",
-     "dir": 1
-    },
-    {
-     "type": "下降三角",
-     "state": "forming",
-     "dir": -1
-    },
-    {
-     "type": "雙重頂",
-     "state": "forming",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "短期50D",
-    "px": 37.537,
-    "dist_pct": 0.72
-   },
-   "cta_score": -100,
-   "rv_pct": 46,
-   "cta_events": [
-    "跌破短期(50D)",
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 9.0,
-   "why": [
-    "雙重底 已確認",
-    "雙重底 形成中",
-    "下降三角 形成中",
-    "雙重頂 形成中",
-    "距短期50D煞車線 0.7%",
-    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "TZA",
-   "d": "2026-07-31",
-   "px": 41.8,
-   "chg1d": 1.46,
-   "chg5d": -0.07,
-   "chg20d": 6.63,
-   "vol_pace": 0.38,
-   "hi52": 93.089,
-   "lo52": 37.1,
-   "pct_from_hi52": -55.1,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "pattern_hits": [
-    {
-     "type": "雙重頂",
-     "state": "confirmed",
-     "dir": -1
-    },
-    {
-     "type": "逆頭肩",
-     "state": "confirmed",
-     "dir": 1
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-31",
-     "name": "曙光初現",
-     "dir": 1
-    }
-   ],
-   "near_line": {
-    "name": "短期50D",
-    "px": 41.477,
-    "dist_pct": -0.77
-   },
-   "cta_score": -67,
-   "rv_pct": 3,
-   "cta_events": [
-    "收復短期(50D)",
-    "跌破短期(50D)",
-    "收復短期(50D)"
-   ],
-   "score": 9.0,
-   "why": [
-    "雙重頂 已確認",
-    "逆頭肩 已確認",
-    "距短期50D煞車線 -0.8%",
-    "近10日CTA事件:收復短期(50D)、跌破短期(50D)、收復短期(50D)"
-   ]
-  },
-  {
-   "sym": "AAOI",
-   "d": "2026-07-31",
-   "px": 94.32,
-   "chg1d": 4.67,
-   "chg5d": -5.82,
-   "chg20d": -22.02,
-   "vol_pace": 1.07,
-   "hi52": 233.67,
-   "lo52": 18.5,
-   "pct_from_hi52": -59.64,
+   "hi52": 312.71,
+   "lo52": 81.81,
+   "pct_from_hi52": -70.17,
    "is_52w_high": false,
    "is_52w_low": false,
    "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-28",
-    "touches": 7
+    "side": "res",
+    "broken_d": "2026-07-30",
+    "touches": 3
    },
    "pattern_hits": [
     {
-     "type": "頭肩頂",
+     "type": "對稱三角",
      "state": "confirmed",
      "dir": -1
+    },
+    {
+     "type": "雙重頂",
+     "state": "forming",
+     "dir": -1
+    },
+    {
+     "type": "雙重底",
+     "state": "forming",
+     "dir": 1
     }
    ],
    "candle_hits": [
     {
      "d": "2026-07-29",
-     "name": "光頭光腳陰線",
+     "name": "看跌吞噬",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-29",
+     "name": "鑷底",
+     "dir": 1
+    },
+    {
+     "d": "2026-07-29",
+     "name": "夜星",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "吊人線",
      "dir": -1
     }
    ],
    "near_line": {
-    "name": "長期200D",
-    "px": 90.009,
-    "dist_pct": -4.57
+    "name": "短期50D",
+    "px": 113.076,
+    "dist_pct": 21.22
    },
-   "cta_score": 0,
-   "rv_pct": 70,
-   "cta_events": [
-    "跌破長期(200D)",
-    "分數翻正",
-    "收復長期(200D)"
-   ],
-   "squeeze": 45,
-   "gex_bn": 0.005,
-   "score": 8.0,
+   "cta_score": -100,
+   "rv_pct": 27,
+   "cta_events": [],
+   "score": 9.0,
    "why": [
-    "趨勢線突破(支撐·觸及7)",
-    "頭肩頂 已確認",
-    "CTA分數 +0(易翻轉區)",
-    "近10日CTA事件:跌破長期(200D)、分數翻正、收復長期(200D)"
+    "趨勢線突破(壓力·觸及3)",
+    "對稱三角 已確認",
+    "雙重頂 形成中",
+    "雙重底 形成中",
+    "近3日蠟燭偏空"
    ]
   },
   {
    "sym": "DIA",
    "d": "2026-07-31",
-   "px": 524.44,
-   "chg1d": 0.56,
-   "chg5d": 1.09,
-   "chg20d": -0.62,
-   "vol_pace": 1.04,
+   "px": 524.32,
+   "chg1d": 0.54,
+   "chg5d": 1.07,
+   "chg20d": -0.65,
+   "vol_pace": 1.07,
    "hi52": 532.389,
    "lo52": 448.649,
-   "pct_from_hi52": -1.49,
+   "pct_from_hi52": -1.52,
    "is_52w_high": false,
    "is_52w_low": false,
    "near_trendline": {
     "side": "sup",
     "px": 517.767,
-    "dist_pct": -1.27,
+    "dist_pct": -1.25,
     "touches": 7
    },
    "pattern_hits": [
     {
      "type": "雙重底",
      "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "VCP 波動收縮",
+     "state": "forming",
      "dir": 1
     },
     {
@@ -1440,39 +2428,50 @@
    "near_line": {
     "name": "短期50D",
     "px": 516.233,
-    "dist_pct": -1.56
+    "dist_pct": -1.54
    },
    "cta_score": 100,
    "rv_pct": 57,
    "cta_events": [],
-   "score": 7.0,
+   "score": 8.0,
    "why": [
     "雙重底 已確認",
+    "VCP 波動收縮 形成中",
     "上升楔形 形成中",
     "近3日蠟燭偏多",
-    "距短期50D煞車線 -1.6%"
+    "距短期50D煞車線 -1.5%"
    ]
   },
   {
-   "sym": "GOOGL",
+   "sym": "SDOW",
    "d": "2026-07-31",
-   "px": 356.13,
-   "chg1d": 6.73,
-   "chg5d": 11.38,
-   "chg20d": -1.05,
-   "vol_pace": 1.59,
-   "hi52": 408.366,
-   "lo52": 240.04,
-   "pct_from_hi52": -12.79,
+   "px": 24.02,
+   "chg1d": -1.4,
+   "chg5d": -3.3,
+   "chg20d": 2.39,
+   "vol_pace": 1.35,
+   "hi52": 38.038,
+   "lo52": 22.85,
+   "pct_from_hi52": -36.85,
    "is_52w_high": false,
    "is_52w_low": false,
    "near_trendline": {
     "side": "res",
-    "px": 369.228,
-    "dist_pct": 3.68,
-    "touches": 3
+    "px": 24.911,
+    "dist_pct": 3.71,
+    "touches": 6
    },
    "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    },
     {
      "type": "逆頭肩",
      "state": "forming",
@@ -1481,41 +2480,216 @@
    ],
    "candle_hits": [
     {
-     "d": "2026-07-29",
-     "name": "紡錘線",
+     "d": "2026-07-30",
+     "name": "看跌孕線",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "十字星",
      "dir": 0
     },
     {
-     "d": "2026-07-30",
-     "name": "十字星",
-     "dir": 0
+     "d": "2026-07-31",
+     "name": "夜星",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "三內部下降",
+     "dir": -1
     }
    ],
    "near_line": {
     "name": "短期50D",
-    "px": 358.736,
-    "dist_pct": 0.73
+    "px": 25.118,
+    "dist_pct": 4.57
    },
-   "cta_score": 33,
-   "rv_pct": 96,
-   "cta_events": [
-    "分數翻正",
-    "收復中期(100D)",
-    "6月動能轉正"
-   ],
-   "fib_zone": {
-    "lab": "61.8%",
-    "px": 355.576,
-    "dist_pct": -0.16
-   },
-   "score": 7.0,
+   "cta_score": -100,
+   "rv_pct": 52,
+   "cta_events": [],
+   "score": 8.0,
    "why": [
+    "下降楔形 已確認",
+    "頭肩頂 已確認",
     "逆頭肩 形成中",
-    "距短期50D煞車線 0.7%",
-    "CTA分數 +33(易翻轉區)",
-    "RV第96百分位(縮部位壓力)",
-    "近10日CTA事件:分數翻正、收復中期(100D)、6月動能轉正",
-    "貼近 Fib 61.8%"
+    "近3日蠟燭偏空"
+   ]
+  },
+  {
+   "sym": "QQQ",
+   "d": "2026-07-31",
+   "px": 687.99,
+   "chg1d": 0.65,
+   "chg5d": 0.55,
+   "chg20d": -3.45,
+   "vol_pace": 1.26,
+   "hi52": 747.828,
+   "lo52": 554.99,
+   "pct_from_hi52": -8.0,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "res",
+    "px": 708.91,
+    "dist_pct": 3.04,
+    "touches": 4
+   },
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "逆頭肩",
+     "state": "forming",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "中期100D",
+    "px": 674.553,
+    "dist_pct": -1.95
+   },
+   "cta_score": 67,
+   "rv_pct": 80,
+   "cta_events": [
+    "跌破中期(100D)",
+    "收復中期(100D)"
+   ],
+   "squeeze": 45,
+   "gex_bn": -0.103,
+   "score": 8.0,
+   "why": [
+    "下降楔形 已確認",
+    "逆頭肩 形成中",
+    "距中期100D煞車線 -1.9%",
+    "RV第80百分位(縮部位壓力)",
+    "近10日CTA事件:跌破中期(100D)、收復中期(100D)"
+   ]
+  },
+  {
+   "sym": "SOXS",
+   "d": "2026-07-31",
+   "px": 54.27,
+   "chg1d": 0.65,
+   "chg5d": 5.32,
+   "chg20d": 20.33,
+   "vol_pace": 1.43,
+   "hi52": 997.515,
+   "lo52": 31.7,
+   "pct_from_hi52": -94.56,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "res",
+    "broken_d": "2026-07-28",
+    "touches": 3
+   },
+   "pattern_hits": [
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "看跌反衝",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 51.122,
+    "dist_pct": -5.8
+   },
+   "cta_score": -67,
+   "rv_pct": 90,
+   "cta_events": [
+    "收復短期(50D)"
+   ],
+   "score": 8.0,
+   "why": [
+    "趨勢線突破(壓力·觸及3)",
+    "對稱三角 已確認",
+    "RV第90百分位(縮部位壓力)",
+    "近10日CTA事件:收復短期(50D)"
+   ]
+  },
+  {
+   "sym": "UDOW",
+   "d": "2026-07-31",
+   "px": 70.1,
+   "chg1d": 1.49,
+   "chg5d": 2.83,
+   "chg20d": -3.04,
+   "vol_pace": 1.51,
+   "hi52": 74.21,
+   "lo52": 46.107,
+   "pct_from_hi52": -5.54,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "res",
+    "px": 75.893,
+    "dist_pct": 8.26,
+    "touches": 9
+   },
+   "pattern_hits": [
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    },
+    {
+     "type": "對稱三角",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "看漲孕線",
+     "dir": 1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "十字星",
+     "dir": 0
+    },
+    {
+     "d": "2026-07-31",
+     "name": "晨星",
+     "dir": 1
+    },
+    {
+     "d": "2026-07-31",
+     "name": "三內部上升",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 67.796,
+    "dist_pct": -3.29
+   },
+   "cta_score": 100,
+   "rv_pct": 58,
+   "cta_events": [
+    "跌破短期(50D)",
+    "收復短期(50D)"
+   ],
+   "score": 8.0,
+   "why": [
+    "逆頭肩 已確認",
+    "對稱三角 已確認",
+    "近3日蠟燭偏多",
+    "近10日CTA事件:跌破短期(50D)、收復短期(50D)"
    ]
   },
   {
@@ -1525,7 +2699,7 @@
    "chg1d": 0.07,
    "chg5d": -4.2,
    "chg20d": -10.85,
-   "vol_pace": 1.19,
+   "vol_pace": 1.21,
    "hi52": 655.95,
    "lo52": 259.775,
    "pct_from_hi52": -23.03,
@@ -1578,26 +2752,182 @@
    ]
   },
   {
-   "sym": "TSLZ",
+   "sym": "FNGD",
    "d": "2026-07-31",
-   "px": 17.25,
-   "chg1d": -1.43,
-   "chg5d": 0.52,
-   "chg20d": 44.35,
-   "vol_pace": 0.49,
-   "hi52": 19.03,
-   "lo52": 9.658,
-   "pct_from_hi52": -9.35,
+   "px": 34.36,
+   "chg1d": -5.03,
+   "chg5d": -8.42,
+   "chg20d": -4.69,
+   "vol_pace": 0.95,
+   "hi52": 87.38,
+   "lo52": 28.72,
+   "pct_from_hi52": -60.68,
    "is_52w_high": false,
    "is_52w_low": false,
+   "near_trendline": {
+    "side": "res",
+    "px": 40.07,
+    "dist_pct": 16.62,
+    "touches": 3
+   },
    "pattern_hits": [
     {
-     "type": "雙重底",
+     "type": "對稱三角",
      "state": "confirmed",
      "dir": 1
     },
     {
+     "type": "雙重頂",
+     "state": "confirmed",
+     "dir": -1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-31",
+     "name": "倒錘子",
+     "dir": 1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 35.433,
+    "dist_pct": 3.12
+   },
+   "cta_score": -100,
+   "rv_pct": 49,
+   "cta_events": [
+    "收復短期(50D)",
+    "跌破短期(50D)"
+   ],
+   "score": 7.0,
+   "why": [
+    "對稱三角 已確認",
+    "雙重頂 已確認",
+    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
+   ]
+  },
+  {
+   "sym": "TQQQ",
+   "d": "2026-07-31",
+   "px": 64.62,
+   "chg1d": 2.09,
+   "chg5d": 0.97,
+   "chg20d": -11.9,
+   "vol_pace": 1.32,
+   "hi52": 87.887,
+   "lo52": 37.234,
+   "pct_from_hi52": -26.47,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "near_trendline": {
+    "side": "res",
+    "px": 69.169,
+    "dist_pct": 7.04,
+    "touches": 5
+   },
+   "pattern_hits": [
+    {
+     "type": "下降楔形",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [],
+   "near_line": {
+    "name": "中期100D",
+    "px": 65.433,
+    "dist_pct": 1.26
+   },
+   "cta_score": 33,
+   "rv_pct": 79,
+   "cta_events": [
+    "分數翻正",
+    "收復長期(200D)",
+    "3月動能轉正"
+   ],
+   "score": 7.0,
+   "why": [
+    "下降楔形 已確認",
+    "距中期100D煞車線 1.3%",
+    "CTA分數 +33(易翻轉區)",
+    "近10日CTA事件:分數翻正、收復長期(200D)、3月動能轉正"
+   ]
+  },
+  {
+   "sym": "SQQQ",
+   "d": "2026-07-31",
+   "px": 43.73,
+   "chg1d": -1.99,
+   "chg5d": -2.37,
+   "chg20d": 9.46,
+   "vol_pace": 1.11,
+   "hi52": 89.289,
+   "lo52": 35.237,
+   "pct_from_hi52": -51.02,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "trendline_break": {
+    "side": "res",
+    "broken_d": "2026-07-29",
+    "touches": 3
+   },
+   "near_trendline": {
+    "side": "sup",
+    "px": 38.938,
+    "dist_pct": -10.96,
+    "touches": 3
+   },
+   "pattern_hits": [
+    {
+     "type": "逆頭肩",
+     "state": "confirmed",
+     "dir": 1
+    }
+   ],
+   "candle_hits": [
+    {
+     "d": "2026-07-30",
+     "name": "看跌反衝",
+     "dir": -1
+    }
+   ],
+   "near_line": {
+    "name": "短期50D",
+    "px": 40.095,
+    "dist_pct": -8.31
+   },
+   "cta_score": -67,
+   "rv_pct": 81,
+   "cta_events": [],
+   "score": 7.0,
+   "why": [
+    "趨勢線突破(壓力·觸及3)",
+    "逆頭肩 已確認",
+    "RV第81百分位(縮部位壓力)"
+   ]
+  },
+  {
+   "sym": "TSLL",
+   "d": "2026-07-31",
+   "px": 7.31,
+   "chg1d": 1.39,
+   "chg5d": -1.48,
+   "chg20d": -40.57,
+   "vol_pace": 1.23,
+   "hi52": 23.259,
+   "lo52": 6.695,
+   "pct_from_hi52": -68.57,
+   "is_52w_high": false,
+   "is_52w_low": false,
+   "pattern_hits": [
+    {
      "type": "頭肩頂",
+     "state": "confirmed",
+     "dir": -1
+    },
+    {
+     "type": "上升三角",
      "state": "confirmed",
      "dir": -1
     }
@@ -1605,98 +2935,98 @@
    "candle_hits": [
     {
      "d": "2026-07-29",
-     "name": "看漲吞噬",
-     "dir": 1
+     "name": "看跌吞噬",
+     "dir": -1
     },
     {
      "d": "2026-07-31",
-     "name": "十字星",
+     "name": "紡錘線",
      "dir": 0
+    },
+    {
+     "d": "2026-07-31",
+     "name": "鑷底",
+     "dir": 1
     }
    ],
    "near_line": {
     "name": "動能63D",
-    "px": 14.42,
-    "dist_pct": -16.41
+    "px": 12.373,
+    "dist_pct": 69.26
    },
-   "cta_score": 67,
-   "rv_pct": 70,
+   "cta_score": -100,
+   "rv_pct": 76,
    "cta_events": [
-    "收復長期(200D)",
-    "3月動能轉正",
-    "6月動能轉正"
+    "12月動能轉負"
    ],
-   "fib_zone": {
-    "lab": "78.6%",
-    "px": 17.024,
-    "dist_pct": -1.31
-   },
    "score": 7.0,
    "why": [
-    "雙重底 已確認",
     "頭肩頂 已確認",
-    "近10日CTA事件:收復長期(200D)、3月動能轉正、6月動能轉正"
+    "上升三角 已確認",
+    "近10日CTA事件:12月動能轉負"
    ]
   },
   {
-   "sym": "TNA",
+   "sym": "MUU",
    "d": "2026-07-31",
-   "px": 67.6,
-   "chg1d": -1.37,
-   "chg5d": -0.29,
-   "chg20d": -7.22,
-   "vol_pace": 1.26,
-   "hi52": 76.839,
-   "lo52": 36.947,
-   "pct_from_hi52": -12.02,
+   "px": 23.67,
+   "chg1d": -12.24,
+   "chg5d": -24.3,
+   "chg20d": -36.48,
+   "vol_pace": 1.65,
+   "hi52": 62.64,
+   "lo52": 2.385,
+   "pct_from_hi52": -62.21,
    "is_52w_high": false,
    "is_52w_low": false,
    "pattern_hits": [
     {
-     "type": "雙重底",
-     "state": "confirmed",
-     "dir": 1
-    },
-    {
-     "type": "頭肩頂",
+     "type": "下降楔形",
      "state": "confirmed",
      "dir": -1
     }
    ],
    "candle_hits": [
     {
+     "d": "2026-07-29",
+     "name": "光頭光腳陰線",
+     "dir": -1
+    },
+    {
+     "d": "2026-07-29",
+     "name": "黑三兵",
+     "dir": -1
+    },
+    {
      "d": "2026-07-30",
-     "name": "看漲孕線",
+     "name": "光頭光腳陽線",
      "dir": 1
     },
     {
      "d": "2026-07-31",
-     "name": "看跌吞噬",
+     "name": "烏雲蓋頂",
      "dir": -1
     }
    ],
    "near_line": {
-    "name": "短期50D",
-    "px": 69.44,
-    "dist_pct": 2.72
+    "name": "中期100D",
+    "px": 26.13,
+    "dist_pct": 10.39
    },
-   "cta_score": 67,
-   "rv_pct": 4,
+   "cta_score": 33,
+   "rv_pct": 89,
    "cta_events": [
-    "跌破短期(50D)",
-    "收復短期(50D)",
-    "跌破短期(50D)"
+    "跌破中期(100D)",
+    "收復中期(100D)",
+    "跌破中期(100D)"
    ],
-   "fib_zone": {
-    "lab": "78.6%",
-    "px": 68.366,
-    "dist_pct": 1.13
-   },
    "score": 7.0,
    "why": [
-    "雙重底 已確認",
-    "頭肩頂 已確認",
-    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
+    "下降楔形 已確認",
+    "近3日蠟燭偏空",
+    "CTA分數 +33(易翻轉區)",
+    "RV第89百分位(縮部位壓力)",
+    "近10日CTA事件:跌破中期(100D)、收復中期(100D)、跌破中期(100D)"
    ]
   },
   {
@@ -1754,88 +3084,42 @@
    ]
   },
   {
-   "sym": "COIN",
+   "sym": "FNGU",
    "d": "2026-07-31",
-   "px": 146.26,
-   "chg1d": -10.59,
-   "chg5d": -7.6,
-   "chg20d": -11.61,
-   "vol_pace": 3.09,
-   "hi52": 373.25,
-   "lo52": 139.11,
-   "pct_from_hi52": -60.81,
-   "is_52w_high": false,
-   "is_52w_low": true,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-31",
-    "touches": 5
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 164.719,
-    "dist_pct": 12.62
-   },
-   "cta_score": -100,
-   "rv_pct": 52,
-   "cta_events": [
-    "跌破短期(50D)",
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 6.0,
-   "why": [
-    "52週新低",
-    "趨勢線突破(支撐·觸及5)",
-    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "MSTR",
-   "d": "2026-07-31",
-   "px": 93.28,
-   "chg1d": -4.56,
-   "chg5d": 1.76,
-   "chg20d": -7.43,
-   "vol_pace": 1.22,
-   "hi52": 312.71,
-   "lo52": 81.81,
-   "pct_from_hi52": -70.17,
+   "px": 26.66,
+   "chg1d": 5.13,
+   "chg5d": 7.41,
+   "chg20d": 0.64,
+   "vol_pace": 0.9,
+   "hi52": 36.78,
+   "lo52": 13.485,
+   "pct_from_hi52": -27.51,
    "is_52w_high": false,
    "is_52w_low": false,
-   "trendline_break": {
+   "near_trendline": {
     "side": "res",
-    "broken_d": "2026-07-30",
+    "px": 27.12,
+    "dist_pct": 1.73,
     "touches": 3
    },
    "pattern_hits": [
     {
-     "type": "雙重頂",
-     "state": "forming",
+     "type": "對稱三角",
+     "state": "confirmed",
      "dir": -1
     },
     {
      "type": "雙重底",
      "state": "forming",
      "dir": 1
+    },
+    {
+     "type": "雙重頂",
+     "state": "forming",
+     "dir": -1
     }
    ],
    "candle_hits": [
-    {
-     "d": "2026-07-29",
-     "name": "看跌吞噬",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-29",
-     "name": "鑷底",
-     "dir": 1
-    },
-    {
-     "d": "2026-07-29",
-     "name": "夜星",
-     "dir": -1
-    },
     {
      "d": "2026-07-31",
      "name": "吊人線",
@@ -1844,408 +3128,22 @@
    ],
    "near_line": {
     "name": "短期50D",
-    "px": 113.076,
-    "dist_pct": 21.22
-   },
-   "cta_score": -100,
-   "rv_pct": 27,
-   "cta_events": [],
-   "score": 6.0,
-   "why": [
-    "趨勢線突破(壓力·觸及3)",
-    "雙重頂 形成中",
-    "雙重底 形成中",
-    "近3日蠟燭偏空"
-   ]
-  },
-  {
-   "sym": "SPXL",
-   "d": "2026-07-31",
-   "px": 268.32,
-   "chg1d": 2.06,
-   "chg5d": 3.04,
-   "chg20d": -0.18,
-   "vol_pace": 1.45,
-   "hi52": 288.44,
-   "lo52": 167.715,
-   "pct_from_hi52": -6.98,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-29",
-    "touches": 4
-   },
-   "near_trendline": {
-    "side": "res",
-    "px": 277.985,
-    "dist_pct": 3.6,
-    "touches": 3
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 269.317,
-    "dist_pct": 0.37
+    "px": 27.97,
+    "dist_pct": 4.91
    },
    "cta_score": 67,
-   "rv_pct": 45,
+   "rv_pct": 61,
    "cta_events": [
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 6.0,
-   "why": [
-    "趨勢線突破(支撐·觸及4)",
-    "距短期50D煞車線 0.4%",
-    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "UPRO",
-   "d": "2026-07-31",
-   "px": 140.25,
-   "chg1d": 1.95,
-   "chg5d": 2.92,
-   "chg20d": -0.37,
-   "vol_pace": 1.33,
-   "hi52": 151.075,
-   "lo52": 87.95,
-   "pct_from_hi52": -7.17,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "sup",
-    "broken_d": "2026-07-29",
-    "touches": 4
-   },
-   "near_trendline": {
-    "side": "res",
-    "px": 162.299,
-    "dist_pct": 15.72,
-    "touches": 4
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 141.01,
-    "dist_pct": 0.54
-   },
-   "cta_score": 67,
-   "rv_pct": 45,
-   "cta_events": [
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 6.0,
-   "why": [
-    "趨勢線突破(支撐·觸及4)",
-    "距短期50D煞車線 0.5%",
-    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "SDOW",
-   "d": "2026-07-31",
-   "px": 24.0,
-   "chg1d": -1.48,
-   "chg5d": -3.38,
-   "chg20d": 2.3,
-   "vol_pace": 1.33,
-   "hi52": 38.038,
-   "lo52": 22.85,
-   "pct_from_hi52": -36.91,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 24.911,
-    "dist_pct": 3.79,
-    "touches": 6
-   },
-   "pattern_hits": [
-    {
-     "type": "頭肩頂",
-     "state": "confirmed",
-     "dir": -1
-    },
-    {
-     "type": "逆頭肩",
-     "state": "forming",
-     "dir": 1
-    },
-    {
-     "type": "對稱三角",
-     "state": "forming",
-     "dir": 0
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-30",
-     "name": "看跌孕線",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-31",
-     "name": "十字星",
-     "dir": 0
-    },
-    {
-     "d": "2026-07-31",
-     "name": "夜星",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-31",
-     "name": "三內部下降",
-     "dir": -1
-    }
-   ],
-   "near_line": {
-    "name": "短期50D",
-    "px": 25.118,
-    "dist_pct": 4.66
-   },
-   "cta_score": -100,
-   "rv_pct": 52,
-   "cta_events": [],
-   "score": 6.0,
-   "why": [
-    "頭肩頂 已確認",
-    "逆頭肩 形成中",
-    "對稱三角 形成中",
-    "近3日蠟燭偏空"
-   ]
-  },
-  {
-   "sym": "QQQ",
-   "d": "2026-07-31",
-   "px": 687.99,
-   "chg1d": 0.65,
-   "chg5d": 0.55,
-   "chg20d": -3.45,
-   "vol_pace": 1.18,
-   "hi52": 747.828,
-   "lo52": 554.99,
-   "pct_from_hi52": -8.0,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 708.91,
-    "dist_pct": 3.04,
-    "touches": 4
-   },
-   "pattern_hits": [
-    {
-     "type": "逆頭肩",
-     "state": "forming",
-     "dir": 1
-    }
-   ],
-   "candle_hits": [],
-   "near_line": {
-    "name": "中期100D",
-    "px": 674.553,
-    "dist_pct": -1.95
-   },
-   "cta_score": 67,
-   "rv_pct": 80,
-   "cta_events": [
-    "跌破中期(100D)",
-    "收復中期(100D)"
-   ],
-   "squeeze": 45,
-   "gex_bn": -0.103,
-   "score": 5.0,
-   "why": [
-    "逆頭肩 形成中",
-    "距中期100D煞車線 -1.9%",
-    "RV第80百分位(縮部位壓力)",
-    "近10日CTA事件:跌破中期(100D)、收復中期(100D)"
-   ]
-  },
-  {
-   "sym": "MSFT",
-   "d": "2026-07-31",
-   "px": 464.72,
-   "chg1d": 3.02,
-   "chg5d": 21.75,
-   "chg20d": 19.01,
-   "vol_pace": 1.71,
-   "hi52": 550.235,
-   "lo52": 349.2,
-   "pct_from_hi52": -15.54,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "res",
-    "broken_d": "2026-07-31",
-    "touches": 7
-   },
-   "near_trendline": {
-    "side": "res",
-    "px": 465.304,
-    "dist_pct": 0.13,
-    "touches": 6
-   },
-   "near_line": {
-    "name": "長期200D",
-    "px": 432.093,
-    "dist_pct": -7.02
-   },
-   "cta_score": 67,
-   "rv_pct": 100,
-   "cta_events": [
-    "收復長期(200D)",
     "3月動能轉正",
-    "6月動能轉正"
+    "6月動能轉正",
+    "12月動能轉正"
    ],
-   "score": 5.0,
+   "score": 6.0,
    "why": [
-    "趨勢線突破(壓力·觸及7)",
-    "RV第100百分位(縮部位壓力)",
-    "近10日CTA事件:收復長期(200D)、3月動能轉正、6月動能轉正"
-   ]
-  },
-  {
-   "sym": "AAPL",
-   "d": "2026-07-31",
-   "px": 308.91,
-   "chg1d": -7.35,
-   "chg5d": -7.24,
-   "chg20d": 0.09,
-   "vol_pace": 2.59,
-   "hi52": 344.57,
-   "lo52": 242.969,
-   "pct_from_hi52": -10.35,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "sup",
-    "px": 284.347,
-    "dist_pct": -7.95,
-    "touches": 5
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 309.511,
-    "dist_pct": 0.19
-   },
-   "cta_score": 67,
-   "rv_pct": 93,
-   "cta_events": [
-    "跌破短期(50D)"
-   ],
-   "fib_zone": {
-    "lab": "61.8%",
-    "px": 305.758,
-    "dist_pct": -1.02
-   },
-   "score": 5.0,
-   "why": [
-    "距短期50D煞車線 0.2%",
-    "RV第93百分位(縮部位壓力)",
-    "近10日CTA事件:跌破短期(50D)",
-    "貼近 Fib 61.8%"
-   ]
-  },
-  {
-   "sym": "SOXS",
-   "d": "2026-07-31",
-   "px": 54.25,
-   "chg1d": 0.61,
-   "chg5d": 5.28,
-   "chg20d": 20.29,
-   "vol_pace": 1.39,
-   "hi52": 997.515,
-   "lo52": 31.7,
-   "pct_from_hi52": -94.56,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "res",
-    "broken_d": "2026-07-28",
-    "touches": 3
-   },
-   "pattern_hits": [],
-   "candle_hits": [
-    {
-     "d": "2026-07-30",
-     "name": "看跌反衝",
-     "dir": -1
-    }
-   ],
-   "near_line": {
-    "name": "短期50D",
-    "px": 51.122,
-    "dist_pct": -5.77
-   },
-   "cta_score": -67,
-   "rv_pct": 90,
-   "cta_events": [
-    "收復短期(50D)"
-   ],
-   "score": 5.0,
-   "why": [
-    "趨勢線突破(壓力·觸及3)",
-    "RV第90百分位(縮部位壓力)",
-    "近10日CTA事件:收復短期(50D)"
-   ]
-  },
-  {
-   "sym": "FNGD",
-   "d": "2026-07-31",
-   "px": 34.36,
-   "chg1d": -5.03,
-   "chg5d": -8.42,
-   "chg20d": -4.69,
-   "vol_pace": 0.95,
-   "hi52": 87.38,
-   "lo52": 28.72,
-   "pct_from_hi52": -60.68,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 40.07,
-    "dist_pct": 16.62,
-    "touches": 3
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重頂",
-     "state": "confirmed",
-     "dir": -1
-    },
-    {
-     "type": "下降旗形",
-     "state": "forming",
-     "dir": 1
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-31",
-     "name": "倒錘子",
-     "dir": 1
-    }
-   ],
-   "near_line": {
-    "name": "短期50D",
-    "px": 35.433,
-    "dist_pct": 3.12
-   },
-   "cta_score": -100,
-   "rv_pct": 49,
-   "cta_events": [
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 5.0,
-   "why": [
-    "雙重頂 已確認",
-    "下降旗形 形成中",
-    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
+    "對稱三角 已確認",
+    "雙重底 形成中",
+    "雙重頂 形成中",
+    "近10日CTA事件:3月動能轉正、6月動能轉正、12月動能轉正"
    ]
   },
   {
@@ -2255,7 +3153,7 @@
    "chg1d": 4.74,
    "chg5d": -9.4,
    "chg20d": -46.4,
-   "vol_pace": 1.03,
+   "vol_pace": 1.06,
    "hi52": 77.667,
    "lo52": 6.61,
    "pct_from_hi52": -73.82,
@@ -2294,48 +3192,13 @@
    ]
   },
   {
-   "sym": "PLTR",
-   "d": "2026-07-31",
-   "px": 123.06,
-   "chg1d": 0.65,
-   "chg5d": 0.11,
-   "chg20d": -4.83,
-   "vol_pace": 0.78,
-   "hi52": 207.52,
-   "lo52": 106.37,
-   "pct_from_hi52": -40.7,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "res",
-    "broken_d": "2026-07-27",
-    "touches": 3
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 130.875,
-    "dist_pct": 6.35
-   },
-   "cta_score": -100,
-   "rv_pct": 28,
-   "cta_events": [
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 4.0,
-   "why": [
-    "趨勢線突破(壓力·觸及3)",
-    "近10日CTA事件:收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
    "sym": "ORCL",
    "d": "2026-07-31",
    "px": 129.87,
    "chg1d": 1.81,
    "chg5d": 12.94,
    "chg20d": -7.09,
-   "vol_pace": 0.87,
+   "vol_pace": 0.88,
    "hi52": 319.459,
    "lo52": 114.5,
    "pct_from_hi52": -59.35,
@@ -2370,235 +3233,13 @@
    ]
   },
   {
-   "sym": "TQQQ",
-   "d": "2026-07-31",
-   "px": 64.62,
-   "chg1d": 2.09,
-   "chg5d": 0.97,
-   "chg20d": -11.9,
-   "vol_pace": 1.3,
-   "hi52": 87.887,
-   "lo52": 37.234,
-   "pct_from_hi52": -26.47,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 69.169,
-    "dist_pct": 7.04,
-    "touches": 5
-   },
-   "near_line": {
-    "name": "中期100D",
-    "px": 65.433,
-    "dist_pct": 1.26
-   },
-   "cta_score": 33,
-   "rv_pct": 79,
-   "cta_events": [
-    "分數翻正",
-    "收復長期(200D)",
-    "3月動能轉正"
-   ],
-   "score": 4.0,
-   "why": [
-    "距中期100D煞車線 1.3%",
-    "CTA分數 +33(易翻轉區)",
-    "近10日CTA事件:分數翻正、收復長期(200D)、3月動能轉正"
-   ]
-  },
-  {
-   "sym": "SQQQ",
-   "d": "2026-07-31",
-   "px": 43.73,
-   "chg1d": -1.99,
-   "chg5d": -2.37,
-   "chg20d": 9.46,
-   "vol_pace": 1.08,
-   "hi52": 89.289,
-   "lo52": 35.237,
-   "pct_from_hi52": -51.02,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "trendline_break": {
-    "side": "res",
-    "broken_d": "2026-07-29",
-    "touches": 3
-   },
-   "near_trendline": {
-    "side": "sup",
-    "px": 38.938,
-    "dist_pct": -10.96,
-    "touches": 3
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 40.095,
-    "dist_pct": -8.31
-   },
-   "cta_score": -67,
-   "rv_pct": 81,
-   "cta_events": [],
-   "score": 4.0,
-   "why": [
-    "趨勢線突破(壓力·觸及3)",
-    "RV第81百分位(縮部位壓力)"
-   ]
-  },
-  {
-   "sym": "TSLL",
-   "d": "2026-07-31",
-   "px": 7.31,
-   "chg1d": 1.39,
-   "chg5d": -1.48,
-   "chg20d": -40.57,
-   "vol_pace": 1.22,
-   "hi52": 23.259,
-   "lo52": 6.695,
-   "pct_from_hi52": -68.57,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "pattern_hits": [
-    {
-     "type": "頭肩頂",
-     "state": "confirmed",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-29",
-     "name": "看跌吞噬",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-31",
-     "name": "紡錘線",
-     "dir": 0
-    },
-    {
-     "d": "2026-07-31",
-     "name": "鑷底",
-     "dir": 1
-    }
-   ],
-   "near_line": {
-    "name": "動能63D",
-    "px": 12.373,
-    "dist_pct": 69.26
-   },
-   "cta_score": -100,
-   "rv_pct": 76,
-   "cta_events": [
-    "12月動能轉負"
-   ],
-   "score": 4.0,
-   "why": [
-    "頭肩頂 已確認",
-    "近10日CTA事件:12月動能轉負"
-   ]
-  },
-  {
-   "sym": "MUU",
-   "d": "2026-07-31",
-   "px": 23.67,
-   "chg1d": -12.24,
-   "chg5d": -24.3,
-   "chg20d": -36.48,
-   "vol_pace": 1.63,
-   "hi52": 62.64,
-   "lo52": 2.385,
-   "pct_from_hi52": -62.21,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "pattern_hits": [],
-   "candle_hits": [
-    {
-     "d": "2026-07-29",
-     "name": "光頭光腳陰線",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-29",
-     "name": "黑三兵",
-     "dir": -1
-    },
-    {
-     "d": "2026-07-30",
-     "name": "光頭光腳陽線",
-     "dir": 1
-    },
-    {
-     "d": "2026-07-31",
-     "name": "烏雲蓋頂",
-     "dir": -1
-    }
-   ],
-   "near_line": {
-    "name": "中期100D",
-    "px": 26.13,
-    "dist_pct": 10.39
-   },
-   "cta_score": 33,
-   "rv_pct": 89,
-   "cta_events": [
-    "跌破中期(100D)",
-    "收復中期(100D)",
-    "跌破中期(100D)"
-   ],
-   "score": 4.0,
-   "why": [
-    "近3日蠟燭偏空",
-    "CTA分數 +33(易翻轉區)",
-    "RV第89百分位(縮部位壓力)",
-    "近10日CTA事件:跌破中期(100D)、收復中期(100D)、跌破中期(100D)"
-   ]
-  },
-  {
-   "sym": "IWM",
-   "d": "2026-07-31",
-   "px": 291.24,
-   "chg1d": -0.46,
-   "chg5d": 0.02,
-   "chg20d": -2.13,
-   "vol_pace": 1.29,
-   "hi52": 302.72,
-   "lo52": 227.189,
-   "pct_from_hi52": -3.79,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "sup",
-    "px": 286.954,
-    "dist_pct": -1.47,
-    "touches": 5
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 292.488,
-    "dist_pct": 0.43
-   },
-   "cta_score": 67,
-   "rv_pct": 4,
-   "cta_events": [
-    "跌破短期(50D)",
-    "收復短期(50D)",
-    "跌破短期(50D)"
-   ],
-   "score": 3.0,
-   "why": [
-    "距短期50D煞車線 0.4%",
-    "近10日CTA事件:跌破短期(50D)、收復短期(50D)、跌破短期(50D)"
-   ]
-  },
-  {
    "sym": "SMH",
    "d": "2026-07-31",
    "px": 540.53,
    "chg1d": 0.3,
    "chg5d": -3.68,
    "chg20d": -8.74,
-   "vol_pace": 1.07,
+   "vol_pace": 1.09,
    "hi52": 671.83,
    "lo52": 314.073,
    "pct_from_hi52": -19.54,
@@ -2636,273 +3277,7 @@
     "近10日CTA事件:跌破中期(100D)、收復中期(100D)",
     "貼近 Fib 61.8%"
    ]
-  },
-  {
-   "sym": "FNGU",
-   "d": "2026-07-31",
-   "px": 26.66,
-   "chg1d": 5.13,
-   "chg5d": 7.41,
-   "chg20d": 0.64,
-   "vol_pace": 0.89,
-   "hi52": 36.78,
-   "lo52": 13.485,
-   "pct_from_hi52": -27.51,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 27.12,
-    "dist_pct": 1.73,
-    "touches": 3
-   },
-   "pattern_hits": [
-    {
-     "type": "雙重底",
-     "state": "forming",
-     "dir": 1
-    },
-    {
-     "type": "雙重頂",
-     "state": "forming",
-     "dir": -1
-    }
-   ],
-   "candle_hits": [
-    {
-     "d": "2026-07-31",
-     "name": "吊人線",
-     "dir": -1
-    }
-   ],
-   "near_line": {
-    "name": "短期50D",
-    "px": 27.97,
-    "dist_pct": 4.91
-   },
-   "cta_score": 67,
-   "rv_pct": 61,
-   "cta_events": [
-    "3月動能轉正",
-    "6月動能轉正",
-    "12月動能轉正"
-   ],
-   "score": 3.0,
-   "why": [
-    "雙重底 形成中",
-    "雙重頂 形成中",
-    "近10日CTA事件:3月動能轉正、6月動能轉正、12月動能轉正"
-   ]
-  },
-  {
-   "sym": "META",
-   "d": "2026-07-31",
-   "px": 556.71,
-   "chg1d": 3.28,
-   "chg5d": -6.47,
-   "chg20d": -4.49,
-   "vol_pace": 1.27,
-   "hi52": 757.186,
-   "lo52": 519.778,
-   "pct_from_hi52": -26.48,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "sup",
-    "px": 498.926,
-    "dist_pct": -10.38,
-    "touches": 3
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 602.918,
-    "dist_pct": 8.3
-   },
-   "cta_score": -100,
-   "rv_pct": 90,
-   "cta_events": [
-    "跌破中期(100D)",
-    "6月動能轉負",
-    "跌破短期(50D)"
-   ],
-   "score": 2.0,
-   "why": [
-    "RV第90百分位(縮部位壓力)",
-    "近10日CTA事件:跌破中期(100D)、6月動能轉負、跌破短期(50D)"
-   ]
-  },
-  {
-   "sym": "TSLA",
-   "d": "2026-07-31",
-   "px": 311.2,
-   "chg1d": 0.76,
-   "chg5d": -0.58,
-   "chg20d": -20.9,
-   "vol_pace": 0.85,
-   "hi52": 498.83,
-   "lo52": 297.38,
-   "pct_from_hi52": -37.61,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "sup",
-    "px": 299.29,
-    "dist_pct": -3.83,
-    "touches": 4
-   },
-   "near_line": {
-    "name": "動能63D",
-    "px": 381.63,
-    "dist_pct": 22.63
-   },
-   "cta_score": -100,
-   "rv_pct": 75,
-   "cta_events": [
-    "12月動能轉負",
-    "12月動能轉正",
-    "12月動能轉負"
-   ],
-   "score": 1.0,
-   "why": [
-    "近10日CTA事件:12月動能轉負、12月動能轉正、12月動能轉負"
-   ]
-  },
-  {
-   "sym": "UDOW",
-   "d": "2026-07-31",
-   "px": 70.1,
-   "chg1d": 1.49,
-   "chg5d": 2.83,
-   "chg20d": -3.04,
-   "vol_pace": 1.49,
-   "hi52": 74.21,
-   "lo52": 46.107,
-   "pct_from_hi52": -5.54,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 75.893,
-    "dist_pct": 8.26,
-    "touches": 9
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 67.796,
-    "dist_pct": -3.29
-   },
-   "cta_score": 100,
-   "rv_pct": 58,
-   "cta_events": [
-    "跌破短期(50D)",
-    "收復短期(50D)"
-   ],
-   "score": 1.0,
-   "why": [
-    "近10日CTA事件:跌破短期(50D)、收復短期(50D)"
-   ]
-  },
-  {
-   "sym": "JPM",
-   "d": "2026-07-31",
-   "px": 351.79,
-   "chg1d": 0.27,
-   "chg5d": -0.4,
-   "chg20d": 5.65,
-   "vol_pace": 0.7,
-   "hi52": 359.3,
-   "lo52": 276.434,
-   "pct_from_hi52": -2.09,
-   "is_52w_high": false,
-   "is_52w_low": false,
-   "near_trendline": {
-    "side": "res",
-    "px": 357.952,
-    "dist_pct": 1.75,
-    "touches": 5
-   },
-   "near_line": {
-    "name": "短期50D",
-    "px": 326.325,
-    "dist_pct": -7.24
-   },
-   "cta_score": 100,
-   "rv_pct": 60,
-   "cta_events": [],
-   "score": 0.0,
-   "why": []
   }
  ],
- "data_quality": [
-  {
-   "source": "patterns IWM",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns MSFT",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns AAPL",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns META",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns TSLA",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns JPM",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns PLTR",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns COIN",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns TQQQ",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns SQQQ",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns SPXL",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns UPRO",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "patterns UDOW",
-   "ok": false,
-   "note": "unsupported format character ')' (0x29) at index 6"
-  },
-  {
-   "source": "scan SNXX",
-   "ok": false,
-   "note": "歷史不足"
-  }
- ]
+ "data_quality": []
 }

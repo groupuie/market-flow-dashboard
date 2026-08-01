@@ -255,7 +255,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T15:49Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T16:31Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -847,9 +847,33 @@ function tlTraces(R,x,OPT2,PRE){
   var out=[];
   var res=PRE||autoTrendlines(R,OPT2);   // PRE=呼叫端已算好的結果(共振圈需共用,避免重算)
   if(!res)return out;
-  var CH=pickChannel(R,res,OPT2);       // 通道主線:六道閘門全過才有;無合格通道 → 只畫趨勢線
+  var CH=pickChannel(R,res,OPT2);       // 通道主線:七道閘門全過才有;無合格通道 → 只畫趨勢線
   var best=CH?CH.L:null;
-  res.lines.forEach(function(L){
+  // 通道去重(2026-08-01 使用者回報「有時會出現兩個下降通道」):
+  //   一張圖只允許一組通道。其餘斜線若「落在通道帶內、且斜率相近(±40%)」= 同一段結構的重覆表述,
+  //   視覺上就是第二組通道 → 直接不畫;水平 S/R 與方向明顯不同的線保留(那是有增量資訊的)。
+  var LINES=res.lines;
+  if(CH){
+    var lo0=Math.min(CH.L.y1,CH.L.y1+CH.far), hi0=Math.max(CH.L.y1,CH.L.y1+CH.far);
+    if(CH.L.side!=='sup'){lo0=CH.L.y1-CH.far; hi0=CH.L.y1;}
+    LINES=res.lines.filter(function(L){
+      if(L===CH.L||L.kind!=='line')return true;
+      var ov=Math.min(L.endIdx,CH.L.endIdx)-Math.max(L.i,CH.L.i);
+      if(ov<Math.max(8,(CH.L.endIdx-CH.L.i)*0.5))return true;      // 幾乎不重疊 → 不是重覆
+      var sRef=Math.abs(CH.L.slope), sL=Math.abs(L.slope);
+      var near=(sRef<1e-9)?(sL<1e-9):(Math.abs(sL/sRef-1)<=0.40&&(L.slope>0)===(CH.L.slope>0));
+      if(!near)return true;
+      var inBand=0,tot=0;                                          // 取樣 5 點看是否落在通道帶內
+      for(var q=0;q<5;q++){
+        var k=Math.round(Math.max(L.i,CH.L.i)+(Math.min(L.endIdx,CH.L.endIdx)-Math.max(L.i,CH.L.i))*q/4);
+        var yl=L.y1+L.slope*(k-L.i), ym=CH.L.y1+CH.L.slope*(k-CH.L.i);
+        var b0=CH.L.side==='sup'?ym:ym-CH.far, b1=CH.L.side==='sup'?ym+CH.far:ym;
+        tot++; if(yl>=b0-CH.far*0.12&&yl<=b1+CH.far*0.12)inBand++;
+      }
+      return !(inBand>=4);                                          // 5 取樣有 4 點在帶內 → 判為重覆,不畫
+    });
+  }
+  LINES.forEach(function(L){
     var col=L.side==='sup'?CPAL.sup:CPAL.res;
     var xs=[],ys=[];
     for(var k=L.i;k<=L.endIdx;k++){xs.push(x[k]);ys.push(+(L.y1+L.slope*(k-L.i)).toFixed(3));}
@@ -872,10 +896,17 @@ function tlTraces(R,x,OPT2,PRE){
       var offc=L.side==='sup'?CH.far:-CH.far;
       var cy=ys.map(function(v){return +(v+offc).toFixed(3);});
       var wid=(CH.wid*100).toFixed(1);
+      var rise=(L.slope>0);
       out.push({type:'scatter',mode:'lines',x:xs,y:cy,showlegend:false,meta:'tl',
         fill:'tonexty',fillcolor:'rgba('+col+',.05)',
         line:{color:'rgba('+col+','+st.a+')',width:st.w,dash:st.d},   // P7-4 與主線完全相同線段
-        hovertemplate:((L.slope>0?'上升':'下行')+'通道'+(L.side==='sup'?'上界':'下界'))+'(主線平移·對側觸及 '+CH.ft+' 次) · 寬 '+wid+'%<extra></extra>'});
+        hovertemplate:((rise?'上升':'下行')+'通道'+(L.side==='sup'?'上界':'下界'))+'(主線平移·對側觸及 '+CH.ft+' 次) · 寬 '+wid+'%<extra></extra>'});
+      // 2026-08-01 使用者指定:通道成形就把「另一側」的可操作點位標出來 —— 上升通道給壓力、下行通道給支撐。
+      //   兩條界線都標(上界=壓力、下界=支撐),各附右緣現值,讓通道直接可讀成價位而不只是形狀。
+      var yA=ys[ys.length-1], yB=cy[cy.length-1];
+      var upY=Math.max(yA,yB), dnY=Math.min(yA,yB);
+      out._lv=[{y:upY,kind:'壓力',col:CPAL.res,tag:(rise?'上升':'下行')+'通道上界'},
+               {y:dnY,kind:'支撐',col:CPAL.sup,tag:(rise?'上升':'下行')+'通道下界'}];
     }
     // 註:趨勢線/通道/三角「畫線即可」,不標記觸及K棒(2026-08-01 使用者指定);
     //     半透明大圓改用於「K棒碰到 CTA 煞車線」,見 renderCockpit 的 CTA 觸線圈。
@@ -1035,43 +1066,78 @@ function classicPatterns(R,piv,OPT){
       score:+(2.6+(st2==='confirmed'?1.5:0)+(DT_TOL-diff)/DT_TOL+1.5*(B.i/(N-1))).toFixed(2),
       lastI:B.i});
   }
-  // 三角 / 楔形 / 旗形:末端 4 轉折(兩高兩低)兩邊線斜率關係
-  if(piv.length>=4){
-    var last4=piv.slice(-4);
-    var Hs=last4.filter(function(p){return p.t==='H';}), Ls=last4.filter(function(p){return p.t==='L';});
-    if(Hs.length===2&&Ls.length===2){
-      var su=(Hs[1].px-Hs[0].px)/Math.max(1,(Hs[1].i-Hs[0].i))/Hs[0].px;   // 上邊線 %/根
-      var sl=(Ls[1].px-Ls[0].px)/Math.max(1,(Ls[1].i-Ls[0].i))/Ls[0].px;
-      var i0=Math.min(Hs[0].i,Ls[0].i), i1=Math.max(Hs[1].i,Ls[1].i);
-      function upAt(k){return Hs[0].px+(Hs[1].px-Hs[0].px)*(k-Hs[0].i)/Math.max(1,(Hs[1].i-Hs[0].i));}
-      function loAt(k){return Ls[0].px+(Ls[1].px-Ls[0].px)*(k-Ls[0].i)/Math.max(1,(Ls[1].i-Ls[0].i));}
-      var w0=(upAt(i0)-loAt(i0))/Math.max(loAt(i0),1e-9), w1=(upAt(i1)-loAt(i1))/Math.max(loAt(i1),1e-9);
-      var conv=w1<w0*0.75, FLAT=0.0006;
-      var type=null,dir3=0;
-      if(su<-FLAT&&sl>FLAT&&conv){type='對稱三角';dir3=0;}
-      else if(Math.abs(su)<=FLAT&&sl>FLAT){type='上升三角';dir3=1;}
-      else if(su<-FLAT&&Math.abs(sl)<=FLAT){type='下降三角';dir3=-1;}
-      else if(su>FLAT&&sl>FLAT&&su<sl&&conv){type='上升楔形';dir3=-1;}
-      else if(su<-FLAT&&sl<-FLAT&&su<sl&&conv){type='下降楔形';dir3=1;}   // 收斂=上邊線跌得更快(su<sl)
-      else if(Math.abs(su-sl)<FLAT*0.8&&Math.abs(su)>FLAT&&(i1-i0)<=40){type=su<0?'下降旗形':'上升旗形';dir3=su<0?1:-1;}
-      if(type&&w1>0&&N-1-i1<=MAXAGE){
-        var why3=['上邊線斜率 '+(su*100).toFixed(3)+'%/根、下邊線 '+(sl*100).toFixed(3)+'%/根',
-                  '通道寬度 '+(w0*100).toFixed(1)+'% → '+(w1*100).toFixed(1)+'%'+(conv?'(收斂)':'(平行)')];
-        var st3='forming',bd3=null,bi3=null;
-        for(var k3=i1+1;k3<N;k3++){
-          if(R[k3].c>upAt(k3)*1.01){st3='confirmed';bd3=R[k3].d;bi3=k3;dir3=1;break;}
-          if(R[k3].c<loAt(k3)*0.99){st3='confirmed';bd3=R[k3].d;bi3=k3;dir3=-1;break;}
+  // 三角收斂 / 楔形 / 旗形(2026-08-01 強化):不再只看「最後 4 個轉折」——
+  //   舊版要求末端恰好 2 高 2 低,實盤常見 5–7 轉折的收斂三角會整個漏掉(使用者回報「辨識不到三角收斂」)。
+  //   新版對「末端 3 個結束位置 × 視窗 4–7 轉折」共 ≤12 組候選逐一評分,取最佳;
+  //   另加兩道品質閘:①收斂交點(apex)須在右緣附近(太遠=近似平行,不是三角)
+  //                   ②區間內收盤落在兩邊線之間的比例 ≥85%(價格真的被夾在裡面才算)。
+  //   掃描順序固定(e 由大到小、k 由小到大),與 patterns.py 逐字一致。
+  (function(){
+    if(piv.length<4)return;
+    var bestT=null;
+    for(var e=piv.length-1;e>=3&&e>=piv.length-3;e--){
+      for(var k=4;k<=7;k++){
+        if(e-k+1<0)continue;
+        var seg=piv.slice(e-k+1,e+1);
+        var Hs=seg.filter(function(p){return p.t==='H';}), Ls=seg.filter(function(p){return p.t==='L';});
+        if(Hs.length<2||Ls.length<2)continue;
+        var H0=Hs[0],H1=Hs[Hs.length-1],L0=Ls[0],L1=Ls[Ls.length-1];
+        if(H1.i<=H0.i||L1.i<=L0.i)continue;
+        var su=(H1.px-H0.px)/(H1.i-H0.i)/H0.px;      // 上邊線 %/根
+        var sl=(L1.px-L0.px)/(L1.i-L0.i)/L0.px;
+        var i0=Math.min(H0.i,L0.i), i1=Math.max(H1.i,L1.i);
+        if(i1-i0<8)continue;
+        var upAt=function(q){return H0.px+(H1.px-H0.px)*(q-H0.i)/(H1.i-H0.i);};
+        var loAt=function(q){return L0.px+(L1.px-L0.px)*(q-L0.i)/(L1.i-L0.i);};
+        var w0=(upAt(i0)-loAt(i0))/Math.max(loAt(i0),1e-9), w1=(upAt(i1)-loAt(i1))/Math.max(loAt(i1),1e-9);
+        if(!(w0>0&&w1>0))continue;
+        var conv=w1<w0*0.75, FLAT=0.0006;
+        var type=null,dir3=0;
+        if(su<-FLAT&&sl>FLAT&&conv){type='對稱三角';dir3=0;}
+        else if(Math.abs(su)<=FLAT&&sl>FLAT&&conv){type='上升三角';dir3=1;}
+        else if(su<-FLAT&&Math.abs(sl)<=FLAT&&conv){type='下降三角';dir3=-1;}
+        else if(su>FLAT&&sl>FLAT&&su<sl&&conv){type='上升楔形';dir3=-1;}
+        else if(su<-FLAT&&sl<-FLAT&&su<sl&&conv){type='下降楔形';dir3=1;}
+        else if(Math.abs(su-sl)<FLAT*0.8&&Math.abs(su)>FLAT&&(i1-i0)<=40){type=su<0?'下降旗形':'上升旗形';dir3=su<0?1:-1;}
+        if(!type)continue;
+        if(N-1-i1>MAXAGE)continue;
+        // 閘① apex:兩邊線交會點須落在 [i1, i1+2×(i1−i0)] 內(收斂型態才檢查;旗形平行不檢查)
+        var apexOK=true, apexI=null;
+        if(conv){
+          var dsl=(su*H0.px)-(sl*L0.px);   // 兩線斜率(絕對值/根)之差
+          var num=(loAt(i1)-upAt(i1));
+          apexI=(Math.abs(dsl)<1e-12)?null:(i1+num/dsl);
+          apexOK=(apexI!=null&&apexI>=i1-2&&apexI<=i1+2*(i1-i0));
         }
-        why3.push(st3==='confirmed'?('收盤'+(dir3>0?'向上':'向下')+'突破邊線 '+bd3+' → confirmed'):'尚未突破邊線 → forming');
-        out.push({type:type,dir:dir3,state:st3,
-          pivots:last4.map(function(p){return {d:p.d,px:+p.px.toFixed(3),role:p.t==='H'?'高':'低',i:p.i};}),
-          edges:{up:{i1:Hs[0].i,y1:+Hs[0].px.toFixed(3),i2:Hs[1].i,y2:+Hs[1].px.toFixed(3)},
-                 lo:{i1:Ls[0].i,y1:+Ls[0].px.toFixed(3),i2:Ls[1].i,y2:+Ls[1].px.toFixed(3)}},
-          target:null,broken_d:bd3,brkI:bi3,why:why3,
-          score:+(2.4+(st3==='confirmed'?1.5:0)+(conv?0.6:0)+1.5*(i1/(N-1))).toFixed(2),lastI:i1});
+        if(!apexOK)continue;
+        // 閘② 夾住率:區間內收盤落在兩邊線(±1.5% 容忍)之間的比例
+        var inC=0,totC=0;
+        for(var q2=i0;q2<=i1;q2++){var u2=upAt(q2),d2=loAt(q2);totC++;
+          if(R[q2].c<=u2*1.015&&R[q2].c>=d2*0.985)inC++;}
+        var contain=totC?inC/totC:0;
+        if(contain<0.85)continue;
+        var st3='forming',bd3=null,bi3=null,dirB=dir3;
+        for(var k3=i1+1;k3<N;k3++){
+          if(R[k3].c>upAt(k3)*1.01){st3='confirmed';bd3=R[k3].d;bi3=k3;dirB=1;break;}
+          if(R[k3].c<loAt(k3)*0.99){st3='confirmed';bd3=R[k3].d;bi3=k3;dirB=-1;break;}
+        }
+        var sc3=2.4+(st3==='confirmed'?1.5:0)+(conv?0.6:0)+1.5*(i1/(N-1))
+                +0.8*(contain-0.85)/0.15+0.15*(seg.length-4);
+        var cand={type:type,dir:dirB,state:st3,
+          pivots:seg.map(function(p){return {d:p.d,px:+p.px.toFixed(3),role:p.t==='H'?'高':'低',i:p.i};}),
+          edges:{up:{i1:H0.i,y1:+H0.px.toFixed(3),i2:H1.i,y2:+H1.px.toFixed(3)},
+                 lo:{i1:L0.i,y1:+L0.px.toFixed(3),i2:L1.i,y2:+L1.px.toFixed(3)}},
+          target:null,broken_d:bd3,brkI:bi3,
+          why:['上邊線斜率 '+(su*100).toFixed(3)+'%/根、下邊線 '+(sl*100).toFixed(3)+'%/根('+Hs.length+'高'+Ls.length+'低)',
+               '通道寬度 '+(w0*100).toFixed(1)+'% → '+(w1*100).toFixed(1)+'%'+(conv?'(收斂 '+((1-w1/w0)*100).toFixed(0)+'%)':'(平行)'),
+               '夾住率 '+(contain*100).toFixed(0)+'%(需≥85%:收盤落在兩邊線內)'+(apexI!=null?(' · 收斂交點約在 '+Math.round(apexI-i1)+' 根後'):''),
+               st3==='confirmed'?('收盤'+(dirB>0?'向上':'向下')+'突破邊線 '+bd3+' → confirmed'):'尚未突破邊線 → forming'],
+          score:+sc3.toFixed(2),lastI:i1};
+        if(!bestT||cand.score>bestT.score)bestT=cand;
       }
     }
-  }
+    if(bestT)out.push(bestT);
+  })();
   // 杯柄:H(左緣)-L(杯底)-H(右緣) + 右緣後淺回檔
   for(var s4=0;s4+2<piv.length;s4++){
     var L1=piv[s4],C=piv[s4+1],R1=piv[s4+2];
@@ -1102,6 +1168,68 @@ function classicPatterns(R,piv,OPT){
       target:+(R1.px*(1+dep)).toFixed(3),broken_d:bd4,brkI:bi4,why:why4,
       score:+(2.8+(st4==='confirmed'?1.5:0)+Math.min(1,dep/0.3)+1.5*(R1.i/(N-1))).toFixed(2),lastI:R1.i});
   }
+  // ===== VCP 波動收縮型態(Minervini;2026-08-01 新增)=====
+  // 純機械定義,逐條列於 why[]:基底內連續 2–4 次「高→低」回檔,幅度**逐次遞減**(每次 ≤ 前次 80%)、
+  // 最後一次 ≤15%、基底頂部大致齊平(最低高點 ≥ 最高高點 88%)、**量縮**(末次回檔均量 ≤ 首次 85%)、
+  // 現價貼近基底高(≤8%)。收盤越過基底高 → confirmed(樞紐買點);否則 forming。
+  // ⚠ 型態辨識非預測:VCP 只描述「供給收縮」的形狀,不保證突破,亦不構成買賣建議。
+  (function(){
+    if(N<40||piv.length<3)return;
+    var baseStart=Math.max(0,N-Math.min(140,N));
+    var CT=[];
+    for(var v0=0;v0+1<piv.length;v0++){
+      var HH=piv[v0],LL=piv[v0+1];
+      if(HH.t!=='H'||LL.t!=='L')continue;
+      if(LL.i<baseStart||HH.i<baseStart)continue;
+      if(!(HH.px>0))continue;
+      CT.push({hi:HH,lo:LL,depth:(HH.px-LL.px)/HH.px});
+    }
+    if(CT.length<2)return;
+    CT=CT.slice(-4);
+    var why5=[],ok5=true;
+    var dtxt=CT.map(function(c){return (c.depth*100).toFixed(1)+'%';}).join(' → ');
+    why5.push('基底內 '+CT.length+' 次回檔:'+dtxt);
+    for(var v1=1;v1<CT.length;v1++){
+      if(!(CT[v1].depth<=CT[v1-1].depth*0.80)){ok5=false;
+        why5.push('第 '+(v1+1)+' 次回檔 '+(CT[v1].depth*100).toFixed(1)+'% 未收斂到前次 80% 以內 → 不成立');break;}
+    }
+    if(ok5)why5.push('每次回檔皆 ≤ 前次 80%(逐次收縮)✓');
+    var lastD=CT[CT.length-1].depth;
+    why5.push('末次回檔 '+(lastD*100).toFixed(1)+'%(需≤15%)');
+    if(lastD>0.15)ok5=false;
+    var his=CT.map(function(c){return c.hi.px;});
+    var hMax=Math.max.apply(null,his), hMin=Math.min.apply(null,his);
+    why5.push('基底頂部齊平度 '+((hMin/hMax)*100).toFixed(0)+'%(需≥88%:高點不逐級崩落)');
+    if(hMin<hMax*0.88)ok5=false;
+    function avgV(i0,i1){var sv=0,cv=0;for(var q=Math.max(0,i0);q<=Math.min(N-1,i1);q++){sv+=(R[q].v||0);cv++;}return cv?sv/cv:0;}
+    var vA=avgV(CT[0].hi.i,CT[0].lo.i), vB=avgV(CT[CT.length-1].hi.i,CT[CT.length-1].lo.i);
+    var vr=vA>0?vB/vA:1;
+    why5.push('末次回檔均量 / 首次均量 = '+(vr*100).toFixed(0)+'%(需≤85%:量縮)');
+    if(!(vA>0&&vr<=0.85))ok5=false;
+    var pivotPx=hMax, lastC=R[N-1].c, gap=(pivotPx-lastC)/pivotPx;
+    why5.push('現價距基底高 '+(gap*100).toFixed(1)+'%(需≤8%)');
+    if(!(gap<=0.08))ok5=false;
+    if(ok5){
+      var st5='forming',bd5=null,bi5=null;
+      for(var k5=CT[CT.length-1].lo.i+1;k5<N;k5++){
+        if(R[k5].c>pivotPx*1.001){st5='confirmed';bd5=R[k5].d;bi5=k5;break;}
+      }
+      why5.push(st5==='confirmed'?('收盤越過樞紐 '+pivotPx.toFixed(2)+' 於 '+bd5+' → confirmed')
+                                 :('尚未越過樞紐 '+pivotPx.toFixed(2)+' → forming(型態非預測,突破與否未知)'));
+      var pvs=[];
+      CT.forEach(function(c,ci){
+        if(ci===0)pvs.push({d:c.hi.d,px:+c.hi.px.toFixed(3),role:'基底高',i:c.hi.i});
+        else pvs.push({d:c.hi.d,px:+c.hi.px.toFixed(3),role:'反彈高'+(ci+1),i:c.hi.i});
+        pvs.push({d:c.lo.d,px:+c.lo.px.toFixed(3),role:'收縮低'+(ci+1),i:c.lo.i});
+      });
+      out.push({type:'VCP 波動收縮',dir:1,state:st5,pivots:pvs,
+        neckline:{x1_d:CT[0].hi.d,y1:+pivotPx.toFixed(3),x2_d:R[N-1].d,y2:+pivotPx.toFixed(3),i1:CT[0].hi.i,i2:N-1},
+        necklineLabel:'樞紐買點 '+pivotPx.toFixed(2)+'(停損參考 '+CT[CT.length-1].lo.px.toFixed(2)+')',
+        target:null,broken_d:bd5,brkI:bi5,why:why5,
+        score:+(3.0+(st5==='confirmed'?1.5:0)+0.5*CT.length+1.2*(1-lastD/0.15)+0.6*(1-vr)).toFixed(2),
+        lastI:CT[CT.length-1].lo.i});
+    }
+  })();
   out.sort(function(x,y){return y.score-x.score;});
   // 同型態去重(保留分高者)+ 上限 4
   var seen={},res=[];
@@ -1387,20 +1515,22 @@ function indStoch(R,n,k1,d1){
 function vbpGeom(){return ((window.innerWidth||1024)<680)?{x0:0.878,w:0.114}:{x0:0.855,w:0.142};}
 function vbpShapes(vb){
   var out=[], G=vbpGeom(), VBP_X0=G.x0, VBP_W=G.w;
-  out.push({type:'rect',xref:'paper',yref:'paper',x0:VBP_X0-0.006,x1:VBP_X0-0.004,y0:0.46,y1:1,
-    fillcolor:'rgba(148,163,184,.28)',line:{width:0},layer:'below'});   // 分隔細線
+  out.push({type:'rect',xref:'paper',yref:'paper',x0:VBP_X0+VBP_W+0.003,x1:VBP_X0+VBP_W+0.005,y0:0.46,y1:1,
+    fillcolor:'rgba(148,163,184,.28)',line:{width:0},layer:'below'});   // 分隔細線(置於柱底外側)
   var poc=-1,pv=-1;
   for(var b0=0;b0<vb.ctr.length;b0++){var t0=vb.up[b0]+vb.dn[b0]; if(t0>pv){pv=t0;poc=b0;}}
   for(var b=0;b<vb.ctr.length;b++){
     var g=VBP_W*vb.up[b]/vb.max, r=VBP_W*vb.dn[b]/vb.max;
     if(g<=0&&r<=0)continue;
     var y0=vb.ctr[b]-vb.bw*0.46, y1=vb.ctr[b]+vb.bw*0.46;
+    // 柱由「右軌最右緣」向左長,朝 K 線圖方向(2026-08-01 使用者指定;同 TrendSpider 量價側欄)
+    var X1=VBP_X0+VBP_W;                     // 柱底(靠右)
     var isP=(b===poc);
-    if(g>0)out.push({type:'rect',xref:'paper',yref:'y',x0:VBP_X0,x1:VBP_X0+g,y0:y0,y1:y1,
+    if(g>0)out.push({type:'rect',xref:'paper',yref:'y',x0:X1-g,x1:X1,y0:y0,y1:y1,
       fillcolor:isP?'rgba(74,222,128,.62)':CPAL.vbpUp,line:{width:0},layer:'below'});
-    if(r>0)out.push({type:'rect',xref:'paper',yref:'y',x0:VBP_X0+g,x1:VBP_X0+g+r,y0:y0,y1:y1,
+    if(r>0)out.push({type:'rect',xref:'paper',yref:'y',x0:X1-g-r,x1:X1-g,y0:y0,y1:y1,
       fillcolor:isP?'rgba(248,113,113,.58)':CPAL.vbpDn,line:{width:0},layer:'below'});
-    if(isP)out.push({type:'rect',xref:'paper',yref:'y',x0:VBP_X0,x1:VBP_X0+g+r,y0:y0,y1:y1,
+    if(isP)out.push({type:'rect',xref:'paper',yref:'y',x0:X1-g-r,x1:X1,y0:y0,y1:y1,
       fillcolor:'rgba(0,0,0,0)',line:{width:1.1,color:CPAL.volHot},layer:'below'});   // POC 加亮框
   }
   out._poc=(poc>=0)?vb.ctr[poc]:null;
@@ -1573,6 +1703,8 @@ const SCAN_F={
   all:['全部',r=>true],
   brk:['趨勢線突破',r=>!!r.trendline_break],
   pat:['型態確認',r=>(r.pattern_hits||[]).some(p=>p.state==='confirmed')],
+  tri:['三角收斂',r=>(r.pattern_hits||[]).some(p=>/三角/.test(p.type||''))],
+  vcp:['VCP',r=>(r.pattern_hits||[]).some(p=>/^VCP/.test(p.type||''))],
   near:['近煞車線',r=>r.near_line&&Math.abs(r.near_line.dist_pct)<2],
   hl52:['52週高/低',r=>r.is_52w_high||r.is_52w_low],
   rv:['RV高位',r=>(r.rv_pct||0)>=80],
@@ -1999,8 +2131,10 @@ function renderCockpit(){
   }catch(e){_BT={err:'回測計算失敗:'+(e&&e.message||e)};}}
   try{buildBtPanel(); if(CHIP_BT){var _br=document.getElementById('btres'); if(_br)_br.innerHTML=btResultHTML(_BT);}}catch(e){}
   // 自動趨勢線層:追加於既有 traces 之後(疊於K線上層;不動既有 trace 順序;<50 根 tlTraces 內部靜默不啟用)
-  var _tlRes=null;
-  if(CHIP_TL&&R.length>=50){try{_tlRes=autoTrendlines(R);tlTraces(R,x,null,_tlRes).forEach(t=>traces.push(t));}catch(e){}}
+  var _tlRes=null,_chLv=null;
+  if(CHIP_TL&&R.length>=50){try{_tlRes=autoTrendlines(R);
+    var _tlT=tlTraces(R,x,null,_tlRes); _chLv=_tlT._lv||null;
+    _tlT.forEach(t=>traces.push(t));}catch(e){}}
   // VbP 需在 ann 之前算好:XR/XW(右緣標註錨點)與 POC 標籤都依賴它
   var _vb=null,_vbShapes=[];
   if(CHIP_VBP){try{
@@ -2016,7 +2150,7 @@ function renderCockpit(){
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
-        +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_BT?' · <span style="color:'+CPAL.bt+'">▲進場</span><span style="color:'+CPAL.btX+'">▼出場</span>(歷史模擬·見下方免責)':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(✔=已確認/…=形成中)':'')+(CHIP_CDL?' · <span style="color:#38bdf8">▲▼蠟燭</span>':'')},
+        +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_BT?' · <span style="color:'+CPAL.bt+'">▲進場</span><span style="color:'+CPAL.btX+'">▼出場</span>(歷史模擬·見下方免責)':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')+(CHIP_CDL?' · <span style="color:#38bdf8">▲▼蠟燭</span>':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90)· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
     {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:MB?'檔位 ±100/67/33(負=倒車)':'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
@@ -2025,8 +2159,16 @@ function renderCockpit(){
   if(pa[li]!=null)ann.push({x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:CPAL.poolA}});
   if(_ovlQ){try{_ovlQ(SPYK,CHIP_IDX.SPY,CPAL.idxSpy,'SPY'); _ovlQ(QQQK,CHIP_IDX.QQQ,CPAL.idxQqq,'QQQ');
     if(_ovlLeg.length)ann[0].text+=' · '+_ovlLeg.join(' ');}catch(e){}}   // P7-3 疊加線(ann 已就緒才畫)
-  // CTA 4 條煞車線:右緣直接標注 名稱+觸發價(相近時往上錯開,顏色對線)
-  (function(){const L=[['短50D',R[li].t50,CPAL.brake1],['中100D',R[li].t100,CPAL.brake2],['長200D',R[li].t200,CPAL.brake3],['動63D',R[li].t63,CPAL.brake4lab]].sort((a,b)=>a[1]-b[1]);
+  // 右緣價位標籤堆:CTA 四條煞車線 + 通道上下界(壓力/支撐點位)一起排,共用防疊字的往上錯開規則
+  (function(){
+    const L=[];
+    if(CHIP_CTA)L.push(['短50D',R[li].t50,CPAL.brake1],['中100D',R[li].t100,CPAL.brake2],
+                       ['長200D',R[li].t200,CPAL.brake3],['動63D',R[li].t63,CPAL.brake4lab]);
+    // 2026-08-01 使用者指定:通道成形 → 直接給出可操作點位(上升通道要壓力、下行通道要支撐;兩界都標)
+    if(_chLv)_chLv.forEach(function(v){ if(v.y==null||!isFinite(v.y))return;
+      L.push([v.kind,v.y,'rgba('+v.col+',1)']); });
+    if(!L.length)return;
+    L.sort((a,b)=>a[1]-b[1]);
     let pv=-Infinity; L.forEach(p=>{let y=p[1]; if(y-pv<rng*0.052)y=pv+rng*0.052; pv=y;
       ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y',y:y,yanchor:'middle',showarrow:false,
         text:p[0]+' '+(p[1]>=1000?p[1].toFixed(0):p[1].toFixed(1)),font:{size:8.5,color:p[2]},bgcolor:CPAL.bgc});});})();
@@ -2034,7 +2176,7 @@ function renderCockpit(){
   if(_vb&&_vbShapes.length){   // VbP 右軌:欄頭(桌機才放,手機空間不足會與圖例撞字)+ POC(量最大價位)標籤
     if(!MB)ann.push({xref:'paper',yref:'paper',x:VBG.x0,y:1.004,xanchor:'left',yanchor:'bottom',showarrow:false,
       font:{size:8,color:MUT2},text:'量價 VbP'});
-    if(_vbShapes._poc!=null)ann.push({xref:'paper',x:VBG.x0+VBG.w+0.004,xanchor:'left',yref:'y',y:_vbShapes._poc,
+    if(_vbShapes._poc!=null)ann.push({xref:'paper',x:VBG.x0+VBG.w+0.010,xanchor:'left',yref:'y',y:_vbShapes._poc,
       yanchor:'middle',showarrow:false,text:'POC '+_vbShapes._poc.toFixed(_vbShapes._poc>=1000?0:1),
       font:{size:8,color:CPAL.volHot},bgcolor:CPAL.bgc});
   }
@@ -2225,11 +2367,11 @@ function renderCockpit(){
         traces.push({type:'scatter',mode:'lines',x:[x[nk.i1],x[ne]],
           y:[+nk.y1.toFixed(3),+(nk.y1+nsl*(ne-nk.i1)).toFixed(3)],meta:'pat',showlegend:false,
           line:{color:'rgba('+col+',.6)',width:1.2,dash:'dash'},
-          hovertemplate:'頸線'+(P4.target!=null?(' · 量度目標 '+P4.target):'')+'<extra></extra>'});
+          hovertemplate:(P4.necklineLabel||'頸線')+(P4.target!=null?(' · 量度目標 '+P4.target):'')+'<extra></extra>'});
       }
       var lp=P4.pivots[P4.pivots.length-1];
       if(!MB||pi===0)ann.push({x:lp.i,y:lp.px+(P4.dir<0?1:-1)*rng*0.05,xref:'x',yref:'y',showarrow:false,
-        text:P4.type+(solid?' ✔':' …'),font:{size:MB?7.5:8.5,color:'rgba('+col+',1)'},bgcolor:CPAL.bgc,
+        text:P4.type.split(' ')[0]+(solid?' ✔':' …'),font:{size:MB?7.5:8.5,color:'rgba('+col+',1)'},bgcolor:CPAL.bgc,
         yanchor:P4.dir<0?'bottom':'top'});
     });
   }catch(e){}}
