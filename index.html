@@ -236,6 +236,7 @@ a{color:var(--blue)}
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span>
     </h2>
     <div id="cockpit" style="height:960px"></div>
+    <div id="season" style="margin:10px 0 18px"></div>
     <div id="chipstock" style="margin:14px 0 22px"></div>
     <div id="chipflow" style="height:440px"></div>
     <div id="chipoffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
@@ -251,7 +252,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T09:19Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T09:50Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -527,6 +528,10 @@ let CHIP_SIGK=true; // 訊號K棒變色開關(煞車線易手日+TD9/13 完成�
 let CHIP_REV=false; // 財報營收階梯開關(預設關,避免預設圖面過載;僅 signals 有 rev_q 的標的顯示 chip)
 let CHIP_PAT=false; // 古典型態層開關(預設關)
 let CHIP_CDL=false; // 蠟燭型態標記開關(預設關,避免圖面過載)
+let CHIP_FIB=false; // Fibonacci 自動回撤(預設關)
+let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
+let CHIP_MTF=false; // MTFA 週線疊加(預設關)
+let CHIP_IND='rv';  // 副圖單槽:rv(轉速,預設)/macd/adx/atr/cci/stoch
 function buildChipIdx(){
   const el=document.getElementById('chipidx'); if(!el)return;
   const cols={SPY:'#2dd4bf',QQQ:'#c084fc'};
@@ -537,7 +542,13 @@ function buildChipIdx(){
     +' <span class="cidxchip4" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #f59e0b;'+(CHIP_SIGK?'background:rgba(245,158,11,.15);color:#f59e0b':'color:var(--muted);opacity:.55')+'">訊號K</span>'
     +(((SIG&&SIG.symbols&&SIG.symbols[CHIP_SYM]&&SIG.symbols[CHIP_SYM].computed_fund&&(SIG.symbols[CHIP_SYM].computed_fund.rev_q||[]).length)?' <span class="cidxchip5" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #22c55e;'+(CHIP_REV?'background:rgba(34,197,94,.15);color:#22c55e':'color:var(--muted);opacity:.55')+'">營收</span>':''))
     +' <span class="cidxchip6" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #a78bfa;'+(CHIP_PAT?'background:rgba(167,139,250,.15);color:#a78bfa':'color:var(--muted);opacity:.55')+'">型態</span>'
-    +' <span class="cidxchip7" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_CDL?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">蠟燭</span>';
+    +' <span class="cidxchip7" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_CDL?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">蠟燭</span>'
+    +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
+    +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
+    +' <span class="cidxchipA" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #94a3b8;'+(CHIP_MTF?'background:rgba(148,163,184,.15);color:#cbd5e1':'color:var(--muted);opacity:.55')+'">週線</span>'
+    +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
+      +[['rv','轉速'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
+        return '<option value="'+o[0]+'"'+(CHIP_IND===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>';
   el.querySelectorAll('.cidxchip').forEach(function(t){t.onclick=function(){var k=t.dataset.k;CHIP_IDX[k]=!CHIP_IDX[k];if(CHIP_IDX[k]){k==='SPY'?ensureSpyK():ensureQQQK();}renderChips();};});
   var t2=el.querySelector('.cidxchip2'); if(t2)t2.onclick=function(){CHIP_TL=!CHIP_TL;renderChips();};
   var t3=el.querySelector('.cidxchip3'); if(t3)t3.onclick=function(){CHIP_VBP=!CHIP_VBP;renderChips();};
@@ -545,6 +556,10 @@ function buildChipIdx(){
   var t5=el.querySelector('.cidxchip5'); if(t5)t5.onclick=function(){CHIP_REV=!CHIP_REV;renderChips();};
   var t6=el.querySelector('.cidxchip6'); if(t6)t6.onclick=function(){CHIP_PAT=!CHIP_PAT;renderChips();};
   var t7=el.querySelector('.cidxchip7'); if(t7)t7.onclick=function(){CHIP_CDL=!CHIP_CDL;renderChips();};
+  var t8=el.querySelector('.cidxchip8'); if(t8)t8.onclick=function(){CHIP_FIB=!CHIP_FIB;renderChips();};
+  var t9=el.querySelector('.cidxchip9'); if(t9)t9.onclick=function(){CHIP_VWAP=!CHIP_VWAP;renderChips();};
+  var tA=el.querySelector('.cidxchipA'); if(tA)tA.onclick=function(){CHIP_MTF=!CHIP_MTF;renderChips();};
+  var ti=el.querySelector('.cidxind'); if(ti)ti.onchange=function(){CHIP_IND=ti.value;renderChips();};
 }
 // ===== 駕駛艙色票(1E 集中化,2026-08-01;預設值=現狀 — 改這一個物件=整個駕駛艙換裝;TrendSpider 對照表見 claude/webapp.md)=====
 const CPAL={
@@ -558,7 +573,11 @@ const CPAL={
   poolA:'#fab219', poolM:'#c2703e', poolUp:'rgba(74,222,128,.5)', poolDn:'rgba(248,113,113,.45)',  // ⑦池
   grid:'#1c2027', mut:'#8792a6', ttl:'#e6e9ef', edge:'#0d0d0d', bgc:'rgba(13,13,13,.68)',
   sup:'74,222,128', res:'248,113,113',                                   // 趨勢線 支撐/壓力(rgb 三元組)
-  vbpUp:'rgba(74,222,128,.32)', vbpDn:'rgba(248,113,113,.30)'            // VbP 量價分佈
+  vbpUp:'rgba(74,222,128,.32)', vbpDn:'rgba(248,113,113,.30)',           // VbP 量價分佈
+  arc:'rgba(226,232,240,.62)', edge:'rgba(226,232,240,.66)',            // 型態:頭肩圓弧 / 三角邊線(TrendSpider 式淺色細線)
+  halo:'rgba(248,113,113,.16)', haloLine:'rgba(248,113,113,.55)',       // 訊號共振圈(觸線+訊號同日)
+  fib:'rgba(250,204,21,.55)', vwapHi:'#38bdf8', vwapLo:'#f0abfc',       // Fib / 錨定VWAP
+  wk:'rgba(148,163,184,.75)'                                            // MTFA 週線
 };
 // ===== 自動趨勢線偵測(TrendSpider 式;移植 trendln/pytrendline 思路;2026-08-01)=====
 // 輸入 R=cockpit 渲染視窗切片(與畫面逐根一致);N<50 回 null 不啟用。
@@ -698,9 +717,9 @@ function autoTrendlines(R,OPT2){
 // 趨勢線 → Plotly traces(支撐綠/壓力紅細實線半透明;✂短虛線=已突破止於突破日;active 右延伸至最後一根)
 // v2(2026-08-01):+平行通道(最佳主線平移至該段最遠極值,每檔1組,淡色細虛線+4.5%填底)
 //               +觸及點圓圈(半透明圓 marker,hover 日期/距線誤差);全部 traces 標 meta:'tl'
-function tlTraces(R,x,OPT2){
+function tlTraces(R,x,OPT2,PRE){
   var out=[];
-  var res=autoTrendlines(R,OPT2);
+  var res=PRE||autoTrendlines(R,OPT2);   // PRE=呼叫端已算好的結果(共振圈需共用,避免重算)
   if(!res)return out;
   var best=null;   // 通道主線=分數最高的斜線(active 優先;無 active 斜線才用已突破者)
   res.lines.forEach(function(L){if(L.kind!=='line')return;
@@ -1080,6 +1099,159 @@ function vbpBins(R,i0,i1){
 }
 // VbP → paper-x shapes(0 貼右緣、柱向左、佔寬≤15%、layer below 不遮K棒;不用 xaxis2 —
 // overlaying 軸 + 事後 restyle/relayout 會讓 Plotly 2.35 把主類別軸重判成 date,已實測毒性,勿改回)
+// ===== P5A Fibonacci 自動回撤:取可視區間最大 swing(ZigZag 極值,退化時用視窗高低)=====
+function fibLevels(R,piv){
+  var N=R.length; if(N<20)return null;
+  var hi=null,lo=null;
+  if(piv&&piv.length>=2){
+    piv.forEach(function(p){
+      if(p.t==='H'&&(!hi||p.px>hi.px))hi=p;
+      if(p.t==='L'&&(!lo||p.px<lo.px))lo=p;
+    });
+  }
+  if(!hi||!lo){   // 退化:視窗真實極值
+    var ih=0,il=0;
+    for(var i=0;i<N;i++){if(R[i].h>R[ih].h)ih=i;if(R[i].l<R[il].l)il=i;}
+    hi={i:ih,px:R[ih].h,d:R[ih].d}; lo={i:il,px:R[il].l,d:R[il].d};
+  }
+  var span=hi.px-lo.px; if(!(span>0))return null;
+  var down=hi.i<lo.i;   // true=高在前(下跌波,回撤由下往上量)
+  var RAT=[0,0.236,0.382,0.5,0.618,0.786,1];
+  return {hi:hi,lo:lo,down:down,startI:Math.min(hi.i,lo.i),
+    levels:RAT.map(function(r){
+      return {r:r,px:+(down?(hi.px-span*r):(lo.px+span*r)).toFixed(3),
+              lab:(r===0?'0':(r===1?'100':(r*100).toFixed(1)))+'%'};
+    })};
+}
+// ===== P5B 錨定 VWAP(日K近似:典型價(H+L+C)/3 × 量 累積;非逐筆 VWAP,誠實標註)=====
+function anchoredVwap(R,anchorI){
+  var out=new Array(R.length).fill(null), pv=0, vv=0;
+  for(var i=anchorI;i<R.length;i++){
+    var tp=(R[i].h+R[i].l+R[i].c)/3, v=R[i].v||0;
+    pv+=tp*v; vv+=v;
+    out[i]=vv>0?+(pv/vv).toFixed(3):null;
+  }
+  return out;
+}
+// ===== P5C MTFA:日K聚合週K + 週線 SMA(階梯對映回日索引)=====
+function weeklyAgg(R){
+  var wk=[],cur=null,key='';
+  function isoWeek(ds){
+    var t=new Date(String(ds)+'T00:00:00Z');
+    if(isNaN(t.getTime()))return String(ds);   // 防禦:非完整日期(YYYY-MM-DD)時退化為逐根一組,不拋例外
+    var day=(t.getUTCDay()+6)%7;
+    t.setUTCDate(t.getUTCDate()-day);
+    return t.toISOString().slice(0,10);
+  }
+  R.forEach(function(r,i){
+    var k=isoWeek(r.d);
+    if(k!==key){if(cur)wk.push(cur);key=k;cur={k:k,o:r.o,h:r.h,l:r.l,c:r.c,v:r.v||0,i0:i,i1:i};}
+    else{cur.h=Math.max(cur.h,r.h);cur.l=Math.min(cur.l,r.l);cur.c=r.c;cur.v+=(r.v||0);cur.i1=i;}
+  });
+  if(cur)wk.push(cur);
+  return wk;
+}
+function weeklyMA(R,n){
+  var wk=weeklyAgg(R), out=new Array(R.length).fill(null);
+  for(var w=0;w<wk.length;w++){
+    if(w+1<n)continue;
+    var s2=0; for(var q=w-n+1;q<=w;q++)s2+=wk[q].c;
+    var ma=s2/n;
+    for(var k=wk[w].i0;k<=wk[w].i1;k++)out[k]=+ma.toFixed(3);   // 階梯:整週同值
+  }
+  return {ma:out,wk:wk};
+}
+// ===== P5D 指標(標準定義;MACD/ADX/ATR/CCI/Stochastic)=====
+function indEMA(v,n){var o=[],k=2/(n+1),e=null;for(var i=0;i<v.length;i++){e=(e==null)?v[i]:v[i]*k+e*(1-k);o.push(e);}return o;}
+function indMACD(R,f,sl,sg){
+  f=f||12;sl=sl||26;sg=sg||9;
+  var C=R.map(function(r){return r.c;});
+  var ef=indEMA(C,f), es=indEMA(C,sl);
+  var dif=C.map(function(_,i){return ef[i]-es[i];});
+  var dea=indEMA(dif,sg);
+  return {dif:dif.map(function(v){return +v.toFixed(4);}),
+          dea:dea.map(function(v){return +v.toFixed(4);}),
+          hist:dif.map(function(v,i){return +((v-dea[i])*2).toFixed(4);})};
+}
+function indATR(R,n){
+  n=n||14; var tr=[],atr=[];
+  for(var i=0;i<R.length;i++){
+    tr.push(i===0?(R[0].h-R[0].l):Math.max(R[i].h-R[i].l,Math.abs(R[i].h-R[i-1].c),Math.abs(R[i].l-R[i-1].c)));
+    if(i<n-1)atr.push(null);
+    else if(i===n-1){var s3=0;for(var q=0;q<n;q++)s3+=tr[q];atr.push(s3/n);}
+    else atr.push((atr[i-1]*(n-1)+tr[i])/n);   // Wilder 平滑
+  }
+  return atr.map(function(v){return v==null?null:+v.toFixed(4);});
+}
+function indADX(R,n){
+  n=n||14;
+  var pdm=[],ndm=[],tr=[];
+  for(var i=0;i<R.length;i++){
+    if(i===0){pdm.push(0);ndm.push(0);tr.push(R[0].h-R[0].l);continue;}
+    var up=R[i].h-R[i-1].h, dn=R[i-1].l-R[i].l;
+    pdm.push(up>dn&&up>0?up:0); ndm.push(dn>up&&dn>0?dn:0);
+    tr.push(Math.max(R[i].h-R[i].l,Math.abs(R[i].h-R[i-1].c),Math.abs(R[i].l-R[i-1].c)));
+  }
+  function wilder(a){
+    var o=new Array(a.length).fill(null),s4=0;
+    for(var i=1;i<a.length;i++){
+      if(i<n){s4+=a[i];if(i===n-1)o[i]=s4;}
+      else if(i===n){s4+=a[i];o[i]=s4;}
+      else o[i]=o[i-1]-o[i-1]/n+a[i];
+    }
+    return o;
+  }
+  var sp=wilder(pdm),sn=wilder(ndm),st=wilder(tr);
+  var pdi=[],ndi=[],dx=[],adx=new Array(R.length).fill(null);
+  for(var i=0;i<R.length;i++){
+    if(sp[i]==null||st[i]==null||!st[i]){pdi.push(null);ndi.push(null);dx.push(null);continue;}
+    var p=100*sp[i]/st[i], q2=100*sn[i]/st[i];
+    pdi.push(p);ndi.push(q2);
+    dx.push((p+q2)?100*Math.abs(p-q2)/(p+q2):null);
+  }
+  var acc=0,cnt=0,started=-1;
+  for(var i=0;i<R.length;i++){
+    if(dx[i]==null)continue;
+    if(started<0){acc+=dx[i];cnt++;if(cnt===n){adx[i]=acc/n;started=i;}}
+    else adx[i]=(adx[i-1]*(n-1)+dx[i])/n;
+  }
+  return {adx:adx.map(function(v){return v==null?null:+v.toFixed(2);}),
+          pdi:pdi.map(function(v){return v==null?null:+v.toFixed(2);}),
+          ndi:ndi.map(function(v){return v==null?null:+v.toFixed(2);})};
+}
+function indCCI(R,n){
+  n=n||20; var o=new Array(R.length).fill(null);
+  var tp=R.map(function(r){return (r.h+r.l+r.c)/3;});
+  for(var i=n-1;i<R.length;i++){
+    var s5=0;for(var q=i-n+1;q<=i;q++)s5+=tp[q];
+    var m=s5/n,md=0;
+    for(var q2=i-n+1;q2<=i;q2++)md+=Math.abs(tp[q2]-m);
+    md/=n;
+    o[i]=md?+((tp[i]-m)/(0.015*md)).toFixed(2):null;
+  }
+  return o;
+}
+function indStoch(R,n,k1,d1){
+  n=n||14;k1=k1||3;d1=d1||3;
+  var raw=new Array(R.length).fill(null);
+  for(var i=n-1;i<R.length;i++){
+    var hh=-Infinity,ll=Infinity;
+    for(var q=i-n+1;q<=i;q++){hh=Math.max(hh,R[q].h);ll=Math.min(ll,R[q].l);}
+    raw[i]=hh>ll?100*(R[i].c-ll)/(hh-ll):50;
+  }
+  function sma2(a,m){
+    var o=new Array(a.length).fill(null);
+    for(var i=0;i<a.length;i++){
+      var s6=0,c=0;
+      for(var q=i-m+1;q<=i;q++)if(q>=0&&a[q]!=null){s6+=a[q];c++;}
+      if(c===m)o[i]=s6/m;
+    }
+    return o;
+  }
+  var K=sma2(raw,k1), D=sma2(K,d1);
+  return {k:K.map(function(v){return v==null?null:+v.toFixed(2);}),
+          d:D.map(function(v){return v==null?null:+v.toFixed(2);})};
+}
 function vbpShapes(vb){
   var out=[];
   for(var b=0;b<vb.ctr.length;b++){
@@ -1245,6 +1417,63 @@ function renderCockpitMax(el,MB){
   el._HL=null;   // 對數軸下自動 y 適應交給 Plotly autorange(不用線性 HL 邏輯)
   bindPinch('cockpit',()=>null);
 }
+// ===== P5E 季節性:年×月報酬矩陣 + 各月平均/勝率(優先 kline_max 全史,無則現有日K降級)=====
+function renderSeason(){
+  const el=document.getElementById('season'); if(!el)return;
+  if(CHIP_WIN==='max'){el.innerHTML='';el.dataset.sig='';return;}   // 全史模式下不重複顯示
+  const KM=CHIPKM[CHIP_SYM];
+  let src=null,full=false;
+  if(KM&&KM.bars&&KM.bars.length>=36){src=KM.bars.map(b=>[b[0],+b[4]]);full=true;}
+  else{const K=CHIPK[CHIP_SYM];
+    if(K&&K.bars&&K.bars.length>=250){const mm=aggMonthly(K.bars);src=mm.map(b=>[b[0],+b[4]]);}}
+  const sig='se:'+CHIP_SYM+':'+(src?src.length:0)+(full?':F':':d');
+  if(el.dataset.sig===sig)return;
+  el.dataset.sig=sig;
+  if(!src||src.length<24){el.innerHTML='<div class="note" style="opacity:.75">季節性:'+CHIP_SYM+' 月資料不足(需 ≥24 個月)</div>';return;}
+  // 月報酬 = 當月收盤 / 前月收盤 − 1
+  const cell={},years=[];
+  for(let i=1;i<src.length;i++){
+    const y=+src[i][0].slice(0,4), m=+src[i][0].slice(5,7);
+    const r=src[i-1][1]>0?(src[i][1]/src[i-1][1]-1)*100:null;
+    if(r==null)continue;
+    cell[y+'-'+m]=r;
+    if(!years.includes(y))years.push(y);
+  }
+  years.sort((a,b)=>b-a);
+  const MN=['1','2','3','4','5','6','7','8','9','10','11','12'];
+  const stat=MN.map((_,mi)=>{
+    const v=years.map(y=>cell[y+'-'+(mi+1)]).filter(x=>x!=null);
+    if(!v.length)return {n:0};
+    const avg=v.reduce((a,b)=>a+b,0)/v.length, win=100*v.filter(x=>x>0).length/v.length;
+    return {n:v.length,avg:avg,win:win};
+  });
+  const all=Object.values(cell); const mx=Math.max(...all.map(Math.abs),1);
+  const col=v=>{if(v==null)return 'transparent';
+    const a=Math.min(1,Math.abs(v)/(mx*0.75))*0.62;
+    return v>=0?'rgba(74,222,128,'+a.toFixed(2)+')':'rgba(248,113,113,'+a.toFixed(2)+')';};
+  let h='<div style="background:var(--surface,#1a1a19);border:1px solid var(--line,#2c2c2a);border-radius:10px;padding:10px 12px">'
+    +'<div style="font-size:12.5px;color:#e6e9ef;font-weight:600;margin-bottom:6px">季節性 · '+CHIP_SYM
+    +' <span style="color:var(--muted);font-weight:400;font-size:11px">月報酬矩陣('+years.length+' 年 · '
+    +(full?'全史月K':'現有日K聚合月線 · 全史資料建置中')+')</span></div>'
+    +'<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:10.5px;font-variant-numeric:tabular-nums">'
+    +'<tr><th style="padding:2px 5px;color:var(--muted);text-align:left">年</th>'
+    +MN.map(m=>'<th style="padding:2px 5px;color:var(--muted);text-align:right">'+m+'月</th>').join('')+'</tr>';
+  years.slice(0,14).forEach(y=>{
+    h+='<tr><td style="padding:2px 5px;color:#c3c2b7">'+y+'</td>'
+      +MN.map((_,mi)=>{const v=cell[y+'-'+(mi+1)];
+        return '<td style="padding:2px 5px;text-align:right;background:'+col(v)+';color:'+(v==null?'#555':'#f2f2f0')+'">'
+          +(v==null?'·':(v>0?'+':'')+v.toFixed(1))+'</td>';}).join('')+'</tr>';
+  });
+  h+='<tr><td style="padding:3px 5px;color:#fab219;border-top:1px solid var(--line)">平均</td>'
+    +stat.map(t=>'<td style="padding:3px 5px;text-align:right;border-top:1px solid var(--line);color:'
+      +(t.n?(t.avg>=0?'#4ade80':'#f87171'):'#555')+'">'+(t.n?(t.avg>0?'+':'')+t.avg.toFixed(1):'·')+'</td>').join('')+'</tr>'
+    +'<tr><td style="padding:2px 5px;color:#fab219">勝率</td>'
+    +stat.map(t=>'<td style="padding:2px 5px;text-align:right;color:'+(t.n?'#c3c2b7':'#555')+'">'
+      +(t.n?Math.round(t.win)+'%':'·')+'</td>').join('')+'</tr></table></div>'
+    +'<div class="note" style="margin-top:6px;font-size:10.5px">月報酬=當月收盤/前月收盤−1;綠=正、紅=負,深淺依幅度。'
+    +'樣本 '+years.length+' 年,**統計描述非預測**;年數少時單月平均易被極端值主導。</div></div>';
+  el.innerHTML=h;
+}
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
@@ -1262,7 +1491,7 @@ function renderCockpit(){
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_REV?':r1':':r0')+(CHIP_PAT?':p1':':p0')+(CHIP_CDL?':d1':':d0')+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'');
+  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_REV?':r1':':r0')+(CHIP_PAT?':p1':':p0')+(CHIP_CDL?':d1':':d0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_MTF?':k1':':k0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'');
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   const x=R.map(r=>r.d.slice(5));
@@ -1308,21 +1537,17 @@ function renderCockpit(){
     {type:'scatter',mode:'markers+text',x:x,y:botY,text:botT,textposition:'bottom center',textfont:{size:8.5,color:CPAL.star},
      marker:{symbol:'star',size:12,color:CPAL.star,line:{width:1.5,color:CPAL.edge}},name:'抄底',hovertemplate:'★ BOT≥3 訊號齊發:抄底階梯<extra></extra>'},
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
+    ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rsi==null?null:+r.rsi.toFixed(1)),yaxis:'y8',line:{color:CPAL.rsi,width:1.1},showlegend:false,hovertemplate:'RSI14 %{y}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rsi==null?null:+r.rsi.toFixed(1)),yaxis:'y8',line:{color:CPAL.rsi,width:1.1},showlegend:false,hovertemplate:'RSI14 %{y}<extra></extra>'}]:[]),
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.sc),yaxis:'y9',line:{color:CPAL.sc,width:1.7,shape:'hv'},showlegend:false,hovertemplate:'score %{y}<extra></extra>'},
     {type:'bar',x:x,y:pbar,yaxis:'y10',marker:{color:pbar.map(v=>v>=0?CPAL.poolUp:CPAL.poolDn)},showlegend:false,hovertemplate:'⑦當日 %{y:.0f}M<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:pa,yaxis:'y10',line:{color:CPAL.poolA,width:2},showlegend:false,hovertemplate:'全單累積 %{y:.0f}M<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:pm,yaxis:'y10',line:{color:CPAL.poolM,width:1.7,dash:'dot'},showlegend:false,hovertemplate:'大單累積 %{y:.0f}M<extra></extra>'}
   ];
   // 自動趨勢線層:追加於既有 traces 之後(疊於K線上層;不動既有 trace 順序;<50 根 tlTraces 內部靜默不啟用)
-  if(CHIP_TL&&R.length>=50){try{tlTraces(R,x).forEach(t=>traces.push(t));}catch(e){}}
-  // VbP 成交量分佈(1D):右緣紅綠橫柱(paper-x shapes;0 貼右緣、柱向左、佔寬≤15%、layer below)
-  var _vb=null,_vbShapes=[];
-  if(CHIP_VBP){try{
-    _vb=vbpBins(R,0,R.length-1);
-    if(_vb)_vbShapes=vbpShapes(_vb);
-  }catch(e){_vb=null;_vbShapes=[];}}
+  var _tlRes=null;
+  if(CHIP_TL&&R.length>=50){try{_tlRes=autoTrendlines(R);tlTraces(R,x,null,_tlRes).forEach(t=>traces.push(t));}catch(e){}}
   const li=R.length-1;
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.028,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
@@ -1416,43 +1641,109 @@ function renderCockpit(){
         yanchor:'bottom',font:{size:8,color:'#fbbf24'},bgcolor:CPAL.bgc});
     });
   }catch(e){}}
-  // ===== P4 渲染(4D):古典型態連線+標籤(confirmed 實線 / forming 虛線半透明;invalidated 演算法端已排除)=====
+  // 訊號共振圈(2026-08-01 視覺精修;仿 TrendSpider aVWAP 觸點圈):
+  // K棒觸及趨勢線 ∩ 該根有訊號(煞車線易手 / TD9·13 完成 / signals marks)→ 半透明大圓標註
+  if(CHIP_TL&&_tlRes){try{
+    var _sig={};
+    for(var q2=1;q2<R.length;q2++){
+      var r2=R[q2],p2=R[q2-1],hit2=false;
+      ['t50','t100','t200','t63'].forEach(function(k9){
+        if(r2[k9]!=null&&p2[k9]!=null&&((r2.c>r2[k9])!==(p2.c>p2[k9])))hit2=true;});
+      if(r2.tds0===9||r2.tdb0===9||r2.tds0===13||r2.tdb0===13)hit2=true;
+      if(hit2)_sig[q2]=1;
+    }
+    if(_sg&&(_sg.marks||[]).length)(_sg.marks||[]).forEach(function(m9){
+      if(m9.kind==='buy'||m9.kind==='sell'||m9.kind==='alert'){var q9=_dIdx[m9.d];if(q9!=null)_sig[q9]=1;}});
+    var hx=[],hy=[],hh=[];
+    _tlRes.lines.forEach(function(L9){
+      (L9.tIdx||[]).forEach(function(k8){
+        if(!_sig[k8])return;
+        var ly8=L9.y1+L9.slope*(k8-L9.i);
+        hx.push(x[k8]); hy.push(+ly8.toFixed(3));
+        hh.push((L9.side==='sup'?'支撐':'壓力')+'觸線 + 同日訊號(煞車易手/TD9·13/標註)');
+      });
+    });
+    if(hx.length)traces.push({type:'scatter',mode:'markers',x:hx,y:hy,customdata:hh,meta:'halo',showlegend:false,
+      marker:{size:22,color:CPAL.halo,line:{width:1.4,color:CPAL.haloLine}},
+      hovertemplate:'%{customdata}<extra></extra>'});
+  }catch(e){}}
+  // VbP 成交量分佈(1D):右緣紅綠橫柱(paper-x shapes;0 貼右緣、柱向左、佔寬≤15%、layer below)
+  var _vb=null,_vbShapes=[];
+  if(CHIP_VBP){try{
+    _vb=vbpBins(R,0,R.length-1);
+    if(_vb)_vbShapes=vbpShapes(_vb);
+  }catch(e){_vb=null;_vbShapes=[];}}
+  // ===== P4 渲染(4D;2026-08-01 視覺精修):頭肩=圓弧、三角楔形=延伸邊線、confirmed 實線/forming 虛線 =====
+  // 視覺語彙對標 TrendSpider:頭肩三個 hump 各畫一條淺色圓弧;三角兩條邊線延伸至右緣
   if(CHIP_PAT&&R.length>=50){try{
     var _piv=zigzag(R), _pats=classicPatterns(R,_piv);
+    function arcPts(apexI,apexPx,baseL,baseR,x0,x1,upward){
+      // 拋物線圓弧(TrendSpider 式:淺而貼合,不下探到谷底):
+      // 頂點略高於極值,弧腳只下探到「頂點↔相鄰谷」的 50%,寬度取谷距的 0.6 → 視覺貼在 hump 上緣
+      var trough=upward?Math.max(baseL,baseR):Math.min(baseL,baseR);
+      var mg=Math.abs(apexPx-trough)*0.05;
+      var apex=apexPx+(upward?mg:-mg);
+      var base=apex+(trough-apex)*0.5;
+      var hwRaw=Math.max(apexI-x0,x1-apexI);
+      var hw=Math.max(2,Math.round(hwRaw*0.6));
+      var a0=Math.max(x0,apexI-hw), a1=Math.min(x1,apexI+hw);
+      var pts=[];
+      for(var q=a0;q<=a1;q++){
+        var t=(q-apexI)/hw;
+        pts.push([q,+(apex-(apex-base)*t*t).toFixed(3)]);
+      }
+      return pts;
+    }
     _pats.forEach(function(P4,pi){
       var solid=P4.state==='confirmed';
-      var col=P4.dir>0?'167,139,250':(P4.dir<0?'244,114,182':'148,163,184');   // 多=紫、空=粉、中性=灰
-      var lw=solid?1.8:1.4;
-      // 轉折連線(頭肩/雙頂底/杯柄)或兩條邊線(三角/楔形/旗形)
+      var col=P4.dir>0?'167,139,250':(P4.dir<0?'244,114,182':'148,163,184');
+      var isHS=/頭肩/.test(P4.type), isDbl=/雙重/.test(P4.type);
       if(P4.edges){
-        [['up',P4.edges.up],['lo',P4.edges.lo]].forEach(function(e){
-          var E=e[1], x1=E.i1, x2=Math.min(R.length-1,P4.brkI!=null?P4.brkI:R.length-1);
+        // 三角/楔形/旗形:兩條邊線,延伸至突破日後數根或視窗右緣(仿 DDOG 白細線)
+        var xEnd=Math.min(R.length-1,(P4.brkI!=null?P4.brkI+6:R.length-1));
+        [P4.edges.up,P4.edges.lo].forEach(function(E){
           var sl=(E.y2-E.y1)/Math.max(1,E.i2-E.i1);
-          traces.push({type:'scatter',mode:'lines',x:[x[x1],x[x2]],
-            y:[+E.y1.toFixed(3),+(E.y1+sl*(x2-x1)).toFixed(3)],meta:'pat',showlegend:false,
-            line:{color:'rgba('+col+',.75)',width:lw,dash:solid?'solid':'dot'},
+          traces.push({type:'scatter',mode:'lines',x:[x[E.i1],x[xEnd]],
+            y:[+E.y1.toFixed(3),+(E.y1+sl*(xEnd-E.i1)).toFixed(3)],meta:'pat',showlegend:false,
+            line:{color:CPAL.edge,width:1.3,dash:solid?'solid':'dot'},
             hovertemplate:P4.type+'('+(solid?'confirmed':'forming')+') 邊線<extra></extra>'});
         });
+      }else if(isHS){
+        // 頭肩:左肩/頭/右肩 三條圓弧(TrendSpider 式);頸線另畫
+        var PV=P4.pivots, up=P4.dir<0;   // 頭肩頂=峰(弧在上);逆頭肩=谷(弧在下)
+        var LSp=PV[0],T1p=PV[1],Hp=PV[2],T2p=PV[3],RSp=PV[4];
+        var humps=[[LSp,Math.max(0,LSp.i-(T1p.i-LSp.i)),T1p.i,T1p.px,T1p.px],
+                   [Hp,T1p.i,T2p.i,T1p.px,T2p.px],
+                   [RSp,T2p.i,Math.min(R.length-1,RSp.i+(RSp.i-T2p.i)),T2p.px,T2p.px]];
+        humps.forEach(function(hm){
+          var P0=hm[0],x0=hm[1],x1=hm[2];
+          if(x1<=x0)return;
+          var pts=arcPts(P0.i,P0.px,hm[3],hm[4],x0,x1,up);
+          traces.push({type:'scatter',mode:'lines',x:pts.map(function(q){return x[q[0]];}),
+            y:pts.map(function(q){return q[1];}),meta:'pat',showlegend:false,
+            line:{color:CPAL.arc,width:1.4,shape:'spline',dash:solid?'solid':'dot'},
+            hovertemplate:P4.type+' · '+P0.role+' '+P0.px+'<extra></extra>'});
+        });
       }else{
+        // 雙重頂底/杯柄:轉折連線+標記
         traces.push({type:'scatter',mode:'lines+markers',x:P4.pivots.map(function(q){return x[q.i];}),
           y:P4.pivots.map(function(q){return q.px;}),meta:'pat',showlegend:false,
-          line:{color:'rgba('+col+',.7)',width:lw,dash:solid?'solid':'dot'},
+          line:{color:'rgba('+col+',.7)',width:1.5,dash:solid?'solid':'dot'},
           marker:{size:6,color:'rgba('+col+',.9)'},
           customdata:P4.pivots.map(function(q){return q.role;}),
           hovertemplate:P4.type+'('+(solid?'confirmed':'forming')+') %{customdata} %{y}<extra></extra>'});
       }
-      // 頸線(頭肩/雙頂底/杯柄):延伸到突破日或視窗末
+      // 頸線:延伸到突破日後數根
       if(P4.neckline){
-        var nk=P4.neckline, ne=Math.min(R.length-1,(P4.brkI!=null?P4.brkI+2:R.length-1));
+        var nk=P4.neckline, ne=Math.min(R.length-1,(P4.brkI!=null?P4.brkI+6:R.length-1));
         var nsl=(nk.y2-nk.y1)/Math.max(1,nk.i2-nk.i1);
         traces.push({type:'scatter',mode:'lines',x:[x[nk.i1],x[ne]],
           y:[+nk.y1.toFixed(3),+(nk.y1+nsl*(ne-nk.i1)).toFixed(3)],meta:'pat',showlegend:false,
-          line:{color:'rgba('+col+',.55)',width:1.2,dash:'dash'},
+          line:{color:'rgba('+col+',.6)',width:1.2,dash:'dash'},
           hovertemplate:'頸線'+(P4.target!=null?(' · 量度目標 '+P4.target):'')+'<extra></extra>'});
       }
-      // 標籤:標在最後一個轉折上方/下方
       var lp=P4.pivots[P4.pivots.length-1];
-      if(!MB||pi===0)ann.push({x:lp.i,y:lp.px+(P4.dir<0?1:-1)*rng*0.045,xref:'x',yref:'y',showarrow:false,
+      if(!MB||pi===0)ann.push({x:lp.i,y:lp.px+(P4.dir<0?1:-1)*rng*0.05,xref:'x',yref:'y',showarrow:false,
         text:P4.type+(solid?' ✔':' …'),font:{size:MB?7.5:8.5,color:'rgba('+col+',1)'},bgcolor:CPAL.bgc,
         yanchor:P4.dir<0?'bottom':'top'});
     });
@@ -1476,6 +1767,114 @@ function renderCockpit(){
       marker:{symbol:'triangle-down',size:6,color:'rgba(248,113,113,.8)'},hovertemplate:'%{customdata}<extra></extra>'});
     if(nx.length)traces.push({type:'scatter',mode:'markers',x:nx,y:ny2,customdata:nh,meta:'cdl',showlegend:false,
       marker:{symbol:'diamond',size:4,color:'rgba(148,163,184,.6)'},hovertemplate:'%{customdata}<extra></extra>'});
+  }catch(e){}}
+  // ===== P5D 副圖單槽(預設 rv=轉速;可切 MACD/ADX/ATR/CCI/KD)=====
+  var _y8={range:[0,104],tickvals:[0,50,80,100],zero:false}, _y8lab=null, _y8shapes=true;
+  if(CHIP_IND!=='rv'){try{
+    _y8shapes=false;
+    if(CHIP_IND==='macd'){
+      var M5=indMACD(R);
+      traces.push({type:'bar',x:x,y:M5.hist,yaxis:'y8',meta:'ind',showlegend:false,
+        marker:{color:M5.hist.map(function(v){return v>=0?'rgba(74,222,128,.5)':'rgba(248,113,113,.5)';})},
+        hovertemplate:'MACD柱 %{y}<extra></extra>'});
+      traces.push({type:'scatter',mode:'lines',x:x,y:M5.dif,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#38bdf8',width:1.4},hovertemplate:'DIF %{y}<extra></extra>'});
+      traces.push({type:'scatter',mode:'lines',x:x,y:M5.dea,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#fbbf24',width:1.2},hovertemplate:'DEA %{y}<extra></extra>'});
+      var mv=M5.dif.concat(M5.dea,M5.hist).filter(function(v){return v!=null;});
+      var mx5=Math.max.apply(null,mv.map(Math.abs))||1;
+      _y8={range:[-mx5*1.15,mx5*1.15],tickvals:null,zero:true};
+      _y8lab='MACD(12,26,9) <span style="color:#38bdf8">DIF</span>/<span style="color:#fbbf24">DEA</span>·柱=(DIF−DEA)×2';
+    }else if(CHIP_IND==='adx'){
+      var A5=indADX(R,14);
+      traces.push({type:'scatter',mode:'lines',x:x,y:A5.pdi,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#4ade80',width:1.1},hovertemplate:'+DI %{y}<extra></extra>'});
+      traces.push({type:'scatter',mode:'lines',x:x,y:A5.ndi,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#f87171',width:1.1},hovertemplate:'−DI %{y}<extra></extra>'});
+      traces.push({type:'scatter',mode:'lines',x:x,y:A5.adx,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#e6e9ef',width:1.7},hovertemplate:'ADX %{y}<extra></extra>'});
+      _y8={range:[0,Math.max(60,Math.max.apply(null,(A5.adx.concat(A5.pdi,A5.ndi)).filter(function(v){return v!=null;}))*1.1)],tickvals:[0,20,25,40,60],zero:false};
+      _y8lab='ADX(14) <span style="color:#e6e9ef">ADX</span>/<span style="color:#4ade80">+DI</span>/<span style="color:#f87171">−DI</span>(ADX>25=趨勢明確)';
+    }else if(CHIP_IND==='atr'){
+      var T5=indATR(R,14), pxl=R[R.length-1].c;
+      var pct5=T5.map(function(v,i){return v==null?null:+(100*v/R[i].c).toFixed(2);});
+      traces.push({type:'scatter',mode:'lines',x:x,y:pct5,yaxis:'y8',meta:'ind',showlegend:false,fill:'tozeroy',
+        line:{color:'#fb923c',width:1.5},fillcolor:'rgba(251,146,60,.08)',
+        hovertemplate:'ATR14 %{y}%(佔價)<extra></extra>'});
+      var av5=pct5.filter(function(v){return v!=null;});
+      _y8={range:[0,(Math.max.apply(null,av5)||1)*1.2],tickvals:null,zero:false};
+      _y8lab='ATR(14) 佔價% · 現值 '+(pct5[R.length-1]||0)+'%(≈日均波動)';
+    }else if(CHIP_IND==='cci'){
+      var C5=indCCI(R,20);
+      traces.push({type:'scatter',mode:'lines',x:x,y:C5,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#c084fc',width:1.5},hovertemplate:'CCI20 %{y}<extra></extra>'});
+      var cv5=C5.filter(function(v){return v!=null;}).map(Math.abs);
+      var cm5=Math.max(220,Math.max.apply(null,cv5)||220);
+      _y8={range:[-cm5*1.1,cm5*1.1],tickvals:[-200,-100,0,100,200],zero:true};
+      _y8lab='CCI(20)(±100 為常態帶、±200 為極端)';
+    }else if(CHIP_IND==='stoch'){
+      var S5=indStoch(R,14,3,3);
+      traces.push({type:'scatter',mode:'lines',x:x,y:S5.k,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#38bdf8',width:1.5},hovertemplate:'%K %{y}<extra></extra>'});
+      traces.push({type:'scatter',mode:'lines',x:x,y:S5.d,yaxis:'y8',meta:'ind',showlegend:false,
+        line:{color:'#fbbf24',width:1.2},hovertemplate:'%D %{y}<extra></extra>'});
+      _y8={range:[0,100],tickvals:[0,20,50,80,100],zero:false};
+      _y8lab='Stochastic(14,3,3) <span style="color:#38bdf8">%K</span>/<span style="color:#fbbf24">%D</span>(20/80 超賣超買)';
+    }
+  }catch(e){}}
+  // ===== P5A Fibonacci 自動回撤(預設關):可視區間最大 swing 自動錨定 =====
+  if(CHIP_FIB&&R.length>=20){try{
+    var _fb=fibLevels(R,(typeof _piv!=='undefined'&&_piv)?_piv:zigzag(R));
+    if(_fb){
+      _fb.levels.forEach(function(L5){
+        traces.push({type:'scatter',mode:'lines',x:[x[_fb.startI],x[R.length-1]],y:[L5.px,L5.px],
+          meta:'fib',showlegend:false,line:{color:CPAL.fib,width:(L5.r===0||L5.r===1)?1.3:1,dash:(L5.r===0||L5.r===1)?'solid':'dot'},
+          hovertemplate:'Fib '+L5.lab+' = '+L5.px+'<extra></extra>'});
+        if(!MB)ann.push({xref:'paper',x:0.062,xanchor:'left',yref:'y',y:L5.px,yanchor:'middle',showarrow:false,
+          text:'fib '+L5.lab,font:{size:7.5,color:'#facc15'},bgcolor:CPAL.bgc});
+      });
+      ann.push({x:_fb.hi.i,y:_fb.hi.px,xref:'x',yref:'y',showarrow:false,yanchor:'bottom',
+        text:'swing高',font:{size:7.5,color:'#facc15'},bgcolor:CPAL.bgc});
+      ann.push({x:_fb.lo.i,y:_fb.lo.px,xref:'x',yref:'y',showarrow:false,yanchor:'top',
+        text:'swing低',font:{size:7.5,color:'#facc15'},bgcolor:CPAL.bgc});
+    }
+  }catch(e){}}
+  // ===== P5B 錨定 VWAP(預設關;日K近似 — 典型價×量,非逐筆 VWAP)=====
+  if(CHIP_VWAP&&R.length>=20){try{
+    var ih5=0,il5=0;
+    for(var q5=0;q5<R.length;q5++){if(R[q5].h>R[ih5].h)ih5=q5;if(R[q5].l<R[il5].l)il5=q5;}
+    [[il5,CPAL.vwapLo,'低錨'],[ih5,CPAL.vwapHi,'高錨']].forEach(function(av){
+      var ser=anchoredVwap(R,av[0]);
+      traces.push({type:'scatter',mode:'lines',x:x,y:ser,meta:'vwap',showlegend:false,connectgaps:false,
+        line:{color:av[1],width:1.6},
+        hovertemplate:'aVWAP('+av[2]+' '+R[av[0]].d.slice(5)+') %{y}<extra></extra>'});
+      var last5=ser[R.length-1];
+      if(last5!=null)ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y',y:last5,yanchor:'middle',showarrow:false,
+        text:'aVWAP·'+av[2],font:{size:8,color:av[1]},bgcolor:CPAL.bgc});
+    });
+    ann.push({xref:'paper',yref:'paper',x:0.5,y:1.001,xanchor:'center',yanchor:'bottom',showarrow:false,
+      font:{size:7.5,color:CPAL.mut},text:'aVWAP=日K近似(典型價×量累積),非逐筆 VWAP'});
+  }catch(e){}}
+  // ===== P5C MTFA 週線疊加(預設關):週線 SMA10/SMA20 階梯 + 週線 TD9 標記 =====
+  if(CHIP_MTF&&R.length>=30){try{
+    [[10,'週SMA10'],[20,'週SMA20']].forEach(function(wm,wi){
+      var W5=weeklyMA(R,wm[0]);
+      traces.push({type:'scatter',mode:'lines',x:x,y:W5.ma,meta:'mtf',showlegend:false,connectgaps:false,
+        line:{color:CPAL.wk,width:wi?1.1:1.6,shape:'hv',dash:wi?'dot':'solid'},
+        hovertemplate:wm[1]+' %{y}<extra></extra>'});
+      var lastv=null;
+      for(var q6=R.length-1;q6>=0;q6--)if(W5.ma[q6]!=null){lastv=W5.ma[q6];break;}
+      if(lastv!=null&&!MB)ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y',y:lastv,yanchor:'middle',
+        showarrow:false,text:wm[1]+' '+lastv.toFixed(1),font:{size:7.5,color:'#cbd5e1'},bgcolor:CPAL.bgc});
+    });
+    // 週線 TD9(週K收盤 vs 前4週)
+    var WK=weeklyAgg(R), wc=WK.map(function(w){return w.c;}), ws=0,wb=0,wx=[],wy=[],wt=[];
+    for(var q7=4;q7<WK.length;q7++){
+      ws=wc[q7]>wc[q7-4]?ws+1:0; wb=wc[q7]<wc[q7-4]?wb+1:0;
+      if(ws===9||wb===9){wx.push(x[WK[q7].i1]);wy.push(wb===9?WK[q7].l-o2:WK[q7].h+o2);wt.push('週9');}
+    }
+    if(wx.length)traces.push({type:'scatter',mode:'text',x:wx,y:wy,text:wt,meta:'mtf',showlegend:false,
+      textfont:{size:8,color:'#cbd5e1'},hovertemplate:'週線 TD Setup 9 完成<extra></extra>'});
   }catch(e){}}
   // 3A 財報營收階梯(P3;預設關):SEC 近16季 → 綠色 hv 階梯+填底,映射至價格座標下緣 22%
   // (不用 overlaying 次軸 — 同 1D 的 Plotly 毒性教訓;hover 以 customdata 顯示真值)
@@ -1506,17 +1905,21 @@ function renderCockpit(){
       });
     }
   }catch(e){}}
+  if(CHIP_IND!=='rv'&&_y8lab){   // 副圖切換:覆寫 y8 標籤文字(轉速標籤僅在 rv 模式)
+    for(var qa=0;qa<ann.length;qa++)if(String(ann[qa].yref)==='y8 domain'){ann[qa].text=_y8lab;break;}
+  }
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   const _ckLay={...PBASE,showlegend:false,
     margin:{l:MB?40:52,r:MB?44:64,t:MB?50:34,b:30},
     xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10'},
     yaxis:{domain:[0.46,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
     yaxis7:{domain:[0.375,0.445],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
-    yaxis8:{domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},range:[0,104],side:'right',tickvals:[0,50,80,100]},
+    yaxis8:Object.assign({domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},
+      _y8.tickvals?{tickvals:_y8.tickvals}:{},_y8.zero?{zerolinecolor:'#39404d'}:{}),
     yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},
     yaxis10:{domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
-    shapes:[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
-            {type:'line',xref:'paper',x0:0,x1:1,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}].concat(_vbShapes).concat(_spot),
+    shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
+            {type:'line',xref:'paper',x0:0,x1:1,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot),
     annotations:ann};
   Plotly.react('cockpit',traces,_ckLay,CFG);
   // VbP 縮放重算:bindPinch 的 relayout 觸發 plotly_relayout → 依可視範圍重分箱(只換 shapes,不動 traces/軸)
@@ -1668,7 +2071,8 @@ function renderChips(){
     return;
   }
   ensureChipK(CHIP_SYM);
-  renderCockpit();     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
+  renderCockpit();
+  try{renderSeason();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 全史模式:⑦池/成本分佈維持 250 日(無對應月頻資料)
