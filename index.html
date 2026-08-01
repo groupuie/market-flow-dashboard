@@ -251,7 +251,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T07:58Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T08:10Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -524,6 +524,7 @@ let CHIP_IDX={SPY:false,QQQ:false};   // 現金池圖疊加 SPY/QQQ 趨勢(預�
 let CHIP_TL=true;   // 駕駛艙自動趨勢線層開關(2026-08-01;預設開,記在 JS 變數即可)
 let CHIP_VBP=true;  // VbP 成交量分佈開關(預設開)
 let CHIP_SIGK=true; // 訊號K棒變色開關(煞車線易手日+TD9/13 完成日;預設開)
+let CHIP_REV=false; // 財報營收階梯開關(預設關,避免預設圖面過載;僅 signals 有 rev_q 的標的顯示 chip)
 function buildChipIdx(){
   const el=document.getElementById('chipidx'); if(!el)return;
   const cols={SPY:'#2dd4bf',QQQ:'#c084fc'};
@@ -531,11 +532,13 @@ function buildChipIdx(){
     return '<span class="cidxchip" data-k="'+k+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+c+';'+(CHIP_IDX[k]?('background:'+c+'26;color:'+c):'color:var(--muted);opacity:.55')+'">'+k+'</span>';}).join(' ')
     +' <span class="cidxchip2" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #4ade80;'+(CHIP_TL?'background:rgba(74,222,128,.15);color:#4ade80':'color:var(--muted);opacity:.55')+'">趨勢線</span>'
     +' <span class="cidxchip3" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #eab308;'+(CHIP_VBP?'background:rgba(234,179,8,.15);color:#eab308':'color:var(--muted);opacity:.55')+'">VbP</span>'
-    +' <span class="cidxchip4" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #f59e0b;'+(CHIP_SIGK?'background:rgba(245,158,11,.15);color:#f59e0b':'color:var(--muted);opacity:.55')+'">訊號K</span>';
+    +' <span class="cidxchip4" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #f59e0b;'+(CHIP_SIGK?'background:rgba(245,158,11,.15);color:#f59e0b':'color:var(--muted);opacity:.55')+'">訊號K</span>'
+    +(((SIG&&SIG.symbols&&SIG.symbols[CHIP_SYM]&&SIG.symbols[CHIP_SYM].computed_fund&&(SIG.symbols[CHIP_SYM].computed_fund.rev_q||[]).length)?' <span class="cidxchip5" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #22c55e;'+(CHIP_REV?'background:rgba(34,197,94,.15);color:#22c55e':'color:var(--muted);opacity:.55')+'">營收</span>':''));
   el.querySelectorAll('.cidxchip').forEach(function(t){t.onclick=function(){var k=t.dataset.k;CHIP_IDX[k]=!CHIP_IDX[k];if(CHIP_IDX[k]){k==='SPY'?ensureSpyK():ensureQQQK();}renderChips();};});
   var t2=el.querySelector('.cidxchip2'); if(t2)t2.onclick=function(){CHIP_TL=!CHIP_TL;renderChips();};
   var t3=el.querySelector('.cidxchip3'); if(t3)t3.onclick=function(){CHIP_VBP=!CHIP_VBP;renderChips();};
   var t4=el.querySelector('.cidxchip4'); if(t4)t4.onclick=function(){CHIP_SIGK=!CHIP_SIGK;renderChips();};
+  var t5=el.querySelector('.cidxchip5'); if(t5)t5.onclick=function(){CHIP_REV=!CHIP_REV;renderChips();};
 }
 // ===== 駕駛艙色票(1E 集中化,2026-08-01;預設值=現狀 — 改這一個物件=整個駕駛艙換裝;TrendSpider 對照表見 claude/webapp.md)=====
 const CPAL={
@@ -572,7 +575,8 @@ function autoTrendlines(R,OPT2){
   }
   atr=cnt?atr/cnt:0;
   var px=R[N-1].c;
-  var TOL=Math.max(0.006,0.25*atr/Math.max(px,1e-9))*(OPT2.tolmult||1);   // 觸及容忍 max(0.6%, 0.25×ATR14/價)(全史模式×2)
+  var LG=!!OPT2.logspace;   // 全史對數模式:輸入=ln(價),距離用絕對差(ln 差≈%差);預設 false=原線性路徑
+  var TOL=(LG?Math.max(0.006,0.25*atr):Math.max(0.006,0.25*atr/Math.max(px,1e-9)))*(OPT2.tolmult||1);   // 觸及容忍
   var pivH=[],pivL=[];
   for(var i=W;i<N-W;i++){
     var hi=true,lo=true;
@@ -589,12 +593,12 @@ function autoTrendlines(R,OPT2){
     var touches=0,errSum=0,lastTouch=-1,run=false,brkIdx=-1,tIdx=[];
     for(var k=i;k<N;k++){
       var ly=y1+slope*(k-i);
-      if(ly<=0)return null;
+      if(!LG&&ly<=0)return null;
       var body=side==='sup'?Math.min(R[k].o,R[k].c):Math.max(R[k].o,R[k].c);
-      var dBrk=side==='sup'?(ly-body)/ly:(body-ly)/ly;
+      var dBrk=side==='sup'?(ly-body):(body-ly); if(!LG)dBrk/=ly;
       if(dBrk>BRK){brkIdx=k;break;}
       var pv=side==='sup'?R[k].l:R[k].h;
-      var d=Math.abs(pv-ly)/ly;
+      var d=Math.abs(pv-ly); if(!LG)d/=ly;
       if(d<=TOL){if(!run){touches++;errSum+=d;lastTouch=k;tIdx.push(k);}else if(k>lastTouch){lastTouch=k;}run=true;}
       else run=false;
     }
@@ -609,7 +613,7 @@ function autoTrendlines(R,OPT2){
     if(!active&&(N-1-s.brkIdx)>staleAllow)return null;
     var endIdx=active?N-1:s.brkIdx;
     var yEnd=y1+slope*(endIdx-i);
-    var dist=Math.abs(yEnd/px-1);
+    var dist=LG?Math.abs(yEnd-px):Math.abs(yEnd/px-1);
     if(active&&dist>DISTCAP)return null;                     // 離戰場太遠的延伸線=雜訊
     var score=s.touches+2.0*(s.lastTouch/(N-1))+(active?0.6:0)-(s.err/TOL)
              -(active?1.2*Math.min(1,dist/DISTCAP):0);       // 評分=觸及+近期權重−誤差−距離
@@ -645,7 +649,7 @@ function autoTrendlines(R,OPT2){
     for(var t=0;t<pts.length;t++){
       if(!cur.length){cur.push(pts[t]);continue;}
       var mean=0;cur.forEach(function(x){mean+=x.p;});mean/=cur.length;
-      if(Math.abs(pts[t].p-mean)/mean<=0.005)cur.push(pts[t]);
+      if((LG?Math.abs(pts[t].p-mean):Math.abs(pts[t].p-mean)/mean)<=0.005)cur.push(pts[t]);
       else{flush();cur=[pts[t]];}
     }
     flush();
@@ -660,7 +664,7 @@ function autoTrendlines(R,OPT2){
     for(var q=0;q<3;q++){
       var k=pts[q];
       var ya=A.y1+A.slope*(k-A.i),yb=B.y1+B.slope*(k-B.i);
-      if(Math.abs(ya-yb)/Math.max(ya,1e-9)>1.5*TOL)return false;
+      if((LG?Math.abs(ya-yb):Math.abs(ya-yb)/Math.max(ya,1e-9))>1.5*TOL)return false;
     }
     return true;
   }
@@ -851,12 +855,86 @@ function tdVis(cn){
   }
   return out;
 }
+// ===== 全史對數月K(P3B;2026-08-01):kline_max_SYM.json(Mac 每月盤後建置);無檔→現有日K聚合月線降級 =====
+const CHIPKM={};
+function ensureChipKMax(sym){
+  if(CHIPKM[sym+'_none']&&Date.now()-(CHIPKM[sym+'_t']||0)>600e3){delete CHIPKM[sym+'_none'];delete CHIPKM[sym+'_r'];}
+  if(CHIPKM[sym]||CHIPKM[sym+'_r'])return; CHIPKM[sym+'_r']=true; CHIPKM[sym+'_t']=Date.now();
+  fetch(DATA_URL.replace('market_data.json','kline_max_'+sym+'.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&d.bars&&d.bars.length>=24){CHIPKM[sym]={bars:d.bars};}else{CHIPKM[sym+'_none']=true;}renderChips();})
+    .catch(()=>{CHIPKM[sym+'_none']=true;renderChips();});
+}
+function aggMonthly(bars){   // 日K→月K(全史檔未建置時的降級來源)
+  const out=[]; let cur=null,key='';
+  bars.forEach(b=>{const k=String(b[0]).slice(0,7);
+    if(k!==key){if(cur)out.push(cur);key=k;cur=[k+'-01',+b[1],+b[2],+b[3],+b[4],+(b[5]||0)];}
+    else{cur[2]=Math.max(cur[2],+b[2]);cur[3]=Math.min(cur[3],+b[3]);cur[4]=+b[4];cur[5]+=+(b[5]||0);}});
+  if(cur)out.push(cur);
+  return out;
+}
+function renderCockpitMax(el,MB){
+  ensureChipKMax(CHIP_SYM);
+  const KM=CHIPKM[CHIP_SYM];
+  let bars=null,building=false;
+  if(KM&&KM.bars)bars=KM.bars;
+  else{const K=CHIPK[CHIP_SYM]; if(K&&K.bars&&K.bars.length>=60){bars=aggMonthly(K.bars);building=true;}}
+  if(!bars||bars.length<12){el.style.height='auto';
+    chartMsg(el,'全史月K'+(CHIPKM[CHIP_SYM+'_none']?'建置中(Mac 每月盤後自動抓取;日K亦不足以聚合)…':'載入中…'));return;}
+  el.style.height=MB?'560px':'640px';
+  const R=bars.map(b=>({d:b[0],o:+b[1],h:+b[2],l:+b[3],c:+b[4],v:+(b[5]||0)}));
+  const sig='max:'+CHIP_SYM+':'+R.length+':'+R[R.length-1].c+(building?':b':'')+(MB?':m':':d')+(CHIP_TL?':t1':':t0');
+  if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
+  el.dataset.sig=sig;
+  const x=R.map(r=>r.d.slice(0,7));
+  const traces=[{type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
+    increasing:{line:{color:CPAL.up,width:1}},decreasing:{line:{color:CPAL.dn,width:1}},name:CHIP_SYM,showlegend:false}];
+  // 長期趨勢線:log 空間計算(線在對數軸上=直線;容忍×2)→ 畫回價格軸(exp);觸線點=聚光燈圈
+  if(CHIP_TL&&R.length>=50){try{
+    const lnR=R.map(r=>({d:r.d,o:Math.log(r.o),h:Math.log(r.h),l:Math.log(r.l),c:Math.log(r.c)}));
+    const res=autoTrendlines(lnR,{tolmult:2,logspace:true});
+    if(res)res.lines.forEach(function(L){
+      const col=L.side==='sup'?CPAL.sup:CPAL.res;
+      const xs=[],ys=[];
+      for(let k=L.i;k<=L.endIdx;k++){xs.push(x[k]);ys.push(+Math.exp(L.y1+L.slope*(k-L.i)).toFixed(4));}
+      const dist=(Math.exp(L.yEnd)/R[R.length-1].c-1)*100;
+      const hov=(L.side==='sup'?'長期支撐':'長期壓力')+(L.kind==='hline'?'(水平)':'')+' · 觸及'+L.touches
+        +(L.active?' · 距現價'+(dist>0?'+':'−')+Math.abs(dist).toFixed(1)+'%':'(✂已突破 '+String(L.broken_d).slice(0,7)+')');
+      traces.push({type:'scatter',mode:'lines',x:xs,y:ys,showlegend:false,meta:'tl',
+        line:{color:'rgba('+col+',.75)',width:1.7,dash:L.active?'solid':'dash'},hovertemplate:hov+'<extra></extra>'});
+      if(L.tIdx&&L.tIdx.length){
+        const cxs=[],cys=[];
+        L.tIdx.forEach(function(k3){cxs.push(x[k3]);cys.push(+Math.exp(L.y1+L.slope*(k3-L.i)).toFixed(4));});
+        traces.push({type:'scatter',mode:'markers',x:cxs,y:cys,showlegend:false,meta:'tl',
+          marker:{size:12,color:'rgba(245,158,11,.14)',line:{width:1.4,color:'rgba('+col+',.85)'}},
+          hovertemplate:'歷史觸線 %{x}<extra></extra>'});
+      }
+      if(!L.active)traces.push({type:'scatter',mode:'text',x:[x[L.endIdx]],y:[ys[ys.length-1]],
+        text:['✂'],textfont:{size:12,color:'rgba('+col+',.95)'},showlegend:false,hoverinfo:'skip',meta:'tl'});
+    });
+  }catch(e){}}
+  const ann=[
+    {xref:'paper',yref:'paper',x:0,y:1.008,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:MB?10.5:12,color:CPAL.ttl},
+     text:'<b>'+CHIP_SYM+' 全史月K</b> · '+R.length+'月 · 對數軸 · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>長期趨勢線(log空間·容忍×2)· ◯歷史觸線'
+       +(building?' · <span style="color:#f59e0b">全史資料建置中(暫以 5 年日K月線;Mac 每月盤後補齊)</span>':'')},
+    {xref:'paper',yref:'paper',x:0,y:-0.085,xanchor:'left',showarrow:false,font:{size:8.5,color:CPAL.mut},
+     text:'全史模式:轉速/檔位/⑦現金池副圖無對應資料已隱藏(切回 10–250 日視窗恢復)'}];
+  freshPlot('cockpit');
+  Plotly.react('cockpit',traces,{...PBASE,showlegend:false,
+    margin:{l:MB?40:52,r:MB?44:64,t:MB?54:46,b:44},
+    xaxis:{type:'category',gridcolor:CPAL.grid,tickfont:{size:8.5,color:CPAL.mut},nticks:MB?6:12,rangeslider:{visible:false}},
+    yaxis:{type:'log',gridcolor:CPAL.grid,tickfont:{size:9,color:CPAL.mut},side:'right'},
+    annotations:ann},CFG);
+  el._HL=null;   // 對數軸下自動 y 適應交給 Plotly autorange(不用線性 HL 邏輯)
+  bindPinch('cockpit',()=>null);
+}
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'980px':'960px';   // 直立手機:加高,五軌才有正確比例(窄螢幕靠垂直空間)
   el.dataset.unt='';   // 離開「未追蹤動作區」狀態
   if(CHIPK[CHIP_SYM+'_none']){el.style.height='auto';chartMsg(el,'日K輪補中(擴充/自訂標的由 Mac 每輪自動補 8 檔,新標的最快 ~10 分、全清單數小時內補齊;每 10 分自動重試)。若久候未出現=來源無此代號日K。下方 ⑦ 現金池圖不受影響。');return;}
+  if(CHIP_WIN==='max'){renderCockpitMax(el,MB);return;}   // P3B 全史對數月K(獨立渲染路徑,日K駕駛艙不受影響)
   const rows=cockpitRows(CHIP_SYM);
   if(!rows||rows.length<10){el.style.height='auto';chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
   const win=Math.max(30,Math.min(CHIP_WIN,250));
@@ -867,7 +945,7 @@ function renderCockpit(){
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'');
+  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_REV?':r1':':r0')+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'');
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   const x=R.map(r=>r.d.slice(5));
@@ -1019,6 +1097,35 @@ function renderCockpit(){
         yanchor:'bottom',font:{size:8,color:'#fbbf24'},bgcolor:CPAL.bgc});
     });
   }catch(e){}}
+  // 3A 財報營收階梯(P3;預設關):SEC 近16季 → 綠色 hv 階梯+填底,映射至價格座標下緣 22%
+  // (不用 overlaying 次軸 — 同 1D 的 Plotly 毒性教訓;hover 以 customdata 顯示真值)
+  var _rvq=(CHIP_REV&&_sg&&_sg.computed_fund&&(_sg.computed_fund.rev_q||[]).length)?_sg.computed_fund.rev_q:null;
+  if(_rvq){try{
+    var loP=Math.min.apply(null,R.map(function(r6){return r6.l;}));
+    var mx6=0; _rvq.forEach(function(qq){if(qq.rev>mx6)mx6=qq.rev;});
+    var qi=0, lastQ=null, stepY=[], stepC=[];
+    for(var q10=0;q10<R.length;q10++){
+      while(qi<_rvq.length&&_rvq[qi].end_d<=R[q10].d){lastQ=_rvq[qi];qi++;}
+      if(lastQ&&mx6>0){stepY.push(+(loP+lastQ.rev/mx6*rng*0.22).toFixed(3));
+        stepC.push(lastQ.q+' 營收 '+(lastQ.rev/1e9).toFixed(2)+'B'+(lastQ.yoy!=null?' · YoY '+(lastQ.yoy>0?'+':'')+lastQ.yoy+'%':''));}
+      else{stepY.push(null);stepC.push('');}
+    }
+    if(mx6>0&&stepY.some(function(v){return v!=null;})){
+      traces.push({type:'scatter',mode:'lines',x:x,y:stepY,customdata:stepC,meta:'rev',showlegend:false,
+        line:{color:'rgba(34,197,94,.55)',width:1.2,shape:'hv'},connectgaps:false,
+        fill:'tozeroy',fillcolor:'rgba(34,197,94,.07)',
+        hovertemplate:'%{customdata}<extra></extra>'});
+      _rvq.forEach(function(qq){
+        if(qq.end_d<R[0].d||qq.end_d>R[R.length-1].d)return;
+        var qz=null;
+        for(var z=R.length-1;z>=0;z--){if(R[z].d<=qq.end_d){qz=z;break;}}
+        if(qz==null)return;
+        if(!MB)ann.push({x:qz,y:+(loP+qq.rev/mx6*rng*0.22).toFixed(3),xref:'x',yref:'y',
+          text:qq.q.slice(2)+(qq.yoy!=null?((qq.yoy>0?' +':' ')+qq.yoy+'%'):''),showarrow:false,
+          yanchor:'bottom',font:{size:7.5,color:'#4ade80'},bgcolor:CPAL.bgc});
+      });
+    }
+  }catch(e){}}
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   const _ckLay={...PBASE,showlegend:false,
     margin:{l:MB?40:52,r:MB?44:64,t:MB?50:34,b:30},
@@ -1079,7 +1186,7 @@ function renderChipCost(){
   const K=CHIPK[CHIP_SYM];
   if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'日K輪補中(同上;補齊後自動顯示成本分佈)…');return;}
   if(!K||!K.bars||!K.bars.length){chartMsg(el,'日K載入中…');return;}
-  const all=chipBars(CHIP_SYM)||K.bars, bars=all.slice(-CHIP_WIN);
+  const all=chipBars(CHIP_SYM)||K.bars, bars=all.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));
   if(bars.length<5){chartMsg(el,'此區間日K不足');return;}
   let pmin=Infinity,pmax=-Infinity;
   bars.forEach(b=>{if(b[3]<pmin)pmin=b[3]; if(b[2]>pmax)pmax=b[2];});
@@ -1145,8 +1252,9 @@ function renderChips(){
   const rb=document.getElementById('chipRange');
   if(rb){rb.innerHTML=[10,30,50,60,100,120,200,250].map(n=>{
       const dis=dates.length<Math.min(n,10); const act=CHIP_WIN===n;
-      return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('');
-    rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=+t.dataset.cn;renderChips();});}
+      return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('')
+      +'<span class="tab '+(CHIP_WIN==='max'?'active':'')+'" data-cn="max" style="padding:3px 10px;font-size:12px">全史</span>';
+    rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=(t.dataset.cn==='max')?'max':+t.dataset.cn;renderChips();});}
   buildChipIdx();
   if(!syms.includes(CHIP_SYM)){   // 自填未追蹤標的 → 動作區「置頂」渲染在駕駛艙位置(不用捲動);20s 迴圈不重繪(保留輸入中的 token)
     const ck=document.getElementById('cockpit');
@@ -1183,7 +1291,7 @@ function renderChips(){
   renderCockpit();     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
-  const use=dates.slice(-CHIP_WIN);
+  const use=dates.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 全史模式:⑦池/成本分佈維持 250 日(無對應月頻資料)
   // ⑦ 覆蓋起點:自「該標的第一個有資料的日子」起畫;之前=無資料 → null 不畫(誠實呈現,避免新入列標的變成假的平地+突刺)
   let fi=use.findIndex(d=>((D[d]||{})[CHIP_SYM])!=null); if(fi<0)fi=use.length;
   let cmM=0,cmA=0; const x=[],barA=[],lineM=[],lineA=[];

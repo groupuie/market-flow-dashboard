@@ -698,6 +698,58 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
             except Exception as e: err("extkl-push", e); break
     log(f"ext klines updated: {len(changed)}/{len(batch)} (bad={len(bad)})")
 
+# ============ 全史月K(P3B;2026-08-01):每月一次,盤後;kline_max_SYM.json ============
+def yahoo_ohlc_max_monthly(sym):
+    """Yahoo period=max interval=1mo 月K(上市至今全史)"""
+    q = urllib.parse.quote(sym)
+    d = http_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{q}?range=max&interval=1mo", 20)
+    r = d["chart"]["result"][0]; ind = r["indicators"]["quote"][0]; ts = r.get("timestamp") or []
+    off = r.get("meta", {}).get("gmtoffset", -14400)
+    bars = []
+    for i, t in enumerate(ts):
+        o = (ind.get("open") or [None]*len(ts))[i]; h = (ind.get("high") or [None]*len(ts))[i]
+        l = (ind.get("low") or [None]*len(ts))[i]; c = (ind.get("close") or [None]*len(ts))[i]
+        v = (ind.get("volume") or [None]*len(ts))[i]
+        if None in (o, h, l, c): continue
+        dt = datetime.fromtimestamp(t + off, timezone.utc).strftime("%Y-%m-%d")
+        bars.append([dt, round(o, 4), round(h, 4), round(l, 4), round(c, 4), int(v or 0)])
+    return bars
+
+def refresh_kline_max(cfg, args, t0, budget=330):
+    """全史對數月K資料源:主要追蹤清單(kline_symbols 核心),每月一次(盤後/休市),
+       Yahoo period=max 月K → gist kline_max_SYM.json。多輪分批(6檔/輪)至當月完成;
+       單檔失敗記當月 done(次月重試),絕不影響既有日K流程;.kmaxmark.json 記月度進度。"""
+    if args.no_push or not cfg.get("gist_id") or not cfg.get("gist_token"): return
+    if market_session() not in ("after", "closed"): return
+    mon = datetime.now(timezone.utc).strftime("%Y-%m")
+    mk = args.config + ".kmaxmark.json"
+    try: st = json.load(open(mk))
+    except Exception: st = {}
+    if st.get("month") != mon: st = {"month": mon, "done": []}
+    allsyms = kline_symbols([])
+    syms = [s for s in allsyms if s not in st["done"]]
+    if not syms: return
+    changed = {}
+    for s in syms[:6]:
+        if time.time() - t0 > budget: break
+        try:
+            bars = yahoo_ohlc_max_monthly(s)
+            if bars and len(bars) >= 24:
+                changed["kline_max_" + s + ".json"] = {"sym": s, "src": "yahoo-max-1mo",
+                    "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"), "bars": bars}
+            st["done"].append(s)   # 太短(新股)也記 done,當月不空轉
+        except Exception as e:
+            err(f"kmax {s}", e); st["done"].append(s)   # 失敗記 done:次月再試,不空轉
+        time.sleep(0.35)
+    try: json.dump(st, open(mk, "w"))
+    except Exception: pass
+    if changed:
+        names = sorted(changed)
+        for i in range(0, len(names), 8):
+            try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
+            except Exception as e: err("kmax-push", e); break
+        log(f"kline_max updated: {len(changed)} (月度 {mon}, 進度 {len(st['done'])}/{len(allsyms)})")
+
 # ============ 點播通道(lookup_request.json 由網頁寫入;Mac 現抓現推,不占追蹤名額)============
 def fetch_gist_file(cfg, name):
     """讀 gist 單一小檔內容(認證 API;小檔不會被截斷)。無檔/無設定→None。"""
@@ -1458,6 +1510,10 @@ def run_once(cfg, args):
     if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
         try: refresh_ext_klines(cfg,args,_run_t0,budget=330)
         except Exception as e: err("extkl",e)
+    # 全史月K(P3B;每月一次盤後,6檔/輪分批;失敗隔離,不影響日K)
+    if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
+        try: refresh_kline_max(cfg,args,_run_t0,budget=330)
+        except Exception as e: err("kmax",e)
     data["ext_universe"]=sorted(s.replace("US.","") for s in EXT_SYMS)   # 前端選單/自動完成用(輸入即可選,資料輪補)
     data["errors"]=ERRORS
     data["meta"]={"futu_ok":len(data["capital_flow"])>0,"n_opt":len(data["options"]),
