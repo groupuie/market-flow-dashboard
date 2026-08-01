@@ -236,6 +236,7 @@ a{color:var(--blue)}
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span>
     </h2>
     <div id="cockpit" style="height:960px"></div>
+    <div id="scanpanel" style="margin:10px 0 14px"></div>
     <div id="season" style="margin:10px 0 18px"></div>
     <div id="chipstock" style="margin:14px 0 22px"></div>
     <div id="chipflow" style="height:440px"></div>
@@ -252,7 +253,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T09:50Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T10:19Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -531,6 +532,7 @@ let CHIP_CDL=false; // 蠟燭型態標記開關(預設關,避免圖面過載)
 let CHIP_FIB=false; // Fibonacci 自動回撤(預設關)
 let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
 let CHIP_MTF=false; // MTFA 週線疊加(預設關)
+let CHIP_CTA=true;  // CTA 煞車線×4 開關(預設開;既有功能)
 let CHIP_IND='rv';  // 副圖單槽:rv(轉速,預設)/macd/adx/atr/cci/stoch
 function buildChipIdx(){
   const el=document.getElementById('chipidx'); if(!el)return;
@@ -546,6 +548,7 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipA" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #94a3b8;'+(CHIP_MTF?'background:rgba(148,163,184,.15);color:#cbd5e1':'color:var(--muted);opacity:.55')+'">週線</span>'
+    +' <span class="cidxchipC" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.brake1+';'+(CHIP_CTA?'background:rgba(147,197,253,.15);color:'+CPAL.brake1:'color:var(--muted);opacity:.55')+'">煞車線</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','轉速'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
         return '<option value="'+o[0]+'"'+(CHIP_IND===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>';
@@ -559,6 +562,7 @@ function buildChipIdx(){
   var t8=el.querySelector('.cidxchip8'); if(t8)t8.onclick=function(){CHIP_FIB=!CHIP_FIB;renderChips();};
   var t9=el.querySelector('.cidxchip9'); if(t9)t9.onclick=function(){CHIP_VWAP=!CHIP_VWAP;renderChips();};
   var tA=el.querySelector('.cidxchipA'); if(tA)tA.onclick=function(){CHIP_MTF=!CHIP_MTF;renderChips();};
+  var tC=el.querySelector('.cidxchipC'); if(tC)tC.onclick=function(){CHIP_CTA=!CHIP_CTA;renderChips();};
   var ti=el.querySelector('.cidxind'); if(ti)ti.onchange=function(){CHIP_IND=ti.value;renderChips();};
 }
 // ===== 駕駛艙色票(1E 集中化,2026-08-01;預設值=現狀 — 改這一個物件=整個駕駛艙換裝;TrendSpider 對照表見 claude/webapp.md)=====
@@ -753,18 +757,8 @@ function tlTraces(R,x,OPT2,PRE){
           hovertemplate:'平行通道(主線平移) · 寬 '+wid+'%<extra></extra>'});
       }
     }
-    if(L.tIdx&&L.tIdx.length){   // 1C 觸及點圓圈
-      var cxs=[],cys=[],cd=[];
-      L.tIdx.forEach(function(k3){
-        var ly3=L.y1+L.slope*(k3-L.i);
-        var pv=L.side==='sup'?R[k3].l:R[k3].h;
-        cxs.push(x[k3]); cys.push(+ly3.toFixed(3));
-        cd.push((Math.abs(pv-ly3)/ly3*100).toFixed(2));
-      });
-      out.push({type:'scatter',mode:'markers',x:cxs,y:cys,customdata:cd,showlegend:false,meta:'tl',
-        marker:{size:9,color:'rgba('+col+',.22)',line:{width:1.2,color:'rgba('+col+',.8)'}},
-        hovertemplate:(L.side==='sup'?'支撐觸及':'壓力觸及')+' %{x} · 距線 %{customdata}%<extra></extra>'});
-    }
+    // 註:趨勢線/通道/三角「畫線即可」,不標記觸及K棒(2026-08-01 使用者指定);
+    //     半透明大圓改用於「K棒碰到 CTA 煞車線」,見 renderCockpit 的 CTA 觸線圈。
     if(!L.active)out.push({type:'scatter',mode:'text',x:[x[L.endIdx]],y:[ys[ys.length-1]],
       text:['✂'],textfont:{size:12,color:'rgba('+col+',.95)'},showlegend:false,hoverinfo:'skip',meta:'tl'});
   });
@@ -1417,6 +1411,77 @@ function renderCockpitMax(el,MB){
   el._HL=null;   // 對數軸下自動 y 適應交給 Plotly autorange(不用線性 HL 邏輯)
   bindPinch('cockpit',()=>null);
 }
+// ===== P6B 全市場掃描面板(讀 data/scan.json;零 token;缺檔降級不報錯)=====
+let SCAN=null,SCAN_req=0,SCAN_filter='all',SCAN_sort='score',SCAN_open=false;
+function ensureScan(){
+  const n=Date.now()/1000; if(n-SCAN_req<300)return; SCAN_req=n;
+  fetch('data/scan.json?t='+Math.floor(Date.now()/300000),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(j=>{if(j&&j.rows){SCAN=j;renderScan();}})
+    .catch(()=>{});
+}
+const SCAN_F={
+  all:['全部',r=>true],
+  brk:['趨勢線突破',r=>!!r.trendline_break],
+  pat:['型態確認',r=>(r.pattern_hits||[]).some(p=>p.state==='confirmed')],
+  near:['近煞車線',r=>r.near_line&&Math.abs(r.near_line.dist_pct)<2],
+  hl52:['52週高/低',r=>r.is_52w_high||r.is_52w_low],
+  rv:['RV高位',r=>(r.rv_pct||0)>=80],
+  cta:['CTA翻轉區',r=>r.cta_score!=null&&Math.abs(r.cta_score)<=33],
+  fib:['貼近Fib',r=>!!r.fib_zone]
+};
+function renderScan(){
+  const el=document.getElementById('scanpanel'); if(!el)return;
+  if(!SCAN||!SCAN.rows){el.innerHTML='';return;}
+  const rows=SCAN.rows.filter(SCAN_F[SCAN_filter][1]);
+  const cmp={score:(a,b)=>b.score-a.score,sym:(a,b)=>a.sym<b.sym?-1:1,
+    chg1d:(a,b)=>(b.chg1d||0)-(a.chg1d||0),rv:(a,b)=>(b.rv_pct||0)-(a.rv_pct||0),
+    cta:(a,b)=>(b.cta_score||0)-(a.cta_score||0)};
+  rows.sort(cmp[SCAN_sort]||cmp.score);
+  const sig='sc:'+(SCAN.updated_utc||'')+':'+SCAN_filter+':'+SCAN_sort+':'+(SCAN_open?1:0)+':'+CHIP_SYM;
+  if(el.dataset.sig===sig)return; el.dataset.sig=sig;
+  const chip=(k,lab,on)=>'<span class="scf" data-k="'+k+'" style="cursor:pointer;padding:2px 9px;border-radius:10px;border:1px solid '
+    +(on?'#a78bfa':'var(--line)')+';font-size:11px;'+(on?'background:rgba(167,139,250,.15);color:#a78bfa':'color:var(--muted)')+'">'+lab+'</span>';
+  let h='<div style="background:var(--surface,#1a1a19);border:1px solid var(--line,#2c2c2a);border-radius:10px;padding:10px 12px">'
+    +'<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:'+(SCAN_open?'8px':'0')+'">'
+    +'<span style="font-size:12.5px;color:#e6e9ef;font-weight:600">全市場掃描</span>'
+    +'<span style="font-size:11px;color:var(--muted)">'+SCAN.n+' 檔 · '+String(SCAN.updated_utc||'').slice(0,16)+' UTC · 視窗 '+SCAN.win+'日</span>'
+    +'<span class="sctoggle" style="cursor:pointer;font-size:11px;color:#a78bfa;text-decoration:underline">'+(SCAN_open?'收合':'展開')+'</span></div>';
+  if(SCAN_open){
+    h+='<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px">'
+      +Object.keys(SCAN_F).map(k=>chip(k,SCAN_F[k][0]+(k==='all'?'':'('+SCAN.rows.filter(SCAN_F[k][1]).length+')'),SCAN_filter===k)).join('')+'</div>'
+      +'<div style="overflow-x:auto;max-height:320px;overflow-y:auto"><table style="border-collapse:collapse;font-size:11px;width:100%;font-variant-numeric:tabular-nums">'
+      +'<tr style="position:sticky;top:0;background:var(--surface,#1a1a19)">'
+      +[['sym','標的'],['score','分數'],['chg1d','當日%'],['cta','CTA'],['rv','RV%']].map(c=>
+        '<th class="scs" data-s="'+c[0]+'" style="cursor:pointer;padding:3px 6px;text-align:right;color:'+(SCAN_sort===c[0]?'#a78bfa':'var(--muted)')+';white-space:nowrap">'+c[1]+(SCAN_sort===c[0]?' ▾':'')+'</th>').join('')
+      +'<th style="padding:3px 6px;text-align:left;color:var(--muted)">觸發條件</th></tr>';
+    rows.slice(0,60).forEach(r=>{
+      const cur=r.sym===CHIP_SYM;
+      h+='<tr style="border-top:1px solid var(--line);'+(cur?'background:rgba(167,139,250,.08)':'')+'">'
+        +'<td style="padding:3px 6px;text-align:right"><span class="scsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#8ab4f8;font-weight:600">'+r.sym+'</span></td>'
+        +'<td style="padding:3px 6px;text-align:right;color:#fab219">'+r.score+'</td>'
+        +'<td style="padding:3px 6px;text-align:right;color:'+((r.chg1d||0)>=0?'#4ade80':'#f87171')+'">'+(r.chg1d==null?'—':(r.chg1d>0?'+':'')+r.chg1d)+'</td>'
+        +'<td style="padding:3px 6px;text-align:right;color:'+((r.cta_score||0)>0?'#4ade80':(r.cta_score||0)<0?'#f87171':'#c3c2b7')+'">'+(r.cta_score==null?'—':(r.cta_score>0?'+':'')+r.cta_score)+'</td>'
+        +'<td style="padding:3px 6px;text-align:right;color:'+((r.rv_pct||0)>=80?'#f59e0b':'#c3c2b7')+'">'+(r.rv_pct==null?'—':r.rv_pct)+'</td>'
+        +'<td style="padding:3px 6px;color:var(--ink2)">'+(r.why||[]).slice(0,3).join(' · ')+'</td></tr>';
+    });
+    h+='</table></div><div class="note" style="margin-top:6px;font-size:10.5px">掃描=機械條件比對(趨勢線突破/型態/煞車線距離/52週高低/Fib/CTA分數/RV/擠壓);'
+      +'**score 僅供排序,非買賣建議**。代號可點擊直接載入上方駕駛艙。</div>';
+  }
+  h+='</div>';
+  el.innerHTML=h;
+  const t=el.querySelector('.sctoggle'); if(t)t.onclick=()=>{SCAN_open=!SCAN_open;renderScan();};
+  el.querySelectorAll('.scf').forEach(c=>c.onclick=()=>{SCAN_filter=c.dataset.k;renderScan();});
+  el.querySelectorAll('.scs').forEach(c=>c.onclick=()=>{SCAN_sort=c.dataset.s;renderScan();});
+  el.querySelectorAll('.scsym').forEach(c=>c.onclick=()=>{
+    const sy=c.dataset.sym;
+    const sel=document.getElementById('chipSym');
+    if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}
+    else CHIP_SYM=sy;
+    ensureChipK(sy); renderChips();
+    const ck=document.getElementById('cockpit'); if(ck&&ck.scrollIntoView)ck.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+}
 // ===== P5E 季節性:年×月報酬矩陣 + 各月平均/勝率(優先 kline_max 全史,無則現有日K降級)=====
 function renderSeason(){
   const el=document.getElementById('season'); if(!el)return;
@@ -1491,7 +1556,7 @@ function renderCockpit(){
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_REV?':r1':':r0')+(CHIP_PAT?':p1':':p0')+(CHIP_CDL?':d1':':d0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_MTF?':k1':':k0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'');
+  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_REV?':r1':':r0')+(CHIP_PAT?':p1':':p0')+(CHIP_CDL?':d1':':d0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_MTF?':k1':':k0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'');
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   const x=R.map(r=>r.d.slice(5));
@@ -1526,10 +1591,11 @@ function renderCockpit(){
   const traces=[
     {type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
      increasing:{line:{color:CPAL.up,width:1}},decreasing:{line:{color:CPAL.dn,width:1}},name:CHIP_SYM,showlegend:false},
+    ...(CHIP_CTA?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t50),line:{color:CPAL.brake1,width:1.3,dash:'dot'},name:'短50D',hovertemplate:'短期煞車線(50D觸發) %{y:.1f}<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t100),line:{color:CPAL.brake2,width:1.3,dash:'dot'},name:'中100D',hovertemplate:'中期煞車線(100D觸發) %{y:.1f}<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t200),line:{color:CPAL.brake3,width:1.3,dash:'dot'},name:'長200D',hovertemplate:'長期煞車線(200D觸發) %{y:.1f}<extra></extra>'},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t63),line:{color:CPAL.brake4,width:1.2,dash:'dash'},name:'動63D',hovertemplate:'動能煞車線(=63日前收盤) %{y:.1f}<extra></extra>'},
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t63),line:{color:CPAL.brake4,width:1.2,dash:'dash'},name:'動63D',hovertemplate:'動能煞車線(=63日前收盤) %{y:.1f}<extra></extra>'}]:[]),
     {type:'scatter',mode:'text',x:x,y:tsY,text:tsT,textfont:{size:tsS,color:tsC},hoverinfo:'skip',showlegend:false},
     {type:'scatter',mode:'text',x:x,y:tbY,text:tbT,textfont:{size:tbS,color:tbC},hoverinfo:'skip',showlegend:false},
     {type:'scatter',mode:'markers+text',x:x,y:topY,text:topT,textposition:'top center',textfont:{size:8.5,color:CPAL.dia},
@@ -1553,7 +1619,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.028,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · <span style="color:'+CPAL.brake1+'">┈煞車線×4(量化觸發價)</span> · <span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈煞車線×4(量化觸發價·◯觸線)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
         +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(✔=已確認/…=形成中)':'')+(CHIP_CDL?' · <span style="color:#38bdf8">▲▼蠟燭</span>':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'轉速 <span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90)· <span style="color:'+CPAL.rsi+'">RSI14</span>'},
@@ -1571,7 +1637,7 @@ function renderCockpit(){
     text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?CPAL.up:R[li].sc<0?CPAL.dn:CPAL.sc},bgcolor:CPAL.bgc});
   // 直立手機:標題精簡成兩行(第二行=圖例),避免單行過長被切掉
   if(MB)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-    text:'<span style="color:'+CPAL.brake1+'">┈煞車×4</span> · <span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · <span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
+    text:(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈煞車×4</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · <span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
       +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')+(CHIP_CDL?' · <span style="color:#38bdf8">▲▼</span>':'')});
   // ===== P2 資料接線層(2026-08-01):內部人徽章 / 訊號K棒變色 / 事件聚光燈(資料=signals.json,無資料靜默)=====
   var _sg=(SIG&&SIG.symbols)?SIG.symbols[CHIP_SYM]:null;
@@ -1641,30 +1707,48 @@ function renderCockpit(){
         yanchor:'bottom',font:{size:8,color:'#fbbf24'},bgcolor:CPAL.bgc});
     });
   }catch(e){}}
-  // 訊號共振圈(2026-08-01 視覺精修;仿 TrendSpider aVWAP 觸點圈):
-  // K棒觸及趨勢線 ∩ 該根有訊號(煞車線易手 / TD9·13 完成 / signals marks)→ 半透明大圓標註
-  if(CHIP_TL&&_tlRes){try{
-    var _sig={};
-    for(var q2=1;q2<R.length;q2++){
-      var r2=R[q2],p2=R[q2-1],hit2=false;
-      ['t50','t100','t200','t63'].forEach(function(k9){
-        if(r2[k9]!=null&&p2[k9]!=null&&((r2.c>r2[k9])!==(p2.c>p2[k9])))hit2=true;});
-      if(r2.tds0===9||r2.tdb0===9||r2.tds0===13||r2.tdb0===13)hit2=true;
-      if(hit2)_sig[q2]=1;
+  // CTA 煞車線觸線圈(2026-08-01 使用者指定;仿 TrendSpider 半透明大圓):
+  // K棒高低範圍涵蓋煞車線值 = 觸線;同一條線連續觸及只標首根 + 5 根冷卻(避免糊成一片);
+  // 該根同時有訊號(TD9·13 完成 / signals marks)→ 環色加強為琥珀。趨勢線/通道只畫線不標點。
+  if(CHIP_CTA){try{
+    var _sigB={};
+    for(var q2=0;q2<R.length;q2++){
+      var r2=R[q2];
+      if(r2.tds0===9||r2.tdb0===9||r2.tds0===13||r2.tdb0===13)_sigB[q2]=1;
     }
     if(_sg&&(_sg.marks||[]).length)(_sg.marks||[]).forEach(function(m9){
-      if(m9.kind==='buy'||m9.kind==='sell'||m9.kind==='alert'){var q9=_dIdx[m9.d];if(q9!=null)_sig[q9]=1;}});
-    var hx=[],hy=[],hh=[];
-    _tlRes.lines.forEach(function(L9){
-      (L9.tIdx||[]).forEach(function(k8){
-        if(!_sig[k8])return;
-        var ly8=L9.y1+L9.slope*(k8-L9.i);
-        hx.push(x[k8]); hy.push(+ly8.toFixed(3));
-        hh.push((L9.side==='sup'?'支撐':'壓力')+'觸線 + 同日訊號(煞車易手/TD9·13/標註)');
-      });
+      if(m9.kind==='buy'||m9.kind==='sell'||m9.kind==='alert'){var q9=_dIdx[m9.d];if(q9!=null)_sigB[q9]=1;}});
+    // 有意義的觸線 = 「先離開、再回測」:自上次觸及後必須曾偏離該線 ≥max(4%,1.5×ATR14/價),
+    // 否則盤整期沿線遊走會標出一長串圈(實測 NVDA 200 日窗 53 個,已修)。另設 10 根冷卻。
+    var _atrC=0,_cn=0;
+    for(var a7=Math.max(1,R.length-14);a7<R.length;a7++){
+      _atrC+=Math.max(R[a7].h-R[a7].l,Math.abs(R[a7].h-R[a7-1].c),Math.abs(R[a7].l-R[a7-1].c)); _cn++;
+    }
+    var _dep=Math.max(0.04,1.5*(_cn?_atrC/_cn:0)/Math.max(R[R.length-1].c,1e-9));
+    var CL=[['t50','短期50D'],['t100','中期100D'],['t200','長期200D'],['t63','動能63D']];
+    var cx=[],cy=[],ch=[],csz=[],ccol=[],cline=[];
+    CL.forEach(function(cc){
+      var lastHit=-99, away=false;
+      for(var k7=1;k7<R.length;k7++){
+        var lv=R[k7][cc[0]];
+        if(lv==null)continue;
+        if(Math.abs(R[k7].c-lv)/lv>=_dep)away=true;   // 已離開該線 → 下次觸及才算有效回測
+        var touch=(R[k7].l<=lv&&R[k7].h>=lv);
+        var pv7=R[k7-1][cc[0]];
+        var prevTouch=(pv7!=null&&R[k7-1].l<=pv7&&R[k7-1].h>=pv7);
+        if(!touch||prevTouch)continue;             // 只標觸及段首根
+        if(k7-lastHit<10||!away)continue;          // 冷卻 10 根 + 必須曾離開
+        lastHit=k7; away=false;
+        var hasSig=!!_sigB[k7];
+        cx.push(x[k7]); cy.push(+lv.toFixed(3));
+        csz.push(hasSig?26:20);
+        ccol.push(hasSig?'rgba(250,204,21,.18)':'rgba(147,197,253,.14)');
+        cline.push(hasSig?'rgba(250,204,21,.75)':'rgba(147,197,253,.5)');
+        ch.push('觸及'+cc[1]+'煞車線 '+lv.toFixed(2)+(hasSig?'<br>⚡同日有訊號(TD9·13/標註)':''));
+      }
     });
-    if(hx.length)traces.push({type:'scatter',mode:'markers',x:hx,y:hy,customdata:hh,meta:'halo',showlegend:false,
-      marker:{size:22,color:CPAL.halo,line:{width:1.4,color:CPAL.haloLine}},
+    if(cx.length)traces.push({type:'scatter',mode:'markers',x:cx,y:cy,customdata:ch,meta:'halo',showlegend:false,
+      marker:{size:csz,color:ccol,line:{width:1.4,color:cline}},
       hovertemplate:'%{customdata}<extra></extra>'});
   }catch(e){}}
   // VbP 成交量分佈(1D):右緣紅綠橫柱(paper-x shapes;0 貼右緣、柱向左、佔寬≤15%、layer below)
@@ -2072,7 +2156,8 @@ function renderChips(){
   }
   ensureChipK(CHIP_SYM);
   renderCockpit();
-  try{renderSeason();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
+  try{renderSeason();}catch(e){}
+  try{ensureScan();renderScan();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 全史模式:⑦池/成本分佈維持 250 日(無對應月頻資料)
