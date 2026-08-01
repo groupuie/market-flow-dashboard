@@ -52,7 +52,8 @@ a{color:var(--blue)}
 @media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
 /* 觸控:圖表上單指滑動交給頁面捲動、雙指捏合交給瀏覽器原生縮放(連續平滑),不被 Plotly 攔截 */
 @media(pointer:coarse){
-  .js-plotly-plot,.js-plotly-plot .plotly,.js-plotly-plot .draglayer,.js-plotly-plot .nsewdrag,.js-plotly-plot .drag{touch-action:pan-y pinch-zoom !important}
+  /* 單指=頁面捲動;兩指捏合由 bindPinch 接手做「圖表縮放」(不再交給瀏覽器頁面縮放) */
+  .js-plotly-plot,.js-plotly-plot .plotly,.js-plotly-plot .draglayer,.js-plotly-plot .nsewdrag,.js-plotly-plot .drag{touch-action:pan-y !important}
 }
 </style>
 </head>
@@ -250,7 +251,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T02:56Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T03:27Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -424,6 +425,48 @@ function chartMsg(el,msg,pad){ if(!el)return;
 // 訊息→圖 轉場前清掉佔位訊息:否則訊息 div 殘留在圖下方,溢出固定高容器、疊到下一個區塊的文字上(手機曾見)
 function freshPlot(id){ const e=document.getElementById(id);
   if(e&&e.firstChild&&!e.querySelector('.plot-container'))e.innerHTML=''; return e; }
+// ===== 圖表雙指縮放(觸控):兩指捏合=縮放、兩指平移=平移、縮到全幅自動還原;單指完全不攔截(=頁面捲動)=====
+function bindPinch(id,getHL){
+  const gd=document.getElementById(id); if(!gd||gd._pinch||!TOUCH)return; gd._pinch=1;
+  let st=null;
+  const N=()=>Math.max(2,(((gd.data||[])[0]||{}).x||[]).length);
+  const cur=()=>{const r=gd.layout&&gd.layout.xaxis&&gd.layout.xaxis.range;const n=N();
+    return (r&&r.length===2)?[+r[0],+r[1]]:[-0.5,n-0.5];};
+  const apply=(lo,hi)=>{const n=N();
+    lo=Math.max(-0.5,lo); hi=Math.min(n-0.5,hi);
+    if(hi-lo<5){const c=(lo+hi)/2;lo=c-2.5;hi=c+2.5;}
+    const full=(lo<=-0.4&&hi>=n-0.6);
+    const upd=full?{'xaxis.autorange':true}:{'xaxis.range':[lo,hi]};
+    const HL=getHL&&getHL();
+    if(HL&&HL.h&&HL.h.length){
+      if(full){upd['yaxis.autorange']=true;}
+      else{const i0=Math.max(0,Math.ceil(lo)),i1=Math.min(HL.h.length-1,Math.floor(hi));
+        let mn=Infinity,mx=-Infinity;
+        for(let i=i0;i<=i1;i++){if(HL.l[i]!=null&&HL.l[i]<mn)mn=HL.l[i]; if(HL.h[i]!=null&&HL.h[i]>mx)mx=HL.h[i];}
+        if(mx>mn){const pad=(mx-mn)*0.08;upd['yaxis.range']=[mn-pad,mx+pad];}}
+    }
+    try{Plotly.relayout(gd,upd);}catch(e){}};
+  const dist=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
+  const midX=t=>(t[0].clientX+t[1].clientX)/2;
+  gd.addEventListener('touchstart',function(e){
+    if(e.touches.length===2){st={d0:Math.max(20,dist(e.touches)),x0:midX(e.touches),r0:cur()};e.preventDefault();}
+  },{passive:false});
+  gd.addEventListener('touchmove',function(e){
+    if(!st||e.touches.length!==2)return;
+    e.preventDefault();
+    const rect=gd.getBoundingClientRect(),w=Math.max(1,rect.width);
+    const k=st.d0/Math.max(20,dist(e.touches));           // 指距拉開→k<1=放大
+    const span0=st.r0[1]-st.r0[0];
+    const fx=Math.min(1,Math.max(0,(st.x0-rect.left)/w)); // 以捏合中點為錨
+    const anchor=st.r0[0]+span0*fx;
+    const span=span0*k;
+    let lo=anchor-span*fx, hi=anchor+span*(1-fx);
+    const dx=(midX(e.touches)-st.x0)/w*span0;             // 兩指同向移動=平移
+    lo-=dx; hi-=dx;
+    apply(lo,hi);
+  },{passive:false});
+  gd.addEventListener('touchend',function(e){if(e.touches.length<2)st=null;},{passive:true});
+}
 function chipBars(sym){   // 日K檔 + 今日盤中K(kline_today,60s 隨主檔更新)合併 → 成本分佈/均價/現價含「今日」
   const K=CHIPK[sym]; if(!K||!K.bars||!K.bars.length)return null;
   const tb=((DATA&&DATA.kline_today)||{})[sym];
@@ -662,6 +705,8 @@ function renderCockpit(){
     shapes:[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
             {type:'line',xref:'paper',x0:0,x1:1,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}],
     annotations:ann},CFG);
+  el._HL={h:R.map(r=>r.h),l:R.map(r=>r.l)};       // 雙指縮放時價格軸依可視K棒自適應
+  bindPinch('cockpit',()=>el._HL);
 }
 function renderChipStock(){
   // 存量分解:流通股(所有籌碼) = 大戶(機構持股 13F) + 非機構(散戶+內部人)。季度變動。
@@ -845,6 +890,7 @@ function renderChips(){
     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}, y2?{range:y2.range}:{})},CFG);
+  bindPinch('chipflow',null);
   buildChipOffs();
   const note=document.getElementById('chipnote');
   if(note)note.innerHTML='<b>⓪駕駛艙</b>:K線疊<b>煞車線</b>(短/中/長期量化觸發價=CTA 部位翻轉位,碰線=機械賣壓啟動)、<b>TD9</b>(橘=賣方九轉/青=買方九轉)與<b>燈號</b>——▼=TOP≥3(score100+RVPOS≥90+TD賣9+爆量 湊3,回測:高beta股後10日續跌×2.0-2.3)強制減碼階梯;▲=BOT≥3(TD買9+RVPOS≥80+殺量竭盡+score&lt;66 湊3,回測:後10日反彈51%、20日69%)抄底階梯。副軌:量(琥珀=爆量)、轉速RVPOS(紅帶=紅線區,無餘裕)+RSI(灰=背景)、檔位score(降檔=訊號斷裂)、⑦現金池(與K線對齊看背離)。<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>大戶均(粉)/散戶均(青)</b>=逐筆成交按自動門檻(≥$10萬或當批前5%)分大單/散戶的成交量加權均價,<b>▲=該群淨買、▼=淨賣</b>;比較兩條與現價,可看誰的成本卡在哪、誰在追高/誰在派發。<b>誠實標注</b>:成本分佈/均價是「近期成交均價」近似、非個別持有成本;大戶/散戶均價的逐筆在熱門股是<b>抽樣估計</b>(NVDA 類約 15% 覆蓋、均價仍近似不偏,但股數不宣稱精確)、中低量股近完整;此兩線自建置日起逐日累積,頭幾天樣本少。';
@@ -1729,6 +1775,8 @@ async function checkVersion(){
     if(!r.ok)return;
     const m=(await r.text()).match(/const BUILD='([^']+)'/);
     if(!m||!(m[1]>BUILD))return;   // 只在偵測到「更新的」build 才動作(ISO 字串比較,防 CDN 抖動迴圈)
+    _verPending=true;              // 有新版待套用:切到背景時無縫重載(修 iOS PWA 長活頁面永遠停在舊版)
+    if(document.hidden){location.reload();return;}
     if(typeof WIN!=='undefined'&&WIN.mode==='live'){location.reload();return;}   // 被動監看→無縫自動更新
     if(_verChip)return; _verChip=true;   // 分析中(視窗模式)→ 顯示可點 chip,不打斷
     const st=document.getElementById('status');
@@ -1739,6 +1787,8 @@ async function checkVersion(){
   }catch(e){}
 }
 setInterval(checkVersion,150000);
+let _verPending=false;
+document.addEventListener('visibilitychange',()=>{ if(document.hidden&&_verPending)location.reload(); });   // 離開畫面的瞬間套新版,不打斷分析
 // ===== 自動刷新 =====
 let cd=REFRESH_SEC;
 setInterval(()=>{cd--;if(cd<=0){cd=REFRESH_SEC;load();}document.getElementById('countdown').textContent='· '+cd+'s 後更新';},1000);
