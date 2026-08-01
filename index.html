@@ -255,7 +255,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-01T14:41Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T15:49Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -430,26 +430,73 @@ function chartMsg(el,msg,pad){ if(!el)return;
 function freshPlot(id){ const e=document.getElementById(id);
   if(e&&e.firstChild&&!e.querySelector('.plot-container'))e.innerHTML=''; return e; }
 // ===== 圖表雙指縮放(觸控):兩指捏合=縮放、兩指平移=平移、縮到全幅自動還原;單指完全不攔截(=頁面捲動)=====
+// x 視窗套用(雙指縮放與滾輪縮放共用):價格軸依可視K棒自適應;縮回全幅自動還原 autorange
+function xzN(gd){return Math.max(2,(((gd.data||[])[0]||{}).x||[]).length);}
+function xzCur(gd){
+  const fa=gd._fullLayout&&gd._fullLayout.xaxis;                  // 優先讀 _fullLayout(relayout 後 gd.layout 可能未同步)
+  const r=(fa&&!fa.autorange&&fa.range)||(gd.layout&&gd.layout.xaxis&&gd.layout.xaxis.range);
+  const n=xzN(gd);
+  return (r&&r.length===2)?[+r[0],+r[1]]:[-0.5,n-0.5];
+}
+function xzApply(gd,getHL,lo,hi){
+  const n=xzN(gd);
+  lo=Math.max(-0.5,lo); hi=Math.min(n-0.5,hi);
+  if(hi-lo<5){const c=(lo+hi)/2;lo=c-2.5;hi=c+2.5;}
+  const full=(lo<=-0.4&&hi>=n-0.6);
+  // ⚠ 一律用「顯式數值範圍」,絕不用 autorange:true —— Plotly 2.35 在本圖(category 主軸 + y7~y10
+  //   多軌 + paper shapes)對 xaxis.autorange 會在 doAutoRange 內丟
+  //   TypeError: Cannot read properties of undefined (reading '_extremes'),
+  //   被 try/catch 吞掉後畫面完全不動 → 症狀正是「縮小(縮回全幅)沒反應、只能放大與拖曳」。
+  if(full){lo=-0.5;hi=n-0.5;}
+  const upd={'xaxis.range':[lo,hi]};
+  const HL=getHL&&getHL();
+  if(HL&&HL.h&&HL.h.length){
+    const i0=full?0:Math.max(0,Math.ceil(lo)), i1=full?HL.h.length-1:Math.min(HL.h.length-1,Math.floor(hi));
+    let mn=Infinity,mx=-Infinity;
+    for(let i=i0;i<=i1;i++){if(HL.l[i]!=null&&HL.l[i]<mn)mn=HL.l[i]; if(HL.h[i]!=null&&HL.h[i]>mx)mx=HL.h[i];}
+    if(mx>mn){const pad=(mx-mn)*0.08;upd['yaxis.range']=[mn-pad,mx+pad];}
+  }
+  try{Plotly.relayout(gd,upd);}catch(e){}
+}
+// ===== 滑鼠滾輪縮放(桌機;2026-08-01 修正)=====
+// 不用 Plotly 內建 scrollZoom —— 多子圖 + category 主軸下實測不穩(拖曳有效、滾輪無效);
+// 改為 capture 階段自行攔截 wheel 並 stopPropagation,Plotly 完全不參與 → 行為可控:
+// 只縮 x(以游標為錨)、價格軸依可視K棒自適應;CHIP_ZOOM 關閉時完全不攔截(滾輪照常捲頁)。
+function bindWheelZoom(id,getHL){
+  const gd=document.getElementById(id); if(!gd||gd._wz)return; gd._wz=1;
+  let pend=null,raf=0;
+  const flush=()=>{raf=0; if(pend){xzApply(gd,getHL,pend[0],pend[1]); pend=null;}};
+  gd.addEventListener('wheel',function(e){
+    if(!CHIP_ZOOM)return;                      // 未開縮放模式:不攔截,頁面照常捲動
+    const fl=gd._fullLayout, xa=fl&&fl.xaxis;
+    if(!fl||!xa||xa._length==null||!fl._size)return;
+    const rc=gd.getBoundingClientRect();
+    const cx=e.clientX-rc.left, cy=e.clientY-rc.top;
+    const x0=xa._offset, x1=xa._offset+xa._length;
+    const yT=fl._size.t, yB=fl._size.t+fl._size.h;
+    if(cx<x0||cx>x1||cy<yT||cy>yB)return;      // 繪圖區外(軸標籤/VbP 軌/留白)不攔截
+    e.preventDefault(); e.stopPropagation();
+    let dy=e.deltaY; if(e.deltaMode===1)dy*=16; else if(e.deltaMode===2)dy*=100;
+    const d=Math.max(-3,Math.min(3,dy/100));   // 滑鼠滾輪 ±100 → ±1 檔;觸控板小量連發也線性
+    const k=Math.exp(d*0.32);                  // 上滾(dy<0)=放大
+    const r0=pend||xzCur(gd), span0=r0[1]-r0[0], n=xzN(gd);
+    const fx=Math.min(1,Math.max(0,(cx-x0)/Math.max(1,x1-x0)));
+    const anchor=r0[0]+span0*fx;
+    let span=Math.max(8,Math.min(n,span0*k));
+    let lo=anchor-span*fx, hi=anchor+span*(1-fx);
+    if(lo<-0.5){hi+=(-0.5-lo); lo=-0.5;}
+    if(hi>n-0.5){lo-=(hi-(n-0.5)); hi=n-0.5;}
+    lo=Math.max(-0.5,lo);
+    pend=[lo,hi];
+    if(!raf)raf=(window.requestAnimationFrame||setTimeout)(flush,16);   // 合併連發,避免 relayout 洪水
+  },{passive:false,capture:true});
+}
 function bindPinch(id,getHL){
   const gd=document.getElementById(id); if(!gd||gd._pinch||!TOUCH)return; gd._pinch=1;
   let st=null;
-  const N=()=>Math.max(2,(((gd.data||[])[0]||{}).x||[]).length);
-  const cur=()=>{const r=gd.layout&&gd.layout.xaxis&&gd.layout.xaxis.range;const n=N();
-    return (r&&r.length===2)?[+r[0],+r[1]]:[-0.5,n-0.5];};
-  const apply=(lo,hi)=>{const n=N();
-    lo=Math.max(-0.5,lo); hi=Math.min(n-0.5,hi);
-    if(hi-lo<5){const c=(lo+hi)/2;lo=c-2.5;hi=c+2.5;}
-    const full=(lo<=-0.4&&hi>=n-0.6);
-    const upd=full?{'xaxis.autorange':true}:{'xaxis.range':[lo,hi]};
-    const HL=getHL&&getHL();
-    if(HL&&HL.h&&HL.h.length){
-      if(full){upd['yaxis.autorange']=true;}
-      else{const i0=Math.max(0,Math.ceil(lo)),i1=Math.min(HL.h.length-1,Math.floor(hi));
-        let mn=Infinity,mx=-Infinity;
-        for(let i=i0;i<=i1;i++){if(HL.l[i]!=null&&HL.l[i]<mn)mn=HL.l[i]; if(HL.h[i]!=null&&HL.h[i]>mx)mx=HL.h[i];}
-        if(mx>mn){const pad=(mx-mn)*0.08;upd['yaxis.range']=[mn-pad,mx+pad];}}
-    }
-    try{Plotly.relayout(gd,upd);}catch(e){}};
+  const N=()=>xzN(gd);
+  const cur=()=>xzCur(gd);
+  const apply=(lo,hi)=>xzApply(gd,getHL,lo,hi);
   const dist=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
   const midX=t=>(t[0].clientX+t[1].clientX)/2;
   gd.addEventListener('touchstart',function(e){
@@ -528,12 +575,10 @@ let CHIP_IDX={SPY:false,QQQ:false};   // P7-3 K線圖(駕駛艙)疊加 SPY/QQQ �
 let CHIP_TL=true;   // 駕駛艙自動趨勢線層開關(2026-08-01;預設開,記在 JS 變數即可)
 let CHIP_VBP=true;  // VbP 成交量分佈開關(預設開)
 let CHIP_SIGK=true; // 訊號K棒變色開關(煞車線易手日+TD9/13 完成日;預設開)
-let CHIP_REV=false; // 財報營收階梯開關(預設關,避免預設圖面過載;僅 signals 有 rev_q 的標的顯示 chip)
 let CHIP_PAT=false; // 古典型態層開關(預設關)
 let CHIP_CDL=false; // 蠟燭型態標記開關(預設關,避免圖面過載)
 let CHIP_FIB=false; // Fibonacci 自動回撤(預設關)
 let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
-let CHIP_MTF=false; // MTFA 週線疊加(預設關)
 let CHIP_CTA=true;  // CTA 煞車線×4 開關(預設開;既有功能)
 let CHIP_BB=false;  // P7-2 布林通道 BB(20,2) 上/中/下軌(預設關)
 let CHIP_ZOOM=false;// P7-1 滑鼠滾輪縮放+拖曳模式(預設關;開啟後滾輪不再捲頁而是縮放)
@@ -547,12 +592,10 @@ function buildChipIdx(){
     +' <span class="cidxchip2" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #4ade80;'+(CHIP_TL?'background:rgba(74,222,128,.15);color:#4ade80':'color:var(--muted);opacity:.55')+'">趨勢線</span>'
     +' <span class="cidxchip3" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #eab308;'+(CHIP_VBP?'background:rgba(234,179,8,.15);color:#eab308':'color:var(--muted);opacity:.55')+'">VbP</span>'
     +' <span class="cidxchip4" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #f59e0b;'+(CHIP_SIGK?'background:rgba(245,158,11,.15);color:#f59e0b':'color:var(--muted);opacity:.55')+'">訊號K</span>'
-    +(((SIG&&SIG.symbols&&SIG.symbols[CHIP_SYM]&&SIG.symbols[CHIP_SYM].computed_fund&&(SIG.symbols[CHIP_SYM].computed_fund.rev_q||[]).length)?' <span class="cidxchip5" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #22c55e;'+(CHIP_REV?'background:rgba(34,197,94,.15);color:#22c55e':'color:var(--muted);opacity:.55')+'">營收</span>':''))
     +' <span class="cidxchip6" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #a78bfa;'+(CHIP_PAT?'background:rgba(167,139,250,.15);color:#a78bfa':'color:var(--muted);opacity:.55')+'">型態</span>'
     +' <span class="cidxchip7" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_CDL?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">蠟燭</span>'
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
-    +' <span class="cidxchipA" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #94a3b8;'+(CHIP_MTF?'background:rgba(148,163,184,.15);color:#cbd5e1':'color:var(--muted);opacity:.55')+'">週線</span>'
     +' <span class="cidxchipC" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.brake1+';'+(CHIP_CTA?'background:rgba(147,197,253,.15);color:'+CPAL.brake1:'color:var(--muted);opacity:.55')+'">CTA</span>'
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span class="cidxchipT" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bt+';'+(CHIP_BT?'background:rgba(34,197,94,.15);color:'+CPAL.bt:'color:var(--muted);opacity:.55')+'">回測</span>'
@@ -563,12 +606,10 @@ function buildChipIdx(){
   var t2=el.querySelector('.cidxchip2'); if(t2)t2.onclick=function(){CHIP_TL=!CHIP_TL;renderChips();};
   var t3=el.querySelector('.cidxchip3'); if(t3)t3.onclick=function(){CHIP_VBP=!CHIP_VBP;renderChips();};
   var t4=el.querySelector('.cidxchip4'); if(t4)t4.onclick=function(){CHIP_SIGK=!CHIP_SIGK;renderChips();};
-  var t5=el.querySelector('.cidxchip5'); if(t5)t5.onclick=function(){CHIP_REV=!CHIP_REV;renderChips();};
   var t6=el.querySelector('.cidxchip6'); if(t6)t6.onclick=function(){CHIP_PAT=!CHIP_PAT;renderChips();};
   var t7=el.querySelector('.cidxchip7'); if(t7)t7.onclick=function(){CHIP_CDL=!CHIP_CDL;renderChips();};
   var t8=el.querySelector('.cidxchip8'); if(t8)t8.onclick=function(){CHIP_FIB=!CHIP_FIB;renderChips();};
   var t9=el.querySelector('.cidxchip9'); if(t9)t9.onclick=function(){CHIP_VWAP=!CHIP_VWAP;renderChips();};
-  var tA=el.querySelector('.cidxchipA'); if(tA)tA.onclick=function(){CHIP_MTF=!CHIP_MTF;renderChips();};
   var tC=el.querySelector('.cidxchipC'); if(tC)tC.onclick=function(){CHIP_CTA=!CHIP_CTA;renderChips();};
   var tB=el.querySelector('.cidxchipB'); if(tB)tB.onclick=function(){CHIP_BB=!CHIP_BB;renderChips();};
   var tT=el.querySelector('.cidxchipT'); if(tT)tT.onclick=function(){CHIP_BT=!CHIP_BT;renderChips();};
@@ -738,18 +779,76 @@ function autoTrendlines(R,OPT2){
     });
   }
   supH=dropDup(supH,supL);resH=dropDup(resH,resL);
-  return {lines:supL.concat(resL,supH,resH),meta:{w:W,tol:TOL,px:px}};
+  return {lines:supL.concat(resL,supH,resH),meta:{w:W,tol:TOL,px:px,atrp:(LG?atr:atr/Math.max(px,1e-9))}};
 }
 // 趨勢線 → Plotly traces(支撐綠/壓力紅細實線半透明;✂短虛線=已突破止於突破日;active 右延伸至最後一根)
 // v2(2026-08-01):+平行通道(最佳主線平移至該段最遠極值,每檔1組,淡色細虛線+4.5%填底)
 //               +觸及點圓圈(半透明圓 marker,hover 日期/距線誤差);全部 traces 標 meta:'tl'
+// ===== 通道判定(2026-08-01 訂正 —— 使用者回報 INTC 下行通道誤判)=====
+// 舊版把「分數最高的斜線」平移到區間最遠一根就當通道,三個結構性缺陷:
+//   ① 沒有 active 要求 → 已突破的陳舊線照畫(INTC:7 月自 142 崩到 86,畫面上還掛著 5 月那條已被
+//      跌破的支撐 + 由 142 那根單峰撐開的 40% 寬「通道」,方向與現況完全相反);
+//   ② 對側界由單一極端棒決定 → 一根長影就把通道撐爆,價格從不回訪那條界線;
+//   ③ 沒有長度/貼近現價/方向一致性檢查 → 18 根的短線也能在 200 日圖上冒充通道。
+// 新版六道機械閘門,全過才畫;任一不過就只畫趨勢線本身(寧缺勿濫,不編造結構)。
+function pickChannel(R,res,OPT2){
+  var N=R.length, px=res.meta.px, TOL=res.meta.tol, LG=!!(OPT2&&OPT2.logspace);
+  var MINSPAN=Math.max(20,Math.round(N*0.12));       // 閘①長度:至少 12% 視窗且 ≥20 根
+  var MINEND =N-1-Math.max(4,Math.round(N*0.04));    // 閘②時效:須延伸到視窗近端(=當前結構)
+  // 距離與寬度門檻改以 ATR 計:高波動股(MU/AAOI 這類一年 3 倍的)本來就該有較寬的通道,
+  // 用固定 %(舊版 12%/30%)會誤殺;低波動的 SPY/大型股則自動收緊。
+  var ATRP=(res.meta.atrp!=null?res.meta.atrp:TOL*4);
+  var DCAP=Math.min(0.22,Math.max(0.12,6*ATRP));     // 端點距現價上限
+  var WMAX=Math.min(0.45,Math.max(0.20,10*ATRP));    // 通道寬上限
+  var WMIN=Math.max(0.02,1.2*ATRP);                  // 通道寬下限(比一根 ATR 還窄=雜訊)
+  var cands=[];
+  res.lines.forEach(function(L){
+    if(L.kind!=='line'||!L.active)return;            // 閘③ 只接受未突破的線
+    if(L.endIdx-L.i<MINSPAN||L.endIdx<MINEND)return;
+    var dist=LG?Math.abs(L.yEnd-px):Math.abs(L.yEnd/px-1);
+    if(dist>DCAP)return;                             // 閘④ 端點須貼近現價(門檻依波動,見上)
+    // 閘⑤ 方向一致:線斜率須與同區間收盤最小平方回歸斜率同號(任一近乎持平則放行)
+    var n2=L.endIdx-L.i+1, sx=0,sy=0,sxy=0,sxx=0;
+    for(var k=L.i;k<=L.endIdx;k++){
+      var xx=k-L.i, yy=LG?Math.log(R[k].c):R[k].c;
+      sx+=xx; sy+=yy; sxy+=xx*yy; sxx+=xx*xx;
+    }
+    var den=n2*sxx-sx*sx, reg=den?(n2*sxy-sx*sy)/den:0;
+    var flat=function(v){return Math.abs(v)*n2/(LG?1:Math.max(px,1e-9))<0.02;};   // 期間總變化<2%=持平
+    if(!flat(reg)&&!flat(L.slope)&&((reg>0)!==(L.slope>0)))return;
+    // 閘⑥ 對側界須被「碰到 ≥2 次」:自最遠偏離往內取候選,找到第一個有 2 次獨立觸及的水準
+    var dev=[];
+    for(var k2=L.i;k2<=L.endIdx;k2++){
+      var ly=L.y1+L.slope*(k2-L.i);
+      dev.push({k:k2,y:ly,d:(L.side==='sup'?(R[k2].h-ly):(ly-R[k2].l))});
+    }
+    var srt=dev.slice().sort(function(a,b){return b.d-a.d;});
+    var far=null, ft=0;
+    for(var c=0;c<Math.min(4,srt.length);c++){
+      var cand=srt[c].d; if(!(cand>0))break;
+      var cnt=0, prev=-9;
+      for(var q=0;q<dev.length;q++){
+        var rel=Math.abs(dev[q].d-cand); if(!LG)rel/=Math.max(dev[q].y,1e-9);
+        if(rel<=TOL*1.6&&dev[q].k-prev>2){cnt++;prev=dev[q].k;}
+      }
+      if(cnt>=2){far=cand;ft=cnt;break;}
+    }
+    if(far==null)return;
+    var wid=LG?far:far/px;
+    if(wid<WMIN||wid>WMAX)return;                    // 閘⑦ 寬度合理帶(以 ATR 計,見上)
+    cands.push({L:L,far:far,ft:ft,wid:wid,
+      q:L.score+0.8*ft+0.6*Math.min(1,(L.endIdx-L.i)/Math.max(1,N*0.5))});
+  });
+  if(!cands.length)return null;
+  cands.sort(function(a,b){return b.q-a.q;});
+  return cands[0];
+}
 function tlTraces(R,x,OPT2,PRE){
   var out=[];
   var res=PRE||autoTrendlines(R,OPT2);   // PRE=呼叫端已算好的結果(共振圈需共用,避免重算)
   if(!res)return out;
-  var best=null;   // 通道主線=分數最高的斜線(active 優先;無 active 斜線才用已突破者)
-  res.lines.forEach(function(L){if(L.kind!=='line')return;
-    if(!best||(L.active&&!best.active)||(L.active===best.active&&L.score>best.score))best=L;});
+  var CH=pickChannel(R,res,OPT2);       // 通道主線:六道閘門全過才有;無合格通道 → 只畫趨勢線
+  var best=CH?CH.L:null;
   res.lines.forEach(function(L){
     var col=L.side==='sup'?CPAL.sup:CPAL.res;
     var xs=[],ys=[];
@@ -763,28 +862,20 @@ function tlTraces(R,x,OPT2,PRE){
     var st=isCh?{w:1.7,a:.85,d:'solid'}
        :(L.kind==='hline'?{w:1.1,a:.5,d:'longdash'}:{w:1.15,a:.55,d:'solid'});
     if(!L.active){st.d='dash'; st.a=Math.min(st.a,.5); st.w=Math.max(1,st.w-0.3);}
-    var hov=(isCh?(L.side==='sup'?'上升通道下界':'下行通道上界'):name)+(L.active
+    var hov=(isCh?((L.slope>0?'上升':'下行')+'通道'+(L.side==='sup'?'下界':'上界')):name)+(L.active
       ? ' · 觸及'+L.touches+' · 距現價'+(dist>0?'+':'−')+Math.abs(dist).toFixed(1)+'%'
       : '(✂已突破 '+String(L.broken_d).slice(5)+') · 觸及'+L.touches);
     out.push({type:'scatter',mode:'lines',x:xs,y:ys,showlegend:false,meta:'tl',
       line:{color:'rgba('+col+','+st.a+')',width:st.w,dash:st.d},
       hovertemplate:hov+'<extra></extra>'});
-    if(L===best){   // 1B 平行通道:緊接主線之後 push → fill:'tonexty' 以主線為界
-      var far=0;
-      for(var k2=L.i;k2<=L.endIdx;k2++){
-        var ly2=L.y1+L.slope*(k2-L.i);
-        var dev=L.side==='sup'?(R[k2].h-ly2):(ly2-R[k2].l);
-        if(dev>far)far=dev;
-      }
-      if(far>0){
-        var offc=L.side==='sup'?far:-far;
-        var cy=ys.map(function(v){return +(v+offc).toFixed(3);});
-        var wid=(far/res.meta.px*100).toFixed(1);
-        out.push({type:'scatter',mode:'lines',x:xs,y:cy,showlegend:false,meta:'tl',
-          fill:'tonexty',fillcolor:'rgba('+col+',.05)',
-          line:{color:'rgba('+col+','+st.a+')',width:st.w,dash:st.d},   // P7-4 與主線完全相同線段
-          hovertemplate:(L.side==='sup'?'上升通道上界':'下行通道下界')+'(主線平移) · 寬 '+wid+'%<extra></extra>'});
-      }
+    if(L===best&&CH){   // 1B 平行通道:緊接主線之後 push → fill:'tonexty' 以主線為界
+      var offc=L.side==='sup'?CH.far:-CH.far;
+      var cy=ys.map(function(v){return +(v+offc).toFixed(3);});
+      var wid=(CH.wid*100).toFixed(1);
+      out.push({type:'scatter',mode:'lines',x:xs,y:cy,showlegend:false,meta:'tl',
+        fill:'tonexty',fillcolor:'rgba('+col+',.05)',
+        line:{color:'rgba('+col+','+st.a+')',width:st.w,dash:st.d},   // P7-4 與主線完全相同線段
+        hovertemplate:((L.slope>0?'上升':'下行')+'通道'+(L.side==='sup'?'上界':'下界'))+'(主線平移·對側觸及 '+CH.ft+' 次) · 寬 '+wid+'%<extra></extra>'});
     }
     // 註:趨勢線/通道/三角「畫線即可」,不標記觸及K棒(2026-08-01 使用者指定);
     //     半透明大圓改用於「K棒碰到 CTA 煞車線」,見 renderCockpit 的 CTA 觸線圈。
@@ -1289,15 +1380,30 @@ function indStoch(R,n,k1,d1){
   return {k:K.map(function(v){return v==null?null:+v.toFixed(2);}),
           d:D.map(function(v){return v==null?null:+v.toFixed(2);})};
 }
+// VbP 繪製(2026-08-01 改版):**獨立右軌**,不再壓在K棒上。
+//   K線 x 軸 domain 收到 [0, VBP_X0-0.010],VbP 佔 [VBP_X0, 1] → 兩圖零重疊(TrendSpider 式量價側欄)。
+//   柱長仍為「該價位量 ÷ 區間最大量」的等比,最大量那一格(POC)加亮邊+標籤 → 一眼看出主力成本區。
+// 右軌起點(paper x)與柱最大寬;手機螢幕窄 → 右軌收窄,K線區才夠看
+function vbpGeom(){return ((window.innerWidth||1024)<680)?{x0:0.878,w:0.114}:{x0:0.855,w:0.142};}
 function vbpShapes(vb){
-  var out=[];
+  var out=[], G=vbpGeom(), VBP_X0=G.x0, VBP_W=G.w;
+  out.push({type:'rect',xref:'paper',yref:'paper',x0:VBP_X0-0.006,x1:VBP_X0-0.004,y0:0.46,y1:1,
+    fillcolor:'rgba(148,163,184,.28)',line:{width:0},layer:'below'});   // 分隔細線
+  var poc=-1,pv=-1;
+  for(var b0=0;b0<vb.ctr.length;b0++){var t0=vb.up[b0]+vb.dn[b0]; if(t0>pv){pv=t0;poc=b0;}}
   for(var b=0;b<vb.ctr.length;b++){
-    var g=0.15*vb.up[b]/vb.max, r=0.15*vb.dn[b]/vb.max;
+    var g=VBP_W*vb.up[b]/vb.max, r=VBP_W*vb.dn[b]/vb.max;
     if(g<=0&&r<=0)continue;
     var y0=vb.ctr[b]-vb.bw*0.46, y1=vb.ctr[b]+vb.bw*0.46;
-    if(g>0)out.push({type:'rect',xref:'paper',yref:'y',x0:1-g,x1:1,y0:y0,y1:y1,fillcolor:CPAL.vbpUp,line:{width:0},layer:'below'});
-    if(r>0)out.push({type:'rect',xref:'paper',yref:'y',x0:1-g-r,x1:1-g,y0:y0,y1:y1,fillcolor:CPAL.vbpDn,line:{width:0},layer:'below'});
+    var isP=(b===poc);
+    if(g>0)out.push({type:'rect',xref:'paper',yref:'y',x0:VBP_X0,x1:VBP_X0+g,y0:y0,y1:y1,
+      fillcolor:isP?'rgba(74,222,128,.62)':CPAL.vbpUp,line:{width:0},layer:'below'});
+    if(r>0)out.push({type:'rect',xref:'paper',yref:'y',x0:VBP_X0+g,x1:VBP_X0+g+r,y0:y0,y1:y1,
+      fillcolor:isP?'rgba(248,113,113,.58)':CPAL.vbpDn,line:{width:0},layer:'below'});
+    if(isP)out.push({type:'rect',xref:'paper',yref:'y',x0:VBP_X0,x1:VBP_X0+g+r,y0:y0,y1:y1,
+      fillcolor:'rgba(0,0,0,0)',line:{width:1.1,color:CPAL.volHot},layer:'below'});   // POC 加亮框
   }
+  out._poc=(poc>=0)?vb.ctr[poc]:null;
   return out;
 }
 // ===== 趨勢線上下微調(可任意移動疊加線;柱狀圖與現金池累積線固定不動)=====
@@ -1756,7 +1862,7 @@ function renderCockpit(){
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_REV?':r1':':r0')+(CHIP_PAT?':p1':':p0')+(CHIP_CDL?':d1':':d0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_MTF?':k1':':k0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')
+  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_SIGK?':k1':':k0')+(CHIP_PAT?':p1':':p0')+(CHIP_CDL?':d1':':d0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')
     +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')+(CHIP_BT?':q1':':q0')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
@@ -1895,12 +2001,21 @@ function renderCockpit(){
   // 自動趨勢線層:追加於既有 traces 之後(疊於K線上層;不動既有 trace 順序;<50 根 tlTraces 內部靜默不啟用)
   var _tlRes=null;
   if(CHIP_TL&&R.length>=50){try{_tlRes=autoTrendlines(R);tlTraces(R,x,null,_tlRes).forEach(t=>traces.push(t));}catch(e){}}
+  // VbP 需在 ann 之前算好:XR/XW(右緣標註錨點)與 POC 標籤都依賴它
+  var _vb=null,_vbShapes=[];
+  if(CHIP_VBP){try{
+    _vb=vbpBins(R,0,R.length-1);
+    if(_vb)_vbShapes=vbpShapes(_vb);
+  }catch(e){_vb=null;_vbShapes=[];}}
   const li=R.length-1;
+  const VBG=vbpGeom();
+  const XR=_vb?(VBG.x0-0.016):0.998;   // 右緣標註錨點:VbP 開啟時退到右軌左側,避免壓字
+  const XW=_vb?(VBG.x0-0.010):1;       // 橫跨全寬的 paper 色帶同步收邊
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.028,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯觸線)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_BT?' · <span style="color:'+CPAL.bt+'">▲進場</span><span style="color:'+CPAL.btX+'">▼出場</span>(歷史模擬·見下方免責)':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(✔=已確認/…=形成中)':'')+(CHIP_CDL?' · <span style="color:#38bdf8">▲▼蠟燭</span>':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90)· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -1913,10 +2028,17 @@ function renderCockpit(){
   // CTA 4 條煞車線:右緣直接標注 名稱+觸發價(相近時往上錯開,顏色對線)
   (function(){const L=[['短50D',R[li].t50,CPAL.brake1],['中100D',R[li].t100,CPAL.brake2],['長200D',R[li].t200,CPAL.brake3],['動63D',R[li].t63,CPAL.brake4lab]].sort((a,b)=>a[1]-b[1]);
     let pv=-Infinity; L.forEach(p=>{let y=p[1]; if(y-pv<rng*0.052)y=pv+rng*0.052; pv=y;
-      ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y',y:y,yanchor:'middle',showarrow:false,
+      ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y',y:y,yanchor:'middle',showarrow:false,
         text:p[0]+' '+(p[1]>=1000?p[1].toFixed(0):p[1].toFixed(1)),font:{size:8.5,color:p[2]},bgcolor:CPAL.bgc});});})();
   // 現在檔位:score 線尾直接標注(綠=前進檔、紅=倒車檔)
-  ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y9',y:Math.max(-95,Math.min(95,R[li].sc)),yanchor:'middle',showarrow:false,
+  if(_vb&&_vbShapes.length){   // VbP 右軌:欄頭(桌機才放,手機空間不足會與圖例撞字)+ POC(量最大價位)標籤
+    if(!MB)ann.push({xref:'paper',yref:'paper',x:VBG.x0,y:1.004,xanchor:'left',yanchor:'bottom',showarrow:false,
+      font:{size:8,color:MUT2},text:'量價 VbP'});
+    if(_vbShapes._poc!=null)ann.push({xref:'paper',x:VBG.x0+VBG.w+0.004,xanchor:'left',yref:'y',y:_vbShapes._poc,
+      yanchor:'middle',showarrow:false,text:'POC '+_vbShapes._poc.toFixed(_vbShapes._poc>=1000?0:1),
+      font:{size:8,color:CPAL.volHot},bgcolor:CPAL.bgc});
+  }
+  ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y9',y:Math.max(-95,Math.min(95,R[li].sc)),yanchor:'middle',showarrow:false,
     text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?CPAL.up:R[li].sc<0?CPAL.dn:CPAL.sc},bgcolor:CPAL.bgc});
   // 直立手機:標題精簡成兩行(第二行=圖例),避免單行過長被切掉
   if(MB)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
@@ -1990,8 +2112,9 @@ function renderCockpit(){
         yanchor:'bottom',font:{size:8,color:'#fbbf24'},bgcolor:CPAL.bgc});
     });
   }catch(e){}}
-  // CTA 煞車線觸線圈(2026-08-01 使用者指定;仿 TrendSpider 半透明大圓):
-  // K棒高低範圍涵蓋煞車線值 = 觸線;同一條線連續觸及只標首根 + 5 根冷卻(避免糊成一片);
+  // CTA 觸線圈(2026-08-01 使用者指定;仿 TrendSpider 半透明大圓):
+  // **只標「K棒碰到 200D 長期線」**(50/100/63D 一律不標 —— 使用者指定,畫面乾淨優先);
+  // K棒高低範圍涵蓋線值 = 觸線;連續觸及只標段首根 + 10 根冷卻 + 需「先離開再回測」;
   // 該根同時有訊號(TD9·13 完成 / signals marks)→ 環色加強為琥珀。趨勢線/通道只畫線不標點。
   if(CHIP_CTA){try{
     var _sigB={};
@@ -2008,7 +2131,7 @@ function renderCockpit(){
       _atrC+=Math.max(R[a7].h-R[a7].l,Math.abs(R[a7].h-R[a7-1].c),Math.abs(R[a7].l-R[a7-1].c)); _cn++;
     }
     var _dep=Math.max(0.04,1.5*(_cn?_atrC/_cn:0)/Math.max(R[R.length-1].c,1e-9));
-    var CL=[['t50','短期50D'],['t100','中期100D'],['t200','長期200D'],['t63','動能63D']];
+    var CL=[['t200','長期200D']];   // 只留 200D(2026-08-01 使用者指定)
     var cx=[],cy=[],ch=[],csz=[],ccol=[],cline=[];
     CL.forEach(function(cc){
       var lastHit=-99, away=false;
@@ -2027,7 +2150,7 @@ function renderCockpit(){
         csz.push(hasSig?26:20);
         ccol.push(hasSig?'rgba(250,204,21,.18)':'rgba(147,197,253,.14)');
         cline.push(hasSig?'rgba(250,204,21,.75)':'rgba(147,197,253,.5)');
-        ch.push('觸及'+cc[1]+'煞車線 '+lv.toFixed(2)+(hasSig?'<br>⚡同日有訊號(TD9·13/標註)':''));
+        ch.push('觸及'+cc[1]+'均線 '+lv.toFixed(2)+(hasSig?'<br>⚡同日有訊號(TD9·13/標註)':''));
       }
     });
     if(cx.length)traces.push({type:'scatter',mode:'markers',x:cx,y:cy,customdata:ch,meta:'halo',showlegend:false,
@@ -2035,11 +2158,6 @@ function renderCockpit(){
       hovertemplate:'%{customdata}<extra></extra>'});
   }catch(e){}}
   // VbP 成交量分佈(1D):右緣紅綠橫柱(paper-x shapes;0 貼右緣、柱向左、佔寬≤15%、layer below)
-  var _vb=null,_vbShapes=[];
-  if(CHIP_VBP){try{
-    _vb=vbpBins(R,0,R.length-1);
-    if(_vb)_vbShapes=vbpShapes(_vb);
-  }catch(e){_vb=null;_vbShapes=[];}}
   // ===== P4 渲染(4D;2026-08-01 視覺精修):頭肩=圓弧、三角楔形=延伸邊線、confirmed 實線/forming 虛線 =====
   // 視覺語彙對標 TrendSpider:頭肩三個 hump 各畫一條淺色圓弧;三角兩條邊線延伸至右緣
   if(CHIP_PAT&&R.length>=50){try{
@@ -2216,81 +2334,34 @@ function renderCockpit(){
         line:{color:av[1],width:1.6},
         hovertemplate:'aVWAP('+av[2]+' '+R[av[0]].d.slice(5)+') %{y}<extra></extra>'});
       var last5=ser[R.length-1];
-      if(last5!=null)ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y',y:last5,yanchor:'middle',showarrow:false,
+      if(last5!=null)ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y',y:last5,yanchor:'middle',showarrow:false,
         text:'aVWAP·'+av[2],font:{size:8,color:av[1]},bgcolor:CPAL.bgc});
     });
     ann.push({xref:'paper',yref:'paper',x:0.5,y:1.001,xanchor:'center',yanchor:'bottom',showarrow:false,
       font:{size:7.5,color:CPAL.mut},text:'aVWAP=日K近似(典型價×量累積),非逐筆 VWAP'});
   }catch(e){}}
-  // ===== P5C MTFA 週線疊加(預設關):週線 SMA10/SMA20 階梯 + 週線 TD9 標記 =====
-  if(CHIP_MTF&&R.length>=30){try{
-    [[10,'週SMA10'],[20,'週SMA20']].forEach(function(wm,wi){
-      var W5=weeklyMA(R,wm[0]);
-      traces.push({type:'scatter',mode:'lines',x:x,y:W5.ma,meta:'mtf',showlegend:false,connectgaps:false,
-        line:{color:CPAL.wk,width:wi?1.1:1.6,shape:'hv',dash:wi?'dot':'solid'},
-        hovertemplate:wm[1]+' %{y}<extra></extra>'});
-      var lastv=null;
-      for(var q6=R.length-1;q6>=0;q6--)if(W5.ma[q6]!=null){lastv=W5.ma[q6];break;}
-      if(lastv!=null&&!MB)ann.push({xref:'paper',x:0.998,xanchor:'right',yref:'y',y:lastv,yanchor:'middle',
-        showarrow:false,text:wm[1]+' '+lastv.toFixed(1),font:{size:7.5,color:'#cbd5e1'},bgcolor:CPAL.bgc});
-    });
-    // 週線 TD9(週K收盤 vs 前4週)
-    var WK=weeklyAgg(R), wc=WK.map(function(w){return w.c;}), ws=0,wb=0,wx=[],wy=[],wt=[];
-    for(var q7=4;q7<WK.length;q7++){
-      ws=wc[q7]>wc[q7-4]?ws+1:0; wb=wc[q7]<wc[q7-4]?wb+1:0;
-      if(ws===9||wb===9){wx.push(x[WK[q7].i1]);wy.push(wb===9?WK[q7].l-o2:WK[q7].h+o2);wt.push('週9');}
-    }
-    if(wx.length)traces.push({type:'scatter',mode:'text',x:wx,y:wy,text:wt,meta:'mtf',showlegend:false,
-      textfont:{size:8,color:'#cbd5e1'},hovertemplate:'週線 TD Setup 9 完成<extra></extra>'});
-  }catch(e){}}
-  // 3A 財報營收階梯(P3;預設關):SEC 近16季 → 綠色 hv 階梯+填底,映射至價格座標下緣 22%
-  // (不用 overlaying 次軸 — 同 1D 的 Plotly 毒性教訓;hover 以 customdata 顯示真值)
-  var _rvq=(CHIP_REV&&_sg&&_sg.computed_fund&&(_sg.computed_fund.rev_q||[]).length)?_sg.computed_fund.rev_q:null;
-  if(_rvq){try{
-    var loP=Math.min.apply(null,R.map(function(r6){return r6.l;}));
-    var mx6=0; _rvq.forEach(function(qq){if(qq.rev>mx6)mx6=qq.rev;});
-    var qi=0, lastQ=null, stepY=[], stepC=[];
-    for(var q10=0;q10<R.length;q10++){
-      while(qi<_rvq.length&&_rvq[qi].end_d<=R[q10].d){lastQ=_rvq[qi];qi++;}
-      if(lastQ&&mx6>0){stepY.push(+(loP+lastQ.rev/mx6*rng*0.22).toFixed(3));
-        stepC.push(lastQ.q+' 營收 '+(lastQ.rev/1e9).toFixed(2)+'B'+(lastQ.yoy!=null?' · YoY '+(lastQ.yoy>0?'+':'')+lastQ.yoy+'%':''));}
-      else{stepY.push(null);stepC.push('');}
-    }
-    if(mx6>0&&stepY.some(function(v){return v!=null;})){
-      traces.push({type:'scatter',mode:'lines',x:x,y:stepY,customdata:stepC,meta:'rev',showlegend:false,
-        line:{color:'rgba(34,197,94,.55)',width:1.2,shape:'hv'},connectgaps:false,
-        fill:'tozeroy',fillcolor:'rgba(34,197,94,.07)',
-        hovertemplate:'%{customdata}<extra></extra>'});
-      _rvq.forEach(function(qq){
-        if(qq.end_d<R[0].d||qq.end_d>R[R.length-1].d)return;
-        var qz=null;
-        for(var z=R.length-1;z>=0;z--){if(R[z].d<=qq.end_d){qz=z;break;}}
-        if(qz==null)return;
-        if(!MB)ann.push({x:qz,y:+(loP+qq.rev/mx6*rng*0.22).toFixed(3),xref:'x',yref:'y',
-          text:qq.q.slice(2)+(qq.yoy!=null?((qq.yoy>0?' +':' ')+qq.yoy+'%'):''),showarrow:false,
-          yanchor:'bottom',font:{size:7.5,color:'#4ade80'},bgcolor:CPAL.bgc});
-      });
-    }
-  }catch(e){}}
+  // (2026-08-01 使用者指定移除:P5C MTFA 週線疊加 與 P3A 財報營收階梯 —— chip 與繪製層皆已下架。
+  //  weeklyAgg/weeklyMA 保留為工具函式(其他層可能引用);引擎 computed_fund.rev_q 仍照常採集供場次判讀引用,只是不再上圖。)
   if(CHIP_IND!=='rv'&&_y8lab){   // 副圖切換:覆寫 y8 標籤文字(轉速標籤僅在 rv 模式)
     for(var qa=0;qa<ann.length;qa++)if(String(ann[qa].yref)==='y8 domain'){ann[qa].text=_y8lab;break;}
   }
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     margin:{l:MB?40:52,r:MB?44:64,t:MB?50:34,b:30},
-    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10'},
+    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10',
+      domain:[0,XW]},   // VbP 開啟 → K線退左讓出右軌(兩圖不重疊)
     yaxis:{domain:[0.46,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
     yaxis7:{domain:[0.375,0.445],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
     yaxis8:Object.assign({domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},
       _y8.tickvals?{tickvals:_y8.tickvals}:{},_y8.zero?{zerolinecolor:'#39404d'}:{}),
     yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},
     yaxis10:{domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
-    shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:1,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
-            {type:'line',xref:'paper',x0:0,x1:1,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot),
+    shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
+            {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot),
     annotations:ann};
   // P7-1 縮放模式時改用專屬 config(scrollZoom 開、雙擊還原);關閉時完全沿用既有 CFG(行為不變)
   Plotly.react('cockpit',traces,_ckLay,
-    CHIP_ZOOM?{displayModeBar:false,responsive:true,scrollZoom:true,doubleClick:'reset'}:CFG);
+    CHIP_ZOOM?{displayModeBar:false,responsive:true,scrollZoom:false,doubleClick:'reset'}:CFG);   // 滾輪由 bindWheelZoom 自行處理
   // VbP 縮放重算:bindPinch 的 relayout 觸發 plotly_relayout → 依可視範圍重分箱(只換 shapes,不動 traces/軸)
   el._vbp=_vb?{R:R,base:_ckLay.shapes.slice(0,2)}:null;
   if(!el._vbpBind&&el.on){el._vbpBind=1;
@@ -2310,8 +2381,9 @@ function renderCockpit(){
       },160);
     });
   }
-  el._HL={h:R.map(r=>r.h),l:R.map(r=>r.l)};       // 雙指縮放時價格軸依可視K棒自適應
+  el._HL={h:R.map(r=>r.h),l:R.map(r=>r.l)};       // 雙指/滾輪縮放時價格軸依可視K棒自適應
   bindPinch('cockpit',()=>el._HL);
+  bindWheelZoom('cockpit',()=>el._HL);              // 只綁一次(gd._wz);CHIP_ZOOM 關閉時不攔截滾輪
 }
 function renderChipStock(){
   // 存量分解:流通股(所有籌碼) = 大戶(機構持股 13F) + 非機構(散戶+內部人)。季度變動。
