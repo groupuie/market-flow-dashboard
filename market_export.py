@@ -112,7 +112,7 @@ EXT_SYMS = [
   "US.ARKK","US.XLY","US.XLI","US.XLU","US.GDX","US.KRE","US.XBI",
   # ===== 2026-07-31 擴編(87→243):目標=常用美股「輸入即有」;⑦ 輪轉分塊自動涵蓋、日K由 Yahoo 輪補 =====
   # 半導體/設備/網通
-  "US.MPWR","US.NXPI","US.TER","US.ENTG","US.SNPS","US.CDNS","US.GFS","US.QRVO","US.SWKS","US.MTSI","US.CRDO","US.ALAB","US.CIEN","US.STX",
+  "US.MPWR","US.NXPI","US.TER","US.ENTG","US.SNPS","US.CDNS","US.GFS","US.QRVO","US.SWKS","US.MTSI","US.CRDO","US.ALAB","US.CIEN","US.STX","US.GLW",
   # AI 基建/雲算力/電力
   "US.CRWV","US.NBIS","US.APLD","US.VRT","US.ETN","US.CEG","US.VST","US.NRG","US.SMR","US.OKLO","US.TLN",
   # 量子
@@ -154,7 +154,7 @@ for _s in ["MARA","RIOT","CLSK"]: EXT_CAT[_s]="加密股"
 for _s in ["ARKK","XLY","XLI","XLU","GDX","KRE","XBI"]: EXT_CAT[_s]="板塊ETF"
 # 2026-07-31 擴編分類
 for _s in ["MPWR","NXPI","TER","ENTG","SNPS","CDNS","GFS","QRVO","SWKS","MTSI"]: EXT_CAT[_s]="半導體"
-for _s in ["ALAB","CRDO","CIEN"]: EXT_CAT[_s]="光通信"   # AI 連接/光模組生態,與 LITE/COHR/AAOI 同組
+for _s in ["ALAB","CRDO","CIEN","GLW"]: EXT_CAT[_s]="光通信"   # AI 連接/光模組/光纖玻璃生態,與 LITE/COHR/AAOI 同組
 EXT_CAT["STX"]="記憶體"
 for _s in ["CRWV","NBIS","APLD","VRT","ETN"]: EXT_CAT[_s]="AI基建"
 for _s in ["CEG","VST","NRG","SMR","OKLO","TLN"]: EXT_CAT[_s]="電力"
