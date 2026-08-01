@@ -250,7 +250,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-07-31T22:42Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-01T02:56Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -398,7 +398,7 @@ function makeTable(el, cols, rows, defSort){
 }
 
 // ===== 個股籌碼追蹤:單檔現金池累積(過去 N 日,大單 vs 全單)+ 價格%疊加 =====
-let CHIP_SYM='', CHIP_WIN=60;
+let CHIP_SYM='', CHIP_WIN=200;   // 預設 200 日(用戶指定)
 const CHIPK={};   // 單檔日K快取 {sym:{close:{date:c}, bars:[[date,o,h,l,c,v,..],..]}}
 function ensureChipK(sym){
   if(!sym)return;
@@ -811,7 +811,18 @@ function renderChips(){
   const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
   const lastM=lineM[lineM.length-1], lastA=lineA[lineA.length-1];
   const idxReb=(K)=>{if(!K)return use.map(()=>null);const raw=use.map(d=>K[d]!=null?K[d]:null);const b=raw.find(v=>v!=null);return b==null?raw.map(()=>null):raw.map(v=>v!=null?+((v/b-1)*100).toFixed(2):null);};
-  const spyS=CHIP_IDX.SPY?(ensureSpyK(),idxReb(SPYK)):null, qqqS=CHIP_IDX.QQQ?(ensureQQQK(),idxReb(QQQK)):null;
+  // 疊加線=「形狀對照」:高波動個股(如 ±120%)會把 ±5% 的大盤線壓成貼地平線(看起來像按鈕沒作用)
+  // → 對齊中線、按可視幅度獨立縮放;hover 仍顯示真實 %(customdata)。
+  const shapeFit=(arr)=>{ if(!arr)return arr;
+    const v=arr.filter(x=>x!=null), pv=ppct.filter(x=>x!=null);
+    if(v.length<2||pv.length<2)return arr;
+    const pmid=(Math.max(...pv)+Math.min(...pv))/2, pspan=Math.max(1e-9,Math.max(...pv)-Math.min(...pv));
+    const mid=(Math.max(...v)+Math.min(...v))/2, span=Math.max(1e-9,Math.max(...v)-Math.min(...v));
+    const k=(pspan/span)*0.85;
+    return arr.map(x=>x==null?null:+(((x-mid)*k)+pmid).toFixed(3));
+  };
+  const spyR=CHIP_IDX.SPY?(ensureSpyK(),idxReb(SPYK)):null, qqqR=CHIP_IDX.QQQ?(ensureQQQK(),idxReb(QQQK)):null;
+  const spyS=spyR?shapeFit(spyR):null, qqqS=qqqR?shapeFit(qqqR):null;
   const bases=[]; if(ppct.some(v=>v!=null))bases.push(ppct); if(spyS&&spyS.some(v=>v!=null))bases.push(spyS); if(qqqS&&qqqS.some(v=>v!=null))bases.push(qqqS);
   const y2=y2Range(bases); const S=y2?y2.span:1;
   CHIP_TREND={};   // 重置趨勢線登錄(供上下微調用;位移=slider% × 該線 span)
@@ -824,12 +835,12 @@ function renderChips(){
   if(ppct.some(v=>v!=null)){CHIP_TREND.price={idx:traces.length,base:ppct,span:S};
     traces.push({type:'scatter',mode:'lines',name:'價格%',x:x,y:off(ppct,'price'),yaxis:'y2',connectgaps:true,line:{color:'#8ab4f8',width:1.7},hovertemplate:'%{x} 價 %{y:+.2f}%<extra></extra>'});}
   if(spyS&&spyS.some(v=>v!=null)){CHIP_TREND.SPY={idx:traces.length,base:spyS,span:S};
-    traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:off(spyS,'SPY'),yaxis:'y2',connectgaps:true,line:{color:'#2dd4bf',width:1.4,dash:'dot'},hovertemplate:'SPY %{y:+.2f}%<extra></extra>'});}
+    traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:off(spyS,'SPY'),yaxis:'y2',connectgaps:true,customdata:spyR,line:{color:'#2dd4bf',width:1.6,dash:'dot'},hovertemplate:'SPY 實際 %{customdata:+.2f}%(形狀對照)<extra></extra>'});}
   if(qqqS&&qqqS.some(v=>v!=null)){CHIP_TREND.QQQ={idx:traces.length,base:qqqS,span:S};
-    traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:off(qqqS,'QQQ'),yaxis:'y2',connectgaps:true,line:{color:'#c084fc',width:1.4,dash:'dot'},hovertemplate:'QQQ %{y:+.2f}%<extra></extra>'});}
+    traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:off(qqqS,'QQQ'),yaxis:'y2',connectgaps:true,customdata:qqqR,line:{color:'#c084fc',width:1.6,dash:'dot'},hovertemplate:'QQQ 實際 %{customdata:+.2f}%(形狀對照)<extra></extra>'});}
   freshPlot('chipflow');
   Plotly.react('chipflow',traces,{...PBASE,barmode:'overlay',margin:{l:70,r:64,t:40,b:34},showlegend:false,
-    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+(use.length-fi)+' 日'+covN+' · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIP_IDX.SPY?' <span style="color:#2dd4bf">┈SPY</span>':'')+(CHIP_IDX.QQQ?' <span style="color:#c084fc">┈QQQ</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出',
+    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+(use.length-fi)+' 日'+covN+' · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIP_IDX.SPY?' <span style="color:#2dd4bf">┈SPY(形狀)</span>':'')+(CHIP_IDX.QQQ?' <span style="color:#c084fc">┈QQQ(形狀)</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出',
       xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
