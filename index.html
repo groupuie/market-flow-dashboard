@@ -254,7 +254,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-02T09:11Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-02T09:44Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -571,8 +571,8 @@ function ensureSignals(){
     .catch(()=>{});
 }
 let CHIP_IDX={SPY:false,QQQ:false};   // P7-3 K線圖(駕駛艙)疊加 SPY/QQQ 相對強弱(預設關,使用者可切)
-let CHIP_TL=true;   // 駕駛艙自動趨勢線層開關(2026-08-01;預設開,記在 JS 變數即可)
-let CHIP_VBP=true;  // VbP 成交量分佈開關(預設開)
+let CHIP_TL=false;  // 駕駛艙自動趨勢線層開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
+let CHIP_VBP=false; // VbP 量價分佈開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
 let CHIP_PAT=false; // 古典型態層開關(預設關)
 let CHIP_FIB=false; // Fibonacci 自動回撤(預設關)
 let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
@@ -2103,8 +2103,7 @@ function renderCockpit(){
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90)· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
     {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:MB?'檔位 ±100/67/33(負=倒車)':'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
-    {xref:'paper',yref:'y10 domain',x:0.004,y:0.94,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+CPAL.poolA+'">全單累積</span>·<span style="color:'+CPAL.poolM+'">大單累積</span>'+((fi7>0&&fi7<R.length)?' · <span style="color:'+CPAL.volHot+'">自 '+R[fi7].d.slice(5)+' 起·回補中</span>':'')},
-    {xref:'paper',yref:'y11 domain',x:0.004,y:0.86,xanchor:'left',showarrow:false,font:{size:9,color:MUT2},text:'⑦當日淨進出(<span style="color:'+CPAL.poolUp2+'">綠=進場</span>/<span style="color:'+CPAL.poolDn2+'">紅=離場</span>,獨立刻度)'},
+    {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+CPAL.poolA+'">全單累積</span>·<span style="color:'+CPAL.poolM+'">大單累積</span>·柱=當日(<span style="color:'+CPAL.poolUp2+'">綠進</span>/<span style="color:'+CPAL.poolDn2+'">紅出</span>·獨立縮放,hover 為真值)'+((fi7>0&&fi7<R.length)?' · <span style="color:'+CPAL.volHot+'">自 '+R[fi7].d.slice(5)+' 起·回補中</span>':'')},
   ];
   if(pa[li]!=null)ann.push({x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:CPAL.poolA}});
   if(_ovlQ){try{_ovlQ(SPYK,CHIP_IDX.SPY,CPAL.idxSpy,'SPY'); _ovlQ(QQQK,CHIP_IDX.QQQ,CPAL.idxQqq,'QQQ');
@@ -2430,19 +2429,21 @@ function renderCockpit(){
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     margin:{l:MB?40:52,r:MB?44:64,t:MB?50:34,b:30},
-    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y11',
+    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10',
       domain:[0,XW]},   // VbP 開啟 → K線退左讓出右軌(兩圖不重疊)
-    yaxis:{domain:[0.475,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
-    yaxis7:{domain:[0.395,0.462],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
-    yaxis8:Object.assign({domain:[0.275,0.382],gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},
+    yaxis:{domain:[0.46,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
+    yaxis7:{domain:[0.375,0.445],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
+    yaxis8:Object.assign({domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},
       _y8.tickvals?{tickvals:_y8.tickvals}:{},_y8.zero?{zerolinecolor:'#39404d'}:{}),
-    yaxis9:{domain:[0.195,0.262],gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},
-    // ⑦ 現金池拆兩軌(2026-08-02 使用者回報「當日柱太不顯眼」):
-    //   y10=累積線(量級 −27000M),y11=當日淨進出柱(量級 ±500M)。同軌時柱被壓成貼線的細點,
-    //   分軌後各有自己的刻度,柱高按自身 P98 對稱撐滿 → 進出節奏一眼可讀。柱色同步加深。
-    yaxis10:{domain:[0.088,0.175],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
-    yaxis11:Object.assign({domain:[0,0.075],gridcolor:GRID2,tickfont:{size:7.5,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#4a5568'},
-      _pbmax>0?{range:[-_pbmax*1.12,_pbmax*1.12]}:{}),
+    yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},
+    // ⑦ 現金池:累積線與當日柱**同一格疊加**(2026-08-02 使用者指定,不分軌)。
+    //   兩者量級差 50 倍(累積 −27000M vs 當日 ±500M),共用刻度時柱必然壓成細點 →
+    //   柱掛在 overlaying 專屬刻度 y11(不顯示刻度、以自身 P98 對稱撐開),真值走 hover。
+    //   ⚠ overlaying 次軸 + category 主軸是 1D 已知地雷:verify_headless 已加
+    //     「疊加/布林/縮放/滾輪/VbP relayout 之後 xaxis.type 恆為 category」全程回歸。
+    yaxis10:{domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
+    yaxis11:Object.assign({overlaying:'y10',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
+      _pbmax>0?{range:[-_pbmax*1.15,_pbmax*1.15]}:{}),
     shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
             {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot),
     annotations:ann};
@@ -2662,13 +2663,13 @@ function renderChips(){
     traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:off(qqqS,'QQQ'),yaxis:'y2',connectgaps:true,customdata:qqqR,line:{color:'#c084fc',width:1.6,dash:'dot'},hovertemplate:'QQQ 實際 %{customdata:+.2f}%(形狀對照)<extra></extra>'});}
   freshPlot('chipflow');
   Plotly.react('chipflow',traces,{...PBASE,barmode:'overlay',margin:{l:70,r:64,t:40,b:34},showlegend:false,
-    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+(use.length-fi)+' 日'+covN+' · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIPF_IDX.SPY?' <span style="color:#2dd4bf">┈SPY(形狀)</span>':'')+(CHIPF_IDX.QQQ?' <span style="color:#c084fc">┈QQQ(形狀)</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出',
+    annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+(use.length-fi)+' 日'+covN+' · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIPF_IDX.SPY?' <span style="color:#2dd4bf">┈SPY(形狀)</span>':'')+(CHIPF_IDX.QQQ?' <span style="color:#c084fc">┈QQQ(形狀)</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出(獨立縮放·hover 為真值)',
       xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
-    xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9},anchor:'y3'},
-    yaxis:{domain:[0.30,1],gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
+    xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
+    yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}, y2?{range:y2.range}:{}),
-    yaxis3:Object.assign({domain:[0,0.24],gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',tickfont:{size:8.5,color:C.ink2},
-      title:{text:'當日淨進出',font:{size:9,color:C.ink2}}}, _bmax>0?{range:[-_bmax*1.12,_bmax*1.12]}:{})},CFG);
+    yaxis3:Object.assign({overlaying:'y',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
+      _bmax>0?{range:[-_bmax*1.15,_bmax*1.15]}:{})},CFG);
   bindPinch('chipflow',null);
   buildChipOffs();
   const note=document.getElementById('chipnote');
