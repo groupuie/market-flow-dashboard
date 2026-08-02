@@ -254,7 +254,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-02T09:44Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-02T11:32Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2002,9 +2002,30 @@ function renderCockpit(){
       tbC.push(emB?CPAL.tdB:b>=7?CPAL.tdB8:CPAL.tdB4);}
     else{tbY.push(null);tbT.push('');tbS.push(smallF);tbC.push('rgba(0,0,0,0)');}
   });
-  // ⑦ 當日柱獨立軌的對稱刻度:絕對值 P98(去極端值,免得整排柱被一根壓扁)
+  // ⑦ 當日柱:與累積線**同格疊加、且共用同一條零線**(2026-08-02 使用者指定)。
+  //   作法:先把累積線軸(y10)算成「上下都留得下柱」的顯式範圍,得到零線距底比例 f;
+  //   再把柱軸(y11)設成同一個 f,柱就從**累積線的 0 位**長出來,而不是從面板中線。
+  //   柱高用自身 |P98|(去極端值)換算成面板固定比例 HB,兩軸零線對齊、彼此不壓縮。
   const _pbs=pbar.filter(v=>v!=null).map(Math.abs).sort((a3,b3)=>a3-b3);
   const _pbmax=_pbs.length?_pbs[Math.min(_pbs.length-1,Math.floor(_pbs.length*0.98))]:0;
+  const _pl=[].concat(pa,pm).filter(v=>v!=null);
+  let _y10r=null,_y11r=null;
+  if(_pl.length){
+    const _A=Math.max(0,-Math.min.apply(null,_pl)), _B=Math.max(0,Math.max.apply(null,_pl));
+    let _dn=_A, _up=_B; const _f0=_A/Math.max(_A+_B,1e-9);
+    if(_f0<0.26)_dn=Math.max(_dn,0.26/0.74*Math.max(_up,1e-9));          // 零線太靠底 → 補下方
+    else if(_f0>0.74)_up=Math.max(_up,0.26/0.74*Math.max(_dn,1e-9));     // 零線太靠頂 → 補上方(常見)
+    _dn*=1.04; _up*=1.04;                                                 // 等比 padding,不動 f
+    if(_dn+_up>0){
+      const _f=_dn/(_dn+_up);
+      _y10r=[-_dn,_up];
+      if(_pbmax>0){
+        const _HB=Math.min(0.22,_f*0.85,(1-_f)*0.85);   // 柱單邊佔面板比例(受零線位置約束)
+        const _S=_pbmax/Math.max(_HB,1e-9);
+        _y11r=[-_f*_S,(1-_f)*_S];                       // 零線分數 = _f,與 y10 完全對齊
+      }
+    }
+  }
   const GRID2=CPAL.grid, MUT2=CPAL.mut;
   const traces=[
     {type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
@@ -2441,9 +2462,10 @@ function renderCockpit(){
     //   柱掛在 overlaying 專屬刻度 y11(不顯示刻度、以自身 P98 對稱撐開),真值走 hover。
     //   ⚠ overlaying 次軸 + category 主軸是 1D 已知地雷:verify_headless 已加
     //     「疊加/布林/縮放/滾輪/VbP relayout 之後 xaxis.type 恆為 category」全程回歸。
-    yaxis10:{domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#39404d'},
+    yaxis10:Object.assign({domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#5a6472'},
+      _y10r?{range:_y10r}:{}),
     yaxis11:Object.assign({overlaying:'y10',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
-      _pbmax>0?{range:[-_pbmax*1.15,_pbmax*1.15]}:{}),
+      _y11r?{range:_y11r}:{}),
     shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
             {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot),
     annotations:ann};
@@ -2629,8 +2651,24 @@ function renderChips(){
   const pb=praw.find(v=>v!=null); const ppct=(pb==null)?praw.map(()=>null):praw.map(v=>v!=null?+((v/pb-1)*100).toFixed(2):null);
   const lastM=lineM[lineM.length-1], lastA=lineA[lineA.length-1];
   // 當日柱獨立軌的對稱刻度:取絕對值 P98(去掉單日極端值,免得整排柱被一根壓扁)
+  // 當日柱:與累積線同格疊加、共用同一條零線(算法與駕駛艙 ⑦ 相同,見該處註解)
   const _bs=barA.filter(v=>v!=null).map(Math.abs).sort((a2,b2)=>a2-b2);
   const _bmax=_bs.length?_bs[Math.min(_bs.length-1,Math.floor(_bs.length*0.98))]:0;
+  const _cl=[].concat(lineA,lineM).filter(v=>v!=null);
+  let _yr=null,_y3r=null;
+  if(_cl.length){
+    const _A2=Math.max(0,-Math.min.apply(null,_cl)), _B2=Math.max(0,Math.max.apply(null,_cl));
+    let _dn2=_A2, _up2=_B2; const _f2=_A2/Math.max(_A2+_B2,1e-9);
+    if(_f2<0.26)_dn2=Math.max(_dn2,0.26/0.74*Math.max(_up2,1e-9));
+    else if(_f2>0.74)_up2=Math.max(_up2,0.26/0.74*Math.max(_dn2,1e-9));
+    _dn2*=1.04; _up2*=1.04;
+    if(_dn2+_up2>0){
+      const _ff=_dn2/(_dn2+_up2);
+      _yr=[-_dn2,_up2];
+      if(_bmax>0){const _HB2=Math.min(0.22,_ff*0.85,(1-_ff)*0.85); const _S2=_bmax/Math.max(_HB2,1e-9);
+        _y3r=[-_ff*_S2,(1-_ff)*_S2];}
+    }
+  }
   const idxReb=(K)=>{if(!K)return use.map(()=>null);const raw=use.map(d=>K[d]!=null?K[d]:null);const b=raw.find(v=>v!=null);return b==null?raw.map(()=>null):raw.map(v=>v!=null?+((v/b-1)*100).toFixed(2):null);};
   // 疊加線=「形狀對照」:高波動個股(如 ±120%)會把 ±5% 的大盤線壓成貼地平線(看起來像按鈕沒作用)
   // → 對齊中線、按可視幅度獨立縮放;hover 仍顯示真實 %(customdata)。
@@ -2666,10 +2704,10 @@ function renderChips(){
     annotations:[{text:'<b>'+CHIP_SYM+'</b> 現金池累積 · 過去 '+(use.length-fi)+' 日'+covN+' · 全單 '+(lastA>0?'+':'')+fmtM(lastA)+'('+(lastA>=0?'淨流入':'淨流出')+') · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=價%</span>'+(CHIPF_IDX.SPY?' <span style="color:#2dd4bf">┈SPY(形狀)</span>':'')+(CHIPF_IDX.QQQ?' <span style="color:#c084fc">┈QQQ(形狀)</span>':'')+' — ↑資金進場↓離場;柱=當日淨進出(獨立縮放·hover 為真值)',
       xref:'paper',yref:'paper',x:0.01,y:1.055,showarrow:false,font:{size:11.5,color:C.amber},xanchor:'left'}],
     xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9}},
-    yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
+    yaxis:Object.assign({gridcolor:C.line,zerolinecolor:'#8b93a1',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}}, _yr?{range:_yr}:{}),
     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},title:{text:'價 %',font:{size:10,color:'#8ab4f8'}}}, y2?{range:y2.range}:{}),
     yaxis3:Object.assign({overlaying:'y',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
-      _bmax>0?{range:[-_bmax*1.15,_bmax*1.15]}:{})},CFG);
+      _y3r?{range:_y3r}:{})},CFG);
   bindPinch('chipflow',null);
   buildChipOffs();
   const note=document.getElementById('chipnote');
