@@ -255,7 +255,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-03T16:28Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-03T16:46Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1808,14 +1808,17 @@ function renderAccum(){
     h+='<div style="font-size:11px;color:var(--muted);margin:7px 0 4px;line-height:1.55">'
       +'定義:<b>⑦全單累積</b>(=現金池琥珀線)60日與20日皆淨流入、吸收率(淨流入÷60日成交額)≥0.2%、價格在120日區間下半、近20日未上噴(&lt;+10%)。'
       +'<br>回測參考('+(S.period||'')+'、'+(S.n_sym||'—')+'檔個股):此型態 40 日內最大漲幅≥15% 的頻率 <b>'+(S.p15||'—')+'%</b>(無條件基準 '+(S.base_p15||'—')+'%)、40日對SPY超額 +'+(S.x40||'—')+'%、達+15%者中位 '+(S.d15_med||'—')+' 個交易日 —— <b>增益溫和、遠非必然</b>;'
-      +'吸收率≥1% 的「極端吸收」歷史反而偏空('+(S.tox_x40||'—')+'%),下方單獨警示。</div>';
+      +'吸收率≥1% 的「極端吸收」歷史反而偏空('+(S.tox_x40||'—')+'%),下方單獨警示。'
+      +(S.combo_m1?('<br>疊加確認(2026-08-03 組合回測):<b>吸籌後突破前10日高才進場 + 大單同向</b> → 40日為正 <b>'+S.combo_m1+'%</b>(基準 '+S.combo_base_m1+'%)、平均 +'+S.combo_f40+'%(n='+S.combo_n+')——可信天花板約六成,<b>75%+ 只在特定行情切片出現,不可信</b>;「確認」欄=每檔目前的確認狀態。'):'')
+      +'</div>';
     const td='padding:3px 7px;text-align:right;white-space:nowrap';
     const tl='padding:3px 7px;text-align:left;white-space:nowrap';
     if(A.picks.length){
       h+='<div style="overflow-x:auto"><table style="font-size:12px"><tr>'
         +'<th style="'+tl+'">代號</th><th style="'+tl+'">類別</th><th style="'+td+'">訊號起日</th><th style="'+td+'">天數</th>'
         +'<th style="'+td+'">起日以來</th><th style="'+td+'">60日全單</th><th style="'+td+'">60日大單</th>'
-        +'<th style="'+td+'">吸收率</th><th style="'+td+'">位置</th><th style="'+td+'">近20日</th></tr>';
+        +'<th style="'+td+'">吸收率</th><th style="'+td+'">位置</th><th style="'+td+'">近20日</th>'
+        +'<th style="'+td+'" title="組合回測的三個確認條件:破=訊號後收盤突破前10日高(進場觸發,+6pt)、單=60日大單同向淨流入、靜=靜默量(20日均額<60日均額);✓越多歷史勝率越高,但天花板約六成">確認(破/單/靜)</th></tr>';
       A.picks.forEach(r=>{
         const cc=r.chg>0?'#4ade80':r.chg<0?'#f87171':'var(--ink2)';
         h+='<tr><td style="'+tl+'"><span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#8ab4f8;text-decoration:underline">'+r.sym+'</span></td>'
@@ -1824,7 +1827,12 @@ function renderAccum(){
           +'<td style="'+td+';color:'+cc+'">'+(r.chg>0?'+':'')+r.chg+'%</td>'
           +'<td style="'+td+'">'+accFmtM(r.a60)+'</td><td style="'+td+';color:var(--muted)">'+accFmtM(r.m60)+'</td>'
           +'<td style="'+td+';color:#facc15">'+r.ab.toFixed(2)+'%</td>'
-          +'<td style="'+td+'">'+r.pp+'%</td><td style="'+td+';color:'+(r.r20<0?'#f87171':'var(--ink2)')+'">'+(r.r20>0?'+':'')+r.r20+'%</td></tr>';
+          +'<td style="'+td+'">'+r.pp+'%</td><td style="'+td+';color:'+(r.r20<0?'#f87171':'var(--ink2)')+'">'+(r.r20>0?'+':'')+r.r20+'%</td>'
+          +'<td style="'+td+';font-size:11px">'
+            +(r.trig?('<span style="color:#4ade80" title="已於 '+r.trig+' 收盤突破前10日高(觸發)">破✓'+r.trig.slice(5)+'</span>'):'<span style="color:var(--muted)" title="尚未突破前10日高(觸發未到)">破─</span>')
+            +' '+((r.m60>0)?'<span style="color:#4ade80" title="60日大單淨流入(同向)">單✓</span>':'<span style="color:var(--muted)" title="60日大單非淨流入">單─</span>')
+            +' '+(r.quiet?'<span style="color:#4ade80" title="靜默量:20日均額<60日均額(隱性吸收)">靜✓</span>':'<span style="color:var(--muted)" title="量能未收縮">靜─</span>')
+          +'</td></tr>';
       });
       h+='</table></div>';
     } else h+='<div style="font-size:12px;color:var(--muted);padding:6px 0">今日無個股符合條件</div>';
