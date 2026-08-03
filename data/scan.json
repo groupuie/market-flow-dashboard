@@ -4973,7 +4973,7 @@
   }
  ],
  "accum": {
-  "updated_utc": "2026-08-03 16:45:44",
+  "updated_utc": "2026-08-03 17:07:34",
   "asof": "2026-08-03",
   "n_universe": 301,
   "n_skip": 1,
@@ -5008,7 +5008,15 @@
    "combo_m1": 60.7,
    "combo_base_m1": 53.0,
    "combo_f40": 13.4,
-   "combo_n": 84
+   "combo_n": 84,
+   "ai_m1": 80.0,
+   "ai_m1_shrunk": 70.9,
+   "ai_m2": 76.0,
+   "ai_n": 25,
+   "ai_base_m1": 61.7,
+   "ai_f40": 42.5,
+   "ai_dedup_m1": 69,
+   "nonai_m1": 52.5
   },
   "picks": [
    {
@@ -5026,7 +5034,8 @@
     "d": "2026-07-31",
     "trig": "2026-07-09",
     "quiet": false,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "BTBT",
@@ -5043,7 +5052,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "ASTS",
@@ -5060,7 +5070,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "RIOT",
@@ -5077,7 +5088,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": false
    },
    {
     "sym": "RBLX",
@@ -5094,7 +5106,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "TER",
@@ -5111,7 +5124,8 @@
     "d": "2026-07-31",
     "trig": "2026-07-21",
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": true
    },
    {
     "sym": "LUNR",
@@ -5128,7 +5142,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "ENTG",
@@ -5145,7 +5160,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": true
    },
    {
     "sym": "COHR",
@@ -5162,7 +5178,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": true
    },
    {
     "sym": "META",
@@ -5179,7 +5196,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": false,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "QCOM",
@@ -5196,7 +5214,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": true
    },
    {
     "sym": "KLAC",
@@ -5213,7 +5232,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": true
    },
    {
     "sym": "JOBY",
@@ -5230,7 +5250,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "IONQ",
@@ -5247,7 +5268,8 @@
     "d": "2026-07-31",
     "trig": "2026-07-31",
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "CDNS",
@@ -5264,7 +5286,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": true
    },
    {
     "sym": "WULF",
@@ -5281,7 +5304,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": false,
-    "ma200": true
+    "ma200": true,
+    "ai": false
    }
   ],
   "etf": [
@@ -5300,7 +5324,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": false
    },
    {
     "sym": "SPXU",
@@ -5317,7 +5342,8 @@
     "d": "2026-07-31",
     "trig": "2026-07-17",
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "XLP",
@@ -5334,7 +5360,8 @@
     "d": "2026-07-31",
     "trig": "2026-07-02",
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": false
    },
    {
     "sym": "XLU",
@@ -5351,7 +5378,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    }
   ],
   "toxic": [
@@ -5366,11 +5394,12 @@
     "ab": 1.95,
     "pp": 5,
     "r20": -0.3,
-    "px": 32.75,
+    "px": 32.76,
     "d": "2026-08-03",
     "trig": "2026-07-17",
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "CVNA",
@@ -5387,7 +5416,8 @@
     "d": "2026-07-31",
     "trig": "2026-07-15",
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    },
    {
     "sym": "LMT",
@@ -5404,7 +5434,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": true
+    "ma200": true,
+    "ai": false
    },
    {
     "sym": "LIT",
@@ -5421,7 +5452,8 @@
     "d": "2026-07-31",
     "trig": null,
     "quiet": true,
-    "ma200": false
+    "ma200": false,
+    "ai": false
    }
   ],
   "grad": {
@@ -5430,248 +5462,294 @@
      "sym": "AMAT",
      "start": "2026-07-29",
      "d15": 2,
+     "ai": true,
      "chg": 16.3
     },
     {
      "sym": "RIOT",
      "start": "2026-07-29",
      "d15": 1,
+     "ai": false,
      "chg": 10.6
     },
     {
      "sym": "DASH",
      "start": "2026-07-23",
      "d15": 3,
+     "ai": false,
      "chg": 15.5
     },
     {
      "sym": "PATH",
      "start": "2026-07-22",
      "d15": 5,
+     "ai": false,
      "chg": 19.3
     },
     {
      "sym": "SNDK",
      "start": "2026-07-17",
      "d15": 2,
+     "ai": true,
      "chg": -10.3
     },
     {
      "sym": "LCID",
      "start": "2026-07-14",
      "d15": 1,
+     "ai": false,
      "chg": 59.7
     },
     {
      "sym": "RIOT",
      "start": "2026-07-13",
      "d15": 7,
+     "ai": false,
      "chg": -0.1
     },
     {
      "sym": "CIFR",
      "start": "2026-07-02",
      "d15": 4,
+     "ai": false,
      "chg": 11.4
     },
     {
      "sym": "CLSK",
      "start": "2026-07-02",
      "d15": 12,
+     "ai": false,
      "chg": 9.0
     },
     {
      "sym": "APP",
      "start": "2026-06-26",
      "d15": 3,
+     "ai": false,
      "chg": -17.0
     },
     {
      "sym": "PINS",
      "start": "2026-06-18",
      "d15": 17,
+     "ai": false,
      "chg": 18.5
     },
     {
      "sym": "TEAM",
      "start": "2026-06-12",
      "d15": 31,
+     "ai": false,
      "chg": 14.1
     },
     {
      "sym": "VRTX",
      "start": "2026-06-11",
      "d15": 14,
+     "ai": false,
      "chg": 7.2
     },
     {
      "sym": "DASH",
      "start": "2026-06-05",
      "d15": 14,
+     "ai": false,
      "chg": 25.1
     },
     {
      "sym": "RBLX",
      "start": "2026-06-04",
      "d15": 10,
+     "ai": false,
      "chg": -17.9
     },
     {
      "sym": "BTBT",
      "start": "2026-06-03",
      "d15": 11,
+     "ai": false,
      "chg": -29.2
     },
     {
      "sym": "DKNG",
      "start": "2026-05-29",
      "d15": 8,
+     "ai": false,
      "chg": 0.5
     },
     {
      "sym": "VRTX",
      "start": "2026-05-21",
      "d15": 25,
+     "ai": false,
      "chg": 11.2
     },
     {
      "sym": "CRWV",
      "start": "2026-05-19",
      "d15": 8,
+     "ai": true,
      "chg": -26.7
     },
     {
      "sym": "SPOT",
      "start": "2026-05-19",
      "d15": 3,
+     "ai": false,
      "chg": 8.3
     },
     {
      "sym": "LCID",
      "start": "2026-05-18",
      "d15": 9,
+     "ai": false,
      "chg": 12.7
     },
     {
      "sym": "BBAI",
      "start": "2026-05-15",
      "d15": 8,
+     "ai": false,
      "chg": -23.0
     },
     {
      "sym": "SMR",
      "start": "2026-05-13",
      "d15": 13,
+     "ai": true,
      "chg": -30.2
     },
     {
      "sym": "DKNG",
      "start": "2026-05-12",
      "d15": 20,
+     "ai": false,
      "chg": 7.6
     },
     {
      "sym": "NCLH",
      "start": "2026-05-04",
      "d15": 29,
+     "ai": false,
      "chg": 20.2
     },
     {
      "sym": "SPOT",
      "start": "2026-05-04",
      "d15": 14,
+     "ai": false,
      "chg": 7.8
     },
     {
      "sym": "FSLR",
      "start": "2026-05-01",
      "d15": 14,
+     "ai": false,
      "chg": 11.5
     },
     {
      "sym": "AAL",
      "start": "2026-04-21",
      "d15": 22,
+     "ai": false,
      "chg": 31.0
     },
     {
      "sym": "BBAI",
      "start": "2026-04-21",
      "d15": 11,
+     "ai": false,
      "chg": 2.4
     },
     {
      "sym": "ASTS",
      "start": "2026-04-17",
      "d15": 25,
+     "ai": false,
      "chg": 2.4
     },
     {
      "sym": "SNPS",
      "start": "2026-04-13",
      "d15": 9,
+     "ai": true,
      "chg": 11.4
     },
     {
      "sym": "SMCI",
      "start": "2026-04-10",
      "d15": 8,
+     "ai": true,
      "chg": 74.1
     },
     {
      "sym": "ZS",
      "start": "2026-04-10",
      "d15": 7,
+     "ai": false,
      "chg": 9.5
     },
     {
      "sym": "NET",
      "start": "2026-04-09",
      "d15": 17,
+     "ai": false,
      "chg": 29.6
     },
     {
      "sym": "TLN",
      "start": "2026-04-09",
      "d15": 5,
+     "ai": true,
      "chg": 16.6
     },
     {
      "sym": "PATH",
      "start": "2026-04-08",
      "d15": 37,
+     "ai": false,
      "chg": 12.3
     },
     {
      "sym": "MDB",
      "start": "2026-04-07",
      "d15": 22,
+     "ai": false,
      "chg": 45.0
     },
     {
      "sym": "RDDT",
      "start": "2026-04-06",
      "d15": 8,
+     "ai": false,
      "chg": 22.3
     },
     {
      "sym": "ALAB",
      "start": "2026-04-01",
      "d15": 4,
+     "ai": true,
      "chg": 222.4
     },
     {
      "sym": "IBKR",
      "start": "2026-04-01",
      "d15": 9,
+     "ai": false,
      "chg": 28.1
     }
    ],
    "hit_n": 71,
    "miss": 48,
-   "pend": 52
+   "pend": 52,
+   "ai": {
+    "hit_n": 25,
+    "miss": 4,
+    "pend": 16
+   }
   },
+  "n_ai": 57,
   "note": "歷史同型態頻率,非未來機率;回測僅 12 個月單一市況、宇宙有選樣偏誤、⑦大單分類為券商近似;吸籌不保證止跌(表列「起日以來」含大幅下跌案例);不構成買賣建議。",
-  "elapsed_s": 20.2
+  "elapsed_s": 19.1
  }
 }

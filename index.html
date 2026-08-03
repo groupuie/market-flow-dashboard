@@ -255,7 +255,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-03T16:46Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-03T17:08Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1787,7 +1787,7 @@ function renderScan(){
 // 源起:使用者觀察「股價跌/低位震盪、⑦現金池累積線卻持續爬升」(SOXL/ASTS/COHR/APP/MSFT…),
 // 以 MSFT 2026-03 案例校準:Σ全單60日>0 且 Σ全單20日>0、吸收率(Σ全單/Σ成交額60日)≥0.2%、
 // 價格位於120日區間≤50%、近20日<+10%。回測與免責見面板內文與 claude/accum_backtest_2026-08.md。
-let ACC_open=true;
+let ACC_open=true,ACC_ai=true;   // 2026-08-03 使用者聚焦:預設只看 AI 主軸(半導體/記憶體/光通訊/電源/雲端)
 function accFmtM(v){ if(v==null||isNaN(v))return '—';
   const sg=v>0?'+':''; const a=Math.abs(v);
   return a>=1000?sg+(v/1000).toFixed(1)+'B':sg+Math.round(v)+'M'; }
@@ -1795,14 +1795,17 @@ function renderAccum(){
   const el=document.getElementById('accumpanel'); if(!el)return;
   const A=SCAN&&SCAN.accum;
   if(!A||!A.picks){el.innerHTML='';el.dataset.sig='';return;}
-  const sig='ac:'+(A.updated_utc||'')+':'+(ACC_open?1:0);
+  const sig='ac:'+(A.updated_utc||'')+':'+(ACC_open?1:0)+':'+(ACC_ai?1:0);
   if(el.dataset.sig===sig)return; el.dataset.sig=sig;
   const S=A.stats||{}, G=A.grad||{hit:[],miss:0,pend:0};
-  const nAll=A.picks.length+(A.etf||[]).length;
+  const aiRows=A.picks.filter(r=>r.ai), rows=ACC_ai?aiRows:A.picks;
+  const fchip=(k,lab,on)=>'<span class="acfil" data-k="'+k+'" style="cursor:pointer;padding:1px 9px;border-radius:10px;border:1px solid '
+    +(on?'#4ade80':'var(--line)')+';font-size:11px;'+(on?'background:rgba(74,222,128,.12);color:#4ade80':'color:var(--muted)')+'">'+lab+'</span>';
   let h='<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)">'
     +'<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'
     +'<b style="font-size:13px">🧲 吸籌偵測</b>'
-    +'<span style="font-size:11px;color:var(--muted)">資金持續入場 × 價格低位(60日窗) · 今日 '+nAll+' 檔 · 資料至 '+(A.asof||'—')+'</span>'
+    +fchip('ai','AI主軸 '+aiRows.length,ACC_ai)+fchip('all','全部 '+A.picks.length,!ACC_ai)
+    +'<span style="font-size:11px;color:var(--muted)">資金持續入場 × 價格低位(60日窗) · 資料至 '+(A.asof||'—')+'</span>'
     +'<span class="actoggle" style="cursor:pointer;font-size:11px;color:#a78bfa;text-decoration:underline">'+(ACC_open?'收合':'展開')+'</span></div>';
   if(ACC_open){
     h+='<div style="font-size:11px;color:var(--muted);margin:7px 0 4px;line-height:1.55">'
@@ -1810,16 +1813,17 @@ function renderAccum(){
       +'<br>回測參考('+(S.period||'')+'、'+(S.n_sym||'—')+'檔個股):此型態 40 日內最大漲幅≥15% 的頻率 <b>'+(S.p15||'—')+'%</b>(無條件基準 '+(S.base_p15||'—')+'%)、40日對SPY超額 +'+(S.x40||'—')+'%、達+15%者中位 '+(S.d15_med||'—')+' 個交易日 —— <b>增益溫和、遠非必然</b>;'
       +'吸收率≥1% 的「極端吸收」歷史反而偏空('+(S.tox_x40||'—')+'%),下方單獨警示。'
       +(S.combo_m1?('<br>疊加確認(2026-08-03 組合回測):<b>吸籌後突破前10日高才進場 + 大單同向</b> → 40日為正 <b>'+S.combo_m1+'%</b>(基準 '+S.combo_base_m1+'%)、平均 +'+S.combo_f40+'%(n='+S.combo_n+')——可信天花板約六成,<b>75%+ 只在特定行情切片出現,不可信</b>;「確認」欄=每檔目前的確認狀態。'):'')
+      +((ACC_ai&&S.ai_m1)?('<br><b style="color:#4ade80">AI主軸('+(A.n_ai||57)+'檔:半導體/記憶體/光通訊/AI基建·電力/雲端)</b>:同組合歷史 40日為正 <b>'+S.ai_m1+'%</b>(n='+S.ai_n+'、收縮 '+S.ai_m1_shrunk+'%、同標的去重 '+S.ai_dedup_m1+'%)vs AI自身基準 '+S.ai_base_m1+'%(<b>+18pt</b>)、平均 +'+S.ai_f40+'%;非AI僅 '+S.nonai_m1+'%——組合優勢幾乎全在AI板塊。<b>⚠ n='+S.ai_n+' 樣本小、群聚於2026-03/04反彈,2025-11 那批 4 筆輸 3 筆:板塊自身回檔時訊號不保護。</b>'):'')
       +'</div>';
     const td='padding:3px 7px;text-align:right;white-space:nowrap';
     const tl='padding:3px 7px;text-align:left;white-space:nowrap';
-    if(A.picks.length){
+    if(rows.length){
       h+='<div style="overflow-x:auto"><table style="font-size:12px"><tr>'
         +'<th style="'+tl+'">代號</th><th style="'+tl+'">類別</th><th style="'+td+'">訊號起日</th><th style="'+td+'">天數</th>'
         +'<th style="'+td+'">起日以來</th><th style="'+td+'">60日全單</th><th style="'+td+'">60日大單</th>'
         +'<th style="'+td+'">吸收率</th><th style="'+td+'">位置</th><th style="'+td+'">近20日</th>'
         +'<th style="'+td+'" title="組合回測的三個確認條件:破=訊號後收盤突破前10日高(進場觸發,+6pt)、單=60日大單同向淨流入、靜=靜默量(20日均額<60日均額);✓越多歷史勝率越高,但天花板約六成">確認(破/單/靜)</th></tr>';
-      A.picks.forEach(r=>{
+      rows.forEach(r=>{
         const cc=r.chg>0?'#4ade80':r.chg<0?'#f87171':'var(--ink2)';
         h+='<tr><td style="'+tl+'"><span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#8ab4f8;text-decoration:underline">'+r.sym+'</span></td>'
           +'<td style="'+tl+';color:var(--muted)">'+(r.cat||'')+'</td>'
@@ -1835,7 +1839,7 @@ function renderAccum(){
           +'</td></tr>';
       });
       h+='</table></div>';
-    } else h+='<div style="font-size:12px;color:var(--muted);padding:6px 0">今日無個股符合條件</div>';
+    } else h+='<div style="font-size:12px;color:var(--muted);padding:6px 0">'+(ACC_ai?'今日 AI 主軸無個股符合條件(切「全部」看其他板塊)':'今日無個股符合條件')+'</div>';
     if((A.etf||[]).length)
       h+='<div style="font-size:11px;color:var(--muted);margin-top:6px">ETF/槓桿類(申贖流語意不同,僅供對照):'
         +A.etf.map(r=>'<span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#8ab4f8">'+r.sym+'</span> '+(r.cat||'')+' 起'+(r.start||'').slice(5)+' 吸'+r.ab.toFixed(2)+'% 位置'+r.pp+'%').join(' · ')+'</div>';
@@ -1843,16 +1847,20 @@ function renderAccum(){
       h+='<div style="font-size:11px;color:#f87171;margin-top:6px">⚠ 極端吸收(≥1%,歷史偏空 x40 '+(S.tox_x40||'—')+'%、樣本 '+(S.tox_n||'—')+'):'
         +A.toxic.map(r=>'<span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#f87171;text-decoration:underline">'+r.sym+'</span> 吸'+r.ab.toFixed(2)+'% 位置'+r.pp+'%').join(' · ')+'</div>';
     const hitN=(G.hit_n!=null?G.hit_n:(G.hit||[]).length), done=hitN+G.miss;
+    const GA=G.ai||null, doneA=GA?(GA.hit_n+GA.miss):0;
+    const hits=(G.hit||[]).filter(x=>!ACC_ai||x.ai);
     h+='<div style="font-size:11px;color:var(--muted);margin-top:7px;border-top:1px solid var(--line);padding-top:6px">'
-      +'前瞻追蹤(近120日、觀察期滿40日的訊號 '+done+' 筆):<b style="color:#4ade80">達+15% '+hitN+' 筆</b>'
+      +'前瞻追蹤(近120日、觀察期滿40日的訊號 '+done+' 筆,全宇宙):<b style="color:#4ade80">達+15% '+hitN+' 筆</b>'
       +(done?('('+Math.round(hitN/Math.max(1,done)*100)+'%)'):'')
       +' · 未達 '+G.miss+' 筆 · 觀察中 '+G.pend+' 筆'
-      +((G.hit||[]).length?('<br>已達標:'+G.hit.slice(0,12).map(x=>x.sym+'(起'+(x.start||'').slice(5)+'→'+x.d15+'日)').join('、')+((G.hit.length>12)?' …':'')):'')+'</div>';
+      +((ACC_ai&&GA)?(' ｜ <b style="color:#4ade80">AI主軸:'+GA.hit_n+'/'+doneA+(doneA?('('+Math.round(GA.hit_n/Math.max(1,doneA)*100)+'%)'):'')+'</b> · 觀察中 '+GA.pend):'')
+      +(hits.length?('<br>已達標'+(ACC_ai?'(AI)':'')+':'+hits.slice(0,12).map(x=>x.sym+'(起'+(x.start||'').slice(5)+'→'+x.d15+'日)').join('、')+((hits.length>12)?' …':'')):'')+'</div>';
     h+='<div style="font-size:10.5px;color:var(--muted);opacity:.8;margin-top:5px">'+(A.note||'')+'</div>';
   }
   h+='</div>';
   el.innerHTML=h;
   const t=el.querySelector('.actoggle'); if(t)t.onclick=()=>{ACC_open=!ACC_open;el.dataset.sig='';renderAccum();};
+  el.querySelectorAll('.acfil').forEach(c=>c.onclick=()=>{ACC_ai=(c.dataset.k==='ai');el.dataset.sig='';renderAccum();});
   el.querySelectorAll('.acsym').forEach(c=>c.onclick=()=>{
     const sy=c.dataset.sym;
     const sel=document.getElementById('chipSym');
