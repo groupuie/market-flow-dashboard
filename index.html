@@ -243,6 +243,7 @@ a{color:var(--blue)}
     <div id="chipflow" style="height:440px"></div>
     <div id="chipoffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
     <div id="chipcost" style="height:460px;margin-top:8px"></div>
+    <div id="accumpanel" style="margin:14px 0 10px"></div>
     <div id="chipnote" class="note"></div>
   </div>
 </section>
@@ -254,7 +255,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-02T11:32Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-03T16:28Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1688,7 +1689,7 @@ function ensureScan(){
   const n=Date.now()/1000; if(n-SCAN_req<300)return; SCAN_req=n;
   fetch('data/scan.json?t='+Math.floor(Date.now()/300000),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(j=>{if(j&&j.rows){SCAN=j;renderScan();}})
+    .then(j=>{if(j&&j.rows){SCAN=j;renderScan();renderAccum();}})
     .catch(()=>{});
 }
 const SCAN_F={
@@ -1774,6 +1775,77 @@ function renderScan(){
   el.querySelectorAll('.scf').forEach(c=>c.onclick=()=>{SCAN_filter=c.dataset.k;renderScan();});
   el.querySelectorAll('.scs').forEach(c=>c.onclick=()=>{SCAN_sort=c.dataset.s;renderScan();});
   el.querySelectorAll('.scsym').forEach(c=>c.onclick=()=>{
+    const sy=c.dataset.sym;
+    const sel=document.getElementById('chipSym');
+    if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}
+    else CHIP_SYM=sy;
+    ensureChipK(sy); renderChips();
+    const ck=document.getElementById('cockpit'); if(ck&&ck.scrollIntoView)ck.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+}
+// ===== 吸籌偵測單元(2026-08-03;讀 scan.json 的 accum 區塊;引擎=scripts/accum.py)=====
+// 源起:使用者觀察「股價跌/低位震盪、⑦現金池累積線卻持續爬升」(SOXL/ASTS/COHR/APP/MSFT…),
+// 以 MSFT 2026-03 案例校準:Σ全單60日>0 且 Σ全單20日>0、吸收率(Σ全單/Σ成交額60日)≥0.2%、
+// 價格位於120日區間≤50%、近20日<+10%。回測與免責見面板內文與 claude/accum_backtest_2026-08.md。
+let ACC_open=true;
+function accFmtM(v){ if(v==null||isNaN(v))return '—';
+  const sg=v>0?'+':''; const a=Math.abs(v);
+  return a>=1000?sg+(v/1000).toFixed(1)+'B':sg+Math.round(v)+'M'; }
+function renderAccum(){
+  const el=document.getElementById('accumpanel'); if(!el)return;
+  const A=SCAN&&SCAN.accum;
+  if(!A||!A.picks){el.innerHTML='';el.dataset.sig='';return;}
+  const sig='ac:'+(A.updated_utc||'')+':'+(ACC_open?1:0);
+  if(el.dataset.sig===sig)return; el.dataset.sig=sig;
+  const S=A.stats||{}, G=A.grad||{hit:[],miss:0,pend:0};
+  const nAll=A.picks.length+(A.etf||[]).length;
+  let h='<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)">'
+    +'<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'
+    +'<b style="font-size:13px">🧲 吸籌偵測</b>'
+    +'<span style="font-size:11px;color:var(--muted)">資金持續入場 × 價格低位(60日窗) · 今日 '+nAll+' 檔 · 資料至 '+(A.asof||'—')+'</span>'
+    +'<span class="actoggle" style="cursor:pointer;font-size:11px;color:#a78bfa;text-decoration:underline">'+(ACC_open?'收合':'展開')+'</span></div>';
+  if(ACC_open){
+    h+='<div style="font-size:11px;color:var(--muted);margin:7px 0 4px;line-height:1.55">'
+      +'定義:<b>⑦全單累積</b>(=現金池琥珀線)60日與20日皆淨流入、吸收率(淨流入÷60日成交額)≥0.2%、價格在120日區間下半、近20日未上噴(&lt;+10%)。'
+      +'<br>回測參考('+(S.period||'')+'、'+(S.n_sym||'—')+'檔個股):此型態 40 日內最大漲幅≥15% 的頻率 <b>'+(S.p15||'—')+'%</b>(無條件基準 '+(S.base_p15||'—')+'%)、40日對SPY超額 +'+(S.x40||'—')+'%、達+15%者中位 '+(S.d15_med||'—')+' 個交易日 —— <b>增益溫和、遠非必然</b>;'
+      +'吸收率≥1% 的「極端吸收」歷史反而偏空('+(S.tox_x40||'—')+'%),下方單獨警示。</div>';
+    const td='padding:3px 7px;text-align:right;white-space:nowrap';
+    const tl='padding:3px 7px;text-align:left;white-space:nowrap';
+    if(A.picks.length){
+      h+='<div style="overflow-x:auto"><table style="font-size:12px"><tr>'
+        +'<th style="'+tl+'">代號</th><th style="'+tl+'">類別</th><th style="'+td+'">訊號起日</th><th style="'+td+'">天數</th>'
+        +'<th style="'+td+'">起日以來</th><th style="'+td+'">60日全單</th><th style="'+td+'">60日大單</th>'
+        +'<th style="'+td+'">吸收率</th><th style="'+td+'">位置</th><th style="'+td+'">近20日</th></tr>';
+      A.picks.forEach(r=>{
+        const cc=r.chg>0?'#4ade80':r.chg<0?'#f87171':'var(--ink2)';
+        h+='<tr><td style="'+tl+'"><span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#8ab4f8;text-decoration:underline">'+r.sym+'</span></td>'
+          +'<td style="'+tl+';color:var(--muted)">'+(r.cat||'')+'</td>'
+          +'<td style="'+td+'">'+(r.start||'').slice(5)+'</td><td style="'+td+'">'+r.days+'</td>'
+          +'<td style="'+td+';color:'+cc+'">'+(r.chg>0?'+':'')+r.chg+'%</td>'
+          +'<td style="'+td+'">'+accFmtM(r.a60)+'</td><td style="'+td+';color:var(--muted)">'+accFmtM(r.m60)+'</td>'
+          +'<td style="'+td+';color:#facc15">'+r.ab.toFixed(2)+'%</td>'
+          +'<td style="'+td+'">'+r.pp+'%</td><td style="'+td+';color:'+(r.r20<0?'#f87171':'var(--ink2)')+'">'+(r.r20>0?'+':'')+r.r20+'%</td></tr>';
+      });
+      h+='</table></div>';
+    } else h+='<div style="font-size:12px;color:var(--muted);padding:6px 0">今日無個股符合條件</div>';
+    if((A.etf||[]).length)
+      h+='<div style="font-size:11px;color:var(--muted);margin-top:6px">ETF/槓桿類(申贖流語意不同,僅供對照):'
+        +A.etf.map(r=>'<span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#8ab4f8">'+r.sym+'</span> '+(r.cat||'')+' 起'+(r.start||'').slice(5)+' 吸'+r.ab.toFixed(2)+'% 位置'+r.pp+'%').join(' · ')+'</div>';
+    if((A.toxic||[]).length)
+      h+='<div style="font-size:11px;color:#f87171;margin-top:6px">⚠ 極端吸收(≥1%,歷史偏空 x40 '+(S.tox_x40||'—')+'%、樣本 '+(S.tox_n||'—')+'):'
+        +A.toxic.map(r=>'<span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#f87171;text-decoration:underline">'+r.sym+'</span> 吸'+r.ab.toFixed(2)+'% 位置'+r.pp+'%').join(' · ')+'</div>';
+    const hitN=(G.hit_n!=null?G.hit_n:(G.hit||[]).length), done=hitN+G.miss;
+    h+='<div style="font-size:11px;color:var(--muted);margin-top:7px;border-top:1px solid var(--line);padding-top:6px">'
+      +'前瞻追蹤(近120日、觀察期滿40日的訊號 '+done+' 筆):<b style="color:#4ade80">達+15% '+hitN+' 筆</b>'
+      +(done?('('+Math.round(hitN/Math.max(1,done)*100)+'%)'):'')
+      +' · 未達 '+G.miss+' 筆 · 觀察中 '+G.pend+' 筆'
+      +((G.hit||[]).length?('<br>已達標:'+G.hit.slice(0,12).map(x=>x.sym+'(起'+(x.start||'').slice(5)+'→'+x.d15+'日)').join('、')+((G.hit.length>12)?' …':'')):'')+'</div>';
+    h+='<div style="font-size:10.5px;color:var(--muted);opacity:.8;margin-top:5px">'+(A.note||'')+'</div>';
+  }
+  h+='</div>';
+  el.innerHTML=h;
+  const t=el.querySelector('.actoggle'); if(t)t.onclick=()=>{ACC_open=!ACC_open;el.dataset.sig='';renderAccum();};
+  el.querySelectorAll('.acsym').forEach(c=>c.onclick=()=>{
     const sy=c.dataset.sym;
     const sel=document.getElementById('chipSym');
     if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}
@@ -2629,7 +2701,7 @@ function renderChips(){
   ensureChipK(CHIP_SYM);
   renderCockpit();
   try{renderSeason();}catch(e){}
-  try{ensureScan();renderScan();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
+  try{ensureScan();renderScan();renderAccum();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 全史模式:⑦池/成本分佈維持 250 日(無對應月頻資料)
