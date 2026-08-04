@@ -236,6 +236,7 @@ a{color:var(--blue)}
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span>
     </h2>
     <div id="cockpit" style="height:960px"></div>
+    <div id="sigreview" style="margin:4px 0 6px"></div>
     <div id="scanpanel" style="margin:10px 0 14px"></div>
     <div id="season" style="margin:10px 0 18px"></div>
     <div id="chipstock" style="margin:14px 0 22px"></div>
@@ -255,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-04T16:24Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-04T16:39Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1871,6 +1872,34 @@ function renderAccum(){
     const ck=document.getElementById('cockpit'); if(ck&&ck.scrollIntoView)ck.scrollIntoView({behavior:'smooth',block:'start'});
   });
 }
+// ===== Claude 判讀層(2026-08-04;data/sig_review.json;場次更新)=====
+// 使用者需求:「加入 Claude 自身的建議,提高減碼/抄底勝率」。機械放寬已回測證明無效(接刀),
+// 改為:◆★與邊緣案例(TOP/BOT=2)由 Claude 逐檔綜合 ⑦資金流/吸籌交叉/事件脈絡 給裁定
+// (確認/存疑/否決/提示+理由),每筆留檔可被前瞻評分;fail-open:無檔或無該檔判讀→整塊隱藏。
+let SIGREV=null,SIGREV_req=0;
+function ensureSigRev(){
+  const n=Date.now()/1000; if(n-SIGREV_req<300)return; SIGREV_req=n;
+  fetch('data/sig_review.json?t='+Math.floor(Date.now()/300000),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null).then(j=>{if(j&&j.reviews){SIGREV=j;renderSigRev();}}).catch(()=>{});
+}
+function renderSigRev(){
+  const el=document.getElementById('sigreview'); if(!el)return;
+  const R=SIGREV&&SIGREV.reviews;
+  if(!R){el.innerHTML='';el.dataset.sig='';return;}
+  const v=R.find(x=>x.sym===CHIP_SYM);
+  const sig='sr:'+CHIP_SYM+':'+(SIGREV.updated_utc||'');
+  if(el.dataset.sig===sig)return; el.dataset.sig=sig;
+  if(!v){el.innerHTML='';return;}
+  const col=v.verdict==='確認'?(v.kind==='抄底'?'#4ade80':'#f59e0b')
+           :v.verdict==='否決'?'#f87171':v.verdict==='存疑'?'#8792a6':'#a78bfa';
+  const age=(()=>{try{const d1=new Date((SIGREV.asof||'')+'T00:00:00Z'),dn=new Date();
+    const dd=Math.floor((dn-d1)/86400e3);return dd>3?'(判讀已過 '+dd+' 天,僅供回顧)':'';}catch(e){return '';}})();
+  el.innerHTML='<div style="border:1px solid '+col+'55;border-left:3px solid '+col+';border-radius:8px;padding:8px 12px;background:var(--surface);font-size:12px;line-height:1.55">'
+    +'<b style="color:'+col+'">🤖 Claude 判讀</b> <span style="color:var(--muted)">'+(SIGREV.asof||'')+' · '+(v.mech||'')+' '+(v.kind||'')+'</span>'
+    +' → <b style="color:'+col+'">'+v.verdict+'</b><span style="color:var(--muted)">(信心'+(v.conf||'—')+')</span> '+age
+    +'<div style="margin-top:3px;color:var(--ink2)">'+(v.why||'')+'</div>'
+    +'<div style="margin-top:3px;font-size:10.5px;color:var(--muted);opacity:.8">主觀綜合判讀·逐筆留檔供前瞻評分·非買賣建議 — 場次更新(非即時)</div></div>';
+}
 // ===== P5E 季節性:年×月報酬矩陣 + 各月平均/勝率(優先 kline_max 全史,無則現有日K降級)=====
 function renderSeason(){
   const el=document.getElementById('season'); if(!el)return;
@@ -2721,7 +2750,7 @@ function renderChips(){
   ensureChipK(CHIP_SYM);
   renderCockpit();
   try{renderSeason();}catch(e){}
-  try{ensureScan();renderScan();renderAccum();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
+  try{ensureScan();renderScan();renderAccum();ensureSigRev();renderSigRev();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   const use=dates.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 全史模式:⑦池/成本分佈維持 250 日(無對應月頻資料)
