@@ -255,7 +255,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-03T17:08Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-04T12:02Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1798,7 +1798,8 @@ function renderAccum(){
   const sig='ac:'+(A.updated_utc||'')+':'+(ACC_open?1:0)+':'+(ACC_ai?1:0);
   if(el.dataset.sig===sig)return; el.dataset.sig=sig;
   const S=A.stats||{}, G=A.grad||{hit:[],miss:0,pend:0};
-  const aiRows=A.picks.filter(r=>r.ai), rows=ACC_ai?aiRows:A.picks;
+  // 自訂追蹤標的(類別=自訂)視同使用者聚焦,AI主軸模式下不隱藏
+  const aiRows=A.picks.filter(r=>r.ai||r.cat==='自訂'), rows=ACC_ai?aiRows:A.picks;
   const fchip=(k,lab,on)=>'<span class="acfil" data-k="'+k+'" style="cursor:pointer;padding:1px 9px;border-radius:10px;border:1px solid '
     +(on?'#4ade80':'var(--line)')+';font-size:11px;'+(on?'background:rgba(74,222,128,.12);color:#4ade80':'color:var(--muted)')+'">'+lab+'</span>';
   let h='<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface)">'
