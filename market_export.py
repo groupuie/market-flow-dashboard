@@ -888,6 +888,40 @@ def fetch_custom_syms(cfg):
     except Exception as e:
         err("custom_syms",e); return []
 
+# ============ 免token加追蹤收件匣(2026-08-04;網頁「＋加入追蹤(免token)」按鈕)============
+# 網頁把代號 POST 到公共主題 ntfy.sh/mfd-add-<gist前12碼>(零設定:兩端都從 gist id 推導)。
+# 這裡每個全量輪撿走 → 格式驗證 → 合併寫回 gist custom_symbols.json(唯一寫入者=Mac,token 不出 Mac)。
+# 濫用防線:格式驗證、每輪最多 5 檔、清單上限 30(fetch_custom_syms 同上限)、已處理訊息 id 去重、
+# 訊息 ~12h 自然過期;收件匣故障一律回空、不影響採集(fail-open)。
+def fetch_inbox_syms(cfg, seen_path):
+    """回傳本輪新申請的『純代號』清單(不含 US. 前綴)"""
+    try:
+        import re as _rex   # 顯式局部匯入:不依賴模組頂部(2026-08-04)
+        gid=str(cfg.get("gist_id") or "")
+        if not gid or not cfg.get("gist_token"): return []
+        try: seen=set((json.load(open(seen_path)) or {}).get("ids") or [])
+        except Exception: seen=set()
+        req=urllib.request.Request(f"https://ntfy.sh/mfd-add-{gid[:12]}/json?poll=1&since=13h",
+                                   headers={"User-Agent":"market-export"})
+        raw=urllib.request.urlopen(req,timeout=12).read().decode("utf-8","ignore")
+        out=[]; new_ids=[]
+        for line in raw.splitlines():
+            try: msg=json.loads(line)
+            except Exception: continue
+            if msg.get("event")!="message": continue
+            mid=str(msg.get("id") or "")
+            if not mid or mid in seen: continue
+            new_ids.append(mid)
+            sym=str(msg.get("message") or "").strip().upper()
+            if _rex.fullmatch(r"[A-Z][A-Z0-9.\-]{0,5}", sym) and sym not in out:
+                out.append(sym)
+        if new_ids:
+            try: json.dump({"ids": (list(seen)+new_ids)[-500:]}, open(seen_path,"w"))
+            except Exception: pass
+        return out[:5]
+    except Exception:
+        return []
+
 # ============ Futu ============
 def pull_top_turnover(q, topn=20):
     """美股成交額 TOP N(排行闖入者來源)"""
@@ -1279,7 +1313,19 @@ def run_once(cfg, args):
     data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1),"deep_pending":_deep}
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
-    if not args.no_futu:   # 富途自選分組「追蹤」= 免 token 自訂來源(牛牛 App 加自選即自動開採)
+    if not args.no_futu:   # 免token收件匣(網頁匿名申請)→ 合併並持久化回 gist(其他觀看者也看得到)
+        _inbox=fetch_inbox_syms(cfg, args.config+".inboxseen.json")
+        _new=[x for x in _inbox if ("US."+x) not in custom]
+        if _new:
+            _plain=[x.replace("US.","") for x in custom]+_new
+            _plain=list(dict.fromkeys(_plain))[:30]
+            try:
+                push_gist(cfg, {"custom_symbols.json": _plain})
+                log(f"inbox 免token加追蹤: +{_new} → custom_symbols.json({len(_plain)} 檔)")
+            except Exception as e: log("INBOX PUSH ERR:",type(e).__name__,e)
+            for x in _new:
+                if ("US."+x) not in custom and len(custom)<60: custom.append("US."+x)
+    if not args.no_futu:   # 富途自選分組「追蹤」= 免 token 自訂來源(牛牛 App 加自選即自動開採;加進清單、不取代)
         for _w in fetch_watchlist_syms():
             if _w not in custom: custom.append(_w)
         custom=custom[:60]
