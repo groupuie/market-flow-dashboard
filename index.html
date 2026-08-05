@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-05T11:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-05T12:59Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -497,7 +497,10 @@ function bindPinch(id,getHL){
   let st=null;
   const N=()=>xzN(gd);
   const cur=()=>xzCur(gd);
-  const apply=(lo,hi)=>xzApply(gd,getHL,lo,hi);
+  let _raf=0,_pend=null;   // rAF 合併:touchmove 密度 > 畫幀,逐事件 relayout 會卡頓(2026-08-05)
+  const apply=(lo,hi)=>{_pend=[lo,hi];
+    if(_raf)return;
+    _raf=requestAnimationFrame(()=>{_raf=0;if(_pend){xzApply(gd,getHL,_pend[0],_pend[1]);_pend=null;}});};
   const dist=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
   const midX=t=>(t[0].clientX+t[1].clientX)/2;
   gd.addEventListener('touchstart',function(e){
@@ -2146,8 +2149,12 @@ function renderCockpit(){
   }
   const GRID2=CPAL.grid, MUT2=CPAL.mut;
   const traces=[
-    {type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
-     increasing:{line:{color:CPAL.up,width:1}},decreasing:{line:{color:CPAL.dn,width:1}},name:CHIP_SYM,showlegend:false},
+    Object.assign({type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
+     name:CHIP_SYM,showlegend:false},
+     // 手機 K 棒仿富途(2026-08-05):實心填色、細影線(0.6)、無端帽;配合 layout.boxgap:0(實測
+     // 是 Plotly 2.35 唯一可加寬燭身的參數:身寬 49%→70% 槽位,trace.width 無效)。桌機維持原樣。
+     MB?{increasing:{fillcolor:CPAL.up,line:{color:CPAL.up,width:0.6}},decreasing:{fillcolor:CPAL.dn,line:{color:CPAL.dn,width:0.6}},whiskerwidth:0}
+       :{increasing:{line:{color:CPAL.up,width:1}},decreasing:{line:{color:CPAL.dn,width:1}}}),
     ...(CHIP_CTA?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t50),line:{color:CPAL.brake1,width:1.3,dash:'dot'},name:'短50D',hovertemplate:'短期煞車線(50D觸發) %{y:.1f}<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t100),line:{color:CPAL.brake2,width:1.3,dash:'dot'},name:'中100D',hovertemplate:'中期煞車線(100D觸發) %{y:.1f}<extra></extra>'},
@@ -2577,8 +2584,13 @@ function renderCockpit(){
   const DOM=MB?{y:[0.535,1.0],y7:[0.445,0.525],y8:[0.32,0.435],y9:[0.225,0.31],y10:[0,0.215]}
               :{y:[0.46,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
+    ...(MB?{boxgap:0}:{}),   // 燭身加寬(見上方 K 棒註解;本圖無其他 box 族 trace,無副作用)
     margin:{l:MB?6:52,r:MB?8:64,t:MB?50:34,b:MB?26:30},
     xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?6:14,rangeslider:{visible:false},anchor:'y10',
+      // 顯式初始範圍(2026-08-05):TD文字/光暈圈/◆★等 trace 的「像素 padding」會把 autorange 撐大
+      // (桌機 ~±2 槽看不出;手機 310px 窄圖實測 [-10.6,131.7]=100根塞進142槽,兩側空白吃掉 30% 寬)。
+      // 顯式 [-0.5,n-0.5] = 邊到邊(同復位後視圖、同富途),也再避開 autorange 地雷族。
+      range:[-0.5,x.length-0.5],
       domain:[0,XW]},   // VbP 開啟 → K線退左讓出右軌(兩圖不重疊)
     yaxis:Object.assign({domain:DOM.y,gridcolor:GRID2,tickfont:{size:MB?8:9,color:MUT2},side:'right'},TLI),
     yaxis7:Object.assign({domain:DOM.y7,gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},TLI),
