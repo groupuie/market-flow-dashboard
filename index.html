@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-05T14:27Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-05T14:52Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2572,6 +2572,17 @@ function renderCockpit(){
   if(CHIP_IND!=='rv'&&_y8lab){   // 副圖切換:覆寫 y8 標籤文字(轉速標籤僅在 rv 模式)
     for(var qa=0;qa<ann.length;qa++)if(String(ann[qa].yref)==='y8 domain'){ann[qa].text=_y8lab;break;}
   }
+  // 盤中即時棒未接提示(2026-08-05):kline_today 快照只涵蓋 固定44檔+自訂+闖入;
+  // 一次性K線檔(點播/yahoo-ext 快照)最後一根 < trade_date 且無今日快照 → 誠實標注 + 指路升級。
+  try{
+    const _kt=((DATA&&DATA.kline_today)||{})[CHIP_SYM];
+    const _lastD=R.length?R[R.length-1].d:null;
+    if(!_kt&&DATA&&DATA.trade_date&&_lastD&&_lastD<DATA.trade_date){
+      ann.push({xref:'paper',yref:'paper',x:0.5,y:1.035,xanchor:'center',yanchor:'bottom',showarrow:false,
+        font:{size:9,color:'#f59e0b'},bgcolor:'rgba(63,45,12,.55)',
+        text:'⚠ K線止於 '+_lastD.slice(5)+'·盤中即時棒未接(此檔為一次性抓取)— 用上方「＋加入追蹤」升級為持續更新'});
+    }
+  }catch(e){}
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   // ===== 手機版面(2026-08-04 使用者指定,參照富途 App 比例)=====
   // 問題:五面板共用桌機版 960px 高 + l40/r44 邊距 → 手機繪圖區僅 ~306px 寬、主圖 518px 高
