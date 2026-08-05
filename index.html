@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-05T12:59Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-05T14:27Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2579,9 +2579,12 @@ function renderCockpit(){
   // 改:MB 總高 640px、邊距 l6/r8(y 刻度 ticklabelposition:'inside' 疊進圖內 → 繪圖區 +23% 寬)、
   //   間距 1%,主圖+量+轉速+檔位+⑦池 ≈ 一屏看完。桌機完全不變。
   const _ckEl=document.getElementById('cockpit');
-  if(_ckEl){const _wantH=MB?'640px':'960px'; if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
+  if(_ckEl){const _wantH=MB?'600px':'960px'; if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
   const TLI=MB?{ticklabelposition:'inside'}:{};
-  const DOM=MB?{y:[0.535,1.0],y7:[0.445,0.525],y8:[0.32,0.435],y9:[0.225,0.31],y10:[0,0.215]}
+  // 手機主圖壓扁(2026-08-05 二次調整,使用者指定仿富途「扁平」感):
+  // 富途手機主圖 ≈ 390×245pt = 1.6:1 寬扁 → 走勢讀起來是緩坡;原 46.5% 高(310×262≈1.2:1)偏方形。
+  // 改:總高 600px、主圖 38.2%(=200px,310/200≈1.55:1),副圖像素高度幾乎不變。
+  const DOM=MB?{y:[0.618,1.0],y7:[0.508,0.603],y8:[0.359,0.493],y9:[0.244,0.334],y10:[0,0.229]}
               :{y:[0.46,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     ...(MB?{boxgap:0}:{}),   // 燭身加寬(見上方 K 棒註解;本圖無其他 box 族 trace,無副作用)
