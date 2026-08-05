@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-04T16:39Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-05T11:13Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2566,21 +2566,32 @@ function renderCockpit(){
     for(var qa=0;qa<ann.length;qa++)if(String(ann[qa].yref)==='y8 domain'){ann[qa].text=_y8lab;break;}
   }
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
+  // ===== 手機版面(2026-08-04 使用者指定,參照富途 App 比例)=====
+  // 問題:五面板共用桌機版 960px 高 + l40/r44 邊距 → 手機繪圖區僅 ~306px 寬、主圖 518px 高
+  //   (窄長條難讀),整艙要滑兩屏半。富途手機:主圖約佔堆疊 50%、副圖各 25%、面板緊貼、刻度疊圖內。
+  // 改:MB 總高 640px、邊距 l6/r8(y 刻度 ticklabelposition:'inside' 疊進圖內 → 繪圖區 +23% 寬)、
+  //   間距 1%,主圖+量+轉速+檔位+⑦池 ≈ 一屏看完。桌機完全不變。
+  const _ckEl=document.getElementById('cockpit');
+  if(_ckEl){const _wantH=MB?'640px':'960px'; if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
+  const TLI=MB?{ticklabelposition:'inside'}:{};
+  const DOM=MB?{y:[0.535,1.0],y7:[0.445,0.525],y8:[0.32,0.435],y9:[0.225,0.31],y10:[0,0.215]}
+              :{y:[0.46,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
-    margin:{l:MB?40:52,r:MB?44:64,t:MB?50:34,b:30},
-    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?8:14,rangeslider:{visible:false},anchor:'y10',
+    margin:{l:MB?6:52,r:MB?8:64,t:MB?50:34,b:MB?26:30},
+    xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?6:14,rangeslider:{visible:false},anchor:'y10',
       domain:[0,XW]},   // VbP 開啟 → K線退左讓出右軌(兩圖不重疊)
-    yaxis:{domain:[0.46,1.0],gridcolor:GRID2,tickfont:{size:9,color:MUT2},side:'right'},
-    yaxis7:{domain:[0.375,0.445],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},
-    yaxis8:Object.assign({domain:[0.25,0.36],gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},
+    yaxis:Object.assign({domain:DOM.y,gridcolor:GRID2,tickfont:{size:MB?8:9,color:MUT2},side:'right'},TLI),
+    yaxis7:Object.assign({domain:DOM.y7,gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},TLI),
+    yaxis8:Object.assign({domain:DOM.y8,gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},TLI,
       _y8.tickvals?{tickvals:_y8.tickvals}:{},_y8.zero?{zerolinecolor:'#39404d'}:{}),
-    yaxis9:{domain:[0.165,0.235],gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',tickvals:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},
+    yaxis9:Object.assign({domain:DOM.y9,gridcolor:GRID2,tickfont:{size:7,color:MUT2},range:[-110,110],side:'right',
+      tickvals:MB?[-100,0,100]:[-100,-67,-33,0,33,67,100],zerolinecolor:'#39404d'},TLI),
     // ⑦ 現金池:累積線與當日柱**同一格疊加**(2026-08-02 使用者指定,不分軌)。
     //   兩者量級差 50 倍(累積 −27000M vs 當日 ±500M),共用刻度時柱必然壓成細點 →
     //   柱掛在 overlaying 專屬刻度 y11(不顯示刻度、以自身 P98 對稱撐開),真值走 hover。
     //   ⚠ overlaying 次軸 + category 主軸是 1D 已知地雷:verify_headless 已加
     //     「疊加/布林/縮放/滾輪/VbP relayout 之後 xaxis.type 恆為 category」全程回歸。
-    yaxis10:Object.assign({domain:[0,0.15],gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#5a6472'},
+    yaxis10:Object.assign({domain:DOM.y10,gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right',zerolinecolor:'#5a6472'},TLI,
       _y10r?{range:_y10r}:{}),
     yaxis11:Object.assign({overlaying:'y10',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
       _y11r?{range:_y11r}:{}),
