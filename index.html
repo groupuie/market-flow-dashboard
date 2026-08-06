@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-06T15:21Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-06T15:55Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1565,7 +1565,7 @@ function buildPoolOffs(){ buildOffs('pooloffs','pooltide',POOL_TREND,POOL_OFF,
 // ===== 駕駛艙:CTA score/RVPOS/TD/RSI/燈號 全前端自算(與回測同定義;快取避免每 20s 重算)=====
 const CKC={};
 function cockpitRows(sym){
-  const bars=chipBars(sym); if(!bars||bars.length<260)return null;
+  const bars=chipBars(sym); if(!bars||bars.length<30)return null;   // 2026-08-06:260→30,新上市股可看(長窗指標自然缺席)
   const cch=CKC[sym];
   if(cch&&cch.n===bars.length&&cch.last===+bars[bars.length-1][4])return cch.rows;
   const n=bars.length, C=bars.map(b=>+b[4]), V=bars.map(b=>+(b[5]||0));
@@ -1589,16 +1589,20 @@ function cockpitRows(sym){
     if(i<14){ag=ag==null?g:ag+g; al=al==null?l:al+l; if(i===13){ag/=14;al/=14;rsi[i]=100-100/(1+ag/(al||1e-9));}}
     else{ag=(ag*13+g)/14; al=(al*13+l)/14; rsi[i]=100-100/(1+ag/(al||1e-9));}}
   const rows=[];
-  for(let i=252;i<n;i++){
-    const s50=(P[i+1]-P[i+1-50])/50, s100=(P[i+1]-P[i+1-100])/100, s200=(P[i+1]-P[i+1-200])/200;
-    let sc=(C[i]>s50?1:-1)+(C[i]>s100?1:-1)+(C[i]>s200?1:-1)
-          +(C[i]>C[i-63]?1:-1)+(C[i]>C[i-126]?1:-1)+(C[i]>C[i-252]?1:-1);
-    const v60=(PV[i+1]-PV[i+1-60])/60, v5=(PV[i+1]-PV[i+1-5])/5;
+  // 2026-08-06 短史模式:歷史 ≥260 根走原路徑(i 自 252 起,輸出逐位元不變);新上市股(30~259 根)
+  // 自第 5 根起出列,長窗欄位(檔位sc/CTA t50·t100·t200·t63)不足即 null,由各消費端已有的 null 防護降級。
+  const i0=(n>=260)?252:5;
+  for(let i=i0;i<n;i++){
+    const s50=i+1>=50?(P[i+1]-P[i+1-50])/50:null, s100=i+1>=100?(P[i+1]-P[i+1-100])/100:null, s200=i+1>=200?(P[i+1]-P[i+1-200])/200:null;
+    let sc=null;
+    if(i>=252)sc=Math.round(100*((C[i]>s50?1:-1)+(C[i]>s100?1:-1)+(C[i]>s200?1:-1)
+          +(C[i]>C[i-63]?1:-1)+(C[i]>C[i-126]?1:-1)+(C[i]>C[i-252]?1:-1))/6);
+    const v60=i+1>=60?(PV[i+1]-PV[i+1-60])/60:(PV[i+1]/(i+1)), v5=i+1>=5?(PV[i+1]-PV[i+1-5])/5:null;
     rows.push({d:bars[i][0],o:+bars[i][1],h:+bars[i][2],l:+bars[i][3],c:C[i],v:V[i],
-      sc:Math.round(100*sc/6),rv:rvp[i],rsi:rsi[i],
-      t50:(P[i]-P[i-49])/49,t100:(P[i]-P[i-99])/99,t200:(P[i]-P[i-199])/199,t63:C[i-63],
+      sc:sc,rv:rvp[i],rsi:rsi[i],
+      t50:i>=49?(P[i]-P[i-49])/49:null,t100:i>=99?(P[i]-P[i-99])/99:null,t200:i>=199?(P[i]-P[i-199])/199:null,t63:i>=63?C[i-63]:null,
       tds:Math.max(tds[i],tds[i-1],tds[i-2]),tdb:Math.max(tdb[i],tdb[i-1],tdb[i-2]),
-      tds0:tds[i],tdb0:tdb[i],volr:v60>0?V[i]/v60:1,volr5:v60>0?v5/v60:1,c5:i>=5?C[i-5]:null});
+      tds0:tds[i],tdb0:tdb[i],volr:v60>0?V[i]/v60:1,volr5:(v60>0&&v5!=null)?v5/v60:1,c5:i>=5?C[i-5]:null});
   }
   CKC[sym]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
   return rows;
@@ -2087,7 +2091,7 @@ function renderCockpit(){
     return;}
   if(CHIP_WIN==='max'){renderCockpitMax(el,MB);return;}   // P3B 全史對數月K(獨立渲染路徑,日K駕駛艙不受影響)
   const rows=cockpitRows(CHIP_SYM);
-  if(!rows||rows.length<10){el.style.height='auto';chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
+  if(!rows||rows.length<10){el.style.height='auto';chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥30 根日K;新上市股以短史模式顯示,一年後檔位/CTA長線自動補齊)…');return;}
   const win=Math.max(30,Math.min(CHIP_WIN,250));
   const R=rows.slice(-win);
   const D=chipDaily();
@@ -2115,7 +2119,7 @@ function renderCockpit(){
   R.forEach((r,ri)=>{
     const TOP=(r.sc===100?1:0)+(r.rv>=90?1:0)+(r.tds>=9?1:0)+(r.volr5>=1.5?1:0);
     const dn=r.c5!=null&&r.c<r.c5;
-    const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+(r.sc<66?1:0);
+    const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+((r.sc!=null&&r.sc<66)?1:0);   // sc=null(短史)不得計分(null<66 恆真陷阱)
     const isT=TOP>=3, isB=BOT>=3;
     topY.push(isT?r.h+o3:null); topT.push(isT&&!pT?'減碼':'');   // 連續齊發只標首日字樣,其餘只留菱形
     botY.push(isB?r.l-o3:null); botT.push(isB&&!pB?'抄底':''); pT=isT; pB=isB;
@@ -2263,8 +2267,9 @@ function renderCockpit(){
   // 右緣價位標籤堆:CTA 四條煞車線 + 通道上下界(壓力/支撐點位)一起排,共用防疊字的往上錯開規則
   (function(){
     const L=[];
-    if(CHIP_CTA)L.push(['短50D',R[li].t50,CPAL.brake1],['中100D',R[li].t100,CPAL.brake2],
-                       ['長200D',R[li].t200,CPAL.brake3],['動63D',R[li].t63,CPAL.brake4lab]);
+    if(CHIP_CTA)[['短50D',R[li].t50,CPAL.brake1],['中100D',R[li].t100,CPAL.brake2],
+                 ['長200D',R[li].t200,CPAL.brake3],['動63D',R[li].t63,CPAL.brake4lab]]
+      .forEach(function(p){ if(p[1]!=null&&isFinite(p[1]))L.push(p); });   // 短史:未成形的煞車線不標(null.toFixed 防炸)
     // 2026-08-01 使用者指定:通道成形 → 直接給出可操作點位(上升通道要壓力、下行通道要支撐;兩界都標)
     if(_chLv)_chLv.forEach(function(v){ if(v.y==null||!isFinite(v.y))return;
       L.push([v.kind,v.y,'rgba('+v.col+',1)']); });
@@ -2281,8 +2286,10 @@ function renderCockpit(){
       yanchor:'middle',showarrow:false,text:'POC '+_vbShapes._poc.toFixed(_vbShapes._poc>=1000?0:1),
       font:{size:8,color:CPAL.volHot},bgcolor:CPAL.bgc});
   }
-  ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y9',y:Math.max(-95,Math.min(95,R[li].sc)),yanchor:'middle',showarrow:false,
+  if(R[li].sc!=null)ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y9',y:Math.max(-95,Math.min(95,R[li].sc)),yanchor:'middle',showarrow:false,
     text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?CPAL.up:R[li].sc<0?CPAL.dn:CPAL.sc},bgcolor:CPAL.bgc});
+  else ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y9',y:0,yanchor:'middle',showarrow:false,
+    text:'檔位 —(需一年歷史)',font:{size:8.5,color:MUT2},bgcolor:CPAL.bgc});
   // 直立手機:標題精簡成兩行(第二行=圖例),避免單行過長被切掉
   if(MB)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
     text:(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · <span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
