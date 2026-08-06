@@ -778,13 +778,16 @@ def serve_lookup(cfg, args):
         try: served = json.load(open(servedp))
         except Exception: served = {}
         if served.get(sym) == ts: return              # 此請求已服務過
-        _known = {x.replace("US.", "") for x in CAP_SYMS} | {x.replace("US.", "") for x in EXT_SYMS} \
-                 | set(kline_symbols([])) | {x.replace("US.", "") for x in fetch_custom_syms(cfg)} \
+        # 跳過集合=「日K輪真的會補到的檔」(核心+自訂+富途自選)。⑦擴充清單(EXT_SYMS)只有資金流、
+        # 沒有日K輪 → 不可跳過,否則點播 GEV/GLD/TLT 等會被誤判「已在宇宙」而永遠補不到K線(2026-08-06 修)。
+        _known = set(kline_symbols([])) | {x.replace("US.", "") for x in fetch_custom_syms(cfg)} \
                  | {x.replace("US.", "") for x in fetch_watchlist_syms()}
         t0 = time.time()
         files = {}
-        if sym in _known:
-            log(f"lookup skip(已在追蹤宇宙): {sym}")
+        # 已在日K輪的檔:只有 gist 真的已有其 kline 檔才跳過(避免用 Yahoo 快照蓋掉富途前復權K+週轉率);
+        # 剛加入清單、輪補未到者照服務(Yahoo 種子先出圖,之後日K輪以富途K覆蓋=既有「首日種子」模式)。
+        if sym in _known and fetch_gist_file(cfg, "kline_" + sym + ".json"):
+            log(f"lookup skip(日K輪已覆蓋): {sym}")
         else:
             # 日K(Yahoo;駕駛艙需 ≥260 根,不足也照推,前端會誠實顯示)
             try:
@@ -888,23 +891,24 @@ def fetch_custom_syms(cfg):
     except Exception as e:
         err("custom_syms",e); return []
 
-# ============ 免token加追蹤收件匣(2026-08-04;網頁「＋加入追蹤(免token)」按鈕)============
-# 網頁把代號 POST 到公共主題 ntfy.sh/mfd-add-<gist前12碼>(零設定:兩端都從 gist id 推導)。
-# 這裡每個全量輪撿走 → 格式驗證 → 合併寫回 gist custom_symbols.json(唯一寫入者=Mac,token 不出 Mac)。
+# ============ 免token收件匣(2026-08-04 加追蹤;2026-08-06 起兼收 ⚡點播)============
+# 網頁把訊息 POST 到公共主題 ntfy.sh/mfd-add-<gist前12碼>(零設定:兩端都從 gist id 推導)。
+# 動詞:純代號「SYM」=加入追蹤(合併寫回 gist custom_symbols.json);「?SYM」=點播(轉寫 lookup_request.json,
+#       由同輪的 serve_lookup 現抓現推,一次性快照、不占 30 檔追蹤名額)。唯一寫入者=Mac,token 不出 Mac。
 # 濫用防線:格式驗證、每輪最多 5 檔、清單上限 30(fetch_custom_syms 同上限)、已處理訊息 id 去重、
 # 訊息 ~12h 自然過期;收件匣故障一律回空、不影響採集(fail-open)。
-def fetch_inbox_syms(cfg, seen_path):
-    """回傳本輪新申請的『純代號』清單(不含 US. 前綴)"""
+def fetch_inbox_msgs(cfg, seen_path):
+    """撿收件匣一次 → (加追蹤代號們, 點播代號們);id 去重持久化。"""
     try:
         import re as _rex   # 顯式局部匯入:不依賴模組頂部(2026-08-04)
         gid=str(cfg.get("gist_id") or "")
-        if not gid or not cfg.get("gist_token"): return []
+        if not gid or not cfg.get("gist_token"): return [],[]
         try: seen=set((json.load(open(seen_path)) or {}).get("ids") or [])
         except Exception: seen=set()
         req=urllib.request.Request(f"https://ntfy.sh/mfd-add-{gid[:12]}/json?poll=1&since=13h",
                                    headers={"User-Agent":"market-export"})
         raw=urllib.request.urlopen(req,timeout=12).read().decode("utf-8","ignore")
-        out=[]; new_ids=[]
+        adds=[]; looks=[]; new_ids=[]
         for line in raw.splitlines():
             try: msg=json.loads(line)
             except Exception: continue
@@ -912,15 +916,58 @@ def fetch_inbox_syms(cfg, seen_path):
             mid=str(msg.get("id") or "")
             if not mid or mid in seen: continue
             new_ids.append(mid)
-            sym=str(msg.get("message") or "").strip().upper()
-            if _rex.fullmatch(r"[A-Z][A-Z0-9.\-]{0,5}", sym) and sym not in out:
-                out.append(sym)
+            body=str(msg.get("message") or "").strip().upper()
+            is_look=body.startswith("?")
+            sym=body[1:].strip() if is_look else body
+            if _rex.fullmatch(r"[A-Z][A-Z0-9.\-]{0,5}", sym):
+                dst=looks if is_look else adds
+                if sym not in dst: dst.append(sym)
         if new_ids:
             try: json.dump({"ids": (list(seen)+new_ids)[-500:]}, open(seen_path,"w"))
             except Exception: pass
-        return out[:5]
+        return adds[:5], looks[:5]
     except Exception:
-        return []
+        return [],[]
+
+def fetch_inbox_syms(cfg, seen_path):
+    """相容包裝(舊呼叫點=全量輪合併):只回加追蹤代號。點播代號改由 process_inbox 每輪處理。"""
+    return fetch_inbox_msgs(cfg, seen_path)[0]
+
+def process_inbox(cfg, args):
+    """每輪(快/全)處理收件匣:加追蹤=即刻合併寫回共享清單(比舊的全量輪合併快到 ~1 分鐘);
+       點播=排入持久佇列、每輪送出一檔到 lookup_request.json(同輪 serve_lookup 立即服務)。
+       兩者皆 push 失敗即留佇列重試(fail-open,不影響採集)。"""
+    adds, looks = fetch_inbox_msgs(cfg, args.config+".inboxseen.json")
+    aqp=args.config+".inboxaddq.json"; lqp=args.config+".inboxlookq.json"
+    try: aq=[s for s in (json.load(open(aqp)) or []) if isinstance(s,str)]
+    except Exception: aq=[]
+    for s in adds:
+        if s not in aq: aq.append(s)
+    if aq:
+        try:
+            custom=[x.replace("US.","") for x in fetch_custom_syms(cfg)]
+            _new=[x for x in aq if x not in custom]
+            if _new:
+                _plain=list(dict.fromkeys(custom+_new))[:30]
+                push_gist(cfg, {"custom_symbols.json": _plain})
+                log(f"inbox 免token加追蹤: +{_new} → custom_symbols.json({len(_plain)} 檔)")
+            aq=[]
+        except Exception as e: log("INBOX ADD ERR:", type(e).__name__, e)
+    try: json.dump(aq[:10], open(aqp,"w"))
+    except Exception: pass
+    try: lq=[s for s in (json.load(open(lqp)) or []) if isinstance(s,str)]
+    except Exception: lq=[]
+    for s in looks:
+        if s not in lq: lq.append(s)
+    if lq:
+        s=lq.pop(0)
+        try:
+            push_gist(cfg, {"lookup_request.json": {"sym": s, "ts": "inbox-"+s+"-"+str(int(time.time()))}})
+            log(f"inbox ⚡點播: {s} → lookup_request.json(佇列餘 {len(lq)})")
+        except Exception as e:
+            lq.insert(0, s); log("INBOX LOOK ERR:", type(e).__name__, e)
+    try: json.dump(lq[:20], open(lqp,"w"))
+    except Exception: pass
 
 # ============ Futu ============
 def pull_top_turnover(q, topn=20):
@@ -1704,8 +1751,11 @@ def main():
             except Exception as e:
                 log("LIGHT PUSH ERROR:",type(e).__name__,e)
             base=data; _persist(base)
-        # ⚡ 點播通道:每輪(快/全)檢查一次 lookup_request.json,新請求現抓現推(~60-90 秒內出圖)
+        # ⚡ 點播通道:每輪(快/全)先撿免token收件匣(加追蹤即刻合併/點播轉單),再檢查 lookup_request.json
+        #   → 收件匣點播於同一輪被 serve_lookup 服務(訪客免token,~1-2 分鐘內出圖)
         if not a.no_futu or True:
+            try: process_inbox(cfg, a)
+            except Exception as e: log("inbox:", type(e).__name__, e)
             try: serve_lookup(cfg, a)
             except Exception as e: log("lookup:", type(e).__name__, e)
         if a.once or market_session()!="rth" or (time.time()-loop_start)>=LOOP_BUDGET:

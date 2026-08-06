@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-05T14:52Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-06T15:21Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2078,7 +2078,13 @@ function renderCockpit(){
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'980px':'960px';   // 直立手機:加高,五軌才有正確比例(窄螢幕靠垂直空間)
   el.dataset.unt='';   // 離開「未追蹤動作區」狀態
-  if(CHIPK[CHIP_SYM+'_none']){el.style.height='auto';chartMsg(el,'日K輪補中(擴充/自訂標的由 Mac 每輪自動補 8 檔,新標的最快 ~10 分、全清單數小時內補齊;每 10 分自動重試)。若久候未出現=來源無此代號日K。下方 ⑦ 現金池圖不受影響。');return;}
+  if(CHIPK[CHIP_SYM+'_none']){el.style.height='auto';el.dataset.sig='';
+    chartMsg(el,'<b>'+CHIP_SYM+'</b> 尚無日K(此檔有 ⑦ 資金流、但不在日K輪補名單,或剛加入還沒輪到)。'
+      +'<div style="margin-top:10px"><button id="ckLkBtn" style="background:#0f3a24;color:#4ade80;border:1.5px solid #4ade80;border-radius:6px;padding:6px 16px;font-size:13px;cursor:pointer;font-weight:600">⚡ 免token點播補K線(約 1-2 分鐘)</button>'
+      +' <span id="chipAddStat" style="font-size:12px;color:#9db4e0"></span></div>'
+      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">點播=任何人可按、一次性快照(Yahoo 5y 日K+⑦ 250 日),不占追蹤名額;要每日自動更新改用搜尋框的「＋加入追蹤」。若久候未出=來源無此代號日K。下方 ⑦ 現金池圖不受影響。</div>',24);
+    const _lb=document.getElementById('ckLkBtn'); if(_lb)_lb.onclick=()=>chipLookup(CHIP_SYM);
+    return;}
   if(CHIP_WIN==='max'){renderCockpitMax(el,MB);return;}   // P3B 全史對數月K(獨立渲染路徑,日K駕駛艙不受影響)
   const rows=cockpitRows(CHIP_SYM);
   if(!rows||rows.length<10){el.style.height='auto';chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥260 根日K)…');return;}
@@ -2673,7 +2679,7 @@ function renderChipCost(){
   // 籌碼成本分佈(量價分佈)+ 均價線 —— 純從既有日K(OHLCV)算,免逐筆、免額外採集。
   const el=document.getElementById('chipcost'); if(!el)return;
   const K=CHIPK[CHIP_SYM];
-  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'日K輪補中(同上;補齊後自動顯示成本分佈)…');return;}
+  if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'尚無日K → 可按上方K線區的「⚡ 免token點播」補齊(補到後這裡自動顯示成本分佈)…');return;}
   if(!K||!K.bars||!K.bars.length){chartMsg(el,'日K載入中…');return;}
   const all=chipBars(CHIP_SYM)||K.bars, bars=all.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));
   if(bars.length<5){chartMsg(el,'此區間日K不足');return;}
@@ -2761,11 +2767,11 @@ function renderChips(){
       +'<div style="margin-top:10px"><button id="chipFreeBtn" style="background:#0f3a24;color:#4ade80;border:1.5px solid #4ade80;border-radius:6px;padding:6px 16px;font-size:13.5px;cursor:pointer;font-weight:600">＋ 加入追蹤 '+CHIP_SYM+'(免 token,任何人可加)</button>'
       +' <span id="chipFreeStat" style="font-size:12px"></span></div>'
       +'<div style="margin-top:5px;font-size:11.5px;color:#8792a6">按下後由資料主機自動接手:清單 ~5 分鐘更新(<b>所有觀看者共用</b>)、K線約 10 分鐘上線、⑦ 現金池 250 日歷史當日回補;好了頁面自動變成駕駛艙,不用重新整理。</div>'
-      +'<div style="margin-top:10px"><button id="chipLkBtn" style="background:#3f2d0c;color:#facc15;border:1px solid #facc15;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">⚡ 點播查詢(~90秒,需token)</button>'
+      +'<div style="margin-top:10px"><button id="chipLkBtn" style="background:#3f2d0c;color:#facc15;border:1px solid #facc15;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">⚡ 點播查詢(免token,~1-2分鐘)</button>'
       +' <button id="chipAddBtn" style="background:#164e63;color:#22d3ee;border:1px solid #22d3ee;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">＋ 直寫加入(需token,0等待)</button>'
       +' <span id="chipAddStat" style="font-size:12px"></span></div>'
-      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">⚡點播=現抓一次不持續更新;直寫=瀏覽器直接寫清單。另外<b style="color:#4ade80">富途牛牛 App</b> 把代號加自選分組「追蹤」也會自動開採(限持有者;是加進清單、不會取代原有標的)。</div>'
-      +(_tok?'':'<div style="margin-top:8px;font-size:11px;color:#66707f">token 只有上面兩顆備援鈕才需要(gist 權限,每台裝置貼一次,只存本機瀏覽器) '
+      +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">⚡點播=任何人可按、現抓一次不持續更新(不占30檔名額);直寫=瀏覽器直接寫清單。另外<b style="color:#4ade80">富途牛牛 App</b> 把代號加自選分組「追蹤」也會自動開採(限持有者;是加進清單、不會取代原有標的)。</div>'
+      +(_tok?'':'<div style="margin-top:8px;font-size:11px;color:#66707f">token 只有「直寫加入」備援鈕才需要(gist 權限,每台裝置貼一次,只存本機瀏覽器) '
         +'<input id="chipTokIn" type="password" placeholder="ghp_…" style="width:170px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:12px">'
         +' <button id="chipTokBtn" style="background:#1f2937;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:2px 10px;font-size:12px;cursor:pointer">儲存</button></div>'),24);
     const fb=document.getElementById('chipFreeBtn'); if(fb)fb.onclick=()=>chipFreeAdd(CHIP_SYM);
@@ -2903,27 +2909,36 @@ async function saveCustom(list){
   document.getElementById('customstat').textContent=(r===true)?'✓ 已儲存,採集器 5 分鐘內生效':'儲存失敗:'+r;
   return r===true;
 }
-async function chipLookup(sym){   // ⚡ 點播:寫 lookup_request.json → Mac 現抓 日K+⑦歷史250日+今日⑦ 推回(~60-90秒;不占追蹤名額)
+async function chipLookup(sym){   // ⚡ 點播(2026-08-06 起免token):公共收件匣送「?代號」→ Mac 每輪撿走轉單、同輪現抓
+  // 日K(Yahoo 5y)+⑦歷史250日+今日⑦ 推回(~1-2分鐘;一次性快照、不占30檔追蹤名額)。備援:有token時直寫請求檔(~60-90秒)。
+  sym=(sym||'').trim().toUpperCase();
   const st=document.getElementById('chipAddStat');
+  if(!/^[A-Z][A-Z0-9.\-]{0,5}$/.test(sym)){if(st)st.textContent='代號格式不對';return;}
+  const gid=(DATA_URL.match(/\/([a-f0-9]{20,})\/raw\//)||[])[1]||'';
   const tok=localStorage.getItem('gh_token');
-  if(!tok){if(st)st.textContent='← 請先貼一次 token(與自訂追蹤共用)';return;}
-  const id=gistId(); if(!id){if(st)st.textContent='找不到 gist id';return;}
   if(st)st.textContent='送出點播…';
-  try{
-    const r=await fetch('https://api.github.com/gists/'+id,{method:'PATCH',
-      headers:{'Authorization':'token '+tok,'Accept':'application/vnd.github+json'},
-      body:JSON.stringify({files:{'lookup_request.json':{content:JSON.stringify({sym:sym,ts:new Date().toISOString()})}}})});
-    if(!r.ok){if(st)st.textContent='送出失敗 HTTP '+r.status;return;}
-    if(st)st.textContent='⚡ 已送出,Mac 現抓中(約 60-90 秒;含 ⑦ 現金池 250 日歷史)…';
-    let tries=0;
-    const tick=()=>{tries++;
-      delete CHIPK[sym+'_none']; delete CHIPK[sym+'_r']; EXTDF_req=0; ensureExtDaily();
-      if(DATA)renderChips();
-      if(chipSyms().includes(sym))return;   // 資料到了 → renderChips 已切成正常視圖
-      if(tries>12){const s2=document.getElementById('chipAddStat');if(s2)s2.textContent='逾時:Mac 可能離線或代號無資料;稍後再試或改「加入自訂」。';return;}
-      setTimeout(tick,15000);};
-    setTimeout(tick,20000);
-  }catch(e){if(st)st.textContent='送出失敗:'+e.message;}
+  let sent=false;
+  if(gid){try{const r=await fetch('https://ntfy.sh/mfd-add-'+gid.slice(0,12),{method:'POST',body:'?'+sym});sent=r.ok;}catch(_){}}
+  if(!sent&&tok){   // 備援:token 直寫 lookup_request.json(舊路徑,免等收件匣輪詢)
+    const id=gistId();
+    if(id){try{
+      const r=await fetch('https://api.github.com/gists/'+id,{method:'PATCH',
+        headers:{'Authorization':'token '+tok,'Accept':'application/vnd.github+json'},
+        body:JSON.stringify({files:{'lookup_request.json':{content:JSON.stringify({sym:sym,ts:new Date().toISOString()})}}})});
+      sent=r.ok; if(!sent&&st)st.textContent='送出失敗 HTTP '+r.status;
+    }catch(e){if(st)st.textContent='送出失敗:'+e.message;}}
+  }
+  if(!sent){if(st&&!st.textContent.startsWith('送出失敗'))st.textContent='送出失敗:公共通道不通,稍後再試'+(tok?'':'(或貼 token 走備援)');return;}
+  if(st)st.textContent='⚡ 已送出(免token),Mac 現抓中(約 1-2 分鐘;含 ⑦ 現金池 250 日歷史)…';
+  let tries=0;
+  const done=()=>{const K=CHIPK[sym];return !!(K&&K.bars&&K.bars.length);};   // 成功=日K真的到了(對「有⑦沒K線」的檔也正確,勿以 chipSyms 判定)
+  const tick=()=>{tries++;
+    delete CHIPK[sym+'_none']; delete CHIPK[sym+'_r']; EXTDF_req=0; ensureExtDaily();
+    if(DATA)renderChips();
+    if(done())return;
+    if(tries>16){const s2=document.getElementById('chipAddStat');if(s2)s2.textContent='逾時:Mac 可能離線或代號無資料;稍後再試或改「＋加入追蹤」。';return;}
+    setTimeout(tick,15000);};
+  setTimeout(tick,20000);
 }
 // ===== 免token加追蹤(2026-08-04):公共收件匣 ntfy → Mac 採集器每個全量輪撿走、驗證、寫回共享清單 =====
 // 任何觀看者、任何裝置皆可用;GitHub token 只存在 Mac(唯一寫入者)。主題名由 gist id 前12碼推導,兩端零設定。
