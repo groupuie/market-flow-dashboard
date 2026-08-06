@@ -752,13 +752,33 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 
 # ============ 點播通道(lookup_request.json 由網頁寫入;Mac 現抓現推,不占追蹤名額)============
 def fetch_gist_file(cfg, name):
-    """讀 gist 單一小檔內容(認證 API;小檔不會被截斷)。無檔/無設定→None。"""
+    """讀 gist 單一小檔內容(認證 API)。無檔/無設定→None。
+       2026-08-06 實遇:gist 檔數 >300 時 API 會截斷檔案清單(本 gist 已 362 檔,kline_* 之後的
+       lookup_request/market_data 等被截掉)→ 後備:同回應取 owner 拼 raw 網址+防快取直取;
+       單檔過大被標 truncated 時走該檔 raw_url。"""
     if not cfg.get("gist_id") or not cfg.get("gist_token"): return None
     req = urllib.request.Request(f"https://api.github.com/gists/{cfg['gist_id']}",
         headers={"Authorization": f"token {cfg['gist_token']}", "User-Agent": "market-export",
                  "Accept": "application/vnd.github+json"})
     d = json.load(urllib.request.urlopen(req, timeout=15))
-    return d.get("files", {}).get(name, {}).get("content")
+    fi = d.get("files", {}).get(name)
+    if fi is not None:
+        c = fi.get("content")
+        if c is not None and not fi.get("truncated"): return c
+        try:
+            if fi.get("raw_url"):
+                return urllib.request.urlopen(urllib.request.Request(fi["raw_url"],
+                    headers={"User-Agent": "market-export"}), timeout=15).read().decode("utf-8", "replace")
+        except Exception: return c
+        return c
+    try:   # 檔案清單被 300 檔上限截斷 → raw 直取(404=真的無此檔 → None)
+        owner = ((d.get("owner") or {}).get("login")) or ""
+        if not owner: return None
+        u = f"https://gist.githubusercontent.com/{owner}/{cfg['gist_id']}/raw/{urllib.parse.quote(name)}?t={int(time.time())}"
+        return urllib.request.urlopen(urllib.request.Request(u,
+            headers={"User-Agent": "market-export"}), timeout=15).read().decode("utf-8", "replace")
+    except Exception:
+        return None
 
 def serve_lookup(cfg, args):
     """⚡ 點播:網頁把 {sym,ts} 寫進 lookup_request.json → 這裡現抓該檔的
@@ -767,17 +787,28 @@ def serve_lookup(cfg, args):
        去重:.lookupserved 記 (sym,ts);已在追蹤宇宙者跳過(本來就有);純快照,不加入持續追蹤。"""
     import re as _re
     try:
-        raw = fetch_gist_file(cfg, "lookup_request.json")
-        if not raw: return
-        try: r = json.loads(raw)
-        except Exception: return
+        r = None
+        spool = args.config + ".lookspool.json"   # 收件匣點播=本機直遞(2026-08-06:免經 gist 讀回,避開 API 300 檔截斷與讀寫時差)
+        try:
+            if os.path.exists(spool): r = json.load(open(spool))
+        except Exception: r = None
+        if not isinstance(r, dict) or not r.get("sym"):
+            r = None
+            raw = fetch_gist_file(cfg, "lookup_request.json")   # token 直寫路徑(瀏覽器 PATCH)
+            if not raw: return
+            try: r = json.loads(raw)
+            except Exception: return
         sym = str(r.get("sym", "")).strip().upper().replace("US.", "")
         ts = str(r.get("ts", ""))[:40]
         if not _re.fullmatch(r"[A-Z.]{1,10}", sym or ""): return
         servedp = args.config + ".lookupserved.json"
         try: served = json.load(open(servedp))
         except Exception: served = {}
-        if served.get(sym) == ts: return              # 此請求已服務過
+        if served.get(sym) == ts:                     # 此請求已服務過(spool 殘留一併清,防重複請求卡佇列)
+            try:
+                if os.path.exists(spool) and (json.load(open(spool)) or {}).get("ts") == ts: os.remove(spool)
+            except Exception: pass
+            return
         # 跳過集合=「日K輪真的會補到的檔」(核心+自訂+富途自選)。⑦擴充清單(EXT_SYMS)只有資金流、
         # 沒有日K輪 → 不可跳過,否則點播 GEV/GLD/TLT 等會被誤判「已在宇宙」而永遠補不到K線(2026-08-06 修)。
         _known = set(kline_symbols([])) | {x.replace("US.", "") for x in fetch_custom_syms(cfg)} \
@@ -846,6 +877,9 @@ def serve_lookup(cfg, args):
             log(f"lookup served: {sym} ({time.time()-t0:.0f}s, ⑦+{nadd}筆, kline={'kline_'+sym+'.json' in files})")
         served[sym] = ts
         try: json.dump(served, open(servedp, "w"))
+        except Exception: pass
+        try:   # 本請求若來自 spool → 服務完移除,讓 process_inbox 下輪再遞下一檔
+            if os.path.exists(spool) and (json.load(open(spool)) or {}).get("ts") == ts: os.remove(spool)
         except Exception: pass
     except Exception as e: err("lookup", e)
 
@@ -959,11 +993,15 @@ def process_inbox(cfg, args):
     except Exception: lq=[]
     for s in looks:
         if s not in lq: lq.append(s)
-    if lq:
+    spool=args.config+".lookspool.json"
+    if lq and not os.path.exists(spool):   # 上一單服務完(spool 已清)才遞下一單;serve_lookup 失敗時單留在 spool 自動重試
         s=lq.pop(0)
+        req={"sym": s, "ts": "inbox-"+s+"-"+str(int(time.time()))}
         try:
-            push_gist(cfg, {"lookup_request.json": {"sym": s, "ts": "inbox-"+s+"-"+str(int(time.time()))}})
-            log(f"inbox ⚡點播: {s} → lookup_request.json(佇列餘 {len(lq)})")
+            json.dump(req, open(spool,"w"))
+            log(f"inbox ⚡點播: {s} → 直遞 serve_lookup(佇列餘 {len(lq)})")
+            try: push_gist(cfg, {"lookup_request.json": req})   # 觀測鏡像(非服務路徑;gist>300檔時 API 讀不回,故不依賴)
+            except Exception: pass
         except Exception as e:
             lq.insert(0, s); log("INBOX LOOK ERR:", type(e).__name__, e)
     try: json.dump(lq[:20], open(lqp,"w"))
