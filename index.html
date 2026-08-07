@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-06T15:55Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-07T12:54Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1579,9 +1579,10 @@ function cockpitRows(sym){
     const va=rets.reduce((a,x)=>a+(x-m)*(x-m),0)/(rets.length-1);
     rv[i]=Math.sqrt(va)*Math.sqrt(252)*100;}
   const rvp=new Array(n).fill(null);
+  const _tmin=(n>=260)?60:15;   // 2026-08-07 短史:rv 百分位樣本門檻 60→15(成熟股不變;短史=對自身有限歷史的百分位,噪音較大,圖上標「短史樣本」)
   for(let i=0;i<n;i++){if(rv[i]==null)continue;let c=0,t=0;
     for(let j=Math.max(0,i-504);j<=i;j++)if(rv[j]!=null){t++;if(rv[j]<=rv[i])c++;}
-    if(t>=60)rvp[i]=Math.round(100*c/t);}
+    if(t>=_tmin)rvp[i]=Math.round(100*c/t);}
   const tds=new Array(n).fill(0), tdb=new Array(n).fill(0);
   for(let i=4;i<n;i++){tds[i]=C[i]>C[i-4]?tds[i-1]+1:0; tdb[i]=C[i]<C[i-4]?tdb[i-1]+1:0;}
   const rsi=new Array(n).fill(null); let ag=null,al=null;
@@ -1855,6 +1856,14 @@ function renderAccum(){
     if((A.toxic||[]).length)
       h+='<div style="font-size:11px;color:#f87171;margin-top:6px">⚠ 極端吸收(≥1%,歷史偏空 x40 '+(S.tox_x40||'—')+'%、樣本 '+(S.tox_n||'—')+'):'
         +A.toxic.map(r=>'<span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:#f87171;text-decoration:underline">'+r.sym+'</span> 吸'+r.ab.toFixed(2)+'% 位置'+r.pp+'%').join(' · ')+'</div>';
+    // 短史雷達(2026-08-07):新上市/新入列(流資料<90日)另列 —— 同條件以可用視窗計,未回測、不入統計
+    const SW=(A.short_watch||[]).filter(r=>!ACC_ai||r.ai||r.cat==='自訂');
+    if(SW.length)
+      h+='<div style="font-size:11px;color:#c9a8f0;margin-top:6px;border-top:1px dashed var(--line);padding-top:6px">🛰 短史雷達(上市/入列未滿90日資料,同條件·可用視窗;<b>未回測,僅雷達非訊號</b>):<br>'
+        +SW.map(r=>'<span class="acsym" data-sym="'+r.sym+'" style="cursor:pointer;color:'+(r.tox?'#f87171':'#c9a8f0')+';text-decoration:underline">'+r.sym+'</span>'
+          +' '+(r.cat||'')+' 資料'+r.days_flow+'日 全單'+(r.a60>=0?'+':'')+(r.a60>=1000?(r.a60/1000).toFixed(1)+'B':r.a60+'M')
+          +' 大單'+(r.m60>=0?'+':'')+(r.m60>=1000?(r.m60/1000).toFixed(1)+'B':r.m60+'M')
+          +' 吸'+r.ab.toFixed(2)+'%'+(r.tox?'<b>(極端⚠)</b>':'')+' 位置'+r.pp+'% 20日'+r.r20+'%').join(' · ')+'</div>';
     const hitN=(G.hit_n!=null?G.hit_n:(G.hit||[]).length), done=hitN+G.miss;
     const GA=G.ai||null, doneA=GA?(GA.hit_n+GA.miss):0;
     const hits=(G.hit||[]).filter(x=>!ACC_ai||x.ai);
@@ -2115,12 +2124,15 @@ function renderCockpit(){
   const liveSeg=cn=>{const st=new Set();let i=cn.length-1,c=cn[i];if(c>0){while(i>=0&&cn[i]===c){st.add(i);c--;i--;}}return st;};
   const liveS2=liveSeg(R.map(r=>r.tds0)), liveB2=liveSeg(R.map(r=>r.tdb0));
   const dense=MB&&win>60;
+  // 短史版◇☆(2026-08-07):上市未滿一年 sc 恆 null → 正式◆★(≥3/4)結構性不可能(SPCX 實例揪出)。
+  // 改 3 可用成分制、門檻 2/3,空心符號+hover 揭露「未回測、關注非訊號」;成熟股(≥260根)路徑逐位元不變。
+  const shortH=!!(R.length&&R[R.length-1].sc==null);
   let pT=false,pB=false;
   R.forEach((r,ri)=>{
     const TOP=(r.sc===100?1:0)+(r.rv>=90?1:0)+(r.tds>=9?1:0)+(r.volr5>=1.5?1:0);
     const dn=r.c5!=null&&r.c<r.c5;
     const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+((r.sc!=null&&r.sc<66)?1:0);   // sc=null(短史)不得計分(null<66 恆真陷阱)
-    const isT=TOP>=3, isB=BOT>=3;
+    const isT=shortH?(TOP>=2):(TOP>=3), isB=shortH?(BOT>=2):(BOT>=3);
     topY.push(isT?r.h+o3:null); topT.push(isT&&!pT?'減碼':'');   // 連續齊發只標首日字樣,其餘只留菱形
     botY.push(isB?r.l-o3:null); botT.push(isB&&!pB?'抄底':''); pT=isT; pB=isB;
     // 神奇九轉(按規則):只顯示「最終數到≥9的段」(含起數1-8過程)與「進行中的段」;過去數不到9就斷的段整段隱藏。
@@ -2173,9 +2185,13 @@ function renderCockpit(){
     {type:'scatter',mode:'text',x:x,y:tsY,text:tsT,textfont:{size:tsS,color:tsC},hoverinfo:'skip',showlegend:false},
     {type:'scatter',mode:'text',x:x,y:tbY,text:tbT,textfont:{size:tbS,color:tbC},hoverinfo:'skip',showlegend:false},
     {type:'scatter',mode:'markers+text',x:x,y:topY,text:topT,textposition:'top center',textfont:{size:8.5,color:CPAL.dia},
-     marker:{symbol:'diamond',size:11,color:CPAL.dia,line:{width:2,color:CPAL.edge}},name:'減碼',hovertemplate:'◆ TOP≥3 齊發:延伸位減碼(298檔×2年:後20日深跌≥15%機率×1.5、≥20%×1.75;平均報酬仍+,動能常續 → 縮部位訊號,非放空)<extra></extra>'},
+     marker:{symbol:shortH?'diamond-open':'diamond',size:11,color:CPAL.dia,line:{width:2,color:shortH?CPAL.dia:CPAL.edge}},name:'減碼',
+     hovertemplate:shortH?'◇ 短史版減碼(上市未滿一年:檔位成分缺 → 3成分制 2/3 齊發)⚠ 無回測樣本,僅供關注、非訊號<extra></extra>'
+       :'◆ TOP≥3 齊發:延伸位減碼(298檔×2年:後20日深跌≥15%機率×1.5、≥20%×1.75;平均報酬仍+,動能常續 → 縮部位訊號,非放空)<extra></extra>'},
     {type:'scatter',mode:'markers+text',x:x,y:botY,text:botT,textposition:'bottom center',textfont:{size:8.5,color:CPAL.star},
-     marker:{symbol:'star',size:12,color:CPAL.star,line:{width:1.5,color:CPAL.edge}},name:'抄底',hovertemplate:'★ BOT≥3 齊發:跌勢延伸位(298檔×2年:10日反彈51%、20日56% vs 基準53% → 位置標記非預測;快殺型崩跌常整段無★,放寬變體回測無增益)<extra></extra>'},
+     marker:{symbol:shortH?'star-open':'star',size:12,color:CPAL.star,line:{width:1.5,color:shortH?CPAL.star:CPAL.edge}},name:'抄底',
+     hovertemplate:shortH?'☆ 短史版抄底(上市未滿一年:檔位成分缺 → 3成分制 2/3 齊發)⚠ 無回測樣本,僅供關注、非訊號<extra></extra>'
+       :'★ BOT≥3 齊發:跌勢延伸位(298檔×2年:10日反彈51%、20日56% vs 基準53% → 位置標記非預測;快殺型崩跌常整段無★,放寬變體回測無增益)<extra></extra>'},
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
@@ -2254,10 +2270,10 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.028,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
-    {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90)· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
+    {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
     {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:MB?'檔位 ±100/67/33(負=倒車)':'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
     {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+CPAL.poolA+'">全單累積</span>·<span style="color:'+CPAL.poolM+'">大單累積</span>·柱=當日(<span style="color:'+CPAL.poolUp2+'">綠進</span>/<span style="color:'+CPAL.poolDn2+'">紅出</span>·獨立縮放,hover 為真值)'+((fi7>0&&fi7<R.length)?' · <span style="color:'+CPAL.volHot+'">自 '+R[fi7].d.slice(5)+' 起·回補中</span>':'')},
   ];
@@ -2292,7 +2308,7 @@ function renderCockpit(){
     text:'檔位 —(需一年歷史)',font:{size:8.5,color:MUT2},bgcolor:CPAL.bgc});
   // 直立手機:標題精簡成兩行(第二行=圖例),避免單行過長被切掉
   if(MB)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-    text:(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · <span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
+    text:(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
       +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
   // ===== P2 資料接線層(2026-08-01):內部人徽章 / 事件聚光燈(資料=signals.json,無資料靜默)=====
   //   註:訊號K棒變色(2B)、蠟燭型態標記(4C)、回測層(P7 前端 UI)已於 2026-08-01 依使用者指定下架。
