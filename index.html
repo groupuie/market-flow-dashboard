@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-07T12:54Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-07T13:29Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -628,6 +628,7 @@ const CPAL={
   tdS:'#fb923c', tdS8:'rgba(251,146,60,.8)', tdS4:'rgba(251,146,60,.42)',  // TD 賣方計數
   tdB:'#22d3ee', tdB8:'rgba(34,211,238,.8)', tdB4:'rgba(34,211,238,.42)',  // TD 買方計數
   dia:'#e879f9', star:'#facc15',                                         // ◆減碼 ★抄底
+  cbot:'#22d3ee', ctop:'#fb923c',                                        // C▲抄底參考 C▼警戒(Claude 參考層)
   volHot:'#f59e0b', volUp:'rgba(74,222,128,.42)', volDn:'rgba(248,113,113,.38)',  // 成交量
   rv:'#c084fc', rvFill:'rgba(192,132,252,.07)', rsi:'#9aa6b8', sc:'#e6e9ef',      // 轉速/檔位
   poolA:'#fab219', poolM:'#c2703e', poolUp:'rgba(74,222,128,.5)', poolDn:'rgba(248,113,113,.45)',  // ⑦池
@@ -1608,6 +1609,61 @@ function cockpitRows(sym){
   CKC[sym]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
   return rows;
 }
+// ===== C訊號(Claude 參考層,2026-08-07):與使用者◆★指標組完全獨立的第二參考;純前端自算、零token =====
+// 設計紀錄(誠實):Claude 先驗提出的兩輪教科書假設 ——「布林回收/RSI穿越/吞噬轉折型」與「⑦資金背離×5日極端反轉」——
+// 在 294-300檔×2年(資金版12個月)回測全數≈基準(53-54% vs 53.4%,減碼端尾部×1.01-1.05)→ 全部棄用,不上圖。
+// 僅上線本案資料自己驗證過的組合(詳 claude/accum_backtest_2026-08.md):
+//   C▲ 抄底參考 = 吸籌狀態(⑦60/20日全單雙正·吸收率0.2~1%·價於120日下半·20日未上噴)×大單60日同向>0
+//                 ×當日收盤首破前10日收盤高 —— 組合回測 40日內達+15%:60.7% vs 基準53.0(n=84;AI集合80.0,n=25小)
+//   C▼ 警戒     = 吸籌形狀但吸收率≥1%(極端吸收)之進入日 —— 歷史40日平均 −9.3%(n=28):「有人狂接」到極端反而偏空
+// 無⑦資料→無標記(fail-open);資料不足正式窗以可用視窗近似並標注。歷史頻率非未來機率、非買賣建議。
+const CSIGC={};
+function csigCompute(sym,rows){
+  try{
+    const D=chipDaily();
+    const fx=rows.map(r=>{const e=(D[r.d]||{})[sym];return e?[(e.m||0),(e.m||0)+((e.r!=null)?e.r:0)]:null;});
+    let cover=0; fx.forEach(v=>{if(v)cover++;});
+    // 快取鍵必含⑦覆蓋數:ext_flows 為非同步載入,首繪時只有 market_data 內嵌的 ~30 日 → 補齊後必須重算(2026-08-07 對拍揪出)
+    const key=sym+':'+rows.length+':'+rows[rows.length-1].d+':'+rows[rows.length-1].c+':'+cover;
+    if(CSIGC[key])return CSIGC[key];
+    if(Object.keys(CSIGC).length>50)for(const k in CSIGC)delete CSIGC[k];
+    const out={bot:[],top:[],cover:cover,approx:false};
+    if(cover<20){CSIGC[key]=out;return out;}   // 覆蓋<20日不出任何C標記:新入列⑦回補未到時,短窗會高估吸收率(SPCX 對拍實例)
+    const n=rows.length, shape=new Array(n).fill(false), M60=new Array(n).fill(0), AB=new Array(n).fill(null);
+    let inTox=false,lastT=-9;
+    for(let t=0;t<n;t++){
+      if(!fx[t])continue;
+      const wl=[],ws=[];
+      for(let k=t;k>=0&&wl.length<60;k--)if(fx[k])wl.push(k);
+      for(let k=t;k>=0&&ws.length<20;k--)if(fx[k])ws.push(k);
+      if(cover>=60){ if(wl.length<60||ws.length<20)continue; }   // 成熟資料:滿窗才評(=引擎正式語意,檔案裁切造成的暖身段不評)
+      else { if(wl.length<15||ws.length<5)continue; out.approx=true; }   // 真短史(如新上市):可用視窗近似,標未回測
+      let a60=0,m60=0,a20=0,dv=0;
+      wl.forEach(k=>{a60+=fx[k][1];m60+=fx[k][0];dv+=rows[k].c*(rows[k].v||0)/1e6;});
+      ws.forEach(k=>{a20+=fx[k][1];});
+      const ab=a60/(dv||1e-9);
+      const pw=Math.min(120,t+1);
+      let lo=Infinity,hi=-Infinity;
+      for(let k=t-pw+1;k<=t;k++){if(rows[k].l<lo)lo=rows[k].l;if(rows[k].h>hi)hi=rows[k].h;}
+      const pos=hi>lo?(rows[t].c-lo)/(hi-lo):0.5;
+      const iws=Math.min(20,t); const r20=iws>0?rows[t].c/rows[t-iws].c-1:0;
+      shape[t]=(a60>0&&a20>0&&ab>=0.002&&pos<=0.5&&r20<0.10);
+      M60[t]=m60; AB[t]=ab;
+      const tox=shape[t]&&ab>=0.010;
+      if(tox&&!inTox&&t-lastT>5){lastT=t;out.top.push(t);}
+      inTox=tox;
+    }
+    let lastB=-9;
+    for(let t=10;t<n;t++){   // 突破觸發:狀態在近3日內成立過(突破日本身常因跳漲離開低位條件=引擎同語意)
+      if(AB[t]==null||AB[t]>=0.010)continue;
+      if(!(shape[t]||shape[t-1]||shape[t-2]||shape[t-3]))continue;
+      if(M60[t]<=0)continue;
+      let mx=-Infinity; for(let k=t-10;k<t;k++)if(rows[k].c>mx)mx=rows[k].c;
+      if(rows[t].c>mx&&t-lastB>5){lastB=t;out.bot.push(t);}
+    }
+    CSIGC[key]=out; return out;
+  }catch(_){return {bot:[],top:[],cover:0,approx:false};}
+}
 function tdVis(cn){
   // 神奇九轉顯示規則:cn=每根的 setup 計數(斷=0)。一「段」= 連續遞增的計數。
   // 顯示條件:該段最終數到 ≥9(成形,含其 1-8 起數過程),或 段仍進行中(最後一根未斷,例如今天數到6 → 繼續顯示)。
@@ -2192,6 +2248,20 @@ function renderCockpit(){
      marker:{symbol:shortH?'star-open':'star',size:12,color:CPAL.star,line:{width:1.5,color:shortH?CPAL.star:CPAL.edge}},name:'抄底',
      hovertemplate:shortH?'☆ 短史版抄底(上市未滿一年:檔位成分缺 → 3成分制 2/3 齊發)⚠ 無回測樣本,僅供關注、非訊號<extra></extra>'
        :'★ BOT≥3 齊發:跌勢延伸位(298檔×2年:10日反彈51%、20日56% vs 基準53% → 位置標記非預測;快殺型崩跌常整段無★,放寬變體回測無增益)<extra></extra>'},
+    ...(function(){try{   // C訊號(Claude 參考層):與◆★成分零重疊;無⑦資料或無觸發=不畫(fail-open)
+      const cs=csigCompute(CHIP_SYM,rows), off=rows.length-R.length;
+      const cb=cs.bot.map(t=>t-off).filter(i=>i>=0&&i<R.length);
+      const ct=cs.top.map(t=>t-off).filter(i=>i>=0&&i<R.length);
+      if(!cb.length&&!ct.length)return [];
+      const yb=new Array(R.length).fill(null), yt=new Array(R.length).fill(null);
+      cb.forEach(i=>{yb[i]=R[i].l-o3*1.9;}); ct.forEach(i=>{yt[i]=R[i].h+o3*1.9;});
+      const apx=cs.approx?'·短史近似(未回測)':'';
+      return [
+       {type:'scatter',mode:'markers',x:x,y:yb,marker:{symbol:'triangle-up',size:10,color:CPAL.cbot,line:{width:1,color:CPAL.edge}},name:'C▲',showlegend:false,
+        hovertemplate:'C▲ Claude參考·吸籌突破:⑦60/20日全單雙正+吸收率0.2~1%+120日下半+20日未上噴+大單同向,收盤首破前10日高'+apx+'<br>組合回測(2y):40日內達+15% 60.7% vs 基準53.0(n=84;AI集合80.0,n=25小樣本)·歷史頻率非未來機率,非建議<extra></extra>'},
+       {type:'scatter',mode:'markers',x:x,y:yt,marker:{symbol:'triangle-down',size:10,color:CPAL.ctop,line:{width:1,color:CPAL.edge}},name:'C▼',showlegend:false,
+        hovertemplate:'C▼ Claude參考·極端吸收警戒:吸籌形狀但吸收率≥1% 之進入日'+apx+'<br>歷史(2y):此型態40日平均−9.3%(n=28)——「有人狂接」到極端反而偏空·歷史頻率非未來機率,非建議<extra></extra>'}];
+    }catch(_){return [];}})(),
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
@@ -2270,7 +2340,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.028,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -2308,7 +2378,7 @@ function renderCockpit(){
     text:'檔位 —(需一年歷史)',font:{size:8.5,color:MUT2},bgcolor:CPAL.bgc});
   // 直立手機:標題精簡成兩行(第二行=圖例),避免單行過長被切掉
   if(MB)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-    text:(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
+    text:(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
       +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
   // ===== P2 資料接線層(2026-08-01):內部人徽章 / 事件聚光燈(資料=signals.json,無資料靜默)=====
   //   註:訊號K棒變色(2B)、蠟燭型態標記(4C)、回測層(P7 前端 UI)已於 2026-08-01 依使用者指定下架。
