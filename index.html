@@ -101,7 +101,7 @@ a{color:var(--blue)}
       <input id="ghtok" type="password" placeholder="貼上 GitHub token(只存在你這台瀏覽器,不會出現在網頁原始碼)" style="background:var(--surface2);color:var(--ink);border:1px solid var(--amber);border-radius:7px;padding:6px 10px;width:420px;font-size:12.5px">
       <button id="tokbtn" class="tab" style="border:none">儲存 token</button>
     </div>
-    <div class="note">加入<b style="color:#4ade80">免 token</b>(2026-08-04 起):申請經公共收件匣由 Mac 採集器撿走、驗證、寫入共享清單(任何觀看者/裝置可加,~1-2 分鐘生效;K線約 10 分鐘、⑦ 250 日歷史當日回補)。貼 token(gist 權限,僅存本機瀏覽器)只有「<b>✕ 移除</b>」或直寫 0 等待才需要。<b style="color:#f43f5e">闖入者</b>=當下美股成交額 TOP20 中不在清單內的標的,自動補抓 ⑦ 並標紅 —— 抓市場當日異常;不做歷史回填(它們是流動名單)。</div>
+    <div class="note">加入<b style="color:#4ade80">免 token</b>(2026-08-04 起):申請經公共收件匣由 Mac 採集器撿走、驗證、寫入共享清單(任何觀看者/裝置可加,~1-3 分鐘生效;K線約 10 分鐘、⑦ 250 日歷史當日回補)。貼 token(gist 權限,僅存本機瀏覽器)只有「<b>✕ 移除</b>」或直寫 0 等待才需要。<b style="color:#f43f5e">闖入者</b>=當下美股成交額 TOP20 中不在清單內的標的,自動補抓 ⑦ 並標紅 —— 抓市場當日異常;不做歷史回填(它們是流動名單)。</div>
   </div>
   <div class="card">
     <h2>類別淨流向（資金在避險還是冒險？）</h2>
@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T01:25Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T01:32Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2151,7 +2151,7 @@ function renderCockpit(){
   el.dataset.unt='';   // 離開「未追蹤動作區」狀態
   if(CHIPK[CHIP_SYM+'_none']){el.style.height='auto';el.dataset.sig='';
     chartMsg(el,'<b>'+CHIP_SYM+'</b> 尚無日K(此檔有 ⑦ 資金流、但不在日K輪補名單,或剛加入還沒輪到)。'
-      +'<div style="margin-top:10px"><button id="ckLkBtn" style="background:#0f3a24;color:#4ade80;border:1.5px solid #4ade80;border-radius:6px;padding:6px 16px;font-size:13px;cursor:pointer;font-weight:600">⚡ 免token點播補K線(約 1-2 分鐘)</button>'
+      +'<div style="margin-top:10px"><button id="ckLkBtn" style="background:#0f3a24;color:#4ade80;border:1.5px solid #4ade80;border-radius:6px;padding:6px 16px;font-size:13px;cursor:pointer;font-weight:600">⚡ 免token點播補K線(約 1-3 分鐘)</button>'
       +' <span id="chipAddStat" style="font-size:12px;color:#9db4e0"></span></div>'
       +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">點播=任何人可按、一次性快照(Yahoo 5y 日K+⑦ 250 日),不占追蹤名額;要每日自動更新改用搜尋框的「＋加入追蹤」。若久候未出=來源無此代號日K。下方 ⑦ 現金池圖不受影響。</div>',24);
     const _lb=document.getElementById('ckLkBtn'); if(_lb)_lb.onclick=()=>chipLookup(CHIP_SYM);
@@ -2862,7 +2862,7 @@ function renderChips(){
       +'<div style="margin-top:10px"><button id="chipFreeBtn" style="background:#0f3a24;color:#4ade80;border:1.5px solid #4ade80;border-radius:6px;padding:6px 16px;font-size:13.5px;cursor:pointer;font-weight:600">＋ 加入追蹤 '+CHIP_SYM+'(免 token,任何人可加)</button>'
       +' <span id="chipFreeStat" style="font-size:12px"></span></div>'
       +'<div style="margin-top:5px;font-size:11.5px;color:#8792a6">按下後由資料主機自動接手:清單 ~5 分鐘更新(<b>所有觀看者共用</b>)、K線約 10 分鐘上線、⑦ 現金池 250 日歷史當日回補;好了頁面自動變成駕駛艙,不用重新整理。</div>'
-      +'<div style="margin-top:10px"><button id="chipLkBtn" style="background:#3f2d0c;color:#facc15;border:1px solid #facc15;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">⚡ 點播查詢(免token,~1-2分鐘)</button>'
+      +'<div style="margin-top:10px"><button id="chipLkBtn" style="background:#3f2d0c;color:#facc15;border:1px solid #facc15;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">⚡ 點播查詢(免token,~1-3分鐘)</button>'
       +' <button id="chipAddBtn" style="background:#164e63;color:#22d3ee;border:1px solid #22d3ee;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer">＋ 直寫加入(需token,0等待)</button>'
       +' <span id="chipAddStat" style="font-size:12px"></span></div>'
       +'<div style="margin-top:6px;font-size:11.5px;color:#8792a6">⚡點播=任何人可按、現抓一次不持續更新(不占30檔名額);直寫=瀏覽器直接寫清單。另外<b style="color:#4ade80">富途牛牛 App</b> 把代號加自選分組「追蹤」也會自動開採(限持有者;是加進清單、不會取代原有標的)。</div>'
@@ -3005,7 +3005,7 @@ async function saveCustom(list){
   return r===true;
 }
 async function chipLookup(sym){   // ⚡ 點播(2026-08-06 起免token):公共收件匣送「?代號」→ Mac 每輪撿走轉單、同輪現抓
-  // 日K(Yahoo 5y)+⑦歷史250日+今日⑦ 推回(~1-2分鐘;一次性快照、不占30檔追蹤名額)。備援:有token時直寫請求檔(~60-90秒)。
+  // 日K(Yahoo 5y)+⑦歷史250日+今日⑦ 推回(~1-3分鐘;一次性快照、不占30檔追蹤名額)。備援:有token時直寫請求檔(~60-90秒)。
   sym=(sym||'').trim().toUpperCase();
   const st=document.getElementById('chipAddStat');
   if(!/^[A-Z][A-Z0-9.\-]{0,5}$/.test(sym)){if(st)st.textContent='代號格式不對';return;}
@@ -3024,7 +3024,7 @@ async function chipLookup(sym){   // ⚡ 點播(2026-08-06 起免token):公共�
     }catch(e){if(st)st.textContent='送出失敗:'+e.message;}}
   }
   if(!sent){if(st&&!st.textContent.startsWith('送出失敗'))st.textContent='送出失敗:公共通道不通,稍後再試'+(tok?'':'(或貼 token 走備援)');return;}
-  if(st)st.textContent='⚡ 已送出(免token),Mac 現抓中(約 1-2 分鐘;含 ⑦ 現金池 250 日歷史)…';
+  if(st)st.textContent='⚡ 已送出(免token),Mac 現抓中(約 1-3 分鐘;含 ⑦ 現金池 250 日歷史)…';
   let tries=0;
   const done=()=>{const K=CHIPK[sym];return !!(K&&K.bars&&K.bars.length);};   // 成功=日K真的到了(對「有⑦沒K線」的檔也正確,勿以 chipSyms 判定)
   const tick=()=>{tries++;
@@ -3082,7 +3082,7 @@ function initCustomUI(){
       if(!gid){if(st)st.textContent='無法定位資料通道';return;}
       if(st)st.textContent='送出中(免token)…';
       fetch('https://ntfy.sh/mfd-add-'+gid.slice(0,12),{method:'POST',body:v})
-        .then(r=>{if(st)st.textContent=r.ok?('✓ 已送出(免token):'+v+' → 採集器 ~1-2 分鐘寫入共享清單、K線約 10 分鐘上線'):'送出失敗 HTTP '+r.status;})
+        .then(r=>{if(st)st.textContent=r.ok?('✓ 已送出(免token):'+v+' → 採集器 ~1-3 分鐘寫入共享清單、K線約 10 分鐘上線'):'送出失敗 HTTP '+r.status;})
         .catch(e=>{if(st)st.textContent='送出失敗:'+e.message;});
       document.getElementById('addsym').value='';
       return;
