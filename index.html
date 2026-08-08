@@ -5,6 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
+<script>
+/* ===== wsxLazy(v10):隱藏中的圖不畫,顯示時才補畫 =====
+ * 動機:2026-08-08 使用者回報 Mac 變慢、iPad Safari 當掉。量測發現首頁同時實體化 17 張
+ * Plotly 圖,其中 14 張在隱藏分頁體內(使用者看不到),仍佔 DOM/監聽/記憶體並隨 20 秒
+ * 資料刷新重畫。改為延後至「真的被顯示」才畫。renderXXX 函式一律不動。 */
+(function(){
+"use strict";
+if(typeof Plotly==='undefined')return;
+var WAIT=[];
+function elOf(gd){try{return (typeof gd==='string')?document.getElementById(gd):gd;}catch(_){return null;}}
+function isHidden(el){try{return !!el&&el.nodeType===1&&el.offsetParent===null;}catch(_){return false;}}
+function wrapDraw(fn){
+  return function(gd){
+    var el=elOf(gd);
+    if(isHidden(el)){
+      el.__wsxPend={f:fn,a:Array.prototype.slice.call(arguments)};
+      if(WAIT.indexOf(el)<0)WAIT.push(el);
+      return (window.Promise?Promise.resolve(el):undefined);
+    }
+    return fn.apply(Plotly,arguments);
+  };
+}
+var _react=Plotly.react,_newPlot=Plotly.newPlot;
+Plotly.react=wrapDraw(_react); Plotly.newPlot=wrapDraw(_newPlot);
+/* 尚未畫過的容器:restyle/relayout 等原本會丟例外,改為安靜略過 */
+['restyle','relayout','update','addTraces','deleteTraces','animate'].forEach(function(k){
+  var o=Plotly[k]; if(typeof o!=='function')return;
+  Plotly[k]=function(gd){
+    var el=elOf(gd);
+    if(el&&!el._fullLayout)return (window.Promise?Promise.resolve(el):undefined);
+    return o.apply(Plotly,arguments);
+  };
+});
+function flush(){
+  for(var i=WAIT.length-1;i>=0;i--){
+    var el=WAIT[i];
+    if(!el||!el.__wsxPend){WAIT.splice(i,1);continue;}
+    if(el.offsetParent===null)continue;
+    var p=el.__wsxPend; el.__wsxPend=null; WAIT.splice(i,1);
+    try{p.f.apply(Plotly,p.a);}catch(_){}
+  }
+  if(WAIT.length===0&&window.__wsxFill)try{window.__wsxFill();}catch(_){}
+}
+window.__wsxFlush=flush;
+document.addEventListener('click',function(e){
+  if(!e.target||!e.target.closest)return;
+  if(e.target.closest('.tab[data-sec]')||e.target.closest('.wsxTab')||e.target.closest('#wsxRail [data-go]')){
+    flush(); setTimeout(flush,130); setTimeout(flush,450);
+  }
+},false);
+window.addEventListener('resize',function(){setTimeout(flush,250);});
+setInterval(function(){if(!document.hidden&&WAIT.length)flush();},1500);
+})();
+</script>
 <style>
 :root{
   --bg:#0d0d0d; --surface:#1a1a19; --surface2:#222220; --line:#2c2c2a;
@@ -194,8 +248,9 @@ body.wsxFit #wsxDestSlot .card{margin:0}
 /* ===== v6:隱藏捲軸/圖寬貼齊/右欄收納期權定位·資金流暗池 ===== */
 body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="flowsec"]{display:none}
 @media (min-width:1360px){
-  body.wsxFit #sec-chips *,body.wsxFit #sec-rotation *{scrollbar-width:none}
-  body.wsxFit #sec-chips *::-webkit-scrollbar,body.wsxFit #sec-rotation *::-webkit-scrollbar{width:0;height:0;display:none}
+  /* v9:原為 `#sec-chips *` 通用比對(2 萬節點×WebKit 捲軸 renderer)=Safari 卡死主因,改點名容器 */
+  body.wsxFit .wsxCol,body.wsxFit .wsxTB,body.wsxFit .wsxTBr,body.wsxFit #wsxCenter,body.wsxFit #wsxRC,body.wsxFit #wsxRChartP,body.wsxFit #wsxTabsP,body.wsxFit #wsxRTabsP,body.wsxFit #wsxRail,body.wsxFit #wsxTopSlot #wsxTop,body.wsxFit #wsxInfoRow .wsxB,body.wsxFit #wsxLeft,body.wsxFit #wsxA,body.wsxFit #wsxB,body.wsxFit #wsxRL,body.wsxFit #wsxRA,body.wsxFit #wsxRB{scrollbar-width:none}
+  body.wsxFit .wsxCol::-webkit-scrollbar,body.wsxFit .wsxTB::-webkit-scrollbar,body.wsxFit .wsxTBr::-webkit-scrollbar,body.wsxFit #wsxCenter::-webkit-scrollbar,body.wsxFit #wsxRC::-webkit-scrollbar,body.wsxFit #wsxRChartP::-webkit-scrollbar,body.wsxFit #wsxTabsP::-webkit-scrollbar,body.wsxFit #wsxRTabsP::-webkit-scrollbar,body.wsxFit #wsxRail::-webkit-scrollbar,body.wsxFit #wsxTopSlot #wsxTop::-webkit-scrollbar,body.wsxFit #wsxInfoRow .wsxB::-webkit-scrollbar,body.wsxFit #wsxLeft::-webkit-scrollbar,body.wsxFit #wsxA::-webkit-scrollbar,body.wsxFit #wsxB::-webkit-scrollbar,body.wsxFit #wsxRL::-webkit-scrollbar,body.wsxFit #wsxRA::-webkit-scrollbar,body.wsxFit #wsxRB::-webkit-scrollbar{width:0;height:0;display:none}
   body.wsxFit #wsxOptSlot .grid,body.wsxFit #wsxFlowSlot .grid{grid-template-columns:minmax(0,1fr)}
   body.wsxFit #wsxOptSlot .grid>*,body.wsxFit #wsxFlowSlot .grid>*{min-width:0}
   body.wsxFit #wsxOptSlot .card,body.wsxFit #wsxFlowSlot .card{margin:0 0 8px;padding:8px;min-width:0;overflow:hidden}
@@ -512,7 +567,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T16:06Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T17:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4785,33 +4840,78 @@ place();setTimeout(place,1200);
 </script>
 <script>
 
-/* ===== wsx6:圖寬恆貼容器 + splitter 拖曳即時重排(2026-08-08 v6)===== */
+/* ===== wsx6 v9:圖寬恆貼容器(ResizeObserver 事件驅動)+ 拖曳期即時重排 =====
+ * v6 原版用 700ms 常駐輪詢 + 每次滑鼠移動 querySelector,實測在真機(Safari/低階裝置)
+ * 造成持續 CPU 與強制同步 layout。v9 改為:容器尺寸真的變了才動作(RO 提供 contentRect,
+ * 不需 getBoundingClientRect → 零強制 layout);背景分頁完全不做事。 */
 (function(){
 "use strict";
-function fitOn(){try{return document.body.classList.contains('wsxFit');}catch(_){return false;}}
+var RO=null,seen=null,pend=null,raf=0;
+try{ if(typeof ResizeObserver!=='undefined'&&typeof WeakSet!=='undefined'){seen=new WeakSet();} }catch(_){}
+function resizeOne(g){
+  try{
+    if(!g||!g.data||!g._fullLayout||g.offsetParent===null)return;
+    if(g.layout&&g.layout.autosize===false)return;
+    var w=Math.round(g.clientWidth||0);
+    if(w>=60&&Math.abs((g._fullLayout.width||0)-w)>4&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(g);
+  }catch(_){}
+}
+/* 全掃(僅在分頁切換/搬移/視窗縮放等「已知佈局變動」時呼叫,不常駐) */
 function fill(){
   try{
-    if(typeof Plotly==='undefined'||!Plotly.Plots)return;
+    if(document.hidden||typeof Plotly==='undefined'||!Plotly.Plots)return;
     var ps=document.querySelectorAll('.js-plotly-plot');
-    for(var i=0;i<ps.length;i++){
-      var g=ps[i];
-      if(!g.data||!g._fullLayout||g.offsetParent===null)continue;
-      if(g.layout&&g.layout.autosize===false)continue;
-      var w=Math.round(g.getBoundingClientRect().width);
-      if(w>=60&&Math.abs((g._fullLayout.width||0)-w)>4){try{Plotly.Plots.resize(g);}catch(_){}}
-    }
+    for(var i=0;i<ps.length;i++)resizeOne(ps[i]);
   }catch(_){}
 }
 window.__wsxFill=fill;
-setInterval(function(){if(fitOn()||((window.innerWidth||1024)<680))fill();},700);
-var _ft=0,_fq=null;
-document.addEventListener('mousemove',function(){
-  if(!document.querySelector('.wsxSplit.on'))return;
-  var n=Date.now();
-  if(n-_ft>=120){_ft=n;fill();}
-  else if(!_fq)_fq=setTimeout(function(){_fq=null;_ft=Date.now();fill();},130);
-},true);
-document.addEventListener('mouseup',function(){setTimeout(fill,90);setTimeout(fill,380);},true);
+function flush(){
+  raf=0;
+  var list=pend; pend=null;
+  if(!list||document.hidden)return;
+  for(var i=0;i<list.length;i++)resizeOne(list[i]);
+}
+function queue(g){
+  if(!pend)pend=[];
+  if(pend.indexOf(g)<0)pend.push(g);
+  if(!raf)raf=(window.requestAnimationFrame||function(f){return setTimeout(f,16);})(flush);
+}
+if(seen){
+  RO=new ResizeObserver(function(es){
+    for(var i=0;i<es.length;i++){
+      var g=es[i].target, cr=es[i].contentRect;
+      if(!g||!g._fullLayout||!cr||cr.width<60)continue;
+      if(Math.abs((g._fullLayout.width||0)-Math.round(cr.width))>4)queue(g);   /* contentRect=已量好,無強制 layout */
+    }
+  });
+}
+/* 新圖出現才登記觀察(querySelectorAll 不觸發 layout;5s 一次成本可忽略) */
+function observeAll(){
+  if(!RO||!seen)return;
+  try{
+    var ps=document.querySelectorAll('.js-plotly-plot');
+    for(var i=0;i<ps.length;i++)if(!seen.has(ps[i])){seen.add(ps[i]);RO.observe(ps[i]);}
+  }catch(_){}
+}
+observeAll();
+setInterval(function(){if(!document.hidden)observeAll();},5000);
+document.addEventListener('click',function(e){
+  if(e.target.closest&&(e.target.closest('.tab[data-sec]')||e.target.closest('.wsxTab')))
+    setTimeout(function(){observeAll();fill();},150);
+});
+var _wt=null;
+window.addEventListener('resize',function(){clearTimeout(_wt);_wt=setTimeout(function(){observeAll();if(!RO)fill();},200);});
+/* 沒有 ResizeObserver 的老瀏覽器:退回低頻輪詢(2s,且僅前景) */
+if(!RO)setInterval(function(){if(!document.hidden)fill();},2000);
+/* 拖曳期才掛 mousemove(v6 曾常駐 capture 監聽,每次滑鼠移動都 querySelector) */
+document.addEventListener('mousedown',function(e){
+  if(!(e.target.closest&&e.target.closest('.wsxSplit')))return;
+  var last=0,tick=function(){var n=Date.now();if(n-last<100)return;last=n;fill();};
+  var up=function(){document.removeEventListener('mousemove',tick);document.removeEventListener('mouseup',up);
+    setTimeout(fill,90);setTimeout(fill,380);};
+  document.addEventListener('mousemove',tick);
+  document.addEventListener('mouseup',up);
+});
 })();
 
 </script>
