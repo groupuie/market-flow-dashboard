@@ -280,6 +280,10 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   #chipInput,#chipSym,#addsym,#chipTokIn,#winFrom,#winTo,#optTrendSym,
   input[type="text"],input[type="password"],input:not([type]),select{font-size:16px!important}
 }
+
+/* ===== v13:只留個股籌碼一個分頁 → 分頁列本身沒有作用,隱藏以讓出垂直空間
+   (#sec-chips 恆為 active,tab 元素保留在 DOM 供 FIT()/選擇器判定) ===== */
+.tabs{display:none}
 </style>
 </head>
 <body>
@@ -293,11 +297,9 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 </header>
 
 <div class="tabs">
-  <div class="tab" data-sec="rotation">資金輪動 FROM→TO</div>
-  <div class="tab" data-sec="options">期權定位</div>
-  <div class="tab" data-sec="cross">跨資產總覽</div>
-  <div class="tab" data-sec="equities">個股 · 槓桿ETF</div>
-  <div class="tab" data-sec="flow">資金流 · 暗池</div>
+  <!-- v13:使用者指定只留「個股籌碼」。其餘分頁鈕移除;
+       rotation/options/flow 的 section 仍留在 DOM(工作區的時間視窗卡、大盤現金流向圖、
+       期權定位/資金流暗池分頁內容都住在那裡),但永遠不可見 → 其 Plotly 圖經 wsxLazy 不會被實體化。 -->
   <div class="tab active" data-sec="chips">個股籌碼</div>
 </div>
 
@@ -446,27 +448,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 </div>
 </section>
 
-<!-- ===== 跨資產總覽 ===== -->
-<section id="sec-cross" class="sec">
-  <div class="card"><h2>關鍵指標</h2><div id="tiles" class="tiles"></div></div>
-  <div class="grid g2">
-    <div class="card"><h2>美債殖利率曲線 <span class="sub" id="ratefresh"></span></h2><div id="curve" style="height:340px"></div></div>
-    <div class="card"><h2>大宗商品（1D / 5D%）</h2><div id="commod" style="height:340px"></div></div>
-  </div>
-</section>
-
-<!-- ===== 個股 · 槓桿ETF ===== -->
-<section id="sec-equities" class="sec">
-  <div class="card">
-    <h2>個股（含相對強弱 RS vs SPY、Futu 大單淨流⑦）</h2>
-    <div style="overflow-x:auto"><table id="stockTable"></table></div>
-  </div>
-  <div class="card">
-    <h2>大型個股／大盤 2× 3× 做多做空 ETF</h2>
-    <div style="overflow-x:auto"><table id="levTable"></table></div>
-    <div class="note">槓桿單股／指數 ETF 有隔夜跳空與波動衰減風險，僅供部位觀察。</div>
-  </div>
-</section>
+<!-- v13:跨資產總覽 / 個股·槓桿ETF 兩區已移除(使用者指定只留個股籌碼;無其他相依) -->
 
 <!-- ===== 資金流 · 暗池 ===== -->
 <section id="sec-flow" class="sec">
@@ -575,7 +557,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T18:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T23:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3439,7 +3421,7 @@ function renderChips(){
 }
 function render(){
   if(!DATA)return;
-  renderRotation(); renderOptions(); renderCross(); renderEquities(); renderFlow(); renderChips();
+  renderRotation(); renderOptions(); renderFlow(); renderChips();   // v13:跨資產/個股ETF 兩區已移除
 }
 
 
@@ -4840,20 +4822,29 @@ document.addEventListener('click',function(e){
 "use strict";
 function chipsOn(){try{return document.getElementById('sec-chips').classList.contains('active');}catch(_){return false;}}
 function wide(){try{return window.__wsxWide?window.__wsxWide():(window.innerWidth>=1360);}catch(_){return true;}}
+var OPENED={};   /* v13:記錄使用者實際點開過的重量級分頁 */
+document.addEventListener('click',function(e){
+  var tb=e.target.closest&&e.target.closest('.wsxTab[data-wt]');
+  if(!tb)return;
+  var k=tb.getAttribute('data-wt');
+  if((k==='optsec'||k==='flowsec')&&!OPENED[k]){OPENED[k]=1;setTimeout(place,0);setTimeout(place,160);}
+});
 function place(){
   var moved=false,movedDest=false;
   try{
     var pairs=[
       {card:'destCard', chips:'wsxDestSlot', rot:'wsxRChartP', prepend:false},
       {card:'winCard',  chips:'wsxWinSlot',  rot:'wsxRL',      prepend:true},
-      {card:'optPack',  chips:'wsxOptSlot',  rot:'sec-options',prepend:false,desk:true},
-      {card:'flowPack', chips:'wsxFlowSlot', rot:'sec-flow',   prepend:false,desk:true},
+      {card:'optPack',  chips:'wsxOptSlot',  rot:'sec-options',prepend:false,desk:true,tab:'optsec'},
+      {card:'flowPack', chips:'wsxFlowSlot', rot:'sec-flow',   prepend:false,desk:true,tab:'flowsec'},
       {card:'wsxTop',   chips:'wsxTopSlot',  rot:'wsxTopHome', prepend:false,desk:true}
     ];
     var on=chipsOn();
     for(var i=0;i<pairs.length;i++){
       var p=pairs[i], card=document.getElementById(p.card);
-      var want=on&&(!p.desk||wide());
+      /* v13:掛在分頁體內的大區塊(期權定位/資金流·暗池)= 第一次點開那個分頁才搬進來,
+         否則初次載入就要白搬數千個節點(實測 DCL +1.9s)。搬回家不受此限。 */
+      var want=on&&(!p.desk||wide())&&(!p.tab||OPENED[p.tab]);
       var tgt=document.getElementById(want?p.chips:p.rot);
       if(!card||!tgt||card.parentNode===tgt)continue;
       if(!want&&p.prepend&&tgt.firstChild)tgt.insertBefore(card,tgt.firstChild);
@@ -4871,7 +4862,12 @@ function place(){
     try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}
     try{if(window.__wsxFill)window.__wsxFill();}catch(_){}
   },150);
-  if(movedDest)setTimeout(function(){try{if(typeof renderRotation==='function'&&typeof DATA!=='undefined'&&DATA)renderRotation();}catch(_){}},230);
+  /* v13:只有在 dest「已經畫過」時才需要補跑(換容器→邊距要重算);初次載入時圖還沒畫,
+     第一次自然渲染就會用到正確容器寬,補跑純屬多花一整輪 renderRotation。 */
+  if(movedDest)setTimeout(function(){try{
+    var d=document.getElementById('dest');
+    if(d&&d._fullLayout&&typeof renderRotation==='function'&&typeof DATA!=='undefined'&&DATA)renderRotation();
+  }catch(_){}},230);
 }
 document.addEventListener('click',function(e){
   if(e.target.closest&&e.target.closest('.tab[data-sec]'))setTimeout(place,80);
@@ -5018,6 +5014,33 @@ document.addEventListener('click',function(e){
   }catch(_){}
 });
 build(); setTimeout(build,1500); setTimeout(build,5000);
+})();
+
+</script>
+<script>
+
+/* ===== wsxCoalesce(v13):renderChips 首呼即時 + 尾隨合併 =====
+ * 載入期間每個 ensureXXX(signals/scan/sig_review/ai_marks/analyst/kline)抓回來都各觸發一次
+ * renderChips,實測連續重畫駕駛艙 6 次(CPU×4 節流下每次約 0.4s)。改為:距上次 ≥500ms 立即畫,
+ * 否則排一次尾隨(500ms) —— 畫面即時性不變(第一次仍同步),連發則合併成一次,最終狀態一致。 */
+(function(){
+"use strict";
+var o=window.renderChips;
+if(typeof o!=='function')return;
+var last=0,timer=null,BUSY=false;
+function run(){
+  last=+new Date(); timer=null;
+  if(BUSY)return;
+  BUSY=true;
+  try{o.call(window);}catch(_){}
+  BUSY=false;
+}
+window.renderChips=function(){
+  var n=+new Date();
+  if(n-last>=500&&!timer){run();return;}
+  if(!timer)timer=setTimeout(run,500);
+};
+window.__wsxRenderChipsNow=run;
 })();
 
 </script>
