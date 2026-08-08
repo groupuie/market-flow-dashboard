@@ -173,6 +173,8 @@ a{color:var(--blue)}
   body.wsxFit #cattiles .tile .chg{display:none}
 }
 @media (max-width:679px){#wsxRTabRow{display:none}.wsxTBr{display:block!important;max-height:none}}
+body.wsxFit #wsxDestSlot .card{margin:0}
+#wsxDestSlot .card{margin:0 0 10px}
 </style>
 </head>
 <body>
@@ -220,7 +222,7 @@ a{color:var(--blue)}
 <div class="wsxSplit" data-ws="L"></div>
 <div id="wsxRC">
   <div id="wsxRChartP">
-<div class="card">
+<div class="card" id="destCard">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="dest" style="height:480px"></div>
     <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
@@ -383,8 +385,7 @@ a{color:var(--blue)}
 </div>
 <div id="wsxGrid">
 <aside id="wsxLeft" class="wsxCol">
-  <div id="wsxMJudge"></div>
-  <div class="wsxP"><div class="wsxH">◆★ / 邊緣案例判讀</div><div class="wsxB" style="padding:2px 8px 8px"><div id="sigreview"></div></div></div>
+  <div id="wsxDestSlot"></div>
 </aside>
 <div class="wsxSplit" data-ws="L"></div>
 <div id="wsxCenter">
@@ -424,7 +425,8 @@ a{color:var(--blue)}
 </div>
 <div class="wsxSplit" data-ws="A2"></div>
 <div id="wsxB" class="wsxCol">
-  <div id="wsxMRev"></div>
+  <div id="wsxMJudge"></div>
+  <div class="wsxP"><div class="wsxH">◆★ / 邊緣案例判讀</div><div class="wsxB" style="padding:2px 8px 8px"><div id="sigreview"></div></div></div>
   <div id="wsxMRep"></div>
   <div class="wsxP"><div class="wsxH">存量分解 · 13F 大戶</div><div class="wsxB" style="padding:2px 8px 8px"><div id="chipstock"></div></div></div>
 </div>
@@ -439,7 +441,7 @@ a{color:var(--blue)}
   <button data-go="wsxMOpt" title="期權定位">⛓<small>期權</small></button>
   <button data-go="season" title="季節性">📅<small>季節</small></button>
   <button data-go="wsxMWatch" title="追蹤清單">👁<small>清單</small></button>
-  <button data-go="wsxMRev" title="判讀訊號流">📡<small>訊號</small></button>
+  <button data-go="wsxDestSlot" title="大盤現金流向">💰<small>現金流</small></button>
   <button data-go="wsxMRep" title="財報">🧾<small>財報</small></button>
   <button data-go="chipstock" title="存量分解">🏦<small>13F</small></button>
 </nav>
@@ -453,7 +455,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T12:50Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T13:59Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4550,9 +4552,9 @@ var DESK=function(){return window.innerWidth>=1360;};
 var grid=document.getElementById('wsxGrid');
 if(!grid)return;
 /* ── 欄寬狀態 ── */
-var COLS={L:264,A:250,B:262};
+var COLS={L:380,A:250,B:262};
 try{var sv=JSON.parse(localStorage.getItem('wsxCols')||"null");if(sv&&sv.L)COLS=sv;}catch(_){}
-var LIM={L:[200,360],A:[200,340],B:[210,380]};
+var LIM={L:[220,560],A:[200,340],B:[210,380]};
 function applyCols(){
   var tg=[document.documentElement,grid];
   for(var i2=0;i2<tg.length;i2++){tg[i2].style.setProperty('--wsxL',COLS.L+'px');tg[i2].style.setProperty('--wsxA',COLS.A+'px');tg[i2].style.setProperty('--wsxB',COLS.B+'px');}
@@ -4667,6 +4669,39 @@ document.addEventListener('click',function(e){
     }catch(_){}
   },120);
 });
+})();
+
+</script>
+<script>
+
+/* ===== destCard 跨分頁共用搬移(wsx5)===== */
+(function(){
+"use strict";
+function homeOf(){
+  try{
+    var chips=document.getElementById('sec-chips');
+    if(chips&&chips.classList.contains('active'))return document.getElementById('wsxDestSlot');
+    return document.getElementById('wsxRChartP');
+  }catch(_){return null;}
+}
+function place(){
+  try{
+    var card=document.getElementById('destCard'),tgt=homeOf();
+    if(!card||!tgt)return;
+    if(card.parentNode===tgt)return;
+    tgt.appendChild(card);
+    setTimeout(function(){
+      try{
+        var ps=card.querySelectorAll('.js-plotly-plot');
+        for(var i=0;i<ps.length;i++)if(ps[i].data&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[i]);
+      }catch(_){}
+    },120);
+  }catch(_){}
+}
+document.addEventListener('click',function(e){
+  if(e.target.closest&&e.target.closest('.tab[data-sec]'))setTimeout(place,80);
+});
+place();setTimeout(place,1200);
 })();
 
 </script>
