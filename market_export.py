@@ -941,7 +941,10 @@ def fetch_inbox_msgs(cfg, seen_path):
         except Exception: seen=set()
         req=urllib.request.Request(f"https://ntfy.sh/mfd-add-{gid[:12]}/json?poll=1&since=13h",
                                    headers={"User-Agent":"market-export"})
-        raw=urllib.request.urlopen(req,timeout=12).read().decode("utf-8","ignore")
+        try:
+            raw=urllib.request.urlopen(req,timeout=12).read().decode("utf-8","ignore")
+        except urllib.error.HTTPError as e:
+            log("INBOX HTTP",e.code,"(429=ntfy 限流,節流機制應防再發)"); return [],[]
         adds=[]; looks=[]; new_ids=[]
         for line in raw.splitlines():
             try: msg=json.loads(line)
@@ -971,7 +974,19 @@ def process_inbox(cfg, args):
     """每輪(快/全)處理收件匣:加追蹤=即刻合併寫回共享清單(比舊的全量輪合併快到 ~1 分鐘);
        點播=排入持久佇列、每輪送出一檔到 lookup_request.json(同輪 serve_lookup 立即服務)。
        兩者皆 push 失敗即留佇列重試(fail-open,不影響採集)。"""
-    adds, looks = fetch_inbox_msgs(cfg, args.config+".inboxseen.json")
+    # ntfy 輪詢節流(2026-08-08 校閱發現):v2 起每輪都撿(盤中=每分鐘)→ 一天可達 ~500 次,實測觸發
+    # ntfy 訪客限流後收件匣「靜默失效」(fail-open 回空、Mac 端才看得到錯)。改:實際輪詢最少間隔 150s
+    # (盤中點播最壞 ~2.5 分鐘,額度 ~350/日);佇列(addq/lookq/spool)每輪照常消化,不受節流影響。
+    # 失敗的訊息不會遺失:未標 seen、留在主題 ~12h,輪詢恢復即補收(自癒)。
+    _tp=args.config+".inboxpoll"
+    try: _last=os.path.getmtime(_tp)
+    except OSError: _last=0
+    if time.time()-_last<150:
+        adds, looks = [], []
+    else:
+        try: open(_tp,"w").write("")
+        except Exception: pass
+        adds, looks = fetch_inbox_msgs(cfg, args.config+".inboxseen.json")
     aqp=args.config+".inboxaddq.json"; lqp=args.config+".inboxlookq.json"
     try: aq=[s for s in (json.load(open(aqp)) or []) if isinstance(s,str)]
     except Exception: aq=[]
