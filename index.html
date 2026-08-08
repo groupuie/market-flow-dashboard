@@ -503,8 +503,9 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   <div class="wsxP" id="wsxChartP">
     <div id="wsxTopSlot"></div>
     <div id="wsxTools"><span class="sub">標的</span><select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
-      <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
+      <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
       <datalist id="chipDL"></datalist>
+      <span id="chipRecent" style="display:none;gap:4px;flex-wrap:wrap;align-items:center"></span>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
     <div id="cockpit" style="height:660px"></div>
@@ -574,7 +575,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T17:55Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T18:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3284,12 +3285,18 @@ function renderChips(){
   } else if(sel){sel.value=syms.includes(CHIP_SYM)?CHIP_SYM:'';}
   const inp=document.getElementById('chipInput');   // 自填代號:輸入任意市場標的 ↵
   if(inp&&!inp.dataset.bound){inp.dataset.bound='1';
+    // v12:記錄最近搜尋。**不在此刻改 datalist**——iPad 的建議浮層可能仍開著,
+    //     在 WebKit 正呈現的 popover 底下抽換 DOM 會讓整個分頁卡死(2026-08-08 使用者回報)。
     const _recPush=v=>{try{if(!/^[A-Z0-9.\-]{1,12}$/.test(v))return;let r=[];try{r=JSON.parse(localStorage.getItem('wsxRecent')||'[]')||[];}catch(_){r=[];}
       r=[v].concat(r.filter(x=>x!==v)).slice(0,8);localStorage.setItem('wsxRecent',JSON.stringify(r));
-      const d2=document.getElementById('chipDL');if(d2){const all=Array.from(d2.querySelectorAll('option')).map(o=>o.value);const rest=all.filter(x=>r.indexOf(x)<0);
-        d2.innerHTML=r.map(x=>'<option value="'+x+'" label="最近搜尋">').join('')+rest.map(x=>'<option value="'+x+'">').join('');}}catch(_){}};   // v7:最近搜尋
-    const go=()=>{const v=(inp.value||'').trim().toUpperCase();if(v){CHIP_SYM=v;_recPush(v);inp.value='';renderChips();}};
-    inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();}); inp.addEventListener('change',go);}
+      setTimeout(function(){try{if(window.__wsxRecentUI)window.__wsxRecentUI();}catch(_){}},500);}catch(_){}};
+    // v12:先收鍵盤/浮層,讓出主執行緒一拍,再做重繪 —— 否則 iOS 會在鍵盤收合交易中被長時間阻塞。
+    const go=()=>{const v=(inp.value||'').trim().toUpperCase();if(!v)return;
+      inp.value='';try{inp.blur();}catch(_){}
+      CHIP_SYM=v;_recPush(v);
+      const run=function(){try{renderChips();}catch(_){}};
+      if(window.requestAnimationFrame)requestAnimationFrame(function(){setTimeout(run,0);});else setTimeout(run,16);};
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go();}}); inp.addEventListener('change',go);}
   const rb=document.getElementById('chipRange');
   if(rb){rb.innerHTML=['d','w','m','y'].map(p=>'<span class="tab '+(CHIP_PD===p?'active':'')+'" data-pd="'+p+'" style="padding:3px 10px;font-size:12px;font-weight:600">'+PD_LAB[p]+'K</span>').join('')
       +'<span style="opacity:.35;margin:0 2px">|</span>'
@@ -4949,6 +4956,68 @@ document.addEventListener('mousedown',function(e){
   document.addEventListener('mousemove',tick);
   document.addEventListener('mouseup',up);
 });
+})();
+
+</script>
+<script>
+
+/* ===== wsxRecent(v12):觸控裝置以「最近」chip 取代 datalist =====
+ * iPad Safari 在「輸入任何代號」搜尋會整頁卡死(Mac Safari / iPhone Safari 皆正常)。
+ * 差異交集=桌機版面(≥680px)×iOS 軟鍵盤/建議浮層,只有 iPad 同時滿足。
+ * 這裡直接把 iPad 上最可疑的那條 WebKit UI 路徑拿掉:移除 list 屬性(不再有 datalist popover),
+ * 改成輸入框旁的可點 chip —— 觸控上本來就比叫出鍵盤打字好用。桌機完全不受影響(維持 datalist)。 */
+(function(){
+"use strict";
+var COARSE=false;
+try{COARSE=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)||((navigator.maxTouchPoints||0)>0);}catch(_){}
+function build(){
+  try{
+    var box=document.getElementById('chipRecent'); if(!box)return;
+    var inp0=document.getElementById('chipInput');
+    if(!COARSE){
+      /* 桌機:維持 datalist 自動完成,把最近搜尋排到最前面。
+         **只在輸入框沒有焦點時才改**(建議浮層開著時抽換 DOM 是 iPad 當機主嫌,桌機也一併避開)。 */
+      box.style.display='none';
+      var d=document.getElementById('chipDL');
+      if(!d||!inp0||document.activeElement===inp0)return;
+      var rc=[];try{rc=(JSON.parse(localStorage.getItem('wsxRecent')||'[]')||[]).filter(function(x){return /^[A-Z0-9.\-]{1,12}$/.test(x);});}catch(_){rc=[];}
+      if(!rc.length)return;
+      var all=Array.prototype.map.call(d.querySelectorAll('option'),function(o){return o.value;});
+      var rest=all.filter(function(x){return rc.indexOf(x)<0;});
+      var sig2=rc.join(',')+'|'+rest.length;
+      if(d.dataset.rsig===sig2)return;
+      d.dataset.rsig=sig2;
+      d.innerHTML=rc.map(function(x){return '<option value="'+x+'" label="最近搜尋">';}).join('')
+                 +rest.map(function(x){return '<option value="'+x+'">';}).join('');
+      return;
+    }
+    var inp=inp0;
+    if(inp&&inp.hasAttribute('list'))inp.removeAttribute('list');   /* 觸控:徹底移除 datalist popover */
+    var r=[];try{r=(JSON.parse(localStorage.getItem('wsxRecent')||'[]')||[]).filter(function(x){return /^[A-Z0-9.\-]{1,12}$/.test(x);});}catch(_){r=[];}
+    if(!r.length){box.style.display='none';box.innerHTML='';return;}
+    var sig=r.join(',');
+    if(box.dataset.sig===sig){box.style.display='inline-flex';return;}
+    box.dataset.sig=sig;
+    box.innerHTML='<span class="sub" style="font-size:10.5px">最近</span>'+r.slice(0,6).map(function(x){
+      return '<span class="tab" data-wsxrec="'+x+'" style="padding:3px 9px;font-size:12px">'+x+'</span>';}).join('');
+    box.style.display='inline-flex';
+  }catch(_){}
+}
+window.__wsxRecentUI=build;
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-wsxrec]');
+  if(!b)return;
+  var sy=b.getAttribute('data-wsxrec');
+  try{
+    if(typeof CHIP_SYM!=='undefined')CHIP_SYM=sy;
+    var sel=document.getElementById('chipSym');
+    if(sel&&Array.prototype.some.call(sel.options,function(o){return o.value===sy;}))sel.value=sy;
+    if(typeof ensureChipK==='function')ensureChipK(sy);
+    if(window.requestAnimationFrame)requestAnimationFrame(function(){setTimeout(function(){try{renderChips();}catch(_){}},0);});
+    else setTimeout(function(){try{renderChips();}catch(_){}},16);
+  }catch(_){}
+});
+build(); setTimeout(build,1500); setTimeout(build,5000);
 })();
 
 </script>
