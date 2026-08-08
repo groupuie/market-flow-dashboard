@@ -273,6 +273,13 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
    不得撐大軌;軌鎖 minmax(0,1fr) 後 div 寬回歸容器,wsx6 fill 偵測落差自癒。滿版 fit 規則較晚且特異度高,不受影響 */
 #wsxGrid,#wsxRGrid{grid-template-columns:minmax(0,1fr)}
 #wsxGrid>*,#wsxRGrid>*,.wsxCol,#wsxCenter,#wsxRC{min-width:0}
+
+/* ===== v11:觸控裝置表單字級 ≥16px —— iOS Safari 對焦 font-size<16px 的輸入框會自動放大頁面,
+   放大會改變 innerWidth 回報值 → 觸發工作區門檻震盪 → 整組面板反覆搬家卡死。從源頭消除。 ===== */
+@media (pointer:coarse){
+  #chipInput,#chipSym,#addsym,#chipTokIn,#winFrom,#winTo,#optTrendSym,
+  input[type="text"],input[type="password"],input:not([type]),select{font-size:16px!important}
+}
 </style>
 </head>
 <body>
@@ -567,7 +574,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T17:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T17:55Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4662,13 +4669,38 @@ setInterval(tick,1500);
 setTimeout(tick,700);
 })();
 
+/* ===== v11:工作區寬度判定(含遲滯 + 斷路器)=====
+ * 2026-08-08 iPad 當機根因:iPad 橫向 1366px 距門檻 1360px 只有 6px,iOS 對焦輸入框自動放大時
+ * innerWidth(視覺視口)瞬間掉到門檻下 → 面板整組來回搬家 → 主執行緒卡死。
+ * 進場 ≥1360、離場 <1290(觸控 <1200):縮放抖動跨不過,橫直向切換仍正確。 */
+window.__wsxWide=(function(){
+  var TOUCH=false;
+  try{TOUCH=(navigator.maxTouchPoints||0)>0||('ontouchstart' in window);}catch(_){}
+  var OUT=TOUCH?1200:1290;
+  var st=null, flips=[], lockUntil=0;
+  return function(){
+    var w=0;
+    try{w=window.innerWidth||document.documentElement.clientWidth||1024;}catch(_){w=1024;}
+    if(st===null){st=w>=1360;return st;}
+    var now=+new Date();
+    if(now<lockUntil)return st;              /* 斷路器鎖定中:維持現狀 */
+    var next=st?(w<OUT?false:true):(w>=1360?true:false);
+    if(next!==st){
+      flips.push(now);
+      while(flips.length&&now-flips[0]>5000)flips.shift();
+      if(flips.length>3){lockUntil=now+10000;return st;}   /* 5 秒內翻轉 >3 次 → 鎖 10 秒 */
+      st=next;
+    }
+    return st;
+  };
+})();
 /* ===== 工作區 v3 附加模組:滿版自適應 + 欄寬拖曳 + rail(2026-08-08)=====
  * 職責:①桌機(≥1360)計算駕駛艙可用高 → window.__wsxCkH(renderChips 的高度單一真值)
  *      ②視窗 resize → 更新高度 + Plotly.Plots.resize(不重跑 renderChips,responsive 自適應)
  *      ③四條 splitter 拖曳欄寬(css 變數 + localStorage)④rail 捷徑。全部 fail-open。 */
 (function(){
 "use strict";
-var DESK=function(){return window.innerWidth>=1360;};
+var DESK=function(){return window.__wsxWide?window.__wsxWide():(window.innerWidth>=1360);};
 var grid=document.getElementById('wsxGrid');
 if(!grid)return;
 /* ── 欄寬狀態 ── */
@@ -4705,6 +4737,7 @@ function rsz(){
     if(cc&&cc.data&&cc.offsetParent!==null)Plotly.Plots.resize(cc);
   }catch(_){}
 }
+window.__wsxRsz=rsz;   /* v11:給 wsx5 搬移後直接呼叫,取代自行 dispatch 全域 resize */
 var _rt=null;
 window.addEventListener('resize',function(){clearTimeout(_rt);_rt=setTimeout(rsz,160);});
 updFit();calcH();
@@ -4799,7 +4832,7 @@ document.addEventListener('click',function(e){
 (function(){
 "use strict";
 function chipsOn(){try{return document.getElementById('sec-chips').classList.contains('active');}catch(_){return false;}}
-function wide(){try{return window.innerWidth>=1360;}catch(_){return true;}}
+function wide(){try{return window.__wsxWide?window.__wsxWide():(window.innerWidth>=1360);}catch(_){return true;}}
 function place(){
   var moved=false,movedDest=false;
   try{
@@ -4826,14 +4859,18 @@ function place(){
     }
   }catch(_){}
   /* 佈局變動 → 重算駕駛艙高(wsx3 rsz)+responsive 圖自適應;destCard 換容器 → 重繪套用窄/寬邊距 */
-  if(moved)setTimeout(function(){try{window.dispatchEvent(new Event('resize'));}catch(_){}},150);
+  /* v11:原本自行 dispatch 全域 resize,會把頁面上每個 resize 監聽再喚醒一輪(放大成本);改直呼 */
+  if(moved)setTimeout(function(){
+    try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}
+    try{if(window.__wsxFill)window.__wsxFill();}catch(_){}
+  },150);
   if(movedDest)setTimeout(function(){try{if(typeof renderRotation==='function'&&typeof DATA!=='undefined'&&DATA)renderRotation();}catch(_){}},230);
 }
 document.addEventListener('click',function(e){
   if(e.target.closest&&e.target.closest('.tab[data-sec]'))setTimeout(place,80);
 });
 var _pt=null;
-window.addEventListener('resize',function(){clearTimeout(_pt);_pt=setTimeout(place,220);});
+window.addEventListener('resize',function(){clearTimeout(_pt);_pt=setTimeout(place,400);});   /* v11:220→400ms,吸收 iOS 鍵盤動畫連發 */
 place();setTimeout(place,1200);
 })();
 
