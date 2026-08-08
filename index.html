@@ -101,7 +101,7 @@ a{color:var(--blue)}
       <input id="ghtok" type="password" placeholder="貼上 GitHub token(只存在你這台瀏覽器,不會出現在網頁原始碼)" style="background:var(--surface2);color:var(--ink);border:1px solid var(--amber);border-radius:7px;padding:6px 10px;width:420px;font-size:12.5px">
       <button id="tokbtn" class="tab" style="border:none">儲存 token</button>
     </div>
-    <div class="note">自訂代號寫入你的 gist(custom_symbols.json),Mac 採集器 5 分鐘內自動開始抓它的 ⑦ 大單淨流與 30 日歷史。首次使用需貼一次 GitHub token(gist 權限;僅存於瀏覽器 localStorage,分享網址給別人時對方看不到、也改不了你的清單)。<b style="color:#f43f5e">闖入者</b>=當下美股成交額 TOP20 中不在清單內的標的,自動補抓 ⑦ 並標紅 —— 抓市場當日異常;不做歷史回填(它們是流動名單)。</div>
+    <div class="note">加入<b style="color:#4ade80">免 token</b>(2026-08-04 起):申請經公共收件匣由 Mac 採集器撿走、驗證、寫入共享清單(任何觀看者/裝置可加,~1-2 分鐘生效;K線約 10 分鐘、⑦ 250 日歷史當日回補)。貼 token(gist 權限,僅存本機瀏覽器)只有「<b>✕ 移除</b>」或直寫 0 等待才需要。<b style="color:#f43f5e">闖入者</b>=當下美股成交額 TOP20 中不在清單內的標的,自動補抓 ⑦ 並標紅 —— 抓市場當日異常;不做歷史回填(它們是流動名單)。</div>
   </div>
   <div class="card">
     <h2>類別淨流向（資金在避險還是冒險？）</h2>
@@ -256,7 +256,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-07T13:29Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T01:25Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2145,7 +2145,9 @@ function buildChipIdxRangeActive(){   // 縮放鈕 active 樣式即時反映(不
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
-  el.style.height=MB?'980px':'960px';   // 直立手機:加高,五軌才有正確比例(窄螢幕靠垂直空間)
+  el.style.height=MB?'600px':'960px';   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
+  // 2026-08-08 校閱修正:此處原為 980(舊五軌高版遺留),完整渲染尾端才改 600;dataset.sig 快取提前返回時
+  // 容器停在 980 → responsive 把圖拉高 → 手機高度在 600/980 間震盪。兩處對齊=單一真值,震盪根治。
   el.dataset.unt='';   // 離開「未追蹤動作區」狀態
   if(CHIPK[CHIP_SYM+'_none']){el.style.height='auto';el.dataset.sig='';
     chartMsg(el,'<b>'+CHIP_SYM+'</b> 尚無日K(此檔有 ⑦ 資金流、但不在日K輪補名單,或剛加入還沒輪到)。'
@@ -3073,6 +3075,18 @@ function initCustomUI(){
   btn.onclick=()=>{
     const v=(document.getElementById('addsym').value||'').trim().toUpperCase().replace(/^US\./,'');
     if(!/^[A-Z.]{1,10}$/.test(v)){document.getElementById('customstat').textContent='代號格式不對';return;}
+    const tok=localStorage.getItem('gh_token');
+    if(!tok){   // 免token(2026-08-08):主頁加入改走公共收件匣(與個股籌碼頁綠鈕同通道);token 僅剩移除/直寫需要
+      const gid=(DATA_URL.match(/\/([a-f0-9]{20,})\/raw\//)||[])[1]||'';
+      const st=document.getElementById('customstat');
+      if(!gid){if(st)st.textContent='無法定位資料通道';return;}
+      if(st)st.textContent='送出中(免token)…';
+      fetch('https://ntfy.sh/mfd-add-'+gid.slice(0,12),{method:'POST',body:v})
+        .then(r=>{if(st)st.textContent=r.ok?('✓ 已送出(免token):'+v+' → 採集器 ~1-2 分鐘寫入共享清單、K線約 10 分鐘上線'):'送出失敗 HTTP '+r.status;})
+        .catch(e=>{if(st)st.textContent='送出失敗:'+e.message;});
+      document.getElementById('addsym').value='';
+      return;
+    }
     const list=[...(DATA.custom_symbols||[])];
     if(!list.includes(v))list.push(v);
     saveCustom(list.slice(0,30)); document.getElementById('addsym').value='';
