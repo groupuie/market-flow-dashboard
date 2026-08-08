@@ -1,0 +1,1703 @@
+{
+ "updated_utc": "2026-08-08 06:48:16",
+ "src": "nasdaq(analyst/eps)+edgar(8-K 2.02)+gist kline(3d)",
+ "note": "評級/目標價=賣方共識統計(系統性偏多、常滯後);驚喜%=(實際-共識)/|共識|;3日反應=揭露前收盤→第3個交易日收盤,歷史描述非預測;不構成投資建議。",
+ "symbols": {
+  "MU": {
+   "pt": {
+    "low": 1100.0,
+    "mean": 1560.74,
+    "high": 2200.0,
+    "buy": 29,
+    "hold": 1,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 22,
+     "hold": 3,
+     "sell": 0,
+     "px": 104.88
+    },
+    {
+     "m": "2025-09",
+     "buy": 24,
+     "hold": 3,
+     "sell": 0,
+     "px": 119.01
+    },
+    {
+     "m": "2025-10",
+     "buy": 22,
+     "hold": 3,
+     "sell": 0,
+     "px": 182.15
+    },
+    {
+     "m": "2025-11",
+     "buy": 24,
+     "hold": 3,
+     "sell": 0,
+     "px": 223.77
+    },
+    {
+     "m": "2025-12",
+     "buy": 24,
+     "hold": 3,
+     "sell": 0,
+     "px": 240.46
+    },
+    {
+     "m": "2026-01",
+     "buy": 25,
+     "hold": 2,
+     "sell": 0,
+     "px": 285.41
+    },
+    {
+     "m": "2026-02",
+     "buy": 27,
+     "hold": 2,
+     "sell": 0,
+     "px": 414.88
+    },
+    {
+     "m": "2026-03",
+     "buy": 27,
+     "hold": 1,
+     "sell": 0,
+     "px": 412.37
+    },
+    {
+     "m": "2026-04",
+     "buy": 26,
+     "hold": 3,
+     "sell": 0,
+     "px": 367.85
+    },
+    {
+     "m": "2026-05",
+     "buy": 27,
+     "hold": 3,
+     "sell": 0,
+     "px": 542.21
+    },
+    {
+     "m": "2026-06",
+     "buy": 26,
+     "hold": 3,
+     "sell": 0,
+     "px": 1035.5
+    },
+    {
+     "m": "2026-07",
+     "buy": 29,
+     "hold": 1,
+     "sell": 0,
+     "px": 1032.28
+    },
+    {
+     "m": "2026-08",
+     "buy": 29,
+     "hold": 1,
+     "sell": 0,
+     "px": 1560.74
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 29,
+   "eps": [
+    {
+     "per": "Aug 2025",
+     "est": 2.67,
+     "act": 2.86,
+     "spr_pct": 7.1,
+     "report_d": "2025-09-23",
+     "chg3d_pct": -5.49
+    },
+    {
+     "per": "Nov 2025",
+     "est": 3.67,
+     "act": 4.61,
+     "spr_pct": 25.6,
+     "report_d": "2025-12-17",
+     "chg3d_pct": 22.65
+    },
+    {
+     "per": "Feb 2026",
+     "est": 8.64,
+     "act": 12.08,
+     "spr_pct": 39.8,
+     "report_d": "2026-03-18",
+     "chg3d_pct": -12.43
+    },
+    {
+     "per": "May 2026",
+     "est": 20.98,
+     "act": 24.89,
+     "spr_pct": 18.6,
+     "report_d": "2026-06-24",
+     "chg3d_pct": 9.23
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Aug 2026",
+     "est": 31.17
+    },
+    {
+     "per": "Nov 2026",
+     "est": 34.54
+    },
+    {
+     "per": "Feb 2027",
+     "est": 37.65
+    }
+   ],
+   "est_momo": {
+    "q_up": 0,
+    "q_dn": 0,
+    "y_up": 0,
+    "y_dn": 0
+   },
+   "last_report": "2026-06-24"
+  },
+  "SNDK": {
+   "pt": {
+    "low": 1300.0,
+    "mean": 2220.0,
+    "high": 3050.0,
+    "buy": 13,
+    "hold": 3,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 6,
+     "hold": 2,
+     "sell": 0,
+     "px": 41.33
+    },
+    {
+     "m": "2025-09",
+     "buy": 8,
+     "hold": 2,
+     "sell": 0,
+     "px": 52.47
+    },
+    {
+     "m": "2025-10",
+     "buy": 9,
+     "hold": 1,
+     "sell": 0,
+     "px": 121.12
+    },
+    {
+     "m": "2025-11",
+     "buy": 10,
+     "hold": 2,
+     "sell": 0,
+     "px": 199.33
+    },
+    {
+     "m": "2025-12",
+     "buy": 10,
+     "hold": 2,
+     "sell": 0,
+     "px": 210.17
+    },
+    {
+     "m": "2026-01",
+     "buy": 10,
+     "hold": 3,
+     "sell": 0,
+     "px": 237.38
+    },
+    {
+     "m": "2026-02",
+     "buy": 12,
+     "hold": 4,
+     "sell": 0,
+     "px": 576.25
+    },
+    {
+     "m": "2026-03",
+     "buy": 11,
+     "hold": 4,
+     "sell": 0,
+     "px": 635.36
+    },
+    {
+     "m": "2026-04",
+     "buy": 11,
+     "hold": 3,
+     "sell": 0,
+     "px": 692.73
+    },
+    {
+     "m": "2026-05",
+     "buy": 13,
+     "hold": 3,
+     "sell": 0,
+     "px": 1187.0
+    },
+    {
+     "m": "2026-06",
+     "buy": 14,
+     "hold": 2,
+     "sell": 0,
+     "px": 1761.43
+    },
+    {
+     "m": "2026-07",
+     "buy": 14,
+     "hold": 2,
+     "sell": 0,
+     "px": 2032.22
+    },
+    {
+     "m": "2026-08",
+     "buy": 13,
+     "hold": 3,
+     "sell": 0,
+     "px": 2220.0
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 0,
+   "eps": [
+    {
+     "per": "Sep 2025",
+     "est": 0.58,
+     "act": 0.9,
+     "spr_pct": 55.2,
+     "report_d": "2025-11-06",
+     "chg3d_pct": 30.76
+    },
+    {
+     "per": "Dec 2025",
+     "est": 3.31,
+     "act": 5.83,
+     "spr_pct": 76.1,
+     "report_d": "2026-01-29",
+     "chg3d_pct": 28.97
+    },
+    {
+     "per": "Mar 2026",
+     "est": 14.17,
+     "act": 23.22,
+     "spr_pct": 63.9,
+     "report_d": "2026-04-30",
+     "chg3d_pct": 28.25
+    },
+    {
+     "per": "Jun 2026",
+     "est": 33.28,
+     "act": 38.82,
+     "spr_pct": 16.6,
+     "report_d": "2026-08-05"
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Sep 2026",
+     "est": 40.68
+    },
+    {
+     "per": "Dec 2026",
+     "est": 47.18
+    },
+    {
+     "per": "Mar 2027",
+     "est": 46.34
+    }
+   ],
+   "est_momo": {
+    "q_up": 1,
+    "q_dn": 0,
+    "y_up": 1,
+    "y_dn": 0
+   },
+   "last_report": "2026-08-05"
+  },
+  "WDC": {
+   "pt": {
+    "low": 500.0,
+    "mean": 679.22,
+    "high": 1050.0,
+    "buy": 14,
+    "hold": 5,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 17,
+     "hold": 3,
+     "sell": 0,
+     "px": 76.55
+    },
+    {
+     "m": "2025-09",
+     "buy": 16,
+     "hold": 3,
+     "sell": 0,
+     "px": 80.34
+    },
+    {
+     "m": "2025-10",
+     "buy": 16,
+     "hold": 4,
+     "sell": 0,
+     "px": 130.59
+    },
+    {
+     "m": "2025-11",
+     "buy": 15,
+     "hold": 4,
+     "sell": 0,
+     "px": 150.21
+    },
+    {
+     "m": "2025-12",
+     "buy": 16,
+     "hold": 3,
+     "sell": 0,
+     "px": 163.54
+    },
+    {
+     "m": "2026-01",
+     "buy": 16,
+     "hold": 3,
+     "sell": 0,
+     "px": 172.27
+    },
+    {
+     "m": "2026-02",
+     "buy": 15,
+     "hold": 4,
+     "sell": 0,
+     "px": 250.23
+    },
+    {
+     "m": "2026-03",
+     "buy": 15,
+     "hold": 4,
+     "sell": 0,
+     "px": 279.7
+    },
+    {
+     "m": "2026-04",
+     "buy": 15,
+     "hold": 3,
+     "sell": 0,
+     "px": 297.73
+    },
+    {
+     "m": "2026-05",
+     "buy": 15,
+     "hold": 3,
+     "sell": 0,
+     "px": 431.52
+    },
+    {
+     "m": "2026-06",
+     "buy": 14,
+     "hold": 2,
+     "sell": 0,
+     "px": 546.2
+    },
+    {
+     "m": "2026-07",
+     "buy": 15,
+     "hold": 3,
+     "sell": 0,
+     "px": 598.37
+    },
+    {
+     "m": "2026-08",
+     "buy": 14,
+     "hold": 5,
+     "sell": 0,
+     "px": 679.22
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 17,
+   "eps": [
+    {
+     "per": "Sep 2025",
+     "est": 1.47,
+     "act": 1.64,
+     "spr_pct": 11.6,
+     "report_d": "2025-10-30",
+     "chg3d_pct": 10.17
+    },
+    {
+     "per": "Dec 2025",
+     "est": 1.83,
+     "act": 1.99,
+     "spr_pct": 8.7,
+     "report_d": "2026-01-29",
+     "chg3d_pct": 4.25
+    },
+    {
+     "per": "Mar 2026",
+     "est": 2.28,
+     "act": 2.62,
+     "spr_pct": 14.9,
+     "report_d": "2026-04-30",
+     "chg3d_pct": 7.07
+    },
+    {
+     "per": "Jun 2026",
+     "est": 3.24,
+     "act": 3.47,
+     "spr_pct": 7.1,
+     "report_d": "2026-08-05"
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Sep 2026",
+     "est": 3.45
+    },
+    {
+     "per": "Dec 2026",
+     "est": 4.02
+    },
+    {
+     "per": "Mar 2027",
+     "est": 4.75
+    }
+   ],
+   "est_momo": {
+    "q_up": 0,
+    "q_dn": 0,
+    "y_up": 0,
+    "y_dn": 0
+   },
+   "last_report": "2026-08-05"
+  },
+  "MRVL": {
+   "pt": {
+    "low": 180.0,
+    "mean": 271.33,
+    "high": 400.0,
+    "buy": 24,
+    "hold": 5,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 25,
+     "hold": 5,
+     "sell": 0,
+     "px": 74.45
+    },
+    {
+     "m": "2025-09",
+     "buy": 25,
+     "hold": 5,
+     "sell": 0,
+     "px": 62.865
+    },
+    {
+     "m": "2025-10",
+     "buy": 23,
+     "hold": 6,
+     "sell": 0,
+     "px": 83.89
+    },
+    {
+     "m": "2025-11",
+     "buy": 22,
+     "hold": 7,
+     "sell": 0,
+     "px": 93.74
+    },
+    {
+     "m": "2025-12",
+     "buy": 22,
+     "hold": 7,
+     "sell": 0,
+     "px": 91.1
+    },
+    {
+     "m": "2026-01",
+     "buy": 21,
+     "hold": 8,
+     "sell": 0,
+     "px": 84.98
+    },
+    {
+     "m": "2026-02",
+     "buy": 23,
+     "hold": 8,
+     "sell": 0,
+     "px": 78.92
+    },
+    {
+     "m": "2026-03",
+     "buy": 22,
+     "hold": 5,
+     "sell": 0,
+     "px": 81.69
+    },
+    {
+     "m": "2026-04",
+     "buy": 23,
+     "hold": 5,
+     "sell": 0,
+     "px": 106.71
+    },
+    {
+     "m": "2026-05",
+     "buy": 23,
+     "hold": 4,
+     "sell": 0,
+     "px": 164.95
+    },
+    {
+     "m": "2026-06",
+     "buy": 26,
+     "hold": 4,
+     "sell": 0,
+     "px": 219.43
+    },
+    {
+     "m": "2026-07",
+     "buy": 23,
+     "hold": 4,
+     "sell": 0,
+     "px": 272.05
+    },
+    {
+     "m": "2026-08",
+     "buy": 24,
+     "hold": 5,
+     "sell": 0,
+     "px": 271.33
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 29,
+   "eps": [
+    {
+     "per": "Jul 2025",
+     "est": 0.51,
+     "act": 0.5,
+     "spr_pct": -2.0,
+     "report_d": "2025-08-28",
+     "chg3d_pct": -19.32
+    },
+    {
+     "per": "Oct 2025",
+     "est": 0.58,
+     "act": 0.62,
+     "spr_pct": 6.9,
+     "report_d": "2025-12-02",
+     "chg3d_pct": 6.48
+    },
+    {
+     "per": "Jan 2026",
+     "est": 0.62,
+     "act": 0.66,
+     "spr_pct": 6.5,
+     "report_d": "2026-03-05",
+     "chg3d_pct": 23.28
+    },
+    {
+     "per": "Apr 2026",
+     "est": 0.61,
+     "act": 0.59,
+     "spr_pct": -3.3,
+     "report_d": "2026-05-27",
+     "chg3d_pct": 10.43
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Jul 2026",
+     "est": 0.65
+    },
+    {
+     "per": "Oct 2026",
+     "est": 0.83
+    },
+    {
+     "per": "Jan 2027",
+     "est": 0.98
+    }
+   ],
+   "est_momo": {
+    "q_up": 0,
+    "q_dn": 0,
+    "y_up": 1,
+    "y_dn": 0
+   },
+   "last_report": "2026-05-27"
+  },
+  "LITE": {
+   "pt": {
+    "low": 800.0,
+    "mean": 1033.89,
+    "high": 1165.0,
+    "buy": 6,
+    "hold": 3,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 10,
+     "hold": 3,
+     "sell": 1,
+     "px": 106.68
+    },
+    {
+     "m": "2025-09",
+     "buy": 11,
+     "hold": 4,
+     "sell": 0,
+     "px": 132.81
+    },
+    {
+     "m": "2025-10",
+     "buy": 11,
+     "hold": 4,
+     "sell": 0,
+     "px": 171.4
+    },
+    {
+     "m": "2025-11",
+     "buy": 11,
+     "hold": 5,
+     "sell": 0,
+     "px": 201.56
+    },
+    {
+     "m": "2025-12",
+     "buy": 10,
+     "hold": 5,
+     "sell": 0,
+     "px": 317.93
+    },
+    {
+     "m": "2026-01",
+     "buy": 10,
+     "hold": 5,
+     "sell": 0,
+     "px": 368.59
+    },
+    {
+     "m": "2026-02",
+     "buy": 10,
+     "hold": 4,
+     "sell": 0,
+     "px": 391.84
+    },
+    {
+     "m": "2026-03",
+     "buy": 10,
+     "hold": 4,
+     "sell": 0,
+     "px": 700.91
+    },
+    {
+     "m": "2026-04",
+     "buy": 11,
+     "hold": 5,
+     "sell": 0,
+     "px": 764.65
+    },
+    {
+     "m": "2026-05",
+     "buy": 12,
+     "hold": 5,
+     "sell": 0,
+     "px": 949.93
+    },
+    {
+     "m": "2026-06",
+     "buy": 12,
+     "hold": 5,
+     "sell": 0,
+     "px": 905.0
+    },
+    {
+     "m": "2026-07",
+     "buy": 13,
+     "hold": 5,
+     "sell": 0,
+     "px": 801.16
+    },
+    {
+     "m": "2026-08",
+     "buy": 6,
+     "hold": 3,
+     "sell": 0,
+     "px": 1033.89
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 15,
+   "eps": [
+    {
+     "per": "Jun 2025",
+     "est": 0.1,
+     "act": 0.32,
+     "spr_pct": 220.0,
+     "report_d": "2025-08-12",
+     "chg3d_pct": -3.18
+    },
+    {
+     "per": "Sep 2025",
+     "est": 0.59,
+     "act": 0.6,
+     "spr_pct": 1.7,
+     "report_d": "2025-11-04",
+     "chg3d_pct": 27.47
+    },
+    {
+     "per": "Dec 2025",
+     "est": 0.97,
+     "act": 1.24,
+     "spr_pct": 27.8,
+     "report_d": "2026-02-03",
+     "chg3d_pct": 26.87
+    },
+    {
+     "per": "Mar 2026",
+     "est": 1.81,
+     "act": 1.88,
+     "spr_pct": 3.9,
+     "report_d": "2026-05-05",
+     "chg3d_pct": -9.13
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Jun 2026",
+     "est": 2.62
+    },
+    {
+     "per": "Sep 2026",
+     "est": 3.21
+    },
+    {
+     "per": "Dec 2026",
+     "est": 3.9
+    }
+   ],
+   "est_momo": {
+    "q_up": 2,
+    "q_dn": 0,
+    "y_up": 2,
+    "y_dn": 0
+   },
+   "last_report": "2026-05-05"
+  },
+  "COHR": {
+   "pt": {
+    "low": 330.0,
+    "mean": 415.0,
+    "high": 465.0,
+    "buy": 4,
+    "hold": 2,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 13,
+     "hold": 3,
+     "sell": 0,
+     "px": 102.79
+    },
+    {
+     "m": "2025-09",
+     "buy": 11,
+     "hold": 3,
+     "sell": 0,
+     "px": 90.47
+    },
+    {
+     "m": "2025-10",
+     "buy": 11,
+     "hold": 3,
+     "sell": 0,
+     "px": 114.65
+    },
+    {
+     "m": "2025-11",
+     "buy": 9,
+     "hold": 5,
+     "sell": 0,
+     "px": 131.96
+    },
+    {
+     "m": "2025-12",
+     "buy": 8,
+     "hold": 5,
+     "sell": 0,
+     "px": 163.5
+    },
+    {
+     "m": "2026-01",
+     "buy": 8,
+     "hold": 5,
+     "sell": 0,
+     "px": 184.57
+    },
+    {
+     "m": "2026-02",
+     "buy": 8,
+     "hold": 4,
+     "sell": 0,
+     "px": 212.18
+    },
+    {
+     "m": "2026-03",
+     "buy": 8,
+     "hold": 4,
+     "sell": 0,
+     "px": 258.93
+    },
+    {
+     "m": "2026-04",
+     "buy": 10,
+     "hold": 4,
+     "sell": 0,
+     "px": 247.8
+    },
+    {
+     "m": "2026-05",
+     "buy": 11,
+     "hold": 4,
+     "sell": 0,
+     "px": 329.5
+    },
+    {
+     "m": "2026-06",
+     "buy": 13,
+     "hold": 4,
+     "sell": 0,
+     "px": 362.9
+    },
+    {
+     "m": "2026-07",
+     "buy": 14,
+     "hold": 4,
+     "sell": 0,
+     "px": 368.65
+    },
+    {
+     "m": "2026-08",
+     "buy": 4,
+     "hold": 2,
+     "sell": 0,
+     "px": 415.0
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 17,
+   "eps": [
+    {
+     "per": "Jun 2025",
+     "est": 0.71,
+     "act": 0.74,
+     "spr_pct": 4.2,
+     "report_d": "2025-08-13",
+     "chg3d_pct": -20.63
+    },
+    {
+     "per": "Sep 2025",
+     "est": 0.85,
+     "act": 0.93,
+     "spr_pct": 9.4,
+     "report_d": "2025-11-05",
+     "chg3d_pct": 23.84
+    },
+    {
+     "per": "Dec 2025",
+     "est": 1.03,
+     "act": 1.11,
+     "spr_pct": 7.8,
+     "report_d": "2026-02-04",
+     "chg3d_pct": 14.91
+    },
+    {
+     "per": "Mar 2026",
+     "est": 1.23,
+     "act": 1.21,
+     "spr_pct": -1.6,
+     "report_d": "2026-05-06",
+     "chg3d_pct": 10.16
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Jun 2026",
+     "est": 1.43
+    },
+    {
+     "per": "Sep 2026",
+     "est": 1.61
+    },
+    {
+     "per": "Dec 2026",
+     "est": 1.77
+    }
+   ],
+   "est_momo": {
+    "q_up": 1,
+    "q_dn": 0,
+    "y_up": 2,
+    "y_dn": 0
+   },
+   "last_report": "2026-05-06"
+  },
+  "AAOI": {
+   "pt": {
+    "low": 109.0,
+    "mean": 158.0,
+    "high": 220.0,
+    "buy": 3,
+    "hold": 2,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 4,
+     "hold": 1,
+     "sell": 0,
+     "px": 21.53
+    },
+    {
+     "m": "2025-09",
+     "buy": 4,
+     "hold": 2,
+     "sell": 0,
+     "px": 24.2
+    },
+    {
+     "m": "2025-10",
+     "buy": 4,
+     "hold": 2,
+     "sell": 0,
+     "px": 28.42
+    },
+    {
+     "m": "2025-11",
+     "buy": 3,
+     "hold": 1,
+     "sell": 0,
+     "px": 35.56
+    },
+    {
+     "m": "2025-12",
+     "buy": 3,
+     "hold": 0,
+     "sell": 1,
+     "px": 26.53
+    },
+    {
+     "m": "2026-01",
+     "buy": 3,
+     "hold": 0,
+     "sell": 1,
+     "px": 34.86
+    },
+    {
+     "m": "2026-02",
+     "buy": 3,
+     "hold": 0,
+     "sell": 1,
+     "px": 43.61
+    },
+    {
+     "m": "2026-03",
+     "buy": 2,
+     "hold": 2,
+     "sell": 0,
+     "px": 84.23
+    },
+    {
+     "m": "2026-04",
+     "buy": 2,
+     "hold": 2,
+     "sell": 0,
+     "px": 86.35
+    },
+    {
+     "m": "2026-05",
+     "buy": 2,
+     "hold": 2,
+     "sell": 0,
+     "px": 183.51
+    },
+    {
+     "m": "2026-06",
+     "buy": 3,
+     "hold": 2,
+     "sell": 0,
+     "px": 185.67
+    },
+    {
+     "m": "2026-07",
+     "buy": 3,
+     "hold": 2,
+     "sell": 0,
+     "px": 139.0
+    },
+    {
+     "m": "2026-08",
+     "buy": 3,
+     "hold": 2,
+     "sell": 0,
+     "px": 158.0
+    }
+   ],
+   "mean_rating": "Hold",
+   "n_analysts": 3,
+   "eps": [
+    {
+     "per": "Sep 2025",
+     "est": -0.14,
+     "act": -0.14,
+     "spr_pct": 0.0,
+     "report_d": "2025-11-06",
+     "chg3d_pct": -18.38
+    },
+    {
+     "per": "Dec 2025",
+     "est": -0.16,
+     "act": -0.04,
+     "spr_pct": 75.0,
+     "report_d": "2026-02-26",
+     "chg3d_pct": 77.57
+    },
+    {
+     "per": "Mar 2026",
+     "est": -0.1,
+     "act": -0.12,
+     "spr_pct": -20.0,
+     "report_d": "2026-05-07",
+     "chg3d_pct": 19.5
+    },
+    {
+     "per": "Jun 2026",
+     "est": -0.02,
+     "act": 0.0,
+     "spr_pct": 100.0,
+     "report_d": "2026-08-06"
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Sep 2026",
+     "est": 0.22
+    },
+    {
+     "per": "Dec 2026",
+     "est": 0.55
+    },
+    {
+     "per": "Mar 2027",
+     "est": 0.71
+    }
+   ],
+   "est_momo": {
+    "q_up": 0,
+    "q_dn": 0,
+    "y_up": 0,
+    "y_dn": 0
+   },
+   "last_report": "2026-08-06"
+  },
+  "NVDA": {
+   "pt": {
+    "low": 250.0,
+    "mean": 308.69,
+    "high": 500.0,
+    "buy": 36,
+    "hold": 1,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 34,
+     "hold": 3,
+     "sell": 1,
+     "px": 173.72
+    },
+    {
+     "m": "2025-09",
+     "buy": 34,
+     "hold": 3,
+     "sell": 1,
+     "px": 174.18
+    },
+    {
+     "m": "2025-10",
+     "buy": 35,
+     "hold": 2,
+     "sell": 1,
+     "px": 187.24
+    },
+    {
+     "m": "2025-11",
+     "buy": 37,
+     "hold": 1,
+     "sell": 1,
+     "px": 202.49
+    },
+    {
+     "m": "2025-12",
+     "buy": 39,
+     "hold": 1,
+     "sell": 1,
+     "px": 179.92
+    },
+    {
+     "m": "2026-01",
+     "buy": 39,
+     "hold": 1,
+     "sell": 1,
+     "px": 186.5
+    },
+    {
+     "m": "2026-02",
+     "buy": 37,
+     "hold": 1,
+     "sell": 1,
+     "px": 191.13
+    },
+    {
+     "m": "2026-03",
+     "buy": 39,
+     "hold": 1,
+     "sell": 1,
+     "px": 177.19
+    },
+    {
+     "m": "2026-04",
+     "buy": 41,
+     "hold": 1,
+     "sell": 1,
+     "px": 175.75
+    },
+    {
+     "m": "2026-05",
+     "buy": 40,
+     "hold": 1,
+     "sell": 1,
+     "px": 198.45
+    },
+    {
+     "m": "2026-06",
+     "buy": 37,
+     "hold": 1,
+     "sell": 1,
+     "px": 224.36
+    },
+    {
+     "m": "2026-07",
+     "buy": 36,
+     "hold": 1,
+     "sell": 0,
+     "px": 197.58
+    },
+    {
+     "m": "2026-08",
+     "buy": 36,
+     "hold": 1,
+     "sell": 0,
+     "px": 308.69
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 39,
+   "eps": [
+    {
+     "per": "Jul 2025",
+     "est": 0.94,
+     "act": 0.99,
+     "spr_pct": 5.3,
+     "report_d": "2025-08-27",
+     "chg3d_pct": -5.96
+    },
+    {
+     "per": "Oct 2025",
+     "est": 1.18,
+     "act": 1.24,
+     "spr_pct": 5.1,
+     "report_d": "2025-11-19",
+     "chg3d_pct": -2.13
+    },
+    {
+     "per": "Jan 2026",
+     "est": 1.45,
+     "act": 1.57,
+     "spr_pct": 8.3,
+     "report_d": "2026-02-25",
+     "chg3d_pct": -6.69
+    },
+    {
+     "per": "Apr 2026",
+     "est": 1.7,
+     "act": 1.87,
+     "spr_pct": 10.0,
+     "report_d": "2026-05-20",
+     "chg3d_pct": -3.85
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Jul 2026",
+     "est": 2.01
+    },
+    {
+     "per": "Oct 2026",
+     "est": 2.24
+    },
+    {
+     "per": "Jan 2027",
+     "est": 2.48
+    }
+   ],
+   "est_momo": {
+    "q_up": 3,
+    "q_dn": 0,
+    "y_up": 4,
+    "y_dn": 0
+   },
+   "last_report": "2026-05-20"
+  },
+  "AVGO": {
+   "pt": {
+    "low": 390.0,
+    "mean": 512.87,
+    "high": 630.0,
+    "buy": 23,
+    "hold": 3,
+    "sell": 0
+   },
+   "rating_hist": [
+    {
+     "m": "2025-08",
+     "buy": 28,
+     "hold": 2,
+     "sell": 0,
+     "px": 288.64
+    },
+    {
+     "m": "2025-09",
+     "buy": 25,
+     "hold": 3,
+     "sell": 0,
+     "px": 297.39
+    },
+    {
+     "m": "2025-10",
+     "buy": 22,
+     "hold": 2,
+     "sell": 0,
+     "px": 333.39
+    },
+    {
+     "m": "2025-11",
+     "buy": 25,
+     "hold": 2,
+     "sell": 0,
+     "px": 369.63
+    },
+    {
+     "m": "2025-12",
+     "buy": 21,
+     "hold": 2,
+     "sell": 0,
+     "px": 386.08
+    },
+    {
+     "m": "2026-01",
+     "buy": 27,
+     "hold": 2,
+     "sell": 0,
+     "px": 346.1
+    },
+    {
+     "m": "2026-02",
+     "buy": 29,
+     "hold": 1,
+     "sell": 0,
+     "px": 331.3
+    },
+    {
+     "m": "2026-03",
+     "buy": 29,
+     "hold": 2,
+     "sell": 0,
+     "px": 319.55
+    },
+    {
+     "m": "2026-04",
+     "buy": 27,
+     "hold": 3,
+     "sell": 0,
+     "px": 313.49
+    },
+    {
+     "m": "2026-05",
+     "buy": 26,
+     "hold": 4,
+     "sell": 0,
+     "px": 421.28
+    },
+    {
+     "m": "2026-06",
+     "buy": 24,
+     "hold": 3,
+     "sell": 0,
+     "px": 459.97
+    },
+    {
+     "m": "2026-07",
+     "buy": 24,
+     "hold": 3,
+     "sell": 0,
+     "px": 369.34
+    },
+    {
+     "m": "2026-08",
+     "buy": 23,
+     "hold": 3,
+     "sell": 0,
+     "px": 512.87
+    }
+   ],
+   "mean_rating": "Buy",
+   "n_analysts": 27,
+   "eps": [
+    {
+     "per": "Jul 2025",
+     "est": 1.35,
+     "act": 1.26,
+     "spr_pct": -6.7,
+     "report_d": "2025-09-04",
+     "chg3d_pct": 9.99
+    },
+    {
+     "per": "Oct 2025",
+     "est": 1.49,
+     "act": 1.61,
+     "spr_pct": 8.1,
+     "report_d": "2025-12-11",
+     "chg3d_pct": -16.01
+    },
+    {
+     "per": "Jan 2026",
+     "est": 1.67,
+     "act": 1.76,
+     "spr_pct": 5.4,
+     "report_d": "2026-03-04",
+     "chg3d_pct": 8.89
+    },
+    {
+     "per": "Apr 2026",
+     "est": 2.02,
+     "act": 2.17,
+     "spr_pct": 7.4,
+     "report_d": "2026-06-03",
+     "chg3d_pct": -17.24
+    }
+   ],
+   "eps_fwd": [
+    {
+     "per": "Jul 2026",
+     "est": 2.83
+    },
+    {
+     "per": "Oct 2026",
+     "est": 3.44
+    },
+    {
+     "per": "Jan 2027",
+     "est": 3.64
+    }
+   ],
+   "est_momo": {
+    "q_up": 0,
+    "q_dn": 0,
+    "y_up": 1,
+    "y_dn": 0
+   },
+   "last_report": "2026-06-03"
+  },
+  "SMH": {
+   "na": "ETF 無分析師覆蓋"
+  },
+  "SOXX": {
+   "na": "ETF 無分析師覆蓋"
+  },
+  "SPY": {
+   "na": "ETF 無分析師覆蓋"
+  },
+  "QQQ": {
+   "na": "ETF 無分析師覆蓋"
+  }
+ },
+ "data_quality": [
+  {
+   "source": "nasdaq tp MU",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt MU",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps MU",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo MU",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar MU",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp SNDK",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt SNDK",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps SNDK",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo SNDK",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar SNDK",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp WDC",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt WDC",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps WDC",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo WDC",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar WDC",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp MRVL",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt MRVL",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps MRVL",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo MRVL",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar MRVL",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp LITE",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt LITE",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps LITE",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo LITE",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar LITE",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp COHR",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt COHR",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps COHR",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo COHR",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar COHR",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp AAOI",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt AAOI",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps AAOI",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo AAOI",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar AAOI",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp NVDA",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt NVDA",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps NVDA",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo NVDA",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar NVDA",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq tp AVGO",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq rt AVGO",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq eps AVGO",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "nasdaq momo AVGO",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "edgar AVGO",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "source": "analyst SMH",
+   "ok": true,
+   "note": "ETF skip"
+  },
+  {
+   "source": "analyst SOXX",
+   "ok": true,
+   "note": "ETF skip"
+  },
+  {
+   "source": "analyst SPY",
+   "ok": true,
+   "note": "ETF skip"
+  },
+  {
+   "source": "analyst QQQ",
+   "ok": true,
+   "note": "ETF skip"
+  }
+ ]
+}
