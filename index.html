@@ -259,7 +259,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T06:51Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T07:23Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -470,7 +470,7 @@ function xzApply(gd,getHL,lo,hi){
   //   多軌 + paper shapes)對 xaxis.autorange 會在 doAutoRange 內丟
   //   TypeError: Cannot read properties of undefined (reading '_extremes'),
   //   被 try/catch 吞掉後畫面完全不動 → 症狀正是「縮小(縮回全幅)沒反應、只能放大與拖曳」。
-  if(full){lo=-0.5;hi=n-0.5;}
+  if(full){lo=-0.5;hi=n-0.5+_pad;}
   const upd={'xaxis.range':[lo,hi]};
   const HL=getHL&&getHL();
   if(HL&&HL.h&&HL.h.length){
@@ -507,8 +507,9 @@ function bindWheelZoom(id,getHL){
     const anchor=r0[0]+span0*fx;
     let span=Math.max(8,Math.min(n,span0*k));
     let lo=anchor-span*fx, hi=anchor+span*(1-fx);
+    const _pad2=(window.innerWidth||1024)<680?0.8:0;
     if(lo<-0.5){hi+=(-0.5-lo); lo=-0.5;}
-    if(hi>n-0.5){lo-=(hi-(n-0.5)); hi=n-0.5;}
+    if(hi>n-0.5+_pad2){lo-=(hi-(n-0.5+_pad2)); hi=n-0.5+_pad2;}
     lo=Math.max(-0.5,lo);
     pend=[lo,hi];
     if(!raf)raf=(window.requestAnimationFrame||setTimeout)(flush,16);   // 合併連發,避免 relayout 洪水
@@ -1979,6 +1980,15 @@ function renderAccum(){
 // 使用者需求:「加入 Claude 自身的建議,提高減碼/抄底勝率」。機械放寬已回測證明無效(接刀),
 // 改為:◆★與邊緣案例(TOP/BOT=2)由 Claude 逐檔綜合 ⑦資金流/吸籌交叉/事件脈絡 給裁定
 // (確認/存疑/否決/提示+理由),每筆留檔可被前瞻評分;fail-open:無檔或無該檔判讀→整塊隱藏。
+// ===== AI 判讀標記層(2026-08-08 使用者:「除機械規則外,另據模型判斷給減碼抄底標注」)=====
+// data/ai_marks.json 由排程場次以模型逐檔判讀增補(只新增當日、不回填=無後見之明,發訊日起前瞻評分);
+// 機械化使用者型態(低檔+碰200MA+爆量)回測為負優勢(csig_bt3:46.2%vs56.0)→ 不做規則、只做逐檔裁量。
+let AIM=null,AIM_req=0;
+function ensureAIM(){
+  const n=Date.now()/1000; if(n-AIM_req<300)return; AIM_req=n;
+  fetch('data/ai_marks.json?t='+Math.floor(Date.now()/300000),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null).then(j=>{if(j&&j.marks){AIM=j;if(DATA)renderChips();}}).catch(()=>{});
+}
 let SIGREV=null,SIGREV_req=0;
 function ensureSigRev(){
   const n=Date.now()/1000; if(n-SIGREV_req<300)return; SIGREV_req=n;
@@ -2207,12 +2217,13 @@ function renderCockpit(){
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':pd'+CHIP_PD+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')
+  const sig=CHIP_SYM+':'+win+':pd'+CHIP_PD+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')+(AIM&&AIM.updated_utc?':a'+AIM.updated_utc:'')
     +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
-  const x=R.map(r=>r.d.slice(5));
+  // x 類別標籤必須唯一(2026-08-08 使用者揪出:週/月K跨年後 'MM-DD' 重複 → category 軸同名互撞、K棒疊格錯亂)
+  const x=R.map(r=>CHIP_PD==='y'?r.d.slice(0,4):CHIP_PD==='d'?r.d.slice(5):r.d.slice(2));
   const rng=Math.max(...R.map(r=>r.h))-Math.min(...R.map(r=>r.l))||1;
   const o1=rng*0.016, o2=rng*0.036, o3=rng*0.088;      // TD小字 / TD強調 / 燈號 位移(依可視價幅,換區間不跑位)
   const smallF=win>120?6.5:7.5, midF=win>120?8:9;      // 大區間縮字,避免連續計數糊成一團
@@ -2311,6 +2322,31 @@ function renderCockpit(){
        {type:'scatter',mode:'markers',x:x,y:yt,marker:{symbol:'triangle-down',size:10,color:CPAL.ctop,line:{width:1,color:CPAL.edge}},name:'C▼',showlegend:false,
         hovertemplate:'C▼ Claude參考·極端吸收警戒:吸籌形狀但吸收率≥1% 之進入日'+apx+'<br>歷史(2y):此型態40日平均−9.3%(n=28)——「有人狂接」到極端反而偏空·歷史頻率非未來機率,非建議<extra></extra>'}];
     }catch(_){return [];}})(),
+    ...(function(){try{   // AI▲▼ 判讀標記(2026-08-08):模型逐檔裁定,發訊日錨定;僅日K;無檔/無此檔=不畫
+      if(CHIP_PD!=='d'||!AIM||!AIM.marks)return [];
+      const mk=AIM.marks[CHIP_SYM]; if(!mk||!mk.length)return [];
+      const di={}; R.forEach((r,i)=>{di[r.d]=i;});
+      const ds=R.map(r=>r.d);
+      const anchor=md=>{let i=di[md]; if(i!=null)return i;   // 發訊日非交易日/盤前(當日K棒未生)→ 錨定 ≤發訊日的最近一根
+        if(md<ds[0])return null;
+        let lo=0,hi=ds.length-1,res=null;
+        while(lo<=hi){const m2=(lo+hi)>>1; if(ds[m2]<=md){res=m2;lo=m2+1;}else hi=m2-1;}
+        return res;};
+      const yb=new Array(R.length).fill(null), yt2=new Array(R.length).fill(null);
+      const hb=new Array(R.length).fill(''), ht=new Array(R.length).fill('');
+      let anyB=false,anyT=false;
+      mk.forEach(m=>{const i=anchor(m.d); if(i==null)return;
+        const h='AI'+(m.k==='抄底'?'▲':'▼')+' 模型判讀·'+m.k+'(信心'+(m.conf||'中')+')·'+m.d+' @'+m.px
+          +'<br>'+String(m.why||'').replace(/</g,'&lt;')
+          +(m.invalid?'<br>失效條件:'+m.invalid:'')
+          +'<br>⚠ 模型主觀判讀·非機械規則·發訊日起前瞻評分·非買賣建議';
+        if(m.k==='抄底'){yb[i]=R[i].l-o3*2.8;hb[i]=h;anyB=true;}
+        else{yt2[i]=R[i].h+o3*2.8;ht[i]=h;anyT=true;}});
+      const out=[];
+      if(anyB)out.push({type:'scatter',mode:'markers',x:x,y:yb,customdata:hb,marker:{symbol:'triangle-up-open',size:12,color:'#e6e9ef',line:{width:1.6,color:'#e6e9ef'}},name:'AI▲',showlegend:false,hovertemplate:'%{customdata}<extra></extra>'});
+      if(anyT)out.push({type:'scatter',mode:'markers',x:x,y:yt2,customdata:ht,marker:{symbol:'triangle-down-open',size:12,color:'#e6e9ef',line:{width:1.6,color:'#e6e9ef'}},name:'AI▼',showlegend:false,hovertemplate:'%{customdata}<extra></extra>'});
+      return out;
+    }catch(_){return [];}})(),
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
@@ -2394,7 +2430,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -2431,7 +2467,7 @@ function renderCockpit(){
   // 右緣標籤蓋最新K棒問題根治:數值上移圖頂,虛線照畫)
   if(MB){
     ann.push({xref:'paper',yref:'paper',x:0,y:1.030,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
+      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span> <span style="color:#e6e9ef">AI▲▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
         +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
     if(CHIP_CTA&&_ctaVals)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,
       font:{size:9,color:MUT2},text:'┈CTA '+_ctaVals});
@@ -2759,7 +2795,8 @@ function renderCockpit(){
       // 顯式初始範圍(2026-08-05):TD文字/光暈圈/◆★等 trace 的「像素 padding」會把 autorange 撐大
       // (桌機 ~±2 槽看不出;手機 310px 窄圖實測 [-10.6,131.7]=100根塞進142槽,兩側空白吃掉 30% 寬)。
       // 顯式 [-0.5,n-0.5] = 邊到邊(同復位後視圖、同富途),也再避開 autorange 地雷族。
-      range:[-0.5,x.length-0.5],
+      range:[-0.5,x.length-0.5+(MB?0.8:0)],   // 手機 boxgap=0 滿槽寬,最右K棒貼繪圖區邊會被切半(2026-08-08 使用者回報)→ 右側留 0.8 槽
+
       domain:[0,XW]},   // VbP 開啟 → K線退左讓出右軌(兩圖不重疊)
     yaxis:Object.assign({domain:DOM.y,gridcolor:GRID2,tickfont:{size:MB?8:9,color:MUT2},side:'right'},TLI),
     yaxis7:Object.assign({domain:DOM.y7,gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},TLI),
@@ -2987,7 +3024,7 @@ function renderChips(){
   ensureChipK(CHIP_SYM);
   renderCockpit();
   try{renderSeason();}catch(e){}
-  try{ensureScan();renderScan();renderAccum();ensureSigRev();renderSigRev();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
+  try{ensureScan();renderScan();renderAccum();ensureSigRev();renderSigRev();ensureAIM();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
   if(0){   // ===== 獨立現金池累積窗:2026-08-08 使用者指示移除(駕駛艙⑦軌已涵蓋同資訊;程式封存不執行)=====
