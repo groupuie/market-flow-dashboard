@@ -190,6 +190,17 @@ body.wsxFit #wsxDestSlot .card{margin:0}
   body.wsxFit #wsxB #wsxTabsP{flex:1 1 auto;height:auto;min-height:0;margin:0}
   body.wsxFit #wsxWinSlot .card,body.wsxFit #wsxDestSlot .card{margin:0 0 8px}
 }
+
+/* ===== v6:隱藏捲軸/圖寬貼齊/右欄收納期權定位·資金流暗池 ===== */
+body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="flowsec"]{display:none}
+@media (min-width:1360px){
+  body.wsxFit #sec-chips *,body.wsxFit #sec-rotation *{scrollbar-width:none}
+  body.wsxFit #sec-chips *::-webkit-scrollbar,body.wsxFit #sec-rotation *::-webkit-scrollbar{width:0;height:0;display:none}
+  body.wsxFit #wsxOptSlot .grid,body.wsxFit #wsxFlowSlot .grid{grid-template-columns:minmax(0,1fr)}
+  body.wsxFit #wsxOptSlot .grid>*,body.wsxFit #wsxFlowSlot .grid>*{min-width:0}
+  body.wsxFit #wsxOptSlot .card,body.wsxFit #wsxFlowSlot .card{margin:0 0 8px;padding:8px;min-width:0;overflow:hidden}
+  body.wsxFit #wsxOptSlot h2,body.wsxFit #wsxFlowSlot h2{font-size:12px;margin:0 0 6px}
+}
 </style>
 </head>
 <body>
@@ -331,6 +342,7 @@ body.wsxFit #wsxDestSlot .card{margin:0}
 
 <!-- ===== 期權定位 ===== -->
 <section id="sec-options" class="sec">
+<div id="optPack">
   <div class="note" id="optfresh" style="margin:0 0 10px"></div>
   <div class="grid g2">
     <div class="card"><h2>Dealer Gamma 曝險 GEX（負=做市商空gamma→放大波動、脆弱；正=壓波動）</h2><div id="gex" style="height:420px"></div></div>
@@ -352,6 +364,7 @@ body.wsxFit #wsxDestSlot .card{margin:0}
     <div style="overflow-x:auto;max-height:520px;overflow-y:auto"><table id="optTable"></table></div>
     <div class="note">GEX＝Σ 各合約 gamma×OI×100×spot²×1%（call +、put −），單位十億美元/1%移動。P/C＝put/call 量比。ATM IV＝spot±3% 履約價均值。Skew＝25Δ put IV − call IV（正=下檔避險需求高）。Max Pain＝OI 內在價值最小的履約價（磁吸位參考）。0DTE＝當日到期合約量佔比。<b>你的 Futu 帳號無美股期權權限，本區改由 CBOE 提供，涵蓋個股／大盤／2×3×槓桿ETF／波動率／大宗。</b></div>
   </div>
+</div>
 </section>
 
 <!-- ===== 跨資產總覽 ===== -->
@@ -378,6 +391,7 @@ body.wsxFit #wsxDestSlot .card{margin:0}
 
 <!-- ===== 資金流 · 暗池 ===== -->
 <section id="sec-flow" class="sec">
+<div id="flowPack">
   <div class="card"><h2>Futu 大單淨流⑦（特大+大單，負=機構在出、散戶在接）</h2><div id="capflow" style="height:420px"></div>
     <div class="note" id="capnote"></div></div>
   <div class="card"><h2>暗池 / 賣空 proxy（FINRA 每日賣空量比）</h2><div style="overflow-x:auto"><table id="dpTable"></table></div>
@@ -390,6 +404,7 @@ body.wsxFit #wsxDestSlot .card{margin:0}
     <div id="dpTrend" style="height:360px"></div>
     <div class="note">各標的每日賣空量比走勢（已回填近 30 個交易日）。虛線 55%＝經驗壓力線；持續高於此常伴隨機構出貨/避險放大。點圖例可隱藏/顯示個別標的。</div>
   </div>
+</div>
 </section>
 
 <section id="sec-chips" class="sec">
@@ -439,7 +454,8 @@ body.wsxFit #wsxDestSlot .card{margin:0}
       <span class="wsxTab" data-wt="flow">⑦ 資金流向</span>
       <span class="wsxTab" data-wt="season">季節性</span>
       <span class="wsxTab" data-wt="stk13f">13F</span>
-      <span class="wsxTab" data-wt="note">說明</span>
+      <span class="wsxTab" data-wt="optsec">期權定位</span>
+      <span class="wsxTab" data-wt="flowsec">資金流·暗池</span>
     </div>
     <div class="wsxTB" data-wtb="scan"><div id="scanpanel"></div></div>
     <div class="wsxTB" data-wtb="accum" style="display:none"><div id="accumpanel"></div></div>
@@ -447,6 +463,8 @@ body.wsxFit #wsxDestSlot .card{margin:0}
     <div class="wsxTB" data-wtb="flow" style="display:none"><div id="wsxFlow"></div></div>
     <div class="wsxTB" data-wtb="season" style="display:none"><div class="wsxP"><div class="wsxH">季節性 · 年×月矩陣</div><div class="wsxB" style="padding:2px 8px 8px"><div id="season"></div></div></div></div>
     <div class="wsxTB" data-wtb="stk13f" style="display:none"><div class="wsxP"><div class="wsxH">存量分解 · 13F 大戶</div><div class="wsxB" style="padding:2px 8px 8px"><div id="chipstock"></div></div></div></div>
+    <div class="wsxTB" data-wtb="optsec" style="display:none"><div id="wsxOptSlot"></div></div>
+    <div class="wsxTB" data-wtb="flowsec" style="display:none"><div id="wsxFlowSlot"></div></div>
     <div class="wsxTB" data-wtb="note" style="display:none"><div id="chipnote" class="note"></div></div>
   </div>
 </div>
@@ -475,7 +493,7 @@ body.wsxFit #wsxDestSlot .card{margin:0}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T14:31Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T15:01Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4521,6 +4539,7 @@ function setTab(k){
   for(var i=0;i<tabs.length;i++)tabs[i].classList.toggle('on',tabs[i].getAttribute('data-wt')===k);
   var bodies=document.querySelectorAll('.wsxTB');
   for(var j=0;j<bodies.length;j++)bodies[j].style.display=(bodies[j].getAttribute('data-wtb')===k)?'':'none';
+  setTimeout(function(){try{var ps=document.querySelectorAll('.wsxTB[data-wtb="'+k+'"] .js-plotly-plot');for(var m=0;m<ps.length;m++){try{if(ps[m].data&&ps[m].offsetParent!==null&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);}catch(_){}}}catch(_){}},90);
   if(k==='cost'){try{var cc=document.getElementById('chipcost');if(cc&&cc.data&&typeof Plotly!=="undefined"&&Plotly.Plots)Plotly.Plots.resize(cc);}catch(_){}}
   if(k==='flow')renderFlow();
 }
@@ -4694,27 +4713,30 @@ document.addEventListener('click',function(e){
 </script>
 <script>
 
-/* ===== destCard+winCard 跨分頁共用搬移(wsx5 v5)===== */
+/* ===== destCard+winCard+optPack+flowPack 跨分頁共用搬移(wsx5 v6)===== */
 (function(){
 "use strict";
 function chipsOn(){try{return document.getElementById('sec-chips').classList.contains('active');}catch(_){return false;}}
+function wide(){try{return window.innerWidth>=1360;}catch(_){return true;}}
 function place(){
   try{
     var pairs=[
       {card:'destCard', chips:'wsxDestSlot', rot:'wsxRChartP', prepend:false},
-      {card:'winCard',  chips:'wsxWinSlot',  rot:'wsxRL',      prepend:true}
+      {card:'winCard',  chips:'wsxWinSlot',  rot:'wsxRL',      prepend:true},
+      {card:'optPack',  chips:'wsxOptSlot',  rot:'sec-options',prepend:false,desk:true},
+      {card:'flowPack', chips:'wsxFlowSlot', rot:'sec-flow',   prepend:false,desk:true}
     ];
     var on=chipsOn();
     for(var i=0;i<pairs.length;i++){
       var p=pairs[i], card=document.getElementById(p.card);
-      var tgt=document.getElementById(on?p.chips:p.rot);
+      var want=on&&(!p.desk||wide());
+      var tgt=document.getElementById(want?p.chips:p.rot);
       if(!card||!tgt||card.parentNode===tgt)continue;
-      if(!on&&p.prepend&&tgt.firstChild)tgt.insertBefore(card,tgt.firstChild);
+      if(!want&&p.prepend&&tgt.firstChild)tgt.insertBefore(card,tgt.firstChild);
       else tgt.appendChild(card);
       (function(c){setTimeout(function(){
-        try{var ps=c.querySelectorAll('.js-plotly-plot');
-          for(var m=0;m<ps.length;m++)if(ps[m].data&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);
-        }catch(_){}
+        var ps=[];try{ps=c.querySelectorAll('.js-plotly-plot');}catch(_){}
+        for(var m=0;m<ps.length;m++){try{if(ps[m].data&&ps[m].offsetParent!==null&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);}catch(_){}}
       },130);})(card);
     }
   }catch(_){}
@@ -4722,7 +4744,41 @@ function place(){
 document.addEventListener('click',function(e){
   if(e.target.closest&&e.target.closest('.tab[data-sec]'))setTimeout(place,80);
 });
+var _pt=null;
+window.addEventListener('resize',function(){clearTimeout(_pt);_pt=setTimeout(place,220);});
 place();setTimeout(place,1200);
+})();
+
+</script>
+<script>
+
+/* ===== wsx6:圖寬恆貼容器 + splitter 拖曳即時重排(2026-08-08 v6)===== */
+(function(){
+"use strict";
+function fitOn(){try{return document.body.classList.contains('wsxFit');}catch(_){return false;}}
+function fill(){
+  try{
+    if(typeof Plotly==='undefined'||!Plotly.Plots)return;
+    var ps=document.querySelectorAll('.js-plotly-plot');
+    for(var i=0;i<ps.length;i++){
+      var g=ps[i];
+      if(!g.data||!g._fullLayout||g.offsetParent===null)continue;
+      if(g.layout&&g.layout.autosize===false)continue;
+      var w=Math.round(g.getBoundingClientRect().width);
+      if(w>=60&&Math.abs((g._fullLayout.width||0)-w)>4){try{Plotly.Plots.resize(g);}catch(_){}}
+    }
+  }catch(_){}
+}
+window.__wsxFill=fill;
+setInterval(function(){if(fitOn())fill();},700);
+var _ft=0,_fq=null;
+document.addEventListener('mousemove',function(){
+  if(!document.querySelector('.wsxSplit.on'))return;
+  var n=Date.now();
+  if(n-_ft>=120){_ft=n;fill();}
+  else if(!_fq)_fq=setTimeout(function(){_fq=null;_ft=Date.now();fill();},130);
+},true);
+document.addEventListener('mouseup',function(){setTimeout(fill,90);setTimeout(fill,380);},true);
 })();
 
 </script>
