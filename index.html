@@ -147,6 +147,32 @@ a{color:var(--blue)}
 @media (max-width:1359px){.wsxSplit,#wsxRail{display:none}}
 @media (max-width:679px){#wsxTabRow{display:none}.wsxTB{display:block!important;max-height:none}}
 .wsxFlash{outline:2px solid #fab219;outline-offset:-2px;border-radius:10px}
+
+/* ===== 資金輪動 · 工作區(wsxR 2026-08-08)===== */
+#wsxRGrid{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+#wsxRL{order:1}#wsxRC{order:2;min-width:0}#wsxRA{order:3}#wsxRB{order:4}
+#wsxRTabRow{display:flex;gap:2px;padding:6px 8px 0;flex-wrap:wrap}
+.wsxTBr{padding:2px 8px 8px;max-height:520px;overflow:auto;scrollbar-width:thin}
+@media (min-width:1360px){
+  body.wsxFit #sec-rotation.active{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+  body.wsxFit #wsxRGrid{flex:1 1 auto;min-height:0;display:grid;gap:0;
+    grid-template-columns:var(--wsxL,258px) 7px minmax(430px,1fr) 7px var(--wsxA,246px) 7px var(--wsxB,258px);align-items:stretch}
+  body.wsxFit #wsxRL,body.wsxFit #wsxRA,body.wsxFit #wsxRB{order:0;height:100%;min-height:0;overflow:auto;scrollbar-width:thin;padding:0 3px 0 1px}
+  body.wsxFit #wsxRC{order:0;height:100%;min-height:0;display:flex;flex-direction:column;padding:0 2px}
+  body.wsxFit #wsxRChartP{flex:1 1 auto;min-height:300px;overflow:auto;margin-bottom:0}
+  body.wsxFit #wsxRTabsP{flex:0 0 auto;height:clamp(200px,30vh,430px);display:flex;flex-direction:column;margin:8px 0 0;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  body.wsxFit #wsxRTabRow{flex:0 0 auto}
+  body.wsxFit .wsxTBr{flex:1 1 auto;min-height:0;max-height:none;overflow:auto}
+  body.wsxFit #wsxRL .card,body.wsxFit #wsxRA .card,body.wsxFit #wsxRB .card{margin:0 0 10px}
+  body.wsxFit #wsxRChartP .card{margin:0}
+  body.wsxFit .wsxTBr .card{margin:0;border:0;background:none;box-shadow:none;padding:2px 4px}
+  body.wsxFit #cattiles{display:flex;flex-direction:column;gap:3px}
+  body.wsxFit #cattiles .tile{display:flex;align-items:baseline;gap:8px;padding:3px 9px;margin:0;width:auto;min-width:0}
+  body.wsxFit #cattiles .tile .lbl{font-size:11px;white-space:nowrap}
+  body.wsxFit #cattiles .tile .val{margin-left:auto;font-size:13px}
+  body.wsxFit #cattiles .tile .chg{display:none}
+}
+@media (max-width:679px){#wsxRTabRow{display:none}.wsxTBr{display:block!important;max-height:none}}
 </style>
 </head>
 <body>
@@ -170,7 +196,9 @@ a{color:var(--blue)}
 
 <!-- ===== 資金輪動 Sankey ===== -->
 <section id="sec-rotation" class="sec active">
-  <div class="card">
+<div id="wsxRGrid">
+<aside id="wsxRL" class="wsxCol">
+<div class="card">
     <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">時間視窗
       <span id="winbar" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="wincustom" style="display:none;gap:6px;align-items:center">
@@ -181,7 +209,91 @@ a{color:var(--blue)}
     </h2>
     <div class="note">「即時」＝本交易日盤中累計(休市時＝上一交易日全日);「過去 N 日」＝近 N 個交易日全日淨額加總(日檔自部署日起累積,足夠天數後才可選)。</div>
   </div>
-  <div class="card">
+  
+<div class="card">
+    <h2>類別淨流向（資金在避險還是冒險？）</h2>
+    <div id="cattiles" class="tiles"></div>
+    <div class="note">各類別 ⑦ 大單淨流合計(依所選時間視窗)。淨流向<b>大盤/現金/國債/金</b>＝避險;淨流向<b>槓桿</b>＝加碼冒險。</div>
+  </div>
+  
+</aside>
+<div class="wsxSplit" data-ws="L"></div>
+<div id="wsxRC">
+  <div id="wsxRChartP">
+<div class="card">
+    <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
+    <div id="dest" style="height:480px"></div>
+    <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
+    <div id="pooltide" style="height:170px;margin-top:4px"></div>
+    <div id="pooloffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
+    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的合計、<b>方向與類別同向</b>,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——<b>右伸=出池(現金離池買股·進場)、左伸=入池(賣股現金回池·了結)</b>,與上方類別「右=買/左=賣」及場內資金線「+y=進場」同一語意;兩段反向=機構與散戶動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+  </div>
+  
+  </div>
+  <div id="wsxRTabsP">
+    <div id="wsxRTabRow">
+      <span class="wsxTab on" data-wrt="flowmap">🔀 輪動圖 FROM→TO</span>
+      <span class="wsxTab" data-wrt="persist">持續性</span>
+      <span class="wsxTab" data-wrt="optprem">期權傾向</span>
+      <span class="wsxTab" data-wrt="lev">多空槓桿</span>
+      <span class="wsxTab" data-wrt="inst">13F 機構</span>
+    </div>
+    <div class="wsxTBr" data-wrtb="flowmap"><div class="card">
+    <h2>機構大單資金輪動 FROM → TO（正股 + 大盤 ETF + 2×3× 槓桿 ETF;連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
+    <div style="margin-bottom:8px">
+      <span class="chip" style="background:#2a3550;color:#9db4e0">● 正股</span>
+      <span class="chip" style="background:#12324a;color:#79c0e0">● 大盤ETF</span>
+      <span class="chip" style="background:#3a2a12;color:#e0b070">● 槓桿ETF</span>
+    </div>
+    <div id="sankey" style="height:560px"></div>
+    <div class="note" id="sankeynote">左＝機構淨流出、右＝淨流入,連線寬度＝真實 ⑦ 大單淨流金額(成交額用主動買賣分類後的淨額,非估算)。節點色:正股藍/大盤青/槓桿橙。小額標的收斂成「其他」以保持可讀。</div>
+  </div>
+  </div>
+    <div class="wsxTBr" data-wrtb="persist" style="display:none"><div class="card">
+    <h2>持續性 — 各標的近幾次淨流向（判斷趨勢 vs 雜訊）</h2>
+    <div id="persist" style="height:420px"></div>
+    <div class="note">每一列是一檔標的,由左到右是最近幾次更新的 ⑦ 淨流向(綠=流入、紅=流出,越深金額越大)。橫軸為<b>美東時間</b>(09:30=開盤)。<b>整列同色＝持續性高(趨勢);顏色跳動＝雜訊。</b>你系統的核心原則:連續同向 ≥3 次才算趨勢。</div>
+  </div>
+  </div>
+    <div class="wsxTBr" data-wrtb="optprem" style="display:none"><div class="card">
+    <h2>選擇權資金傾向（權利金成交額;綠＝看漲 call、紅＝看跌 put）</h2>
+    <div id="optprem" style="height:340px"></div>
+    <div class="note">綠＝看漲(call)、紅＝看跌(put)權利金成交額(Σ 量×中價×100,CBOE 延遲約 15 分)。誠實版「期權資金流向」——看得出押漲或押跌傾向,非逐筆主動方向。指數(SPX/VIX)量體太大已移到期權定位頁,此處只列個股/ETF 以免壓縮。</div>
+  </div>
+  </div>
+    <div class="wsxTBr" data-wrtb="lev" style="display:none"><div class="card">
+    <h2>多空槓桿資金(美股版「期貨多空・融券」;部位層,非日內流)</h2>
+    <div id="levtiles" class="tiles"></div>
+    <div style="overflow-x:auto;margin-top:10px;max-height:340px;overflow-y:auto"><table id="shortTable"></table></div>
+    <div class="note"><b>做空也是資金進場</b>——本卡呈現美股可公開觀測的多空「部位」:<b>期貨多空</b>=CFTC COT(TFF 報告,週頻:週五發布週二值;槓桿基金≈投機方、資產管理人≈長線多方,$ 估算=口數×合約乘數×指數)。<b>個股空方部位</b>=交易所半月申報(Yahoo 轉載),空方部位$=空單股數×現價;Δ=與上期比較=空方資金增減。<b>期權新倉資金</b>=T+1 粗估(ΔOI×當日平均權利金;call 新倉≈多方資金、put 新倉≈空方/避險資金)——OI 日檔自 2026-07-22 起累積,兩日後自動顯示。<b>誠實邊界</b>:美股沒有台股那種日頻融資融券——放空「流量」僅有 FINRA 日賣空量比(見暗池分頁),放空「部位」半月一次;各數據頻率不同,<b>不與上方日內現金池混算</b>,分層對照判讀。</div>
+  </div>
+  </div>
+    <div class="wsxTBr" data-wrtb="inst" style="display:none"><div class="card" id="instcard" style="display:none">
+    <h2>交易機構持股（13F,季頻;綠＝機構增持、紅＝減持）</h2>
+    <div style="overflow-x:auto"><table id="instTable"></table></div>
+    <div class="note">富途機構持股資料,季頻、延遲(非即時)。持股比例變動＝上季到本季機構整體增/減持。僅美股正股/基金,ETF 與指數多半無此資料。</div>
+  </div></div>
+  </div>
+</div>
+<div class="wsxSplit" data-ws="A"></div>
+<div id="wsxRA" class="wsxCol">
+<div class="card">
+    <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
+    <div id="cashtiles" class="tiles"></div>
+    <div class="grid g2" style="margin-top:10px">
+      <div><div id="mmfTrend" style="height:250px"></div></div>
+      <div><div id="rrpTrend" style="height:250px"></div></div>
+    </div>
+    <div class="note">「等機會的現金」主體停在<b>貨幣市場基金 MMF</b>——散戶券商帳戶的閒置現金每晚被自動掃(sweep)進去,機構亦然——來源 ICI,<b>週頻</b>(週四發布、資料截至週三)。<b>Fed ON RRP</b>＝貨幣基金放回 Fed 的過剩現金,<b>日頻</b>(當日美東 13:15 後有值;2025 年後已近乎排空,代表系統閒錢已回到市場運用,水位主要看 MMF)。券商免佣現金餘額為月頻(FINRA)且無機器可讀源,誠實不納入。<b>盤中的即時現金池水位不存在任何公開資料源——券商帳戶餘額是私有資料。</b>盤中唯一可觀測的是上圖「現金ETF ⑦ 主動流」,方向即時但量級只是冰山一角;水位判讀以本卡的 MMF 週頻為準。</div>
+  </div>
+  
+</div>
+<div class="wsxSplit" data-ws="A2"></div>
+<div id="wsxRB" class="wsxCol">
+<div class="card"><h2>流出 TOP（機構在減）</h2><div style="overflow-x:auto"><table id="outTable"></table></div></div>
+    
+<div class="card"><h2>流入 TOP（機構在加）</h2><div style="overflow-x:auto"><table id="inTable"></table></div></div>
+<div class="card">
     <h2>追蹤範圍 — 固定清單 + <span style="color:#f43f5e">成交額 TOP20 闖入者</span>(自動)+ <span style="color:#22d3ee">自訂追蹤</span></h2>
     <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
       <span id="customchips" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
@@ -195,63 +307,9 @@ a{color:var(--blue)}
     </div>
     <div class="note">加入<b style="color:#4ade80">免 token</b>(2026-08-04 起):申請經公共收件匣由 Mac 採集器撿走、驗證、寫入共享清單(任何觀看者/裝置可加,~1-3 分鐘生效;K線約 10 分鐘、⑦ 250 日歷史當日回補)。貼 token(gist 權限,僅存本機瀏覽器)只有「<b>✕ 移除</b>」或直寫 0 等待才需要。<b style="color:#f43f5e">闖入者</b>=當下美股成交額 TOP20 中不在清單內的標的,自動補抓 ⑦ 並標紅 —— 抓市場當日異常;不做歷史回填(它們是流動名單)。</div>
   </div>
-  <div class="card">
-    <h2>類別淨流向（資金在避險還是冒險？）</h2>
-    <div id="cattiles" class="tiles"></div>
-    <div class="note">各類別 ⑦ 大單淨流合計(依所選時間視窗)。淨流向<b>大盤/現金/國債/金</b>＝避險;淨流向<b>槓桿</b>＝加碼冒險。</div>
-  </div>
-  <div class="card">
-    <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
-    <div id="dest" style="height:480px"></div>
-    <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
-    <div id="pooltide" style="height:170px;margin-top:4px"></div>
-    <div id="pooloffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的合計、<b>方向與類別同向</b>,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——<b>右伸=出池(現金離池買股·進場)、左伸=入池(賣股現金回池·了結)</b>,與上方類別「右=買/左=賣」及場內資金線「+y=進場」同一語意;兩段反向=機構與散戶動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
-  </div>
-  <div class="card">
-    <h2>現金池真實水位（離場等機會的錢；層級觀測,非盤中流量）</h2>
-    <div id="cashtiles" class="tiles"></div>
-    <div class="grid g2" style="margin-top:10px">
-      <div><div id="mmfTrend" style="height:250px"></div></div>
-      <div><div id="rrpTrend" style="height:250px"></div></div>
-    </div>
-    <div class="note">「等機會的現金」主體停在<b>貨幣市場基金 MMF</b>——散戶券商帳戶的閒置現金每晚被自動掃(sweep)進去,機構亦然——來源 ICI,<b>週頻</b>(週四發布、資料截至週三)。<b>Fed ON RRP</b>＝貨幣基金放回 Fed 的過剩現金,<b>日頻</b>(當日美東 13:15 後有值;2025 年後已近乎排空,代表系統閒錢已回到市場運用,水位主要看 MMF)。券商免佣現金餘額為月頻(FINRA)且無機器可讀源,誠實不納入。<b>盤中的即時現金池水位不存在任何公開資料源——券商帳戶餘額是私有資料。</b>盤中唯一可觀測的是上圖「現金ETF ⑦ 主動流」,方向即時但量級只是冰山一角;水位判讀以本卡的 MMF 週頻為準。</div>
-  </div>
-  <div class="card">
-    <h2>多空槓桿資金(美股版「期貨多空・融券」;部位層,非日內流)</h2>
-    <div id="levtiles" class="tiles"></div>
-    <div style="overflow-x:auto;margin-top:10px;max-height:340px;overflow-y:auto"><table id="shortTable"></table></div>
-    <div class="note"><b>做空也是資金進場</b>——本卡呈現美股可公開觀測的多空「部位」:<b>期貨多空</b>=CFTC COT(TFF 報告,週頻:週五發布週二值;槓桿基金≈投機方、資產管理人≈長線多方,$ 估算=口數×合約乘數×指數)。<b>個股空方部位</b>=交易所半月申報(Yahoo 轉載),空方部位$=空單股數×現價;Δ=與上期比較=空方資金增減。<b>期權新倉資金</b>=T+1 粗估(ΔOI×當日平均權利金;call 新倉≈多方資金、put 新倉≈空方/避險資金)——OI 日檔自 2026-07-22 起累積,兩日後自動顯示。<b>誠實邊界</b>:美股沒有台股那種日頻融資融券——放空「流量」僅有 FINRA 日賣空量比(見暗池分頁),放空「部位」半月一次;各數據頻率不同,<b>不與上方日內現金池混算</b>,分層對照判讀。</div>
-  </div>
-  <div class="card">
-    <h2>機構大單資金輪動 FROM → TO（正股 + 大盤 ETF + 2×3× 槓桿 ETF;連線寬度＝真實 Futu ⑦ 特大+大單淨流金額）</h2>
-    <div style="margin-bottom:8px">
-      <span class="chip" style="background:#2a3550;color:#9db4e0">● 正股</span>
-      <span class="chip" style="background:#12324a;color:#79c0e0">● 大盤ETF</span>
-      <span class="chip" style="background:#3a2a12;color:#e0b070">● 槓桿ETF</span>
-    </div>
-    <div id="sankey" style="height:560px"></div>
-    <div class="note" id="sankeynote">左＝機構淨流出、右＝淨流入,連線寬度＝真實 ⑦ 大單淨流金額(成交額用主動買賣分類後的淨額,非估算)。節點色:正股藍/大盤青/槓桿橙。小額標的收斂成「其他」以保持可讀。</div>
-  </div>
-  <div class="card">
-    <h2>持續性 — 各標的近幾次淨流向（判斷趨勢 vs 雜訊）</h2>
-    <div id="persist" style="height:420px"></div>
-    <div class="note">每一列是一檔標的,由左到右是最近幾次更新的 ⑦ 淨流向(綠=流入、紅=流出,越深金額越大)。橫軸為<b>美東時間</b>(09:30=開盤)。<b>整列同色＝持續性高(趨勢);顏色跳動＝雜訊。</b>你系統的核心原則:連續同向 ≥3 次才算趨勢。</div>
-  </div>
-  <div class="card">
-    <h2>選擇權資金傾向（權利金成交額;綠＝看漲 call、紅＝看跌 put）</h2>
-    <div id="optprem" style="height:340px"></div>
-    <div class="note">綠＝看漲(call)、紅＝看跌(put)權利金成交額(Σ 量×中價×100,CBOE 延遲約 15 分)。誠實版「期權資金流向」——看得出押漲或押跌傾向,非逐筆主動方向。指數(SPX/VIX)量體太大已移到期權定位頁,此處只列個股/ETF 以免壓縮。</div>
-  </div>
-  <div class="card" id="instcard" style="display:none">
-    <h2>交易機構持股（13F,季頻;綠＝機構增持、紅＝減持）</h2>
-    <div style="overflow-x:auto"><table id="instTable"></table></div>
-    <div class="note">富途機構持股資料,季頻、延遲(非即時)。持股比例變動＝上季到本季機構整體增/減持。僅美股正股/基金,ETF 與指數多半無此資料。</div>
-  </div>
-  <div class="grid g2">
-    <div class="card"><h2>流出 TOP（機構在減）</h2><div style="overflow-x:auto"><table id="outTable"></table></div></div>
-    <div class="card"><h2>流入 TOP（機構在加）</h2><div style="overflow-x:auto"><table id="inTable"></table></div></div>
-  </div>
+  
+</div>
+</div>
 </section>
 
 <!-- ===== 期權定位 ===== -->
@@ -395,7 +453,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T12:19Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T12:50Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4496,16 +4554,15 @@ var COLS={L:264,A:250,B:262};
 try{var sv=JSON.parse(localStorage.getItem('wsxCols')||"null");if(sv&&sv.L)COLS=sv;}catch(_){}
 var LIM={L:[200,360],A:[200,340],B:[210,380]};
 function applyCols(){
-  grid.style.setProperty('--wsxL',COLS.L+'px');
-  grid.style.setProperty('--wsxA',COLS.A+'px');
-  grid.style.setProperty('--wsxB',COLS.B+'px');
+  var tg=[document.documentElement,grid];
+  for(var i2=0;i2<tg.length;i2++){tg[i2].style.setProperty('--wsxL',COLS.L+'px');tg[i2].style.setProperty('--wsxA',COLS.A+'px');tg[i2].style.setProperty('--wsxB',COLS.B+'px');}
 }
 applyCols();
 /* ── 駕駛艙高度單一真值 ── */
-function FIT(){try{return DESK()&&document.getElementById('sec-chips').classList.contains('active');}catch(_){return false;}}
+function FIT(){try{return DESK()&&(document.getElementById('sec-chips').classList.contains('active')||document.getElementById('sec-rotation').classList.contains('active'));}catch(_){return false;}}
 function updFit(){var on=FIT();document.body.classList.toggle('wsxFit',on);document.documentElement.classList.toggle('wsxFit',on);}
 function calcH(){
-  if(!FIT()){window.__wsxCkH=null;return;}
+  if(!FIT()||!document.getElementById('sec-chips').classList.contains('active')){window.__wsxCkH=null;return;}
   try{
     var p=document.getElementById('wsxChartP'),tl=document.getElementById('wsxTools'),ck=document.getElementById('cockpit');
     if(!p||!tl||!ck)return;
@@ -4574,6 +4631,41 @@ document.addEventListener('click',function(e){
     for(var i=0;i<tabs.length;i++)if(tabs[i].getAttribute('data-wt')===wt)tabs[i].click();}
   try{el.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(_){el.scrollIntoView();}
   el.classList.add('wsxFlash');setTimeout(function(){el.classList.remove('wsxFlash');},1300);
+});
+})();
+
+</script>
+<script>
+
+/* ===== 資金輪動工作區分頁(wsx4)===== */
+(function(){
+"use strict";
+var row=document.getElementById('wsxRTabRow'); if(!row)return;
+function show(k){
+  var tabs=row.querySelectorAll('.wsxTab');
+  for(var i=0;i<tabs.length;i++)tabs[i].classList.toggle('on',tabs[i].getAttribute('data-wrt')===k);
+  var bodies=document.querySelectorAll('.wsxTBr');
+  for(var j=0;j<bodies.length;j++)bodies[j].style.display=(bodies[j].getAttribute('data-wrtb')===k)?'':'none';
+  setTimeout(function(){
+    try{
+      var ps=document.querySelectorAll('.wsxTBr[data-wrtb="'+k+'"] .js-plotly-plot');
+      for(var m=0;m<ps.length;m++)if(ps[m].data&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);
+    }catch(_){}
+  },80);
+}
+row.addEventListener('click',function(e){
+  var tb=e.target.closest&&e.target.closest('.wsxTab[data-wrt]');
+  if(tb)show(tb.getAttribute('data-wrt'));
+});
+/* 進 rotation 分頁時喚醒中欄 Plotly(dest 等在隱藏時渲染過的圖) */
+document.addEventListener('click',function(e){
+  if(!(e.target.closest&&e.target.closest('.tab[data-sec="rotation"]')))return;
+  setTimeout(function(){
+    try{
+      var ps=document.querySelectorAll('#wsxRChartP .js-plotly-plot, .wsxTBr:not([style*="none"]) .js-plotly-plot');
+      for(var m=0;m<ps.length;m++)if(ps[m].data&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);
+    }catch(_){}
+  },120);
 });
 })();
 
