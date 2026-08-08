@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>【LAB】全市場資金部位地圖</title>
+<title>【工作區 LAB】全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
 <style>
 :root{
@@ -58,18 +58,30 @@ a{color:var(--blue)}
   .js-plotly-plot,.js-plotly-plot .plotly,.js-plotly-plot .draglayer,.js-plotly-plot .nsewdrag,.js-plotly-plot .drag{touch-action:pan-y !important}
 }
 
-/* ===== 工作區 LAB 殼(wsx)===== */
+/* ===== 工作區 v2(wsx)===== */
+header{display:none!important}.tabs{display:none!important}
+#wsxTop{display:flex;align-items:center;gap:10px;padding:8px 4px 10px;flex-wrap:wrap}
+.wsxBrand{font-weight:800;font-size:15px;white-space:nowrap}
+.wsxBrand b{color:#fab219;margin-left:2px}
+#wsxQuick{display:inline-flex;gap:5px;flex-wrap:wrap}
+.wsxChip{display:inline-block;padding:4px 11px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#c3c2b7;cursor:pointer;font-size:11.5px;font-weight:700}
+.wsxChip.on{background:#3987e5;border-color:#3987e5;color:#fff}
+#wsxPills{display:inline-flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.wsxPill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:11px;color:#c3c2b7;white-space:nowrap}
+.wsxPill .dot{width:7px;height:7px;border-radius:50%}
 #wsxGrid{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
 #wsxLeft{order:2}#wsxCenter{order:1;min-width:0}#wsxA{order:3}#wsxB{order:4}
 @media (min-width:1360px){
-  #wsxGrid{grid-template-columns:minmax(242px,258px) minmax(600px,1fr) minmax(230px,248px) minmax(238px,258px)}
+  #wsxGrid{grid-template-columns:minmax(242px,258px) minmax(600px,1fr) minmax(230px,250px) minmax(238px,260px)}
   #wsxLeft{order:1}#wsxCenter{order:2}#wsxA{order:3}#wsxB{order:4}
   .wsxCol{position:sticky;top:6px;max-height:calc(100vh - 12px);overflow:auto;scrollbar-width:thin}
 }
 .wsxP{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+#wsxCenter .wsxP{margin-bottom:10px}
 .wsxH{display:flex;align-items:center;gap:6px;padding:7px 10px 4px;font-size:10.5px;font-weight:700;letter-spacing:.05em;color:#898781;text-transform:uppercase}
 .wsxH .wsxHr{margin-left:auto;font-weight:600;text-transform:none;letter-spacing:0}
 .wsxB{padding:2px 10px 9px;font-size:12px;line-height:1.5}
+#wsxTools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 10px 4px;font-size:12px}
 .wsxN{font-variant-numeric:tabular-nums}
 .wsx-up{color:#4ade4a}.wsx-dn{color:#ff6b6b}.wsx-fl{color:#898781}
 .wsxSt{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:11px;margin:3px 0}
@@ -99,12 +111,22 @@ a{color:var(--blue)}
 .wsxVd{font-size:10px;font-weight:700;padding:0 7px;border-radius:8px}
 .wsx-vd-ok{background:rgba(74,222,74,.15);color:#4ade4a}.wsx-vd-no{background:rgba(255,107,107,.15);color:#ff6b6b}
 .wsx-vd-q{background:rgba(250,178,25,.15);color:#fab219}.wsx-vd-h{background:rgba(57,135,229,.15);color:#3987e5}
+#wsxTabRow{display:flex;gap:2px;padding:6px 8px 0;flex-wrap:wrap}
+.wsxTab{padding:5px 13px;font-size:12px;font-weight:600;color:#898781;cursor:pointer;border-bottom:2px solid transparent;user-select:none}
+.wsxTab.on{color:#f2f1ea;border-bottom-color:#3987e5}
+.wsxTB{padding:2px 8px 8px;max-height:420px;overflow:auto;scrollbar-width:thin}
+.wsxBarRow{display:flex;align-items:center;gap:7px;margin:4px 0;font-size:11.5px}
+.wsxBarRow .bl{width:52px;flex:0 0 auto;color:#c3c2b7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wsxBarRow .track{flex:1;height:13px;background:rgba(255,255,255,.05);border-radius:4px;position:relative;overflow:hidden}
+.wsxBarRow .cl{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#898781;opacity:.5}
+.wsxBarRow .sg{position:absolute;top:1.5px;bottom:1.5px;border-radius:2px}
+.wsxBarRow .bv{width:82px;flex:0 0 auto;text-align:right;font-size:11px;line-height:1.25}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>全市場資金部位地圖<span style="font-size:12px;font-weight:800;color:#fab219;border:1px solid #fab219;border-radius:9px;padding:1px 8px;margin-left:8px;vertical-align:3px">工作區 LAB · staging</span></h1>
+  <h1>全市場資金部位地圖</h1>
   <span class="sub">大盤 · 個股 · 槓桿ETF · <b style="color:var(--ink2)">期權定位</b> · 匯率 · 國債 · 加密 · 大宗商品 · 暗池proxy</span>
   <span id="status" class="badge stale">載入中…</span>
   <span class="sub" id="updated"></span>
@@ -270,35 +292,56 @@ a{color:var(--blue)}
 </section>
 
 <section id="sec-chips" class="sec">
-  <div class="card">
-    <h2 style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">個股籌碼追蹤 — 存量分解 · 現金池累積 · 成本分佈
-      <span class="sub">標的</span>
-      <select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
+<div id="wsxTop">
+  <span class="wsxBrand">⬡ 資金流工作區<b>LAB</b></span>
+  <span id="wsxQuick"></span>
+  <span id="wsxPills"></span>
+</div>
+<div id="wsxGrid">
+<aside id="wsxLeft" class="wsxCol">
+  <div id="wsxMJudge"></div>
+  <div class="wsxP"><div class="wsxH">◆★ / 邊緣案例判讀</div><div class="wsxB" style="padding:2px 8px 8px"><div id="sigreview"></div></div></div>
+</aside>
+<div id="wsxCenter">
+  <div class="wsxP">
+    <div id="wsxTools"><span class="sub">標的</span><select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
       <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
       <datalist id="chipDL"></datalist>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
-      <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span>
-    </h2>
-<div id="wsxGrid">
-<aside id="wsxLeft" class="wsxCol"></aside>
-<div id="wsxCenter">
-    <div id="cockpit" style="height:960px"></div>
-    <div id="sigreview" style="margin:4px 0 6px"></div>
-    <div id="scanpanel" style="margin:10px 0 14px"></div>
-    <div id="season" style="margin:10px 0 18px"></div>
-    <div id="chipstock" style="margin:14px 0 22px"></div>
-    <!-- 獨立現金池累積窗 2026-08-08 使用者指示移除(駕駛艙⑦軌已涵蓋);div 保留為 renderChips 錨點與降級訊息容器,恆隱藏 -->
-    <div id="chipfidx" style="display:none"></div>
-    <div id="chipflow" style="display:none"></div>
-    <div id="chipoffs" style="display:none"></div>
-    <div id="chipcost" style="height:460px;margin-top:8px"></div>
-    <div id="accumpanel" style="margin:14px 0 10px"></div>
-    <div id="chipnote" class="note"></div>
-</div>
-<div id="wsxA" class="wsxCol"></div>
-<div id="wsxB" class="wsxCol"></div>
-</div>
+      <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
+    <div id="cockpit" style="height:660px"></div>
   </div>
+  <div class="wsxP">
+    <div id="wsxTabRow">
+      <span class="wsxTab on" data-wt="scan">🔍 全市場掃描</span>
+      <span class="wsxTab" data-wt="accum">🧲 吸籌偵測</span>
+      <span class="wsxTab" data-wt="cost">成本分佈</span>
+      <span class="wsxTab" data-wt="flow">⑦ 資金流向</span>
+      <span class="wsxTab" data-wt="note">說明</span>
+    </div>
+    <div class="wsxTB" data-wtb="scan"><div id="scanpanel"></div></div>
+    <div class="wsxTB" data-wtb="accum" style="display:none"><div id="accumpanel"></div></div>
+    <div class="wsxTB" data-wtb="cost" style="display:none"><div id="chipcost" style="height:460px"></div></div>
+    <div class="wsxTB" data-wtb="flow" style="display:none"><div id="wsxFlow"></div></div>
+    <div class="wsxTB" data-wtb="note" style="display:none"><div id="chipnote" class="note"></div></div>
+  </div>
+  <!-- renderChips 錨點(恆隱藏,不可移除) -->
+  <div id="chipfidx" style="display:none"></div>
+  <div id="chipflow" style="display:none"></div>
+  <div id="chipoffs" style="display:none"></div>
+</div>
+<div id="wsxA" class="wsxCol">
+  <div id="wsxMAnl"></div>
+  <div id="wsxMOpt"></div>
+  <div class="wsxP"><div class="wsxH">季節性 · 年×月矩陣</div><div class="wsxB" style="padding:2px 8px 8px"><div id="season"></div></div></div>
+  <div id="wsxMWatch"></div>
+</div>
+<div id="wsxB" class="wsxCol">
+  <div id="wsxMRev"></div>
+  <div id="wsxMRep"></div>
+  <div class="wsxP"><div class="wsxH">存量分解 · 13F 大戶</div><div class="wsxB" style="padding:2px 8px 8px"><div id="chipstock"></div></div></div>
+</div>
+</div>
 </section>
 
 <div class="note">資料由你 Mac 上的採集器每 5 分鐘推送到 GitHub gist，本頁每 60 秒自行抓取更新 —— 開著就會動，不消耗任何 AI token。<b>盤中即時性</b>：Futu ⑦／個股價格＝即時（LV3）、期權＝每次採集重算（CBOE 源延遲約 15 分）、殖利率＝即時指數＋官方 EOD 曲線；賣空／暗池為 FINRA T+1（物理上限，無免費即時源）。<b>盤後</b>：資金輪動、期權趨勢、賣空趨勢皆可選日期區間。本頁不構成投資建議。</div>
@@ -2236,7 +2279,7 @@ function buildChipIdxRangeActive(){   // 縮放鈕 active 樣式即時反映(不
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
-  el.style.height=MB?'600px':'960px';   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
+  el.style.height=MB?'600px':'660px';   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
   // 2026-08-08 校閱修正:此處原為 980(舊五軌高版遺留),完整渲染尾端才改 600;dataset.sig 快取提前返回時
   // 容器停在 980 → responsive 把圖拉高 → 手機高度在 600/980 間震盪。兩處對齊=單一真值,震盪根治。
   el.dataset.unt='';   // 離開「未追蹤動作區」狀態
@@ -2830,7 +2873,7 @@ function renderCockpit(){
   // 改:MB 總高 640px、邊距 l6/r8(y 刻度 ticklabelposition:'inside' 疊進圖內 → 繪圖區 +23% 寬)、
   //   間距 1%,主圖+量+轉速+檔位+⑦池 ≈ 一屏看完。桌機完全不變。
   const _ckEl=document.getElementById('cockpit');
-  if(_ckEl){const _wantH=MB?'600px':'960px'; if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
+  if(_ckEl){const _wantH=MB?'600px':'660px'; if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
   const TLI=MB?{ticklabelposition:'inside'}:{};
   // 手機主圖壓扁(2026-08-05 二次調整,使用者指定仿富途「扁平」感):
   // 富途手機主圖 ≈ 390×245pt = 1.6:1 寬扁 → 走勢讀起來是緩坡;原 46.5% 高(310×262≈1.2:1)偏方形。
@@ -4101,13 +4144,14 @@ setInterval(()=>{cd--;if(cd<=0){cd=REFRESH_SEC;load();}document.getElementById('
 load();
 </script>
 <script>
-/* ===== 工作區 LAB 殼(wsx;2026-08-08)=====
- * 只讀既有全域(DATA/SIG/SIGREV/CHIP_SYM),全部 fail-open;不碰 renderChips/renderCockpit。
- * 新資料源:data/analyst.json(Nasdaq+EDGAR;SPEC §3 2026-08-08 收編)。 */
+/* ===== 工作區 v2(wsx;2026-08-08)=====
+ * LAB 版面為主體:駕駛艙引擎原封入中欄;掃描/吸籌/成本分佈/⑦ 進底部分頁;
+ * season/sigreview/chipstock 移位側欄(id 不變,render 函式零改動)。
+ * 只讀既有全域(DATA/SIG/SIGREV/SCAN/CHIP_SYM),全部 fail-open。 */
 (function(){
 "use strict";
 if(!document.getElementById('wsxGrid'))return;
-var AN=null,AN_req=0,lastKey="";
+var AN=null,AN_req=0,lastKey="",TAB='scan';
 function ensureAnalyst(){
   var n=Date.now()/1000; if(n-AN_req<300)return; AN_req=n;
   fetch('data/analyst.json?t='+Math.floor(Date.now()/300000),{cache:'no-store'})
@@ -4125,6 +4169,7 @@ function pct2(v){return v==null?"–":(v>0?"+":"")+(+v).toFixed(2)+"%";}
 function px2(v){return v==null?"–":(+v).toLocaleString(undefined,{maximumFractionDigits:2});}
 function money(n){var a=Math.abs(n);if(a>=1e9)return (n/1e9).toFixed(2)+"B";if(a>=1e6)return (n/1e6).toFixed(1)+"M";if(a>=1e3)return (n/1e3).toFixed(0)+"K";return (+n).toFixed(0);}
 function moneyS(n){return n==null?"–":(n>0?"+":"")+money(n);}
+function fMm(v){return v==null?"–":(v>0?"+":"")+(Math.abs(v)>=1000?(v/1000).toFixed(2)+"B":v.toFixed(0)+"M");}
 function agoMin(ts){if(!ts)return null;var ms=new Date(ts.replace(" ","T")+(ts.indexOf("Z")>=0||ts.indexOf("+")>=0?"":"Z")).getTime();return Math.round((Date.now()-ms)/60000);}
 function agoTxt(ts){var m=agoMin(ts);if(m==null)return"—";if(m<1)return"剛剛";if(m<60)return m+"分前";if(m<2880)return (m/60).toFixed(1)+"時前";return Math.round(m/1440)+"天前";}
 function f7(sym){try{var e=DATA&&DATA.capital_flow&&DATA.capital_flow["US."+sym];return e?e.main_net:null;}catch(_){return null;}}
@@ -4142,17 +4187,32 @@ function revCard(r,open){
     '<span class="m" style="margin-left:auto">'+esc(String(r.d||"").slice(5))+'</span></div>'+
     '<div class="m" style="margin-top:2px">'+esc(r.mech||"")+'</div><div class="why">'+esc(r.why||"")+'</div></div>';
 }
+/* ── 頂列 ── */
+var QUICK=["NVDA","MU","SNDK","WDC","AVGO","SMH","SPY","QQQ"];
+var LIGHT={"🟢":["正常","#4ade4a"],"🟡":["留意","#fab219"],"🔴":["警戒","#ff6b6b"]};
+var SESS={rth:"盤中",pre:"盤前",after:"盤後",closed:"休市",pause:"暫停"};
+function renderTopbar(){
+  var q=document.getElementById('wsxQuick'),p=document.getElementById('wsxPills');
+  var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"";
+  if(q)q.innerHTML=QUICK.map(function(s){return '<span class="wsxChip'+(s===sym?' on':'')+'" data-wsxsym="'+s+'">'+s+'</span>';}).join("");
+  if(p){
+    var lg=(typeof SIG!=="undefined")&&SIG&&SIG.market&&SIG.market.regime_light,L=LIGHT[lg]||["—","#898781"];
+    var sess=(typeof DATA!=="undefined")&&DATA&&SESS[DATA.session]||"—";
+    p.innerHTML='<span class="wsxPill"><span class="dot" style="background:'+L[1]+'"></span>大盤 '+L[0]+'</span>'+
+      '<span class="wsxPill">'+esc(sess)+'</span>'+
+      '<span class="wsxPill">'+((typeof DATA!=="undefined")&&DATA?'行情 '+agoTxt(DATA.ts_utc):"載入中…")+'</span>'+
+      '<span class="wsxPill" style="color:#fab219;border-color:#5a4a1a">LAB</span>';
+  }
+}
 /* ── 左欄:Claude 判讀 ── */
 function renderLeft(){
-  var el=document.getElementById('wsxLeft'); if(!el)return;
+  var el=document.getElementById('wsxMJudge'); if(!el)return;
   var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
   var s=(typeof SIG!=="undefined")&&SIG&&SIG.symbols&&SIG.symbols[sym];
-  var rv=(typeof SIGREV!=="undefined")&&SIGREV&&(SIGREV.reviews||[]).filter(function(x){return x.sym===sym;})[0];
   var stale=(typeof SIG!=="undefined")&&SIG&&agoMin(SIG.updated_utc)>2880;
   var q=quote(sym),c7=f7(sym);
-  var head=(SIG?agoTxt(SIG.updated_utc):"—")+(stale?' <span class="wsxBg wsx-bo">偏舊</span>':"");
-  var b="";
-  b+='<div style="display:flex;align-items:baseline;gap:8px"><b style="font-size:15px">'+esc(sym)+'</b>'+
+  var head=(typeof SIG!=="undefined"&&SIG?agoTxt(SIG.updated_utc):"—")+(stale?' <span class="wsxBg wsx-bo">偏舊</span>':"");
+  var b='<div style="display:flex;align-items:baseline;gap:8px"><b style="font-size:15px">'+esc(sym)+'</b>'+
      '<span class="wsxN" style="font-size:13px">'+(q?px2(q.last):"–")+'</span>'+
      '<span class="wsxN '+cls(q&&q.chg1d)+'">'+(q&&q.chg1d!=null?pct2(q.chg1d):"")+'</span></div>';
   if(s){
@@ -4166,12 +4226,12 @@ function renderLeft(){
        '<div class="wsxKv"><span>'+esc(cta.tag||"CTA")+'分數 / RV位</span><span class="wsxN"><span class="'+cls(cta.score)+'">'+(cta.score!=null?(cta.score>0?"+":"")+cta.score:"–")+'</span> / '+(cta.rv_pct!=null?cta.rv_pct+"%":"–")+'</span></div>'+
        '<div class="wsxKv"><span>擠壓 / GEX</span><span class="wsxN">'+(g.squeeze_score!=null?g.squeeze_score:"–")+' / '+(g.gex_bn!=null?g.gex_bn.toFixed(2)+"Bn":"–")+'</span></div>'+
        '<div class="wsxKv"><span>翻轉/Call牆/Put牆</span><span class="wsxN">'+(g.flip!=null?g.flip:"–")+' / '+(g.call_wall!=null?g.call_wall:"–")+' / '+(g.put_wall!=null?g.put_wall:"–")+'</span></div>'+
-       '<div class="wsxKv"><span>下次財報</span><span class="wsxN">'+esc(s.next_earnings||"–")+'</span></div>';
+       '<div class="wsxKv"><span>內部人90日 / 下次財報</span><span class="wsxN">'+(s.insider_90d?(s.insider_90d.p_cnt||0)+"買/"+(s.insider_90d.s_cnt||0)+"賣":"–")+' / '+esc(s.next_earnings||"–")+'</span></div>';
     var rq=(s.computed_fund&&s.computed_fund.rev_q)||[];
     if(rq.length){
       var yy=rq.slice(-8),ym=1;yy.forEach(function(r){ym=Math.max(ym,Math.abs(r.yoy||0));});
-      b+='<div class="wsxH" style="padding:8px 0 3px">營收 YoY%(近8季)</div><div style="display:flex;align-items:flex-end;gap:2px;height:64px">'+
-        yy.map(function(r,i){var h=Math.max(2,Math.abs(r.yoy||0)/ym*40);
+      b+='<div class="wsxH" style="padding:8px 0 3px">營收 YoY%(近8季)</div><div style="display:flex;align-items:flex-end;gap:2px;height:60px">'+
+        yy.map(function(r,i){var h=Math.max(2,Math.abs(r.yoy||0)/ym*38);
           return '<div title="'+esc(r.q)+' 營收 '+money(r.rev)+' · YoY '+pct1(r.yoy)+'" style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px">'+
             '<span class="m wsxN" style="'+(i>=yy.length-2?"":"visibility:hidden")+'">'+(r.yoy!=null?r.yoy.toFixed(0)+"%":"")+'</span>'+
             '<div style="width:70%;height:'+h+'px;background:#bd7f18;border-radius:2px 2px 0 0"></div>'+
@@ -4180,17 +4240,15 @@ function renderLeft(){
   }else{
     b+='<div class="wsxSkel">此標的不在 AI 訊號覆蓋(現行 13 檔)</div>';
   }
-  if(rv)b+=revCard(rv,true);
   b+='<div class="wsxDisc">判讀由排程場次更新,非即時對話 · 不構成投資建議</div>';
   el.innerHTML=panel('🤖 Claude 判讀',head,b);
 }
 /* ── 右A:分析師 / 期權 / 清單 ── */
-function renderA(){
-  var el=document.getElementById('wsxA'); if(!el)return;
+function renderAnl(){
+  var el=document.getElementById('wsxMAnl'); if(!el)return;
   var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
-  /* 分析師 */
   var an=AN&&AN.symbols&&AN.symbols[sym],ab="";
-  if(!AN)ab='<div class="wsxSkel">analyst.json 載入中/未部署</div>';
+  if(!AN)ab='<div class="wsxSkel">analyst.json 載入中…</div>';
   else if(!an||an.na||(!an.pt&&!an.eps))ab='<div class="wsxSkel">'+esc((an&&an.na)||"此標的未覆蓋(試驗 13 檔)")+'</div>';
   else{
     var q=quote(sym),spot=q&&q.last,pt=an.pt||{};
@@ -4215,19 +4273,23 @@ function renderA(){
     }
     var rh=an.rating_hist||[];
     if(rh.length>=4){
-      ab+='<div class="wsxH" style="padding:7px 0 2px">評級分布 · 近'+rh.length+'月</div><div style="display:flex;gap:2px;align-items:flex-end;height:48px">'+
+      ab+='<div class="wsxH" style="padding:7px 0 2px">評級分布 · 近'+rh.length+'月</div><div style="display:flex;gap:2px;align-items:flex-end;height:46px">'+
         rh.map(function(h){var t2=(h.buy||0)+(h.hold||0)+(h.sell||0)||1;
-          return '<div title="'+esc(h.m)+' · 買'+h.buy+' 持'+h.hold+' 賣'+h.sell+'" style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:40px;gap:1px">'+
-            '<div style="height:'+((h.sell||0)/t2*36).toFixed(1)+'px;background:#ff6b6b"></div>'+
-            '<div style="height:'+((h.hold||0)/t2*36).toFixed(1)+'px;background:#8a8781"></div>'+
-            '<div style="height:'+((h.buy||0)/t2*36).toFixed(1)+'px;background:#4ade4a;border-radius:0 0 2px 2px"></div></div>';}).join("")+'</div>'+
+          return '<div title="'+esc(h.m)+' · 買'+h.buy+' 持'+h.hold+' 賣'+h.sell+'" style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:38px;gap:1px">'+
+            '<div style="height:'+((h.sell||0)/t2*34).toFixed(1)+'px;background:#ff6b6b"></div>'+
+            '<div style="height:'+((h.hold||0)/t2*34).toFixed(1)+'px;background:#8a8781"></div>'+
+            '<div style="height:'+((h.buy||0)/t2*34).toFixed(1)+'px;background:#4ade4a;border-radius:0 0 2px 2px"></div></div>';}).join("")+'</div>'+
         '<div class="m wsxN" style="display:flex;justify-content:space-between"><span>'+esc(rh[0].m.slice(2))+'</span><span>'+esc(rh[rh.length-1].m.slice(2))+'</span></div>';
     }
     var mo=an.est_momo;
     if(mo)ab+='<div class="wsxKv"><span>預估修正(月)</span><span class="wsxN">季 <span class="wsx-up">↑'+(mo.q_up||0)+'</span>/<span class="wsx-dn">↓'+(mo.q_dn||0)+'</span> · 年 <span class="wsx-up">↑'+(mo.y_up||0)+'</span>/<span class="wsx-dn">↓'+(mo.y_dn||0)+'</span></span></div>';
     ab+='<div class="wsxDisc">Nasdaq 共識 · 賣方評級系統性偏多、常滯後 · 非投資建議</div>';
   }
-  /* 期權定位 */
+  el.innerHTML=panel('🎯 分析師 · '+esc(sym),(AN?agoTxt(AN.updated_utc):"—"),ab);
+}
+function renderOpt(){
+  var el=document.getElementById('wsxMOpt'); if(!el)return;
+  var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
   var o=(typeof DATA!=="undefined")&&DATA&&DATA.options&&DATA.options[sym];
   var g=(typeof SIG!=="undefined")&&SIG&&SIG.symbols&&SIG.symbols[sym]&&SIG.symbols[sym].gamma||{};
   var ob="";
@@ -4244,16 +4306,20 @@ function renderA(){
       var gexs=ser.map(function(e){return e.gex_bn;});
       if(gexs.length>1){
         var gp=Math.max.apply(null,[0].concat(gexs)),gn=Math.max.apply(null,[0].concat(gexs.map(function(v){return -(v||0);})));
-        var GH=40,yz=Math.min(GH-3,Math.max(3,GH*(gp/((gp+gn)||1))));
+        var GH=38,yz=Math.min(GH-3,Math.max(3,GH*(gp/((gp+gn)||1))));
         var slot=100/gexs.length,bw=slot*.62,svg='<line x1="0" y1="'+yz.toFixed(1)+'" x2="100" y2="'+yz.toFixed(1)+'" stroke="#898781" stroke-opacity=".45" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>';
         gexs.forEach(function(v,i){var h=Math.abs(v||0)/Math.max(gp,gn,1e-6)*(v>=0?yz-2:GH-yz-2);
           svg+='<rect x="'+(i*slot+(slot-bw)/2).toFixed(2)+'" y="'+((v>=0?yz-h:yz)).toFixed(1)+'" width="'+bw.toFixed(2)+'" height="'+Math.max(1,h).toFixed(1)+'" fill="'+(v>=0?"#4ade4a":"#ff6b6b")+'" opacity=".8"><title>GEX '+(v!=null?v.toFixed(2):"–")+'Bn</title></rect>';});
-        ob+='<div class="wsxH" style="padding:7px 0 2px">GEX 近'+gexs.length+'日(Bn)</div><svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%;height:40px;display:block">'+svg+'</svg>';
+        ob+='<div class="wsxH" style="padding:7px 0 2px">GEX 近'+gexs.length+'日(Bn)</div><svg viewBox="0 0 100 38" preserveAspectRatio="none" style="width:100%;height:38px;display:block">'+svg+'</svg>';
       }
     }catch(_){}
     ob+='<div class="wsxDisc">CBOE 延遲 ~15分 · 牆位取自訊號檔 · 權利金=槓桿曝險非停泊資本</div>';
   }
-  /* 追蹤清單 */
+  el.innerHTML=panel('期權定位 · '+esc(sym),((typeof DATA!=="undefined")&&DATA&&DATA._options_ts?agoTxt(DATA._options_ts):""),ob);
+}
+function renderWatch(){
+  var el=document.getElementById('wsxMWatch'); if(!el)return;
+  var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
   var wb="";
   try{
     var rows=Object.keys(DATA.stocks||{}).map(function(s2){return {s:s2,q:DATA.stocks[s2],f:f7(s2)};})
@@ -4262,20 +4328,22 @@ function renderA(){
       rows.map(function(r){return '<tr class="'+(r.s===sym?"cur":"")+'" data-wsxsym="'+r.s+'"><td class="sym">'+r.s+'</td><td class="wsxN">'+px2(r.q.last)+'</td>'+
         '<td class="wsxN '+cls(r.q.chg1d)+'">'+pct2(r.q.chg1d)+'</td><td class="wsxN '+cls(r.f)+'">'+(r.f!=null?moneyS(r.f):"–")+'</td></tr>';}).join("")+'</tbody></table>';
   }catch(_){wb='<div class="wsxSkel">—</div>';}
-  el.innerHTML=panel('🎯 分析師 · '+esc(sym),(AN?agoTxt(AN.updated_utc):"—"),ab)
-             +panel('期權定位 · '+esc(sym),(DATA&&DATA._options_ts?agoTxt(DATA._options_ts):""),ob)
-             +panel('追蹤清單','當日% 排序 · 點擊換股',wb);
+  el.innerHTML=panel('追蹤清單','當日% 排序 · 點擊換股',wb);
 }
 /* ── 右B:訊號流 / 財報 ── */
-function renderB(){
-  var el=document.getElementById('wsxB'); if(!el)return;
-  var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
+function renderRev(){
+  var el=document.getElementById('wsxMRev'); if(!el)return;
   var rb="";
   try{
     var list=((typeof SIGREV!=="undefined")&&SIGREV&&SIGREV.reviews||[]).slice().sort(function(a,b2){return String(b2.d).localeCompare(String(a.d));});
     if(!list.length)rb='<div class="wsxSkel">判讀檔不可用</div>';
     else rb=list.map(function(r){return revCard(r,false);}).join("")+'<div class="wsxDisc">點卡片展開 · 每筆留檔供前瞻評分 · 非買賣建議</div>';
   }catch(_){rb='<div class="wsxSkel">—</div>';}
+  el.innerHTML=panel('📡 判讀 · 訊號流',((typeof SIGREV!=="undefined")&&SIGREV?esc(SIGREV.asof||""):"—"),rb);
+}
+function renderRep(){
+  var el=document.getElementById('wsxMRep'); if(!el)return;
+  var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
   var fb="";
   try{
     var s=(typeof SIG!=="undefined")&&SIG&&SIG.symbols&&SIG.symbols[sym];
@@ -4297,8 +4365,41 @@ function renderB(){
          '<div class="wsxDisc">營收=SEC companyfacts · 驚喜/財報日=Nasdaq+EDGAR 8-K'+(s&&s.next_earnings?' · 下次財報 '+esc(s.next_earnings):"")+(fwd?' · 下季共識 EPS '+fwd.est:"")+'<br>3日反應=揭露前收盤→第3個交易日收盤 · 歷史描述非預測 · 不構成投資建議</div>';
     }
   }catch(_){fb='<div class="wsxSkel">—</div>';}
-  el.innerHTML=panel('📡 判讀 · 訊號流',((typeof SIGREV!=="undefined")&&SIGREV?esc(SIGREV.asof||""):"—"),rb)
-             +panel('財報 · 季營收 × 分析師','',fb);
+  el.innerHTML=panel('財報 · 季營收 × 分析師 · '+esc(sym),'',fb);
+}
+/* ── ⑦ 資金流向分頁 ── */
+var CATORDER=["半導體","記憶體","光通信","軟體平台","加密股","電動車","正股","大盤","板塊ETF","槓桿","反向","國債","信用債","金","油","銀","Crypto","自訂","闖入","現金","其他"];
+function renderFlow(){
+  var el=document.getElementById('wsxFlow'); if(!el)return;
+  try{
+    var cf=DATA&&DATA.capital_flow;
+    if(!cf){el.innerHTML='<div class="wsxSkel">⑦ 資料不可用</div>';return;}
+    var agg={};
+    Object.keys(cf).forEach(function(k){var c=cf[k].cat||"其他";var o=agg[c]||(agg[c]={m:0,r:0});o.m+=(cf[k].main_net||0)/1e6;o.r+=(cf[k].retail_net||0)/1e6;});
+    var ents=Object.keys(agg).map(function(k){return {k:k,m:agg[k].m,r:agg[k].r,net:agg[k].m+agg[k].r};});
+    ents.sort(function(a,b2){var ia=CATORDER.indexOf(a.k),ib=CATORDER.indexOf(b2.k);return (ia<0?99:ia)-(ib<0?99:ib);});
+    var mx=1;ents.forEach(function(x){mx=Math.max(mx,Math.abs(x.m)+Math.abs(x.r));});
+    var P=function(v){return (Math.abs(v)/mx*50).toFixed(2);};
+    el.innerHTML='<div style="padding:4px 2px">'+ents.map(function(x){
+      var pM=Math.max(0,x.m),nM=Math.min(0,x.m),pR=Math.max(0,x.r),nR=Math.min(0,x.r);
+      return '<div class="wsxBarRow"><div class="bl">'+esc(x.k)+'</div><div class="track"><div class="cl"></div>'+
+        '<div class="sg" style="left:50%;width:'+P(pM)+'%;background:#16a34a"></div>'+
+        '<div class="sg" style="left:'+(50+parseFloat(P(pM))).toFixed(2)+'%;width:'+P(pR)+'%;background:#86efac"></div>'+
+        '<div class="sg" style="right:50%;width:'+P(nM)+'%;background:#dc2626"></div>'+
+        '<div class="sg" style="right:'+(50+parseFloat(P(nM))).toFixed(2)+'%;width:'+P(nR)+'%;background:#fca5a5"></div></div>'+
+        '<div class="bv wsxN"><span class="'+cls(x.net)+'">'+fMm(x.net)+'</span><br><span class="m">大單 '+fMm(x.m)+'</span></div></div>';}).join("")+
+      '</div><div class="wsxDisc">當日累計 · 深色=大單(機構) 淺色=中小單 · 右正=淨流入 · ETF 淨需求以官方申贖為準</div>';
+  }catch(_){el.innerHTML='<div class="wsxSkel">—</div>';}
+}
+/* ── 分頁切換 ── */
+function setTab(k){
+  TAB=k;
+  var tabs=document.querySelectorAll('#wsxTabRow .wsxTab');
+  for(var i=0;i<tabs.length;i++)tabs[i].classList.toggle('on',tabs[i].getAttribute('data-wt')===k);
+  var bodies=document.querySelectorAll('.wsxTB');
+  for(var j=0;j<bodies.length;j++)bodies[j].style.display=(bodies[j].getAttribute('data-wtb')===k)?'':'none';
+  if(k==='cost'){try{var cc=document.getElementById('chipcost');if(cc&&cc.data&&typeof Plotly!=="undefined"&&Plotly.Plots)Plotly.Plots.resize(cc);}catch(_){}}
+  if(k==='flow')renderFlow();
 }
 function wsxGo(sy){
   try{
@@ -4310,22 +4411,32 @@ function wsxGo(sy){
   }catch(_){}
 }
 document.addEventListener('click',function(e){
+  var t=e.target.closest&&e.target.closest('.wsxTab[data-wt]');
+  if(t){setTab(t.getAttribute('data-wt'));return;}
   var sy=e.target.closest&&e.target.closest('[data-wsxsym]');
   if(sy){wsxGo(sy.getAttribute('data-wsxsym'));return;}
   var rc=e.target.closest&&e.target.closest('[data-wsxrc]');
   if(rc){rc.classList.toggle('open');}
 });
+/* ── 開機:直進個股籌碼 ── */
+function boot(){
+  try{
+    var tb=document.querySelector('.tab[data-sec="chips"]');
+    if(tb&&!document.getElementById('sec-chips').classList.contains('active'))tb.click();
+  }catch(_){}
+}
 function tick(){
   try{
     ensureAnalyst();
     var key=[(typeof CHIP_SYM!=="undefined")?CHIP_SYM:"",(typeof DATA!=="undefined")&&DATA?DATA.ts_utc:"",
       (typeof SIG!=="undefined")&&SIG?SIG.updated_utc:"",(typeof SIGREV!=="undefined")&&SIGREV?SIGREV.updated_utc:"",
       AN?AN.updated_utc:""].join("|");
-    if(key!==lastKey){lastKey=key;renderLeft();renderA();renderB();}
+    if(key!==lastKey){lastKey=key;renderTopbar();renderLeft();renderAnl();renderOpt();renderWatch();renderRev();renderRep();if(TAB==='flow')renderFlow();}
   }catch(_){}
 }
+boot();setTimeout(boot,900);
 setInterval(tick,1500);
-setTimeout(tick,800);
+setTimeout(tick,700);
 })();
 
 </script>
