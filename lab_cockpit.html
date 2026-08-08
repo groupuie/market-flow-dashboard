@@ -121,6 +121,36 @@ header{display:none!important}.tabs{display:none!important}
 .wsxBarRow .cl{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#898781;opacity:.5}
 .wsxBarRow .sg{position:absolute;top:1.5px;bottom:1.5px;border-radius:2px}
 .wsxBarRow .bv{width:82px;flex:0 0 auto;text-align:right;font-size:11px;line-height:1.25}
+
+/* ===== v3:滿版自適應 + splitter + rail ===== */
+@media (min-width:1360px){
+  html,body{height:100%;overflow:hidden}
+  body>.wrap{height:100vh;box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px 6px;max-width:none;margin:0}
+  #sec-chips.active{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+  #wsxTop{flex:0 0 auto;padding:4px 2px 8px}
+  #wsxGrid{flex:1 1 auto;min-height:0;display:grid;gap:0;
+    grid-template-columns:var(--wsxL,258px) 7px minmax(430px,1fr) 7px var(--wsxA,246px) 7px var(--wsxB,258px) 7px 42px;align-items:stretch}
+  #wsxLeft,#wsxA,#wsxB{order:0;position:static;max-height:none;height:100%;min-height:0;overflow:auto;scrollbar-width:thin;padding:0 3px 0 1px}
+  #wsxCenter{order:0;height:100%;min-height:0;display:flex;flex-direction:column;padding:0 2px}
+  #wsxChartP{flex:1 1 auto;min-height:340px;display:flex;flex-direction:column;overflow:hidden;margin-bottom:0}
+  #wsxTools{flex:0 0 auto;gap:4px 6px;padding:6px 8px 3px;font-size:11.5px}
+  #wsxTools .tab{padding:2px 8px;font-size:11px}
+  #wsxTools select,#wsxTools input{padding:2px 6px;font-size:12px}
+  #cockpit{flex:1 1 auto;min-height:0}
+  #wsxTabsP{flex:0 0 auto;height:clamp(200px,26vh,380px);display:flex;flex-direction:column;margin:8px 0 0}
+  #wsxTabRow{flex:0 0 auto}
+  .wsxTB{flex:1 1 auto;min-height:0;max-height:none;overflow:auto}
+  .wsxSplit{cursor:col-resize;height:100%}
+  .wsxSplit::after{content:"";display:block;width:2px;height:100%;margin:0 auto;background:var(--line)}
+  .wsxSplit:hover::after,.wsxSplit.on::after{background:#3987e5;width:3px}
+  #wsxRail{display:flex;flex-direction:column;gap:3px;align-items:center;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;padding:6px 0;overflow:auto;scrollbar-width:none}
+  #wsxRail button{width:32px;height:34px;border:0;background:none;color:#898781;font-size:13px;cursor:pointer;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:0}
+  #wsxRail button small{font-size:8px;transform:scale(.86);white-space:nowrap}
+  #wsxRail button:hover{background:rgba(255,255,255,.06);color:#f2f1ea}
+}
+@media (max-width:1359px){.wsxSplit,#wsxRail{display:none}}
+@media (max-width:679px){#wsxTabRow{display:none}.wsxTB{display:block!important;max-height:none}}
+.wsxFlash{outline:2px solid #fab219;outline-offset:-2px;border-radius:10px}
 </style>
 </head>
 <body>
@@ -302,8 +332,9 @@ header{display:none!important}.tabs{display:none!important}
   <div id="wsxMJudge"></div>
   <div class="wsxP"><div class="wsxH">◆★ / 邊緣案例判讀</div><div class="wsxB" style="padding:2px 8px 8px"><div id="sigreview"></div></div></div>
 </aside>
+<div class="wsxSplit" data-ws="L"></div>
 <div id="wsxCenter">
-  <div class="wsxP">
+  <div class="wsxP" id="wsxChartP">
     <div id="wsxTools"><span class="sub">標的</span><select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
       <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
       <datalist id="chipDL"></datalist>
@@ -311,7 +342,7 @@ header{display:none!important}.tabs{display:none!important}
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
     <div id="cockpit" style="height:660px"></div>
   </div>
-  <div class="wsxP">
+  <div class="wsxP" id="wsxTabsP">
     <div id="wsxTabRow">
       <span class="wsxTab on" data-wt="scan">🔍 全市場掃描</span>
       <span class="wsxTab" data-wt="accum">🧲 吸籌偵測</span>
@@ -321,7 +352,7 @@ header{display:none!important}.tabs{display:none!important}
     </div>
     <div class="wsxTB" data-wtb="scan"><div id="scanpanel"></div></div>
     <div class="wsxTB" data-wtb="accum" style="display:none"><div id="accumpanel"></div></div>
-    <div class="wsxTB" data-wtb="cost" style="display:none"><div id="chipcost" style="height:460px"></div></div>
+    <div class="wsxTB" data-wtb="cost" style="display:none"><div id="chipcost" style="height:430px"></div></div>
     <div class="wsxTB" data-wtb="flow" style="display:none"><div id="wsxFlow"></div></div>
     <div class="wsxTB" data-wtb="note" style="display:none"><div id="chipnote" class="note"></div></div>
   </div>
@@ -330,17 +361,34 @@ header{display:none!important}.tabs{display:none!important}
   <div id="chipflow" style="display:none"></div>
   <div id="chipoffs" style="display:none"></div>
 </div>
+<div class="wsxSplit" data-ws="A"></div>
 <div id="wsxA" class="wsxCol">
   <div id="wsxMAnl"></div>
   <div id="wsxMOpt"></div>
   <div class="wsxP"><div class="wsxH">季節性 · 年×月矩陣</div><div class="wsxB" style="padding:2px 8px 8px"><div id="season"></div></div></div>
   <div id="wsxMWatch"></div>
 </div>
+<div class="wsxSplit" data-ws="A2"></div>
 <div id="wsxB" class="wsxCol">
   <div id="wsxMRev"></div>
   <div id="wsxMRep"></div>
   <div class="wsxP"><div class="wsxH">存量分解 · 13F 大戶</div><div class="wsxB" style="padding:2px 8px 8px"><div id="chipstock"></div></div></div>
 </div>
+<div class="wsxSplit" data-ws="B"></div>
+<nav id="wsxRail">
+  <button data-go="wsxMJudge" title="Claude 判讀">🤖<small>判讀</small></button>
+  <button data-go="cockpit" title="主圖">📈<small>主圖</small></button>
+  <button data-go="scanpanel" data-wt="scan" title="全市場掃描">🔍<small>掃描</small></button>
+  <button data-go="accumpanel" data-wt="accum" title="吸籌偵測">🧲<small>吸籌</small></button>
+  <button data-go="chipcost" data-wt="cost" title="成本分佈">📊<small>成本</small></button>
+  <button data-go="wsxMAnl" title="分析師">🎯<small>分析</small></button>
+  <button data-go="wsxMOpt" title="期權定位">⛓<small>期權</small></button>
+  <button data-go="season" title="季節性">📅<small>季節</small></button>
+  <button data-go="wsxMWatch" title="追蹤清單">👁<small>清單</small></button>
+  <button data-go="wsxMRev" title="判讀訊號流">📡<small>訊號</small></button>
+  <button data-go="wsxMRep" title="財報">🧾<small>財報</small></button>
+  <button data-go="chipstock" title="存量分解">🏦<small>13F</small></button>
+</nav>
 </div>
 </section>
 
@@ -2279,7 +2327,7 @@ function buildChipIdxRangeActive(){   // 縮放鈕 active 樣式即時反映(不
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;
-  el.style.height=MB?'600px':'660px';   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
+  el.style.height=MB?'600px':(window.__wsxCkH||'660px');   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
   // 2026-08-08 校閱修正:此處原為 980(舊五軌高版遺留),完整渲染尾端才改 600;dataset.sig 快取提前返回時
   // 容器停在 980 → responsive 把圖拉高 → 手機高度在 600/980 間震盪。兩處對齊=單一真值,震盪根治。
   el.dataset.unt='';   // 離開「未追蹤動作區」狀態
@@ -2873,7 +2921,7 @@ function renderCockpit(){
   // 改:MB 總高 640px、邊距 l6/r8(y 刻度 ticklabelposition:'inside' 疊進圖內 → 繪圖區 +23% 寬)、
   //   間距 1%,主圖+量+轉速+檔位+⑦池 ≈ 一屏看完。桌機完全不變。
   const _ckEl=document.getElementById('cockpit');
-  if(_ckEl){const _wantH=MB?'600px':'660px'; if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
+  if(_ckEl){const _wantH=MB?'600px':(window.__wsxCkH||'660px'); if(_ckEl.style.height!==_wantH)_ckEl.style.height=_wantH;}
   const TLI=MB?{ticklabelposition:'inside'}:{};
   // 手機主圖壓扁(2026-08-05 二次調整,使用者指定仿富途「扁平」感):
   // 富途手機主圖 ≈ 390×245pt = 1.6:1 寬扁 → 走勢讀起來是緩坡;原 46.5% 高(310×262≈1.2:1)偏方形。
@@ -4437,6 +4485,96 @@ function tick(){
 boot();setTimeout(boot,900);
 setInterval(tick,1500);
 setTimeout(tick,700);
+})();
+
+/* ===== 工作區 v3 附加模組:滿版自適應 + 欄寬拖曳 + rail(2026-08-08)=====
+ * 職責:①桌機(≥1360)計算駕駛艙可用高 → window.__wsxCkH(renderChips 的高度單一真值)
+ *      ②視窗 resize → 更新高度 + Plotly.Plots.resize(不重跑 renderChips,responsive 自適應)
+ *      ③四條 splitter 拖曳欄寬(css 變數 + localStorage)④rail 捷徑。全部 fail-open。 */
+(function(){
+"use strict";
+var DESK=function(){return window.innerWidth>=1360;};
+var grid=document.getElementById('wsxGrid');
+if(!grid)return;
+/* ── 欄寬狀態 ── */
+var COLS={L:264,A:250,B:262};
+try{var sv=JSON.parse(localStorage.getItem('wsxCols')||"null");if(sv&&sv.L)COLS=sv;}catch(_){}
+var LIM={L:[200,360],A:[200,340],B:[210,380]};
+function applyCols(){
+  grid.style.setProperty('--wsxL',COLS.L+'px');
+  grid.style.setProperty('--wsxA',COLS.A+'px');
+  grid.style.setProperty('--wsxB',COLS.B+'px');
+}
+applyCols();
+/* ── 駕駛艙高度單一真值 ── */
+function calcH(){
+  if(!DESK()){window.__wsxCkH=null;return;}
+  try{
+    var p=document.getElementById('wsxChartP'),tl=document.getElementById('wsxTools'),ck=document.getElementById('cockpit');
+    if(!p||!tl||!ck)return;
+    var h=Math.floor(p.getBoundingClientRect().height - tl.offsetHeight - 12);
+    h=Math.max(430,Math.min(940,h));
+    window.__wsxCkH=h+'px';
+    if(ck.style.height!==window.__wsxCkH && !ck.dataset.unt)ck.style.height=window.__wsxCkH;
+  }catch(_){}
+}
+function rsz(){
+  try{
+    calcH();
+    if(typeof Plotly==="undefined"||!Plotly.Plots)return;
+    var ck=document.getElementById('cockpit');
+    if(ck&&ck.data)Plotly.Plots.resize(ck);
+    var cc=document.getElementById('chipcost');
+    if(cc&&cc.data&&cc.offsetParent!==null)Plotly.Plots.resize(cc);
+  }catch(_){}
+}
+var _rt=null;
+window.addEventListener('resize',function(){clearTimeout(_rt);_rt=setTimeout(rsz,160);});
+calcH();
+/* 首次渲染後校正一輪(字體/捲軸就緒後高度會微變) */
+var _n=0,_iv=setInterval(function(){
+  _n++;var ck=document.getElementById('cockpit');
+  if(ck&&ck.data){rsz();if(_n>4)clearInterval(_iv);}
+  if(_n>40)clearInterval(_iv);
+},700);
+/* ── splitter 拖曳 ── */
+var drag=null;
+document.addEventListener('mousedown',function(e){
+  var s=e.target.closest&&e.target.closest('.wsxSplit');
+  if(!s||!DESK())return;
+  var k=s.getAttribute('data-ws'),key=(k==='A2')?'A':k;
+  drag={k:k,key:key,x:e.clientX,v:COLS[key],el:s};
+  s.classList.add('on');document.body.style.userSelect='none';document.body.style.cursor='col-resize';
+  e.preventDefault();
+});
+document.addEventListener('mousemove',function(e){
+  if(!drag)return;
+  var dx=e.clientX-drag.x;
+  /* s1(L|中):+dx=左欄變寬;s2(中|A):+dx=中欄變寬→A 變窄;s3(A|B):+dx=A 變寬;s4(B|rail):+dx=B 變寬 */
+  var nv=(drag.k==='A')?drag.v-dx:drag.v+dx;
+  var lim=LIM[drag.key];nv=Math.max(lim[0],Math.min(lim[1],nv));
+  COLS[drag.key]=Math.round(nv);applyCols();
+});
+document.addEventListener('mouseup',function(){
+  if(!drag)return;
+  drag.el.classList.remove('on');drag=null;
+  document.body.style.userSelect='';document.body.style.cursor='';
+  try{localStorage.setItem('wsxCols',JSON.stringify(COLS));}catch(_){}
+  rsz();
+});
+/* ── rail 捷徑 ── */
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#wsxRail [data-go]');
+  if(!b)return;
+  var id=b.getAttribute('data-go');
+  var el=document.getElementById(id);
+  if(!el)return;
+  var wt=b.getAttribute('data-wt');
+  if(wt){var tabs=document.querySelectorAll('#wsxTabRow .wsxTab');
+    for(var i=0;i<tabs.length;i++)if(tabs[i].getAttribute('data-wt')===wt)tabs[i].click();}
+  try{el.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(_){el.scrollIntoView();}
+  el.classList.add('wsxFlash');setTimeout(function(){el.classList.remove('wsxFlash');},1300);
+});
 })();
 
 </script>
