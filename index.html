@@ -201,6 +201,14 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   body.wsxFit #wsxOptSlot .card,body.wsxFit #wsxFlowSlot .card{margin:0 0 8px;padding:8px;min-width:0;overflow:hidden}
   body.wsxFit #wsxOptSlot h2,body.wsxFit #wsxFlowSlot h2{font-size:12px;margin:0 0 6px}
 }
+
+/* ===== v7:wsxTop 整合K線上方(插槽內壓單列,水平捲不換行,捲軸已隱藏) ===== */
+@media (min-width:1360px){
+  body.wsxFit #wsxTopSlot #wsxTop{padding:0 2px 3px;margin:0 0 3px;border-bottom:1px solid var(--line);gap:6px;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap}
+  body.wsxFit #wsxTopSlot #wsxQuick,body.wsxFit #wsxTopSlot #wsxPills{flex-wrap:nowrap;display:inline-flex}
+  body.wsxFit #wsxTopSlot .wsxBrand{font-size:11.5px}
+  body.wsxFit #wsxTopSlot #wsxTop::-webkit-scrollbar{display:none;height:0}
+}
 </style>
 </head>
 <body>
@@ -408,6 +416,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 </section>
 
 <section id="sec-chips" class="sec">
+<div id="wsxTopHome"></div>
 <div id="wsxTop">
   <span class="wsxBrand">個股籌碼<b>工作區</b></span>
   <span id="wsxQuick"></span>
@@ -421,6 +430,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 <div class="wsxSplit" data-ws="L"></div>
 <div id="wsxCenter">
   <div class="wsxP" id="wsxChartP">
+    <div id="wsxTopSlot"></div>
     <div id="wsxTools"><span class="sub">標的</span><select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
       <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
       <datalist id="chipDL"></datalist>
@@ -493,7 +503,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T15:01Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T15:42Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3024,7 +3034,7 @@ function renderCockpit(){
               :{y:[0.46,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     ...(MB?{boxgap:0}:{}),   // 燭身加寬(見上方 K 棒註解;本圖無其他 box 族 trace,無副作用)
-    margin:{l:MB?6:52,r:MB?8:64,t:MB?58:34,b:MB?26:30},   // MB t58:三行標頭(標題/圖例/CTA數值列,2026-08-08)
+    margin:{l:MB?6:10,r:MB?8:50,t:MB?58:34,b:MB?26:30},   // MB t58:三行標頭(標題/圖例/CTA數值列,2026-08-08)
     xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?6:14,rangeslider:{visible:false},anchor:'y10',
       // 顯式初始範圍(2026-08-05):TD文字/光暈圈/◆★等 trace 的「像素 padding」會把 autorange 撐大
       // (桌機 ~±2 槽看不出;手機 310px 窄圖實測 [-10.6,131.7]=100根塞進142槽,兩側空白吃掉 30% 寬)。
@@ -3198,11 +3208,16 @@ function renderChips(){
   if(sel&&sel.dataset.built!==syms.join()){
     sel.innerHTML=syms.map(x=>'<option'+(x===CHIP_SYM?' selected':'')+'>'+x+'</option>').join('');
     sel.dataset.built=syms.join(); sel.onchange=()=>{CHIP_SYM=sel.value;renderChips();};
-    const dl=document.getElementById('chipDL'); if(dl)dl.innerHTML=syms.map(x=>'<option value="'+x+'">').join('');   // 輸入框自動完成
+    const dl=document.getElementById('chipDL'); if(dl){let _rc=[];try{_rc=(JSON.parse(localStorage.getItem('wsxRecent')||'[]')||[]).filter(x=>/^[A-Z0-9.\-]{1,12}$/.test(x));}catch(_){_rc=[];}
+      dl.innerHTML=_rc.map(x=>'<option value="'+x+'" label="最近搜尋">').join('')+syms.filter(x=>_rc.indexOf(x)<0).map(x=>'<option value="'+x+'">').join('');}   // 輸入框自動完成(最近搜尋置頂;v7)
   } else if(sel){sel.value=syms.includes(CHIP_SYM)?CHIP_SYM:'';}
   const inp=document.getElementById('chipInput');   // 自填代號:輸入任意市場標的 ↵
   if(inp&&!inp.dataset.bound){inp.dataset.bound='1';
-    const go=()=>{const v=(inp.value||'').trim().toUpperCase();if(v){CHIP_SYM=v;inp.value='';renderChips();}};
+    const _recPush=v=>{try{if(!/^[A-Z0-9.\-]{1,12}$/.test(v))return;let r=[];try{r=JSON.parse(localStorage.getItem('wsxRecent')||'[]')||[];}catch(_){r=[];}
+      r=[v].concat(r.filter(x=>x!==v)).slice(0,8);localStorage.setItem('wsxRecent',JSON.stringify(r));
+      const d2=document.getElementById('chipDL');if(d2){const all=Array.from(d2.querySelectorAll('option')).map(o=>o.value);const rest=all.filter(x=>r.indexOf(x)<0);
+        d2.innerHTML=r.map(x=>'<option value="'+x+'" label="最近搜尋">').join('')+rest.map(x=>'<option value="'+x+'">').join('');}}catch(_){}};   // v7:最近搜尋
+    const go=()=>{const v=(inp.value||'').trim().toUpperCase();if(v){CHIP_SYM=v;_recPush(v);inp.value='';renderChips();}};
     inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();}); inp.addEventListener('change',go);}
   const rb=document.getElementById('chipRange');
   if(rb){rb.innerHTML=['d','w','m','y'].map(p=>'<span class="tab '+(CHIP_PD===p?'active':'')+'" data-pd="'+p+'" style="padding:3px 10px;font-size:12px;font-weight:600">'+PD_LAB[p]+'K</span>').join('')
@@ -3787,6 +3802,7 @@ function optNewCap(){
   return any?{callNew:cN,putNew:pN,n:use.length}:null;
 }
 function renderDest(catSplit, subtitle, fixRange){
+  const NRD=(function(){try{const _e=document.getElementById('dest');const _w=_e?_e.clientWidth:0;return ((window.innerWidth||1024)>=680)&&_w>0&&_w<560;}catch(_){return false;}})();   // v7:窄容器(個股左欄)壓邊距;勿引用下方 const MB(TDZ)
   const el=document.getElementById('dest'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;   // 手機模式:字縮、文案精簡、長柱標籤入柱
   const order=['半導體','記憶體','光通信','軟體平台','加密股','電動車','正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入','◇期權做多','◇期權做空'];
@@ -3833,14 +3849,14 @@ function renderDest(catSplit, subtitle, fixRange){
   const pDv=poolM*poolR2<0&&Math.min(Math.abs(poolM),Math.abs(poolR2))>2e6;
   ann.push(tipLab(pNet,pPos,pNeg,Mp,'y2','Σ 即時現金池',(pNet>=0?'<span style="color:#4ade80">(出池·買股進場)</span>':'<span style="color:#f87171">(入池·賣股回池)</span>')+(pDv?' ⚡':''),MB?9.5:11.5,C.amber));
   // 上緣資訊:圖例(左上)與 MMF 錨定(右上),手機用精簡文案
-  ann.push({text:'【'+(subtitle||winLabel())+'】'+(MB?'深=大單 淺=散戶|⚡=反向|下軌=池'
+  ann.push({text:'【'+(subtitle||winLabel())+'】'+((MB||NRD)?'深=大單 淺=散戶|⚡=反向|下軌=池'
       :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出(賣) 綠=流入(買)|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度')
       +(hasOpt?(MB?' |◇期權新資金自軌T+1':' |◇期權做多(青)/做空(紫)=新增未平倉資金 ΔOI×權利金(T+1·自屬刻度·不入池)'):''),
     xref:'paper',yref:'paper',x:0.01,y:1.035,showarrow:false,font:{size:MB?8.5:10,color:C.muted},xanchor:'left'});
   const mmf=(DATA.cash_pool||{}).mmf||null;
   if(mmf&&mmf.total_bn){
     const short='MMF $'+(mmf.total_bn/1000).toFixed(2)+'T';
-    ann.push({text:MB?short+'('+String(mmf.asof_iso||'').slice(5)+')'
+    ann.push({text:(MB||NRD)?short+'('+String(mmf.asof_iso||'').slice(5)+')'
         :'池基準水位:'+short+'('+(mmf.asof||'')+',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
       xref:'paper',yref:'paper',x:0.99,y:1.10,showarrow:false,font:{size:MB?8.5:10.5,color:C.ink2},xanchor:'right'});
   }
@@ -3859,20 +3875,20 @@ function renderDest(catSplit, subtitle, fixRange){
   if(hasOpt)traces.push({type:'bar',orientation:'h',x:oV,y:oCats,xaxis:'x3',yaxis:'y3',
      marker:{color:oCol},hovertemplate:'%{y}:%{x:,.0f}<extra></extra>'});
   const layout={...PBASE,barmode:'relative',
-     margin:{l:MB?60:96,r:MB?14:56,t:MB?46:52,b:MB?32:40},
+     margin:{l:MB?60:(NRD?4:96),r:MB?14:(NRD?8:56),t:MB?46:52,b:MB?32:40},
      annotations:ann,showlegend:false,
      xaxis:{gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
        range:[-Mc,Mc],anchor:'y'},
-     yaxis:{gridcolor:C.line,autorange:'reversed',domain:catDom,tickfont:{size:MB?9.5:12}},
+     yaxis:{gridcolor:C.line,autorange:'reversed',domain:catDom,automargin:true,tickfont:{size:MB?9.5:(NRD?10.5:12)}},
      xaxis2:{gridcolor:'#26261f',zerolinecolor:C.amber,zerolinewidth:1.5,tickformat:'~s',
        tickfont:{size:MB?8:9,color:'#a68a3f'},range:[-Mp,Mp],anchor:'y2'},
-     yaxis2:{domain:[0,hasOpt?0.10:0.115],tickmode:'array',tickvals:['Σ 即時現金池'],
-       ticktext:[MB?'Σ池':'Σ 即時現金池'],tickfont:{size:MB?9.5:11,color:C.amber}}};
+     yaxis2:{domain:[0,hasOpt?0.10:0.115],tickmode:'array',tickvals:['Σ 即時現金池'],automargin:true,
+       ticktext:[(MB||NRD)?'Σ池':'Σ 即時現金池'],tickfont:{size:MB?9.5:11,color:C.amber}}};
   if(hasOpt){
     layout.xaxis3={gridcolor:'#241f2e',zerolinecolor:'#8b7bb0',zerolinewidth:1.5,tickformat:'~s',
       tickfont:{size:MB?8:9,color:'#9d8bc4'},range:[-Mo,Mo],anchor:'y3'};
-    layout.yaxis3={domain:[0.15,0.27],autorange:'reversed',tickmode:'array',tickvals:oCats,
-      ticktext:oCats.map(c=>MB?c.replace('◇',''):c),tickfont:{size:MB?9:10.5,color:'#9d8bc4'}};
+    layout.yaxis3={domain:[0.15,0.27],autorange:'reversed',tickmode:'array',tickvals:oCats,automargin:true,
+      ticktext:oCats.map(c=>(MB||NRD)?c.replace('◇',''):c),tickfont:{size:MB?9:10.5,color:'#9d8bc4'}};
   }
   Plotly.react('dest',traces,layout,CFG);
 }
@@ -3880,6 +3896,7 @@ function renderDest(catSplit, subtitle, fixRange){
 // ===== 場內資金線(=現金池反向,與指數同向):即時=今日盤中累積;多日視窗=區間累積 =====
 function renderPoolTide(){
   const el=document.getElementById('pooltide'); if(!el)return;
+  const NRP=(function(){try{const _w=el.clientWidth||0;return ((window.innerWidth||1024)>=680)&&_w>0&&_w<560;}catch(_){return false;}})();   // v7:窄容器壓邊距
   buildIdxToggle();
   const CASH=new Set(['SGOV','BIL']);
   const toPct=a=>{const b=a.find(v=>v!=null);return b==null?a.map(()=>null):a.map(v=>v!=null?+((v/b-1)*100).toFixed(3):null);};
@@ -3924,17 +3941,17 @@ function renderPoolTide(){
   if(IDX_SHOW.QQQ&&idxQQQ.some(v=>v!=null)){POOL_TREND.QQQ={idx:traces.length,base:idxQQQ,span:pS};
     traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:poff(idxQQQ,'QQQ'),yaxis:'y2',connectgaps:true,line:{color:'#c084fc',width:1.6},hovertemplate:'%{x} QQQ %{y:+.2f}%<extra></extra>'});}
   Plotly.react('pooltide',traces,
-    {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:96,r:((window.innerWidth||1024)<680)?14:80,t:26,b:26},showlegend:false,
-     annotations:[{text:((window.innerWidth||1024)<680)
+    {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:(NRP?4:96),r:((window.innerWidth||1024)<680)?14:(NRP?4:80),t:26,b:26},showlegend:false,
+     annotations:[{text:(((window.innerWidth||1024)<680)||NRP)
         ?'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
         :'<b>場內資金線</b>(現金池反向·'+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
        +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span>·<span style="color:#c084fc">紫=QQQ</span>(%改) · 柱=當日淨進出(綠進紅出) — 線=累積(<b>+y=現金離池進場、−y=現金入池了結</b>),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
-       font:{size:((window.innerWidth||1024)<680)?9.5:11.5,color:C.amber},xanchor:'left'}],
+       font:{size:(((window.innerWidth||1024)<680)||NRP)?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
-     yaxis:{gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}},
-     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,tickfont:{size:9,color:'#8ab4f8'},
-       title:{text:'指數 %',font:{size:10,color:'#9db4e0'}}}, py2?{range:py2.range}:{})},CFG);
+     yaxis:Object.assign({gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',automargin:true},NRP?{}:{title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}}),
+     yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,automargin:true,tickfont:{size:9,color:'#8ab4f8'}},
+       NRP?{}:{title:{text:'指數 %',font:{size:10,color:'#9db4e0'}}}, py2?{range:py2.range}:{})},CFG);
   buildPoolOffs();
 }
 // ===== 逐日播放動畫 =====
@@ -4607,7 +4624,8 @@ function calcH(){
   try{
     var p=document.getElementById('wsxChartP'),tl=document.getElementById('wsxTools'),ck=document.getElementById('cockpit');
     if(!p||!tl||!ck)return;
-    var h=Math.floor(p.getBoundingClientRect().height - tl.offsetHeight - 12);
+    var tp=document.getElementById('wsxTop'),th=(tp&&tp.parentNode&&tp.parentNode.id==='wsxTopSlot')?(tp.offsetHeight+6):0;
+    var h=Math.floor(p.getBoundingClientRect().height - tl.offsetHeight - th - 12);
     h=Math.max(360,Math.min(940,h));
     window.__wsxCkH=h+'px';
     if(ck.style.height!==window.__wsxCkH && !ck.dataset.unt)ck.style.height=window.__wsxCkH;
@@ -4713,18 +4731,20 @@ document.addEventListener('click',function(e){
 </script>
 <script>
 
-/* ===== destCard+winCard+optPack+flowPack 跨分頁共用搬移(wsx5 v6)===== */
+/* ===== destCard+winCard+optPack+flowPack+wsxTop 跨分頁共用搬移(wsx5 v7)===== */
 (function(){
 "use strict";
 function chipsOn(){try{return document.getElementById('sec-chips').classList.contains('active');}catch(_){return false;}}
 function wide(){try{return window.innerWidth>=1360;}catch(_){return true;}}
 function place(){
+  var moved=false,movedDest=false;
   try{
     var pairs=[
       {card:'destCard', chips:'wsxDestSlot', rot:'wsxRChartP', prepend:false},
       {card:'winCard',  chips:'wsxWinSlot',  rot:'wsxRL',      prepend:true},
       {card:'optPack',  chips:'wsxOptSlot',  rot:'sec-options',prepend:false,desk:true},
-      {card:'flowPack', chips:'wsxFlowSlot', rot:'sec-flow',   prepend:false,desk:true}
+      {card:'flowPack', chips:'wsxFlowSlot', rot:'sec-flow',   prepend:false,desk:true},
+      {card:'wsxTop',   chips:'wsxTopSlot',  rot:'wsxTopHome', prepend:false,desk:true}
     ];
     var on=chipsOn();
     for(var i=0;i<pairs.length;i++){
@@ -4734,12 +4754,16 @@ function place(){
       if(!card||!tgt||card.parentNode===tgt)continue;
       if(!want&&p.prepend&&tgt.firstChild)tgt.insertBefore(card,tgt.firstChild);
       else tgt.appendChild(card);
+      moved=true; if(p.card==='destCard')movedDest=true;
       (function(c){setTimeout(function(){
         var ps=[];try{ps=c.querySelectorAll('.js-plotly-plot');}catch(_){}
         for(var m=0;m<ps.length;m++){try{if(ps[m].data&&ps[m].offsetParent!==null&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);}catch(_){}}
       },130);})(card);
     }
   }catch(_){}
+  /* 佈局變動 → 重算駕駛艙高(wsx3 rsz)+responsive 圖自適應;destCard 換容器 → 重繪套用窄/寬邊距 */
+  if(moved)setTimeout(function(){try{window.dispatchEvent(new Event('resize'));}catch(_){}},150);
+  if(movedDest)setTimeout(function(){try{if(typeof renderRotation==='function'&&typeof DATA!=='undefined'&&DATA)renderRotation();}catch(_){}},230);
 }
 document.addEventListener('click',function(e){
   if(e.target.closest&&e.target.closest('.tab[data-sec]'))setTimeout(place,80);
