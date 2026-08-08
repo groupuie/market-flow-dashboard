@@ -242,9 +242,10 @@ a{color:var(--blue)}
     <div id="scanpanel" style="margin:10px 0 14px"></div>
     <div id="season" style="margin:10px 0 18px"></div>
     <div id="chipstock" style="margin:14px 0 22px"></div>
-    <div id="chipfidx" style="display:flex;gap:8px;align-items:center;margin:0 0 4px 6px;font-size:11px;flex-wrap:wrap"></div>
-    <div id="chipflow" style="height:440px"></div>
-    <div id="chipoffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
+    <!-- 獨立現金池累積窗 2026-08-08 使用者指示移除(駕駛艙⑦軌已涵蓋);div 保留為 renderChips 錨點與降級訊息容器,恆隱藏 -->
+    <div id="chipfidx" style="display:none"></div>
+    <div id="chipflow" style="display:none"></div>
+    <div id="chipoffs" style="display:none"></div>
     <div id="chipcost" style="height:460px;margin-top:8px"></div>
     <div id="accumpanel" style="margin:14px 0 10px"></div>
     <div id="chipnote" class="note"></div>
@@ -258,7 +259,7 @@ a{color:var(--blue)}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T06:22Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T06:51Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -407,6 +408,25 @@ function makeTable(el, cols, rows, defSort){
 
 // ===== 個股籌碼追蹤:單檔現金池累積(過去 N 日,大單 vs 全單)+ 價格%疊加 =====
 let CHIP_SYM='', CHIP_WIN=100;   // 預設 100 日 + CTA 開(2026-08-01 使用者指定)
+let CHIP_PD='d';   // K線週期(2026-08-08 使用者指定):'d'日 'w'週 'm'月 'y'年;視窗數字=「根數」跨週期共用
+const PD_LAB={d:'日',w:'週',m:'月',y:'年'};
+function periodKey(ds,pd){   // 交易日 'YYYY-MM-DD' → 週期桶鍵(週=ISO 週一錨定;月/年=字首)
+  if(pd==='m')return ds.slice(0,7);
+  if(pd==='y')return ds.slice(0,4);
+  if(pd==='w'){const d=new Date(ds+'T00:00:00Z');const wd=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-wd);
+    return d.toISOString().slice(0,10);}
+  return ds;
+}
+function aggBars(bars,pd){   // 日K→週/月/年K:開=首根、高=max、低=min、收=末根、量/週轉率=加總;標籤=桶內第一個交易日
+  const out=[]; let cur=null,key='';
+  bars.forEach(b=>{const k=periodKey(String(b[0]),pd);
+    if(k!==key){if(cur)out.push(cur);key=k;
+      cur=[String(b[0]),+b[1],+b[2],+b[3],+b[4],+(b[5]||0),(b[6]!=null?+b[6]:null)];}
+    else{cur[2]=Math.max(cur[2],+b[2]);cur[3]=Math.min(cur[3],+b[3]);cur[4]=+b[4];cur[5]+=+(b[5]||0);
+      if(b[6]!=null)cur[6]=(cur[6]||0)+ +b[6];}});
+  if(cur)out.push(cur);
+  return out;
+}
 const CHIPK={};   // 單檔日K快取 {sym:{close:{date:c}, bars:[[date,o,h,l,c,v,..],..]}}
 function ensureChipK(sym){
   if(!sym)return;
@@ -524,11 +544,19 @@ function bindPinch(id,getHL){
   },{passive:false});
   gd.addEventListener('touchend',function(e){if(e.touches.length<2)st=null;},{passive:true});
 }
-function chipBars(sym){   // 日K檔 + 今日盤中K(kline_today,60s 隨主檔更新)合併 → 成本分佈/均價/現價含「今日」
+function chipBars(sym,pd){   // 日K檔 + 今日盤中K(kline_today,60s 隨主檔更新)合併;pd 省略=目前週期(成本分佈等固定傳 'd')
   const K=CHIPK[sym]; if(!K||!K.bars||!K.bars.length)return null;
   const tb=((DATA&&DATA.kline_today)||{})[sym];
-  if(tb&&tb.length>=6&&tb[0]>K.bars[K.bars.length-1][0])return K.bars.concat([tb]);
-  return K.bars;
+  const daily=(tb&&tb.length>=6&&tb[0]>K.bars[K.bars.length-1][0])?K.bars.concat([tb]):K.bars;
+  const p=pd||CHIP_PD;
+  if(p==='d')return daily;
+  if(p==='y'){   // 年K:優先全史月K檔(kline_max,涵蓋 10-40 年);未載入先用 5 年日K聚合(誠實較短),到檔自動重繪
+    try{ensureChipKMax(sym);}catch(_){}
+    const KM=(typeof CHIPKM!=='undefined')?CHIPKM[sym]:null;
+    if(KM&&KM.bars&&KM.bars.length>=12)return aggBars(KM.bars,'y');
+    return aggBars(daily,'y');
+  }
+  return aggBars(daily,p);
 }
 let EXTDF=null,EXTDF_req=0;   // 擴充清單 ⑦(獨立 ext_flows.json,個股籌碼分頁專用;不進大盤匯總)
 function ensureExtDaily(){   // ~10 分重抓(檔案回填後達 ~2MB,gzip 傳輸;日頻資料低頻即可;首載立即重繪)
@@ -1568,8 +1596,9 @@ function buildPoolOffs(){ buildOffs('pooloffs','pooltide',POOL_TREND,POOL_OFF,
 // ===== 駕駛艙:CTA score/RVPOS/TD/RSI/燈號 全前端自算(與回測同定義;快取避免每 20s 重算)=====
 const CKC={};
 function cockpitRows(sym){
-  const bars=chipBars(sym); if(!bars||bars.length<30)return null;   // 2026-08-06:260→30,新上市股可看(長窗指標自然缺席)
-  const cch=CKC[sym];
+  const bars=chipBars(sym); if(!bars||bars.length<(CHIP_PD==='y'?5:CHIP_PD==='m'?12:30))return null;   // 260→30(2026-08-06);月K≥12根/年K≥5根即可看
+  const _ck=sym+':'+CHIP_PD;   // 快取鍵含週期(2026-08-08 多週期)
+  const cch=CKC[_ck];
   if(cch&&cch.n===bars.length&&cch.last===+bars[bars.length-1][4])return cch.rows;
   const n=bars.length, C=bars.map(b=>+b[4]), V=bars.map(b=>+(b[5]||0));
   const P=new Array(n+1).fill(0), PV=new Array(n+1).fill(0);
@@ -1595,7 +1624,7 @@ function cockpitRows(sym){
   const rows=[];
   // 2026-08-06 短史模式:歷史 ≥260 根走原路徑(i 自 252 起,輸出逐位元不變);新上市股(30~259 根)
   // 自第 5 根起出列,長窗欄位(檔位sc/CTA t50·t100·t200·t63)不足即 null,由各消費端已有的 null 防護降級。
-  const i0=(n>=260)?252:5;
+  const i0=(CHIP_PD==='d'&&n>=260)?252:(CHIP_PD==='y'?1:5);   // 非日K恆短史模式(sc/檔位=日K定義);年K留1根暖機
   for(let i=i0;i<n;i++){
     const s50=i+1>=50?(P[i+1]-P[i+1-50])/50:null, s100=i+1>=100?(P[i+1]-P[i+1-100])/100:null, s200=i+1>=200?(P[i+1]-P[i+1-200])/200:null;
     let sc=null;
@@ -1608,7 +1637,7 @@ function cockpitRows(sym){
       tds:Math.max(tds[i],tds[i-1],tds[i-2]),tdb:Math.max(tdb[i],tdb[i-1],tdb[i-2]),
       tds0:tds[i],tdb0:tdb[i],volr:v60>0?V[i]/v60:1,volr5:(v60>0&&v5!=null)?v5/v60:1,c5:i>=5?C[i-5]:null});
   }
-  CKC[sym]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
+  CKC[_ck]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
   return rows;
 }
 // ===== C訊號(Claude 參考層,2026-08-07):與使用者◆★指標組完全獨立的第二參考;純前端自算、零token =====
@@ -2161,16 +2190,24 @@ function renderCockpit(){
     return;}
   if(CHIP_WIN==='max'){renderCockpitMax(el,MB);return;}   // P3B 全史對數月K(獨立渲染路徑,日K駕駛艙不受影響)
   const rows=cockpitRows(CHIP_SYM);
-  if(!rows||rows.length<10){el.style.height='auto';chartMsg(el,'日K載入中,或歷史不足(駕駛艙需 ≥30 根日K;新上市股以短史模式顯示,一年後檔位/CTA長線自動補齊)…');return;}
-  const win=Math.max(30,Math.min(CHIP_WIN,250));
+  if(!rows||rows.length<(CHIP_PD==='y'?3:CHIP_PD==='m'?6:10)){el.style.height='auto';chartMsg(el,'K線載入中,或此週期歷史不足(日K需 ≥30 根;新上市股以短史模式顯示)…');return;}
+  const win=Math.max(CHIP_PD==='y'?3:CHIP_PD==='m'?6:30,Math.min(CHIP_WIN,250));
   const R=rows.slice(-win);
-  const D=chipDaily();
+  const D0=chipDaily();
+  let D=D0;
+  if(CHIP_PD!=='d'){   // 多週期(2026-08-08):⑦ 日流按週期分桶加總,掛回各桶首個交易日標籤 → 池線/當日柱語意=該期淨額
+    D={}; const _lb={}; rows.forEach(r=>{_lb[periodKey(r.d,CHIP_PD)]=r.d;});
+    Object.keys(D0).forEach(dd=>{const e=(D0[dd]||{})[CHIP_SYM]; if(!e||e.m==null)return;
+      const L=_lb[periodKey(dd,CHIP_PD)]; if(!L)return;
+      const t=D[L]||(D[L]={}); const s=t[CHIP_SYM]||(t[CHIP_SYM]={m:0,r:0});
+      s.m+=(e.m||0); s.r+=((e.r!=null)?e.r:0);});
+  }
   let fi7=R.findIndex(r=>((D[r.d]||{})[CHIP_SYM])!=null); if(fi7<0)fi7=R.length;   // ⑦ 覆蓋起點:之前不畫 0(新入列回補中)
   let cm=0,ca=0; const pm=[],pa=[],pbar=[];
   R.forEach((r,ri7)=>{ if(ri7<fi7){pm.push(null);pa.push(null);pbar.push(null);return;}
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
-  const sig=CHIP_SYM+':'+win+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')
+  const sig=CHIP_SYM+':'+win+':pd'+CHIP_PD+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')
     +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
@@ -2194,7 +2231,7 @@ function renderCockpit(){
     const TOP=(r.sc===100?1:0)+(r.rv>=90?1:0)+(r.tds>=9?1:0)+(r.volr5>=1.5?1:0);
     const dn=r.c5!=null&&r.c<r.c5;
     const BOT=(r.tdb>=9?1:0)+(r.rv>=80?1:0)+((r.volr>=1.75&&dn)?1:0)+((r.sc!=null&&r.sc<66)?1:0);   // sc=null(短史)不得計分(null<66 恆真陷阱)
-    const isT=shortH?(TOP>=2):(TOP>=3), isB=shortH?(BOT>=2):(BOT>=3);
+    const isT=CHIP_PD==='d'&&(shortH?(TOP>=2):(TOP>=3)), isB=CHIP_PD==='d'&&(shortH?(BOT>=2):(BOT>=3));   // ◆★=日K回測口徑,非日K不亮
     topY.push(isT?r.h+o3:null); topT.push(isT&&!pT?'減碼':'');   // 連續齊發只標首日字樣,其餘只留菱形
     botY.push(isB?r.l-o3:null); botT.push(isB&&!pB?'抄底':''); pT=isT; pB=isB;
     // 神奇九轉(按規則):只顯示「最終數到≥9的段」(含起數1-8過程)與「進行中的段」;過去數不到9就斷的段整段隱藏。
@@ -2259,7 +2296,8 @@ function renderCockpit(){
      marker:{symbol:shortH?'star-open':'star',size:12,color:CPAL.star,line:{width:1.5,color:shortH?CPAL.star:CPAL.edge}},name:'抄底',
      hovertemplate:shortH?'☆ 短史版抄底(上市未滿一年:檔位成分缺 → 3成分制 2/3 齊發)⚠ 無回測樣本,僅供關注、非訊號<extra></extra>'
        :'★ BOT≥3 齊發:跌勢延伸位(298檔×2年:10日反彈51%、20日56% vs 基準53% → 位置標記非預測;快殺型崩跌常整段無★,放寬變體回測無增益)<extra></extra>'},
-    ...(function(){try{   // C訊號(Claude 參考層):與◆★成分零重疊;無⑦資料或無觸發=不畫(fail-open)
+    ...(function(){try{   // C訊號(Claude 參考層):與◆★成分零重疊;無⑦資料或無觸發=不畫(fail-open);僅日K(回測口徑)
+      if(CHIP_PD!=='d')return [];
       const cs=csigCompute(CHIP_SYM,rows), off=rows.length-R.length;
       const cb=cs.bot.map(t=>t-off).filter(i=>i>=0&&i<R.length);
       const ct=cs.top.map(t=>t-off).filter(i=>i>=0&&i<R.length);
@@ -2344,14 +2382,19 @@ function renderCockpit(){
     if(_vb)_vbShapes=vbpShapes(_vb);
   }catch(e){_vb=null;_vbShapes=[];}}
   const li=R.length-1;
+  // CTA 數值列(2026-08-08:兩平台皆入標題,右緣標籤全退場 —— 桌機也會蓋住最新K棒)
+  const _fvC=v=>(v>=1000?v.toFixed(0):v.toFixed(1));
+  const _ctaVals=CHIP_CTA?[['短',R[li].t50,CPAL.brake1],['中',R[li].t100,CPAL.brake2],['長',R[li].t200,CPAL.brake3],['動',R[li].t63,CPAL.brake4lab]]
+    .filter(p=>p[1]!=null&&isFinite(p[1]))
+    .map(p=>'<span style="color:'+p[2]+'">'+p[0]+_fvC(p[1])+'</span>').join(' '):'';
   const VBG=vbpGeom();
   const XR=_vb?(VBG.x0-0.016):0.998;   // 右緣標註錨點:VbP 開啟時退到右軌左側,避免壓字
   const XW=_vb?(VBG.x0-0.010):1;       // 橫跨全寬的 paper 色帶同步收邊
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日'}
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+'日 · '+(CHIP_CTA?'<span style="color:'+CPAL.brake1+'">┈CTA×4(量化觸發價·◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -2363,10 +2406,7 @@ function renderCockpit(){
     if(_ovlLeg.length)ann[0].text+=' · '+_ovlLeg.join(' ');}catch(e){}}   // P7-3 疊加線(ann 已就緒才畫)
   // 右緣價位標籤堆:CTA 四條煞車線 + 通道上下界(壓力/支撐點位)一起排,共用防疊字的往上錯開規則
   (function(){
-    const L=[];
-    if(CHIP_CTA&&!MB)[['短50D',R[li].t50,CPAL.brake1],['中100D',R[li].t100,CPAL.brake2],
-                 ['長200D',R[li].t200,CPAL.brake3],['動63D',R[li].t63,CPAL.brake4lab]]
-      .forEach(function(p){ if(p[1]!=null&&isFinite(p[1]))L.push(p); });   // 短史:未成形不標(null防炸);手機改圖頂數值列(2026-08-08:右緣標籤會蓋住最新K棒)
+    const L=[];   // CTA 右緣標籤已全面退場(2026-08-08:桌機也蓋最新K棒 → 數值一律入標題列);此堆疊只剩通道點位
     // 2026-08-01 使用者指定:通道成形 → 直接給出可操作點位(上升通道要壓力、下行通道要支撐;兩界都標)
     if(_chLv)_chLv.forEach(function(v){ if(v.y==null||!isFinite(v.y))return;
       L.push([v.kind,v.y,'rgba('+v.col+',1)']); });
@@ -2391,16 +2431,10 @@ function renderCockpit(){
   // 右緣標籤蓋最新K棒問題根治:數值上移圖頂,虛線照畫)
   if(MB){
     ann.push({xref:'paper',yref:'paper',x:0,y:1.030,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>'+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
+      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
         +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
-    if(CHIP_CTA){
-      const _fv=v=>(v>=1000?v.toFixed(0):v.toFixed(1));
-      const _cv=[['短',R[li].t50,CPAL.brake1],['中',R[li].t100,CPAL.brake2],['長',R[li].t200,CPAL.brake3],['動',R[li].t63,CPAL.brake4lab]]
-        .filter(p=>p[1]!=null&&isFinite(p[1]))
-        .map(p=>'<span style="color:'+p[2]+'">'+p[0]+_fv(p[1])+'</span>').join(' ');
-      if(_cv)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,
-        font:{size:9,color:MUT2},text:'┈CTA '+_cv});
-    }
+    if(CHIP_CTA&&_ctaVals)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,
+      font:{size:9,color:MUT2},text:'┈CTA '+_ctaVals});
   }
   // ===== P2 資料接線層(2026-08-01):內部人徽章 / 事件聚光燈(資料=signals.json,無資料靜默)=====
   //   註:訊號K棒變色(2B)、蠟燭型態標記(4C)、回測層(P7 前端 UI)已於 2026-08-01 依使用者指定下架。
@@ -2698,7 +2732,7 @@ function renderCockpit(){
   try{
     const _kt=((DATA&&DATA.kline_today)||{})[CHIP_SYM];
     const _lastD=R.length?R[R.length-1].d:null;
-    if(!_kt&&DATA&&DATA.trade_date&&_lastD&&_lastD<DATA.trade_date){
+    if(CHIP_PD==='d'&&!_kt&&DATA&&DATA.trade_date&&_lastD&&_lastD<DATA.trade_date){   // 僅日K(週/月桶首日必<今日,非凍結)
       ann.push({xref:'paper',yref:'paper',x:0.5,y:1.035,xanchor:'center',yanchor:'bottom',showarrow:false,
         font:{size:9,color:'#f59e0b'},bgcolor:'rgba(63,45,12,.55)',
         text:'⚠ K線止於 '+_lastD.slice(5)+'·盤中即時棒未接(此檔為一次性抓取)— 用上方「＋加入追蹤」升級為持續更新'});
@@ -2836,7 +2870,7 @@ function renderChipCost(){
   const K=CHIPK[CHIP_SYM];
   if(CHIPK[CHIP_SYM+'_none']){chartMsg(el,'尚無日K → 可按上方K線區的「⚡ 免token點播」補齊(補到後這裡自動顯示成本分佈)…');return;}
   if(!K||!K.bars||!K.bars.length){chartMsg(el,'日K載入中…');return;}
-  const all=chipBars(CHIP_SYM)||K.bars, bars=all.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));
+  const all=chipBars(CHIP_SYM,'d')||K.bars, bars=all.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 成本分佈恆用日K(量價分佈語意)
   if(bars.length<5){chartMsg(el,'此區間日K不足');return;}
   let pmin=Infinity,pmax=-Infinity;
   bars.forEach(b=>{if(b[3]<pmin)pmin=b[3]; if(b[2]>pmax)pmax=b[2];});
@@ -2900,7 +2934,9 @@ function renderChips(){
     const go=()=>{const v=(inp.value||'').trim().toUpperCase();if(v){CHIP_SYM=v;inp.value='';renderChips();}};
     inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();}); inp.addEventListener('change',go);}
   const rb=document.getElementById('chipRange');
-  if(rb){rb.innerHTML=[10,30,50,60,100,120,200,250].map(n=>{
+  if(rb){rb.innerHTML=['d','w','m','y'].map(p=>'<span class="tab '+(CHIP_PD===p?'active':'')+'" data-pd="'+p+'" style="padding:3px 10px;font-size:12px;font-weight:600">'+PD_LAB[p]+'K</span>').join('')
+      +'<span style="opacity:.35;margin:0 2px">|</span>'
+      +[10,30,50,60,100,120,200,250].map(n=>{
       const dis=dates.length<Math.min(n,10); const act=CHIP_WIN===n;
       return '<span class="tab '+(act?'active':'')+'" data-cn="'+n+'" style="padding:3px 10px;font-size:12px;'+(dis?'opacity:.35;pointer-events:none':'')+'">'+n+'日</span>';}).join('')
       +'<span class="tab '+(CHIP_WIN==='max'?'active':'')+'" data-cn="max" style="padding:3px 10px;font-size:12px">全史</span>'
@@ -2908,6 +2944,9 @@ function renderChips(){
       +'<span class="tab '+(CHIP_ZOOM?'active':'')+'" id="ckZoom" title="開啟後:滑鼠滾輪縮放、按住拖曳平移(關閉則滾輪照常捲頁)" style="padding:3px 10px;font-size:12px;margin-left:8px">⤢ 縮放拖曳</span>'
       +'<span class="tab" id="ckRst" title="回到目前視窗的原始畫面(視窗天數不變:看 30 日就回 30 日)" style="padding:3px 10px;font-size:12px">⟲ 復位</span>';
     rb.querySelectorAll('.tab[data-cn]').forEach(t=>t.onclick=()=>{CHIP_WIN=(t.dataset.cn==='max')?'max':+t.dataset.cn;renderChips();});
+    rb.querySelectorAll('.tab[data-pd]').forEach(t=>t.onclick=()=>{if(CHIP_PD===t.dataset.pd)return;CHIP_PD=t.dataset.pd;
+      const _e=document.getElementById('cockpit'); if(_e)_e.dataset.sig='';   // 週期切換必重繪(sig 已含 pd,此為保險)
+      renderChips();});
     const _zb=rb.querySelector('#ckZoom'); if(_zb)_zb.onclick=()=>{CHIP_ZOOM=!CHIP_ZOOM;cockpitReset(true);};
     const _rb2=rb.querySelector('#ckRst'); if(_rb2)_rb2.onclick=()=>cockpitReset(false);}
   buildChipIdx();
@@ -2951,6 +2990,7 @@ function renderChips(){
   try{ensureScan();renderScan();renderAccum();ensureSigRev();renderSigRev();}catch(e){}     // 駕駛艙:K線+煞車線+TD9+燈號 / 量 / 轉速 / 檔位 / ⑦池
   renderChipStock();   // 存量分解:流通股 / 大戶(機構) / 非機構
   renderChipCost();    // 籌碼成本分佈(量價)+ 均價線(從日K)
+  if(0){   // ===== 獨立現金池累積窗:2026-08-08 使用者指示移除(駕駛艙⑦軌已涵蓋同資訊;程式封存不執行)=====
   const use=dates.slice(-(CHIP_WIN==='max'?250:CHIP_WIN));   // 全史模式:⑦池/成本分佈維持 250 日(無對應月頻資料)
   // ⑦ 覆蓋起點:自「該標的第一個有資料的日子」起畫;之前=無資料 → null 不畫(誠實呈現,避免新入列標的變成假的平地+突刺)
   let fi=use.findIndex(d=>((D[d]||{})[CHIP_SYM])!=null); if(fi<0)fi=use.length;
@@ -3029,8 +3069,9 @@ function renderChips(){
       _y3r?{range:_y3r}:{})},CFG);
   bindPinch('chipflow',null);
   buildChipOffs();
+  }   // ===== 獨立現金池累積窗 封存結束 =====
   const note=document.getElementById('chipnote');
-  if(note)note.innerHTML='<b>⓪駕駛艙</b>:K線疊<b>煞車線</b>(短/中/長期量化觸發價=CTA 部位翻轉位,碰線=機械賣壓啟動)、<b>TD9</b>(橘=賣方九轉/青=買方九轉)與<b>燈號</b>——▼=TOP≥3(score100+RVPOS≥90+TD賣9+爆量5日 湊3)減碼階梯——<b>2026-08-04 重測(298檔×2年)</b>:◆後平均報酬仍為正(動能常延續)、但 20 日深跌≥15% 機率 <b>×1.5</b>、≥20% <b>×1.75</b> → 是「尾部風險位置」=縮部位/防守訊號,不是放空;▲=BOT≥3(TD買9+RVPOS≥80+殺量竭盡+score&lt;66 湊3)抄底階梯——同樣本:10日反彈 51%、20日 56%(基準 53%)=<b>位置標記而非預測</b>;快殺型崩跌(TD9 與爆量結構上來不及亮,如 AEHR 2026-07 整段只有 BOT=2)常無★,放寬變體(BOT≥2/快殺/深跌)回測皆無增益、多為接刀 → 故不放寬,抄底請併看吸籌單元的「突破確認」。副軌:量(琥珀=爆量)、轉速RVPOS(紅帶=紅線區,無餘裕)+RSI(灰=背景)、檔位score(降檔=訊號斷裂)、⑦現金池(與K線對齊看背離)。<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。<b>②現金池累積</b>=該股 ⑦ 每日主動淨流自區間起點累加(大單≈機構、全單含中小單≈散戶);<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>→設計上與股價同向,<b>背離</b>(價漲·線降=⑦在撤/派發)=轉折觀察;柱=當日淨進出。<b>③籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>大戶均(粉)/散戶均(青)</b>=逐筆成交按自動門檻(≥$10萬或當批前5%)分大單/散戶的成交量加權均價,<b>▲=該群淨買、▼=淨賣</b>;比較兩條與現價,可看誰的成本卡在哪、誰在追高/誰在派發。<b>誠實標注</b>:成本分佈/均價是「近期成交均價」近似、非個別持有成本;大戶/散戶均價的逐筆在熱門股是<b>抽樣估計</b>(NVDA 類約 15% 覆蓋、均價仍近似不偏,但股數不宣稱精確)、中低量股近完整;此兩線自建置日起逐日累積,頭幾天樣本少。';
+  if(note)note.innerHTML='<b>⓪駕駛艙</b>:K線疊<b>煞車線</b>(短/中/長期量化觸發價=CTA 部位翻轉位,碰線=機械賣壓啟動)、<b>TD9</b>(橘=賣方九轉/青=買方九轉)與<b>燈號</b>——▼=TOP≥3(score100+RVPOS≥90+TD賣9+爆量5日 湊3)減碼階梯——<b>2026-08-04 重測(298檔×2年)</b>:◆後平均報酬仍為正(動能常延續)、但 20 日深跌≥15% 機率 <b>×1.5</b>、≥20% <b>×1.75</b> → 是「尾部風險位置」=縮部位/防守訊號,不是放空;▲=BOT≥3(TD買9+RVPOS≥80+殺量竭盡+score&lt;66 湊3)抄底階梯——同樣本:10日反彈 51%、20日 56%(基準 53%)=<b>位置標記而非預測</b>;快殺型崩跌(TD9 與爆量結構上來不及亮,如 AEHR 2026-07 整段只有 BOT=2)常無★,放寬變體(BOT≥2/快殺/深跌)回測皆無增益、多為接刀 → 故不放寬,抄底請併看吸籌單元的「突破確認」。副軌:量(琥珀=爆量)、轉速RVPOS(紅帶=紅線區,無餘裕)+RSI(灰=背景)、檔位score(降檔=訊號斷裂)、⑦現金池(與K線對齊看背離)。<b>①存量分解</b>:流通股(所有籌碼)=大戶(機構 13F 持股數)+非機構(散戶+內部人),季頻;機構季變=大戶加減碼。⑦現金池累積已併入駕駛艙最底軌(獨立圖 2026-08-08 移除):<b>+y=現金離池(進場買貨)、−y=現金入池(獲利了結)</b>,與K線對齊看<b>背離</b>(價漲·線降=⑦在撤/派發)。<b>②籌碼成本分佈</b>=近 N 日日K量價分佈,<b>POC</b>=最大量價位(最厚套牢/支撐)、橘帶=70%價值區、綠=現價下方(獲利盤/支撐)紅=上方(套牢盤/壓力);<b>均價/VWAP60/120</b>=各期成交量加權平均成本。<b>大戶均(粉)/散戶均(青)</b>=逐筆成交按自動門檻(≥$10萬或當批前5%)分大單/散戶的成交量加權均價,<b>▲=該群淨買、▼=淨賣</b>;比較兩條與現價,可看誰的成本卡在哪、誰在追高/誰在派發。<b>誠實標注</b>:成本分佈/均價是「近期成交均價」近似、非個別持有成本;大戶/散戶均價的逐筆在熱門股是<b>抽樣估計</b>(NVDA 類約 15% 覆蓋、均價仍近似不偏,但股數不宣稱精確)、中低量股近完整;此兩線自建置日起逐日累積,頭幾天樣本少。';
 }
 function render(){
   if(!DATA)return;
