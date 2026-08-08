@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
 <style>
@@ -209,6 +209,15 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   body.wsxFit #wsxTopSlot .wsxBrand{font-size:11.5px}
   body.wsxFit #wsxTopSlot #wsxTop::-webkit-scrollbar{display:none;height:0}
 }
+
+/* ===== v8:手機隱藏灰色說明(誠實/免責文案仍在 DOM;與桌機工作區 v5 同規則) ===== */
+@media (max-width:679px){
+  .note,.wsxDisc{display:none!important}
+}
+/* v8:單欄 1fr 軌 min-content 撐爆防護(地雷21 同族)——svg 固定寬(如 Plotly 隱藏渲染 700px)
+   不得撐大軌;軌鎖 minmax(0,1fr) 後 div 寬回歸容器,wsx6 fill 偵測落差自癒。滿版 fit 規則較晚且特異度高,不受影響 */
+#wsxGrid,#wsxRGrid{grid-template-columns:minmax(0,1fr)}
+#wsxGrid>*,#wsxRGrid>*,.wsxCol,#wsxCenter,#wsxRC{min-width:0}
 </style>
 </head>
 <body>
@@ -222,16 +231,16 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 </header>
 
 <div class="tabs">
-  <div class="tab active" data-sec="rotation">資金輪動 FROM→TO</div>
+  <div class="tab" data-sec="rotation">資金輪動 FROM→TO</div>
   <div class="tab" data-sec="options">期權定位</div>
   <div class="tab" data-sec="cross">跨資產總覽</div>
   <div class="tab" data-sec="equities">個股 · 槓桿ETF</div>
   <div class="tab" data-sec="flow">資金流 · 暗池</div>
-  <div class="tab" data-sec="chips">個股籌碼</div>
+  <div class="tab active" data-sec="chips">個股籌碼</div>
 </div>
 
 <!-- ===== 資金輪動 Sankey ===== -->
-<section id="sec-rotation" class="sec active">
+<section id="sec-rotation" class="sec">
 <div id="wsxRGrid">
 <aside id="wsxRL" class="wsxCol">
 <div class="card" id="winCard">
@@ -415,7 +424,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 </div>
 </section>
 
-<section id="sec-chips" class="sec">
+<section id="sec-chips" class="sec active">
 <div id="wsxTopHome"></div>
 <div id="wsxTop">
   <span class="wsxBrand">個股籌碼<b>工作區</b></span>
@@ -503,7 +512,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T15:42Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-08T16:06Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4794,7 +4803,7 @@ function fill(){
   }catch(_){}
 }
 window.__wsxFill=fill;
-setInterval(function(){if(fitOn())fill();},700);
+setInterval(function(){if(fitOn()||((window.innerWidth||1024)<680))fill();},700);
 var _ft=0,_fq=null;
 document.addEventListener('mousemove',function(){
   if(!document.querySelector('.wsxSplit.on'))return;
