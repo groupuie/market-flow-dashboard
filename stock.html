@@ -913,7 +913,10 @@ function detect(bars){
     if(!base)continue;
     var tier=null;
     if(bounce>=0.12)tier=2;
-    else if(bounce>=0.08)tier=1;                 // 兩級互斥:△1 有 0.12 上界
+    /* 2026-08-10:△1(反彈 8–12%)經三項檢驗判定無效 —— 改成與 △2 互斥後
+       命中 13.1% < 對照 17.8%、5 窗 0/5、前 10 筆貢獻 188%。依新規格廢除,只保留 △2。
+       原本的 +8.2pt 是因為舊條件(≥8%)包含了 △2(≥12%),優勢全由 △2 貢獻。 */
+    else tier=null;
     if(!tier)continue;
     if(i-last[tier]<5)continue;                  // 同級 <5 根不重畫
     last[tier]=i;
