@@ -284,6 +284,11 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 /* ===== v13:只留個股籌碼一個分頁 → 分頁列本身沒有作用,隱藏以讓出垂直空間
    (#sec-chips 恆為 active,tab 元素保留在 DOM 供 FIT()/選擇器判定) ===== */
 .tabs{display:none}
+
+/* ===== v14:捲軸隱藏(所有寬度;類別選擇器,不用 `*` 後代比對 —— 見地雷25) =====
+   會捲的容器由 wsxNoSB 模組一次性打上 .wsxNSB;樣式引擎只需比對一個類別。 */
+.wsxNSB{scrollbar-width:none!important;-ms-overflow-style:none!important}
+.wsxNSB::-webkit-scrollbar{width:0!important;height:0!important;display:none!important}
 </style>
 </head>
 <body>
@@ -557,7 +562,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-08T23:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-09T00:15Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3421,7 +3426,11 @@ function renderChips(){
 }
 function render(){
   if(!DATA)return;
-  renderRotation(); renderOptions(); renderFlow(); renderChips();   // v13:跨資產/個股ETF 兩區已移除
+  // v14:駕駛艙優先。renderRotation/Options/Flow 畫的是使用者當下看不到的東西(或左欄次要圖),
+  //      先讓主圖出來,其餘丟到 idle —— 實測到「駕駛艙可用」再快一大截。
+  renderChips();
+  var _rest=function(){try{renderRotation();}catch(_){}try{renderOptions();}catch(_){}try{renderFlow();}catch(_){}};
+  if(window.requestIdleCallback)requestIdleCallback(_rest,{timeout:1500});else setTimeout(_rest,60);
 }
 
 
@@ -4467,7 +4476,7 @@ function renderAnl(){
   var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"NVDA";
   var an=AN&&AN.symbols&&AN.symbols[sym],ab="";
   if(!AN)ab='<div class="wsxSkel">analyst.json 載入中…</div>';
-  else if(!an||an.na||(!an.pt&&!an.eps))ab='<div class="wsxSkel">'+esc((an&&an.na)||"此標的未覆蓋(試驗 13 檔)")+'</div>';
+  else if(!an||an.na||(!an.pt&&!an.eps))ab='<div class="wsxSkel">'+esc((an&&an.na)||("此標的未覆蓋(分析師層已覆蓋 "+((AN&&AN.symbols)?Object.keys(AN.symbols).length:0)+" 檔)"))+'</div>';
   else{
     var q=quote(sym),spot=q&&q.last,pt=an.pt||{};
     if(pt.mean!=null){
@@ -4511,7 +4520,7 @@ function renderOpt(){
   var o=(typeof DATA!=="undefined")&&DATA&&DATA.options&&DATA.options[sym];
   var g=(typeof SIG!=="undefined")&&SIG&&SIG.symbols&&SIG.symbols[sym]&&SIG.symbols[sym].gamma||{};
   var ob="";
-  if(!o)ob='<div class="wsxSkel">此標的無期權資料(CBOE 覆蓋 27 檔)</div>';
+  if(!o)ob='<div class="wsxSkel">此標的無期權資料(CBOE 覆蓋 '+((DATA&&DATA.options)?Object.keys(DATA.options).length:0)+' 檔)</div>';
   else{
     ob='<div class="wsxKv"><span>Spot / MaxPain</span><span class="wsxN">'+px2(o.spot)+' / '+(o.max_pain!=null?o.max_pain:"–")+'</span></div>'+
        '<div class="wsxKv"><span>P/C 量 / OI</span><span class="wsxN">'+(o.pc_vol!=null?o.pc_vol:"–")+' / '+(o.pc_oi!=null?o.pc_oi:"–")+'</span></div>'+
@@ -5034,6 +5043,7 @@ function run(){
   BUSY=true;
   try{o.call(window);}catch(_){}
   BUSY=false;
+  try{if(window.__wsxNoSB)window.__wsxNoSB();}catch(_){}   /* v14:重繪產生的新容器補打捲軸標籤 */
 }
 window.renderChips=function(){
   var n=+new Date();
@@ -5041,6 +5051,48 @@ window.renderChips=function(){
   if(!timer)timer=setTimeout(run,500);
 };
 window.__wsxRenderChipsNow=run;
+/* v14:renderRotation 同樣套尾隨合併(載入期會被觸發多次,每次都重畫現金流向圖) */
+var r0=window.renderRotation;
+if(typeof r0==='function'){
+  var rlast=0,rtimer=null;
+  var rrun=function(){rlast=+new Date();rtimer=null;try{r0.call(window);}catch(_){}};
+  window.renderRotation=function(){
+    var n=+new Date();
+    if(n-rlast>=500&&!rtimer){rrun();return;}
+    if(!rtimer)rtimer=setTimeout(rrun,500);
+  };
+}
+})();
+
+</script>
+<script>
+
+/* ===== wsxNoSB(v14):把「會捲的容器」打上 .wsxNSB =====
+ * 為什麼不用 CSS 的通用後代選擇器(在 section 底下用星號比對所有元素):會讓樣式引擎對含 Plotly SVG 的
+ * 兩萬個節點持續比對(2026-08-08 iPad/Mac Safari 卡死主因,地雷25)。改成 JS 只比對一次、
+ * 打上類別,之後樣式引擎只認一個 class —— 同樣的視覺效果,零持續成本。 */
+(function(){
+"use strict";
+var SEL=['.wsxCol','.wsxTB','.wsxTBr','.wsxB','.wsxP','#wsxCenter','#wsxRC','#wsxRChartP',
+         '#wsxTabsP','#wsxRTabsP','#wsxRail','#wsxTop','#wsxGrid','#wsxRGrid',
+         '#sec-chips [style*="overflow"]','#sec-chips table','#sec-chips .card',
+         '#wsxLeft','#wsxA','#wsxB','#wsxInfoRow','#scanpanel','#accumpanel','#wsxMWatch','#wsxFlow'].join(',');
+function tag(){
+  try{
+    var els=document.querySelectorAll(SEL);
+    for(var i=0;i<els.length;i++){var e=els[i];if(!e.classList.contains('wsxNSB'))e.classList.add('wsxNSB');}
+    /* 表格外層的 overflow 包裝(renderXXX 用 innerHTML 生成,故每次重繪後要補打) */
+    var w=document.querySelectorAll('#sec-chips div[style*="overflow"]');
+    for(var j=0;j<w.length;j++)if(!w[j].classList.contains('wsxNSB'))w[j].classList.add('wsxNSB');
+  }catch(_){}
+}
+window.__wsxNoSB=tag;
+tag();
+if(document.readyState!=='complete')window.addEventListener('load',tag);
+document.addEventListener('click',function(e){
+  if(e.target&&e.target.closest&&(e.target.closest('.wsxTab')||e.target.closest('#wsxRail [data-go]')))setTimeout(tag,120);
+});
+setTimeout(tag,1500);setTimeout(tag,4000);
 })();
 
 </script>
