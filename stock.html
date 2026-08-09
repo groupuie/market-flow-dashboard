@@ -825,6 +825,264 @@ async function boot(){
 }
 boot();
 window._dbg={get chart(){return chart},get SIG(){return SIG},get overlayIds(){return overlayIds},get dayBars(){return dayBars},get MKT(){return MKT}};
+
+// ===== PIVOT MARK BLOCK START (2026-08) =====
+/* 波段轉折標記 Phase 1:△ 抄底候選(△2 高信心 / △1 標準)。
+ *
+ * 【已知限制】(規格 §8,逐字保留)
+ * 本標記依據 2025-08 ~ 2026-08 單一市況回測,約 12 個月、247 檔。
+ * 宇宙為追蹤清單 + 成交額闖入者,存在選樣偏誤且偏 AI / 熱門股。
+ * △2 參數為 44 組合格參數中的最佳者,存在選擇偏誤,期望值應打折至約 +7pt。
+ * 波段轉折以 ZigZag >=10% 定義,更換擺盪門檻會改變絕對數值(但 243 格全數為正)。
+ * 族群異質性顯著:金融未通過、半導體對 ▼ 為反指標、太空組基準波動遠高於其他組。
+ * 歷史頻率非未來機率,不構成投資建議。
+ *
+ * 【實作邊界】本區塊不修改任何既有函式;drawSignals/clearSignals 以外層包裝掛載,
+ * overlay id 一律 push 進既有 overlayIds,故既有 clearSignals() 可正確清除本圖層。
+ * Phase 2(▼/🔥 減碼)在富途財報日曆接上前不得開工 —— 規格 §3.1 硬阻擋。
+ */
+(function(){
+"use strict";
+if(typeof IND!=="object"||!IND)return;
+if(IND.pivotMark===undefined)IND.pivotMark=false;      // 預設關閉(規格 §2.3)
+
+/* 沿用既有色票與文案表,只新增鍵、不改既有鍵 */
+try{ if(!KINDCOL.pivotLow)KINDCOL.pivotLow=KINDCOL.buy; if(!KINDTXT.pivotLow)KINDTXT.pivotLow="波段低點候選"; }catch(e){}
+
+var PV_IDS=[];          // 本圖層自己畫出去的 overlay(同時也會進 overlayIds)
+var PV_MARKS=[];        // {ts,val,tier,extra[]} 供本區塊自己的 hover 使用
+var LB=40;
+
+/* ---- RVPOS:自 index.html cockpitRows 的 rv/rvp 區段移植(演算法逐行相同) ---- */
+function rvposArr(C){
+  var n=C.length, rv=new Array(n).fill(null), i, j;
+  for(i=20;i<n;i++){
+    var rets=[];
+    for(j=i-19;j<=i;j++)if(C[j-1]>0)rets.push(Math.log(C[j]/C[j-1]));
+    if(rets.length<2)continue;
+    var m=rets.reduce(function(a,b){return a+b;},0)/rets.length;
+    var va=rets.reduce(function(a,x){return a+(x-m)*(x-m);},0)/(rets.length-1);
+    rv[i]=Math.sqrt(va)*Math.sqrt(252)*100;
+  }
+  var rvp=new Array(n).fill(null);
+  var _tmin=(n>=260)?60:15;    // 短史門檻沿用 index.html(短史樣本雜訊較大,tooltip 會標注)
+  for(i=0;i<n;i++){
+    if(rv[i]==null)continue;
+    var c=0,t2=0;
+    for(j=Math.max(0,i-504);j<=i;j++)if(rv[j]!=null){t2++;if(rv[j]<=rv[i])c++;}
+    if(t2>=_tmin)rvp[i]=Math.round(100*c/t2);
+  }
+  return rvp;
+}
+
+/* ---- 族群:取 market_data.daily_flows 最近一筆有該標的的分類(規格 §2.5) ---- */
+function sectorOf(sym){
+  try{
+    var df=MKT&&MKT.daily_flows; if(!df)return null;
+    var ds=Object.keys(df).sort();
+    for(var i=ds.length-1;i>=0;i--){
+      var e=df[ds[i]]&&df[ds[i]][sym];
+      if(e&&e.c)return e.c;
+    }
+  }catch(e){}
+  return null;                                   // 取不到分類 → 照畫,tooltip 末行加「族群未知」
+}
+
+/* ---- 偵測(規格 §2.1 + §2.2 去重) ---- */
+function detect(bars){
+  var n=bars.length; if(n<121)return [];
+  var C=bars.map(function(b){return +b.close;});
+  var H=bars.map(function(b){return +b.high;});
+  var L=bars.map(function(b){return +b.low;});
+  var rvp=rvposArr(C);
+  var out=[], last={1:-1e9,2:-1e9}, i, j;
+  for(i=Math.max(LB-1,119);i<n;i++){
+    var lowIdx=i, low0=L[i];
+    for(j=i-LB+1;j<=i;j++)if(L[j]<low0){low0=L[j];lowIdx=j;}
+    if(!(low0>0))continue;
+    var near=C[i]/low0-1;
+    var gap=i-lowIdx;
+    var mx=-Infinity; for(j=lowIdx;j<=i;j++)if(H[j]>mx)mx=H[j];
+    var bounce=mx/low0-1;
+    var lo120=Infinity, hi120=-Infinity;
+    for(j=i-119;j<=i;j++){if(L[j]<lo120)lo120=L[j];if(H[j]>hi120)hi120=H[j];}
+    var rng=hi120-lo120; if(!(rng>0))continue;
+    var pos120=(C[i]-lo120)/rng;
+    var r=rvp[i]; if(r==null)continue;
+    var base=(near<=0.05)&&(gap>=5)&&(pos120<=0.50)&&(r>=70);
+    if(!base)continue;
+    var tier=null;
+    if(bounce>=0.12)tier=2;
+    else if(bounce>=0.08)tier=1;                 // 兩級互斥:△1 有 0.12 上界
+    if(!tier)continue;
+    if(i-last[tier]<5)continue;                  // 同級 <5 根不重畫
+    last[tier]=i;
+    out.push({i:i,ts:bars[i].timestamp,tier:tier});
+  }
+  return out;
+}
+
+/* ---- 新 overlay(不動既有 sigMark);位置沿用「K棒下方 +16px」的既有慣例 ---- */
+try{
+  klinecharts.registerOverlay({
+    name:"pivotMark",totalStep:1,lock:true,needDefaultPointFigure:false,
+    createPointFigures:function(p){
+      var c=p.coordinates[0]; if(!c)return [];
+      var d=p.overlay.extendData||{};
+      var t2=(d.tier===2);
+      var col=(typeof KINDCOL!=="undefined"&&KINDCOL.pivotLow)||"#22c55e";
+      var sz=t2?8:6.5;
+      var y=c.y+16;                               // below
+      return [
+        {type:"circle",attrs:{x:c.x,y:y,r:11},styles:{style:"fill",color:"rgba(0,0,0,0.01)"},ignoreEvent:false},
+        {type:"polygon",attrs:{coordinates:[{x:c.x,y:y-sz},{x:c.x+sz*0.9,y:y+sz*0.6},{x:c.x-sz*0.9,y:y+sz*0.6}]},
+         styles:t2?{style:"fill",color:col}:{style:"stroke_fill",color:"rgba(34,197,94,.28)",borderColor:col,borderSize:1}}
+      ];
+    }
+  });
+}catch(e){}
+
+/* ---- Tooltip 文案(規格 §2.4 逐字;§4 誠實標籤) ---- */
+var TXT2=["波段低點候選(高信心)",
+"歷史:亮燈起 5 個交易日內,碰到 ≥10% 波段低點的比例 48%,",
+"      同日同族群對照 32%(優勢 +16pt)",
+"無偏估計約 +7pt — 此參數組是 44 組中最佳者,實際期望值應以 +7pt 為準",
+"樣本 181 段 / 111 檔 / 2025-08 ~ 2026-08(單一市況)",
+"用途:定位,非進場訊號。方向與部位請自行判斷。"];
+var TXT1=["波段低點候選(標準)",
+"歷史:亮燈起 5 個交易日內,碰到 ≥10% 波段低點的比例 35%,",
+"      同日同族群對照 26%(優勢 +8pt)",
+"樣本 291 段 / 前後兩期各自為 +4.9pt / +9.5pt",
+"用途:定位,非進場訊號。方向與部位請自行判斷。"];
+var LEGEND="歷史頻率非未來機率。本標記為位置定位,不構成投資建議。";
+
+function esc2(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+function showPvTip(m){
+  var el=document.getElementById("sigtip"); if(!el)return;
+  var col=(typeof KINDCOL!=="undefined"&&KINDCOL.pivotLow)||"#22c55e";
+  var lines=(m.tier===2?TXT2:TXT1).slice();
+  for(var i=0;i<m.extra.length;i++)lines.push(m.extra[i]);
+  var h='<div class="t"><span class="kchip" style="background:'+col+'22;color:'+col+'">'
+       +(m.tier===2?"△2":"△1")+'</span>'+esc2(lines[0])+'</div>';
+  h+='<div class="sub">'+esc2(m.d)+'</div>';
+  h+='<div style="margin-top:6px;font-size:11.5px;line-height:1.6;color:var(--ink2);white-space:pre-wrap">'
+     +esc2(lines.slice(1).join("\n"))+'</div>';
+  el.innerHTML=h; el.style.display="block"; el._pvOwn=1;
+  var wrap=document.getElementById("chartwrap");
+  var w=wrap.clientWidth, tw=Math.min(340,w-20);
+  var x=(typeof lastXY!=="undefined"?lastXY.x:0)+14, y=(typeof lastXY!=="undefined"?lastXY.y:0)+10;
+  if(x+tw>w-8)x=Math.max(8,(typeof lastXY!=="undefined"?lastXY.x:0)-tw-14);
+  el.style.left=x+"px";
+  el.style.top=Math.max(6,Math.min(y,wrap.clientHeight-40-el.clientHeight))+"px";
+}
+function hidePvTip(){
+  var el=document.getElementById("sigtip");
+  if(el&&el._pvOwn){el.style.display="none";el._pvOwn=0;}
+}
+
+/* ---- 繪製 ---- */
+function clearPv(){
+  PV_IDS.forEach(function(id){try{chart.removeOverlay({id});}catch(e){}});
+  PV_IDS=[]; PV_MARKS=[]; hidePvTip();
+  var lg=document.getElementById("pvLegend"); if(lg&&lg.parentNode)lg.parentNode.removeChild(lg);
+}
+function drawPv(){
+  clearPv();
+  if(!IND.pivotMark)return;                       // 關閉時:零 overlay、零圖例、零 DOM 殘留
+  if(typeof chart==="undefined"||!chart)return;
+  if(typeof dayBars==="undefined"||!dayBars||dayBars.length<121)return;
+  var sec=sectorOf(typeof SYM!=="undefined"?SYM:"");
+  if(sec==="金融")return;                          // 規格 §2.5:金融族群不畫
+  var extra=[];
+  if(!sec)extra.push("族群未知");
+  if(dayBars.length<260)extra.push("短史樣本,雜訊較大");
+  var hits=detect(dayBars), seen={};
+  for(var k=0;k<hits.length;k++){
+    var hmk=hits[k];
+    var ds=new Date(hmk.ts).toISOString().slice(0,10);
+    var ts=findBarTs(ds); if(ts==null)continue;    // 週/月K:映射到當前週期的 bar(沿用既有 helper)
+    var key=ts+":"+hmk.tier; if(seen[key])continue; seen[key]=1;
+    var bar=barAt(ts); if(!bar)continue;
+    var id=null;
+    try{
+      id=chart.createOverlay({name:"pivotMark",points:[{timestamp:ts,value:bar.low}],lock:true,
+        extendData:{kind:"pivotLow",tier:hmk.tier}});
+    }catch(e){}
+    if(id){
+      PV_IDS.push(id);
+      try{overlayIds.push(id);}catch(e){}          // 併入既有清單 → 既有 clearSignals() 可清除
+      PV_MARKS.push({ts:ts,val:bar.low,tier:hmk.tier,d:ds,extra:extra});
+    }
+  }
+  if(PV_MARKS.length){
+    var host=document.getElementById("indtogs");
+    if(host&&host.parentNode&&!document.getElementById("pvLegend")){
+      var lg=document.createElement("div");
+      lg.id="pvLegend";
+      lg.style.cssText="width:100%;font-size:10.5px;color:#898781;margin:4px 0 0;line-height:1.5";
+      lg.textContent="△ 波段低點候選(△2 高信心/△1 標準)· "+LEGEND;
+      host.parentNode.appendChild(lg);
+    }
+  }
+}
+
+/* ---- hover(自有命中偵測,不動既有 hitTest/MARKS_DRAWN) ---- */
+function pvHit(x,y){
+  var best=null,bd=1e9;
+  for(var i=0;i<PV_MARKS.length;i++){
+    var m=PV_MARKS[i],p=null;
+    try{p=chart.convertToPixel({timestamp:m.ts,value:m.val},{paneId:"candle_pane"});}catch(e){continue;}
+    if(!p||p.x==null)continue;
+    var my=p.y+16;
+    var d=Math.max(Math.abs(p.x-x),Math.abs(my-y));
+    if(d<14&&d<bd){bd=d;best=m;}
+  }
+  return best;
+}
+(function bindPv(){
+  var el=document.getElementById("chartwrap"); if(!el)return;
+  var last=null;
+  el.addEventListener("mousemove",function(e){
+    if(!IND.pivotMark||!PV_MARKS.length){if(last){last=null;hidePvTip();}return;}
+    var r=el.getBoundingClientRect();
+    var m=pvHit(e.clientX-r.left,e.clientY-r.top);
+    if(m){if(m!==last){last=m;showPvTip(m);}el.style.cursor="pointer";}
+    else if(last){last=null;hidePvTip();}
+  });
+})();
+
+/* ---- 掛載:包住 drawSignals(既有函式一行未改;它每次都會先 clearSignals) ---- */
+if(typeof window.drawSignals==="function"){
+  var _ds=window.drawSignals;
+  window.drawSignals=function(){
+    var r;
+    try{r=_ds.apply(this,arguments);}finally{try{drawPv();}catch(e){}}
+    return r;
+  };
+}
+/* ---- 開關(工具列新增一顆 chip;沿用既有 .itog 樣式,不改既有 toggle 邏輯) ---- */
+(function addToggle(){
+  var host=document.getElementById("indtogs"); if(!host)return;
+  if(document.querySelector('.itog[data-pv="1"]'))return;
+  var sp=document.createElement("span");
+  sp.className="itog"; sp.setAttribute("data-pv","1"); sp.textContent="△轉折";
+  sp.title="波段低點候選(回測層;定位用,非進場訊號)";
+  sp.classList.toggle("on",!!IND.pivotMark);
+  sp.onclick=function(){
+    IND.pivotMark=!IND.pivotMark;
+    try{localStorage.setItem("kl_ind",JSON.stringify(IND));}catch(e){}
+    sp.classList.toggle("on",!!IND.pivotMark);
+    drawPv();
+  };
+  host.appendChild(document.createTextNode(" "));
+  host.appendChild(sp);
+})();
+window._pvdbg={detect:detect,draw:drawPv,get marks(){return PV_MARKS;},get ids(){return PV_IDS;}};
+try{drawPv();}catch(e){}
+})();
+// ===== PIVOT MARK BLOCK END =====
+
 </script>
 <script>
 if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){})})}
