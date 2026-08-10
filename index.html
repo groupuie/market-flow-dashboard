@@ -289,6 +289,84 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
    會捲的容器由 wsxNoSB 模組一次性打上 .wsxNSB;樣式引擎只需比對一個類別。 */
 .wsxNSB{scrollbar-width:none!important;-ms-overflow-style:none!important}
 .wsxNSB::-webkit-scrollbar{width:0!important;height:0!important;display:none!important}
+
+/* ===== v16:Liquid Glass 按鈕(2026-08-10)=====
+   蘋果液態玻璃風格:分層半透明漸層 + 頂部鏡面高光 + 內凹底光 + 膠囊圓角。
+   地雷25 保護:全區塊僅具名 class/id 選擇器,無 universal selector;
+   不用 backdrop-filter —— 數十顆小按鈕 × Safari 即時模糊已證實拖垮效能,
+   玻璃感全靠漸層與雙層陰影模擬。不改任何 padding/尺寸 ⇒ 零版面位移。 */
+.tab{
+  background:linear-gradient(180deg,rgba(255,255,255,.145),rgba(255,255,255,.055) 45%,rgba(255,255,255,.03) 62%,rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.17);
+  border-radius:999px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 1px rgba(255,255,255,.05),0 1px 4px rgba(0,0,0,.35);
+  transition:border-color .18s ease,box-shadow .22s ease,color .15s ease,transform .12s ease;
+}
+.tab:active{transform:scale(.955)}
+.tab.active{
+  background:linear-gradient(180deg,rgba(125,180,255,.50),rgba(57,135,229,.36) 48%,rgba(37,99,235,.32) 66%,rgba(90,155,240,.42));
+  border-color:rgba(160,200,255,.55);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -7px 12px rgba(25,85,190,.34),0 2px 10px rgba(57,135,229,.38);
+  text-shadow:0 1px 2px rgba(0,40,110,.35);
+}
+.wsxChip{
+  background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.05) 45%,rgba(255,255,255,.03) 62%,rgba(255,255,255,.07));
+  border:1px solid rgba(255,255,255,.16);border-radius:999px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.20),0 1px 3px rgba(0,0,0,.30);
+  transition:border-color .18s ease,box-shadow .22s ease,transform .12s ease;
+}
+.wsxChip:active{transform:scale(.94)}
+.wsxChip.on{
+  background:linear-gradient(180deg,rgba(125,180,255,.50),rgba(57,135,229,.36) 50%,rgba(37,99,235,.34));
+  border-color:rgba(160,200,255,.55);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.40),inset 0 -6px 10px rgba(25,85,190,.32),0 2px 8px rgba(57,135,229,.36);
+}
+.wsxPill{
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.035) 55%,rgba(255,255,255,.055));
+  border:1px solid rgba(255,255,255,.13);border-radius:999px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15);
+}
+.wsxTab{border-bottom:0;border-radius:999px;transition:color .15s ease}
+.wsxTab.on{
+  color:#fff;
+  background:linear-gradient(180deg,rgba(125,180,255,.42),rgba(57,135,229,.30) 50%,rgba(37,99,235,.28));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.36),inset 0 -5px 9px rgba(25,85,190,.28),0 1px 6px rgba(57,135,229,.30);
+}
+.badge{border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 1px rgba(0,0,0,.12)}
+#wsxRail{
+  background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.02) 55%,rgba(255,255,255,.045));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 1px 6px rgba(0,0,0,.25);
+}
+#wsxRail button{border-radius:10px;transition:color .15s ease,transform .12s ease}
+#wsxRail button:active{transform:scale(.92)}
+/* 疊加指標小丸與大盤指數丸:行內樣式只定義配色 —— 這裡補玻璃邊光+膠囊,不碰顏色 */
+.idxchip,.fidxchip,.cidxchip,.cidxchip2,.cidxchip3,.cidxchip6,.cidxchip8,.cidxchip9,.cidxchipC,.cidxchipB{
+  border-radius:999px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 1px 3px rgba(0,0,0,.25);
+}
+/* 一次性行動鈕(點播/加入/儲存;行內配色保留,補膠囊+鏡面) */
+#ckLkBtn,#chipFreeBtn,#chipLkBtn,#chipAddBtn,#chipTokBtn{
+  border-radius:999px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1px 4px rgba(0,0,0,.30);
+}
+/* 輸入欄與下拉:玻璃欄位(圓角 11px —— 膠囊會讓短欄位文字貼弧,故用 iOS 欄位圓角) */
+#chipSym,#chipInput,#addsym,#chipTokIn,#winFrom,#winTo,#optTrendSym{
+  background:linear-gradient(180deg,rgba(255,255,255,.105),rgba(255,255,255,.045) 55%,rgba(255,255,255,.065)) !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  border-radius:11px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 2px 5px rgba(0,0,0,.16);
+}
+#chipSym:focus,#chipInput:focus,#addsym:focus,#chipTokIn:focus,#winFrom:focus,#winTo:focus,#optTrendSym:focus{
+  outline:none;border-color:rgba(150,195,255,.60) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 3px rgba(57,135,229,.22);
+}
+@media(hover:hover){
+  .tab:hover{border-color:rgba(255,255,255,.32);box-shadow:inset 0 1px 0 rgba(255,255,255,.30),inset 0 -1px 1px rgba(255,255,255,.06),0 2px 8px rgba(0,0,0,.40)}
+  .tab.active:hover{border-color:rgba(185,215,255,.70)}
+  .wsxChip:hover{border-color:rgba(255,255,255,.32);color:#f2f1ea}
+  .wsxTab:hover{color:#e8e7de}
+  #wsxRail button:hover{background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.06));color:#f2f1ea;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+}
 </style>
 </head>
 <body>
@@ -562,7 +640,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-09T00:15Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-10T11:02Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
