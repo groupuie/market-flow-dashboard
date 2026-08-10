@@ -1084,7 +1084,7 @@ def pull_daily_hist(q, syms, days=400):
         time.sleep(1.1)   # Futu 歷史資金流配額約 30 次/30 秒;0.5s 會超限→尾端(目的地ETF)全失敗
     return out
 
-def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
+def pull_futu(want_inst=False, want_hist=False, extra_syms=None, hist_syms=None):
     from futu import OpenQuoteContext, RET_OK
     q=OpenQuoteContext(host="127.0.0.1",port=11111)
     cap={}; snaps={}; inst={}; hist={}
@@ -1161,8 +1161,10 @@ def pull_futu(want_inst=False, want_hist=False, extra_syms=None):
                 time.sleep(0.5)
         except Exception as e: err("rank",e)
         # 歷史日頻回填(重;每日一次;固定清單+自訂,闖入者不回填)
+        # 2026-08-10:hist_syms 給定=只補指定檔(新板塊 20 檔 ~45s);None=全宇宙(每日 20h 輪)。
+        # 板塊擴充後全宇宙 94 檔 ≈150s,若每小時缺漏輪也整宇宙重拉會吃爆 420s 看門狗(當日實測連環超時)。
         if want_hist:
-            hist=pull_daily_hist(q, syms)
+            hist=pull_daily_hist(q, hist_syms if hist_syms else syms)
     finally:
         q.close()
     return cap, snaps, inst, hist
@@ -1424,6 +1426,7 @@ def run_once(cfg, args):
     except Exception: _missing=[]
     _deep=not os.path.exists(args.config+".histdeep2")   # 一次性深回填(400天)尚未做過
     want_hist = (not args.no_futu) and (_nd<10 or _age>20*3600 or (bool(_missing) and _age>3600) or (_deep and _age>1800))
+    _histsyms = None if (_nd<10 or _age>20*3600 or (_deep and _age>1800)) else (["US."+x for x in _missing] or None)
     data["_hist_state"]={"want":bool(want_hist),"missing":_missing[:8],"mark_age_h":round(_age/3600,1),"deep_pending":_deep}
     histfill={}
     custom=fetch_custom_syms(cfg) if not args.no_futu else []
@@ -1446,7 +1449,7 @@ def run_once(cfg, args):
     data["custom_symbols"]=[s.replace("US.","") for s in custom]
     if not args.no_futu:
         try:
-            cap,snaps,inst,histfill=pull_futu(want_inst=want_inst, want_hist=want_hist, extra_syms=custom)
+            cap,snaps,inst,histfill=pull_futu(want_inst=want_inst, want_hist=want_hist, extra_syms=custom, hist_syms=_histsyms)
             data["capital_flow"]=cap
             if inst:
                 data["institutions"]=inst
@@ -1802,6 +1805,9 @@ def main():
             if base is not None and not a.no_push:   # 全刷前先推新鮮 ⑦(用上輪慢區塊),補上 run_once 那段空窗
                 try: push_gist(cfg,{"market_data.json":collect_light(cfg,a,base)})
                 except Exception as e: log("prelight:",type(e).__name__,e)
+            try:   # 2026-08-10:prelight 拉 94 檔 ⑦ 約 90s,原本吃掉 run_once 的 420s 看門狗預算 →
+                if _has_wd: _sig.alarm(420)   # 板塊擴充後恰好連環超時、全量輪永不落地(當日停推根因);重置=還 run_once 完整預算
+            except Exception: pass
             data,fsnap=run_once(cfg,a)
             log(f"collected(full): stocks={data['meta']['n_stocks']} opt={data['meta']['n_opt']} "
                 f"cap={len(data['capital_flow'])} errs={len(data['errors'])}")
