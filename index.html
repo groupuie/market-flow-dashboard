@@ -414,11 +414,12 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   <div id="wsxRChartP">
 <div class="card" id="destCard">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
+    <div id="destDrill" style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:24px;margin:2px 0 5px 2px"><span class="sub" style="font-size:10.5px;opacity:.8">點下方板塊柱(或左側板塊名)→ 此處列出該板塊 ⑦ 資金前 10 檔個股,點代號直達個股籌碼K線</span></div>
     <div id="dest" style="height:480px"></div>
     <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
     <div id="pooloffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
-    <div class="note">同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的合計、<b>方向與類別同向</b>,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——<b>右伸=出池(現金離池買股·進場)、左伸=入池(賣股現金回池·了結)</b>,與上方類別「右=買/左=賣」及場內資金線「+y=進場」同一語意;兩段反向=機構與散戶動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note"><b>板塊下鑽</b>:點任一板塊柱(或左側板塊名)→ 圖上方列出該板塊 ⑦ 資金前 10 檔個股鈕(排序=全單淨流絕對值=本柱主要成分;<b>非交易所成交額</b>,該量無全宇宙即時源),點代號直達個股籌碼K線;點 Σ池=全市場前 10;再點一次收合。同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的合計、<b>方向與類別同向</b>,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——<b>右伸=出池(現金離池買股·進場)、左伸=入池(賣股現金回池·了結)</b>,與上方類別「右=買/左=賣」及場內資金線「+y=進場」同一語意;兩段反向=機構與散戶動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   
   </div>
@@ -640,7 +641,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-10T11:02Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-10T19:32Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4021,7 +4022,7 @@ function renderDest(catSplit, subtitle, fixRange){
   ];
   if(hasOpt)traces.push({type:'bar',orientation:'h',x:oV,y:oCats,xaxis:'x3',yaxis:'y3',
      marker:{color:oCol},hovertemplate:'%{y}:%{x:,.0f}<extra></extra>'});
-  const layout={...PBASE,barmode:'relative',
+  const layout={...PBASE,barmode:'relative',dragmode:false,   // v17:本圖固定範圍、無縮放需求;關拖曳→板塊名(y刻度)可點擊下鑽
      margin:{l:MB?60:(NRD?4:96),r:MB?14:(NRD?8:56),t:MB?46:52,b:MB?32:40},
      annotations:ann,showlegend:false,
      xaxis:{gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
@@ -4038,6 +4039,79 @@ function renderDest(catSplit, subtitle, fixRange){
       ticktext:oCats.map(c=>(MB||NRD)?c.replace('◇',''):c),tickfont:{size:MB?9:10.5,color:'#9d8bc4'}};
   }
   Plotly.react('dest',traces,layout,CFG);
+  try{destDrillBind();destDrillRender();}catch(_){}
+}
+// ===== 板塊下鑽(2026-08-10 v17):點板塊柱/板塊名 → 上方空間列出該板塊 ⑦ 資金前10個股鈕 → 點代號連動個股籌碼 =====
+// 排序=⑦全單(大單+散戶)淨流「絕對值」= 這根柱由誰撐出來(非交易所成交額——成交額無全宇宙即時源,誠實標注);
+// 成分=flowMap() 同一份資料 → 前10名與柱值天生自洽。Σ池列=全市場前10;◇期權列=衍生品合計,無個股成分。
+let DEST_DRILL=null;   // 選中的板塊名;'__ALL__'=Σ池(全市場);null=未選(顯示提示)
+function destDrillData(cat){
+  const FM=flowMap(); const rows=[];
+  Object.keys(FM).forEach(s=>{const e=FM[s];
+    if(e.v==null&&e.r==null)return;
+    const c=e.cat||'正股'; if(c==='現金')return;   // 現金ETF=池內重分配,不屬任何柱(與 renderRotation 同規則)
+    if(cat!=='__ALL__'&&c!==cat)return;
+    const m=e.v||0, r=(e.r==null?null:e.r), g=Math.abs(m)+Math.abs(r||0);
+    if(g<=1e5)return;
+    rows.push({s:s,m:m,r:r,net:m+(r||0),g:g});});
+  rows.sort((a,b)=>b.g-a.g);
+  return rows.slice(0,10);
+}
+function destDrillRender(){
+  const el=document.getElementById('destDrill'); if(!el)return;
+  if(!DEST_DRILL){
+    el.innerHTML='<span class="sub" style="font-size:10.5px;opacity:.8">點下方板塊柱(或左側板塊名)→ 此處列出該板塊 ⑦ 資金前 10 檔個股,點代號直達個股籌碼K線</span>';
+    return;
+  }
+  const rows=destDrillData(DEST_DRILL);
+  const ttl=DEST_DRILL==='__ALL__'?'全市場(Σ池成分)':DEST_DRILL;
+  let h='<span title="排序=⑦全單(大單+散戶)淨流絕對值=本柱主要成分;非交易所成交額" style="font-size:11px;color:var(--amber);font-weight:700">'+ttl+' · ⑦資金前'+(rows.length||0)+'</span>';
+  if(!rows.length)h+='<span class="sub" style="font-size:10.5px">本視窗此板塊無 ⑦ 個股資料</span>';
+  h+=rows.map(x=>{
+    const up=x.net>=0, cur=(typeof CHIP_SYM!=='undefined'&&CHIP_SYM===x.s);
+    const dv=x.r!=null&&x.m*x.r<0&&Math.min(Math.abs(x.m),Math.abs(x.r))>2e6;
+    const col=up?'#4ade80':'#f87171';
+    const ti=x.s+' 全單 '+(x.net>0?'+':'')+fmtM(x.net)+' | 大單 '+(x.m>0?'+':'')+fmtM(x.m)+' · 散戶 '+(x.r==null?'無資料':((x.r>0?'+':'')+fmtM(x.r)))+(dv?' | ⚡大小單反向(轉折觀察)':'')+' — 點擊看個股籌碼K線';
+    return '<span class="ddsym" data-dd="'+x.s+'" title="'+ti+'" style="cursor:pointer;padding:2px 8px;border-radius:11px;border:1px solid '+(cur?col:'var(--line)')+';background:'+(cur?(up?'rgba(74,222,128,.16)':'rgba(248,113,113,.16)'):'rgba(255,255,255,.04)')+';box-shadow:inset 0 1px 0 rgba(255,255,255,.07);color:'+col+';font-size:11px;font-weight:700;white-space:nowrap">'+x.s+' '+(x.net>0?'+':'')+fmtM(x.net)+(dv?'⚡':'')+'</span>';
+  }).join('');
+  h+='<span class="ddclose" title="收合" style="cursor:pointer;padding:2px 7px;border-radius:11px;border:1px solid var(--line);color:var(--muted);font-size:11px">✕</span>';
+  el.innerHTML=h;
+  el.querySelectorAll('.ddsym').forEach(b=>b.onclick=()=>{   // 與掃描表 .scsym 同一條連動路徑(已驗證模式)
+    const sy=b.dataset.dd;
+    const sel=document.getElementById('chipSym');
+    if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}
+    else CHIP_SYM=sy;
+    ensureChipK(sy); renderChips(); destDrillRender();
+    const ck=document.getElementById('cockpit'); if(ck&&ck.scrollIntoView)ck.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  const cl=el.querySelector('.ddclose'); if(cl)cl.onclick=()=>{DEST_DRILL=null;destDrillRender();};
+}
+function destDrillPick(raw){
+  const t=String(raw||'').trim(); if(!t)return;
+  if(t.indexOf('期權')>=0){   // ◇期權做多/做空(y3):ΔOI×權利金合計,無個股成分 → 說明代替下鑽
+    const el=document.getElementById('destDrill');
+    if(el)el.innerHTML='<span class="sub" style="font-size:10.5px">◇期權列=新增未平倉資金(ΔOI×權利金)合計,屬衍生品、無個股成分;請點其他板塊柱</span>';
+    DEST_DRILL=null; return;
+  }
+  const cat=(t.indexOf('Σ')>=0)?'__ALL__':t;   // Σ池/Σ 即時現金池 → 全市場前10
+  DEST_DRILL=(DEST_DRILL===cat)?null:cat;      // 再點同板塊=收合
+  destDrillRender();
+}
+function destDrillBind(){
+  const el=document.getElementById('dest'); if(!el)return;
+  if(typeof el.on==='function'&&!el._ddBound){el._ddBound=1;   // jsdom 樁無 el.on → 守衛(2026-08-08 測具教訓)
+    el.on('plotly_click',ev=>{try{
+      const p=ev&&ev.points&&ev.points[0]; if(p&&p.y!=null)destDrillPick(p.y);
+    }catch(_){}});
+  }
+  try{   // 板塊名(y 刻度)=穩定大點擊目標(小額柱僅數px寬難點);dragmode:false 下軸拖曳區不攔截。每次重繪後重綁。
+    el.querySelectorAll('.ytick text,.y2tick text,.y3tick text').forEach(t=>{
+      t.style.pointerEvents='all';   // Plotly 預設 tick 文字 pointer-events:none → 打開才收得到點擊(實測定位)
+      t.style.cursor='pointer';
+      t.onclick=e2=>{try{destDrillPick((e2.currentTarget&&e2.currentTarget.textContent)||'');}catch(_){}};
+    });
+    el.querySelectorAll('.draglayer .drag:not(.nsewdrag)').forEach(d=>{d.style.pointerEvents='none';});   // 保險:軸縮放熱區讓位給刻度點擊(主繪圖區 hover/click 不受影響)
+  }catch(_){}
 }
 
 // ===== 場內資金線(=現金池反向,與指數同向):即時=今日盤中累積;多日視窗=區間累積 =====
