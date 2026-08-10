@@ -415,11 +415,11 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 <div class="card" id="destCard">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="destDrill" style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:24px;margin:2px 0 5px 2px"><span class="sub" style="font-size:10.5px;opacity:.8">點下方板塊柱(或左側板塊名)→ 此處列出該板塊 ⑦ 資金前 10 檔個股,點代號直達個股籌碼K線</span></div>
-    <div id="dest" style="height:480px"></div>
+    <div id="dest" style="height:512px"></div>
     <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
     <div id="pooloffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
-    <div class="note"><b>板塊下鑽</b>:點任一板塊柱(或左側板塊名)→ 圖上方列出該板塊 ⑦ 資金前 10 檔個股鈕(排序=全單淨流絕對值=本柱主要成分;<b>非交易所成交額</b>,該量無全宇宙即時源),點代號直達個股籌碼K線;點 Σ池=全市場前 10;再點一次收合。同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>底部「Σ 即時現金池」列</b>=上方各列的合計、<b>方向與類別同向</b>,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——<b>右伸=出池(現金離池買股·進場)、左伸=入池(賣股現金回池·了結)</b>,與上方類別「右=買/左=賣」及場內資金線「+y=進場」同一語意;兩段反向=機構與散戶動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
+    <div class="note"><b>板塊下鑽</b>:點任一板塊柱(或左側板塊名)→ 圖上方列出該板塊 ⑦ 資金前 10 檔個股鈕(排序=全單淨流絕對值=本柱主要成分;<b>非交易所成交額</b>,該量無全宇宙即時源),點代號直達個股籌碼K線;點 Σ池=全市場前 10;再點一次收合。同一時間窗、跨資產的<b>方向性壓力對照</b>(非帳務追蹤——每筆賣出必有買方,跌價也不是資金移出),左=淨流出(賣出側)、右=淨流入(買入側)。目的地 proxy:國債＝SHY/IEF/TLT、信用債＝HYG/LQD(風險偏好)、金＝GLD、油＝USO、銀＝SLV、Crypto＝IBIT/ETHA、反向＝SQQQ/SOXS/SH/SPXU/TZA。板塊輪動:SMH/SOXX/XLK/XLF/XLE/XLV。<b>2026-08-10 新增板塊</b>:太空＝RKLB/ASTS/LUNR/RDW/PL(+SPCX 自自訂歸入)、國防＝LMT/RTX/NOC/GD/LHX/AVAV/KTOS、金融傳產＝JPM/BAC/WFC/GS/MS/C/CAT/DE——新成員 ⑦ 自採集器更新起收集,歷史約 400 日由每日回填輪自動補齊(補齊前多日視窗僅含既有涵蓋段,誠實呈現)。<b>底部「Σ 即時現金池」列</b>=上方各列的合計、<b>方向與類別同向</b>,深琥珀=大單池(機構)、淺琥珀=中小單池(散戶)堆疊,合計=全單池,置於<b>獨立下軌、池專屬刻度</b>(池=總和量體,天生大類別一個數量級;分軌後類別柱恢復可讀,兩軌 0 點對齊)——<b>右伸=出池(現金離池買股·進場)、左伸=入池(賣股現金回池·了結)</b>,與上方類別「右=買/左=賣」及場內資金線「+y=進場」同一語意;兩段反向=機構與散戶動作相反(經典轉折觀察)。<b>下方「池水位線」</b>=雙線:琥珀實線=全單池、深橙虛線=大單池(機構)——兩線同行=全場一致;兩線背離=機構與散戶反向(轉折觀察,對應上圖 ⚡)。即時=今日盤中累積(每 ~6 分一點),多日視窗=從區間起點逐日累積的水位(跨日累加,非每日歸零)。<b>現金ETF(SGOV/BIL)屬停泊現金,其流動=池內重分配,已併入池、不再單列</b>(獨立讀數見下方水位卡)。<b>觀測的資金流部位越多(固定清單+闖入+自訂),池推估越準</b>;基準水位錨定 ICI MMF 週頻(圖右上;詳見下卡)。本圖與池為<b>全單口徑(特大+大+中+小,主動方向分類)</b>——大中小分類噪音在加總中互銷,較 ⑦ 大單口徑完整約 4 倍量;機構大單視角見上方 Sankey/熱力圖(維持 ⑦ 口徑,兩鏡頭對照可看機構vs散戶分歧)。推估仍僅涵蓋觀測清單、必然不準,但浮動方向可觀測。期權 premium 是槓桿曝險、不是停泊資本,不入本圖。</div>
   </div>
   
   </div>
@@ -641,7 +641,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-10T19:32Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-10T20:14Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3516,6 +3516,7 @@ function render(){
 // ===== 資金輪動 Sankey / 視窗 / 目的地(真實 ⑦ 大單淨流)=====
 const CATCOL={'正股':'#4f74c8','半導體':'#4f74c8','記憶體':'#6d8ad9','光通信':'#5aa9e6','軟體平台':'#6d9eeb','加密股':'#b07de6','電動車':'#e0673e','◇期權做多':'#2dd4bf','◇期權做空':'#c084fc','大盤':'#3fa0d8','板塊ETF':'#38bdf8','槓桿':'#d89838','ETF':'#d89838',
   '反向':'#a78bfa','現金':'#94a3b8','國債':'#2dd4bf','信用債':'#0e7490','金':'#eab308','油':'#c2703e','銀':'#9aa4b2','Crypto':'#e879a9',
+  '太空':'#818cf8','國防':'#94a86e','金融傳產':'#d4b06a',
   '自訂':'#22d3ee','闖入':'#f43f5e','其他':'#6b7280'};
 // ---- 自訂追蹤:寫回 gist(token 僅存 localStorage)----
 function gistId(){const m=DATA_URL.match(/gist\.githubusercontent\.com\/[^/]+\/([a-f0-9]+)\//);return m?m[1]:null;}
@@ -3646,7 +3647,11 @@ function winLabel(){
 const SECTOR={NVDA:'半導體',AMD:'半導體',AVGO:'半導體',MRVL:'半導體',INTC:'半導體',TSM:'半導體',
   MU:'記憶體',SNDK:'記憶體',WDC:'記憶體',LITE:'光通信',COHR:'光通信',AAOI:'光通信',
   MSFT:'軟體平台',AAPL:'軟體平台',AMZN:'軟體平台',META:'軟體平台',GOOGL:'軟體平台',ORCL:'軟體平台',NFLX:'軟體平台',PLTR:'軟體平台',
-  COIN:'加密股',MSTR:'加密股',TSLA:'電動車'};
+  COIN:'加密股',MSTR:'加密股',TSLA:'電動車',
+  // 2026-08-10 使用者新增三板塊(SPCX 由自訂歸入太空;歷史 250 天依本表即時重歸類)
+  RKLB:'太空',ASTS:'太空',LUNR:'太空',RDW:'太空',PL:'太空',SPCX:'太空',
+  LMT:'國防',RTX:'國防',NOC:'國防',GD:'國防',LHX:'國防',AVAV:'國防',KTOS:'國防',
+  JPM:'金融傳產',BAC:'金融傳產',WFC:'金融傳產',GS:'金融傳產',MS:'金融傳產',C:'金融傳產',CAT:'金融傳產',DE:'金融傳產'};
 function catOf(sym,storedC){return SECTOR[sym]||storedC||'正股';}   // 正股再細分板塊;歷史(250天)即時重歸類
 function flowMap(){
   // 回傳 {sym:{v:大單淨流(元), r:中小單淨流(元), cat}}
@@ -3748,7 +3753,7 @@ function renderRotation(){
   delete catSplit['現金'];   // 現金ETF=池內重分配,不入列(併入池)
   Object.keys(catSplit).forEach(c=>{const o=catSplit[c];
     if(Math.abs(o.m)<=1e5&&Math.abs(o.r)<=1e5&&Math.abs(o.m+o.r)<=1e5)delete catSplit[c];});
-  const catOrder=['半導體','記憶體','光通信','軟體平台','加密股','電動車','正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
+  const catOrder=['半導體','記憶體','光通信','軟體平台','加密股','電動車','太空','國防','金融傳產','正股','大盤','板塊ETF','槓桿','反向','現金','國債','信用債','金','油','銀','Crypto','自訂','闖入','ETF'];
   document.getElementById('cattiles').innerHTML=catOrder.filter(c=>catNet[c]!=null).map(c=>{
     const v=catNet[c], cl=v>0?'up':(v<0?'down':'flat');
     return `<div class="tile"><div class="lbl">${c}</div><div class="val ${cl}">${v>0?'+':''}${fmtM(v)}</div>
@@ -3953,7 +3958,7 @@ function renderDest(catSplit, subtitle, fixRange){
   const NRD=(function(){try{const _e=document.getElementById('dest');const _w=_e?_e.clientWidth:0;return ((window.innerWidth||1024)>=680)&&_w>0&&_w<560;}catch(_){return false;}})();   // v7:窄容器(個股左欄)壓邊距;勿引用下方 const MB(TDZ)
   const el=document.getElementById('dest'); if(!el)return;
   const MB=(window.innerWidth||1024)<680;   // 手機模式:字縮、文案精簡、長柱標籤入柱
-  const order=['半導體','記憶體','光通信','軟體平台','加密股','電動車','正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入','◇期權做多','◇期權做空'];
+  const order=['半導體','記憶體','光通信','軟體平台','加密股','電動車','太空','國防','金融傳產','正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入','◇期權做多','◇期權做空'];
   const all=order.filter(c=>catSplit[c]).map(c=>({c,m:catSplit[c].m||0,r:catSplit[c].r||0,opt:!!catSplit[c]._opt}));
   if(!all.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
   const rows=all.filter(x=>!x.opt), optRows=all.filter(x=>x.opt);   // 期權=自屬刻度(量級遠大於 ⑦ 淨流),與類別/池各自獨立

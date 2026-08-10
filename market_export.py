@@ -55,6 +55,11 @@ CAP_SYMS = [
   "US.NVDA","US.MSFT","US.AAPL","US.AMZN","US.META","US.GOOGL","US.AVGO","US.TSLA",
   "US.MU","US.SNDK","US.WDC","US.MRVL","US.LITE","US.COHR","US.AAOI",
   "US.AMD","US.PLTR","US.COIN","US.MSTR","US.NFLX","US.INTC","US.ORCL","US.TSM",
+  # 太空/國防/金融傳產(2026-08-10 使用者指定板塊追蹤新增;⑦ 進大盤匯總。
+  # 時間預算註記:+20 檔 ≈ 快輪 +12s(0.5s/檔+API),60s 節奏最壞退到 ~70s;歷史回填輪 +22s——皆在 420s 看門狗內)
+  "US.RKLB","US.ASTS","US.LUNR","US.RDW","US.PL",
+  "US.LMT","US.RTX","US.NOC","US.GD","US.LHX","US.AVAV","US.KTOS",
+  "US.JPM","US.BAC","US.WFC","US.GS","US.MS","US.C","US.CAT","US.DE",
   # 板塊 ETF(半導體 + 大板塊輪動:科技/金融/能源/醫療)
   "US.SMH","US.SOXX","US.XLK","US.XLF","US.XLE","US.XLV",
   # 槓桿多方
@@ -85,6 +90,9 @@ for _s in ["LITE","COHR","AAOI"]: CAP_CAT[_s]="光通信"
 for _s in ["MSFT","AAPL","AMZN","META","GOOGL","ORCL","NFLX","PLTR"]: CAP_CAT[_s]="軟體平台"
 for _s in ["COIN","MSTR"]: CAP_CAT[_s]="加密股"
 CAP_CAT["TSLA"]="電動車"
+for _s in ["RKLB","ASTS","LUNR","RDW","PL"]: CAP_CAT[_s]="太空"
+for _s in ["LMT","RTX","NOC","GD","LHX","AVAV","KTOS"]: CAP_CAT[_s]="國防"
+for _s in ["JPM","BAC","WFC","GS","MS","C","CAT","DE"]: CAP_CAT[_s]="金融傳產"
 
 # ============ 擴充追蹤清單(個股籌碼分頁專用;只在完整輪抓、不進 1 分鐘即時迴圈、不併入大盤匯總)============
 # 常見高成交量美股 —— ⑦ 現金池推到獨立 ext_flows.json,前端只在個股籌碼分頁合併,主儀表板不受影響
@@ -139,15 +147,17 @@ EXT_SYMS = [
   "US.HUT","US.CORZ","US.IREN","US.WULF","US.CIFR","US.BTBT","US.BITF","US.GLXY","US.CRCL","US.SBET","US.BMNR",
   # ETF(寬基/區域/主題)
   "US.VOO","US.VTI","US.EEM","US.EFA","US.FXI","US.EWJ","US.EWT","US.INDA","US.URA","US.LIT","US.KWEB","US.XLC","US.XLP","US.XLB","US.XME","US.XOP","US.OIH","US.IBB","US.VNQ",
+  # 2026-08-10 板塊追蹤新增之日K補位(不在核心WL的新CAP成員:⑦走CAP、日K由本ext輪Yahoo補)
+  "US.RDW","US.PL","US.LHX","US.AVAV","US.KTOS",
 ]
 EXT_CAT = {}
 for _s in ["QCOM","TXN","ADI","MCHP","ON","ARM","ASML","KLAC","LRCX","AMAT"]: EXT_CAT[_s]="半導體"
 for _s in ["CRM","ADBE","CSCO","IBM","NOW","INTU","UBER","ABNB","SHOP","SNOW","PANW","CRWD","DDOG","NET","ANET","DELL","APP","SMCI"]: EXT_CAT[_s]="軟體平台"
-for _s in ["JPM","BAC","WFC","GS","MS","C","V","MA","AXP","SCHW","PYPL","SOFI","HOOD"]: EXT_CAT[_s]="金融"
+for _s in ["V","MA","AXP","SCHW","PYPL","SOFI","HOOD"]: EXT_CAT[_s]="金融"   # JPM/BAC/WFC/GS/MS/C 改隸 金融傳產(2026-08-10)
 for _s in ["LLY","UNH","JNJ","ABBV","PFE","MRK","TMO","AMGN","GILD"]: EXT_CAT[_s]="醫療"
 for _s in ["WMT","COST","HD","MCD","NKE","SBUX","DIS","KO","PEP","PG"]: EXT_CAT[_s]="消費"
 for _s in ["XOM","CVX","OXY","SLB","COP"]: EXT_CAT[_s]="能源"
-for _s in ["BA","CAT","GE"]: EXT_CAT[_s]="工業"
+for _s in ["BA","GE"]: EXT_CAT[_s]="工業"   # CAT 改隸 金融傳產(2026-08-10)
 for _s in ["F","GM","RIVN","LCID"]: EXT_CAT[_s]="電動車"
 for _s in ["BABA","PDD","NIO","JD","BIDU"]: EXT_CAT[_s]="中概"
 for _s in ["MARA","RIOT","CLSK"]: EXT_CAT[_s]="加密股"
@@ -168,11 +178,15 @@ for _s in ["ISRG","MRNA","BNTX","NVO","HIMS","CVS","CI","BMY","VRTX","REGN"]: EX
 for _s in ["FCX","NEM","AA","NUE","CLF"]: EXT_CAT[_s]="原物料"
 for _s in ["DVN","HAL","BKR"]: EXT_CAT[_s]="能源"
 for _s in ["ENPH","FSLR","RUN"]: EXT_CAT[_s]="新能源"
-for _s in ["LMT","RTX","NOC","GD","HON","DE","UNP","UPS","FDX","MMM","PWR","ROK"]: EXT_CAT[_s]="工業"
+for _s in ["HON","UNP","UPS","FDX","MMM","PWR","ROK"]: EXT_CAT[_s]="工業"   # LMT/RTX/NOC/GD→國防、DE→金融傳產(2026-08-10)
 for _s in ["RKLB","ASTS","ACHR","JOBY","LUNR"]: EXT_CAT[_s]="太空"
 for _s in ["XPEV","LI"]: EXT_CAT[_s]="電動車"
 for _s in ["BILI","TME","FUTU"]: EXT_CAT[_s]="中概"
 for _s in ["HUT","CORZ","IREN","WULF","CIFR","BTBT","BITF","GLXY","CRCL","SBET","BMNR"]: EXT_CAT[_s]="加密股"
+# 2026-08-10 板塊追蹤三板塊(與 CAP_CAT/前端 SECTOR 同步;ACHR/JOBY 維持 ext 太空=個股籌碼限定)
+for _s in ["RDW","PL"]: EXT_CAT[_s]="太空"
+for _s in ["LMT","RTX","NOC","GD","LHX","AVAV","KTOS"]: EXT_CAT[_s]="國防"
+for _s in ["JPM","BAC","WFC","GS","MS","C","CAT","DE"]: EXT_CAT[_s]="金融傳產"
 for _s in ["VOO","VTI","EEM","EFA","FXI","EWJ","EWT","INDA","URA","LIT","KWEB","XLC","XLP","XLB","XME","XOP","OIH","IBB","VNQ"]: EXT_CAT[_s]="板塊ETF"
 
 FINRA_SYMS = {"NVDA","MU","SNDK","WDC","MRVL","TSLA","SMH","AVGO","SPY","QQQ","AMD"}
