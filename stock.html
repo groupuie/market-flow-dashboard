@@ -436,9 +436,12 @@ function quoteOf(sym){
 function mergeLive(bars){
   if(!MKT)return bars;
   const out=bars.slice();
-  const kt=(MKT.kline_today||{})[SYM];
+  let kt=(MKT.kline_today||{})[SYM];
+  // 巨棒防護(2026-08-12):開盤瞬間快照欄位未填=0 → 「插到 0 的長棒」;任一 ≤0 改走報價回退,高低夾正涵蓋開收
+  if(kt&&kt.length>=6&&!(+kt[1]>0&&+kt[2]>0&&+kt[3]>0&&+kt[4]>0))kt=null;
   if(kt&&kt.length>=6){
-    const ts=tsOf(kt[0]),nb={timestamp:ts,open:+kt[1],high:+kt[2],low:+kt[3],close:+kt[4],volume:+kt[5]||0,tor:kt[6]==null?null:+kt[6]};
+    const _o=+kt[1],_c=+kt[4],_h=Math.max(+kt[2],_o,_c),_l=Math.min(+kt[3],_o,_c);
+    const ts=tsOf(kt[0]),nb={timestamp:ts,open:_o,high:_h,low:_l,close:_c,volume:+kt[5]||0,tor:kt[6]==null?null:+kt[6]};
     if(out.length&&out[out.length-1].timestamp===ts)out[out.length-1]=nb;
     else if(!out.length||ts>out[out.length-1].timestamp)out.push(nb);
     return out;

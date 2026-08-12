@@ -515,23 +515,45 @@ def merge_bars(old, new):
         m[b[0]] = b
     return [m[k] for k in sorted(m)]
 
+def _snap_rows(d, out):
+    """快照列 → kline_today 棒;含兩道淨化(2026-08-12 巨棒事故對策):
+       ①開/高/低/收任一 ≤0(開盤瞬間欄位未填)→ 丟棄該列 —— 上圖會畫出「插到 0 的巨棒」;
+       ②高低夾正涵蓋開收(快照欄位更新不同步的微幅錯序)。"""
+    for _, r in d.iterrows():
+        sym = str(r.get("code", "")).replace("US.", "")
+        dt = str(r.get("update_time") or "")[:10]
+        o, h, l, c = _f(r.get("open_price")), _f(r.get("high_price")), _f(r.get("low_price")), _f(r.get("last_price"))
+        v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
+        if not dt or None in (o, h, l, c): continue
+        if o <= 0 or h <= 0 or l <= 0 or c <= 0: continue
+        h = max(h, o, c); l = min(l, o, c)
+        out[sym] = [dt, o, h, l, c, int(v or 0), tr]
+
+def _snap_batch(q, fs, out, depth=0):
+    """get_market_snapshot 一批裡有任一無效代碼=整批失敗且原版無記錄(2026-08-12 實案:
+       訪客免token加入 AVGG/NEBX/LITX 等手滑代號 → kline_today 整包靜默變空、盤中棒全站消失)。
+       → 失敗即二分遞迴:壞代碼隔離到單檔逐一記 snap-bad(gist errors 可見),好代碼照常回傳。"""
+    from futu import RET_OK
+    ret, d = q.get_market_snapshot(fs)
+    if ret == RET_OK:
+        _snap_rows(d, out); return
+    if len(fs) == 1:
+        err("snap-bad", RuntimeError(fs[0] + " " + str(d)[:50])); return
+    if depth >= 8:
+        err("snap", RuntimeError(str(d)[:60] + " n=%d" % len(fs))); return
+    mid = len(fs) // 2
+    time.sleep(0.55); _snap_batch(q, fs[:mid], out, depth + 1)   # 0.55s=遵守快照 60次/30秒 節流
+    time.sleep(0.55); _snap_batch(q, fs[mid:], out, depth + 1)
+
 def snapshot_today(kl_syms):
-    """當日K(每5分):開高低收/量/週轉率 → market_data.json 的 kline_today"""
-    from futu import OpenQuoteContext, RET_OK
+    """當日K(全量輪+盤中快輪):開高低收/量/週轉率 → market_data.json 的 kline_today"""
+    from futu import OpenQuoteContext
     q = OpenQuoteContext(host="127.0.0.1", port=11111)
     out = {}
     try:
         fs = ["US." + s for s in kl_syms]
         for i in range(0, len(fs), 200):
-            ret, d = q.get_market_snapshot(fs[i:i+200])
-            if ret == RET_OK:
-                for _, r in d.iterrows():
-                    sym = str(r.get("code", "")).replace("US.", "")
-                    dt = str(r.get("update_time") or "")[:10]
-                    o, h, l, c = _f(r.get("open_price")), _f(r.get("high_price")), _f(r.get("low_price")), _f(r.get("last_price"))
-                    v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
-                    if dt and None not in (o, h, l, c):
-                        out[sym] = [dt, o, h, l, c, int(v or 0), tr]
+            _snap_batch(q, fs[i:i+200], out)
             time.sleep(0.3)
     finally:
         q.close()
@@ -547,7 +569,12 @@ def refresh_klines(cfg, args, kl_syms):
     except OSError: age = 1e9
     sess = market_session()
     daily_due = age > 20*3600 and sess in ("after", "closed")
-    missing = [s for s in kl_syms if not os.path.exists(os.path.join(kdir, s + ".json"))][:3]
+    badp = args.config + ".klbad"
+    try: klbad = json.load(open(badp))
+    except Exception: klbad = {}
+    _now = time.time()
+    missing = [s for s in kl_syms if not os.path.exists(os.path.join(kdir, s + ".json"))
+               and _now - (klbad.get(s) or 0) > 6*3600][:3]   # 2026-08-12:壞代號(AVGG等)永久搶佔 3 槽 → 6h 退避
     todo = list(kl_syms) if daily_due else missing
     if not todo: return
     from datetime import timedelta
@@ -592,6 +619,9 @@ def refresh_klines(cfg, args, kl_syms):
                     src = "yahoo備援" if q else "yahoo"
                 except Exception as e2:
                     err(f"kline-yh {s}", e2); bars = None
+                    klbad[s] = _now
+                    try: json.dump(klbad, open(badp, "w"))
+                    except Exception: pass
             if bars:
                 payload = {"sym": s, "src": src, "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
                            "bars": bars[-KL_HIST_DAYS:]}
@@ -1008,6 +1038,22 @@ def process_inbox(cfg, args):
         if s not in aq: aq.append(s)
     if aq:
         try:
+            if not args.no_futu:   # 2026-08-12:格式合法≠代號存在(AVGG/NEBX/LITX 實案) → 快照驗證,查無此檔退件
+                try:
+                    from futu import OpenQuoteContext, RET_OK
+                    _qv = OpenQuoteContext(host="127.0.0.1", port=11111)
+                    try:
+                        _ok = []
+                        for _s2 in aq:
+                            try:
+                                _r, _d2 = _qv.get_market_snapshot(["US." + _s2])
+                                if _r == RET_OK and len(_d2): _ok.append(_s2)
+                                else: log(f"inbox 退件(查無代號): {_s2}")
+                            except Exception: _ok.append(_s2)   # 單檔驗證異常=不誤殺(fail-open)
+                            time.sleep(0.55)
+                        aq = _ok
+                    finally: _qv.close()
+                except Exception: pass   # OpenD 不在=跳過驗證(fail-open)
             custom=[x.replace("US.","") for x in fetch_custom_syms(cfg)]
             _new=[x for x in aq if x not in custom]
             if _new:
@@ -1714,6 +1760,11 @@ def collect_light(cfg, args, base):
                 uts=[v.get("update_time","") for v in cap.values() if v.get("update_time")]
                 if uts: data["trade_date"]=max(uts)[:10]
         except Exception as e: err("futu-light",e)
+    if not args.no_futu:
+        try:   # 2026-08-12:盤中快輪同步刷當日K(原只在全量輪更新;板塊擴充後全量輪 ~13 分一輪,盤中棒失即時)
+            _kt = snapshot_today(kline_symbols(data.get("custom_symbols") or []))
+            if _kt: data["kline_today"] = _kt   # 空結果保留 base 舊值(fail-open;全量輪會定期重算)
+        except Exception as e: err("kline-light", e)
     # SPY 即時價(池水位末點/概覽用;單一 Yahoo 呼叫)—— 只覆蓋 last,保留其餘欄位、不 mutate base
     try:
         c,_,_=yahoo_hist("SPY")
@@ -1791,10 +1842,10 @@ def main():
         except Exception: pass
     def _full_due():
         if base is None: return True
-        try: return (time.time()-os.path.getmtime(FULLMARK))>420
+        try: return (time.time()-os.path.getmtime(FULLMARK))>900   # 2026-08-12:420→900;快輪已扛 ⑦+當日K 即時,全量輪(期權等)10-15分足矣(CBOE 源延遲15分)
         except OSError: return True
     _did_full=False
-    loop_start=time.time(); LOOP_BUDGET=285
+    loop_start=time.time(); LOOP_BUDGET=235   # 2026-08-12:285→235;擴板塊後單快輪 ~70s,3 輪收在 5 分 launchd 槽內(否則整槽被鎖跳過=全站 13 分節奏)
     while True:
         it=time.time()
         try:
