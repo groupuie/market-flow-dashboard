@@ -415,7 +415,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 <div class="card" id="destCard">
     <h2>離開股票之後,錢去了哪?（目的地對照 ＋ 中央現金池推估）</h2>
     <div id="destDrill" style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:24px;margin:2px 0 5px 2px"><span class="sub" style="font-size:10.5px;opacity:.8">點下方板塊柱(或左側板塊名)→ 此處列出該板塊 ⑦ 資金前 10 檔個股,點代號直達個股籌碼K線</span></div>
-    <div id="dest" style="height:512px"></div>
+    <div id="dest" style="height:556px"></div>
     <div id="idxtoggle" style="display:flex;gap:8px;align-items:center;margin:6px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
     <div id="pooltide" style="height:170px;margin-top:4px"></div>
     <div id="pooloffs" style="display:flex;gap:10px;align-items:center;margin:4px 0 0 6px;font-size:11px;flex-wrap:wrap"></div>
@@ -641,7 +641,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-12T23:46Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-13T22:08Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4038,7 +4038,9 @@ function renderDest(catSplit, subtitle, fixRange){
      annotations:ann,showlegend:false,
      xaxis:{gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
        range:[-Mc,Mc],anchor:'y'},
-     yaxis:{gridcolor:C.line,autorange:'reversed',domain:catDom,automargin:true,tickfont:{size:MB?9.5:(NRD?10.5:12)}},
+     yaxis:{gridcolor:C.line,autorange:'reversed',domain:catDom,automargin:true,tickfont:{size:MB?9.5:(NRD?10.5:12)},
+       tickmode:'linear',dtick:1},   // v20:三板塊後 21 列越過 Plotly 自動稀疏門檻→標籤被隔行隱藏(看似「分類跑掉/國防不見」);強制每列都標
+
      xaxis2:{gridcolor:'#26261f',zerolinecolor:C.amber,zerolinewidth:1.5,tickformat:'~s',
        tickfont:{size:MB?8:9,color:'#a68a3f'},range:[-Mp,Mp],anchor:'y2'},
      yaxis2:{domain:[0,hasOpt?0.10:0.115],tickmode:'array',tickvals:['Σ 即時現金池'],automargin:true,
