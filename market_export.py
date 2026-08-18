@@ -463,8 +463,11 @@ INST_SYMS = ["US.NVDA","US.AMD","US.AVGO","US.MRVL","US.INTC","US.TSM",
              "US.COIN","US.MSTR","US.TSLA","US.JPM","US.LLY"]
 
 # ============ 個股K線層(stock.html 用;另一 session 開發,已合併)============
+SEC_KL = ["RKLB","ASTS","LUNR","RDW","PL",          # 2026-08-18:三板塊(v18)成員入日K/當日K輪 ——
+          "LMT","RTX","NOC","GD","LHX","AVAV","KTOS",  # 下鑽/板塊追蹤點進來的個股此前不在 kline_today(WL 限定),
+          "JPM","BAC","WFC","GS","MS","C","CAT","DE"]  # 盤中永遠「K線止於昨日」。既有 yahoo-ext 快取自動被 futu-qfq 覆蓋接手。
 def kline_symbols(custom):
-    base = WL["market"] + WL["stocks"] + WL["leveraged"]
+    base = WL["market"] + WL["stocks"] + WL["leveraged"] + SEC_KL
     out = []
     for s in list(base) + [c for c in (custom or [])]:
         s = str(s).replace("US.", "")
