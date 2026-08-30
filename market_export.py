@@ -640,10 +640,9 @@ def refresh_klines(cfg, args, kl_syms):
         try: open(mark, "w").write(str(time.time()))
         except Exception: pass
     if changed and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
-        names = sorted(changed)
-        for i in range(0, len(names), 8):
-            try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
-            except Exception as e: err("kline-push", e); break
+        # 2026-08-31:改走持久佇列(push 失敗不再遺失;08-17~08-30 token 過期期間 gist 日K停在 08-14 的根因)
+        klq_add(args, sorted(changed))
+        klq_flush(cfg, args, time.time(), budget=120, max_batches=16)
     log(f"klines updated: {len(changed)}/{len(todo)}")
 
 def ext_hist_todo(extdaily, syms, min_days=30, batch=10):
@@ -739,10 +738,8 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
     try: json.dump(bad, open(badp, "w"))
     except Exception: pass
     if changed and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
-        names = sorted(changed)
-        for i in range(0, len(names), 8):
-            try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
-            except Exception as e: err("extkl-push", e); break
+        klq_add(args, sorted(changed))          # 2026-08-31:持久佇列,失敗留待下輪
+        klq_flush(cfg, args, time.time(), budget=60, max_batches=2)
     log(f"ext klines updated: {len(changed)}/{len(batch)} (bad={len(bad)})")
 
 # ============ 全史月K(P3B;2026-08-01):每月一次,盤後;kline_max_SYM.json ============
@@ -773,10 +770,12 @@ def refresh_kline_max(cfg, args, t0, budget=330):
     try: st = json.load(open(mk))
     except Exception: st = {}
     if st.get("month") != mon: st = {"month": mon, "done": []}
+    if st.get("gen") != 2:   # 2026-08-31:gen2=重做本月(08 月 token 過期期間 done 已記但 push 全失敗 → gist 月K停在 7 月)
+        st = {"month": mon, "done": [], "gen": 2}
     allsyms = kline_symbols([])
     syms = [s for s in allsyms if s not in st["done"]]
     if not syms: return
-    changed = {}
+    changed = {}; done_now = []
     for s in syms[:6]:
         if time.time() - t0 > budget: break
         try:
@@ -784,18 +783,87 @@ def refresh_kline_max(cfg, args, t0, budget=330):
             if bars and len(bars) >= 24:
                 changed["kline_max_" + s + ".json"] = {"sym": s, "src": "yahoo-max-1mo",
                     "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"), "bars": bars}
-            st["done"].append(s)   # 太短(新股)也記 done,當月不空轉
+                done_now.append(s)   # 推送成功後才記 done(push 失敗=下輪重抓重推)
+            else:
+                st["done"].append(s)   # 太短(新股)記 done,當月不空轉
         except Exception as e:
-            err(f"kmax {s}", e); st["done"].append(s)   # 失敗記 done:次月再試,不空轉
+            err(f"kmax {s}", e); st["done"].append(s)   # 抓取失敗記 done:次月再試,不空轉
         time.sleep(0.35)
-    try: json.dump(st, open(mk, "w"))
-    except Exception: pass
     if changed:
-        names = sorted(changed)
+        names = sorted(changed); pushed_all = True
         for i in range(0, len(names), 8):
             try: push_gist(cfg, {n: changed[n] for n in names[i:i+8]})
-            except Exception as e: err("kmax-push", e); break
-        log(f"kline_max updated: {len(changed)} (月度 {mon}, 進度 {len(st['done'])}/{len(allsyms)})")
+            except Exception as e: err("kmax-push", e); pushed_all = False; break
+        if pushed_all: st["done"].extend(done_now)
+        log(f"kline_max updated: {len(changed)} (月度 {mon}, 進度 {len(st['done'])}/{len(allsyms)}, push={'ok' if pushed_all else 'FAIL→下輪重試'})")
+    try: json.dump(st, open(mk, "w"))
+    except Exception: pass
+
+# ============ K線推送佇列(2026-08-31):push 失敗不再遺失、跨輪重試,並自癒漏推的快取檔 ============
+# 背景:08-17 token 過期 → 13 天內日K每日照常寫進本機快取(.klines/SYM.json),但每次 push 失敗即 break、
+# 且 changed 集合隨該輪消失 → token 換新後 gist 日K仍停在 08-14,要等下一次 daily_due(下個 after/closed 時段)才補。
+# 對策:(1) 所有日K推送先入持久佇列(.klqueue.json),成功才出列;(2) 每輪掃 .klines 內 mtime 晚於「上次成功
+#       推送標記」(.klpushed)的快取檔入列(核心清單優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
+#       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
+KLQ_BATCH = 8
+def klq_path(args): return args.config + ".klqueue.json"
+def klq_load(args):
+    try: q = json.load(open(klq_path(args)))
+    except Exception: q = []
+    return [x for x in q if isinstance(x, str)]
+def klq_save(args, q):
+    try: json.dump(q, open(klq_path(args), "w"))
+    except Exception: pass
+def klq_add(args, names):
+    q = klq_load(args)
+    for n in names:
+        if n not in q: q.append(n)
+    klq_save(args, q)
+def klq_heal(args, kl_core):
+    """快取檔 mtime > .klpushed(上次佇列清空時刻)者入列;標記不存在(首次)=全部入列。核心清單優先。"""
+    kdir = args.config + ".klines"
+    try: last = os.path.getmtime(args.config + ".klpushed")
+    except OSError: last = 0
+    try: files = [f for f in os.listdir(kdir) if f.endswith(".json")]
+    except OSError: return 0
+    core = set(kl_core or [])
+    due = []
+    for f in files:
+        s = f[:-5]
+        try: mt = os.path.getmtime(os.path.join(kdir, f))
+        except OSError: continue
+        if mt > last: due.append((0 if s in core else 1, s))
+    due.sort()
+    if due: klq_add(args, ["kline_" + s + ".json" for _, s in due])
+    return len(due)
+def klq_flush(cfg, args, t0, budget=330, max_batches=6):
+    """從佇列推送(每輪最多 max_batches 個 PATCH、每批 KLQ_BATCH 檔);成功即出列,失敗留待下輪;
+       佇列清空時寫 .klpushed 標記(之後只有更新過的快取檔會再入列)。回傳推送檔數。"""
+    if args.no_push or not cfg.get("gist_id") or not cfg.get("gist_token"): return 0
+    q = klq_load(args)
+    if not q: return 0
+    kdir = args.config + ".klines"
+    n = 0
+    for _ in range(max_batches):
+        if not q or time.time() - t0 > budget: break
+        batch = q[:KLQ_BATCH]; files = {}
+        for name in batch:
+            if not name.startswith("kline_"): continue
+            p = os.path.join(kdir, name[len("kline_"):])
+            try:
+                if os.path.exists(p): files[name] = json.load(open(p))
+            except Exception: pass
+        if files:
+            try: push_gist(cfg, files)
+            except Exception as e: err("klq-push", e); break
+        q = q[len(batch):]; n += len(files)
+        klq_save(args, q)
+        time.sleep(0.3)
+    if not q:
+        try: open(args.config + ".klpushed", "w").write(str(time.time()))
+        except Exception: pass
+    log(f"kline queue: pushed {n}, remaining {len(q)}")
+    return n
 
 # ============ 公開源備援的當日K(GitHub Actions;Mac 關機時 K線/技術層照樣盤中更新)============
 def fetch_custom_syms_public():
@@ -1754,6 +1822,12 @@ def run_once(cfg, args):
     if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
         try: refresh_kline_max(cfg,args,_run_t0,budget=330)
         except Exception as e: err("kmax",e)
+    # 日K推送自癒(2026-08-31):漏推/失敗的快取檔補上 gist(全量輪每次最多 6 批×8 檔;核心清單優先)
+    if not getattr(args,"public_out",None) and not args.no_push:
+        try:
+            klq_heal(args, kl_syms)
+            klq_flush(cfg, args, _run_t0, budget=380, max_batches=6)
+        except Exception as e: err("klq", e)
     data["ext_universe"]=sorted(s.replace("US.","") for s in EXT_SYMS)   # 前端選單/自動完成用(輸入即可選,資料輪補)
     data["errors"]=ERRORS
     data["meta"]={"futu_ok":len(data["capital_flow"])>0,"n_opt":len(data["options"]),
@@ -1913,6 +1987,8 @@ def main():
             except Exception as e:
                 log("LIGHT PUSH ERROR:",type(e).__name__,e)
             base=data; _persist(base)
+            try: klq_flush(cfg,a,it,budget=150,max_batches=2)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒
+            except Exception as e: log("klq-light:",type(e).__name__,e)
         # ⚡ 點播通道:每輪(快/全)先撿免token收件匣(加追蹤即刻合併/點播轉單),再檢查 lookup_request.json
         #   → 收件匣點播於同一輪被 serve_lookup 服務(訪客免token,~1-2 分鐘內出圖)
         if not a.no_futu or True:
