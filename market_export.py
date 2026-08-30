@@ -806,6 +806,8 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 #       推送標記」(.klpushed)的快取檔入列(核心清單優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
 #       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
 KLQ_BATCH = 8
+KLQ_VER = "2026-08-31c"
+KLQ_STAT = {"heal_n": 0, "pushed": 0, "queue": None}   # 本輪統計 → market_data.meta.klq(觀測用)
 def klq_path(args): return args.config + ".klqueue.json"
 def klq_load(args):
     try: q = json.load(open(klq_path(args)))
@@ -835,6 +837,7 @@ def klq_heal(args, kl_core):
         if mt > last: due.append((0 if s in core else 1, s))
     due.sort()
     if due: klq_add(args, ["kline_" + s + ".json" for _, s in due])
+    KLQ_STAT["heal_n"] = len(due); KLQ_STAT["cache_n"] = len(files)
     return len(due)
 def klq_flush(cfg, args, t0, budget=330, max_batches=6):
     """從佇列推送(每輪最多 max_batches 個 PATCH、每批 KLQ_BATCH 檔);成功即出列,失敗留待下輪;
@@ -862,8 +865,30 @@ def klq_flush(cfg, args, t0, budget=330, max_batches=6):
     if not q:
         try: open(args.config + ".klpushed", "w").write(str(time.time()))
         except Exception: pass
+    KLQ_STAT["pushed"] = KLQ_STAT.get("pushed", 0) + n; KLQ_STAT["queue"] = len(q)
     log(f"kline queue: pushed {n}, remaining {len(q)}")
     return n
+
+def _klq_meta(args):
+    """觀測用:採集器版本/佇列/快取狀態(寫進 market_data.meta.klq,雲端可由 gist 看到)"""
+    try:
+        kdir = args.config + ".klines"
+        st = dict(KLQ_STAT); st["ver"] = KLQ_VER
+        try: st["queue"] = len(klq_load(args))
+        except Exception: pass
+        try: st["klpushed"] = datetime.fromtimestamp(os.path.getmtime(args.config + ".klpushed"), timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        except OSError: st["klpushed"] = None
+        try:
+            mu = json.load(open(os.path.join(kdir, "MU.json")))
+            st["cache_mu"] = {"updated_utc": mu.get("updated_utc"), "last": (mu.get("bars") or [[None]])[-1][0], "src": mu.get("src")}
+        except Exception as e: st["cache_mu"] = str(e)[:60]
+        try: st["cache_n"] = len([f for f in os.listdir(kdir) if f.endswith(".json")])
+        except OSError: st["cache_n"] = None
+        try: st["klmark_age_h"] = round((time.time() - os.path.getmtime(args.config + ".klmark")) / 3600, 1)
+        except OSError: st["klmark_age_h"] = None
+        return st
+    except Exception as e:
+        return {"ver": KLQ_VER, "err": str(e)[:60]}
 
 # ============ 公開源備援的當日K(GitHub Actions;Mac 關機時 K線/技術層照樣盤中更新)============
 def fetch_custom_syms_public():
@@ -1838,6 +1863,7 @@ def run_once(cfg, args):
     data["meta"]={"futu_ok":len(data["capital_flow"])>0,"n_opt":len(data["options"]),
                   "n_inst":len(data.get("institutions",{})),
                   "n_kl_today":len(data.get("kline_today",{})),
+                  "klq":_klq_meta(args),
                   "n_stocks":len(data["stocks"])+len(data["leveraged"])+len(data["market"])}
     return data, fsnap
 
@@ -1883,7 +1909,10 @@ def collect_light(cfg, args, base):
             sp=dict(mk.get("SPY") or {}); sp["last"]=round(c[-1],4); mk["SPY"]=sp
             data["market"]=mk
     except Exception as e: err("spy-light",e)
-    m=dict(data.get("meta") or {}); m["futu_ok"]=len(data.get("capital_flow") or {})>0; data["meta"]=m
+    m=dict(data.get("meta") or {}); m["futu_ok"]=len(data.get("capital_flow") or {})>0
+    try: m["klq"]=_klq_meta(args)   # 2026-08-31:快輪也刷新佇列觀測值
+    except Exception: pass
+    data["meta"]=m
     data["errors"]=list(ERRORS)
     return data
 
@@ -1992,7 +2021,7 @@ def main():
             except Exception as e:
                 log("LIGHT PUSH ERROR:",type(e).__name__,e)
             base=data; _persist(base)
-            try: klq_flush(cfg,a,it,budget=150,max_batches=2)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒
+            try: klq_flush(cfg,a,it,budget=200,max_batches=2)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒(週末快輪本身 ~2 分)
             except Exception as e: log("klq-light:",type(e).__name__,e)
         # ⚡ 點播通道:每輪(快/全)先撿免token收件匣(加追蹤即刻合併/點播轉單),再檢查 lookup_request.json
         #   → 收件匣點播於同一輪被 serve_lookup 服務(訪客免token,~1-2 分鐘內出圖)
