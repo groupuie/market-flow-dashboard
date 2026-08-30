@@ -803,10 +803,10 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 # 背景:08-17 token 過期 → 13 天內日K每日照常寫進本機快取(.klines/SYM.json),但每次 push 失敗即 break、
 # 且 changed 集合隨該輪消失 → token 換新後 gist 日K仍停在 08-14,要等下一次 daily_due(下個 after/closed 時段)才補。
 # 對策:(1) 所有日K推送先入持久佇列(.klqueue.json),成功才出列;(2) 每輪掃 .klines 內 mtime 晚於「上次成功
-#       推送標記」(.klpushed)的快取檔入列(核心清單優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
+#       掃描標記」(.klscan)的快取檔入列(判讀核心優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
 #       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
 KLQ_BATCH = 8
-KLQ_VER = "2026-08-31c"
+KLQ_VER = "2026-08-31d"
 KLQ_STAT = {"heal_n": 0, "pushed": 0, "queue": None}   # 本輪統計 → market_data.meta.klq(觀測用)
 def klq_path(args): return args.config + ".klqueue.json"
 def klq_load(args):
@@ -821,27 +821,33 @@ def klq_add(args, names):
     for n in names:
         if n not in q: q.append(n)
     klq_save(args, q)
+KLQ_PRIO = ["MU","SNDK","WDC","MRVL","LITE","COHR","AAOI","NVDA","AVGO","SMH","SOXX","SPY","QQQ","IWM","DIA"]   # 判讀核心先推
 def klq_heal(args, kl_core):
-    """快取檔 mtime > .klpushed(上次佇列清空時刻)者入列;標記不存在(首次)=全部入列。核心清單優先。"""
+    """掃描 .klines 快取:mtime 晚於上次掃描標記(.klscan)的檔案入列(首次=全部);之後寫掃描標記。
+       語意=「標記之前修改的檔都已入列」;實際推送由持久佇列保證(推完才出列),標記不代表已推送。
+       (2026-08-31 v4:原 .klpushed「推送完成標記」會被 ext/日更的局部 flush 清空佇列時誤寫,
+        導致自癒掃描永遠找不到待補檔 —— 改為掃描標記,與推送脫鉤。)排序:判讀核心→其餘核心→擴充。"""
     kdir = args.config + ".klines"
-    try: last = os.path.getmtime(args.config + ".klpushed")
+    mk = args.config + ".klscan"
+    try: last = os.path.getmtime(mk)
     except OSError: last = 0
     try: files = [f for f in os.listdir(kdir) if f.endswith(".json")]
     except OSError: return 0
-    core = set(kl_core or [])
+    core = set(kl_core or []); prio = {s: i for i, s in enumerate(KLQ_PRIO)}
     due = []
     for f in files:
         s = f[:-5]
         try: mt = os.path.getmtime(os.path.join(kdir, f))
         except OSError: continue
-        if mt > last: due.append((0 if s in core else 1, s))
+        if mt > last: due.append((0 if s in prio else (1 if s in core else 2), prio.get(s, 0), s))
     due.sort()
-    if due: klq_add(args, ["kline_" + s + ".json" for _, s in due])
+    if due: klq_add(args, ["kline_" + s + ".json" for _, _, s in due])
+    try: open(mk, "w").write(str(time.time()))
+    except Exception: pass
     KLQ_STAT["heal_n"] = len(due); KLQ_STAT["cache_n"] = len(files)
     return len(due)
 def klq_flush(cfg, args, t0, budget=330, max_batches=6):
-    """從佇列推送(每輪最多 max_batches 個 PATCH、每批 KLQ_BATCH 檔);成功即出列,失敗留待下輪;
-       佇列清空時寫 .klpushed 標記(之後只有更新過的快取檔會再入列)。回傳推送檔數。"""
+    """從佇列推送(每輪最多 max_batches 個 PATCH、每批 KLQ_BATCH 檔);成功即出列,失敗留待下輪。回傳推送檔數。"""
     if args.no_push or not cfg.get("gist_id") or not cfg.get("gist_token"): return 0
     q = klq_load(args)
     if not q: return 0
@@ -862,9 +868,6 @@ def klq_flush(cfg, args, t0, budget=330, max_batches=6):
         q = q[len(batch):]; n += len(files)
         klq_save(args, q)
         time.sleep(0.3)
-    if not q:
-        try: open(args.config + ".klpushed", "w").write(str(time.time()))
-        except Exception: pass
     KLQ_STAT["pushed"] = KLQ_STAT.get("pushed", 0) + n; KLQ_STAT["queue"] = len(q)
     log(f"kline queue: pushed {n}, remaining {len(q)}")
     return n
@@ -876,8 +879,8 @@ def _klq_meta(args):
         st = dict(KLQ_STAT); st["ver"] = KLQ_VER
         try: st["queue"] = len(klq_load(args))
         except Exception: pass
-        try: st["klpushed"] = datetime.fromtimestamp(os.path.getmtime(args.config + ".klpushed"), timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-        except OSError: st["klpushed"] = None
+        try: st["klscan"] = datetime.fromtimestamp(os.path.getmtime(args.config + ".klscan"), timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        except OSError: st["klscan"] = None
         try:
             mu = json.load(open(os.path.join(kdir, "MU.json")))
             st["cache_mu"] = {"updated_utc": mu.get("updated_utc"), "last": (mu.get("bars") or [[None]])[-1][0], "src": mu.get("src")}
@@ -1455,7 +1458,7 @@ def run_once(cfg, args):
     if not getattr(args,"public_out",None) and not args.no_push:
         try:
             klq_heal(args, kline_symbols(fetch_custom_syms(cfg) if not args.no_futu else []))
-            klq_flush(cfg, args, _run_t0, budget=60, max_batches=6)
+            klq_flush(cfg, args, _run_t0, budget=75, max_batches=12)
         except Exception as e: err("klq0", e)
     data={"ts_utc":now.strftime("%Y-%m-%d %H:%M:%S"),"source":"mac-market-export",
           "market":{},"stocks":{},"leveraged":{},"options":{},"fx":{},"rates":{},
@@ -2021,7 +2024,7 @@ def main():
             except Exception as e:
                 log("LIGHT PUSH ERROR:",type(e).__name__,e)
             base=data; _persist(base)
-            try: klq_flush(cfg,a,it,budget=200,max_batches=2)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒(週末快輪本身 ~2 分)
+            try: klq_flush(cfg,a,it,budget=200,max_batches=4)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒(週末快輪本身 ~2 分)
             except Exception as e: log("klq-light:",type(e).__name__,e)
         # ⚡ 點播通道:每輪(快/全)先撿免token收件匣(加追蹤即刻合併/點播轉單),再檢查 lookup_request.json
         #   → 收件匣點播於同一輪被 serve_lookup 服務(訪客免token,~1-2 分鐘內出圖)
