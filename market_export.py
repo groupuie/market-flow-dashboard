@@ -797,6 +797,34 @@ def refresh_kline_max(cfg, args, t0, budget=330):
             except Exception as e: err("kmax-push", e); break
         log(f"kline_max updated: {len(changed)} (月度 {mon}, 進度 {len(st['done'])}/{len(allsyms)})")
 
+# ============ 公開源備援的當日K(GitHub Actions;Mac 關機時 K線/技術層照樣盤中更新)============
+def fetch_custom_syms_public():
+    """免 token 讀共享自訂清單(gist raw 匿名;Actions 端無 config)。失敗回空(fail-open)。"""
+    try:
+        u = ("https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524"
+             "/raw/custom_symbols.json?t=%d" % int(time.time()))
+        arr = json.loads(http_get(u, 12, 2))
+        out = []
+        for s in arr if isinstance(arr, list) else []:
+            s = str(s).strip().upper().replace("US.", "")
+            if s and len(s) <= 12 and s not in out: out.append(s)
+        return out[:30]
+    except Exception as e:
+        err("cust-public", e); return []
+
+def yahoo_kline_today(syms, t0, budget=200):
+    """Yahoo 5d 日K取最後一根 → kline_today[sym]=[d,o,h,l,c,v,None](盤中含進行中當日棒;
+       延遲以 Yahoo 為準 ≤15 分,誠實次於富途 LV3)。tor=None,前端 merge 保留富途舊值。"""
+    out = {}
+    for s in syms:
+        if time.time() - t0 > budget: break
+        try:
+            bars = yahoo_ohlc(s, "5d")
+            if bars: out[s] = bars[-1]
+        except Exception as e: err(f"klpub {s}", e)
+        time.sleep(0.15)
+    return out
+
 # ============ 點播通道(lookup_request.json 由網頁寫入;Mac 現抓現推,不占追蹤名額)============
 def fetch_gist_file(cfg, name):
     """讀 gist 單一小檔內容(認證 API)。無檔/無設定→None。
@@ -1827,10 +1855,17 @@ def main():
 
     # 公開源備援:單次全量,寫檔不推 gist
     if a.public_out:
+        _t0=time.time()
         data,fsnap=run_once(cfg,a)
         data["source"]="gh-actions-public"
+        try:   # 當日K(Yahoo 源):核心清單+共享自訂 —— Mac 關機時前端 mergeSources 以此接手 kline_today
+            _kt=yahoo_kline_today(kline_symbols(fetch_custom_syms_public()), _t0, budget=330)
+            if _kt:
+                data["kline_today"]=_kt
+                data.setdefault("meta",{})["n_kl_today"]=len(_kt)
+        except Exception as e: err("kl-public", e)
         json.dump(data, open(a.public_out,"w"), ensure_ascii=False, separators=(",",":"))
-        log(f"public-out 寫入 {a.public_out}: options={len(data.get('options',{}))} rates_live={bool(data.get('rates_live'))}")
+        log(f"public-out 寫入 {a.public_out}: options={len(data.get('options',{}))} rates_live={bool(data.get('rates_live'))} kl_today={len(data.get('kline_today',{}))}")
         return
 
     # 盤中 1 分鐘更新(強韌版):慢區塊(報價/期權/K線/finra 等)每 ~7 分全刷一次(run_once,~2-3 分),

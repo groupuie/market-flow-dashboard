@@ -125,6 +125,7 @@ K線：日K由你 Mac 的採集器每日以富途<b>前復權</b>K線更新（�
 // ================= 基本設定 =================
 const GIST="https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/";
 const DATA_URL=GIST+"market_data.json";
+const PUB_URL="https://raw.githubusercontent.com/groupuie/market-flow-dashboard/data/market_public.json";   // 雲端備援(Actions),Mac 停更時接手行情+當日K
 const REFRESH_SEC=60, SIG_REFRESH_SEC=300;
 const NAMES={MU:"美光 Micron",SNDK:"SanDisk 閃迪",WDC:"Western Digital 威騰",MRVL:"Marvell 邁威爾",LITE:"Lumentum",COHR:"Coherent 高意",AAOI:"Applied Opto 應用光電",NVDA:"NVIDIA 輝達",AVGO:"Broadcom 博通",SMH:"VanEck 半導體ETF",SOXX:"iShares 費半ETF",SPY:"S&P 500 ETF",QQQ:"Nasdaq 100 ETF",DIA:"道瓊 ETF",IWM:"羅素2000 ETF",MSFT:"微軟",AAPL:"蘋果",AMZN:"亞馬遜",META:"Meta",GOOGL:"Alphabet",TSLA:"特斯拉",JPM:"摩根大通",LLY:"禮來",TQQQ:"納指 3x",SQQQ:"納指 -3x",SOXL:"半導體 3x",SOXS:"半導體 -3x",NVDL:"NVDA 2x",NVDS:"NVDA -1x",TSLL:"TSLA 2x",TSLZ:"TSLA -2x",FNGU:"FANG+ 3x",FNGD:"FANG+ -3x",SPXL:"標普 3x",SPXS:"標普 -3x",UPRO:"標普 3x",SPXU:"標普 -3x",TNA:"羅素 3x",TZA:"羅素 -3x",UDOW:"道瓊 3x",SDOW:"道瓊 -3x",MUU:"MU 2x",SNXX:"SNDK 2x",MVLL:"MRVL 2x"};
 const GROUPS=[["持倉",["MU","SNDK","WDC","MRVL","LITE","COHR","AAOI","NVDA","AVGO","SMH","SOXX"]],
@@ -511,9 +512,18 @@ async function loadKline(){
 }
 async function loadMarket(){
   try{
-    const r=await fetch(DATA_URL,{cache:"no-store"});
-    if(!r.ok)throw new Error("HTTP "+r.status);
-    MKT=await r.json();
+    const f=async u=>{try{const r=await fetch(u+(u.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/15000),{cache:"no-store"});return r.ok?await r.json():null;}catch(e){return null;}};
+    const [mac,pub]=await Promise.all([f(DATA_URL),f(PUB_URL)]);
+    MKT=mac||pub;
+    if(mac&&pub){
+      const age=t=>{const x=Date.parse((t||'').replace(' ','T')+'Z');return isNaN(x)?1e9:(Date.now()-x)/60000;};
+      if(age(pub.ts_utc)<age(mac.ts_utc)){   // Mac 停更 → 行情/時段/當日K交給雲端備援(⑦等 Mac 專屬鍵不動,誠實凍結)
+        MKT={...mac};
+        ['market','stocks','leveraged','session','ts_utc'].forEach(k=>{if(pub[k]!==undefined)MKT[k]=pub[k];});
+        if(pub.kline_today&&Object.keys(pub.kline_today).length)MKT.kline_today=pub.kline_today;
+      }
+    }
+    if(!MKT)throw new Error("both sources down");
     if(RAW){dayBars=mergeLive(toBars(RAW));const cb=curBars();if(cb.length)chart.updateData(cb[cb.length-1]);}
     renderHeader();renderInfoCard();renderWatchlist();checkLiveHint();
   }catch(e){/* 保留上次資料 */}

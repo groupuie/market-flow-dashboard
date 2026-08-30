@@ -641,7 +641,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-13T22:08Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-30T15:56Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -691,8 +691,11 @@ function mergeSources(mac,pub){
   const ma=tsAgeMin(mac.ts_utc), pa=tsAgeMin(pub.ts_utc);
   const base=(ma<=pa)?{...mac}:{...pub};
   // ⑦/Mac 專屬:永遠取 Mac(唯一來源)
-  ['capital_flow','flow_history','daily_flows','custom_symbols','institutions','kline_today',
+  ['capital_flow','flow_history','daily_flows','custom_symbols','institutions',
    'trade_date','_hist_state','opt_daily','meta','ext_universe','ext_days'].forEach(k=>{if(mac[k]!==undefined)base[k]=mac[k];});
+  // 當日K:Mac(富途即時)為主;Mac 停更時改用雲端備援的 Yahoo 當日棒 —— K線與技術層在 Mac 關機時照樣盤中更新(2026-08-30)
+  if(mac.kline_today!==undefined)base.kline_today=mac.kline_today;
+  if(pa<ma&&pub.kline_today&&Object.keys(pub.kline_today).length)base.kline_today=pub.kline_today;
   if(pa<ma){
     // 公開區塊:備援較新就用備援
     ['market','stocks','leveraged','options','_options_ts','_options_cached','fx','rates',
