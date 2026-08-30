@@ -1425,6 +1425,13 @@ def options_due(state_path, force):
 def run_once(cfg, args):
     now=datetime.now(timezone.utc)
     _run_t0=time.time()   # 全輪時間預算:ext/ticks 只在預算內執行,確保單輪 <420s 看門狗(2026-07-27 停推事故對策)
+    # 日K推送自癒(2026-08-31):全量輪一開始就先清佇列(此時預算最充裕;週末全量輪本身可達 ~6 分,
+    # 放在輪末常被預算擋掉)。核心清單優先;每輪最多 6 批×8 檔、60 秒;佇列空時零成本。
+    if not getattr(args,"public_out",None) and not args.no_push:
+        try:
+            klq_heal(args, kline_symbols(fetch_custom_syms(cfg) if not args.no_futu else []))
+            klq_flush(cfg, args, _run_t0, budget=60, max_batches=6)
+        except Exception as e: err("klq0", e)
     data={"ts_utc":now.strftime("%Y-%m-%d %H:%M:%S"),"source":"mac-market-export",
           "market":{},"stocks":{},"leveraged":{},"options":{},"fx":{},"rates":{},
           "crypto":{},"commodities":{},"darkpool":{},"capital_flow":{},"errors":[]}
@@ -1822,11 +1829,9 @@ def run_once(cfg, args):
     if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
         try: refresh_kline_max(cfg,args,_run_t0,budget=330)
         except Exception as e: err("kmax",e)
-    # 日K推送自癒(2026-08-31):漏推/失敗的快取檔補上 gist(全量輪每次最多 6 批×8 檔;核心清單優先)
+    # 日K推送自癒(2026-08-31):本輪新寫入的快取檔入列(下輪推);推送本身移到 run_once 開頭(預算充裕)
     if not getattr(args,"public_out",None) and not args.no_push:
-        try:
-            klq_heal(args, kl_syms)
-            klq_flush(cfg, args, _run_t0, budget=380, max_batches=6)
+        try: klq_heal(args, kl_syms)
         except Exception as e: err("klq", e)
     data["ext_universe"]=sorted(s.replace("US.","") for s in EXT_SYMS)   # 前端選單/自動完成用(輸入即可選,資料輪補)
     data["errors"]=ERRORS
