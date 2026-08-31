@@ -575,6 +575,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
     <div id="tjstrip" style="display:none"></div>
+    <div id="posstrip" style="display:none"></div>
     <div id="cockpit" style="height:660px"></div>
   </div>
   <div id="wsxInfoRow">
@@ -600,6 +601,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
       <span class="wsxTab on" data-wt="scan">🔍 全市場掃描</span>
       <span class="wsxTab" data-wt="accum">🧲 吸籌偵測</span>
       <span class="wsxTab" data-wt="tj">📐 技術判斷</span>
+      <span class="wsxTab" data-wt="pos">💼 持倉</span>
       <span class="wsxTab" data-wt="cost">成本分佈</span>
       <span class="wsxTab" data-wt="flow">⑦ 資金流向</span>
       <span class="wsxTab" data-wt="season">季節性</span>
@@ -610,6 +612,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
     <div class="wsxTB" data-wtb="scan"><div id="scanpanel"></div></div>
     <div class="wsxTB" data-wtb="accum" style="display:none"><div id="accumpanel"></div></div>
     <div class="wsxTB" data-wtb="tj" style="display:none"><div id="tjpanel"></div></div>
+    <div class="wsxTB" data-wtb="pos" style="display:none"><div id="pospanel"></div></div>
     <div class="wsxTB" data-wtb="cost" style="display:none"><div id="chipcost" style="height:430px"></div></div>
     <div class="wsxTB" data-wtb="flow" style="display:none"><div id="wsxFlow"></div></div>
     <div class="wsxTB" data-wtb="season" style="display:none"><div class="wsxP"><div class="wsxH">季節性 · 年×月矩陣</div><div class="wsxB" style="padding:2px 8px 8px"><div id="season"></div></div></div></div>
@@ -644,7 +647,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-31T17:35Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-31T19:05Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2645,6 +2648,80 @@ function tjEarnVeto(asof,earn){   // 財報否決:asof 之後 5 個交易日內�
     if(w===0||w===6||TJ_HOL[s])continue;k++;last=s;}
   return earn<=last;
 }
+// ===== 💼 持倉管理層(手冊 v0.2 出場規則;2026-09-01)=====
+// 持倉/出場紀錄只存本機 localStorage(mfd_pos_v1 / mfd_exit_v1)——**絕不上傳 repo/gist**(部署站台是公開的,
+// 成本與股數屬個人財務資料)。規則評估一律用「最近已收盤日K」(tjLastDone,與技判層同口徑);零AI、門檻凍結。
+// 誠實缺口:VIX backwardation 否決未做(無期現結構資料源);ATM旗標僅核心清單(window.TJPUB=data/tech_judge.json)。
+let _POSLV=null;   // 駕駛艙右緣價位標籤(成本/回本)暫存:traces IIFE 寫入 → ann 右緣堆疊消費(同 _chLv 模式)
+function posLoad(){try{return JSON.parse(localStorage.getItem('mfd_pos_v1')||'{}')||{};}catch(_){return {};}}
+function posExits(){try{return JSON.parse(localStorage.getItem('mfd_exit_v1')||'[]')||[];}catch(_){return [];}}
+function posRevGet(){try{return localStorage.getItem('mfd_pos_rev')||'0';}catch(_){return '0';}}
+function posSave(p,x){   // p=持倉物件(null=不動) x=出場紀錄陣列(null=不動);bump rev + 立即重繪駕駛艙(sig 含 :P)
+  try{
+    if(p!=null)localStorage.setItem('mfd_pos_v1',JSON.stringify(p));
+    if(x!=null)localStorage.setItem('mfd_exit_v1',JSON.stringify(x));
+    localStorage.setItem('mfd_pos_rev',String((+(localStorage.getItem('mfd_pos_rev')||0))+1));
+  }catch(_){}
+  try{if(typeof renderCockpit==='function')renderCockpit();}catch(_){}
+}
+function posTradFwd(d0,k){   // d0(YYYY-MM-DD)之後第 k 個交易日(跳過週末+TJ_HOL)
+  const d=new Date(d0+'T00:00:00Z');let c=0,s=d0;
+  while(c<k){d.setUTCDate(d.getUTCDate()+1);s=d.toISOString().slice(0,10);
+    const w=d.getUTCDay();if(w===0||w===6||TJ_HOL[s])continue;c++;}
+  return s;
+}
+function posVeto(sym){   // 出場紀律否決(手冊共同否決的「持倉歷史」部分):出場後5交易日冷卻;連兩次停損鎖30天
+  try{
+    const xs=posExits().filter(e=>e&&e.s===sym&&e.d).sort((a,b)=>a.d<b.d?1:-1);
+    if(!xs.length)return null;
+    const asof=tjLastDone();
+    if(xs.length>=2&&xs[0].why==='stop'&&xs[1].why==='stop'){
+      const u0=new Date(xs[0].d+'T00:00:00Z');u0.setUTCDate(u0.getUTCDate()+30);
+      const u=u0.toISOString().slice(0,10);
+      if(asof<u)return {t:'停損鎖30天',until:u,why:'連兩次停損('+xs[1].d+'、'+xs[0].d+')'};
+    }
+    const cd=posTradFwd(xs[0].d,5);
+    if(xs[0].d<=asof&&asof<=cd)return {t:'出場冷卻5日',until:cd,why:xs[0].d+' 出場('+(xs[0].why||'manual')+')'};
+    return null;
+  }catch(_){return null;}
+}
+function posEval(sym,pos,T,B,earn,atm){   // 手冊v0.2出場規則逐條;T=tjSeriesJS 輸出;B=已收盤bars;earn=下次財報;atm=增發旗標
+  const i=T.n-1;if(i<0)return null;
+  const asof=T.D[i],P=T.C[i],C0=+pos.c,sh=+pos.sh||0,zero=pos.st==='zero';
+  const sma=k=>{if(i<k-1)return null;let s=0;for(let j=i-k+1;j<=i;j++)s+=T.C[j];return s/k;};
+  const mid=(T.up[i]!=null&&T.lo[i]!=null)?(T.up[i]+T.lo[i])/2:sma(20);   // 中軌=SMA20(上下軌均值恆等)
+  const s50=sma(50),reg=T.reg[i];
+  const trail=reg==='trend'?{name:'SMA50',v:s50}:{name:'SMA20',v:mid};   // 追蹤線逐日切換;regime 未定→SMA20 保守
+  const trailBrk=trail.v!=null&&P<trail.v;
+  const f=(C0>0&&P>0)?C0/P:null,recovPx=C0>0?C0/0.7:null;               // f=成本÷現價;回本賣出門檻 f≤0.7
+  const fok=T.fok(i),f20=T.f20n(i),f20m=T.f20r(i);
+  const exEv=T.exOn[i],lo=T.lo[i];
+  const stopBelow=lo!=null&&P<lo,stopFlow=fok&&f20!=null&&f20<=0;
+  const eVeto=tjEarnVeto(asof,earn);
+  // 財報日自動入檔(le=最近一次財報;SIG 只有 next_earnings,財報過後就查不到 → 進 10 交易日窗先記下,供跳空檢測)
+  try{if(earn&&earn>asof&&pos.le!==earn&&earn<=posTradFwd(asof,10)){pos.le=earn;
+    const pp=posLoad();if(pp[sym]){pp[sym].le=earn;localStorage.setItem('mfd_pos_v1',JSON.stringify(pp));}}}catch(_){}
+  let gap=null;   // 財報利空跳空收破中軌(手冊「立即全出」)。定義:財報日起 2 根內,開盤<前日最低(真跳空)且收盤<SMA20
+  if(pos.le&&pos.le<=asof){
+    let k0=-1;for(let j=0;j<T.n;j++)if(T.D[j]>=pos.le){k0=j;break;}
+    if(k0>0)for(let j=k0;j<Math.min(T.n,k0+2);j++){
+      const o=+B[j][1],pl2=+B[j-1][3],m2=(T.up[j]!=null&&T.lo[j]!=null)?(T.up[j]+T.lo[j])/2:null;
+      if(m2!=null&&o<pl2&&T.C[j]<m2){gap={d:T.D[j]};break;}}
+  }
+  let ins;   // 今日指令(優先序=手冊:立即全出 > 停損 > 零成本追蹤 > 回本賣出 > 財報減半 > 續抱)
+  if(atm)ins={code:'IMM',lv:'danger',t:'立即全出:增發/ATM 旗標(手冊:宣布增發→不分狀態全出)'};
+  else if(gap)ins={code:'IMM',lv:'danger',t:'立即全出:財報利空跳空收破中軌('+gap.d+')'};
+  else if(!zero&&stopBelow&&stopFlow)ins={code:'STOP',lv:'danger',t:'停損全出:收破下軌 '+lo.toFixed(2)+' 且 flow20≤0 —— 不攤平'};
+  else if(!zero&&stopBelow&&!fok)ins={code:'STOPW',lv:'warn',t:'收破下軌 '+lo.toFixed(2)+'(⑦覆蓋不足無法確認 flow20;手冊停損=兩者同時,自行斟酌)'};
+  else if(zero&&trailBrk)ins={code:'TRAIL',lv:'danger',t:'零成本出場:收盤跌破追蹤線 '+trail.name+' '+trail.v.toFixed(2)+' → 全出'};
+  else if(!zero&&exEv&&f!=null&&f<=0.7)ins={code:'RECOV',lv:'warn',t:'回本賣出:出貨證據亮 且 f='+f.toFixed(2)+'≤0.7 → 賣 '+(f*100).toFixed(0)+'% 收回全部成本(挑放量上漲日執行),留 '+((1-f)*100).toFixed(0)+'% 零成本'};
+  else if(!zero&&eVeto&&pos.eh!==earn)ins={code:'HALF',lv:'warn',t:'財報前5交易日('+earn+'):未回本部位減半(每次財報一次;零成本可抱過)'};
+  else ins={code:'HOLD',lv:'ok',t:zero?'零成本續抱:追蹤 '+trail.name+' '+(trail.v!=null?trail.v.toFixed(2):'—')+'(收破全出)':'續抱:未觸出場條件'+(exEv&&f!=null&&f>0.7?'(出貨證據亮但 f='+f.toFixed(2)+'>0.7 未達回本門檻,續觀察)':'')};
+  const add=!zero&&mid!=null?{above:P>mid,flow:fok&&f20!=null&&f20>0}:null;   // 第二批加碼條件(資訊性;手冊:站上中軌且flow20>0)
+  if(add)add.on=add.above&&add.flow;
+  return {asof,P,C0,sh,zero,f,recovPx,mid,s50,reg,trail,trailBrk,exEv,exW:T.exW[i],lo,stopBelow,stopFlow,fok,f20m,eVeto,earn,gap,ins,add,
+    pl:C0>0?(P/C0-1)*100:null,stale:asof<tjLastDone()};
+}
 function cockpitReset(modeChanged){
   const e=document.getElementById('cockpit'); if(!e)return;
   try{ if(window.Plotly&&(e._fullLayout||e.data))Plotly.purge(e); }catch(_){}
@@ -2692,7 +2769,7 @@ function renderCockpit(){
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
   const sig=CHIP_SYM+':'+win+':pd'+CHIP_PD+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')+(AIM&&AIM.updated_utc?':a'+AIM.updated_utc:'')
-    +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')+(CHIP_TJ?':J1':':J0')
+    +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')+(CHIP_TJ?':J1':':J0')+':P'+posRevGet()
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
@@ -2876,6 +2953,7 @@ function renderCockpit(){
         +(veto?bg(true,'🚫 財報否決(5交易日內:'+earn+')','#f87171')
           :bg(pT,'趨勢'+(pT?'✓':'✗'),'#3987e5')+bg(pC,'循環'+(pC?'✓':'✗'),'#fab219')+bg(pD,'災後'+(pD?'✓':'✗'),'#4ade80'))
         +(T.exOn[i9]?bg(true,'⚠ 出場警戒','#f87171'):'')
+        +(function(){try{var pv=posVeto(CHIP_SYM);return pv?bg(true,'🚫 '+pv.t+'(至'+pv.until+')','#f87171'):'';}catch(_){return '';}})()
         +'<span>TD買'+T.tdb[i9]+'/賣'+T.tds[i9]+'</span><span>%B '+f1(T.pb[i9])+'</span>'
         +'<span>帶寬 '+(T.bw[i9]!=null?(T.bw[i9]*100).toFixed(1)+'%':'—')+(T.sqz[i9]?' <b style="color:#fab219">SQZ</b>':'')+'</span>'
         +'<span>⑦flow20 '+(fokv&&f20v!=null?((f20v>0?'+':'')+f20v.toFixed(0)+'M'):'覆蓋不足')+'</span>'
@@ -2894,6 +2972,45 @@ function renderCockpit(){
       if(anyE)out2.push({type:'scatter',mode:'text',x:x,y:yE,text:tE,customdata:hE,textfont:{size:12,color:'#f87171'},showlegend:false,name:'技判出場',hovertemplate:'%{customdata}<extra></extra>'});
       return out2;
     }catch(_){try{const s9=document.getElementById('tjstrip');if(s9)s9.style.display='none';}catch(__){}return [];}})(),
+    ...(function(){try{   // 💼 持倉層(手冊v0.2出場規則):成本線/回本線+持倉條;僅日K;持倉只存本機 localStorage;fail-open
+      const strip=document.getElementById('posstrip');
+      const pos=(posLoad()||{})[CHIP_SYM];
+      _POSLV=null;
+      if(CHIP_PD!=='d'||!pos){if(strip)strip.style.display='none';return [];}
+      const _bars=chipBars(CHIP_SYM,'d')||[];
+      const lastDone=tjLastDone();
+      const B=_bars.filter(b=>b[0]<=lastDone);
+      const shTx=(+pos.sh||0)?((+pos.sh)+'股·'):'';
+      if(B.length<70){if(strip){strip.style.display='';strip.innerHTML='<div style="padding:4px 8px;margin:2px 0 4px;border:1px solid rgba(74,222,128,.3);border-radius:8px;font-size:11px;color:#898781"><b style="color:#4ade80">💼 持倉</b> '+shTx+'成本 '+(+pos.c).toFixed(2)+' · 日K不足70根,無法依手冊判讀出場規則</div>';}return [];}
+      const FM={};Object.keys(D0||{}).forEach(dd=>{const e=(D0[dd]||{})[CHIP_SYM];if(e&&e.m!=null&&dd<=lastDone)FM[dd]=+e.m;});
+      const T=tjSeriesJS(B,FM);
+      const earn=(typeof SIG!=='undefined'&&SIG&&SIG.symbols&&SIG.symbols[CHIP_SYM])?(SIG.symbols[CHIP_SYM].next_earnings||null):null;
+      const atm=!!(window.TJPUB&&window.TJPUB.symbols&&window.TJPUB.symbols[CHIP_SYM]&&window.TJPUB.symbols[CHIP_SYM].atm_flag);
+      const ev=posEval(CHIP_SYM,pos,T,B,earn,atm);
+      if(!ev){if(strip)strip.style.display='none';return [];}
+      const LVC={danger:'#f87171',warn:'#fab219',ok:'#4ade80'};
+      const bg2=(txt,col)=>'<span style="padding:1px 7px;border-radius:6px;font-weight:700;background:'+col+'26;color:'+col+'">'+txt+'</span>';
+      if(strip){strip.innerHTML='<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 8px;margin:2px 0 4px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.3);border-radius:8px;font-size:11px;color:#c3c2b7">'
+        +'<b style="color:#4ade80">💼 持倉</b>'
+        +bg2(ev.zero?'零成本':'未回本',ev.zero?'#4ade80':'#8ab4f8')
+        +'<span>'+shTx+'成本 '+ev.C0.toFixed(2)+'</span>'
+        +'<span>'+ev.asof+' 收 '+ev.P.toFixed(2)+' <b style="color:'+(ev.pl>=0?'#4ade80':'#f87171')+'">'+(ev.pl>=0?'+':'')+ev.pl.toFixed(1)+'%</b>'+(ev.stale?' <b style="color:#f87171">資料未更新</b>':'')+'</span>'
+        +bg2(ev.ins.t,LVC[ev.ins.lv])
+        +(ev.zero?'':'<span>f='+(ev.f!=null?ev.f.toFixed(2):'—')+'(≤0.7 可回本賣出;回本價 '+(ev.recovPx!=null?ev.recovPx.toFixed(2):'—')+')</span>')
+        +'<span>追蹤線 '+ev.trail.name+' '+(ev.trail.v!=null?ev.trail.v.toFixed(2):'—')+(ev.trailBrk?' <b style="color:#f87171">已破</b>':'')+'</span>'
+        +'<span>停損參考=下軌 '+(ev.lo!=null?ev.lo.toFixed(2):'—')+(ev.fok?'':'(⑦覆蓋不足)')+'</span>'
+        +(ev.earn?'<span>財報 '+ev.earn+(ev.eVeto?' <b style="color:#fab219">5日內</b>':'')+'</span>':'')
+        +(ev.add?'<span>加碼(第二批)'+(ev.add.on?'<b style="color:#4ade80">條件成立</b>':'未成立')+'(站上中軌'+(ev.add.above?'✓':'✗')+'·flow20>0'+(ev.add.flow?'✓':'✗')+')</span>':'')
+        +'<span style="color:#898781">手冊v0.2出場 · 僅存本機 · 非投資建議 · 明細/編輯在工作區「💼 持倉」分頁</span>'
+        +'</div>';strip.style.display='';}
+      const out3=[{type:'scatter',mode:'lines',x:x,y:R.map(()=>ev.C0),line:{color:'rgba(230,233,239,.75)',width:1,dash:'dot'},showlegend:false,name:'持倉成本',hovertemplate:'持倉成本 '+ev.C0.toFixed(2)+'<extra></extra>'}];
+      _POSLV=[{y:ev.C0,tag:'成本',col:'230,233,239'}];
+      if(!ev.zero&&ev.recovPx!=null){
+        out3.push({type:'scatter',mode:'lines',x:x,y:R.map(()=>ev.recovPx),line:{color:'rgba(74,222,128,.55)',width:1,dash:'dashdot'},showlegend:false,name:'回本賣出價',hovertemplate:'回本賣出參考價 '+ev.recovPx.toFixed(2)+'(=成本÷0.7;價在此之上+出貨證據亮→賣'+(ev.f!=null?(ev.f*100).toFixed(0):'—')+'%收回全部成本)<extra></extra>'});
+        _POSLV.push({y:ev.recovPx,tag:'回本',col:'74,222,128'});
+      }
+      return out3;
+    }catch(_){try{const s8=document.getElementById('posstrip');if(s8)s8.style.display='none';}catch(__){}return [];}})(),
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
@@ -2993,6 +3110,8 @@ function renderCockpit(){
     // 2026-08-01 使用者指定:通道成形 → 直接給出可操作點位(上升通道要壓力、下行通道要支撐;兩界都標)
     if(_chLv)_chLv.forEach(function(v){ if(v.y==null||!isFinite(v.y))return;
       L.push([v.kind,v.y,'rgba('+v.col+',1)']); });
+    if(_POSLV)_POSLV.forEach(function(v){ if(!v||v.y==null||!isFinite(v.y))return;   // 💼 持倉成本/回本 右緣價籤(同一防疊字堆疊)
+      L.push([v.tag,v.y,'rgb('+v.col+')']); });
     if(!L.length)return;
     L.sort((a,b)=>a[1]-b[1]);
     let pv=-Infinity; L.forEach(p=>{let y=p[1]; if(y-pv<rng*0.052)y=pv+rng*0.052; pv=y;
@@ -4970,7 +5089,7 @@ function ensureTJ(force){
   fetch('data/tech_judge.json'+bust,{cache:'no-store'})
     .then(function(r){if(!r.ok)throw 0;return r.json();})
     .catch(function(){return fetch('https://raw.githubusercontent.com/groupuie/market-flow-dashboard/main/data/tech_judge.json'+bust,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();});})
-    .then(function(j){TJ=j;TJ_err=false;if(TAB==='tj')renderTJ();})
+    .then(function(j){TJ=j;try{window.TJPUB=j;}catch(_){}TJ_err=false;if(TAB==='tj')renderTJ();if(TAB==='pos')renderPos();})
     .catch(function(){TJ_err=true;if(TAB==='tj')renderTJ();});
 }
 function tjChip(it,lab){
@@ -5025,9 +5144,11 @@ function tjCard(s,n,cur,latest){
   var earn='<div style="font-size:11px;color:#c3c2b7">財報:'+(e.date?('<b style="color:'+(e.veto?'#f87171':'#f2f1ea')+'">'+e.date+'</b>'+(e.veto?' <span style="color:#f87171;font-weight:700">否決期(5交易日內)</span>':'')):'<span style="color:#898781">未公告/未知</span>')
     +(n.atm_flag?' · <span style="color:#f87171;font-weight:700">增發/ATM旗標</span>':'')+'</div>';
   var vetoBar=n.vetoed?'<div style="background:rgba(248,113,113,.12);color:#f87171;border-radius:6px;padding:3px 7px;margin-top:4px;font-size:11px;font-weight:600">🚫 '+n.veto_reason+'</div>':'';
+  var pv2=(typeof posVeto==='function')?posVeto(s):null;   // 出場紀律(冷卻5日/停損鎖30天;本機持倉紀錄)
+  var pvBar=pv2?'<div style="background:rgba(248,113,113,.12);color:#f87171;border-radius:6px;padding:3px 7px;margin-top:4px;font-size:11px;font-weight:600">🚫 '+pv2.t+'(至 '+pv2.until+';'+esc(pv2.why)+'——出場紀律,不進場)</div>':'';
   var conc='<div style="margin-top:5px;font-size:11.5px;color:#f2f1ea;background:rgba(255,255,255,.04);border-radius:6px;padding:4px 7px">'+(n.conclusion||'')+'</div>';
   return '<div style="background:rgba(255,255,255,.025);border:1px solid '+bd+';border-radius:10px;padding:8px 10px'+(cur?';box-shadow:0 0 0 1px #3987e5 inset':'')+'">'
-    +head+rows+paths+exit+earn+vetoBar+conc+'</div>';
+    +head+rows+paths+exit+earn+vetoBar+pvBar+conc+'</div>';
 }
 function renderTJ(){
   var el=document.getElementById('tjpanel'); if(!el)return;
@@ -5045,6 +5166,134 @@ function renderTJ(){
     +'五日斜率=近5個交易日⑦淨額(2026-08-31 定義)。⑦=富途特大+大單主動淨流入;'+(TJ.disclaimer||'')+'</div>';
   el.querySelectorAll('[data-tjsym]').forEach(function(b){b.onclick=function(){var sy=b.getAttribute('data-tjsym');if(typeof wsxGo==='function')wsxGo(sy);renderTJ();};});
 }
+/* ── 💼 持倉管理(手冊 v0.2 出場規則;2026-09-01)──
+ * 持倉/出場紀錄只存本機 localStorage(cockpit 區塊的 posLoad/posSave/posEval/posVeto 全域函式),絕不上傳。
+ * 卡片判讀用最近已收盤日K(chipBars(sym,'d') 過濾 tjLastDone);盤中價僅顯示參考。 */
+var POS_EDIT=null;
+function posFmt2(v){return v==null||!isFinite(v)?'—':(+v).toFixed(2);}
+function posCard(sym,p){
+  var bars=(typeof chipBars==='function'?chipBars(sym,'d'):[])||[];
+  var lastDone=(typeof tjLastDone==='function')?tjLastDone():'';
+  var B=bars.filter(function(b){return b[0]<=lastDone;});
+  var cur=(typeof CHIP_SYM!=='undefined'&&CHIP_SYM===sym);
+  var head='<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><b data-possym="'+esc(sym)+'" style="font-size:14px;cursor:pointer;color:'+(cur?'#3987e5':'#f2f1ea')+'">'+esc(sym)+'</b>'
+    +'<span style="padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700;'+(p.st==='zero'?'background:rgba(74,222,128,.15);color:#4ade80">零成本':'background:rgba(138,180,248,.15);color:#8ab4f8">未回本')+'</span>'
+    +'<span style="margin-left:auto;display:inline-flex;gap:5px">'
+    +'<button data-pose="'+esc(sym)+'" class="tab" style="border:none;font-size:10.5px;padding:2px 8px">編輯</button>'
+    +'<button data-posx="'+esc(sym)+'" class="tab" style="border:none;font-size:10.5px;padding:2px 8px;color:#f87171" title="從持倉移除並寫入出場紀錄(觸發冷卻5日;停損出場計入停損鎖)">標記已全出</button>'
+    +'<button data-posd="'+esc(sym)+'" class="tab" style="border:none;font-size:10.5px;padding:2px 8px;color:#898781" title="輸入錯誤時整筆移除,不記出場紀錄(不觸發冷卻)">刪除</button></span></div>';
+  var q=quote(sym);
+  if(B.length<70){
+    return '<div style="background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;padding:8px 10px">'+head
+      +'<div style="font-size:11.5px;color:#c3c2b7;margin-top:3px">'+(+p.sh||0)+'股 · 成本 '+posFmt2(p.c)+(q&&q.last!=null?' · 盤中 '+px2(q.last):'')+' · <span style="color:#898781">日K不足70根或載入中,暫無法判讀出場規則</span></div></div>';
+  }
+  var FM={},D0=(typeof chipDaily==='function')?chipDaily():{};
+  Object.keys(D0||{}).forEach(function(dd){var e=(D0[dd]||{})[sym];if(e&&e.m!=null&&dd<=lastDone)FM[dd]=+e.m;});
+  var T=tjSeriesJS(B,FM);
+  var earn=(typeof SIG!=='undefined'&&SIG&&SIG.symbols&&SIG.symbols[sym])?(SIG.symbols[sym].next_earnings||null):null;
+  var atm=!!(window.TJPUB&&window.TJPUB.symbols&&window.TJPUB.symbols[sym]&&window.TJPUB.symbols[sym].atm_flag);
+  var ev=posEval(sym,p,T,B,earn,atm);
+  if(!ev)return '';
+  var LVC={danger:'#f87171',warn:'#fab219',ok:'#4ade80'};
+  var acts='';
+  if(ev.ins.code==='RECOV')acts+='<button data-posr="'+esc(sym)+'" class="tab" style="border:none;font-size:11px;color:#4ade80">✓ 標記已執行回本賣出(留 '+((1-ev.f)*100).toFixed(0)+'% 零成本)</button>';
+  if(ev.ins.code==='HALF')acts+='<button data-posh="'+esc(sym)+'" class="tab" style="border:none;font-size:11px;color:#fab219">✓ 標記已減半('+(+p.sh||0)+'→'+((+p.sh||0)/2)+'股)</button>';
+  var pv=(typeof posVeto==='function')?posVeto(sym):null;
+  return '<div style="background:rgba(255,255,255,.025);border:1.5px solid '+LVC[ev.ins.lv]+'55;border-radius:10px;padding:8px 10px'+(cur?';box-shadow:0 0 0 1px #3987e5 inset':'')+'">'
+    +head
+    +'<div style="font-size:11.5px;color:#c3c2b7;margin-top:2px">'+(+p.sh||0)+'股 · 成本 <b style="color:#f2f1ea">'+posFmt2(ev.C0)+'</b> · '+ev.asof+' 收 <b style="color:#f2f1ea">'+posFmt2(ev.P)+'</b> <b style="color:'+(ev.pl>=0?'#4ade80':'#f87171')+'">'+(ev.pl!=null?((ev.pl>=0?'+':'')+ev.pl.toFixed(1)+'%'):'—')+'</b>'
+    +(q&&q.last!=null?' · 盤中 '+px2(q.last)+'<span style="color:#898781">(參考;規則用收盤)</span>':'')+(ev.stale?' · <b style="color:#f87171">資料未更新</b>':'')+'</div>'
+    +'<div style="margin-top:4px;padding:4px 8px;border-radius:7px;background:'+LVC[ev.ins.lv]+'1c;color:'+LVC[ev.ins.lv]+';font-weight:700;font-size:12px">今日指令:'+esc(ev.ins.t)+'</div>'
+    +(acts?'<div style="margin-top:3px">'+acts+'</div>':'')
+    +'<div style="font-size:11px;line-height:1.6;color:#c3c2b7;margin-top:4px">'
+    +'回本賣出:f='+(ev.f!=null?ev.f.toFixed(2):'—')+'(門檻≤0.7;回本價=成本÷0.7='+posFmt2(ev.recovPx)+')· 出貨證據 '+(ev.exEv?'<b style="color:#f87171">亮</b>':'未亮')+'<br>'
+    +'追蹤線('+(ev.reg==='trend'?'趨勢':ev.reg==='cycle'?'循環':'—')+' regime→'+ev.trail.name+'):'+posFmt2(ev.trail.v)+(ev.trailBrk?' <b style="color:#f87171">已收破</b>':' 未破')+(ev.zero?'(零成本:收破=全出)':'')+'<br>'
+    +'停損(未回本):下軌 '+posFmt2(ev.lo)+(ev.stopBelow?' <b style="color:#f87171">已收破</b>':' 未破')+' · flow20 '+(ev.fok?(ev.f20m!=null?((ev.f20m>0?'+':'')+ev.f20m.toFixed(0)+'M'):'—'):'<span style="color:#f87171">覆蓋不足</span>')+'<br>'
+    +'財報:'+(ev.earn?ev.earn+(ev.eVeto?' <b style="color:#fab219">5交易日內'+(ev.zero?'(零成本可抱過)':'(未回本應減半'+(p.eh===ev.earn?'·已減半✓':'')+')')+'</b>':''):'<span style="color:#898781">未公告/未知</span>')
+    +(ev.add?'<br>加碼第二批:'+(ev.add.on?'<b style="color:#4ade80">條件成立</b>':'未成立')+'(站上中軌'+(ev.add.above?'✓':'✗')+'+flow20>0'+(ev.add.flow?'✓':'✗')+';單檔上限2/5)':'')
+    +(pv?'<br><b style="color:#f87171">🚫 '+pv.t+'(至 '+pv.until+';'+esc(pv.why)+')— 冷卻/鎖定期內不進場</b>':'')
+    +'</div></div>';
+}
+function renderPos(){
+  var el=document.getElementById('pospanel');if(!el)return;
+  if(typeof posLoad!=='function'){el.innerHTML='<div class="wsxSkel">持倉引擎載入中…</div>';return;}
+  try{if(typeof ensureTJ==='function')ensureTJ();}catch(_){}
+  var P0=posLoad(),syms=Object.keys(P0);
+  var needK=false;
+  syms.forEach(function(s){var b=(typeof chipBars==='function'?chipBars(s,'d'):[])||[];
+    if(b.length<70){needK=true;try{if(typeof ensureChipK==='function')ensureChipK(s);}catch(_){}}});
+  if(needK){clearTimeout(el._posT);el._posT=setTimeout(function(){if(TAB==='pos')renderPos();},4000);}
+  var ed=(POS_EDIT&&P0[POS_EDIT])?P0[POS_EDIT]:null; if(POS_EDIT&&!ed)POS_EDIT=null;
+  var PIN='background:var(--surface2);color:#f2f1ea;border:1px solid var(--line);border-radius:6px;padding:4px 7px;font-size:12px';
+  var form='<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:2px 0 8px;padding:7px 9px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;font-size:12px">'
+    +'<b style="color:#e6e9ef">'+(ed?'✏️ 編輯 '+esc(POS_EDIT):'＋ 新增持倉')+'</b>'
+    +'<input id="posSym" list="chipDL" placeholder="代號" value="'+(ed?esc(POS_EDIT):'')+'"'+(ed?' disabled':'')+' style="width:82px;text-transform:uppercase;'+PIN+'">'
+    +'<input id="posCost" type="number" step="0.01" min="0.01" placeholder="成本價" value="'+(ed?ed.c:'')+'" style="width:92px;'+PIN+'">'
+    +'<input id="posSh" type="number" step="any" min="0" placeholder="股數(選填)" value="'+(ed&&ed.sh?ed.sh:'')+'" style="width:104px;'+PIN+'">'
+    +'<select id="posSt" style="'+PIN+'"><option value="open"'+(!ed||ed.st!=='zero'?' selected':'')+'>未回本</option><option value="zero"'+(ed&&ed.st==='zero'?' selected':'')+'>零成本</option></select>'
+    +'<button id="posAdd" class="tab" style="border:none">'+(ed?'儲存變更':'加入')+'</button>'
+    +(ed?'<button id="posCancel" class="tab" style="border:none;color:#898781">取消</button>':'')
+    +'<span id="posMsg" style="color:#f87171;font-size:11px"></span></div>';
+  var cards='';syms.sort().forEach(function(s){try{cards+=posCard(s,P0[s]);}catch(_){}});
+  var xs=posExits(),xh='';
+  if(xs.length){
+    xh='<div style="margin-top:8px;font-size:11px;color:#898781"><b style="color:#c3c2b7">出場紀錄</b>(供 冷卻5交易日 / 連兩次停損鎖30天 判定)'
+      +'<button id="posXClr" class="tab" style="border:none;font-size:10px;margin-left:6px;color:#898781">清除全部紀錄</button><br>'
+      +xs.slice(0,12).map(function(e){return esc(e.s)+' '+esc(e.d)+'('+esc(e.why||'manual')+')';}).join(' · ')+(xs.length>12?' · …':'')+'</div>';
+  }
+  var bak='<details style="margin-top:8px;font-size:11px;color:#898781"><summary style="cursor:pointer">備份 / 還原(換裝置搬移用;資料不會自動同步)</summary>'
+    +'<textarea id="posBak" style="width:100%;height:64px;margin-top:4px;font-size:10.5px;'+PIN+'">'+esc(JSON.stringify({pos:P0,exits:xs}))+'</textarea>'
+    +'<button id="posImp" class="tab" style="border:none;font-size:10.5px">匯入上方內容(覆蓋現有持倉+紀錄)</button></details>';
+  el.innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 6px">'
+    +'<b style="font-size:12.5px;color:#e6e9ef">💼 持倉管理(手冊 v0.2 出場規則)</b>'
+    +'<span style="font-size:10.5px;color:#898781">回本賣出 f=成本÷現價≤0.7 · 零成本追蹤線(趨勢SMA50/循環SMA20 逐日切換) · 停損=收破下軌+flow20≤0 · 財報前5日減半 · 立即全出(ATM/財報跳空破中軌) · 判讀用最近已收盤日K</span></div>'
+    +form
+    +(syms.length?'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px">'+cards+'</div>'
+      :'<div class="wsxSkel">尚無持倉 —— 在上方輸入代號與成本價加入。資料只存這台裝置的瀏覽器(localStorage),不會上傳到任何伺服器/repo/gist;清瀏覽器資料會清掉,可用下方備份搬移。</div>')
+    +xh+bak
+    +'<div class="wsxDisc">持倉資料僅存本機瀏覽器(公開站台,故不上雲);規則引擎輸出=機械條件描述,非投資建議。部位規則(手冊):現金池五等分、單檔上限2/5;第二批=站上中軌且flow20>0。未做:VIX backwardation 否決(無期現結構資料源)。持倉檔的K線圖上會自動畫 成本線/回本線+持倉條。</div>';
+  function $g(id){return document.getElementById(id);}
+  var add=$g('posAdd');if(add)add.onclick=function(){
+    var sym=(POS_EDIT||(($g('posSym')||{}).value||'')).trim().toUpperCase();
+    var c=parseFloat(($g('posCost')||{}).value),sh=parseFloat(($g('posSh')||{}).value)||0,st=($g('posSt')||{}).value||'open';
+    var msg=$g('posMsg');
+    if(!/^[A-Z][A-Z0-9.\-]{0,9}$/.test(sym)){if(msg)msg.textContent='代號格式不對';return;}
+    if(!(c>0)){if(msg)msg.textContent='成本價需 >0';return;}
+    var P1=posLoad(),old=P1[sym]||{};
+    P1[sym]={c:c,sh:sh,st:st,ed:old.ed||((typeof tjLastDone==='function')?tjLastDone():''),eh:old.eh,le:old.le};
+    posSave(P1,null);POS_EDIT=null;
+    try{if(typeof ensureChipK==='function')ensureChipK(sym);}catch(_){}
+    renderPos();};
+  var cn=$g('posCancel');if(cn)cn.onclick=function(){POS_EDIT=null;renderPos();};
+  el.querySelectorAll('[data-possym]').forEach(function(b){b.onclick=function(){var sy=b.getAttribute('data-possym');if(typeof wsxGo==='function')wsxGo(sy);renderPos();};});
+  el.querySelectorAll('[data-pose]').forEach(function(b){b.onclick=function(){POS_EDIT=b.getAttribute('data-pose');renderPos();};});
+  el.querySelectorAll('[data-posd]').forEach(function(b){b.onclick=function(){var s=b.getAttribute('data-posd');
+    var P1=posLoad();delete P1[s];posSave(P1,null);if(POS_EDIT===s)POS_EDIT=null;renderPos();};});
+  el.querySelectorAll('[data-posx]').forEach(function(b){b.onclick=function(){var s=b.getAttribute('data-posx');
+    var P1=posLoad(),why='manual';
+    try{   // 以「當下指令碼」決定出場性質(停損→計入停損鎖;冷卻對所有出場皆適用)
+      var bars=(chipBars(s,'d')||[]),ld=tjLastDone(),B2=bars.filter(function(x2){return x2[0]<=ld;});
+      if(B2.length>=70){
+        var FM2={},D2=chipDaily();Object.keys(D2||{}).forEach(function(dd){var e=(D2[dd]||{})[s];if(e&&e.m!=null&&dd<=ld)FM2[dd]=+e.m;});
+        var T2=tjSeriesJS(B2,FM2);
+        var earn2=(typeof SIG!=='undefined'&&SIG&&SIG.symbols&&SIG.symbols[s])?(SIG.symbols[s].next_earnings||null):null;
+        var ev2=posEval(s,P1[s]||{},T2,B2,earn2,false);
+        if(ev2)why=(ev2.ins.code==='STOP'||ev2.ins.code==='STOPW')?'stop':(ev2.ins.code==='TRAIL'?'trail':(ev2.ins.code==='IMM'?'imm':'manual'));}
+    }catch(_){}
+    delete P1[s];var X1=posExits();X1.unshift({s:s,d:(typeof tjLastDone==='function')?tjLastDone():'',why:why});
+    posSave(P1,X1);if(POS_EDIT===s)POS_EDIT=null;renderPos();};});
+  el.querySelectorAll('[data-posr]').forEach(function(b){b.onclick=function(){var s=b.getAttribute('data-posr');
+    var P1=posLoad(),p=P1[s];if(!p)return;
+    try{var bars=(chipBars(s,'d')||[]),ld=tjLastDone(),B2=bars.filter(function(x2){return x2[0]<=ld;});
+      var lastC=B2.length?+B2[B2.length-1][4]:null,f2=(lastC&&p.c>0)?p.c/lastC:null;
+      if(f2!=null){p.sh=Math.max(0,+(((+p.sh||0)*(1-f2)).toFixed(4)));p.st='zero';posSave(P1,null);renderPos();}}catch(_){}}});
+  el.querySelectorAll('[data-posh]').forEach(function(b){b.onclick=function(){var s=b.getAttribute('data-posh');
+    var P1=posLoad(),p=P1[s];if(!p)return;
+    var earn2=(typeof SIG!=='undefined'&&SIG&&SIG.symbols&&SIG.symbols[s])?(SIG.symbols[s].next_earnings||null):null;
+    p.sh=(+p.sh||0)/2;p.eh=earn2;posSave(P1,null);renderPos();};});
+  var xc=$g('posXClr');if(xc)xc.onclick=function(){posSave(null,[]);renderPos();};
+  var im=$g('posImp');if(im)im.onclick=function(){try{var j=JSON.parse(($g('posBak')||{}).value||'');posSave(j.pos||{},j.exits||[]);renderPos();}catch(_){var m2=$g('posMsg');if(m2)m2.textContent='匯入格式錯誤(需為備份輸出的 JSON)';}};
+}
 /* ── 分頁切換 ── */
 function setTab(k){
   TAB=k;
@@ -5056,6 +5305,7 @@ function setTab(k){
   if(k==='cost'){try{var cc=document.getElementById('chipcost');if(cc&&cc.data&&typeof Plotly!=="undefined"&&Plotly.Plots)Plotly.Plots.resize(cc);}catch(_){}}
   if(k==='flow')renderFlow();
   if(k==='tj'){try{renderTJ();}catch(_){}}
+  if(k==='pos'){try{renderPos();}catch(_){}}
 }
 function wsxGo(sy){
   try{
@@ -5086,8 +5336,8 @@ function tick(){
     ensureAnalyst();
     var key=[(typeof CHIP_SYM!=="undefined")?CHIP_SYM:"",(typeof DATA!=="undefined")&&DATA?DATA.ts_utc:"",
       (typeof SIG!=="undefined")&&SIG?SIG.updated_utc:"",(typeof SIGREV!=="undefined")&&SIGREV?SIGREV.updated_utc:"",
-      AN?AN.updated_utc:""].join("|");
-    if(key!==lastKey){lastKey=key;renderTopbar();renderLeft();renderAnl();renderOpt();renderWatch();renderRev();renderRep();if(TAB==='flow')renderFlow();if(TAB==='tj'){try{renderTJ();}catch(_){}}}
+      AN?AN.updated_utc:"",(typeof posRevGet==='function')?posRevGet():""].join("|");
+    if(key!==lastKey){lastKey=key;renderTopbar();renderLeft();renderAnl();renderOpt();renderWatch();renderRev();renderRep();if(TAB==='flow')renderFlow();if(TAB==='tj'){try{renderTJ();}catch(_){}}if(TAB==='pos'){try{renderPos();}catch(_){}}}
   }catch(_){}
 }
 /* 生產版:不自動跳分頁 */
