@@ -11,7 +11,7 @@
 傳輸：git smart-HTTP push（雲端沙箱的 GitHub REST 代理擋未註冊 repo，git 協定可用 —
       2026-07-20 實測）。token 讀 tracker/.gh_token（新 session 從專案 claude/config.json
       的 github.token 重建此檔）。
-用法：python3 scripts/deploy_web.py [index] [stock] [app] [sw] [manifest] [kclib] [signals] [scan] [sigrev] [aim] [analyst] [exporter]
+用法：python3 scripts/deploy_web.py [index] [stock] [app] [sw] [manifest] [kclib] [signals] [scan] [sigrev] [aim] [analyst] [tj] [exporter]
       # 不帶參數 = 推送所有「本地存在」的目標
 """
 import os, shutil, subprocess, sys, tempfile, time, urllib.request
@@ -29,6 +29,7 @@ FILES = {"index":    (os.path.join(ROOT, "webapp/index.html"),           "index.
          "sigrev":   (os.path.join(ROOT, "data/sig_review.json"),        "data/sig_review.json"),
          "aim":      (os.path.join(ROOT, "data/ai_marks.json"),          "data/ai_marks.json"),    # AI▲▼ 判讀標記(2026-08-08;只增當日)
          "analyst":  (os.path.join(ROOT, "data/analyst.json"),           "data/analyst.json"),     # 分析師共識(2026-08-08)
+         "tj":       (os.path.join(ROOT, "data/tech_judge.json"),        "data/tech_judge.json"),  # 技術判斷·手冊v0.2(2026-08-31)
          "exporter": (os.path.join(ROOT, "mac_bridge/market_export.py"), "market_export.py")}
 
 def sh(*cmd, cwd=None):

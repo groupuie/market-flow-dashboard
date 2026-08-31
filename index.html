@@ -598,6 +598,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
     <div id="wsxTabRow">
       <span class="wsxTab on" data-wt="scan">🔍 全市場掃描</span>
       <span class="wsxTab" data-wt="accum">🧲 吸籌偵測</span>
+      <span class="wsxTab" data-wt="tj">📐 技術判斷</span>
       <span class="wsxTab" data-wt="cost">成本分佈</span>
       <span class="wsxTab" data-wt="flow">⑦ 資金流向</span>
       <span class="wsxTab" data-wt="season">季節性</span>
@@ -607,6 +608,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
     </div>
     <div class="wsxTB" data-wtb="scan"><div id="scanpanel"></div></div>
     <div class="wsxTB" data-wtb="accum" style="display:none"><div id="accumpanel"></div></div>
+    <div class="wsxTB" data-wtb="tj" style="display:none"><div id="tjpanel"></div></div>
     <div class="wsxTB" data-wtb="cost" style="display:none"><div id="chipcost" style="height:430px"></div></div>
     <div class="wsxTB" data-wtb="flow" style="display:none"><div id="wsxFlow"></div></div>
     <div class="wsxTB" data-wtb="season" style="display:none"><div class="wsxP"><div class="wsxH">季節性 · 年×月矩陣</div><div class="wsxB" style="padding:2px 8px 8px"><div id="season"></div></div></div></div>
@@ -641,7 +643,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-30T15:56Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-31T15:54Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -681,7 +683,7 @@ function rangeBar(elId,cur,onpick){
   el.querySelectorAll('.tab').forEach(t=>t.onclick=()=>onpick(+t.dataset.n));
 }
 
-const PUB_URL="https://raw.githubusercontent.com/groupuie/market-flow-dashboard/data/market_public.json";
+const PUB_URL="https://raw.githubusercontent.com/groupuie/market-flow-dashboard/refs/heads/data/market_public.json";
 function tsAgeMin(ts){const t=Date.parse((ts||'').replace(' ','T')+'Z');return isNaN(t)?1e9:(Date.now()-t)/60000;}
 function mergeSources(mac,pub){
   // Mac=全量(含⑦);Actions=公開源備援。Mac 休眠時公開區塊由備援接手,⑦ 誠實凍結
@@ -4786,6 +4788,109 @@ function renderFlow(){
       '</div><div class="wsxDisc">當日累計 · 深色=大單(機構) 淺色=中小單 · 右正=淨流入 · ETF 淨需求以官方申贖為準</div>';
   }catch(_){el.innerHTML='<div class="wsxSkel">—</div>';}
 }
+/* ===== 📐 技術判斷模組(手冊 v0.2;2026-08-31)=====
+   確定性規則引擎卡片:讀 data/tech_judge.json(scripts/tech_judge.py 每日盤後產出;
+   MRVL 2026-08-28 驗收通過)。零 AI 判讀、零 token;缺檔降級不報錯。
+   規則:SMA20±2σ/%B/帶寬/squeeze、SMA50 regime、TD連續計數、⑦flow20(20日)+五日斜率
+   (=近5日⑦淨額,2026-08-31 使用者裁定)、吸籌/出貨背離、三條進場路徑+共同否決、出貨證據。*/
+var TJ=null,TJ_ts=0,TJ_err=false;
+function tjLatestSession(){ /* 最近已收盤 ET 交易日(16:00 後當日才算;含 2026-27 休市表) */
+  var HOL={'2026-01-01':1,'2026-01-19':1,'2026-02-16':1,'2026-04-03':1,'2026-05-25':1,'2026-06-19':1,
+           '2026-07-03':1,'2026-09-07':1,'2026-11-26':1,'2026-12-25':1,'2027-01-01':1,'2027-01-18':1,'2027-02-15':1};
+  function fmt(d){return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');}
+  var now=new Date(), et;
+  try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit'}).formatToParts(now),o={};
+      p.forEach(function(x){o[x.type]=x.value;});
+      et=new Date(Date.UTC(+o.year,+o.month-1,+o.day,+(o.hour==='24'?0:o.hour)));}
+  catch(_){et=new Date(now.getTime()-4*3600e3);}
+  var d=new Date(Date.UTC(et.getUTCFullYear(),et.getUTCMonth(),et.getUTCDate()));
+  function trad(x){var w=x.getUTCDay();return w>0&&w<6&&!HOL[fmt(x)];}
+  if(!(trad(d)&&et.getUTCHours()>=16))d.setUTCDate(d.getUTCDate()-1);
+  while(!trad(d))d.setUTCDate(d.getUTCDate()-1);
+  return fmt(d);
+}
+function ensureTJ(force){
+  if(!force&&TJ&&Date.now()-TJ_ts<300000)return;
+  TJ_ts=Date.now();
+  var bust='?t='+Math.floor(Date.now()/300000);
+  fetch('data/tech_judge.json'+bust,{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .catch(function(){return fetch('https://raw.githubusercontent.com/groupuie/market-flow-dashboard/main/data/tech_judge.json'+bust,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();});})
+    .then(function(j){TJ=j;TJ_err=false;if(TAB==='tj')renderTJ();})
+    .catch(function(){TJ_err=true;if(TAB==='tj')renderTJ();});
+}
+function tjChip(it,lab){
+  return '<span title="'+String(it.k+' | '+(it.v||'')).replace(/"/g,'&quot;')+'" style="display:inline-block;padding:1px 6px;margin:1px 2px 1px 0;border-radius:6px;font-size:10.5px;'+
+    (it.ok?'background:rgba(74,222,128,.13);color:#4ade80':'background:rgba(255,255,255,.05);color:#898781')+'">'+(it.ok?'✓':'✗')+lab+'</span>';
+}
+function tjPath(name,items,labs,rawPass,vetoed){
+  var badge=vetoed?'<span style="color:#f87171;font-weight:700">被否決</span>'
+    :(rawPass?'<span style="color:#4ade80;font-weight:700">成立</span>':'<span style="color:#898781">未成立</span>');
+  var chips='';for(var i=0;i<items.length;i++)chips+=tjChip(items[i],labs[i]);
+  return '<div style="margin:2px 0"><span style="display:inline-block;width:44px;color:#c3c2b7;font-weight:600">'+name+'</span>'+badge+'<div style="margin-left:44px">'+chips+'</div></div>';
+}
+function tjCard(s,n,cur,latest){
+  var stale=n.stale||(n.asof&&latest&&n.asof<latest);
+  var bd=stale?'#f87171':(cur?'#3987e5':'var(--line)');
+  var head='<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">'
+    +'<b data-tjsym="'+s+'" style="font-size:14px;cursor:pointer;color:'+(cur?'#3987e5':'#f2f1ea')+'">'+s+'</b>';
+  if(n.insufficient){
+    return '<div style="background:rgba(255,255,255,.025);border:1px solid '+bd+';border-radius:10px;padding:8px 10px">'+head
+      +'<span style="color:#898781;font-size:11px">'+(n.asof||'—')+'</span></div>'
+      +'<div style="color:#898781;font-size:11.5px;margin-top:4px">'+(n.conclusion||'資料不足,不判讀')+'</div></div>';
+  }
+  var reg=n.regime==='trend'?'<span style="background:rgba(57,135,229,.15);color:#3987e5;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">趨勢</span>'
+        :n.regime==='cycle'?'<span style="background:rgba(250,178,25,.15);color:#fab219;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">循環</span>'
+        :'<span style="color:#898781">—</span>';
+  head+=reg+(n.exit_on?'<span style="background:rgba(248,113,113,.15);color:#f87171;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">⚠ 出場警戒</span>':'')
+    +'<span style="margin-left:auto;color:'+(stale?'#f87171':'#898781')+';font-size:11px">'+(n.asof||'')+(stale?' · 資料未更新':'')+'</span></div>';
+  function pct(a,b){return (a&&b)?((a/b-1)*100).toFixed(1)+'%':'—';}
+  var f=n.flow||{},dv=n.div||{};
+  var slope=f.slope5_musd,sArrow=slope==null?'—':(slope>0?'<span style="color:#4ade80">↑ +'+slope+'M</span>':(slope<0?'<span style="color:#f87171">↓ '+slope+'M</span>':'0'));
+  var f20=f.flow20_musd,f20txt=f20==null?'—':('<span style="color:'+(f20>0?'#4ade80':(f20<0?'#f87171':'#c3c2b7'))+'">'+(f20>0?'+':'')+f20+'M</span>');
+  var rows='<div style="font-size:11.5px;line-height:1.55;color:#c3c2b7;margin-top:3px">'
+    +'C <b style="color:#f2f1ea">'+n.close+'</b> · vs SMA20 <b>'+pct(n.close,n.sma20)+'</b>('+n.sma20+') · vs SMA50 <b>'+pct(n.close,n.sma50)+'</b>('+n.sma50+')<br>'
+    +'%B <b style="color:#f2f1ea">'+(n.pctb!=null?n.pctb.toFixed(2):'—')+'</b> · 帶寬 <b>'+(n.bw!=null?(n.bw*100).toFixed(1)+'%':'—')+'</b>'
+    +(n.squeeze?' · <span style="color:#fab219;font-weight:700">SQUEEZE</span>':' · 非squeeze')
+    +' · 上軌 '+n.upper+' / 下軌 '+n.lower+'<br>'
+    +'TD買 <b style="color:'+((n.td_buy||0)>=6?'#4ade80':'#f2f1ea')+'">'+n.td_buy+'</b> · TD賣 <b style="color:'+((n.td_sell||0)>=6?'#f87171':'#f2f1ea')+'">'+n.td_sell+'</b>'
+    +' · ⑦flow20 '+f20txt+' · 5日斜率 '+sArrow+(f.ok?'':' <span style="color:#f87171">(⑦覆蓋不足'+(f.cov20||0)+'/20)</span>')+'<br>'
+    +'背離:'+(dv.accum?'<span style="color:#4ade80;font-weight:700">🧲吸籌</span>':'<span style="color:#898781">吸籌—</span>')
+    +' / '+(dv.dist?'<span style="color:#f87171;font-weight:700">📤出貨</span>':'<span style="color:#898781">出貨—</span>')
+    +'</div>';
+  var p=n.paths||{};
+  var paths='<div style="margin-top:5px;border-top:1px dashed var(--line);padding-top:4px;font-size:11px">'
+    +tjPath('趨勢',p.trend||[],['regime','TD≥6','%B·sq','flow+'],(n.path_raw_pass||{}).trend,n.vetoed)
+    +tjPath('循環',p.cycle||[],['regime','%B·sq','TD9','吸籌'],(n.path_raw_pass||{}).cycle,n.vetoed)
+    +tjPath('災後',p.disaster||[],['TD9','破下軌','回軌上','斜率+'],(n.path_raw_pass||{}).disaster,n.vetoed)
+    +'</div>';
+  var ex=n.exit||{};
+  var exit='<div style="font-size:11px;margin-top:3px;color:#c3c2b7">出貨證據:'
+    +tjChip(ex.a||{ok:false,k:'',v:''},'TD賣9+%B.8')+tjChip(ex.b||{ok:false,k:'',v:''},'出貨背離')+'</div>';
+  var e=n.earnings||{};
+  var earn='<div style="font-size:11px;color:#c3c2b7">財報:'+(e.date?('<b style="color:'+(e.veto?'#f87171':'#f2f1ea')+'">'+e.date+'</b>'+(e.veto?' <span style="color:#f87171;font-weight:700">否決期(5交易日內)</span>':'')):'<span style="color:#898781">未公告/未知</span>')
+    +(n.atm_flag?' · <span style="color:#f87171;font-weight:700">增發/ATM旗標</span>':'')+'</div>';
+  var vetoBar=n.vetoed?'<div style="background:rgba(248,113,113,.12);color:#f87171;border-radius:6px;padding:3px 7px;margin-top:4px;font-size:11px;font-weight:600">🚫 '+n.veto_reason+'</div>':'';
+  var conc='<div style="margin-top:5px;font-size:11.5px;color:#f2f1ea;background:rgba(255,255,255,.04);border-radius:6px;padding:4px 7px">'+(n.conclusion||'')+'</div>';
+  return '<div style="background:rgba(255,255,255,.025);border:1px solid '+bd+';border-radius:10px;padding:8px 10px'+(cur?';box-shadow:0 0 0 1px #3987e5 inset':'')+'">'
+    +head+rows+paths+exit+earn+vetoBar+conc+'</div>';
+}
+function renderTJ(){
+  var el=document.getElementById('tjpanel'); if(!el)return;
+  if(!TJ){el.innerHTML='<div class="wsxSkel">'+(TJ_err?'tech_judge.json 尚未產出(每日盤後由排程更新);今晚盤後第一輪後出現':'技術判斷載入中…')+'</div>';ensureTJ();return;}
+  var latest=tjLatestSession();
+  var syms=Object.keys(TJ.symbols||{});
+  var cur=(typeof CHIP_SYM!=='undefined'&&syms.indexOf(CHIP_SYM)>=0)?CHIP_SYM:null;
+  if(cur){syms.splice(syms.indexOf(cur),1);syms.unshift(cur);}
+  var cards='';for(var i=0;i<syms.length;i++)cards+=tjCard(syms[i],TJ.symbols[syms[i]]||{},syms[i]===cur,latest);
+  el.innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 6px">'
+    +'<b style="font-size:12.5px;color:#e6e9ef">📐 技術判斷(手冊 v0.2)</b>'
+    +'<span style="font-size:10.5px;color:#898781">確定性規則引擎 · 零AI判讀 · 每日盤後更新 · 算於 '+(TJ.updated_utc||'')+' UTC · 最近已收盤日 '+latest+'</span></div>'
+    +'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:8px">'+cards+'</div>'
+    +'<div class="wsxDisc">規則:進場=趨勢/循環/災後三路徑(逐項顯示);共同否決=財報5交易日內/增發ATM旗標;出貨證據=近3日TD賣9且%B>0.8、或出貨背離。'
+    +'五日斜率=近5個交易日⑦淨額(2026-08-31 定義)。⑦=富途特大+大單主動淨流入;'+(TJ.disclaimer||'')+'</div>';
+  el.querySelectorAll('[data-tjsym]').forEach(function(b){b.onclick=function(){var sy=b.getAttribute('data-tjsym');if(typeof wsxGo==='function')wsxGo(sy);renderTJ();};});
+}
 /* ── 分頁切換 ── */
 function setTab(k){
   TAB=k;
@@ -4796,6 +4901,7 @@ function setTab(k){
   setTimeout(function(){try{var ps=document.querySelectorAll('.wsxTB[data-wtb="'+k+'"] .js-plotly-plot');for(var m=0;m<ps.length;m++){try{if(ps[m].data&&ps[m].offsetParent!==null&&typeof Plotly!=='undefined'&&Plotly.Plots)Plotly.Plots.resize(ps[m]);}catch(_){}}}catch(_){}},90);
   if(k==='cost'){try{var cc=document.getElementById('chipcost');if(cc&&cc.data&&typeof Plotly!=="undefined"&&Plotly.Plots)Plotly.Plots.resize(cc);}catch(_){}}
   if(k==='flow')renderFlow();
+  if(k==='tj'){try{renderTJ();}catch(_){}}
 }
 function wsxGo(sy){
   try{
@@ -4827,7 +4933,7 @@ function tick(){
     var key=[(typeof CHIP_SYM!=="undefined")?CHIP_SYM:"",(typeof DATA!=="undefined")&&DATA?DATA.ts_utc:"",
       (typeof SIG!=="undefined")&&SIG?SIG.updated_utc:"",(typeof SIGREV!=="undefined")&&SIGREV?SIGREV.updated_utc:"",
       AN?AN.updated_utc:""].join("|");
-    if(key!==lastKey){lastKey=key;renderTopbar();renderLeft();renderAnl();renderOpt();renderWatch();renderRev();renderRep();if(TAB==='flow')renderFlow();}
+    if(key!==lastKey){lastKey=key;renderTopbar();renderLeft();renderAnl();renderOpt();renderWatch();renderRev();renderRep();if(TAB==='flow')renderFlow();if(TAB==='tj'){try{renderTJ();}catch(_){}}}
   }catch(_){}
 }
 /* 生產版:不自動跳分頁 */

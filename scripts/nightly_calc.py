@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """盤後排程的純運算步驟(零 token;2026-08-31)
-把「全市場掃描 scan.py」與「分析師 analyst_probe.py」包成一鍵:自動從 market_data.json
-組出標的宇宙(當日K核心清單 + ext_universe + capital_flow 成員),再依參數執行。
-用法:python3 scripts/nightly_calc.py [scan] [analyst]     # 不帶參數 = 兩者都跑
-產出:data/scan.json、data/analyst.json(scan 約 2–4 分;analyst 約 20–30 分,Nasdaq 節流)。
+把「全市場掃描 scan.py」「分析師 analyst_probe.py」「技術判斷 tech_judge.py(手冊 v0.2)」包成一鍵:
+自動從 market_data.json 組出標的宇宙(當日K核心清單 + ext_universe + capital_flow 成員),再依參數執行。
+用法:python3 scripts/nightly_calc.py [scan] [analyst] [tj]     # 不帶參數 = 三者都跑
+產出:data/scan.json、data/analyst.json、data/tech_judge.json(scan 約 2–4 分;analyst 約 20–30 分;tj 數秒)。
+tj 完成後若 tracker/.gh_token 存在,自動 deploy_web.py tj(fail-open;排程 prompt 無需改部署清單)。
 """
 import json, os, subprocess, sys, time, urllib.request
 
@@ -27,10 +28,20 @@ def universe():
     return uni
 
 def main():
-    want = [a for a in sys.argv[1:] if a in ("scan", "analyst")] or ["scan", "analyst"]
+    want = [a for a in sys.argv[1:] if a in ("scan", "analyst", "tj")] or ["scan", "analyst", "tj"]
     uni = universe()
     log(f"universe {len(uni)} 檔; steps={want}")
     symcsv = ",".join(uni)
+    if "tj" in want:   # 技術判斷(手冊 v0.2;核心追蹤清單;數秒)→ 產出後就地部署(fail-open)
+        r = subprocess.run([sys.executable, os.path.join(SCRIPTS, "tech_judge.py"),
+                            "--config", os.path.join(ROOT, "config.json"),
+                            "--signals", os.path.join(ROOT, "data/signals.json"),
+                            "--kline-dir", os.path.join(ROOT, "data"),
+                            "--out", os.path.join(ROOT, "data/tech_judge.json")], cwd=SCRIPTS)
+        log("tech_judge exit", r.returncode)
+        if r.returncode == 0 and os.path.exists(os.path.join(ROOT, ".gh_token")):
+            r2 = subprocess.run([sys.executable, os.path.join(SCRIPTS, "deploy_web.py"), "tj"], cwd=SCRIPTS)
+            log("tech_judge deploy exit", r2.returncode)
     if "scan" in want:
         r = subprocess.run([sys.executable, os.path.join(SCRIPTS, "scan.py"),
                             "--config", os.path.join(ROOT, "config.json"),
