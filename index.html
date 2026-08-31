@@ -574,6 +574,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
       <span id="chipRecent" style="display:none;gap:4px;flex-wrap:wrap;align-items:center"></span>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
+    <div id="tjstrip" style="display:none"></div>
     <div id="cockpit" style="height:660px"></div>
   </div>
   <div id="wsxInfoRow">
@@ -643,7 +644,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-31T15:54Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-31T17:01Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1007,6 +1008,7 @@ let CHIP_FIB=false; // Fibonacci 自動回撤(預設關)
 let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
 let CHIP_CTA=true;  // CTA 煞車線×4 開關(預設開;既有功能)
 let CHIP_BB=false;  // P7-2 布林通道 BB(20,2) 上/中/下軌(預設關)
+let CHIP_TJ=false;  // 📐 技術判斷層(手冊 v0.2;2026-09-01):路徑成立/出貨證據上圖+警示條(預設關 —— 預設畫面只留 CTA)
 let CHIP_ZOOM=false;// P7-1 滑鼠滾輪縮放+拖曳模式(預設關;開啟後滾輪不再捲頁而是縮放)
 let CHIPF_IDX={SPY:false,QQQ:false};   // P7-7 現金池變化圖專屬疊加(與上方 K線圖疊加鈕獨立)
 let CHIP_IND='rv';  // 副圖單槽:rv(轉速,預設)/macd/adx/atr/cci/stoch
@@ -1022,6 +1024,7 @@ function buildChipIdx(){
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipC" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.brake1+';'+(CHIP_CTA?'background:rgba(147,197,253,.15);color:'+CPAL.brake1:'color:var(--muted);opacity:.55')+'">CTA</span>'
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
+    +' <span class="cidxchipJ" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #f472b6;'+(CHIP_TJ?'background:rgba(244,114,182,.15);color:#f472b6':'color:var(--muted);opacity:.55')+'">📐技判</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
         return '<option value="'+o[0]+'"'+(CHIP_IND===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>';
@@ -1033,6 +1036,7 @@ function buildChipIdx(){
   var t9=el.querySelector('.cidxchip9'); if(t9)t9.onclick=function(){CHIP_VWAP=!CHIP_VWAP;renderChips();};
   var tC=el.querySelector('.cidxchipC'); if(tC)tC.onclick=function(){CHIP_CTA=!CHIP_CTA;renderChips();};
   var tB=el.querySelector('.cidxchipB'); if(tB)tB.onclick=function(){CHIP_BB=!CHIP_BB;renderChips();};
+  var tJ=el.querySelector('.cidxchipJ'); if(tJ)tJ.onclick=function(){CHIP_TJ=!CHIP_TJ;renderChips();};
   var ti=el.querySelector('.cidxind'); if(ti)ti.onchange=function(){CHIP_IND=ti.value;renderChips();};
 }
 // ===== P7-7 現金池變化圖專屬 SPY/QQQ 疊加鈕(2026-08-01 恢復;與上方 K線圖疊加鈕各自獨立)=====
@@ -2564,6 +2568,83 @@ function backtest(rows){
 // P7-1 復位/模式切換:整張重畫回「目前視窗的原始畫面」(CHIP_WIN 不變 → 30日仍是30日、200日仍是200日)。
 //   purge 是必要的 —— Plotly.react 不會套用變更後的 config(scrollZoom),不 purge 則縮放模式切換無效;
 //   purge 會清掉 plotly_relayout 監聽 → 同步重置 _vbpBind 讓 VbP 重綁(_pinch 為 DOM 事件、purge 不影響,不可重置否則重複綁定)。
+// ===== 📐 技術判斷層(手冊 v0.2;2026-09-01)=====
+// 確定性規則引擎的前端鏡像:與 scripts/tech_judge.py 同公式(部署前 JS↔Python 對拍;規格=claude/tech_judge_module.md)。
+// 只用已收盤完整日K;⑦=特大+大單淨流入($M,chipDaily);門檻凍結,任何改版須重跑 MRVL 2026-08-28 驗收。
+// 圖上標記=路徑條件「成立首日」(未含財報否決,否決只進警示條);⚠=出貨證據亮燈首日。非買賣建議。
+const TJ_HOL={'2026-01-01':1,'2026-01-19':1,'2026-02-16':1,'2026-04-03':1,'2026-05-25':1,'2026-06-19':1,
+  '2026-07-03':1,'2026-09-07':1,'2026-11-26':1,'2026-12-25':1,'2027-01-01':1,'2027-01-18':1,'2027-02-15':1};   // 同 tjLatestSession/tech_judge.py 休市表
+function tjSeriesJS(B,FM){   // B=[[d,o,h,l,c,v,tor],…](已濾未收盤bar、依日期排序);FM={date:m($M)}
+  const n=B.length,D=B.map(b=>b[0]),C=B.map(b=>+b[4]),V=B.map(b=>+(b[5]||0));
+  const P=new Array(n+1).fill(0),PV=new Array(n+1).fill(0);
+  for(let i=0;i<n;i++){P[i+1]=P[i]+C[i];PV[i+1]=PV[i]+V[i];}
+  const s20=i=>i>=19?(P[i+1]-P[i-19])/20:null, s50=i=>i>=49?(P[i+1]-P[i-49])/50:null;
+  const sd20=new Array(n).fill(null),up=new Array(n).fill(null),lo=new Array(n).fill(null),pb=new Array(n).fill(null),bw=new Array(n).fill(null);
+  for(let i=19;i<n;i++){const m=s20(i);let s=0;for(let j=i-19;j<=i;j++){const d2=C[j]-m;s+=d2*d2;}
+    const sd=Math.sqrt(s/20);sd20[i]=sd;up[i]=m+2*sd;lo[i]=m-2*sd;
+    const w=up[i]-lo[i];pb[i]=w?(C[i]-lo[i])/w:null;bw[i]=m?w/m:null;}
+  const sqz=new Array(n).fill(false);   // squeeze=當日帶寬≤近60日(含當日)最低
+  for(let i=19;i<n;i++){let mn=Infinity;for(let j=Math.max(19,i-59);j<=i;j++)if(bw[j]!=null&&bw[j]<mn)mn=bw[j];
+    sqz[i]=bw[i]!=null&&bw[i]<=mn;}
+  const reg=new Array(n).fill(null);    // 趨勢=C>SMA50 且 SMA50>10日前 SMA50;否則循環
+  for(let i=0;i<n;i++){const a=s50(i),b=i>=10?s50(i-10):null;
+    if(a==null||b==null)continue;reg[i]=(C[i]>a&&a>b)?'trend':'cycle';}
+  const tdb=new Array(n).fill(0),tds=new Array(n).fill(0);   // 連續計數,破則歸零,不設 9 上限
+  for(let i=4;i<n;i++){tdb[i]=C[i]<C[i-4]?tdb[i-1]+1:0;tds[i]=C[i]>C[i-4]?tds[i-1]+1:0;}
+  const cum=new Array(n).fill(0),covP=new Array(n+1).fill(0);let run=0;
+  for(let i=0;i<n;i++){const m=FM[D[i]];run+=(m!=null?m:0);cum[i]=run;covP[i+1]=covP[i]+(FM[D[i]]!=null?1:0);}
+  const cov20=i=>i>=19?covP[i+1]-covP[i-19]:covP[i+1];
+  const v20=i=>i>=19?(PV[i+1]-PV[i-19])/20:null;
+  const f20r=i=>i>=20?cum[i]-cum[i-20]:null;                       // flow20 原值($M)
+  const f20n=i=>{const r=f20r(i),v=v20(i);return (r!=null&&v)?r*1e6/v:null;};   // ÷20日均量標準化
+  const sl5=i=>i>=5?cum[i]-cum[i-5]:null;                          // 五日斜率=近5日⑦淨額(2026-08-31 使用者裁定)
+  const fok=i=>cov20(i)>=15;                                       // 近20日⑦覆蓋<15天=資金流不判讀
+  const acc=new Array(n).fill(false),dst=new Array(n).fill(false);
+  for(let i=20;i<n;i++){const f=f20n(i);if(!fok(i)||f==null)continue;
+    const ch=C[i]/C[i-20]-1;let mx=-Infinity;for(let j=i-19;j<=i;j++)if(C[j]>mx)mx=C[j];
+    acc[i]=f>0&&ch<=0.02;dst[i]=C[i]>=mx*0.99&&f<=0;}
+  const passT=new Array(n).fill(false),passC=new Array(n).fill(false),passD=new Array(n).fill(false),
+        exOn=new Array(n).fill(false),exW=new Array(n).fill('');
+  for(let i=19;i<n;i++){
+    let a1=false,a2=false,a3=false,dTd=false,dLo=false,c3=false,e1=false;
+    for(let j=Math.max(0,i-9);j<=i;j++){
+      if(tdb[j]>=6)a1=true;
+      if((pb[j]!=null&&pb[j]<=0.35)||sqz[j])a2=true;
+      const f=f20n(j);if(fok(j)&&f!=null&&f>0)a3=true;
+      if(tdb[j]>=9)dTd=true;
+      if(lo[j]!=null&&C[j]<lo[j])dLo=true;}
+    for(let j=Math.max(0,i-4);j<=i;j++)if(tdb[j]>=9)c3=true;
+    for(let j=Math.max(0,i-2);j<=i;j++)if(tds[j]>=9)e1=true;
+    passT[i]=reg[i]==='trend'&&a1&&a2&&a3;
+    passC[i]=reg[i]==='cycle'&&((pb[i]!=null&&pb[i]<=0.2)||sqz[i])&&c3&&acc[i];
+    const s5=sl5(i);
+    passD[i]=dTd&&dLo&&lo[i]!=null&&C[i]>lo[i]&&fok(i)&&s5!=null&&s5>0;
+    const ea=e1&&pb[i]!=null&&pb[i]>0.8;
+    exOn[i]=ea||dst[i];exW[i]=(ea?'a':'')+(dst[i]?'b':'');
+  }
+  return {n,D,C,sd20,up,lo,pb,bw,sqz,reg,tdb,tds,cum,f20r,f20n,sl5,cov20,fok,acc,dst,passT,passC,passD,exOn,exW};
+}
+function tjLastDone(){   // 最近已收盤 ET 交易日(16:00 後當日才算;TJ_HOL 休市表;與 tech_judge.py 同規則)
+  function fmt(d){return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');}
+  var now=new Date(),et;
+  try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit'}).formatToParts(now),o={};
+      p.forEach(function(x2){o[x2.type]=x2.value;});
+      et=new Date(Date.UTC(+o.year,+o.month-1,+o.day,+(o.hour==='24'?0:o.hour)));}
+  catch(_){et=new Date(now.getTime()-4*3600e3);}
+  var d=new Date(Date.UTC(et.getUTCFullYear(),et.getUTCMonth(),et.getUTCDate()));
+  function trad(x2){var w=x2.getUTCDay();return w>0&&w<6&&!TJ_HOL[fmt(x2)];}
+  if(!(trad(d)&&et.getUTCHours()>=16))d.setUTCDate(d.getUTCDate()-1);
+  while(!trad(d))d.setUTCDate(d.getUTCDate()-1);
+  return fmt(d);
+}
+function tjEarnVeto(asof,earn){   // 財報否決:asof 之後 5 個交易日內有財報(週末+TJ_HOL)
+  if(!earn||earn<=asof)return false;
+  const d=new Date(asof+'T00:00:00Z');let k=0,last=asof;
+  while(k<5){d.setUTCDate(d.getUTCDate()+1);
+    const s=d.toISOString().slice(0,10),w=d.getUTCDay();
+    if(w===0||w===6||TJ_HOL[s])continue;k++;last=s;}
+  return earn<=last;
+}
 function cockpitReset(modeChanged){
   const e=document.getElementById('cockpit'); if(!e)return;
   try{ if(window.Plotly&&(e._fullLayout||e.data))Plotly.purge(e); }catch(_){}
@@ -2611,7 +2692,7 @@ function renderCockpit(){
     const e=(D[r.d]||{})[CHIP_SYM]; const m=e?(e.m||0):0, rr=(e&&e.r!=null)?e.r:0;
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
   const sig=CHIP_SYM+':'+win+':pd'+CHIP_PD+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')+(AIM&&AIM.updated_utc?':a'+AIM.updated_utc:'')
-    +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')
+    +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')+(CHIP_TJ?':J1':':J0')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
@@ -2740,6 +2821,74 @@ function renderCockpit(){
       if(anyT)out.push({type:'scatter',mode:'markers',x:x,y:yt2,customdata:ht,marker:{symbol:'triangle-down-open',size:12,color:'#e6e9ef',line:{width:1.6,color:'#e6e9ef'}},name:'AI▼',showlegend:false,hovertemplate:'%{customdata}<extra></extra>'});
       return out;
     }catch(_){return [];}})(),
+    ...(function(){try{   // 📐 技術判斷層(手冊 v0.2):路徑成立首日 趨/循/災 + 出貨證據 ⚠ + 警示條;僅日K;fail-open
+      const strip=document.getElementById('tjstrip');
+      if(CHIP_PD!=='d'||!CHIP_TJ){if(strip)strip.style.display='none';return [];}
+      const _bars=chipBars(CHIP_SYM)||[];
+      const lastDone=tjLastDone();
+      const B=_bars.filter(b=>b[0]<=lastDone);
+      const f1=v=>v==null?'—':(+v).toFixed(2);
+      if(B.length<70){if(strip){strip.style.display='';strip.innerHTML='<div style="padding:4px 8px;margin:2px 0 4px;border:1px solid rgba(244,114,182,.25);border-radius:8px;font-size:11px;color:#898781"><b style="color:#f472b6">📐 技判</b> 日K不足 70 根,資料不足不判讀(手冊 v0.2)</div>';}return [];}
+      const FM={};Object.keys(D0||{}).forEach(dd=>{const e=(D0[dd]||{})[CHIP_SYM];if(e&&e.m!=null&&dd<=lastDone)FM[dd]=+e.m;});
+      const T=tjSeriesJS(B,FM);
+      const di={};R.forEach((r,i2)=>{di[r.d]=i2;});
+      const yP=new Array(R.length).fill(null),tP=new Array(R.length).fill(''),cP=new Array(R.length).fill('#3987e5'),hP=new Array(R.length).fill('');
+      const yE=new Array(R.length).fill(null),tE=new Array(R.length).fill(''),hE=new Array(R.length).fill('');
+      let anyP=false,anyE=false;
+      for(let j=0;j<T.n;j++){
+        const i2=di[T.D[j]];if(i2==null)continue;
+        const stT=T.passT[j]&&!(j>0&&T.passT[j-1]),stC=T.passC[j]&&!(j>0&&T.passC[j-1]),stD=T.passD[j]&&!(j>0&&T.passD[j-1]);
+        if(stT||stC||stD){
+          let txt='';const hh=[];
+          if(stT){txt+='趨';hh.push('趨勢路徑成立:regime=趨勢 · 近10日TD買曾≥6 · %B≤0.35或squeeze · flow20>0');}
+          if(stC){txt+='循';hh.push('循環路徑成立:regime=循環 · 當日%B≤0.2或squeeze · 近5日TD買曾達9 · 吸籌背離');}
+          if(stD){txt+='災';hh.push('災後路徑成立:近10日TD買曾達9且曾收破下軌 · 當日收回下軌上 · 近5日⑦淨額>0');}
+          yP[i2]=R[i2].l-o3*3.7;tP[i2]=txt;cP[i2]=stD?'#4ade80':(stC?'#fab219':'#3987e5');
+          hP[i2]=T.D[j]+'<br>'+hh.join('<br>')+'<br>%B='+f1(T.pb[j])+' 帶寬='+(T.bw[j]!=null?(T.bw[j]*100).toFixed(1)+'%':'—')+(T.sqz[j]?'·SQUEEZE':'')+' TD買'+T.tdb[j]+'/賣'+T.tds[j]+' flow20='+(T.f20r(j)!=null?T.f20r(j).toFixed(0)+'M':'—')
+            +'<br>⚠ 手冊v0.2規則條件成立「首日」(未含財報否決,見警示條)·歷史條件不代表未來·非買賣建議';
+          anyP=true;
+        }
+        if(T.exOn[j]&&!(j>0&&T.exOn[j-1])){
+          yE[i2]=R[i2].h+o3*3.7;tE[i2]='⚠';
+          hE[i2]=T.D[j]+' 出貨證據亮燈:'+(T.exW[j].indexOf('a')>=0?'近3日TD賣曾達9且當日%B>0.8':'')+(T.exW[j]==='ab'?' + ':'')+(T.exW[j].indexOf('b')>=0?'出貨背離(收盤≥20日最高×0.99且flow20≤0)':'')
+            +'<br>%B='+f1(T.pb[j])+' TD賣'+T.tds[j]+' flow20='+(T.f20r(j)!=null?T.f20r(j).toFixed(0)+'M':'—')
+            +'<br>⚠ 規則條件成立「首日」·歷史條件不代表未來·非買賣建議';
+          anyE=true;
+        }
+      }
+      // 警示條(當前狀態=已收盤最新一根;財報否決只作用於今日判定,不回溯歷史標記)
+      const i9=T.n-1,regZ=T.reg[i9]==='trend'?'趨勢':(T.reg[i9]==='cycle'?'循環':'—');
+      const earn=(typeof SIG!=='undefined'&&SIG&&SIG.symbols&&SIG.symbols[CHIP_SYM])?(SIG.symbols[CHIP_SYM].next_earnings||null):null;
+      const veto=tjEarnVeto(T.D[i9],earn);
+      const pT=T.passT[i9],pC=T.passC[i9],pD=T.passD[i9];
+      const hits=[pT?'趨勢路徑':null,pC?'循環路徑':null,pD?'災後路徑':null].filter(Boolean);
+      let conc=regZ+' regime;';
+      if(veto)conc+='進場全數被否決(財報否決:'+earn+')';
+      else if(hits.length)conc+=hits.join('+')+' 成立';
+      else conc+='三條路徑皆不成立,空手觀望';
+      if(T.exOn[i9])conc+=';⚠ 出場警戒燈亮';
+      if(!hits.length&&!veto&&T.reg[i9]==='cycle'&&T.lo[i9]!=null)conc+=';災後觀察價位=下軌 '+Math.round(T.lo[i9])+' 附近';
+      const bg=(on,txt,col)=>'<span style="padding:1px 7px;border-radius:6px;font-weight:600;'+(on?('background:'+col+'26;color:'+col):'color:#898781;opacity:.7')+'">'+txt+'</span>';
+      const f20v=T.f20r(i9),s5v=T.sl5(i9),fokv=T.fok(i9);
+      if(strip){strip.innerHTML='<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 8px;margin:2px 0 4px;background:rgba(244,114,182,.05);border:1px solid rgba(244,114,182,.25);border-radius:8px;font-size:11px;color:#c3c2b7">'
+        +'<b style="color:#f472b6">📐 技判</b><span style="color:'+(T.D[i9]<lastDone?'#f87171':'#898781')+'">'+T.D[i9]+(T.D[i9]<lastDone?' · 資料未更新':'')+'</span>'
+        +bg(true,regZ,T.reg[i9]==='trend'?'#3987e5':'#fab219')
+        +(veto?bg(true,'🚫 財報否決(5交易日內:'+earn+')','#f87171')
+          :bg(pT,'趨勢'+(pT?'✓':'✗'),'#3987e5')+bg(pC,'循環'+(pC?'✓':'✗'),'#fab219')+bg(pD,'災後'+(pD?'✓':'✗'),'#4ade80'))
+        +(T.exOn[i9]?bg(true,'⚠ 出場警戒','#f87171'):'')
+        +'<span>TD買'+T.tdb[i9]+'/賣'+T.tds[i9]+'</span><span>%B '+f1(T.pb[i9])+'</span>'
+        +'<span>帶寬 '+(T.bw[i9]!=null?(T.bw[i9]*100).toFixed(1)+'%':'—')+(T.sqz[i9]?' <b style="color:#fab219">SQZ</b>':'')+'</span>'
+        +'<span>⑦flow20 '+(fokv&&f20v!=null?((f20v>0?'+':'')+f20v.toFixed(0)+'M'):'覆蓋不足')+'</span>'
+        +'<span>5日 '+(fokv&&s5v!=null?((s5v>0?'+':'')+s5v.toFixed(0)+'M'):'—')+'</span>'
+        +(earn&&!veto?'<span>財報 '+earn+'</span>':'')
+        +'<span style="color:#e6e9ef;background:rgba(255,255,255,.05);padding:1px 7px;border-radius:6px">'+conc+'</span>'
+        +'<span style="color:#898781">手冊v0.2 · 規則引擎 · 非投資建議</span></div>';
+        strip.style.display='';}
+      const out2=[];
+      if(anyP)out2.push({type:'scatter',mode:'text',x:x,y:yP,text:tP,customdata:hP,textfont:{size:11,color:cP},showlegend:false,name:'技判路徑',hovertemplate:'%{customdata}<extra></extra>'});
+      if(anyE)out2.push({type:'scatter',mode:'text',x:x,y:yE,text:tE,customdata:hE,textfont:{size:12,color:'#f87171'},showlegend:false,name:'技判出場',hovertemplate:'%{customdata}<extra></extra>'});
+      return out2;
+    }catch(_){try{const s9=document.getElementById('tjstrip');if(s9)s9.style.display='none';}catch(__){}return [];}})(),
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
@@ -2823,7 +2972,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 趨/循/災=路徑首日·<span style="color:#f87171">⚠</span>出貨</span>':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -2860,7 +3009,7 @@ function renderCockpit(){
   // 右緣標籤蓋最新K棒問題根治:數值上移圖頂,虛線照畫)
   if(MB){
     ann.push({xref:'paper',yref:'paper',x:0,y:1.030,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span> <span style="color:#e6e9ef">AI▲▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')
+      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span> <span style="color:#e6e9ef">AI▲▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判</span>':'')
         +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
     if(CHIP_CTA&&_ctaVals)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,
       font:{size:9,color:MUT2},text:'┈CTA '+_ctaVals});
