@@ -644,7 +644,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-31T17:01Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-08-31T17:28Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2839,18 +2839,18 @@ function renderCockpit(){
         const i2=di[T.D[j]];if(i2==null)continue;
         const stT=T.passT[j]&&!(j>0&&T.passT[j-1]),stC=T.passC[j]&&!(j>0&&T.passC[j-1]),stD=T.passD[j]&&!(j>0&&T.passD[j-1]);
         if(stT||stC||stD){
-          let txt='';const hh=[];
-          if(stT){txt+='趨';hh.push('趨勢路徑成立:regime=趨勢 · 近10日TD買曾≥6 · %B≤0.35或squeeze · flow20>0');}
-          if(stC){txt+='循';hh.push('循環路徑成立:regime=循環 · 當日%B≤0.2或squeeze · 近5日TD買曾達9 · 吸籌背離');}
-          if(stD){txt+='災';hh.push('災後路徑成立:近10日TD買曾達9且曾收破下軌 · 當日收回下軌上 · 近5日⑦淨額>0');}
+          let txt='▲';const hh=[];
+          if(stT){txt+='趨';hh.push('▲趨 進場訊號|趨勢路徑成立:regime=趨勢 · 近10日TD買曾≥6 · %B≤0.35或squeeze · flow20>0');}
+          if(stC){txt+='循';hh.push('▲循 進場訊號|循環路徑成立:regime=循環 · 當日%B≤0.2或squeeze · 近5日TD買曾達9 · 吸籌背離');}
+          if(stD){txt+='災';hh.push('▲災 進場訊號|災後路徑成立:近10日TD買曾達9且曾收破下軌 · 當日收回下軌上 · 近5日⑦淨額>0');}
           yP[i2]=R[i2].l-o3*3.7;tP[i2]=txt;cP[i2]=stD?'#4ade80':(stC?'#fab219':'#3987e5');
           hP[i2]=T.D[j]+'<br>'+hh.join('<br>')+'<br>%B='+f1(T.pb[j])+' 帶寬='+(T.bw[j]!=null?(T.bw[j]*100).toFixed(1)+'%':'—')+(T.sqz[j]?'·SQUEEZE':'')+' TD買'+T.tdb[j]+'/賣'+T.tds[j]+' flow20='+(T.f20r(j)!=null?T.f20r(j).toFixed(0)+'M':'—')
             +'<br>⚠ 手冊v0.2規則條件成立「首日」(未含財報否決,見警示條)·歷史條件不代表未來·非買賣建議';
           anyP=true;
         }
         if(T.exOn[j]&&!(j>0&&T.exOn[j-1])){
-          yE[i2]=R[i2].h+o3*3.7;tE[i2]='⚠';
-          hE[i2]=T.D[j]+' 出貨證據亮燈:'+(T.exW[j].indexOf('a')>=0?'近3日TD賣曾達9且當日%B>0.8':'')+(T.exW[j]==='ab'?' + ':'')+(T.exW[j].indexOf('b')>=0?'出貨背離(收盤≥20日最高×0.99且flow20≤0)':'')
+          yE[i2]=R[i2].h+o3*3.7;tE[i2]='⚠出';
+          hE[i2]=T.D[j]+' ⚠出 出場警戒|出貨證據亮燈:'+(T.exW[j].indexOf('a')>=0?'近3日TD賣曾達9且當日%B>0.8':'')+(T.exW[j]==='ab'?' + ':'')+(T.exW[j].indexOf('b')>=0?'出貨背離(收盤≥20日最高×0.99且flow20≤0)':'')
             +'<br>%B='+f1(T.pb[j])+' TD賣'+T.tds[j]+' flow20='+(T.f20r(j)!=null?T.f20r(j).toFixed(0)+'M':'—')
             +'<br>⚠ 規則條件成立「首日」·歷史條件不代表未來·非買賣建議';
           anyE=true;
@@ -2882,7 +2882,15 @@ function renderCockpit(){
         +'<span>5日 '+(fokv&&s5v!=null?((s5v>0?'+':'')+s5v.toFixed(0)+'M'):'—')+'</span>'
         +(earn&&!veto?'<span>財報 '+earn+'</span>':'')
         +'<span style="color:#e6e9ef;background:rgba(255,255,255,.05);padding:1px 7px;border-radius:6px">'+conc+'</span>'
-        +'<span style="color:#898781">手冊v0.2 · 規則引擎 · 非投資建議</span></div>';
+        +'<span style="color:#898781">手冊v0.2 · 規則引擎 · 非投資建議</span>'
+        +'<span style="flex-basis:100%;display:flex;gap:9px;flex-wrap:wrap;align-items:center;color:#898781;font-size:10.5px;border-top:1px dashed rgba(244,114,182,.2);padding-top:3px;margin-top:1px">'
+          +'<span>圖上標記(K棒下=進場訊號、K棒上=出場警戒):</span>'
+          +'<span><b style="color:#3987e5">▲趨</b> 趨勢路徑成立首日(順勢回檔買點條件湊齊)</span>'
+          +'<span><b style="color:#fab219">▲循</b> 循環路徑成立首日(區間低檔買點條件同日成立)</span>'
+          +'<span><b style="color:#4ade80">▲災</b> 災後路徑成立首日(急跌後修復+資金回流)</span>'
+          +'<span><b style="color:#f87171">⚠出</b> 出貨證據亮燈(高檔TD賣9 或 價平量走=出貨背離)</span>'
+          +'<span>滑過/點擊標記=該日完整條件數值</span>'
+        +'</span></div>';
         strip.style.display='';}
       const out2=[];
       if(anyP)out2.push({type:'scatter',mode:'text',x:x,y:yP,text:tP,customdata:hP,textfont:{size:11,color:cP},showlegend:false,name:'技判路徑',hovertemplate:'%{customdata}<extra></extra>'});
@@ -2972,7 +2980,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 趨/循/災=路徑首日·<span style="color:#f87171">⚠</span>出貨</span>':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 ▲趨/▲循/▲災=進場路徑成立·<span style="color:#f87171">⚠出</span>=出貨警戒(圖例見上方警示條)</span>':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
