@@ -715,6 +715,16 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
             try: _src0 = (json.load(open(os.path.join(kdir, _f2))) or {}).get("src") or ""
             except Exception: _src0 = ""
             if str(_src0).startswith("yahoo"): syms.append(_s0)
+        # 歷史點播名單(.lookupserved.json)也納入:早期 serve_lookup 只推 gist、不寫本機快取 →
+        # 這些檔(BE/GLD/XLE/HYG/SLV/USO/XLF/XLV…)本機無檔=上面掃不到,gist 上永久凍結(2026-09-22 事故根因之二)。
+        # 納入後走「缺檔隨時補」路徑,本輪即重抓+落地本機快取,之後照常日更。
+        try:
+            _srv = json.load(open(args.config + ".lookupserved.json"))
+            for _s1 in (_srv or {}):
+                _s1 = str(_s1).upper()
+                if _s1 and _s1 not in core and _s1 not in syms and _re2.fullmatch(r"[A-Z][A-Z0-9.\-]{0,9}", _s1):
+                    syms.append(_s1)
+        except Exception: pass
     except Exception: pass
     badp = args.config + ".extklbad"
     try: bad = json.load(open(badp))
