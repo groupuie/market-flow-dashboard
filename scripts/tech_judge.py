@@ -84,6 +84,34 @@ def load_kline(sym, kdir, gist_base):
 
 def rnd(x, d=3): return None if x is None else round(float(x), d)
 
+# ---------------- 波段頂確認(2026-09-22;取代圖上「⚠出」的標記口徑)----------------
+# 使用者回報:手冊出貨證據(TD賣9+%B>0.8 / 出貨背離)在上行通道每碰上緣就亮 → 實測 307檔×近一年
+# 每檔每年 12.8 次、抓頂率≈隨便一天、40日同股超額僅 −3.4%(≈雜訊)。回測後採用「結構確認」:
+#   ①過熱=收盤高於 SMA50 ≥15%(這一段真的拉開了,不是通道內的小波動);
+#   ②確認=過熱後 20 個交易日內,第一次收盤跌破 SMA20(布林中軌)→ 這一波的頂已經出現;
+#   ③冷卻=確認後 20 個交易日內不再武裝(一個波段只標一次;無冷卻時 27% 的確認相隔<10日=同一個頂重複標)。
+# 回測(307檔,2025-10→2026-07,40日前瞻;腳本 scratchpad top_var4.py R2):每檔每年 2.0 次;
+#   之後40日再跌≥10% 60.5%(所有日 45%);20日同股超額 −2.5%(中位 −3.8)、40日 −6.3%;前後半段同號;
+#   代價=確認時已離20日高點約 12%、中位落後真頂約 4 個交易日。低波動大型股/指數很少拉開15% → 幾乎不會亮。
+TOP_EXT = 0.15; TOP_ARM = 20; TOP_COOL = 20
+def swing_top_series(C, sma20, sma50):
+    n = len(C); warn = [False]*n; conf = [False]*n; peak = [None]*n
+    armed = True; waiting = False; last_hot = -999; last_conf = -999; pk = None
+    for i in range(n):
+        hot = sma50[i] is not None and sma50[i] > 0 and C[i]/sma50[i] - 1 >= TOP_EXT
+        cooling = i - last_conf < TOP_COOL
+        if hot:
+            if armed and not cooling: warn[i] = True; armed = False; waiting = True; pk = i
+            if waiting:
+                last_hot = i
+                if pk is None or C[i] > C[pk]: pk = i
+        if waiting and not hot and i - last_hot <= TOP_ARM:
+            if sma20[i] is not None and C[i] < sma20[i]:
+                conf[i] = True; peak[i] = pk; waiting = False; armed = True; last_conf = i
+        if waiting and i - last_hot > TOP_ARM:
+            waiting = False; armed = True
+    return warn, conf, peak, waiting
+
 # ---------------- 核心計算(全部只用已收盤完整日K) ----------------
 def compute_symbol(bars, flow_by_date, asof=None):
     """bars=[[d,o,h,l,c,v,tor],...](已依日期排序、僅完整日);flow_by_date={date:m($M)}
@@ -187,6 +215,21 @@ def compute_symbol(bars, flow_by_date, asof=None):
               "v": "maxTD賣=%d,%%B=%.2f" % (max(tds[i-2:i+1]), pctb[i])}
     exit_b = {"k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)", "ok": dist_div,
               "v": "C=%.2f,max20×0.99=%.2f,flow20=%s" % (C[i], max20*0.99, rnd(f20_now, 4))}
+    # 波段頂確認(圖上「出」口徑;見 swing_top_series)
+    tw, tc, tpk, twait = swing_top_series(C, sma20, sma50)
+    last_c = max((j for j in range(n) if tc[j]), default=None)
+    recent_c = [D[j] for j in range(max(0, i-59), i+1) if tc[j]]
+    swing_top = {
+        "ext_pct": rnd((C[i]/sma50[i]-1)*100, 2) if sma50[i] else None,
+        "watch": bool(twait),                                   # 本波段已過熱、尚未確認 → 收破中軌即確認
+        "confirm_level": rnd(sma20[i]) if twait else None,
+        "last_confirm_d": D[last_c] if last_c is not None else None,
+        "last_confirm_peak_d": D[tpk[last_c]] if last_c is not None and tpk[last_c] is not None else None,
+        "last_confirm_peak_c": rnd(C[tpk[last_c]]) if last_c is not None and tpk[last_c] is not None else None,
+        "confirm_60d": recent_c,
+        "today": bool(tc[i]),
+        "recent5": any(tc[max(0, i-4):i+1]),                    # 近5個交易日內有確認(卡片/結論用)
+    }
     return {
         "insufficient": False, "bars_n": n, "asof": D[i],
         "close": rnd(C[i]), "sma20": rnd(sma20[i]), "sd20": rnd(sd20[i]),
@@ -202,6 +245,7 @@ def compute_symbol(bars, flow_by_date, asof=None):
                 "max20_close": rnd(max20)},
         "paths": {"trend": trend_items, "cycle": cycle_items, "disaster": dis_items},
         "exit": {"a": exit_a, "b": exit_b},
+        "swing_top": swing_top,
         "_dbg": {"tdb_tail": tdb[-15:], "tds_tail": tds[-15:], "dates_tail": D[-15:],
                  "closes_tail": [rnd(x) for x in C[-25:]]},
     }
@@ -245,8 +289,13 @@ def apply_verdicts(node, earnings_date, atm_flag, latest_sess):
         parts.append("+".join(zh[k] for k in hits) + " 成立")
     else:
         parts.append("三條路徑皆不成立,空手觀望")
+    st = node.get("swing_top") or {}
+    if st.get("recent5"):
+        parts.append("出:波段頂確認(%s 收破中軌;波段高點 %s 收 %s)" % (st["last_confirm_d"], st.get("last_confirm_peak_d"), st.get("last_confirm_peak_c")))
+    elif st.get("watch"):
+        parts.append("高檔:高於50日線 %.0f%%,若收破中軌 %.2f 即確認波段頂" % (st.get("ext_pct") or 0, st.get("confirm_level") or 0))
     if node["exit_on"]:
-        parts.append("⚠ 出場警戒燈亮")
+        parts.append("手冊出貨證據亮(參考)")
     if not hits and not veto and node["regime"] == "cycle" and node.get("lower"):
         parts.append("災後路徑觀察價位=下軌 %.0f 附近" % node["lower"])
     node["conclusion"] = ";".join(parts)

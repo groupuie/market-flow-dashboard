@@ -648,7 +648,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-09-22T17:10Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-09-22T19:25Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2626,7 +2626,20 @@ function tjSeriesJS(B,FM){   // B=[[d,o,h,l,c,v,tor],…](已濾未收盤bar、�
     const ea=e1&&pb[i]!=null&&pb[i]>0.8;
     exOn[i]=ea||dst[i];exW[i]=(ea?'a':'')+(dst[i]?'b':'');
   }
-  return {n,D,C,sd20,up,lo,pb,bw,sqz,reg,tdb,tds,cum,f20r,f20n,sl5,cov20,fok,acc,dst,passT,passC,passD,exOn,exW};
+  // 波段頂確認(2026-09-22;圖上「出」口徑,與 tech_judge.py swing_top_series 逐位元同規則):
+  //   ①過熱=收盤高於SMA50≥15% ②過熱後20交易日內首次收破SMA20(中軌)=確認 ③確認後20交易日冷卻(一個波段只標一次)
+  //   回測 307檔×近一年:每檔每年 2.0 次(舊⚠出 12.8);之後40日再跌≥10% 60.5%(所有日45%);40日同股超額 −6.3%。
+  const topW=new Array(n).fill(false),topC=new Array(n).fill(false),topPk=new Array(n).fill(-1);
+  let tArmed=true,tWait=false,tLastHot=-999,tLastConf=-999,tPk=-1;
+  for(let i=0;i<n;i++){const a50=s50(i),hot=a50!=null&&a50>0&&C[i]/a50-1>=0.15,cool=i-tLastConf<20;
+    if(hot){if(tArmed&&!cool){topW[i]=true;tArmed=false;tWait=true;tPk=i;}
+      if(tWait){tLastHot=i;if(tPk<0||C[i]>C[tPk])tPk=i;}}
+    const m20=s20(i);
+    if(tWait&&!hot&&i-tLastHot<=20&&m20!=null&&C[i]<m20){topC[i]=true;topPk[i]=tPk;tWait=false;tArmed=true;tLastConf=i;}
+    if(tWait&&i-tLastHot>20){tWait=false;tArmed=true;}}
+  const topWait=tWait,topPkNow=tWait?tPk:-1;
+  return {n,D,C,sd20,up,lo,pb,bw,sqz,reg,tdb,tds,cum,f20r,f20n,sl5,cov20,fok,acc,dst,passT,passC,passD,exOn,exW,
+          s20a:s20,s50a:s50,topW,topC,topPk,topWait,topPkNow};
 }
 function tjLastDone(){   // 最近已收盤 ET 交易日(16:00 後當日才算;TJ_HOL 休市表;與 tech_judge.py 同規則)
   function fmt(d){return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');}
@@ -2962,11 +2975,14 @@ function renderCockpit(){
             +'<br>⚠ 手冊v0.2規則條件成立「首日」(未含財報否決,見警示條)·歷史條件不代表未來·非買賣建議';
           anyP=true;
         }
-        if(T.exOn[j]&&!(j>0&&T.exOn[j-1])){
-          yE[i2]=R[i2].h+o3*3.7;tE[i2]='⚠出';
-          hE[i2]=T.D[j]+' ⚠出 出場警戒|出貨證據亮燈:'+(T.exW[j].indexOf('a')>=0?'近3日TD賣曾達9且當日%B>0.8':'')+(T.exW[j]==='ab'?' + ':'')+(T.exW[j].indexOf('b')>=0?'出貨背離(收盤≥20日最高×0.99且flow20≤0)':'')
-            +'<br>%B='+f1(T.pb[j])+' TD賣'+T.tds[j]+' flow20='+(T.f20r(j)!=null?T.f20r(j).toFixed(0)+'M':'—')
-            +'<br>⚠ 規則條件成立「首日」·歷史條件不代表未來·非買賣建議';
+        if(T.topC[j]){   // 出=波段頂確認(2026-09-22 改版;舊口徑「出貨證據首日」每檔每年12.8次≈雜訊,已退為警示條參考)
+          const pk=T.topPk[j],pkC=pk>=0?T.C[pk]:null,a50=T.s50a(pk>=0?pk:j),m20=T.s20a(j);
+          yE[i2]=R[i2].h+o3*3.7;tE[i2]='出';
+          hE[i2]=T.D[j]+' 出|波段頂確認:這一波先拉到高於50日線 '+(pkC&&a50?((pkC/a50-1)*100).toFixed(0):'≥15')+'%'
+            +(pk>=0?'(波段高點 '+T.D[pk].slice(5)+' 收 '+f1(pkC)+')':'')
+            +',今天第一次收盤跌破20日線(中軌 '+f1(m20)+')'+(pkC?' — 已離高點 '+((T.C[j]/pkC-1)*100).toFixed(1)+'%':'')
+            +'<br>歷史(307檔×近一年):之後40日再跌≥10%的機率 60%(一般日 45%);40日平均比同股平常少賺約6%;約每檔每年2次'
+            +'<br>⚠ 這是「頂已出現」的確認,不是預測最高點(代價:通常落後真頂約4天、已回落約12%)·非買賣建議';
           anyE=true;
         }
       }
@@ -2980,7 +2996,9 @@ function renderCockpit(){
       if(veto)conc+='進場全數被否決(財報否決:'+earn+')';
       else if(hits.length)conc+=hits.join('+')+' 成立';
       else conc+='三條路徑皆不成立,空手觀望';
-      if(T.exOn[i9])conc+=';⚠ 出場警戒燈亮';
+      {let lc=-1;for(let k=i9;k>=Math.max(0,i9-4);k--)if(T.topC[k]){lc=k;break;}
+       if(lc>=0)conc+=';出:波段頂確認('+T.D[lc]+' 收破中軌)';
+       else if(T.topWait)conc+=';高檔:若收盤跌破中軌 '+f1(T.s20a(i9))+' 即確認波段頂';}
       if(!hits.length&&!veto&&T.reg[i9]==='cycle'&&T.lo[i9]!=null)conc+=';災後觀察價位=下軌 '+Math.round(T.lo[i9])+' 附近';
       const bg=(on,txt,col)=>'<span style="padding:1px 7px;border-radius:6px;font-weight:600;'+(on?('background:'+col+'26;color:'+col):'color:#898781;opacity:.7')+'">'+txt+'</span>';
       const f20v=T.f20r(i9),s5v=T.sl5(i9),fokv=T.fok(i9);
@@ -2989,7 +3007,11 @@ function renderCockpit(){
         +bg(true,regZ,T.reg[i9]==='trend'?'#3987e5':'#fab219')
         +(veto?bg(true,'🚫 財報否決(5交易日內:'+earn+')','#f87171')
           :bg(pT,'趨勢'+(pT?'✓':'✗'),'#3987e5')+bg(pC,'循環'+(pC?'✓':'✗'),'#fab219')+bg(pD,'災後'+(pD?'✓':'✗'),'#4ade80'))
-        +(T.exOn[i9]?bg(true,'⚠ 出場警戒','#f87171'):'')
+        +(function(){let lc=-1;for(let k=i9;k>=Math.max(0,i9-4);k--)if(T.topC[k]){lc=k;break;}
+          if(lc>=0)return bg(true,'出 波段頂確認('+T.D[lc].slice(5)+')','#f87171');
+          if(T.topWait){const a50=T.s50a(i9);return bg(true,'高檔 · 高於50日線'+(a50?((T.C[i9]/a50-1)*100).toFixed(0):'')+'% · 收破 '+f1(T.s20a(i9))+' 即確認頂','#fab219');}
+          return '';})()
+        +(T.exOn[i9]?'<span style="color:#898781" title="手冊v0.2原始出貨證據(TD賣9+%B>0.8 / 出貨背離);回測≈雜訊,僅供參考">手冊出貨證據亮(參考)</span>':'')
         +(function(){try{var pv=posVeto(CHIP_SYM);return pv?bg(true,'🚫 '+pv.t+'(至'+pv.until+')','#f87171'):'';}catch(_){return '';}})()
         +'<span>TD買'+T.tdb[i9]+'/賣'+T.tds[i9]+'</span><span>%B '+f1(T.pb[i9])+'</span>'
         +'<span>帶寬 '+(T.bw[i9]!=null?(T.bw[i9]*100).toFixed(1)+'%':'—')+(T.sqz[i9]?' <b style="color:#fab219">SQZ</b>':'')+'</span>'
@@ -3001,7 +3023,7 @@ function renderCockpit(){
         +'<span style="flex-basis:100%;display:flex;gap:9px;flex-wrap:wrap;align-items:center;color:#898781;font-size:10.5px;border-top:1px dashed rgba(244,114,182,.2);padding-top:3px;margin-top:1px">'
           +'<span>圖上標記:</span>'
           +'<span><b style="color:#4ade80">買</b>(K棒下)=進場路徑成立首日,滑過/點擊看是哪條路徑(趨勢/循環/災後)與當日條件</span>'
-          +'<span><b style="color:#f87171">⚠出</b>(K棒上)=出貨證據亮燈,出場警戒</span>'
+          +'<span><b style="color:#f87171">出</b>(K棒上)=波段頂確認:先漲到高於50日線15%以上,之後第一次收盤跌破20日線(約每檔每年2次;通道內的小波動不標)</span>'
         +'</span></div>';
         strip.style.display='';}
       const out2=[];
@@ -3131,7 +3153,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 <span style="color:#4ade80">買</span>=進場路徑成立·<span style="color:#f87171">⚠出</span>=出貨警戒</span>':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 <span style="color:#4ade80">買</span>=進場路徑成立·<span style="color:#f87171">出</span>=波段頂確認</span>':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -5152,7 +5174,9 @@ function tjCard(s,n,cur,latest){
   var reg=n.regime==='trend'?'<span style="background:rgba(57,135,229,.15);color:#3987e5;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">趨勢</span>'
         :n.regime==='cycle'?'<span style="background:rgba(250,178,25,.15);color:#fab219;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">循環</span>'
         :'<span style="color:#898781">—</span>';
-  head+=reg+(n.exit_on?'<span style="background:rgba(248,113,113,.15);color:#f87171;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">⚠ 出場警戒</span>':'')
+  var stp=n.swing_top||{};
+  head+=reg+(stp.recent5?'<span title="波段頂確認:本波段曾高於50日線≥15%,之後首次收破中軌(近5交易日內)" style="background:rgba(248,113,113,.15);color:#f87171;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">出 波段頂確認 '+String(stp.last_confirm_d||'').slice(5)+'</span>'
+      :(stp.watch?'<span title="本波段已高於50日線≥15%,尚未確認;收盤跌破中軌即確認波段頂" style="background:rgba(250,178,25,.15);color:#fab219;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700">高檔 · 收破 '+stp.confirm_level+' 即確認頂</span>':''))
     +'<span style="margin-left:auto;color:'+(stale?'#f87171':'#898781')+';font-size:11px">'+(n.asof||'')+(stale?' · 資料未更新':'')+'</span></div>';
   function pct(a,b){return (a&&b)?((a/b-1)*100).toFixed(1)+'%':'—';}
   var f=n.flow||{},dv=n.div||{};
@@ -5175,7 +5199,7 @@ function tjCard(s,n,cur,latest){
     +tjPath('災後',p.disaster||[],['TD9','破下軌','回軌上','斜率+'],(n.path_raw_pass||{}).disaster,n.vetoed)
     +'</div>';
   var ex=n.exit||{};
-  var exit='<div style="font-size:11px;margin-top:3px;color:#c3c2b7">出貨證據:'
+  var exit='<div style="font-size:11px;margin-top:3px;color:#c3c2b7" title="手冊v0.2原始出貨證據;回測(307檔)≈雜訊,圖上「出」已改用波段頂確認">手冊出貨證據(參考):'
     +tjChip(ex.a||{ok:false,k:'',v:''},'TD賣9+%B.8')+tjChip(ex.b||{ok:false,k:'',v:''},'出貨背離')+'</div>';
   var e=n.earnings||{};
   var earn='<div style="font-size:11px;color:#c3c2b7">財報:'+(e.date?('<b style="color:'+(e.veto?'#f87171':'#f2f1ea')+'">'+e.date+'</b>'+(e.veto?' <span style="color:#f87171;font-weight:700">否決期(5交易日內)</span>':'')):'<span style="color:#898781">未公告/未知</span>')
