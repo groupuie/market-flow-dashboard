@@ -474,19 +474,47 @@ def kline_symbols(custom):
         if s and s not in out: out.append(s)
     return out
 
-def yahoo_ohlc(sym, rng="5y"):
+# 2026 美股休市(與前端 TJ_HOL / tech_judge.py 同表;半日市視為交易日)
+ET_HOL = {"2026-01-01","2026-01-19","2026-02-16","2026-04-03","2026-05-25","2026-06-19",
+          "2026-07-03","2026-09-07","2026-11-26","2026-12-25","2027-01-01","2027-01-18","2027-02-15"}
+def _et_now():
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.now(ZoneInfo("America/New_York"))
+    except Exception:
+        from datetime import timedelta
+        return datetime.now(timezone.utc) - timedelta(hours=4)
+def last_done_session():
+    """最近一個『已收盤』美股交易日(ET 16:05 後當日才算完成;週末+ET_HOL)"""
+    from datetime import timedelta
+    et = _et_now(); d = et.date()
+    def trad(x): return x.weekday() < 5 and x.strftime("%Y-%m-%d") not in ET_HOL
+    if not (trad(d) and (et.hour, et.minute) >= (16, 5)): d = d - timedelta(days=1)
+    while not trad(d): d = d - timedelta(days=1)
+    return d.strftime("%Y-%m-%d")
+
+def yahoo_ohlc(sym, rng="5y", adjust=False, complete_only=False):
+    """Yahoo 日K。adjust=True:以 adjclose/close 比例同乘開高低收 → 等同富途「前復權」(股利+分割;最新價不動)
+       —— 2026-09-22 實測:JPM/MU 與富途 qfq 0.00% 差、MSFT 0.19%、SPY 0.5%(Yahoo 原始 close 只調分割,
+       配息股舊價可差 3–12%)。complete_only=True:剔除尚未收盤的當日棒(盤中抓到的是半根,
+       存進日K檔會被當成定案 → 2026-09-22 BE 案例:13:24 ET 的半根被凍結到隔天)。"""
     q = urllib.parse.quote(sym)
-    d = http_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{q}?range={rng}&interval=1d", 15)
+    d = http_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{q}?range={rng}&interval=1d&events=div%7Csplit", 15)
     r = d["chart"]["result"][0]; ind = r["indicators"]["quote"][0]; ts = r.get("timestamp") or []
     off = r.get("meta", {}).get("gmtoffset", -14400)
+    adjc = ((r.get("indicators", {}).get("adjclose") or [{}])[0] or {}).get("adjclose") or []
+    ld = last_done_session() if complete_only else None
     bars = []
     for i, t in enumerate(ts):
         o = (ind.get("open") or [None]*len(ts))[i]; h = (ind.get("high") or [None]*len(ts))[i]
         l = (ind.get("low") or [None]*len(ts))[i]; c = (ind.get("close") or [None]*len(ts))[i]
         v = (ind.get("volume") or [None]*len(ts))[i]
-        if None in (o, h, l, c): continue
+        if None in (o, h, l, c) or not c: continue
         dt = datetime.fromtimestamp(t + off, timezone.utc).strftime("%Y-%m-%d")
-        bars.append([dt, round(o, 3), round(h, 3), round(l, 3), round(c, 3), int(v or 0), None])
+        if ld and dt > ld: continue                       # 未收盤(盤前/盤中)當日棒不入日K檔
+        f = 1.0
+        if adjust and i < len(adjc) and adjc[i]: f = adjc[i] / c
+        bars.append([dt, round(o*f, 3), round(h*f, 3), round(l*f, 3), round(c*f, 3), int(v or 0), None])
     return bars
 
 def futu_hist_bars(q, sym, start, end):
@@ -541,6 +569,7 @@ def _snap_batch(q, fs, out, depth=0):
     if ret == RET_OK:
         _snap_rows(d, out); return
     if len(fs) == 1:
+        SNAP_BAD.add(fs[0])
         err("snap-bad", RuntimeError(fs[0] + " " + str(d)[:50])); return
     if depth >= 8:
         err("snap", RuntimeError(str(d)[:60] + " n=%d" % len(fs))); return
@@ -548,18 +577,40 @@ def _snap_batch(q, fs, out, depth=0):
     time.sleep(0.55); _snap_batch(q, fs[:mid], out, depth + 1)   # 0.55s=遵守快照 60次/30秒 節流
     time.sleep(0.55); _snap_batch(q, fs[mid:], out, depth + 1)
 
-def snapshot_today(kl_syms):
-    """當日K(全量輪+盤中快輪):開高低收/量/週轉率 → market_data.json 的 kline_today"""
+SNAP_BAD = set()   # 本輪快照查無的代號(_snap_batch 二分隔離出來的)
+def snap_symbols(args, custom):
+    """盤中當日棒宇宙(2026-09-22):核心+自訂 ∪ 擴充清單 ∪ ⚡點播 —— 讓每一檔「查得到日K的股票」盤中都有即時棒
+       (以前只有核心 ~93 檔有;擴充/點播檔盤中停在昨收,與富途並排必然不同)。快照不耗富途歷史K額度。"""
+    out = list(kline_symbols(custom))
+    try:
+        xs, _ = ext_kl_syms(args)
+        for x in xs:
+            if x not in out: out.append(x)
+    except Exception: pass
+    return out
+def snapshot_today(kl_syms, args=None):
+    """當日K(全量輪+盤中快輪):開高低收/量/週轉率 → market_data.json 的 kline_today。
+       查無代號記 .snapbad.json 24h 不再送(避免每分鐘快輪重複二分隔離的延遲)。"""
     from futu import OpenQuoteContext
+    badp = (args.config + ".snapbad.json") if args is not None else None
+    try: sbad = json.load(open(badp)) if badp else {}
+    except Exception: sbad = {}
+    now = time.time()
+    syms = [s for s in kl_syms if now - (sbad.get(s) or 0) > 24*3600]
     q = OpenQuoteContext(host="127.0.0.1", port=11111)
     out = {}
+    SNAP_BAD.clear()
     try:
-        fs = ["US." + s for s in kl_syms]
+        fs = ["US." + s for s in syms]
         for i in range(0, len(fs), 200):
             _snap_batch(q, fs[i:i+200], out)
             time.sleep(0.3)
     finally:
         q.close()
+    if badp and SNAP_BAD:
+        for c in SNAP_BAD: sbad[c.replace("US.", "")] = now
+        try: json.dump(sbad, open(badp, "w"))
+        except Exception: pass
     return out
 
 def refresh_klines(cfg, args, kl_syms):
@@ -579,6 +630,9 @@ def refresh_klines(cfg, args, kl_syms):
     missing = [s for s in kl_syms if not os.path.exists(os.path.join(kdir, s + ".json"))
                and _now - (klbad.get(s) or 0) > 6*3600][:3]   # 2026-08-12:壞代號(AVGG等)永久搶佔 3 槽 → 6h 退避
     todo = list(kl_syms) if daily_due else missing
+    if daily_due:   # 2026-09-22:一次性復權重抓優先給「早期 Yahoo 原始價種子」的檔(板塊追蹤 SEC_KL、自訂)
+        _base = set(WL["market"] + WL["stocks"] + WL["leveraged"])
+        todo.sort(key=lambda x: 0 if (x in SEC_KL or x not in _base) else 1)
     if not todo: return
     from datetime import timedelta
     end = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -590,6 +644,7 @@ def refresh_klines(cfg, args, kl_syms):
             q = OpenQuoteContext(host="127.0.0.1", port=11111)
         except Exception as e: err("kline-ctx", e)
     changed = {}
+    _regen_n = [0]; _full = set()   # 本輪一次性全量重抓計數(上限 25 檔/輪,分散富途請求)/ 本輪全量取得的檔
     try:
         for s in todo:
             path = os.path.join(kdir, s + ".json")
@@ -602,23 +657,27 @@ def refresh_klines(cfg, args, kl_syms):
                         st = (datetime.now(timezone.utc) - timedelta(days=40)).strftime("%Y-%m-%d")
                         newb = futu_hist_bars(q, s, st, end); src = "futu-qfq"
                         om = {b[0]: b[4] for b in cache["bars"]}
-                        drift = [b for b in newb if b[0] in om and om[b[0]] and abs(b[4]/om[b[0]]-1) > 0.02]
-                        bars = futu_hist_bars(q, s, start5, end) if drift else merge_bars(cache["bars"], newb)
-                        if drift: src = "futu-qfq(復權重抓)"
+                        # 2026-09-22:門檻 2%→0.15% —— 每次配息前復權會把整段歷史平移 0.3–1%,2% 門檻抓不到 →
+                        # 舊價永遠停在前一版復權(LMT 2023 年價差 9%);另:早期 Yahoo 原始價種子的檔(adj_gen 缺)一次性全量重抓。
+                        drift = [b for b in newb if b[0] in om and om[b[0]] and abs(b[4]/om[b[0]]-1) > 0.0015]
+                        regen = cache.get("adj_gen") != 2 and _regen_n[0] < 25
+                        if regen: _regen_n[0] += 1
+                        bars = futu_hist_bars(q, s, start5, end) if (drift or regen) else merge_bars(cache["bars"], newb)
+                        if drift or regen: src = "futu-qfq(復權重抓)"; _full.add(s)
                     else:
-                        bars = futu_hist_bars(q, s, start5, end); src = "futu-qfq"
+                        bars = futu_hist_bars(q, s, start5, end); src = "futu-qfq"; _full.add(s)
                 else:
                     raise RuntimeError("no futu ctx")
             except Exception as e:
                 if not isinstance(e, RuntimeError) or "no futu ctx" not in str(e): err(f"kline {s}", e)
                 try:
-                    if cache and cache.get("bars"):
-                        newb = yahoo_ohlc(s, "3mo")
+                    if cache and cache.get("bars"):   # 備援也用前復權(與富途 qfq 同口徑)+只存完整棒
+                        newb = yahoo_ohlc(s, "3mo", adjust=True, complete_only=True)
                         om = {b[0]: b[4] for b in cache["bars"]}
-                        drift = [b for b in newb if b[0] in om and om[b[0]] and abs(b[4]/om[b[0]]-1) > 0.02]
-                        bars = merge_bars(cache["bars"], yahoo_ohlc(s, "5y")) if drift else merge_bars(cache["bars"], newb)
+                        drift = [b for b in newb if b[0] in om and om[b[0]] and abs(b[4]/om[b[0]]-1) > 0.0015]
+                        bars = merge_bars(cache["bars"], yahoo_ohlc(s, "5y", adjust=True, complete_only=True)) if drift else merge_bars(cache["bars"], newb)
                     else:
-                        bars = yahoo_ohlc(s, "5y")
+                        bars = yahoo_ohlc(s, "5y", adjust=True, complete_only=True)
                     src = "yahoo備援" if q else "yahoo"
                 except Exception as e2:
                     err(f"kline-yh {s}", e2); bars = None
@@ -626,7 +685,11 @@ def refresh_klines(cfg, args, kl_syms):
                     try: json.dump(klbad, open(badp, "w"))
                     except Exception: pass
             if bars:
+                _ld = last_done_session()
+                bars = [b for b in bars if b[0] <= _ld]   # 只存完整日棒(盤中半根交給 kline_today 快照)
+            if bars:
                 payload = {"sym": s, "src": src, "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                           "adj_gen": 2 if (s in _full or (cache or {}).get("adj_gen") == 2) else 1,
                            "bars": bars[-KL_HIST_DAYS:]}
                 try: json.dump(payload, open(path, "w"), ensure_ascii=False, separators=(",", ":"))
                 except Exception: pass
@@ -696,18 +759,20 @@ def pull_ext_hist(syms, days=250):
     return out
 
 EXT_KL_KEEP = 800   # 擴充標的日K保留根數(駕駛艙 250 日視窗需 ~502 根;Yahoo 5y 抓、存尾 800)
-def refresh_ext_klines(cfg, args, t0, budget=330):
-    """擴充清單日K(Yahoo 來源、零 Futu 歷史配額):每輪最多 20 檔輪轉 → kline_SYM.json(與核心同格式)。
-       缺檔隨時補(新標的最快 ~10 分上線);已有檔者盤後日更(>20h 且 after/closed,存完整 EOD bar);
-       落後過久(>44h)不分時段補抓(2026-09-22:78 檔隔天中午仍缺週一收盤棒的事故對策)。
-       輪轉範圍=EXT_SYMS ∪ 快取夾既有 Yahoo 檔(含 ⚡點播快照)——點播檔一併日更,不再永久凍結
-       (2026-09-22:BE/GLD/XLE/HYG/SLV/USO/XLF/XLV 凍結一個多月的事故對策;點播檔更新後 src 轉 yahoo-ext)。
-       失敗代號記 .extklbad 退避 6h,壞代號不空轉。核心清單(Futu qfq 路徑)不經此函式。"""
-    kdir = args.config + ".klines"; os.makedirs(kdir, exist_ok=True)
+def ext_kl_syms(args):
+    """擴充日K輪轉宇宙 = EXT_SYMS(非核心)∪ 快取夾既有 Yahoo 檔 ∪ 歷史⚡點播名單。回傳 (syms, lookup_set)。"""
+    import re as _re2
+    kdir = args.config + ".klines"
     core = set(kline_symbols([]))
     syms = [s.replace("US.", "") for s in EXT_SYMS if s.replace("US.", "") not in core]
-    try:   # ⚡點播/遺留 Yahoo 檔納入輪轉(檔案存在=有人看過;kline_max_ 另有月K流程,命名不同不會誤掃)
-        import re as _re2
+    looked = set()
+    try:
+        _srv = json.load(open(args.config + ".lookupserved.json"))
+        for _s1 in (_srv or {}):
+            _s1 = str(_s1).upper()
+            if _re2.fullmatch(r"[A-Z][A-Z0-9.\-]{0,9}", _s1): looked.add(_s1)
+    except Exception: pass
+    try:
         for _f2 in os.listdir(kdir):
             if not _f2.endswith(".json"): continue
             _s0 = _f2[:-5]
@@ -715,44 +780,75 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
             try: _src0 = (json.load(open(os.path.join(kdir, _f2))) or {}).get("src") or ""
             except Exception: _src0 = ""
             if str(_src0).startswith("yahoo"): syms.append(_s0)
-        # 歷史點播名單(.lookupserved.json)也納入:早期 serve_lookup 只推 gist、不寫本機快取 →
-        # 這些檔(BE/GLD/XLE/HYG/SLV/USO/XLF/XLV…)本機無檔=上面掃不到,gist 上永久凍結(2026-09-22 事故根因之二)。
-        # 納入後走「缺檔隨時補」路徑,本輪即重抓+落地本機快取,之後照常日更。
-        try:
-            _srv = json.load(open(args.config + ".lookupserved.json"))
-            for _s1 in (_srv or {}):
-                _s1 = str(_s1).upper()
-                if _s1 and _s1 not in core and _s1 not in syms and _re2.fullmatch(r"[A-Z][A-Z0-9.\-]{0,9}", _s1):
-                    syms.append(_s1)
-        except Exception: pass
     except Exception: pass
+    for _s1 in sorted(looked):
+        if _s1 not in core and _s1 not in syms: syms.append(_s1)
+    return syms, looked
+
+EXT_ADJ = 2   # 擴充/點播日K格式代:2=Yahoo adjclose 前復權+只存完整日棒(2026-09-22);舊檔自動一次性重抓
+def ext_kl_write(args, s, bars, origin="ext"):
+    """寫擴充日K本機快取 + 索引(last=最後完整日、chk=檢查時間、adj=格式代)。回傳 payload。"""
+    kdir = args.config + ".klines"; os.makedirs(kdir, exist_ok=True)
+    payload = {"sym": s, "src": "yahoo-ext", "origin": origin, "adj": "qfq-yahoo",
+               "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+               "tor_unit": "pct", "bars": bars[-EXT_KL_KEEP:]}
+    try: json.dump(payload, open(os.path.join(kdir, s + ".json"), "w"), ensure_ascii=False, separators=(",", ":"))
+    except Exception: pass
+    ip = args.config + ".extklidx.json"
+    try: idx = json.load(open(ip))
+    except Exception: idx = {}
+    idx[s] = {"last": bars[-1][0] if bars else None, "chk": time.time(), "adj": EXT_ADJ}
+    try: json.dump(idx, open(ip, "w"))
+    except Exception: pass
+    return payload
+
+def refresh_ext_klines(cfg, args, t0, budget=330):
+    """擴充/點播日K(Yahoo、零 Futu 歷史配額)。2026-09-22 根治版(使用者:「徹底解決新查詢股票K線不正確」):
+       ① 價格=Yahoo adjclose 前復權(與富途 qfq 同口徑,實測 JPM/MU 0.00%、SPY 0.5% 以內);
+       ② 只存「已收盤」的完整日棒(盤中抓到的半根不再被凍結成定案);
+       ③ 何時補=看資料完整度而非檔案年齡:最後一根 < 最近已收盤交易日 就排隊(收盤後 ~1 小時全宇宙補齊;
+          補不到(Yahoo 延遲/休市)30 分後再試);⚡點播檔優先;每 7 天全量刷新一次(吸收事後復權修正);
+       ④ 舊格式檔(未復權/含半根)一次性全部重抓。每輪最多 20 檔;失敗代號退避 6h。核心(Futu qfq)不經此函式。"""
+    kdir = args.config + ".klines"; os.makedirs(kdir, exist_ok=True)
+    syms, looked = ext_kl_syms(args)
     badp = args.config + ".extklbad"
     try: bad = json.load(open(badp))
     except Exception: bad = {}
-    now = time.time(); sess = market_session()
+    ip = args.config + ".extklidx.json"
+    try: idx = json.load(open(ip))
+    except Exception: idx = {}
+    now = time.time(); ld = last_done_session()
     due = []
     for s in syms:
         if now - (bad.get(s) or 0) < 6*3600: continue
         p = os.path.join(kdir, s + ".json")
-        try: age = now - os.path.getmtime(p)
-        except OSError: age = 1e9
-        if age > 1e8: due.append((age, s))                                   # 缺檔:隨時補
-        elif age > 44*3600: due.append((age, s))                             # 嚴重落後:不分時段補(2026-09-22)
-        elif age > 20*3600 and sess in ("after", "closed"): due.append((age, s))  # 日更:盤後
-    due.sort(key=lambda t: (-t[0], t[1]))   # 最舊優先;同齡按 A→Z(缺檔補齊順序可預期)
-    batch = [s for _, s in due[:20]]   # 8→20(2026-09-22:宇宙 ~250 檔,8/輪追不上每日 EOD;20檔≈+27s/輪,預算內)
+        if not os.path.exists(p): due.append((0, "", s)); continue          # 缺檔:最優先
+        e = idx.get(s)
+        if e is None:                                                       # 索引缺:讀檔補一次
+            try:
+                j = json.load(open(p)); b = j.get("bars") or []
+                e = {"last": b[-1][0] if b else None, "chk": 0, "adj": EXT_ADJ if j.get("adj") == "qfq-yahoo" else 1}
+            except Exception: e = {"last": None, "chk": 0, "adj": 1}
+            idx[s] = e
+        last = e.get("last") or ""
+        if last < ld and now - (e.get("chk") or 0) > 1800:
+            due.append((1 if s in looked else 2, last, s))                  # 缺最近收盤棒(點播檔優先)
+        elif e.get("adj") != EXT_ADJ:
+            due.append((3, last, s))                                         # 舊格式 → 一次性重抓
+        elif now - (e.get("chk") or 0) > 7*86400:
+            due.append((4, last, s))                                         # 週期全量刷新
+    try: json.dump(idx, open(ip, "w"))
+    except Exception: pass
+    due.sort()
+    batch = [s for _, _, s in due[:20]]
     if not batch: return
     changed = {}
     for s in batch:
         if time.time() - t0 > budget: break
         try:
-            bars = yahoo_ohlc(s, "5y")
-            if bars and len(bars) >= 200:
-                payload = {"sym": s, "src": "yahoo-ext", "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-                           "tor_unit": "pct", "bars": bars[-EXT_KL_KEEP:]}
-                try: json.dump(payload, open(os.path.join(kdir, s + ".json"), "w"), ensure_ascii=False, separators=(",", ":"))
-                except Exception: pass
-                changed["kline_" + s + ".json"] = payload
+            bars = yahoo_ohlc(s, "5y", adjust=True, complete_only=True)
+            if bars and len(bars) >= 30:
+                changed["kline_" + s + ".json"] = ext_kl_write(args, s, bars, "lookup" if s in looked else "ext")
                 bad.pop(s, None)
             else:
                 bad[s] = now   # 太短/無資料 → 退避(可能下市或代號不存在)
@@ -763,8 +859,8 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
     except Exception: pass
     if changed and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
         klq_add(args, sorted(changed))          # 2026-08-31:持久佇列,失敗留待下輪
-        klq_flush(cfg, args, time.time(), budget=60, max_batches=2)
-    log(f"ext klines updated: {len(changed)}/{len(batch)} (bad={len(bad)})")
+        klq_flush(cfg, args, time.time(), budget=60, max_batches=3)
+    log(f"ext klines updated: {len(changed)}/{len(batch)} (due={len(due)}, ld={ld}, bad={len(bad)})")
 
 # ============ 全史月K(P3B;2026-08-01):每月一次,盤後;kline_max_SYM.json ============
 def yahoo_ohlc_max_monthly(sym):
@@ -1016,12 +1112,10 @@ def serve_lookup(cfg, args):
             log(f"lookup skip(日K輪已覆蓋): {sym}")
         else:
             # 日K(Yahoo;駕駛艙需 ≥260 根,不足也照推,前端會誠實顯示)
-            try:
-                bars = yahoo_ohlc(sym, "5y")
+            try:   # 2026-09-22:前復權+只存完整日棒+落地本機快取(=進入擴充日K日更輪,不再是一次性快照)
+                bars = yahoo_ohlc(sym, "5y", adjust=True, complete_only=True)
                 if bars and len(bars) >= 30:
-                    files["kline_" + sym + ".json"] = {"sym": sym, "src": "yahoo-lookup",
-                        "updated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-                        "tor_unit": "pct", "bars": bars[-EXT_KL_KEEP:]}
+                    files["kline_" + sym + ".json"] = ext_kl_write(args, sym, bars, "lookup")
             except Exception as e: err(f"lookup-kl {sym}", e)
             # ⑦:歷史 250 日 + 今日盤中(現金池同步更新)
             extpath = args.config + ".extdaily.json"
@@ -1868,7 +1962,7 @@ def run_once(cfg, args):
     else:
         kl_syms=kline_symbols(data.get("custom_symbols") or [])
     if not args.no_futu:
-        try: data["kline_today"]=snapshot_today(kl_syms)
+        try: data["kline_today"]=snapshot_today(snap_symbols(args, data.get("custom_symbols") or []) if kl_syms else kl_syms, args)
         except Exception as e: err("kline_today",e)
     if kl_syms:
         try: refresh_klines(cfg,args,kl_syms)
@@ -1925,7 +2019,7 @@ def collect_light(cfg, args, base):
         except Exception as e: err("futu-light",e)
     if not args.no_futu:
         try:   # 2026-08-12:盤中快輪同步刷當日K(原只在全量輪更新;板塊擴充後全量輪 ~13 分一輪,盤中棒失即時)
-            _kt = snapshot_today(kline_symbols(data.get("custom_symbols") or []))
+            _kt = snapshot_today(snap_symbols(args, data.get("custom_symbols") or []), args)
             if _kt: data["kline_today"] = _kt   # 空結果保留 base 舊值(fail-open;全量輪會定期重算)
         except Exception as e: err("kline-light", e)
     # SPY 即時價(池水位末點/概覽用;單一 Yahoo 呼叫)—— 只覆蓋 last,保留其餘欄位、不 mutate base

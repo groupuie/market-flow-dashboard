@@ -648,7 +648,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-09-22T19:25Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-09-22T23:30Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -946,7 +946,9 @@ function chipBars(sym,pd){   // 日K檔 + 今日盤中K(kline_today,60s 隨主�
     else{const _h=Math.max(+tb[2],+tb[1],+tb[4]),_l=Math.min(+tb[3],+tb[1],+tb[4]);
       if(_h!==+tb[2]||_l!==+tb[3])tb=[tb[0],+tb[1],_h,_l,+tb[4],tb[5],tb[6]];}
   }else tb=null;
-  const daily=(tb&&tb[0]>K.bars[K.bars.length-1][0])?K.bars.concat([tb]):K.bars;
+  // 2026-09-22:同日期時以富途快照取代檔內那根(檔內可能是盤中抓到的半根;快照=即時/收盤定案值,與富途 App 同源)
+  const _lb=K.bars[K.bars.length-1][0];
+  const daily=!tb?K.bars:(tb[0]>_lb?K.bars.concat([tb]):(tb[0]===_lb?K.bars.slice(0,-1).concat([tb]):K.bars));
   const p=pd||CHIP_PD;
   if(p==='d')return daily;
   if(p==='y'){   // 年K:優先全史月K檔(kline_max,涵蓋 10-40 年);未載入先用 5 年日K聚合(誠實較短),到檔自動重繪
@@ -2752,17 +2754,18 @@ function dqBanner(){
     const sym=CHIP_SYM,K=CHIPK[sym];
     if(!K||!K.bars||!K.bars.length||CHIPK[sym+'_none']){el.style.display='none';return;}
     const lastDone=tjLastDone();
+    const MB2=chipBars(sym,'d')||K.bars;   // 含富途當日快照棒(收盤後尚未補進日K檔的那 ~1 小時由快照頂上,不誤報)
     let lastClosed=null;
-    for(let i=K.bars.length-1;i>=0;i--){if(K.bars[i][0]<=lastDone){lastClosed=K.bars[i][0];break;}}
+    for(let i=MB2.length-1;i>=0;i--){if(MB2[i][0]<=lastDone){lastClosed=MB2[i][0];break;}}
     const src=K.src||'';
     const kt=!!(((typeof DATA!=='undefined'&&DATA&&DATA.kline_today)||{})[sym]);
     const lag=lastClosed?dqTradLag(lastClosed,lastDone):99;
     if(lag>=1){
       // 停更自癒:每 10 分鐘重抓一次此檔(修復檔推上 gist 後,不必手動重新整理頁面)
       if(Date.now()-(CHIPK[sym+'_t']||0)>600e3){delete CHIPK[sym];delete CHIPK[sym+'_r'];try{ensureChipK(sym);}catch(_){}}
-      const why=src==='yahoo-lookup'
-        ?'此檔是「⚡點播」一次性快照,<b>不會自動更新</b> —— 要每日自動更新:在上方搜尋框輸入代號按「＋加入自訂追蹤」'
-        :(src==='yahoo-ext'?'Yahoo 日更輪補尚未跑到(正常於盤後~隔日補齊;連續多日未補=採集器待查)':'日K更新延遲(富途採集待查)');
+      const why=(src==='yahoo-lookup'||src==='yahoo-ext')
+        ?'每日自動補檔尚未跑到(2026-09-22 起:收盤後約 1 小時內補齊,⚡點播檔同樣每日更新;連續多日未補=Mac 採集器待查)'
+        :'日K更新延遲(富途採集待查)';
       el.innerHTML='<div style="padding:5px 9px;margin:2px 0 4px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.45);border-radius:8px;font-size:11.5px;color:#fca5a5;line-height:1.5"><b>⚠ '+sym+' 日K資料未更新</b> — 最後收盤K棒 <b>'+(lastClosed||'—')+'</b>,落後最近已收盤日('+lastDone+')<b> '+(lag>=99?'很多':lag)+' 個交易日</b>。'+why+'。<b>此檔圖上所有指標/技判/訊號都只反映舊資料。</b></div>';
       el.style.display='';
     }else if(!kt&&typeof DATA!=='undefined'&&DATA&&(DATA.session==='rth'||DATA.session==='pre')&&(src==='yahoo-ext'||src==='yahoo-lookup')){

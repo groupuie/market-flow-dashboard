@@ -549,12 +549,14 @@ function dqStock(){   // 資料品質警示(2026-09-22 BE/NBIS 事故對策):日
     while(!trad(d))d.setUTCDate(d.getUTCDate()-1);
     const lastDone=fmt2(d);
     let lc=null;for(let i=RAW.bars.length-1;i>=0;i--){if(RAW.bars[i][0]<=lastDone){lc=RAW.bars[i][0];break;}}
+    try{if(dayBars&&dayBars.length){const lb=dayBars[dayBars.length-1];   // 含富途當日快照棒(tsOf=UTC 午夜)
+      const ds=new Date(lb.timestamp).toISOString().slice(0,10);if(ds<=lastDone&&(!lc||ds>lc))lc=ds;}}catch(e){}
     if(lc&&lc<lastDone){
       let n=0;const dd=new Date(lc+'T00:00:00Z');
       while(n<99){dd.setUTCDate(dd.getUTCDate()+1);const s2=fmt2(dd);if(s2>lastDone)break;if(!trad(dd))continue;n++;}
       $("status").className="badge err";
       $("status").textContent="⚠ K線停在 "+lc+"(落後 "+n+" 交易日)";
-      const note=RAW.src==='yahoo-lookup'?' · ⚡點播快照不會自動更新(要日更請加入自訂追蹤);圖上指標僅反映舊資料':' · 日更輪補未到,圖上指標僅反映舊資料';
+      const note=' · 每日自動補檔尚未跑到(收盤後約1小時內補齊);圖上指標僅反映舊資料';
       if($("updated").textContent.indexOf('僅反映舊資料')<0)$("updated").textContent+=note;
     }
   }catch(e){}
@@ -574,7 +576,7 @@ function renderHeader(){
   $("chg").className="chg "+(chg>0?"up":chg<0?"down":"flat");
   if(MKT){
     const sess={pre:"盤前",rth:"盤中",after:"盤後",closed:"休市"}[MKT.session]||"";
-    $("updated").textContent="行情 "+ago(MKT.ts_utc)+(sess?" · "+sess:"")+(RAW?" · K線更新 "+ago(RAW.updated_utc)+(RAW.src&&RAW.src.indexOf("yahoo")>=0?"（seed,待富途覆蓋）":""):"");
+    $("updated").textContent="行情 "+ago(MKT.ts_utc)+(sess?" · "+sess:"")+(RAW?" · K線更新 "+ago(RAW.updated_utc)+(RAW.src&&RAW.src.indexOf("yahoo")>=0?"（Yahoo前復權·盤中棒=富途快照）":""):"");
   }
   try{dqStock();}catch(e){}
 }
