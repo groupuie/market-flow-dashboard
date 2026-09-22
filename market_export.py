@@ -697,12 +697,25 @@ def pull_ext_hist(syms, days=250):
 
 EXT_KL_KEEP = 800   # 擴充標的日K保留根數(駕駛艙 250 日視窗需 ~502 根;Yahoo 5y 抓、存尾 800)
 def refresh_ext_klines(cfg, args, t0, budget=330):
-    """擴充清單日K(Yahoo 來源、零 Futu 歷史配額):每輪最多 8 檔輪轉 → kline_SYM.json(與核心同格式)。
-       缺檔隨時補(新標的最快 ~10 分上線);已有檔者盤後日更(>20h 且 after/closed,存完整 EOD bar)。
+    """擴充清單日K(Yahoo 來源、零 Futu 歷史配額):每輪最多 20 檔輪轉 → kline_SYM.json(與核心同格式)。
+       缺檔隨時補(新標的最快 ~10 分上線);已有檔者盤後日更(>20h 且 after/closed,存完整 EOD bar);
+       落後過久(>44h)不分時段補抓(2026-09-22:78 檔隔天中午仍缺週一收盤棒的事故對策)。
+       輪轉範圍=EXT_SYMS ∪ 快取夾既有 Yahoo 檔(含 ⚡點播快照)——點播檔一併日更,不再永久凍結
+       (2026-09-22:BE/GLD/XLE/HYG/SLV/USO/XLF/XLV 凍結一個多月的事故對策;點播檔更新後 src 轉 yahoo-ext)。
        失敗代號記 .extklbad 退避 6h,壞代號不空轉。核心清單(Futu qfq 路徑)不經此函式。"""
     kdir = args.config + ".klines"; os.makedirs(kdir, exist_ok=True)
     core = set(kline_symbols([]))
     syms = [s.replace("US.", "") for s in EXT_SYMS if s.replace("US.", "") not in core]
+    try:   # ⚡點播/遺留 Yahoo 檔納入輪轉(檔案存在=有人看過;kline_max_ 另有月K流程,命名不同不會誤掃)
+        import re as _re2
+        for _f2 in os.listdir(kdir):
+            if not _f2.endswith(".json"): continue
+            _s0 = _f2[:-5]
+            if _s0 in core or _s0 in syms or not _re2.fullmatch(r"[A-Z][A-Z0-9.\-]{0,9}", _s0): continue
+            try: _src0 = (json.load(open(os.path.join(kdir, _f2))) or {}).get("src") or ""
+            except Exception: _src0 = ""
+            if str(_src0).startswith("yahoo"): syms.append(_s0)
+    except Exception: pass
     badp = args.config + ".extklbad"
     try: bad = json.load(open(badp))
     except Exception: bad = {}
@@ -714,9 +727,10 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
         try: age = now - os.path.getmtime(p)
         except OSError: age = 1e9
         if age > 1e8: due.append((age, s))                                   # 缺檔:隨時補
+        elif age > 44*3600: due.append((age, s))                             # 嚴重落後:不分時段補(2026-09-22)
         elif age > 20*3600 and sess in ("after", "closed"): due.append((age, s))  # 日更:盤後
     due.sort(key=lambda t: (-t[0], t[1]))   # 最舊優先;同齡按 A→Z(缺檔補齊順序可預期)
-    batch = [s for _, s in due[:8]]
+    batch = [s for _, s in due[:20]]   # 8→20(2026-09-22:宇宙 ~250 檔,8/輪追不上每日 EOD;20檔≈+27s/輪,預算內)
     if not batch: return
     changed = {}
     for s in batch:
@@ -2026,6 +2040,9 @@ def main():
             base=data; _persist(base)
             try: klq_flush(cfg,a,it,budget=200,max_batches=4)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒(週末快輪本身 ~2 分)
             except Exception as e: log("klq-light:",type(e).__name__,e)
+            if market_session()!="rth":   # 2026-09-22:盤後/休市的輕輪也輪補擴充日K(20檔/次×launchd每5分 → 收盤後 ~1h 內全宇宙補齊;rth 不做,保 60s ⑦ 節奏)
+                try: refresh_ext_klines(cfg,a,it,budget=180)
+                except Exception as e: log("extkl-light:",type(e).__name__,e)
         # ⚡ 點播通道:每輪(快/全)先撿免token收件匣(加追蹤即刻合併/點播轉單),再檢查 lookup_request.json
         #   → 收件匣點播於同一輪被 serve_lookup 服務(訪客免token,~1-2 分鐘內出圖)
         if not a.no_futu or True:

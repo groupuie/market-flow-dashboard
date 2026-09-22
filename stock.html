@@ -506,6 +506,7 @@ async function loadKline(){
   renderHeader();
   $("status").className="badge "+(RAW?"ok":"err");
   $("status").textContent=RAW?"● K線已載入":"此標的尚未收錄K線";
+  try{dqStock();}catch(e){}
   if(!RAW){
     $("updated").textContent="輸入代號加入自訂追蹤後,約 10 分鐘內出現(Mac 採集器抓取)";
   }
@@ -536,6 +537,28 @@ async function loadSignals(){
   }catch(e){SIG=null;}
   drawSignals();renderAICard();renderLevelCard();renderInfoCard();checkLiveHint();
 }
+function dqStock(){   // 資料品質警示(2026-09-22 BE/NBIS 事故對策):日K最後收盤棒落後最近已收盤交易日 → 紅牌+說明
+  try{
+    if(!RAW||!RAW.bars||!RAW.bars.length)return;
+    const HOL={'2026-01-01':1,'2026-01-19':1,'2026-02-16':1,'2026-04-03':1,'2026-05-25':1,'2026-06-19':1,'2026-07-03':1,'2026-09-07':1,'2026-11-26':1,'2026-12-25':1,'2027-01-01':1,'2027-01-18':1,'2027-02-15':1};
+    const fmt2=d=>d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');
+    const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit'}).formatToParts(new Date()),o={};p.forEach(x=>{o[x.type]=x.value;});
+    let d=new Date(Date.UTC(+o.year,+o.month-1,+o.day));const hh=+(o.hour==='24'?0:o.hour);
+    const trad=x=>{const w=x.getUTCDay();return w>0&&w<6&&!HOL[fmt2(x)];};
+    if(!(trad(d)&&hh>=16))d.setUTCDate(d.getUTCDate()-1);
+    while(!trad(d))d.setUTCDate(d.getUTCDate()-1);
+    const lastDone=fmt2(d);
+    let lc=null;for(let i=RAW.bars.length-1;i>=0;i--){if(RAW.bars[i][0]<=lastDone){lc=RAW.bars[i][0];break;}}
+    if(lc&&lc<lastDone){
+      let n=0;const dd=new Date(lc+'T00:00:00Z');
+      while(n<99){dd.setUTCDate(dd.getUTCDate()+1);const s2=fmt2(dd);if(s2>lastDone)break;if(!trad(dd))continue;n++;}
+      $("status").className="badge err";
+      $("status").textContent="⚠ K線停在 "+lc+"(落後 "+n+" 交易日)";
+      const note=RAW.src==='yahoo-lookup'?' · ⚡點播快照不會自動更新(要日更請加入自訂追蹤);圖上指標僅反映舊資料':' · 日更輪補未到,圖上指標僅反映舊資料';
+      if($("updated").textContent.indexOf('僅反映舊資料')<0)$("updated").textContent+=note;
+    }
+  }catch(e){}
+}
 function renderHeader(){
   const nm=NAMES[SYM]||"";
   $("symtitle").innerHTML=esc(SYM)+' <span class="subname">'+esc(nm)+"</span>";
@@ -553,6 +576,7 @@ function renderHeader(){
     const sess={pre:"盤前",rth:"盤中",after:"盤後",closed:"休市"}[MKT.session]||"";
     $("updated").textContent="行情 "+ago(MKT.ts_utc)+(sess?" · "+sess:"")+(RAW?" · K線更新 "+ago(RAW.updated_utc)+(RAW.src&&RAW.src.indexOf("yahoo")>=0?"（seed,待富途覆蓋）":""):"");
   }
+  try{dqStock();}catch(e){}
 }
 
 // ================= AI 標註 =================

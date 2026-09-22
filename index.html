@@ -574,6 +574,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
       <span id="chipRecent" style="display:none;gap:4px;flex-wrap:wrap;align-items:center"></span>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
+    <div id="dqstrip" style="display:none"></div>
     <div id="tjstrip" style="display:none"></div>
     <div id="posstrip" style="display:none"></div>
     <div id="cockpit" style="height:660px"></div>
@@ -647,7 +648,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-08-31T19:05Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-09-22T17:10Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -827,7 +828,7 @@ function ensureChipK(sym){
   fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
-      CHIPK[sym]={close:m,bars:d.bars};renderChips();}
+      CHIPK[sym]={close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||''};renderChips();}   // 2026-09-22:保留來源/更新時間 → 資料品質警示條用
       else{CHIPK[sym+'_none']=true;renderChips();}})   // 無此K線檔(非K線追蹤標的)→標記,避免永久「載入中」
     .catch(()=>{CHIPK[sym+'_none']=true;renderChips();});
 }
@@ -2722,6 +2723,41 @@ function posEval(sym,pos,T,B,earn,atm){   // 手冊v0.2出場規則逐條;T=tjSe
   return {asof,P,C0,sh,zero,f,recovPx,mid,s50,reg,trail,trailBrk,exEv,exW:T.exW[i],lo,stopBelow,stopFlow,fok,f20m,eVeto,earn,gap,ins,add,
     pl:C0>0?(P/C0-1)*100:null,stale:asof<tjLastDone()};
 }
+// ===== 資料品質警示條(2026-09-22;BE/NBIS 事故對策)=====
+// 沉默的錯比醒目的缺更糟:日K「最後收盤棒」落後最近已收盤交易日 → 紅條講清楚原因與影響;
+// Yahoo 日更來源盤中本來就沒有當日棒 → 灰字註明(避免與富途盤中棒的核心檔互相對照時誤判「圖錯了」)。
+function dqTradLag(a,b){   // (a,b] 之間的交易日數(跳週末+TJ_HOL;上限99)
+  if(!a||!b||a>=b)return 0;
+  const d=new Date(a+'T00:00:00Z');let n=0;
+  while(n<99){d.setUTCDate(d.getUTCDate()+1);const s=d.toISOString().slice(0,10);
+    if(s>b)break;const w=d.getUTCDay();if(w===0||w===6||TJ_HOL[s])continue;n++;}
+  return n;
+}
+function dqBanner(){
+  const el=document.getElementById('dqstrip');if(!el)return;
+  try{
+    const sym=CHIP_SYM,K=CHIPK[sym];
+    if(!K||!K.bars||!K.bars.length||CHIPK[sym+'_none']){el.style.display='none';return;}
+    const lastDone=tjLastDone();
+    let lastClosed=null;
+    for(let i=K.bars.length-1;i>=0;i--){if(K.bars[i][0]<=lastDone){lastClosed=K.bars[i][0];break;}}
+    const src=K.src||'';
+    const kt=!!(((typeof DATA!=='undefined'&&DATA&&DATA.kline_today)||{})[sym]);
+    const lag=lastClosed?dqTradLag(lastClosed,lastDone):99;
+    if(lag>=1){
+      // 停更自癒:每 10 分鐘重抓一次此檔(修復檔推上 gist 後,不必手動重新整理頁面)
+      if(Date.now()-(CHIPK[sym+'_t']||0)>600e3){delete CHIPK[sym];delete CHIPK[sym+'_r'];try{ensureChipK(sym);}catch(_){}}
+      const why=src==='yahoo-lookup'
+        ?'此檔是「⚡點播」一次性快照,<b>不會自動更新</b> —— 要每日自動更新:在上方搜尋框輸入代號按「＋加入自訂追蹤」'
+        :(src==='yahoo-ext'?'Yahoo 日更輪補尚未跑到(正常於盤後~隔日補齊;連續多日未補=採集器待查)':'日K更新延遲(富途採集待查)');
+      el.innerHTML='<div style="padding:5px 9px;margin:2px 0 4px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.45);border-radius:8px;font-size:11.5px;color:#fca5a5;line-height:1.5"><b>⚠ '+sym+' 日K資料未更新</b> — 最後收盤K棒 <b>'+(lastClosed||'—')+'</b>,落後最近已收盤日('+lastDone+')<b> '+(lag>=99?'很多':lag)+' 個交易日</b>。'+why+'。<b>此檔圖上所有指標/技判/訊號都只反映舊資料。</b></div>';
+      el.style.display='';
+    }else if(!kt&&typeof DATA!=='undefined'&&DATA&&(DATA.session==='rth'||DATA.session==='pre')&&(src==='yahoo-ext'||src==='yahoo-lookup')){
+      el.innerHTML='<div style="padding:3px 9px;margin:2px 0 4px;border:1px dashed rgba(137,135,129,.4);border-radius:8px;font-size:10.5px;color:#898781">ℹ '+sym+' 為 Yahoo 日更來源:盤中不畫當日K棒(最後一根 = '+lastClosed+' 收盤),收盤後自動補上;要盤中即時棒請加入自訂追蹤(富途來源)。</div>';
+      el.style.display='';
+    }else el.style.display='none';
+  }catch(_){try{el.style.display='none';}catch(__){}}
+}
 function cockpitReset(modeChanged){
   const e=document.getElementById('cockpit'); if(!e)return;
   try{ if(window.Plotly&&(e._fullLayout||e.data))Plotly.purge(e); }catch(_){}
@@ -2737,6 +2773,7 @@ function buildChipIdxRangeActive(){   // 縮放鈕 active 樣式即時反映(不
 }
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
+  try{dqBanner();}catch(_){}   // 資料品質條:每次渲染都重估(含 sig 快取提前返回前;時間推進會改變 lastDone)
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'600px':(window.__wsxCkH||'660px');   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
   // 2026-08-08 校閱修正:此處原為 980(舊五軌高版遺留),完整渲染尾端才改 600;dataset.sig 快取提前返回時
