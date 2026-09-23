@@ -511,9 +511,23 @@ async function loadKline(){
     $("updated").textContent="輸入代號加入自訂追蹤後,約 10 分鐘內出現(Mac 採集器抓取)";
   }
 }
+// gist 大檔先抓 .gz64(gzip+base64,約原檔 1/3.5;採集器 2026-09-23 起與原檔同次寫入),不存在/解壓失敗 → 退回原 .json
+// 背景:gist raw 不做 gzip,使用者網路對 gist 僅 ~35-70KB/s → 0.5MB 主檔要 7-16 秒
+let GZ64_OFF=0;
+async function gistJSON(u,init){
+  const m=u.match(/\/(market_data|daily_flows|ext_flows|chips_vwap)\.json(\?.*)?$/);
+  if(m&&typeof DecompressionStream!=='undefined'&&Date.now()>GZ64_OFF){
+    try{const r=await fetch(u.replace(m[1]+'.json',m[1]+'.gz64'),init);
+      if(r.ok){const t=(await r.text()).trim();const bin=Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+        return JSON.parse(await new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip'))).text());}
+      if(r.status===404)GZ64_OFF=Date.now()+600e3;   // 採集器尚未產生 → 10 分內直接走原檔
+    }catch(e){}
+  }
+  const r=await fetch(u,init); return r.ok?await r.json():null;
+}
 async function loadMarket(){
   try{
-    const f=async u=>{try{const r=await fetch(u+(u.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/15000),{cache:"no-store"});return r.ok?await r.json():null;}catch(e){return null;}};
+    const f=async u=>{try{return await gistJSON(u+(u.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/15000),{cache:"no-store"});}catch(e){return null;}};
     const [mac,pub]=await Promise.all([f(DATA_URL),f(PUB_URL)]);
     MKT=mac||pub;
     if(mac&&pub){

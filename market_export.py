@@ -8,7 +8,7 @@
 只讀行情、永不下單、永不 unlock_trade。
 用法:python market_export.py --config config.json   [--no-futu] [--no-push] [--force-options]
 """
-import json, sys, os, time, argparse, math, hashlib, urllib.request, urllib.parse
+import json, sys, os, time, argparse, math, hashlib, urllib.request, urllib.parse, gzip, base64
 from datetime import datetime, timezone
 
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
@@ -1988,9 +1988,20 @@ def run_once(cfg, args):
                   "n_stocks":len(data["stocks"])+len(data["leveraged"])+len(data["market"])}
     return data, fsnap
 
+# 2026-09-23 慢網路:gist raw 不做 gzip,使用者網路對 gist 僅 ~35-70KB/s(raw.githubusercontent 同網路 ~700KB/s 且有 gzip)。
+# 大檔另附 <名>.gz64 = base64(gzip(緊湊JSON)),約原檔 1/3.5;前端先抓 .gz64(DecompressionStream 解壓),失敗退回原 .json。
+# 與原檔同一次 PATCH 寫入 → 新鮮度一致;任何例外只略過 .gz64,不影響原檔推送。
+GZ64_FILES = {"market_data.json", "daily_flows.json", "ext_flows.json", "chips_vwap.json"}
 def push_gist(cfg, files):
     gid=cfg["gist_id"]; tok=cfg["gist_token"]
-    body=json.dumps({"files":{k:{"content":json.dumps(v,ensure_ascii=False)} for k,v in files.items()}}).encode()
+    out={k:{"content":json.dumps(v,ensure_ascii=False)} for k,v in files.items()}
+    for k,v in files.items():
+        if k in GZ64_FILES:
+            try:
+                raw=json.dumps(v,ensure_ascii=False,separators=(",",":")).encode("utf-8")
+                out[k[:-5]+".gz64"]={"content":base64.b64encode(gzip.compress(raw,6)).decode("ascii")}
+            except Exception as e: err("gz64", e)
+    body=json.dumps({"files":out}).encode()
     req=urllib.request.Request(f"https://api.github.com/gists/{gid}",data=body,method="PATCH",
         headers={"Authorization":f"token {tok}","Accept":"application/vnd.github+json","User-Agent":"market-export"})
     urllib.request.urlopen(req,timeout=25).read(); return "ok"
