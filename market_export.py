@@ -2021,9 +2021,9 @@ def run_once(cfg, args):
 # 大檔另附 <名>.gz64 = base64(gzip(緊湊JSON)),約原檔 1/3.5;前端先抓 .gz64(DecompressionStream 解壓),失敗退回原 .json。
 # 與原檔同一次 PATCH 寫入 → 新鮮度一致;任何例外只略過 .gz64,不影響原檔推送。
 GZ64_FILES = {"market_data.json", "daily_flows.json", "ext_flows.json", "chips_vwap.json"}
-def push_gist(cfg, files):
+def push_gist(cfg, files, gz_only=False):
     gid=cfg["gist_id"]; tok=cfg["gist_token"]
-    out={k:{"content":json.dumps(v,ensure_ascii=False)} for k,v in files.items()}
+    out={} if gz_only else {k:{"content":json.dumps(v,ensure_ascii=False)} for k,v in files.items()}
     for k,v in files.items():
         if k in GZ64_FILES:
             try:
@@ -2099,6 +2099,23 @@ def push_full(cfg, data, fsnap, a):
             except Exception: pass
     except Exception as e:
         log("PUSH ERROR:",type(e).__name__,e)
+    # 2026-09-23 一次性:日檔類 .gz64 只在該檔內容變動時才隨原檔寫入(daily_flows 每日一次、ext_flows 回填時),
+    # 上線首日前端會退回未壓縮原檔(3MB+1.2MB)→ 由本機快取補推一次 .gz64(不重推原檔;失敗下輪再試)
+    gzm=a.config+".gz64mark"
+    if not os.path.exists(gzm):
+        try:
+            extra={}
+            for name,cache,wrap in (("daily_flows.json",".dailyflows.json",lambda d:{"ts_utc":data["ts_utc"],"n_days":len(d),"daily_flows":d}),
+                                     ("ext_flows.json",".extdaily.json",lambda d:{"ts_utc":data["ts_utc"],"n_days":len(d),"daily_flows":d}),
+                                     ("chips_vwap.json",".chipsvwap.json",lambda d:{"ts_utc":data["ts_utc"],"daily":d})):
+                if name in files: continue
+                try:
+                    d0=json.load(open(a.config+cache))
+                    if isinstance(d0,dict) and d0: extra[name]=wrap(d0)
+                except Exception: pass
+            if extra: push_gist(cfg,extra,gz_only=True); log("gz64 backfill: "+" + ".join(extra))
+            open(gzm,"w").write(str(time.time()))
+        except Exception as e: log("gz64 backfill error:",type(e).__name__,e)
     return files["market_data.json"]
 
 def main():
