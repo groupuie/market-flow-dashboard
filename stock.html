@@ -434,6 +434,19 @@ function quoteOf(sym){
   if(!MKT)return null;
   return (MKT.stocks||{})[sym]||(MKT.market||{})[sym]||(MKT.leveraged||{})[sym]||null;
 }
+const SNAP_HOL={'2026-01-01':1,'2026-01-19':1,'2026-02-16':1,'2026-04-03':1,'2026-05-25':1,'2026-06-19':1,'2026-07-03':1,'2026-09-07':1,'2026-11-26':1,'2026-12-25':1,'2027-01-01':1,'2027-01-18':1,'2027-02-15':1};
+function snapDate(){   // 快照 OHLCV 所屬交易日(與採集器 snap_trade_date 同規則):交易日 ET 09:30 後=今日,否則=最近已收盤交易日(16:05 後當日才算)
+  function fmt(x){return x.getUTCFullYear()+'-'+String(x.getUTCMonth()+1).padStart(2,'0')+'-'+String(x.getUTCDate()).padStart(2,'0');}
+  const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).formatToParts(new Date()),o={};
+  p.forEach(x=>{o[x.type]=x.value;});
+  const hm=(+(o.hour==='24'?0:o.hour))*60+(+o.minute);
+  let d=new Date(Date.UTC(+o.year,+o.month-1,+o.day));
+  const trad=x=>{const w=x.getUTCDay();return w>0&&w<6&&!SNAP_HOL[fmt(x)];};
+  if(trad(d)&&hm>=570)return fmt(d);
+  if(!(trad(d)&&hm>=965))d.setUTCDate(d.getUTCDate()-1);
+  while(!trad(d))d.setUTCDate(d.getUTCDate()-1);
+  return fmt(d);
+}
 function mergeLive(bars){
   if(!MKT)return bars;
   const out=bars.slice();
@@ -441,6 +454,8 @@ function mergeLive(bars){
   // 巨棒防護(2026-08-12):開盤瞬間快照欄位未填=0 → 「插到 0 的長棒」;任一 ≤0 改走報價回退,高低夾正涵蓋開收
   if(kt&&kt.length>=6&&!(+kt[1]>0&&+kt[2]>0&&+kt[3]>0&&+kt[4]>0))kt=null;
   if(kt&&kt.length>=6){
+    // 2026-09-23:快照日期不得超過應屬交易日(富途 update_time 夜盤/盤前即跳新日,OHLC 仍是前一日常規盤)
+    try{const _sd=snapDate(); if(kt[0]>_sd)kt=[_sd].concat(kt.slice(1));}catch(_){}
     const _o=+kt[1],_c=+kt[4],_h=Math.max(+kt[2],_o,_c),_l=Math.min(+kt[3],_o,_c);
     const ts=tsOf(kt[0]),nb={timestamp:ts,open:_o,high:_h,low:_l,close:_c,volume:+kt[5]||0,tor:kt[6]==null?null:+kt[6]};
     if(out.length&&out[out.length-1].timestamp===ts)out[out.length-1]=nb;

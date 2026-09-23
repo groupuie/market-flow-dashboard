@@ -546,13 +546,23 @@ def merge_bars(old, new):
         m[b[0]] = b
     return [m[k] for k in sorted(m)]
 
+def snap_trade_date():
+    """快照 OHLCV 所屬的交易日(2026-09-23):富途 update_time 在美股夜盤/盤前一有成交就跳到新日
+       (實測 09-23 03:24 ET,310/329 檔 update_time 已是 09-23,但 open/high/low/last 仍是 09-22 常規盤定案值)
+       → 若照 update_time 標日期,前端會在台灣下午畫出「與前一日一模一樣的幽靈棒」,採集器補棒也對不上日期。
+       改以 ET 時鐘判定:交易日 09:30 之後=今日(常規盤欄位在 09:30 重置),否則=最近已收盤交易日。"""
+    et = _et_now(); d = et.strftime("%Y-%m-%d")
+    if et.weekday() < 5 and d not in ET_HOL and (et.hour, et.minute) >= (9, 30): return d
+    return last_done_session()
+
 def _snap_rows(d, out):
     """快照列 → kline_today 棒;含兩道淨化(2026-08-12 巨棒事故對策):
        ①開/高/低/收任一 ≤0(開盤瞬間欄位未填)→ 丟棄該列 —— 上圖會畫出「插到 0 的巨棒」;
-       ②高低夾正涵蓋開收(快照欄位更新不同步的微幅錯序)。"""
+       ②高低夾正涵蓋開收(快照欄位更新不同步的微幅錯序)。日期=snap_trade_date()(不再用 update_time)。"""
+    dt0 = snap_trade_date()
     for _, r in d.iterrows():
         sym = str(r.get("code", "")).replace("US.", "")
-        dt = str(r.get("update_time") or "")[:10]
+        dt = dt0 if str(r.get("update_time") or "")[:10] else ""
         o, h, l, c = _f(r.get("open_price")), _f(r.get("high_price")), _f(r.get("low_price")), _f(r.get("last_price"))
         v = _f(r.get("volume")); tr = _f(r.get("turnover_rate"))
         if not dt or None in (o, h, l, c): continue
