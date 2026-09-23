@@ -648,7 +648,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-09-22T23:30Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD='2026-09-23T00:50Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -719,16 +719,38 @@ function mergeSources(mac,pub){
   base._macAge=ma; base._pubAge=pa;
   return base;
 }
+// 慢網路韌性(2026-09-23 使用者回報「網頁打不開」):實測使用者網路對 gist raw 僅 ~70KB/s 且 gist 不做 gzip
+// (market_data 0.5MB、ext_flows 3MB、daily_flows 1.2MB 原樣下載;raw.githubusercontent 同網路 ~700KB/s 且有 gzip)。
+// 舊流程:首次繪製等 gist 主檔(~7 秒)→ 之後 K 線與 4.5MB 大檔同時搶頻寬(NVDA K 線 55 秒才到),
+// 且 20 秒輪詢不管上一輪是否下載完 → 多個 0.5MB 請求疊在一起越塞越慢。
+// 新流程:①上一輪未完成不再疊加 ②首載備援源(快)先畫、Mac 全量到了再補 ③駕駛艙 K 線與主檔並行預抓
+// ④大檔等 K 線到了(或 8 秒後)才下載且標低優先 ⑤休市時輪詢 20→120 秒、分頁在背景不輪詢
+let LOAD_BUSY=0, LOAD_LAST=0, LOAD_MAC=null;
 async function load(){
-  const f=async u=>{try{const cb=u+(u.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/15000);const r=await fetch(cb,{cache:"no-store"});return r.ok?await r.json():null;}catch(e){return null;}};
-  const [mac,pub]=await Promise.all([f(DATA_URL),f(PUB_URL)]);
-  const m=mergeSources(mac,pub);
-  if(!m){
-    document.getElementById('status').className='badge err';
-    document.getElementById('status').textContent='抓取失敗：兩個資料源皆不可達';
-    return;
-  }
-  DATA=m; mergeDeep(); render(); markStatus(); ensureDeepDaily();
+  if(LOAD_BUSY&&Date.now()-LOAD_BUSY<90e3)return;
+  LOAD_BUSY=Date.now();
+  try{
+    const f=async(u,pri)=>{try{const cb=u+(u.includes('?')?'&':'?')+'t='+Math.floor(Date.now()/15000);const r=await fetch(cb,{cache:"no-store",priority:pri||'auto'});return r.ok?await r.json():null;}catch(e){return null;}};
+    const first=!DATA;
+    if(first){try{ensureChipK(CHIP_SYM||'NVDA');}catch(_){}}
+    let macIn=false;
+    const pMac=f(DATA_URL).then(x=>{macIn=true;return x;}), pPub=f(PUB_URL,'high');
+    if(first)pPub.then(pub=>{
+      if(DATA||macIn||!pub)return;
+      const p=mergeSources(null,Object.assign({},pub)); p._partial=true; DATA=p;
+      try{render();markStatus();}catch(e){console.warn('partial render',e);}
+    });
+    let [mac,pub]=await Promise.all([pMac,pPub]);
+    if(mac)LOAD_MAC=mac; else if(LOAD_MAC)mac=LOAD_MAC;   // gist 偶發失敗 → 沿用上一份 Mac 全量(依其時間戳照實顯示新舊),不讓⑦整塊消失
+    const m=mergeSources(mac,pub);
+    if(!m){
+      if(DATA)return;   // 已有畫面(含備援先畫)→ 保留,下一輪再試
+      document.getElementById('status').className='badge err';
+      document.getElementById('status').textContent='抓取失敗：兩個資料源皆不可達';
+      return;
+    }
+    DATA=m; mergeDeep(); render(); markStatus(); ensureDeepDaily(); LOAD_LAST=Date.now();
+  }finally{LOAD_BUSY=0;}
 }
 function etSession(){
   // 以瀏覽器時間換算美東,粗判時段(假日以 trade_date 呈現為準)
@@ -767,7 +789,8 @@ function markStatus(){
   }
   let meta='採集 美東 '+tzTime(ts,'America/New_York')+' · 台灣 '+tzTime(ts,'Asia/Taipei')+(td?' · ⑦資料屬 '+td:'');
   const _ma=DATA._macAge, _pa=DATA._pubAge;
-  if(_ma!=null&&_pa!=null&&_ma>30&&_pa<30)
+  if(DATA._partial)meta+=' · ⏳ 完整資料(⑦大單流/個股)下載中…';
+  else if(_ma!=null&&_pa!=null&&_ma>30&&_pa<30)
     meta+=(_ma>=1e8)?' · ⚠ ⑦大單流離線(等待 Mac):其餘資料由雲端備援即時更新'
       :' · ⚠ Mac 休眠中:⑦大單流凍結於 '+(_ma<120?Math.round(_ma)+' 分':(_ma/60).toFixed(1)+' 小時')+'前,其餘資料由雲端備援即時更新';
   const opx=isOpex(td);
@@ -825,12 +848,13 @@ function ensureChipK(sym){
   // 「無K線」非永久:擴充/自訂標的的日K由 Mac 輪補,10 分後重試一次(檔案長出來就自動點亮)
   if(CHIPK[sym+'_none']&&Date.now()-(CHIPK[sym+'_t']||0)>600e3){delete CHIPK[sym+'_none'];delete CHIPK[sym+'_r'];}
   if(CHIPK[sym]||CHIPK[sym+'_r'])return; CHIPK[sym+'_r']=true; CHIPK[sym+'_t']=Date.now();
-  fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
+  const _rc=()=>{if(sym===(CHIP_SYM||'NVDA'))heavyRelease(); if(DATA&&!DATA._partial){try{renderChips();}catch(e){console.warn(e);}}};   // 首載預抓時主檔可能未到 → 只存快取,主檔到了 render 會畫
+  fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store',priority:'high'})
     .then(r=>r.ok?r.json():null)
     .then(d=>{if(d&&d.bars){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
-      CHIPK[sym]={close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||''};renderChips();}   // 2026-09-22:保留來源/更新時間 → 資料品質警示條用
-      else{CHIPK[sym+'_none']=true;renderChips();}})   // 無此K線檔(非K線追蹤標的)→標記,避免永久「載入中」
-    .catch(()=>{CHIPK[sym+'_none']=true;renderChips();});
+      CHIPK[sym]={close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||''};_rc();}   // 2026-09-22:保留來源/更新時間 → 資料品質警示條用
+      else{CHIPK[sym+'_none']=true;_rc();}},   // 無此K線檔(非K線追蹤標的)→標記,避免永久「載入中」
+      ()=>{CHIPK[sym+'_none']=true;_rc();});
 }
 function fmtShares(n){ if(n==null||isNaN(n))return '—';
   const a=Math.abs(n);
@@ -959,12 +983,15 @@ function chipBars(sym,pd){   // 日K檔 + 今日盤中K(kline_today,60s 隨主�
   }
   return aggBars(daily,p);
 }
+let _HEAVY=null,_heavyOpen=null,_heavyOK=false;   // 大檔放行閘:駕駛艙 K 線到了(或 8 秒後)才下載 ext_flows/daily_flows/chips_vwap
+function heavyGate(){ if(_heavyOK)return Promise.resolve(); if(!_HEAVY)_HEAVY=new Promise(r=>{_heavyOpen=r;setTimeout(()=>{_heavyOK=true;r();},8000);}); return _HEAVY; }
+function heavyRelease(){ _heavyOK=true; if(_heavyOpen)_heavyOpen(); }
 let EXTDF=null,EXTDF_req=0;   // 擴充清單 ⑦(獨立 ext_flows.json,個股籌碼分頁專用;不進大盤匯總)
 function ensureExtDaily(){   // ~10 分重抓(檔案回填後達 ~2MB,gzip 傳輸;日頻資料低頻即可;首載立即重繪)
   const _n=Date.now()/1000; if(_n-EXTDF_req<600)return; EXTDF_req=_n;
-  fetch(DATA_URL.replace('market_data.json','ext_flows.json'),{cache:'no-store'})
+  heavyGate().then(()=>fetch(DATA_URL.replace('market_data.json','ext_flows.json'),{cache:'no-store',priority:'low'}))
     .then(r=>r.ok?r.json():null)
-    .then(j=>{const df=j&&j.daily_flows; if(df){const first=!EXTDF; EXTDF=df; if(first&&DATA)renderChips();}})
+    .then(j=>{const df=j&&j.daily_flows; if(df){const first=!EXTDF; EXTDF=df; if(first&&DATA&&!DATA._partial)renderChips();}})
     .catch(()=>{});
 }
 function chipDaily(){   // 個股籌碼分頁資料源 = 主 daily_flows ∪ 擴充 ext_flows(逐日合併;主儀表板 DATA.daily_flows 不動)
@@ -982,8 +1009,8 @@ function chipSyms(){   // 全追蹤宇宙:主清單(固定＋闖入＋自訂)∪
 let CHIPV=null,CHIPV_req=0;   // 大戶/散戶 盤中均價日檔(chips_vwap.json)
 function ensureChipVwap(){   // ~5 分重抓;首載立即重繪(今日值另走 market_data 嵌入,60s 更新)
   const _n=Date.now()/1000; if(_n-CHIPV_req<300)return; CHIPV_req=_n;
-  fetch(DATA_URL.replace('market_data.json','chips_vwap.json'),{cache:'no-store'})
-    .then(r=>r.ok?r.json():null).then(j=>{const dd=j&&j.daily; if(dd){const first=!CHIPV; CHIPV=dd; if(first&&DATA)renderChips();}}).catch(()=>{});
+  heavyGate().then(()=>fetch(DATA_URL.replace('market_data.json','chips_vwap.json'),{cache:'no-store',priority:'low'}))
+    .then(r=>r.ok?r.json():null).then(j=>{const dd=j&&j.daily; if(dd){const first=!CHIPV; CHIPV=dd; if(first&&DATA&&!DATA._partial)renderChips();}}).catch(()=>{});
 }
 function chipVwapFor(sym, dates){   // 對 window 內日期量加權彙總 → 大戶/散戶均價 + 淨方向
   const hist=CHIPV||{}, today=(DATA&&DATA.chips_vwap_today)||{}, td=DATA&&DATA.trade_date;
@@ -3683,6 +3710,8 @@ function renderChipCost(){
 }
 function renderChips(){
   const el=document.getElementById('chipflow'); if(!el)return;
+  if(DATA&&DATA._partial){   // 首載備援先畫階段:個股清單/⑦尚未到 → 不選股(否則會誤選清單第一檔)、不畫,等 Mac 全量
+    chartMsg(document.getElementById('cockpit'),'個股資料下載中…(網路較慢時需數秒;K 線已優先下載)',30); return; }
   ensureExtDaily(); ensureChipVwap(); ensureSignals();
   const D=chipDaily(); const dates=Object.keys(D).sort();
   const syms=chipSyms();
@@ -4271,7 +4300,7 @@ function ensureDeepDaily(){
   const now=Date.now();
   if(DFULL_req&&now-DFULL_req<15*60*1000)return;   // 15 分節流(檔案≈每日才變)
   DFULL_req=now;
-  fetch(DATA_URL.replace('market_data.json','daily_flows.json'),{cache:'no-store'})
+  heavyGate().then(()=>fetch(DATA_URL.replace('market_data.json','daily_flows.json'),{cache:'no-store',priority:'low'}))
     .then(r=>r.ok?r.json():null)
     .then(j=>{const df=j&&j.daily_flows;
       if(df&&Object.keys(df).length>Object.keys(DFULL||{}).length){DFULL=df;if(DATA){mergeDeep();render();}}})
@@ -4873,7 +4902,9 @@ let _verPending=false;
 document.addEventListener('visibilitychange',()=>{ if(document.hidden&&_verPending)location.reload(); });   // 離開畫面的瞬間套新版,不打斷分析
 // ===== 自動刷新 =====
 let cd=REFRESH_SEC;
-setInterval(()=>{cd--;if(cd<=0){cd=REFRESH_SEC;load();}document.getElementById('countdown').textContent='· '+cd+'s 後更新';},1000);
+function pollSec(){ const s=(DATA&&DATA.session&&DATA.session!=='unknown')?DATA.session:etSession(); return s==='closed'?120:REFRESH_SEC; }
+setInterval(()=>{cd--;if(cd<=0){cd=pollSec();if(!document.hidden)load();}document.getElementById('countdown').textContent=LOAD_BUSY?'· 下載中…':'· '+cd+'s 後更新';},1000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&LOAD_LAST&&Date.now()-LOAD_LAST>REFRESH_SEC*1000)cd=Math.min(cd,1); });   // 回到前景且資料已舊 → 立即更新
 load();
 </script>
 <script>
