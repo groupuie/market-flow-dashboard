@@ -802,7 +802,7 @@ def ext_kl_write(args, s, bars, origin="ext"):
     except Exception: pass
     return payload
 
-def refresh_ext_klines(cfg, args, t0, budget=330):
+def refresh_ext_klines(cfg, args, t0, budget=330, kt=None):
     """擴充/點播日K(Yahoo、零 Futu 歷史配額)。2026-09-22 根治版(使用者:「徹底解決新查詢股票K線不正確」):
        ① 價格=Yahoo adjclose 前復權(與富途 qfq 同口徑,實測 JPM/MU 0.00%、SPY 0.5% 以內);
        ② 只存「已收盤」的完整日棒(盤中抓到的半根不再被凍結成定案);
@@ -847,6 +847,15 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
         if time.time() - t0 > budget: break
         try:
             bars = yahoo_ohlc(s, "5y", adjust=True, complete_only=True)
+            if bars and len(bars) >= 30 and bars[-1][0] < ld and kt and kt.get(s) and str(kt[s][0]) == ld:
+                # 2026-09-23:Yahoo 未定案(當日棒 null 可持續到隔日凌晨)→ 以富途「收盤後快照」補最近收盤棒。
+                # 快照日期==最近已收盤交易日 ⇒ 該棒已完整;最新棒的前復權係數=1,與 Yahoo adjclose 口徑一致。
+                # 否則隔天開盤後 kline_today 換成新日,這批檔的前一日會在圖上空一根。
+                try:
+                    sb = kt[s]
+                    bars = bars + [[ld, round(float(sb[1]), 3), round(float(sb[2]), 3), round(float(sb[3]), 3), round(float(sb[4]), 3),
+                                    int(sb[5] or 0), (None if len(sb) < 7 or sb[6] is None else round(float(sb[6]), 3))]]
+                except Exception: pass
             if bars and len(bars) >= 30:
                 # 2026-09-23:Yahoo 收盤後 ~20:00–22:00 ET 會把當日棒暫時清成 null(定案處理中)→ 抓回的資料仍缺最近收盤棒。
                 # 原本照寫照推、30 分後再抓,80 檔每 30 分輪一次(每輪 20 檔 Yahoo+gist 全在空轉)。
@@ -1998,7 +2007,7 @@ def run_once(cfg, args):
         except Exception as e: err("klines",e)
     # 擴充清單日K(Yahoo 輪補;個股籌碼分頁「內容空白」根治):預算內每輪 8 檔
     if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
-        try: refresh_ext_klines(cfg,args,_run_t0,budget=330)
+        try: refresh_ext_klines(cfg,args,_run_t0,budget=330,kt=data.get("kline_today"))
         except Exception as e: err("extkl",e)
     # 全史月K(P3B;每月一次盤後,6檔/輪分批;失敗隔離,不影響日K)
     if not getattr(args,"public_out",None) and (time.time()-_run_t0)<300:
@@ -2202,7 +2211,7 @@ def main():
             try: klq_flush(cfg,a,it,budget=200,max_batches=4)   # 2026-08-31:快輪也消化日K佇列(每輪 ≤2 批),加速自癒(週末快輪本身 ~2 分)
             except Exception as e: log("klq-light:",type(e).__name__,e)
             if market_session()!="rth":   # 2026-09-22:盤後/休市的輕輪也輪補擴充日K(20檔/次×launchd每5分 → 收盤後 ~1h 內全宇宙補齊;rth 不做,保 60s ⑦ 節奏)
-                try: refresh_ext_klines(cfg,a,it,budget=180)
+                try: refresh_ext_klines(cfg,a,it,budget=180,kt=data.get("kline_today"))
                 except Exception as e: log("extkl-light:",type(e).__name__,e)
         # ⚡ 點播通道:每輪(快/全)先撿免token收件匣(加追蹤即刻合併/點播轉單),再檢查 lookup_request.json
         #   → 收件匣點播於同一輪被 serve_lookup 服務(訪客免token,~1-2 分鐘內出圖)
