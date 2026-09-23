@@ -2,6 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
+<meta name="build" content="2026-09-23T02:30Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -648,7 +649,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD='2026-09-23T01:55Z';   // 部署版本戳;checkVersion 偵測到更新的 build → 自動更新(live)或提示 chip(分析中)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-09-23T02:30Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -4896,9 +4897,11 @@ document.querySelectorAll('.tab[data-sec]').forEach(t=>t.onclick=()=>{
 let _verChip=false;
 async function checkVersion(){
   try{
-    const r=await fetch((location.pathname||'/')+'?v='+Math.floor(Date.now()/60000),{cache:'no-store'});
-    if(!r.ok)return;
-    const m=(await r.text()).match(/const BUILD='([^']+)'/);
+    // 2026-09-23:只抓檔頭 4KB(Range;GitHub Pages/Fastly 支援 206)—— 原本每 150 秒整份 index.html(gzip 156KB)重抓,
+    // 在使用者到 GitHub CDN 僅 ~100KB/s 的線路上等於每 2.5 分鐘塞住 1.5 秒、跟資料輪詢搶頻寬
+    const r=await fetch((location.pathname||'/')+'?v='+Math.floor(Date.now()/60000),{cache:'no-store',headers:{'Range':'bytes=0-4095'}});
+    if(!r.ok)return;   // 200 或 206 皆可(不支援 Range 就是整份,regex 照樣找得到)
+    const m=(await r.text()).match(/name="build" content="([^"]+)"/);
     if(!m||!(m[1]>BUILD))return;   // 只在偵測到「更新的」build 才動作(ISO 字串比較,防 CDN 抖動迴圈)
     _verPending=true;              // 有新版待套用:切到背景時無縫重載(修 iOS PWA 長活頁面永遠停在舊版)
     if(document.hidden){location.reload();return;}
