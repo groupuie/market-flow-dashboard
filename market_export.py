@@ -831,8 +831,8 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
             except Exception: e = {"last": None, "chk": 0, "adj": 1}
             idx[s] = e
         last = e.get("last") or ""
-        if last < ld and now - (e.get("chk") or 0) > 1800:
-            due.append((1 if s in looked else 2, last, s))                  # 缺最近收盤棒(點播檔優先)
+        if last < ld and now - (e.get("chk") or 0) > 1800 and now > (e.get("nx") or 0):
+            due.append((1 if s in looked else 2, last, s))                  # 缺最近收盤棒(點播檔優先;nx=Yahoo 未定案退避)
         elif e.get("adj") != EXT_ADJ:
             due.append((3, last, s))                                         # 舊格式 → 一次性重抓
         elif now - (e.get("chk") or 0) > 7*86400:
@@ -842,13 +842,27 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
     due.sort()
     batch = [s for _, _, s in due[:20]]
     if not batch: return
-    changed = {}
+    changed = {}; upd = {}   # upd: 本輪索引增量(chk/nx),輪末合併寫回
     for s in batch:
         if time.time() - t0 > budget: break
         try:
             bars = yahoo_ohlc(s, "5y", adjust=True, complete_only=True)
             if bars and len(bars) >= 30:
-                changed["kline_" + s + ".json"] = ext_kl_write(args, s, bars, "lookup" if s in looked else "ext")
+                # 2026-09-23:Yahoo 收盤後 ~20:00–22:00 ET 會把當日棒暫時清成 null(定案處理中)→ 抓回的資料仍缺最近收盤棒。
+                # 原本照寫照推、30 分後再抓,80 檔每 30 分輪一次(每輪 20 檔 Yahoo+gist 全在空轉)。
+                # 改:內容與快取相同(同最後日、同末 5 根收盤、同格式)就不寫不推;仍缺最近棒 → 2 小時後再試。
+                e0 = idx.get(s) or {}; ob = []
+                try: ob = (json.load(open(os.path.join(kdir, s + ".json"))) or {}).get("bars") or []
+                except Exception: ob = []
+                if ob and ob[-1][0] > bars[-1][0] and e0.get("adj") == EXT_ADJ:   # 新抓資料反而少了最近棒(Yahoo 定案空窗)→ 保留快取已有的
+                    bars = bars + [b for b in ob if b[0] > bars[-1][0]]
+                same = (e0.get("adj") == EXT_ADJ and len(ob) >= 5 and ob[-1][0] == bars[-1][0]
+                        and [b[4] for b in ob[-5:]] == [b[4] for b in bars[-5:]])
+                if same:
+                    upd[s] = {"chk": now, "nx": (now + 7200) if bars[-1][0] < ld else 0}
+                else:
+                    changed["kline_" + s + ".json"] = ext_kl_write(args, s, bars, "lookup" if s in looked else "ext")
+                    if bars[-1][0] < ld: upd[s] = {"nx": now + 7200}
                 bad.pop(s, None)
             else:
                 bad[s] = now   # 太短/無資料 → 退避(可能下市或代號不存在)
@@ -857,10 +871,16 @@ def refresh_ext_klines(cfg, args, t0, budget=330):
         time.sleep(0.35)
     try: json.dump(bad, open(badp, "w"))
     except Exception: pass
+    if upd:   # 索引合併寫回(ext_kl_write 已逐檔更新 last/chk/adj → 以檔案為底、套用本輪 nx/chk)
+        try:
+            cur = json.load(open(ip))
+            for k2, v2 in upd.items(): cur[k2] = dict(cur.get(k2) or idx.get(k2) or {}, **v2)
+            json.dump(cur, open(ip, "w"))
+        except Exception: pass
     if changed and not args.no_push and cfg.get("gist_id") and cfg.get("gist_token"):
         klq_add(args, sorted(changed))          # 2026-08-31:持久佇列,失敗留待下輪
         klq_flush(cfg, args, time.time(), budget=60, max_batches=3)
-    log(f"ext klines updated: {len(changed)}/{len(batch)} (due={len(due)}, ld={ld}, bad={len(bad)})")
+    log(f"ext klines updated: {len(changed)}/{len(batch)} (due={len(due)}, ld={ld}, bad={len(bad)}, unchanged={len(batch)-len(changed)})")
 
 # ============ 全史月K(P3B;2026-08-01):每月一次,盤後;kline_max_SYM.json ============
 def yahoo_ohlc_max_monthly(sym):
@@ -926,7 +946,13 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 #       掃描標記」(.klscan)的快取檔入列(判讀核心優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
 #       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
 KLQ_BATCH = 8
-KLQ_VER = "2026-08-31d"
+KLQ_VER = "2026-09-23a"
+def klq_pushed_load(args):
+    try: return json.load(open(args.config + ".klpushedmt.json"))
+    except Exception: return {}
+def klq_pushed_save(args, d):
+    try: json.dump(d, open(args.config + ".klpushedmt.json", "w"))
+    except Exception: pass
 KLQ_STAT = {"heal_n": 0, "pushed": 0, "queue": None}   # 本輪統計 → market_data.meta.klq(觀測用)
 def klq_path(args): return args.config + ".klqueue.json"
 def klq_load(args):
@@ -954,12 +980,14 @@ def klq_heal(args, kl_core):
     try: files = [f for f in os.listdir(kdir) if f.endswith(".json")]
     except OSError: return 0
     core = set(kl_core or []); prio = {s: i for i, s in enumerate(KLQ_PRIO)}
-    due = []
+    pushed = klq_pushed_load(args)   # 2026-09-23:已成功推送時的檔案 mtime —— 推送後未再修改的檔不重複入列
+    due = []                          # (原本「掃描標記之後修改」會把 ext 輪補剛推完的 20 檔再推一次,每檔皆雙倍上傳)
     for f in files:
         s = f[:-5]
         try: mt = os.path.getmtime(os.path.join(kdir, f))
         except OSError: continue
-        if mt > last: due.append((0 if s in prio else (1 if s in core else 2), prio.get(s, 0), s))
+        if mt > last and mt > (pushed.get("kline_" + f) or 0) + 1e-6:
+            due.append((0 if s in prio else (1 if s in core else 2), prio.get(s, 0), s))
     due.sort()
     if due: klq_add(args, ["kline_" + s + ".json" for _, _, s in due])
     try: open(mk, "w").write(str(time.time()))
@@ -972,19 +1000,20 @@ def klq_flush(cfg, args, t0, budget=330, max_batches=6):
     q = klq_load(args)
     if not q: return 0
     kdir = args.config + ".klines"
-    n = 0
+    n = 0; pushed = klq_pushed_load(args)
     for _ in range(max_batches):
         if not q or time.time() - t0 > budget: break
-        batch = q[:KLQ_BATCH]; files = {}
+        batch = q[:KLQ_BATCH]; files = {}; mts = {}
         for name in batch:
             if not name.startswith("kline_"): continue
             p = os.path.join(kdir, name[len("kline_"):])
             try:
-                if os.path.exists(p): files[name] = json.load(open(p))
+                if os.path.exists(p): mts[name] = os.path.getmtime(p); files[name] = json.load(open(p))
             except Exception: pass
         if files:
             try: push_gist(cfg, files)
             except Exception as e: err("klq-push", e); break
+            pushed.update(mts); klq_pushed_save(args, pushed)
         q = q[len(batch):]; n += len(files)
         klq_save(args, q)
         time.sleep(0.3)
