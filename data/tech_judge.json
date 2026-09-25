@@ -1,38 +1,38 @@
 {
- "updated_utc": "2026-09-24 22:14:09",
+ "updated_utc": "2026-09-25 22:12:16",
  "spec": "手冊 v0.2 技術判斷(確定性規則引擎)",
- "latest_session": "2026-09-24",
+ "latest_session": "2026-09-25",
  "symbols": {
   "MU": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 1080.53,
-   "sma20": 986.798,
-   "sd20": 53.466,
-   "upper": 1093.731,
-   "lower": 879.865,
-   "sma50": 937.034,
-   "sma50_10ago": 929.744,
-   "pctb": 0.9383,
-   "bw": 0.2167,
+   "asof": "2026-09-25",
+   "close": 1082.28,
+   "sma20": 994.142,
+   "sd20": 55.932,
+   "upper": 1106.007,
+   "lower": 882.278,
+   "sma50": 941.615,
+   "sma50_10ago": 928.607,
+   "pctb": 0.8939,
+   "bw": 0.225,
    "squeeze": false,
    "bw_min60": 0.1285,
    "regime": "trend",
    "td_buy": 0,
-   "td_sell": 6,
+   "td_sell": 7,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 128.2,
-    "flow20_norm": 5.0497,
-    "slope5_musd": 140.4,
-    "vol20": 25387405.0
+    "flow20_musd": 273.0,
+    "flow20_norm": 10.9488,
+    "slope5_musd": -128.2,
+    "vol20": 24934273.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": 15.15,
+    "chg20_pct": 15.7,
     "max20_close": 1096.16
    },
    "paths": {
@@ -55,7 +55,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=5.0497"
+      "v": "now=10.9488"
      }
     ],
     "cycle": [
@@ -67,7 +67,7 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.94 sq=False"
+      "v": "%B=0.89 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
@@ -77,7 +77,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=5.0497,20日漲跌=15.1%"
+      "v": "flow20=10.9488,20日漲跌=15.7%"
      }
     ],
     "disaster": [
@@ -94,12 +94,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=1080.53 下軌=879.87"
+      "v": "C=1082.28 下軌=882.28"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
-      "ok": true,
-      "v": "140.4$M"
+      "ok": false,
+      "v": "-128.2$M"
      }
     ]
    },
@@ -107,18 +107,18 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=6,%B=0.94"
+     "v": "maxTD賣=7,%B=0.89"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=1080.53,max20×0.99=1085.20,flow20=5.0497"
+     "v": "C=1082.28,max20×0.99=1085.20,flow20=10.9488"
     }
    },
    "swing_top": {
-    "ext_pct": 15.31,
+    "ext_pct": 14.94,
     "watch": true,
-    "confirm_level": 986.798,
+    "confirm_level": 994.142,
     "last_confirm_d": "2026-07-02",
     "last_confirm_peak_d": "2026-06-25",
     "last_confirm_peak_c": 1213.373,
@@ -130,7 +130,7 @@
    },
    "earnings": {
     "date": "2026-09-30",
-    "days_cal": 6,
+    "days_cal": 5,
     "veto": true
    },
    "atm_flag": false,
@@ -148,39 +148,39 @@
    },
    "exit_on": false,
    "stale": false,
-   "conclusion": "趨勢 regime;進場全數被否決(財報否決(未來5交易日內:2026-09-30));高檔:高於50日線 15%,若收破中軌 986.80 即確認波段頂",
+   "conclusion": "趨勢 regime;進場全數被否決(財報否決(未來5交易日內:2026-09-30));高檔:高於50日線 15%,若收破中軌 994.14 即確認波段頂",
    "earnings_src": "yahoo"
   },
   "SNDK": {
    "insufficient": false,
-   "bars_n": 405,
-   "asof": "2026-09-24",
-   "close": 1753.62,
-   "sma20": 1649.146,
-   "sd20": 121.219,
-   "upper": 1891.583,
-   "lower": 1406.709,
-   "sma50": 1509.425,
-   "sma50_10ago": 1525.849,
-   "pctb": 0.7155,
-   "bw": 0.294,
+   "bars_n": 406,
+   "asof": "2026-09-25",
+   "close": 1777.8,
+   "sma20": 1663.789,
+   "sd20": 118.149,
+   "upper": 1900.086,
+   "lower": 1427.491,
+   "sma50": 1516.759,
+   "sma50_10ago": 1517.872,
+   "pctb": 0.7412,
+   "bw": 0.284,
    "squeeze": false,
    "bw_min60": 0.2193,
    "regime": "cycle",
-   "td_buy": 1,
-   "td_sell": 0,
+   "td_buy": 0,
+   "td_sell": 1,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -728.2,
-    "flow20_norm": -67.8852,
-    "slope5_musd": -300.6,
-    "vol20": 10726939.0
+    "flow20_musd": -764.3,
+    "flow20_norm": -71.7639,
+    "slope5_musd": -468.9,
+    "vol20": 10650209.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": 16.96,
+    "chg20_pct": 19.72,
     "max20_close": 1887.04
    },
    "paths": {
@@ -203,7 +203,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-67.8852"
+      "v": "now=-71.7639"
      }
     ],
     "cycle": [
@@ -215,7 +215,7 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.72 sq=False"
+      "v": "%B=0.74 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
@@ -225,7 +225,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-67.8852,20日漲跌=17.0%"
+      "v": "flow20=-71.7639,20日漲跌=19.7%"
      }
     ],
     "disaster": [
@@ -242,12 +242,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=1753.62 下軌=1406.71"
+      "v": "C=1777.80 下軌=1427.49"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-300.6$M"
+      "v": "-468.9$M"
      }
     ]
    },
@@ -255,18 +255,18 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=4,%B=0.72"
+     "v": "maxTD賣=4,%B=0.74"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=1753.62,max20×0.99=1868.17,flow20=-67.8852"
+     "v": "C=1777.80,max20×0.99=1868.17,flow20=-71.7639"
     }
    },
    "swing_top": {
-    "ext_pct": 16.18,
+    "ext_pct": 17.21,
     "watch": true,
-    "confirm_level": 1649.146,
+    "confirm_level": 1663.789,
     "last_confirm_d": "2026-07-02",
     "last_confirm_peak_d": "2026-06-25",
     "last_confirm_peak_c": 2335.0,
@@ -278,7 +278,7 @@
    },
    "earnings": {
     "date": "2026-11-06",
-    "days_cal": 43,
+    "days_cal": 42,
     "veto": false
    },
    "atm_flag": false,
@@ -296,39 +296,39 @@
    },
    "exit_on": false,
    "stale": false,
-   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 16%,若收破中軌 1649.15 即確認波段頂;災後路徑觀察價位=下軌 1407 附近",
+   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 17%,若收破中軌 1663.79 即確認波段頂;災後路徑觀察價位=下軌 1427 附近",
    "earnings_src": "yahoo"
   },
   "WDC": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 450.31,
-   "sma20": 450.245,
-   "sd20": 18.869,
-   "upper": 487.983,
-   "lower": 412.508,
-   "sma50": 474.055,
-   "sma50_10ago": 497.766,
-   "pctb": 0.5009,
-   "bw": 0.1676,
+   "asof": "2026-09-25",
+   "close": 456.81,
+   "sma20": 449.993,
+   "sd20": 18.745,
+   "upper": 487.484,
+   "lower": 412.503,
+   "sma50": 473.826,
+   "sma50_10ago": 494.677,
+   "pctb": 0.5909,
+   "bw": 0.1666,
    "squeeze": false,
    "bw_min60": 0.161,
    "regime": "cycle",
    "td_buy": 0,
-   "td_sell": 5,
+   "td_sell": 6,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -82.5,
-    "flow20_norm": -12.6503,
-    "slope5_musd": -13.1,
-    "vol20": 6521567.0
+    "flow20_musd": -76.0,
+    "flow20_norm": -11.8047,
+    "slope5_musd": -25.6,
+    "vol20": 6438113.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": -3.93,
+    "chg20_pct": -1.09,
     "max20_close": 482.28
    },
    "paths": {
@@ -351,7 +351,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-12.6503"
+      "v": "now=-11.8047"
      }
     ],
     "cycle": [
@@ -363,7 +363,7 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.50 sq=False"
+      "v": "%B=0.59 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
@@ -373,7 +373,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-12.6503,20日漲跌=-3.9%"
+      "v": "flow20=-11.8047,20日漲跌=-1.1%"
      }
     ],
     "disaster": [
@@ -390,12 +390,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=450.31 下軌=412.51"
+      "v": "C=456.81 下軌=412.50"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-13.1$M"
+      "v": "-25.6$M"
      }
     ]
    },
@@ -403,28 +403,28 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=5,%B=0.50"
+     "v": "maxTD賣=6,%B=0.59"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=450.31,max20×0.99=477.46,flow20=-12.6503"
+     "v": "C=456.81,max20×0.99=477.46,flow20=-11.8047"
     }
    },
    "swing_top": {
-    "ext_pct": -5.01,
+    "ext_pct": -3.59,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-06-10",
     "last_confirm_peak_d": "2026-06-03",
-    "last_confirm_peak_c": 593.955,
+    "last_confirm_peak_c": 593.765,
     "confirm_60d": [],
     "today": false,
     "recent5": false
    },
    "earnings": {
     "date": "2026-11-05",
-    "days_cal": 42,
+    "days_cal": 41,
     "veto": false
    },
    "atm_flag": false,
@@ -448,33 +448,33 @@
   "MRVL": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 258.95,
-   "sma20": 231.864,
-   "sd20": 17.606,
-   "upper": 267.077,
-   "lower": 196.652,
-   "sma50": 219.097,
-   "sma50_10ago": 217.557,
-   "pctb": 0.8846,
-   "bw": 0.3037,
+   "asof": "2026-09-25",
+   "close": 261.935,
+   "sma20": 232.889,
+   "sd20": 18.696,
+   "upper": 270.281,
+   "lower": 195.496,
+   "sma50": 220.569,
+   "sma50_10ago": 216.84,
+   "pctb": 0.8884,
+   "bw": 0.3211,
    "squeeze": false,
    "bw_min60": 0.2131,
    "regime": "trend",
    "td_buy": 0,
-   "td_sell": 7,
+   "td_sell": 8,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -26.3,
-    "flow20_norm": -1.2224,
-    "slope5_musd": 16.4,
-    "vol20": 21514491.0
+    "flow20_musd": 1.2,
+    "flow20_norm": 0.0598,
+    "slope5_musd": 54.0,
+    "vol20": 20054855.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": 5.65,
+    "chg20_pct": 8.48,
     "max20_close": 262.36
    },
    "paths": {
@@ -497,7 +497,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=-1.2224"
+      "v": "now=0.0598"
      }
     ],
     "cycle": [
@@ -509,7 +509,7 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.88 sq=False"
+      "v": "%B=0.89 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
@@ -519,7 +519,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-1.2224,20日漲跌=5.6%"
+      "v": "flow20=0.0598,20日漲跌=8.5%"
      }
     ],
     "disaster": [
@@ -536,12 +536,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=258.95 下軌=196.65"
+      "v": "C=261.94 下軌=195.50"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "16.4$M"
+      "v": "54.0$M"
      }
     ]
    },
@@ -549,18 +549,18 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=7,%B=0.88"
+     "v": "maxTD賣=8,%B=0.89"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=258.95,max20×0.99=259.74,flow20=-1.2224"
+     "v": "C=261.94,max20×0.99=259.74,flow20=0.0598"
     }
    },
    "swing_top": {
-    "ext_pct": 18.19,
+    "ext_pct": 18.75,
     "watch": true,
-    "confirm_level": 231.864,
+    "confirm_level": 232.889,
     "last_confirm_d": "2026-07-02",
     "last_confirm_peak_d": "2026-06-04",
     "last_confirm_peak_c": 316.352,
@@ -572,7 +572,7 @@
    },
    "earnings": {
     "date": "2026-12-01",
-    "days_cal": 68,
+    "days_cal": 67,
     "veto": false
    },
    "atm_flag": false,
@@ -590,39 +590,39 @@
    },
    "exit_on": false,
    "stale": false,
-   "conclusion": "趨勢 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 18%,若收破中軌 231.86 即確認波段頂",
+   "conclusion": "趨勢 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 19%,若收破中軌 232.89 即確認波段頂",
    "earnings_src": "yahoo"
   },
   "LITE": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 929.04,
-   "sma20": 912.421,
-   "sd20": 43.553,
-   "upper": 999.526,
-   "lower": 825.315,
-   "sma50": 854.357,
-   "sma50_10ago": 823.924,
-   "pctb": 0.5954,
-   "bw": 0.1909,
+   "asof": "2026-09-25",
+   "close": 941.65,
+   "sma20": 911.696,
+   "sd20": 42.936,
+   "upper": 997.568,
+   "lower": 825.824,
+   "sma50": 859.065,
+   "sma50_10ago": 826.441,
+   "pctb": 0.6744,
+   "bw": 0.1884,
    "squeeze": true,
-   "bw_min60": 0.1909,
+   "bw_min60": 0.1884,
    "regime": "trend",
-   "td_buy": 1,
+   "td_buy": 2,
    "td_sell": 0,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 139.4,
-    "flow20_norm": 31.6597,
-    "slope5_musd": 179.5,
-    "vol20": 4403076.0
+    "flow20_musd": 116.5,
+    "flow20_norm": 26.542,
+    "slope5_musd": 146.1,
+    "vol20": 4389274.0
    },
    "div": {
     "accum": true,
     "dist": false,
-    "chg20_pct": -1.06,
+    "chg20_pct": -1.52,
     "max20_close": 988.98
    },
    "paths": {
@@ -645,7 +645,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=31.6597"
+      "v": "now=26.542"
      }
     ],
     "cycle": [
@@ -657,17 +657,17 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": true,
-      "v": "%B=0.60 sq=True"
+      "v": "%B=0.67 sq=True"
      },
      {
       "k": "近5日 TD買計數曾達9",
       "ok": false,
-      "v": "max=1"
+      "v": "max=2"
      },
      {
       "k": "當日吸籌背離",
       "ok": true,
-      "v": "flow20=31.6597,20日漲跌=-1.1%"
+      "v": "flow20=26.542,20日漲跌=-1.5%"
      }
     ],
     "disaster": [
@@ -684,12 +684,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=929.04 下軌=825.31"
+      "v": "C=941.65 下軌=825.82"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "179.5$M"
+      "v": "146.1$M"
      }
     ]
    },
@@ -697,16 +697,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=4,%B=0.60"
+     "v": "maxTD賣=4,%B=0.67"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=929.04,max20×0.99=979.09,flow20=31.6597"
+     "v": "C=941.65,max20×0.99=979.09,flow20=26.542"
     }
    },
    "swing_top": {
-    "ext_pct": 8.74,
+    "ext_pct": 9.61,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-09-01",
@@ -720,7 +720,7 @@
    },
    "earnings": {
     "date": "2026-11-05",
-    "days_cal": 42,
+    "days_cal": 41,
     "veto": false
    },
    "atm_flag": false,
@@ -744,33 +744,33 @@
   "COHR": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 290.61,
-   "sma20": 290.366,
-   "sd20": 16.694,
-   "upper": 323.754,
-   "lower": 256.978,
-   "sma50": 296.389,
-   "sma50_10ago": 301.764,
-   "pctb": 0.5037,
+   "asof": "2026-09-25",
+   "close": 295.83,
+   "sma20": 290.388,
+   "sd20": 16.701,
+   "upper": 323.789,
+   "lower": 256.987,
+   "sma50": 296.767,
+   "sma50_10ago": 300.499,
+   "pctb": 0.5815,
    "bw": 0.23,
    "squeeze": false,
    "bw_min60": 0.1711,
    "regime": "cycle",
-   "td_buy": 1,
+   "td_buy": 2,
    "td_sell": 0,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -9.3,
-    "flow20_norm": -1.4899,
-    "slope5_musd": -32.7,
-    "vol20": 6241913.0
+    "flow20_musd": -12.7,
+    "flow20_norm": -2.0338,
+    "slope5_musd": -48.8,
+    "vol20": 6244494.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": -1.28,
+    "chg20_pct": 0.15,
     "max20_close": 321.52
    },
    "paths": {
@@ -793,7 +793,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=-1.4899"
+      "v": "now=-2.0338"
      }
     ],
     "cycle": [
@@ -805,17 +805,17 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.50 sq=False"
+      "v": "%B=0.58 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
       "ok": false,
-      "v": "max=1"
+      "v": "max=2"
      },
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-1.4899,20日漲跌=-1.3%"
+      "v": "flow20=-2.0338,20日漲跌=0.1%"
      }
     ],
     "disaster": [
@@ -832,12 +832,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=290.61 下軌=256.98"
+      "v": "C=295.83 下軌=256.99"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-32.7$M"
+      "v": "-48.8$M"
      }
     ]
    },
@@ -845,16 +845,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=4,%B=0.50"
+     "v": "maxTD賣=4,%B=0.58"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=290.61,max20×0.99=318.30,flow20=-1.4899"
+     "v": "C=295.83,max20×0.99=318.30,flow20=-2.0338"
     }
    },
    "swing_top": {
-    "ext_pct": -1.95,
+    "ext_pct": -0.32,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-05-29",
@@ -866,7 +866,7 @@
    },
    "earnings": {
     "date": "2026-11-04",
-    "days_cal": 41,
+    "days_cal": 40,
     "veto": false
    },
    "atm_flag": false,
@@ -890,34 +890,34 @@
   "AAOI": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 101.03,
-   "sma20": 103.827,
-   "sd20": 4.883,
-   "upper": 113.593,
-   "lower": 94.061,
-   "sma50": 111.677,
-   "sma50_10ago": 115.408,
-   "pctb": 0.3568,
-   "bw": 0.1881,
+   "asof": "2026-09-25",
+   "close": 101.4,
+   "sma20": 103.233,
+   "sd20": 4.395,
+   "upper": 112.023,
+   "lower": 94.443,
+   "sma50": 111.7,
+   "sma50_10ago": 114.736,
+   "pctb": 0.3957,
+   "bw": 0.1703,
    "squeeze": true,
-   "bw_min60": 0.1881,
+   "bw_min60": 0.1703,
    "regime": "cycle",
-   "td_buy": 1,
+   "td_buy": 2,
    "td_sell": 0,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -60.9,
-    "flow20_norm": -9.1734,
-    "slope5_musd": -14.6,
-    "vol20": 6638750.0
+    "flow20_musd": -71.4,
+    "flow20_norm": -10.8164,
+    "slope5_musd": -25.3,
+    "vol20": 6601068.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": -11.19,
-    "max20_close": 113.28
+    "chg20_pct": -10.49,
+    "max20_close": 111.55
    },
    "paths": {
     "trend": [
@@ -939,7 +939,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-9.1734"
+      "v": "now=-10.8164"
      }
     ],
     "cycle": [
@@ -951,17 +951,17 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": true,
-      "v": "%B=0.36 sq=True"
+      "v": "%B=0.40 sq=True"
      },
      {
       "k": "近5日 TD買計數曾達9",
       "ok": false,
-      "v": "max=1"
+      "v": "max=2"
      },
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-9.1734,20日漲跌=-11.2%"
+      "v": "flow20=-10.8164,20日漲跌=-10.5%"
      }
     ],
     "disaster": [
@@ -978,12 +978,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=101.03 下軌=94.06"
+      "v": "C=101.40 下軌=94.44"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-14.6$M"
+      "v": "-25.3$M"
      }
     ]
    },
@@ -991,16 +991,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=4,%B=0.36"
+     "v": "maxTD賣=4,%B=0.40"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=101.03,max20×0.99=112.15,flow20=-9.1734"
+     "v": "C=101.40,max20×0.99=110.43,flow20=-10.8164"
     }
    },
    "swing_top": {
-    "ext_pct": -9.53,
+    "ext_pct": -9.22,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-08-24",
@@ -1014,7 +1014,7 @@
    },
    "earnings": {
     "date": "2026-11-05",
-    "days_cal": 42,
+    "days_cal": 41,
     "veto": false
    },
    "atm_flag": false,
@@ -1038,33 +1038,33 @@
   "NVDA": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 224.58,
-   "sma20": 221.787,
-   "sd20": 5.547,
-   "upper": 232.881,
-   "lower": 210.694,
-   "sma50": 215.437,
-   "sma50_10ago": 211.938,
-   "pctb": 0.6259,
-   "bw": 0.1,
+   "asof": "2026-09-25",
+   "close": 225.07,
+   "sma20": 221.655,
+   "sd20": 5.434,
+   "upper": 232.522,
+   "lower": 210.787,
+   "sma50": 215.795,
+   "sma50_10ago": 212.356,
+   "pctb": 0.6571,
+   "bw": 0.0981,
    "squeeze": false,
    "bw_min60": 0.0927,
    "regime": "trend",
-   "td_buy": 0,
-   "td_sell": 6,
+   "td_buy": 1,
+   "td_sell": 0,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 1771.9,
-    "flow20_norm": 14.015,
-    "slope5_musd": 119.4,
-    "vol20": 126429048.0
+    "flow20_musd": 585.9,
+    "flow20_norm": 5.0538,
+    "slope5_musd": -15.6,
+    "vol20": 115932171.0
    },
    "div": {
-    "accum": false,
+    "accum": true,
     "dist": false,
-    "chg20_pct": 7.24,
+    "chg20_pct": -1.17,
     "max20_close": 230.103
    },
    "paths": {
@@ -1087,7 +1087,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=14.015"
+      "v": "now=5.0538"
      }
     ],
     "cycle": [
@@ -1099,17 +1099,17 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.63 sq=False"
+      "v": "%B=0.66 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
       "ok": false,
-      "v": "max=0"
+      "v": "max=1"
      },
      {
       "k": "當日吸籌背離",
-      "ok": false,
-      "v": "flow20=14.015,20日漲跌=7.2%"
+      "ok": true,
+      "v": "flow20=5.0538,20日漲跌=-1.2%"
      }
     ],
     "disaster": [
@@ -1126,12 +1126,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=224.58 下軌=210.69"
+      "v": "C=225.07 下軌=210.79"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
-      "ok": true,
-      "v": "119.4$M"
+      "ok": false,
+      "v": "-15.6$M"
      }
     ]
    },
@@ -1139,16 +1139,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=6,%B=0.63"
+     "v": "maxTD賣=6,%B=0.66"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=224.58,max20×0.99=227.80,flow20=14.015"
+     "v": "C=225.07,max20×0.99=227.80,flow20=5.0538"
     }
    },
    "swing_top": {
-    "ext_pct": 4.24,
+    "ext_pct": 4.3,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-05-05",
@@ -1160,7 +1160,7 @@
    },
    "earnings": {
     "date": "2026-11-17",
-    "days_cal": 54,
+    "days_cal": 53,
     "veto": false
    },
    "atm_flag": false,
@@ -1184,34 +1184,34 @@
   "AVGO": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 350.36,
-   "sma20": 358.446,
-   "sd20": 9.844,
-   "upper": 378.134,
-   "lower": 338.758,
-   "sma50": 376.697,
-   "sma50_10ago": 382.948,
-   "pctb": 0.2946,
-   "bw": 0.1099,
+   "asof": "2026-09-25",
+   "close": 352.81,
+   "sma20": 357.543,
+   "sd20": 9.485,
+   "upper": 376.513,
+   "lower": 338.573,
+   "sma50": 376.005,
+   "sma50_10ago": 382.389,
+   "pctb": 0.3752,
+   "bw": 0.1061,
    "squeeze": false,
    "bw_min60": 0.0949,
    "regime": "cycle",
-   "td_buy": 1,
+   "td_buy": 2,
    "td_sell": 0,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -795.9,
-    "flow20_norm": -28.7854,
-    "slope5_musd": -130.7,
-    "vol20": 27649463.0
+    "flow20_musd": -832.4,
+    "flow20_norm": -30.4154,
+    "slope5_musd": -148.6,
+    "vol20": 27367758.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": -1.29,
-    "max20_close": 370.865
+    "chg20_pct": -4.87,
+    "max20_close": 369.667
    },
    "paths": {
     "trend": [
@@ -1233,7 +1233,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-28.7854"
+      "v": "now=-30.4154"
      }
     ],
     "cycle": [
@@ -1245,17 +1245,17 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.29 sq=False"
+      "v": "%B=0.38 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
       "ok": false,
-      "v": "max=1"
+      "v": "max=2"
      },
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-28.7854,20日漲跌=-1.3%"
+      "v": "flow20=-30.4154,20日漲跌=-4.9%"
      }
     ],
     "disaster": [
@@ -1272,12 +1272,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=350.36 下軌=338.76"
+      "v": "C=352.81 下軌=338.57"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-130.7$M"
+      "v": "-148.6$M"
      }
     ]
    },
@@ -1285,28 +1285,28 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=4,%B=0.29"
+     "v": "maxTD賣=4,%B=0.38"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=350.36,max20×0.99=367.16,flow20=-28.7854"
+     "v": "C=352.81,max20×0.99=365.97,flow20=-30.4154"
     }
    },
    "swing_top": {
-    "ext_pct": -6.99,
+    "ext_pct": -6.17,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-05-19",
     "last_confirm_peak_d": "2026-05-14",
-    "last_confirm_peak_c": 439.095,
+    "last_confirm_peak_c": 438.297,
     "confirm_60d": [],
     "today": false,
     "recent5": false
    },
    "earnings": {
     "date": "2026-12-09",
-    "days_cal": 76,
+    "days_cal": 75,
     "veto": false
    },
    "atm_flag": false,
@@ -1330,33 +1330,33 @@
   "SMH": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 600.52,
-   "sma20": 567.154,
-   "sd20": 20.038,
-   "upper": 607.23,
-   "lower": 527.078,
-   "sma50": 565.138,
-   "sma50_10ago": 570.142,
-   "pctb": 0.9163,
-   "bw": 0.1413,
+   "asof": "2026-09-25",
+   "close": 606.56,
+   "sma20": 568.832,
+   "sd20": 21.786,
+   "upper": 612.404,
+   "lower": 525.26,
+   "sma50": 565.891,
+   "sma50_10ago": 569.104,
+   "pctb": 0.9329,
+   "bw": 0.1532,
    "squeeze": false,
    "bw_min60": 0.0723,
    "regime": "cycle",
    "td_buy": 0,
-   "td_sell": 5,
+   "td_sell": 6,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 584.6,
-    "flow20_norm": 89.4136,
-    "slope5_musd": 58.0,
-    "vol20": 6538152.0
+    "flow20_musd": 542.7,
+    "flow20_norm": 84.2844,
+    "slope5_musd": 53.3,
+    "vol20": 6438918.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": 8.05,
+    "chg20_pct": 5.86,
     "max20_close": 607.46
    },
    "paths": {
@@ -1379,7 +1379,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=89.4136"
+      "v": "now=84.2844"
      }
     ],
     "cycle": [
@@ -1391,7 +1391,7 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.92 sq=False"
+      "v": "%B=0.93 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
@@ -1401,7 +1401,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=89.4136,20日漲跌=8.1%"
+      "v": "flow20=84.2844,20日漲跌=5.9%"
      }
     ],
     "disaster": [
@@ -1418,12 +1418,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=600.52 下軌=527.08"
+      "v": "C=606.56 下軌=525.26"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "58.0$M"
+      "v": "53.3$M"
      }
     ]
    },
@@ -1431,16 +1431,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=5,%B=0.92"
+     "v": "maxTD賣=6,%B=0.93"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=600.52,max20×0.99=601.39,flow20=89.4136"
+     "v": "C=606.56,max20×0.99=601.39,flow20=84.2844"
     }
    },
    "swing_top": {
-    "ext_pct": 6.26,
+    "ext_pct": 7.19,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-06-05",
@@ -1470,39 +1470,39 @@
    },
    "exit_on": false,
    "stale": false,
-   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 527 附近",
+   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 525 附近",
    "earnings_src": "無"
   },
   "SOXX": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 566.07,
-   "sma20": 524.208,
-   "sd20": 23.715,
-   "upper": 571.639,
-   "lower": 476.777,
-   "sma50": 525.599,
-   "sma50_10ago": 532.805,
-   "pctb": 0.9413,
-   "bw": 0.181,
+   "asof": "2026-09-25",
+   "close": 572.68,
+   "sma20": 526.588,
+   "sd20": 25.965,
+   "upper": 578.518,
+   "lower": 474.657,
+   "sma50": 526.347,
+   "sma50_10ago": 531.176,
+   "pctb": 0.9438,
+   "bw": 0.1972,
    "squeeze": false,
    "bw_min60": 0.0822,
    "regime": "cycle",
    "td_buy": 0,
-   "td_sell": 5,
+   "td_sell": 6,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -27.5,
-    "flow20_norm": -3.6956,
-    "slope5_musd": 182.2,
-    "vol20": 7441302.0
+    "flow20_musd": -22.4,
+    "flow20_norm": -3.1014,
+    "slope5_musd": 122.8,
+    "vol20": 7222601.0
    },
    "div": {
     "accum": false,
-    "dist": false,
-    "chg20_pct": 9.9,
+    "dist": true,
+    "chg20_pct": 9.06,
     "max20_close": 572.78
    },
    "paths": {
@@ -1525,7 +1525,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-3.6956"
+      "v": "now=-3.1014"
      }
     ],
     "cycle": [
@@ -1547,7 +1547,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-3.6956,20日漲跌=9.9%"
+      "v": "flow20=-3.1014,20日漲跌=9.1%"
      }
     ],
     "disaster": [
@@ -1564,12 +1564,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=566.07 下軌=476.78"
+      "v": "C=572.68 下軌=474.66"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "182.2$M"
+      "v": "122.8$M"
      }
     ]
    },
@@ -1577,21 +1577,21 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=5,%B=0.94"
+     "v": "maxTD賣=6,%B=0.94"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
-     "ok": false,
-     "v": "C=566.07,max20×0.99=567.05,flow20=-3.6956"
+     "ok": true,
+     "v": "C=572.68,max20×0.99=567.05,flow20=-3.1014"
     }
    },
    "swing_top": {
-    "ext_pct": 7.7,
+    "ext_pct": 8.8,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": "2026-06-10",
     "last_confirm_peak_d": "2026-06-03",
-    "last_confirm_peak_c": 615.388,
+    "last_confirm_peak_c": 614.986,
     "confirm_60d": [],
     "today": false,
     "recent5": false
@@ -1614,41 +1614,41 @@
     "cycle": false,
     "disaster": false
    },
-   "exit_on": false,
+   "exit_on": true,
    "stale": false,
-   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 477 附近",
+   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;手冊出貨證據亮(參考);災後路徑觀察價位=下軌 475 附近",
    "earnings_src": "無"
   },
   "SPY": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 767.27,
-   "sma20": 763.923,
-   "sd20": 5.763,
-   "upper": 775.448,
-   "lower": 752.397,
-   "sma50": 759.46,
-   "sma50_10ago": 756.368,
-   "pctb": 0.6452,
-   "bw": 0.0302,
+   "asof": "2026-09-25",
+   "close": 771.35,
+   "sma20": 764.026,
+   "sd20": 5.877,
+   "upper": 775.781,
+   "lower": 752.272,
+   "sma50": 759.908,
+   "sma50_10ago": 756.737,
+   "pctb": 0.8115,
+   "bw": 0.0308,
    "squeeze": false,
    "bw_min60": 0.0202,
    "regime": "trend",
-   "td_buy": 0,
-   "td_sell": 5,
+   "td_buy": 1,
+   "td_sell": 0,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 2897.9,
-    "flow20_norm": 66.6184,
-    "slope5_musd": 1204.2,
-    "vol20": 43499999.0
+    "flow20_musd": 2888.7,
+    "flow20_norm": 66.1535,
+    "slope5_musd": 1109.5,
+    "vol20": 43666629.0
    },
    "div": {
     "accum": true,
     "dist": false,
-    "chg20_pct": 0.4,
+    "chg20_pct": 0.28,
     "max20_close": 773.5
    },
    "paths": {
@@ -1671,7 +1671,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=66.6184"
+      "v": "now=66.1535"
      }
     ],
     "cycle": [
@@ -1683,17 +1683,17 @@
      {
       "k": "當日 %B≤0.2或squeeze",
       "ok": false,
-      "v": "%B=0.65 sq=False"
+      "v": "%B=0.81 sq=False"
      },
      {
       "k": "近5日 TD買計數曾達9",
       "ok": false,
-      "v": "max=0"
+      "v": "max=1"
      },
      {
       "k": "當日吸籌背離",
       "ok": true,
-      "v": "flow20=66.6184,20日漲跌=0.4%"
+      "v": "flow20=66.1535,20日漲跌=0.3%"
      }
     ],
     "disaster": [
@@ -1710,12 +1710,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=767.27 下軌=752.40"
+      "v": "C=771.35 下軌=752.27"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "1204.2$M"
+      "v": "1109.5$M"
      }
     ]
    },
@@ -1723,16 +1723,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=5,%B=0.65"
+     "v": "maxTD賣=5,%B=0.81"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=767.27,max20×0.99=765.76,flow20=66.6184"
+     "v": "C=771.35,max20×0.99=765.76,flow20=66.1535"
     }
    },
    "swing_top": {
-    "ext_pct": 1.03,
+    "ext_pct": 1.51,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": null,
@@ -1768,33 +1768,33 @@
   "QQQ": {
    "insufficient": false,
    "bars_n": 1250,
-   "asof": "2026-09-24",
-   "close": 741.09,
-   "sma20": 719.11,
-   "sd20": 12.879,
-   "upper": 744.867,
-   "lower": 693.352,
-   "sma50": 711.203,
-   "sma50_10ago": 709.872,
-   "pctb": 0.9267,
-   "bw": 0.0716,
+   "asof": "2026-09-25",
+   "close": 744.5,
+   "sma20": 720.317,
+   "sd20": 14.021,
+   "upper": 748.359,
+   "lower": 692.276,
+   "sma50": 711.989,
+   "sma50_10ago": 709.666,
+   "pctb": 0.9312,
+   "bw": 0.0779,
    "squeeze": false,
    "bw_min60": 0.0258,
    "regime": "trend",
    "td_buy": 0,
-   "td_sell": 6,
+   "td_sell": 7,
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 655.5,
-    "flow20_norm": 19.8473,
-    "slope5_musd": 378.6,
-    "vol20": 33027166.0
+    "flow20_musd": 344.1,
+    "flow20_norm": 10.385,
+    "slope5_musd": 539.4,
+    "vol20": 33134462.0
    },
    "div": {
     "accum": false,
     "dist": false,
-    "chg20_pct": 4.29,
+    "chg20_pct": 3.35,
     "max20_close": 747.46
    },
    "paths": {
@@ -1817,7 +1817,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=19.8473"
+      "v": "now=10.385"
      }
     ],
     "cycle": [
@@ -1839,7 +1839,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=19.8473,20日漲跌=4.3%"
+      "v": "flow20=10.385,20日漲跌=3.4%"
      }
     ],
     "disaster": [
@@ -1856,12 +1856,12 @@
      {
       "k": "當日收盤回到下軌之上",
       "ok": true,
-      "v": "C=741.09 下軌=693.35"
+      "v": "C=744.50 下軌=692.28"
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "378.6$M"
+      "v": "539.4$M"
      }
     ]
    },
@@ -1869,16 +1869,16 @@
     "a": {
      "k": "近3日TD賣曾達9 且 當日%B>0.8",
      "ok": false,
-     "v": "maxTD賣=6,%B=0.93"
+     "v": "maxTD賣=7,%B=0.93"
     },
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=741.09,max20×0.99=739.99,flow20=19.8473"
+     "v": "C=744.50,max20×0.99=739.99,flow20=10.385"
     }
    },
    "swing_top": {
-    "ext_pct": 4.2,
+    "ext_pct": 4.57,
     "watch": false,
     "confirm_level": null,
     "last_confirm_d": null,
@@ -1922,12 +1922,12 @@
   {
    "source": "judge MU",
    "ok": true,
-   "note": "趨勢 regime;進場全數被否決(財報否決(未來5交易日內:2026-09-30));高檔:高於50日線 15%,若收破中軌 986.80 即確認波段頂"
+   "note": "趨勢 regime;進場全數被否決(財報否決(未來5交易日內:2026-09-30));高檔:高於50日線 15%,若收破中軌 994.14 即確認波段頂"
   },
   {
    "source": "judge SNDK",
    "ok": true,
-   "note": "循環 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 16%,若收破中軌 1649.15 即確認波段頂;災後路徑觀察價位=下軌 1407 附近"
+   "note": "循環 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 17%,若收破中軌 1663.79 即確認波段頂;災後路徑觀察價位=下軌 1427 附近"
   },
   {
    "source": "judge WDC",
@@ -1937,7 +1937,7 @@
   {
    "source": "judge MRVL",
    "ok": true,
-   "note": "趨勢 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 18%,若收破中軌 231.86 即確認波段頂"
+   "note": "趨勢 regime;三條路徑皆不成立,空手觀望;高檔:高於50日線 19%,若收破中軌 232.89 即確認波段頂"
   },
   {
    "source": "judge LITE",
@@ -1967,12 +1967,12 @@
   {
    "source": "judge SMH",
    "ok": true,
-   "note": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 527 附近"
+   "note": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 525 附近"
   },
   {
    "source": "judge SOXX",
    "ok": true,
-   "note": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 477 附近"
+   "note": "循環 regime;三條路徑皆不成立,空手觀望;手冊出貨證據亮(參考);災後路徑觀察價位=下軌 475 附近"
   },
   {
    "source": "judge SPY",
