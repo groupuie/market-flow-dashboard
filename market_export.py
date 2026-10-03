@@ -1062,6 +1062,7 @@ def _klq_meta(args):
         return {"ver": KLQ_VER, "err": str(e)[:60]}
 
 # ============ 公開源備援的當日K(GitHub Actions;Mac 關機時 K線/技術層照樣盤中更新)============
+CUSTOM_MAX = 40   # 自訂追蹤清單上限(2026-10-03 30→40:使用者加 STX/STXL 時 29/30 已滿;收件匣每輪 5 檔的濫用防線不變)
 def fetch_custom_syms_public():
     """免 token 讀共享自訂清單(gist raw 匿名;Actions 端無 config)。失敗回空(fail-open)。"""
     try:
@@ -1072,7 +1073,7 @@ def fetch_custom_syms_public():
         for s in arr if isinstance(arr, list) else []:
             s = str(s).strip().upper().replace("US.", "")
             if s and len(s) <= 12 and s not in out: out.append(s)
-        return out[:30]
+        return out[:CUSTOM_MAX]
     except Exception as e:
         err("cust-public", e); return []
 
@@ -1258,15 +1259,15 @@ def fetch_custom_syms(cfg):
             if not s or len(s)>12: continue
             if not s.startswith("US."): s="US."+s
             if s not in out: out.append(s)
-        return out[:30]
+        return out[:CUSTOM_MAX]
     except Exception as e:
         err("custom_syms",e); return []
 
 # ============ 免token收件匣(2026-08-04 加追蹤;2026-08-06 起兼收 ⚡點播)============
 # 網頁把訊息 POST 到公共主題 ntfy.sh/mfd-add-<gist前12碼>(零設定:兩端都從 gist id 推導)。
 # 動詞:純代號「SYM」=加入追蹤(合併寫回 gist custom_symbols.json);「?SYM」=點播(轉寫 lookup_request.json,
-#       由同輪的 serve_lookup 現抓現推,一次性快照、不占 30 檔追蹤名額)。唯一寫入者=Mac,token 不出 Mac。
-# 濫用防線:格式驗證、每輪最多 5 檔、清單上限 30(fetch_custom_syms 同上限)、已處理訊息 id 去重、
+#       由同輪的 serve_lookup 現抓現推,一次性快照、不占 40 檔追蹤名額)。唯一寫入者=Mac,token 不出 Mac。
+# 濫用防線:格式驗證、每輪最多 5 檔、清單上限 CUSTOM_MAX=40(fetch_custom_syms 同上限)、已處理訊息 id 去重、
 # 訊息 ~12h 自然過期;收件匣故障一律回空、不影響採集(fail-open)。
 def fetch_inbox_msgs(cfg, seen_path):
     """撿收件匣一次 → (加追蹤代號們, 點播代號們);id 去重持久化。"""
@@ -1350,7 +1351,7 @@ def process_inbox(cfg, args):
             custom=[x.replace("US.","") for x in fetch_custom_syms(cfg)]
             _new=[x for x in aq if x not in custom]
             if _new:
-                _plain=list(dict.fromkeys(custom+_new))[:30]
+                _plain=list(dict.fromkeys(custom+_new))[:CUSTOM_MAX]
                 push_gist(cfg, {"custom_symbols.json": _plain})
                 log(f"inbox 免token加追蹤: +{_new} → custom_symbols.json({len(_plain)} 檔)")
             aq=[]
@@ -1781,7 +1782,7 @@ def run_once(cfg, args):
         _new=[x for x in _inbox if ("US."+x) not in custom]
         if _new:
             _plain=[x.replace("US.","") for x in custom]+_new
-            _plain=list(dict.fromkeys(_plain))[:30]
+            _plain=list(dict.fromkeys(_plain))[:CUSTOM_MAX]
             try:
                 push_gist(cfg, {"custom_symbols.json": _plain})
                 log(f"inbox 免token加追蹤: +{_new} → custom_symbols.json({len(_plain)} 檔)")

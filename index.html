@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-09-23T07:50Z">
+<meta name="build" content="2026-10-03T00:20Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -649,7 +649,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-09-23T07:50Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-03T00:20Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3974,7 +3974,7 @@ async function chipLookup(sym){   // ⚡ 點播(2026-08-06 起免token):公共�
 }
 // ===== 免token加追蹤(2026-08-04):公共收件匣 ntfy → Mac 採集器每個全量輪撿走、驗證、寫回共享清單 =====
 // 任何觀看者、任何裝置皆可用;GitHub token 只存在 Mac(唯一寫入者)。主題名由 gist id 前12碼推導,兩端零設定。
-// 濫用防線:格式驗證(兩端)、Mac 每輪最多收 5 檔、清單上限 30、已處理訊息 id 去重、訊息 ~12h 自然過期。
+// 濫用防線:格式驗證(兩端)、Mac 每輪最多收 5 檔、清單上限 40、已處理訊息 id 去重、訊息 ~12h 自然過期。
 function chipFreeAdd(sym){
   sym=(sym||'').trim().toUpperCase();
   const st=document.getElementById('chipFreeStat');
@@ -3994,7 +3994,7 @@ async function chipAddCustom(sym){   // 個股籌碼分頁:一鍵把自填代號
   const st=document.getElementById('chipAddStat');
   if(!localStorage.getItem('gh_token')){if(st)st.textContent='← 請先在下方貼一次 token';return;}
   const list=[...(DATA.custom_symbols||[])]; if(!list.includes(sym))list.push(sym);
-  if(list.length>30){if(st)st.textContent='自訂已滿 30 檔,請先在「追蹤範圍」移除一些';return;}
+  if(list.length>40){if(st)st.textContent='自訂已滿 40 檔,請先在「追蹤範圍」移除一些';return;}
   if(st)st.textContent='儲存中…';
   const r=await saveCustomCore(list);
   if(st)st.textContent=(r===true)?'✓ 已加入!Mac 採集器 ~5 分內開始:⑦ 即時+歷史回填、日K(~10 分)。晚點回來看即可。':'失敗:'+r;
