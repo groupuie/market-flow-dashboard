@@ -4,8 +4,11 @@ name: nightly-engine
 #   + 全市場掃描 scan + 分析師共識 analyst → 只提交這 4 個 data 檔到 main(Pages 自動更新)。
 # 不做 Claude 逐檔判讀(使用者 2026-10-09:只看 K 線圖 + 📐技判,判讀卡停在最後一次)。
 # 全部資料來源為公開讀取(gist raw / Yahoo / Nasdaq / SEC / CBOE);唯一秘密=SEC 聯絡 email(repo secret SEC_CONTACT)。
-# 每個階段跑完就各自提交(analyst ~340 檔可能跑 1 小時;前面的成果不因後段逾時而遺失)。
+# 每個階段跑完就各自提交(analyst ~340 檔約 1 小時;前面的成果不因後段逾時而遺失)。
+# 2026-10-09 首測(run 37902232950):signals 1 分、tj+scan 3 分、analyst 62 分,四檔皆提交、Pages 自動更新、資料品質與雲端 Claude 版相同。
 on:
+  schedule:
+    - cron: "30 22 * * 1-5"   # 22:30 UTC 週一~五 = 台灣 06:30 週二~六;EDT/EST 皆在美股收盤後(非交易日由閘門跳過)
   workflow_dispatch:
 permissions:
   contents: write
