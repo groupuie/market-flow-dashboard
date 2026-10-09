@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-09T10:31Z">
+<meta name="build" content="2026-10-09T10:38Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -650,7 +650,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-09T10:31Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-09T10:38Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1165,7 +1165,8 @@ function fcStrip(a){
   if(FC_MORE){
     const ct=cx.cta||{},vc=cx.volctl||{},vx=cx.vix||{},gd=cx.gexdix||{},mc=cx.macro||{};
     const pc=v=>v==null?'—':(v>0?'+':'')+v+'%';
-    more='<div style="flex-basis:100%;height:0"></div><span style="color:#898781" title="這些量在 2012–2026 對大盤有預測力,但 2008 金融海嘯時失效(越恐慌越跌);或(原油/黃金/白銀)在不同年代正負號會翻 → 只當背景,不計入氣候分數">參考(不計分)ⓘ</span>'
+    more='<div style="flex-basis:100%;height:0"></div><span style="color:#c3c2b7;white-space:pre-line;line-height:1.5">'+esc(tipC)+'</span>'   // 觸控裝置看不到 title 提示 → 說明直接展開
+      +'<div style="flex-basis:100%;height:0"></div><span style="color:#898781" title="這些量在 2012–2026 對大盤有預測力,但 2008 金融海嘯時失效(越恐慌越跌);或(原油/黃金/白銀)在不同年代正負號會翻 → 只當背景,不計入氣候分數">參考(不計分:2012 後有效但 2008 失效,或沒有穩定領先性)</span>'
       +'<span>CTA趨勢基金部位 SPX '+(ct.spx_pct!=null?ct.spx_pct+'%':'—')+' / NDX '+(ct.ndx_pct!=null?ct.ndx_pct+'%':'—')+'</span>'
       +'<span>波動控制基金曝險 '+(vc.exposure!=null?vc.exposure+'×':'—')+(vc.pct!=null?'('+vc.pct+'%)':'')+'</span>'
       +'<span>VIX '+(vx.vix!=null?vx.vix:'—')+' · VIX/VIX3M '+(vx.ratio!=null?vx.ratio+(vx.ratio>=1?'(倒掛=恐慌)':'(正常)'):'—')+'</span>'
