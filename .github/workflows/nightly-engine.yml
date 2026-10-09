@@ -4,6 +4,7 @@ name: nightly-engine
 #   + 全市場掃描 scan + 分析師共識 analyst → 只提交這 4 個 data 檔到 main(Pages 自動更新)。
 # 不做 Claude 逐檔判讀(使用者 2026-10-09:只看 K 線圖 + 📐技判,判讀卡停在最後一次)。
 # 全部資料來源為公開讀取(gist raw / Yahoo / Nasdaq / SEC / CBOE);本 workflow 不含任何秘密。
+# 每個階段跑完就各自提交(analyst ~340 檔可能跑 1 小時;前面的成果不因後段逾時而遺失)。
 on:
   workflow_dispatch:
 permissions:
@@ -15,7 +16,7 @@ concurrency:
 jobs:
   engine:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - name: market-day gate (schedule only; manual runs always go)
@@ -40,7 +41,7 @@ jobs:
           open(os.environ["GITHUB_OUTPUT"], "a").write(f"run={run}\n")
           print("run =", run)
           PY
-      - name: config (public URLs only)
+      - name: setup (public config + commit helper)
         if: steps.day.outputs.run == '1'
         run: |
           cat > config.json <<'EOF'
@@ -48,30 +49,46 @@ jobs:
            "futu_relay": {"transport": "gist", "raw_url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/futu_snapshot.json"},
            "public_backup_url": "https://raw.githubusercontent.com/groupuie/market-flow-dashboard/data/market_public.json"}
           EOF
+          git config user.name "actions-nightly"
+          git config user.email "actions@users.noreply.github.com"
+          cat > /tmp/commit_data.sh <<'EOF'
+          #!/bin/bash
+          # 用法:commit_data.sh <檔...>  — JSON 驗證不過就還原;只提交指定 data 檔;rebase 重試 3 次
+          for f in "$@"; do
+            [ -f "$f" ] || continue
+            python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" || { echo "invalid $f → restore"; git checkout -- "$f"; }
+          done
+          git add "$@" 2>/dev/null
+          if git diff --cached --quiet; then echo "no changes: $*"; exit 0; fi
+          git commit -q -m "nightly-engine: $(git diff --cached --name-only | tr '\n' ' ')"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && { echo "pushed: $*"; exit 0; }
+            sleep 10
+          done
+          echo "push failed: $*"; exit 1
+          EOF
+          chmod +x /tmp/commit_data.sh
       - name: signals engine (13 core)
         if: steps.day.outputs.run == '1'
         continue-on-error: true
-        run: python3 scripts/stock_signals.py --mode full --out data/signals.json --prev data/signals.json --config config.json
-      - name: tech_judge + scan + analyst
+        timeout-minutes: 20
+        run: |
+          python3 scripts/stock_signals.py --mode full --out data/signals.json --prev data/signals.json --config config.json
+          /tmp/commit_data.sh data/signals.json
+      - name: tech_judge + scan
         if: steps.day.outputs.run == '1'
         continue-on-error: true
-        run: python3 scripts/nightly_calc.py tj scan analyst
-      - name: validate & commit (data files only)
-        if: steps.day.outputs.run == '1'
+        timeout-minutes: 30
         run: |
-          FILES="data/signals.json data/tech_judge.json data/scan.json data/analyst.json"
-          for f in $FILES; do
-            python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" || { echo "invalid $f → restore"; git checkout -- "$f"; }
-          done
-          git config user.name "actions-nightly"
-          git config user.email "actions@users.noreply.github.com"
-          git add $FILES
-          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
-          git commit -q -m "nightly-engine: $(git diff --cached --name-only | tr '\n' ' ')"
-          for i in 1 2 3; do
-            git pull -q --rebase origin main && git push -q origin HEAD:main && { echo "pushed"; break; }
-            sleep 10
-          done
+          python3 scripts/nightly_calc.py tj scan
+          /tmp/commit_data.sh data/tech_judge.json data/scan.json
+      - name: analyst consensus (~340 symbols, slow)
+        if: steps.day.outputs.run == '1'
+        continue-on-error: true
+        timeout-minutes: 120
+        run: |
+          python3 scripts/nightly_calc.py analyst
+          /tmp/commit_data.sh data/analyst.json
       - name: request Pages build (fallback; harmless if redundant)
         if: steps.day.outputs.run == '1'
         run: |
