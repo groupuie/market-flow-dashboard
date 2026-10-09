@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-03T00:20Z">
+<meta name="build" content="2026-10-09T10:27Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -576,6 +576,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
     <div id="dqstrip" style="display:none"></div>
+    <div id="fcstrip" style="display:none"></div>
     <div id="tjstrip" style="display:none"></div>
     <div id="posstrip" style="display:none"></div>
     <div id="cockpit" style="height:660px"></div>
@@ -649,7 +650,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-03T00:20Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-09T10:27Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1052,6 +1053,135 @@ function ensureSignals(){
     .then(j=>{if(j&&j.symbols){const first=!SIG;SIG=j;if(first&&DATA)renderChips();}})
     .catch(()=>{});
 }
+// ===== 🌐 全球資金氣候 + ▲抄底/▼減碼(2026-10-09;資料=data/flow_climate.json,盤後引擎 scripts/flow_climate.py;零 token)=====
+// 研究結論(專案文件 claude/flow_climate_2026-10.md;259 檔 × 2009–2026 回測):個股K線轉折單獨≈擲硬幣(◆★、拉回買、
+// 跌破中軌皆然);能分辨真假的是「全球資金氣候」= 日圓套利擁擠度(CFTC)+ 5年期殖利率20日衝擊 + 美元趨勢,三者在
+// 四個子期間方向一致。▼=技判「出」(曾高於50日線≥15%後首次收破20日線)且氣候≤35%;▲=曾低於50日線≥15%後首次站回
+// 20日線且氣候≥80%。各自 20 交易日冷卻。與 Python fc_events 逐位元同口徑(JS↔Py 對拍見文件)。
+let FCL=null,FCL_req=0,FC_MORE=false;
+function ensureFlowClimate(){
+  const _n=Date.now()/1000; if(_n-FCL_req<600)return; FCL_req=_n;
+  const bust='?t='+Math.floor(Date.now()/600000);
+  fetch('data/flow_climate.json'+bust,{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.json();})
+    .catch(()=>fetch('https://raw.githubusercontent.com/groupuie/market-flow-dashboard/main/data/flow_climate.json'+bust,{cache:'no-store'}).then(r=>r.ok?r.json():null))
+    .then(j=>{if(j&&j.series&&j.series.d){const first=!FCL;FCL=j;if(first&&DATA&&!DATA._partial)renderChips();}})
+    .catch(()=>{});
+}
+function fcClimOf(d){   // 該交易日的氣候(0–1);晚於序列最後一天 → 沿用最新值(盤中/引擎未跑);早於序列起點 → null
+  if(!FCL||!FCL.series)return null;
+  if(!FCL._m){const m={},S=FCL.series;let lc=null,ld='';
+    S.d.forEach((dd,i)=>{const c=S.c[i];if(c!=null){m[dd]=c/100;lc=c/100;ld=dd;}});
+    FCL._m=m;FCL._lc=lc;FCL._ld=ld;}
+  const v=FCL._m[d]; if(v!=null)return v;
+  return (FCL._ld&&d>FCL._ld)?FCL._lc:null;
+}
+function fcSeriesJS(B){   // B=[[d,o,h,l,c,v],...] 已收盤日K(舊→新)
+  const th=(FCL&&FCL.th)||{trim:0.35,trim_strong:0.20,buy:0.80,ext:0.15,dip:0.15,cool:20};
+  const n=B.length,D=B.map(b=>b[0]),C=B.map(b=>+b[4]);
+  const pre=new Array(n+1);pre[0]=0;for(let i=0;i<n;i++)pre[i+1]=pre[i]+C[i];
+  const s20=new Array(n).fill(null),s50=new Array(n).fill(null),rel=new Array(n).fill(null),ext=new Array(n).fill(null),dip=new Array(n).fill(null);
+  for(let i=0;i<n;i++){if(i>=19)s20[i]=(pre[i+1]-pre[i-19])/20; if(i>=49){s50[i]=(pre[i+1]-pre[i-49])/50;rel[i]=C[i]/s50[i]-1;}}
+  const ev=[];let lt=-999,lb=-999;
+  for(let i=0;i<n;i++){
+    if(i>=68){let mx=-Infinity,mn=Infinity;for(let k=i-19;k<=i;k++){if(rel[k]>mx)mx=rel[k];if(rel[k]<mn)mn=rel[k];}ext[i]=mx;dip[i]=mn;}
+    if(i<1||s20[i]==null||s20[i-1]==null)continue;
+    const dn=C[i]<s20[i]&&C[i-1]>=s20[i-1], up=C[i]>s20[i]&&C[i-1]<=s20[i-1];
+    if(dn&&ext[i]!=null&&ext[i]>=th.ext&&i-lt>th.cool){lt=i;const cl=fcClimOf(D[i]);   // 冷卻以「轉折」計(與氣候無關)=回測口徑
+      if(cl!=null&&cl<=th.trim)ev.push({k:'trim',i:i,d:D[i],c:C[i],clim:cl,ext:ext[i],s20:s20[i],strong:cl<=th.trim_strong});}
+    if(up&&dip[i]!=null&&dip[i]<=-0.10&&i-lb>th.cool){lb=i;const cl=fcClimOf(D[i]);
+      if(cl!=null&&cl>=th.buy&&dip[i]<=-th.dip)ev.push({k:'buy',i:i,d:D[i],c:C[i],clim:cl,dip:dip[i],s20:s20[i]});}
+  }
+  return {n:n,D:D,C:C,s20:s20,s50:s50,ext:ext,dip:dip,ev:ev,th:th,lt:lt,lb:lb};   // lt/lb=最後一次「被接受」的轉折(冷卻起點)
+}
+function fcLab(p){return p==null?'—':(p>=80?'寬鬆':p>=65?'偏寬':p>35?'中性':p>20?'偏緊':'緊縮');}
+function fcCol(p){return p==null?'#898781':(p>=80?'#22c55e':p>=65?'#86efac':p>35?'#94a3b8':p>20?'#fb923c':'#f87171');}
+let _FCB=null,_FCST=null;   // 色帶段落(K線窗內)/ 最近一次 strip 參數(參考面板展開只重畫 strip,不重繪 K 線)
+function fcBandShapes(domY,XW){   // 價格窗底部細色帶:≤20 紅 · 20–35 橘 · 65–80 淺綠 · ≥80 綠(35–65 中性不畫)
+  if(!_FCB||!_FCB.length)return [];
+  const col={a:'rgba(248,113,113,.85)',b:'rgba(251,146,60,.7)',d:'rgba(134,239,172,.6)',e:'rgba(34,197,94,.9)'};
+  const y0=domY[0],y1=domY[0]+0.011;
+  return _FCB.map(r=>({type:'rect',xref:'x',yref:'paper',x0:r.x0,x1:r.x1,y0:y0,y1:y1,fillcolor:col[r.k],line:{width:0},layer:'below'}));
+}
+function fcStrip(a){
+  const strip=document.getElementById('fcstrip'); if(!strip)return;
+  if(a!==undefined)_FCST=a; a=_FCST;
+  if(!a||a.off){strip.style.display='none';return;}
+  strip.style.display='';
+  const box=inner=>'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 8px;margin:2px 0 4px;background:rgba(45,212,191,.05);border:1px solid rgba(45,212,191,.28);border-radius:8px;font-size:11px;color:#c3c2b7">'+inner+'</div>';
+  if(a.loading||!FCL){strip.innerHTML=box('<b style="color:#2dd4bf">🌐 資金氣候</b><span style="color:#898781">載入中…(資料=每日盤後引擎產出;首次部署後當晚出現)</span>');return;}
+  const N=FCL.now||{},S=FCL.stats||{},raw=N.raw||{},cot=raw.cot||{},cx=N.ctx||{},th=FCL.th||{};
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  const pill=(txt,c,tip)=>'<span'+(tip?' title="'+esc(tip)+'"':'')+' style="padding:1px 7px;border-radius:6px;font-weight:700;background:'+c+'26;color:'+c+(tip?';cursor:help':'')+'">'+txt+'</span>';
+  const sg=v=>v==null?'—':((v>0?'+':'')+v);
+  const p=N.climate, cb=(S.climate||{});
+  const stale=(function(){try{return (Date.now()-Date.parse(FCL.updated_utc))/864e5>4;}catch(_){return false;}})();
+  const tipC='全球資金氣候 '+p+'%(近3年百分位;高=順風、低=收緊)\n'
+    +'由 2007–2026 四段期間方向都一致的三個大戶/機構資金量組成:\n'
+    +'① 日圓套利擁擠度 '+N.yen+'(CFTC 交易商日圓淨部位 z='+(cot.z!=null?cot.z:'—')+',報告日 '+(cot.report||'—')+';投機資金越是放空日圓借錢買全球資產,分數越低)\n'
+    +'② 利率衝擊 '+N.rate+'(5年期美債殖利率 20日 '+sg(raw.fvx_chg20_bp)+'bp;急升=金融條件收緊)\n'
+    +'③ 美元趨勢 '+N.usd+'(美元指數趨勢強度 '+sg(raw.dxy_trend)+';走強=全球流動性收緊)\n'
+    +'歷史(259檔個股,2009–2026)20日上漲機率/平均:≤20% '+(cb.le20?cb.le20.up20+'% / '+cb.le20.mu20+'%':'—')
+    +' · 中性 '+(cb['35_65']?cb['35_65'].up20+'% / +'+cb['35_65'].mu20+'%':'—')+' · ≥80% '+(cb.ge80?cb.ge80.up20+'% / +'+cb.ge80.mu20+'%':'—')
+    +'(全部 '+(cb.all?cb.all.up20+'% / +'+cb.all.mu20+'%':'—')+')\n氣候只說「大環境順不順」;個股▲▼要等K線轉折確認。非買賣建議。';
+  let h='<b style="color:#2dd4bf">🌐 資金氣候</b>'
+    +pill(p+'% '+fcLab(p),fcCol(p),tipC)
+    +'<span title="'+esc(tipC)+'" style="cursor:help">日圓套利 <b style="color:'+fcCol(N.yen)+'">'+N.yen+'</b> · 利率 <b style="color:'+fcCol(N.rate)+'">'+N.rate+'</b> · 美元 <b style="color:'+fcCol(N.usd)+'">'+N.usd+'</b></span>'
+    +'<span style="color:'+(stale?'#f87171':'#898781')+'">'+(N.date||'')+(stale?' · 資料未更新':'')+'</span>';
+  // —— 本檔狀態(最近已收盤K)——
+  const T=a.T;
+  if(a.short)h+=pill('本檔日K不足70根','#898781');
+  else if(T&&T.n){
+    const i9=T.n-1, cl=fcClimOf(T.D[i9]), cp=cl==null?null:Math.round(cl*100);
+    let le=null; for(let k=T.ev.length-1;k>=0;k--){if(T.ev[k].i>=i9-4){le=T.ev[k];break;}}
+    const f2=v=>v==null?'—':(+v).toFixed(2);
+    const lastRaw=k=>k==='t'?T.lt:T.lb;   // 冷卻起點=最後一次被接受的轉折(與回測同口徑)
+    if(le){h+=le.k==='trim'?pill('▼減碼 確認 '+le.d.slice(5),'#f97316','技判「出」轉折 × 資金氣候 '+Math.round(le.clim*100)+'%:見K線上的▼(hover 有歷史統計)')
+                            :pill('▲抄底 確認 '+le.d.slice(5),'#22c55e','深跌後站回20日線 × 資金氣候 '+Math.round(le.clim*100)+'%:見K線上的▲(hover 有歷史統計)');}
+    else if(cl!=null&&cl<=th.trim&&T.ext[i9]!=null&&T.ext[i9]>=th.ext&&T.s20[i9]!=null&&T.C[i9]>=T.s20[i9]&&(i9+1-lastRaw('t'))>th.cool){
+      const gap=(T.C[i9]/T.s20[i9]-1)*100;
+      h+=pill('⚠ 高檔待確認:收盤跌破 20日線 '+f2(T.s20[i9])+'('+(gap>=0?'還差 '+gap.toFixed(1)+'%':'')+')即 ▼減碼','#fab219',
+        '這一波曾高於50日線 '+(T.ext[i9]*100).toFixed(0)+'%,資金氣候 '+cp+'%(偏緊)。若之後收盤第一次跌破20日線 → ▼減碼。\n(歷史:這種時候的轉折,40日內再跌≥10% 的機率約 '+((S.trim||{}).dd40||'—')+'%,平常 '+((S.trim||{}).base_dd40||'—')+'%)');}
+    else if(cl!=null&&cl>=th.buy&&T.dip[i9]!=null&&T.dip[i9]<=-th.dip&&T.s20[i9]!=null&&T.C[i9]<=T.s20[i9]&&(i9+1-lastRaw('b'))>th.cool){
+      const gap=(T.s20[i9]/T.C[i9]-1)*100;
+      h+=pill('👀 深跌待確認:收盤站回 20日線 '+f2(T.s20[i9])+'(還差 '+gap.toFixed(1)+'%)即 ▲抄底','#22c55e',
+        '這一波曾低於50日線 '+(-T.dip[i9]*100).toFixed(0)+'%,資金氣候 '+cp+'%(寬鬆)。若之後收盤第一次站回20日線 → ▲抄底。');}
+    else h+='<span style="color:#898781" title="▼只在氣候≤'+Math.round(th.trim*100)+'%、▲只在氣候≥'+Math.round(th.buy*100)+'% 時才會出現;其餘時間個股轉折回測≈擲硬幣">本檔無▲▼訊號</span>';
+    // 盤中暫定(未收盤的最新K):只提示,不上圖
+    const L=a.live;
+    if(L&&!le&&T.n>=20){const lc=+L[4],s20L=(T.C.slice(i9-18,i9+1).reduce((x,y)=>x+y,0)+lc)/20;
+      if(cl!=null&&cl<=th.trim&&T.ext[i9]!=null&&T.ext[i9]>=th.ext&&T.C[i9]>=T.s20[i9]&&lc<s20L)h+=pill('盤中已跌破20日線(收盤確認才算)','#fb923c');
+      else if(cl!=null&&cl>=th.buy&&T.dip[i9]!=null&&T.dip[i9]<=-th.dip&&T.C[i9]<=T.s20[i9]&&lc>s20L)h+=pill('盤中已站回20日線(收盤確認才算)','#22c55e');}
+  }
+  // —— 全追蹤宇宙近 5 日 ——
+  const sc=FCL.scan;
+  if(sc){
+    const ord=arr=>arr.slice().sort((x,y)=>(x.etf?1:0)-(y.etf?1:0));   // 個股在前、ETF/槓桿ETF 在後(淡色)
+    const lst=(arr,c)=>{const o=ord(arr);return o.slice(0,8).map(e=>'<span class="fcsym" data-sym="'+e.s+'" title="'+e.d+' 收 '+e.c+' · 氣候 '+e.clim+'%'+(e.etf?' · ETF':'')+'" style="cursor:pointer;color:'+c+';opacity:'+(e.etf?.6:1)+';text-decoration:underline dotted">'+e.s+'</span>').join(' ')+(o.length>8?' <span style="color:#898781">+'+(o.length-8)+'</span>':'');};
+    h+='<span style="color:#898781">近5日全追蹤:</span>'+(sc.trim&&sc.trim.length?'<span><b style="color:#f97316">▼'+sc.trim.length+'</b> '+lst(sc.trim,'#fdba74')+'</span>':'<span style="color:#898781">▼0</span>')
+      +(sc.buy&&sc.buy.length?'<span><b style="color:#22c55e">▲'+sc.buy.length+'</b> '+lst(sc.buy,'#86efac')+'</span>':'<span style="color:#898781">▲0</span>');}
+  h+='<span class="fcmore" style="cursor:pointer;color:#2dd4bf;text-decoration:underline dotted">'+(FC_MORE?'收合 ▴':'參考面板 ▾')+'</span>';
+  let more='';
+  if(FC_MORE){
+    const ct=cx.cta||{},vc=cx.volctl||{},vx=cx.vix||{},gd=cx.gexdix||{},mc=cx.macro||{};
+    const pc=v=>v==null?'—':(v>0?'+':'')+v+'%';
+    more='<div style="flex-basis:100%;height:0"></div><span style="color:#898781" title="這些量在 2012–2026 對大盤有預測力,但 2008 金融海嘯時失效(越恐慌越跌);或(原油/黃金/白銀)在不同年代正負號會翻 → 只當背景,不計入氣候分數">參考(不計分)ⓘ</span>'
+      +'<span>CTA趨勢基金部位 SPX '+(ct.spx_pct!=null?ct.spx_pct+'%':'—')+' / NDX '+(ct.ndx_pct!=null?ct.ndx_pct+'%':'—')+'</span>'
+      +'<span>波動控制基金曝險 '+(vc.exposure!=null?vc.exposure+'×':'—')+(vc.pct!=null?'('+vc.pct+'%)':'')+'</span>'
+      +'<span>VIX '+(vx.vix!=null?vx.vix:'—')+' · VIX/VIX3M '+(vx.ratio!=null?vx.ratio+(vx.ratio>=1?'(倒掛=恐慌)':'(正常)'):'—')+'</span>'
+      +'<span>造市商Gamma '+(gd.gex_bn!=null?gd.gex_bn+'B':'—')+(gd.gex_pct!=null?'('+gd.gex_pct+'%)':'')+' · 暗池買盤DIX '+(gd.dix!=null?gd.dix+'%':'—')+(gd.dix5_pct!=null?'('+gd.dix5_pct+'%)':'')+'</span>'
+      +'<span>10Y '+(mc.tnx!=null?mc.tnx+'%':'—')+'('+sg(mc.tnx_chg20_bp)+'bp/20日)</span>'
+      +'<span>20日:原油 '+pc(mc.oil_20d)+' · 黃金 '+pc(mc.gold_20d)+' · 白銀 '+pc(mc.silver_20d)+' · 銅 '+pc(mc.copper_20d)+' · 美元 '+pc(mc.dxy_20d)+' · USDJPY '+pc(mc.jpy_20d)+' · 高收益債/公債 '+pc(mc.hyg_ief_20d)+'</span>';
+    if(sc&&sc.watch_trim&&sc.watch_trim.length)more+='<div style="flex-basis:100%;height:0"></div><span style="color:#fab219">⚠ 待確認▼(收破20日線即減碼,差距由近到遠):</span>'
+      +sc.watch_trim.slice(0,14).map(w=>'<span class="fcsym" data-sym="'+w.s+'" title="現價 '+w.px+' · 20日線 '+w.s20+' · 曾高於50日線 '+w.ext+'%'+(w.etf?' · ETF':'')+'" style="cursor:pointer;opacity:'+(w.etf?.6:1)+';text-decoration:underline dotted">'+w.s+'('+w.gap+'%)</span>').join(' ');
+    if(sc&&sc.watch_buy&&sc.watch_buy.length)more+='<div style="flex-basis:100%;height:0"></div><span style="color:#22c55e">👀 待確認▲(站回20日線即抄底):</span>'
+      +sc.watch_buy.slice(0,14).map(w=>'<span class="fcsym" data-sym="'+w.s+'" title="現價 '+w.px+' · 20日線 '+w.s20+' · 曾低於50日線 '+w.dip+'%'+(w.etf?' · ETF':'')+'" style="cursor:pointer;opacity:'+(w.etf?.6:1)+';text-decoration:underline dotted">'+w.s+'('+w.gap+'%)</span>').join(' ');
+  }
+  strip.innerHTML=box(h+more);
+  const mo=strip.querySelector('.fcmore'); if(mo)mo.onclick=()=>{FC_MORE=!FC_MORE;fcStrip();};
+  strip.querySelectorAll('.fcsym').forEach(c=>c.onclick=()=>{const sy=c.dataset.sym;const sel=document.getElementById('chipSym');
+    if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}else CHIP_SYM=sy;
+    try{ensureChipK(sy);}catch(_){} renderChips();});
+}
 let CHIP_IDX={SPY:false,QQQ:false};   // P7-3 K線圖(駕駛艙)疊加 SPY/QQQ 相對強弱(預設關,使用者可切)
 let CHIP_TL=false;  // 駕駛艙自動趨勢線層開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
 let CHIP_VBP=false; // VbP 量價分佈開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
@@ -1061,6 +1191,7 @@ let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
 let CHIP_CTA=true;  // CTA 煞車線×4 開關(預設開;既有功能)
 let CHIP_BB=false;  // P7-2 布林通道 BB(20,2) 上/中/下軌(預設關)
 let CHIP_TJ=false;  // 📐 技術判斷層(手冊 v0.2;2026-09-01):路徑成立/出貨證據上圖+警示條(預設關 —— 預設畫面只留 CTA)
+let CHIP_FC=true;   // 🌐 全球資金氣候 + ▲抄底/▼減碼(2026-10-09 使用者委託「中短線抄底、減碼訊號工具」;預設開)
 let CHIP_ZOOM=false;// P7-1 滑鼠滾輪縮放+拖曳模式(預設關;開啟後滾輪不再捲頁而是縮放)
 let CHIPF_IDX={SPY:false,QQQ:false};   // P7-7 現金池變化圖專屬疊加(與上方 K線圖疊加鈕獨立)
 let CHIP_IND='rv';  // 副圖單槽:rv(轉速,預設)/macd/adx/atr/cci/stoch
@@ -1077,6 +1208,7 @@ function buildChipIdx(){
     +' <span class="cidxchipC" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.brake1+';'+(CHIP_CTA?'background:rgba(147,197,253,.15);color:'+CPAL.brake1:'color:var(--muted);opacity:.55')+'">CTA</span>'
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span class="cidxchipJ" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #f472b6;'+(CHIP_TJ?'background:rgba(244,114,182,.15);color:#f472b6':'color:var(--muted);opacity:.55')+'">📐技判</span>'
+    +' <span class="cidxchipF" title="全球資金氣候(日圓套利擁擠度+利率衝擊+美元趨勢)× 個股轉折 → ▲抄底/▼減碼" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #2dd4bf;'+(CHIP_FC?'background:rgba(45,212,191,.15);color:#2dd4bf':'color:var(--muted);opacity:.55')+'">🌐資金</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
         return '<option value="'+o[0]+'"'+(CHIP_IND===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>';
@@ -1089,6 +1221,7 @@ function buildChipIdx(){
   var tC=el.querySelector('.cidxchipC'); if(tC)tC.onclick=function(){CHIP_CTA=!CHIP_CTA;renderChips();};
   var tB=el.querySelector('.cidxchipB'); if(tB)tB.onclick=function(){CHIP_BB=!CHIP_BB;renderChips();};
   var tJ=el.querySelector('.cidxchipJ'); if(tJ)tJ.onclick=function(){CHIP_TJ=!CHIP_TJ;renderChips();};
+  var tF=el.querySelector('.cidxchipF'); if(tF)tF.onclick=function(){CHIP_FC=!CHIP_FC;renderChips();};
   var ti=el.querySelector('.cidxind'); if(ti)ti.onchange=function(){CHIP_IND=ti.value;renderChips();};
 }
 // ===== P7-7 現金池變化圖專屬 SPY/QQQ 疊加鈕(2026-08-01 恢復;與上方 K線圖疊加鈕各自獨立)=====
@@ -2876,6 +3009,7 @@ function renderCockpit(){
     cm+=m; ca+=m+rr; pm.push(+cm.toFixed(1)); pa.push(+ca.toFixed(1)); pbar.push(m+rr);});
   const sig=CHIP_SYM+':'+win+':pd'+CHIP_PD+':'+R[R.length-1].d+':'+R[R.length-1].c.toFixed(3)+':'+(pa[pa.length-1]||0)+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+(CHIP_VBP?':v1':':v0')+(CHIP_PAT?':p1':':p0')+(CHIP_FIB?':f1':':f0')+(CHIP_VWAP?':w1':':w0')+(CHIP_CTA?':c1':':c0')+':i'+CHIP_IND+(SIG&&SIG.updated_utc?':g'+SIG.updated_utc:'')+(AIM&&AIM.updated_utc?':a'+AIM.updated_utc:'')
     +(CHIP_BB?':b1':':b0')+(CHIP_ZOOM?':z1':':z0')+(CHIP_TJ?':J1':':J0')+':P'+posRevGet()
+    +(CHIP_FC?':F1':':F0')+(FCL&&FCL.updated_utc?':f'+FCL.updated_utc:'')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
@@ -2945,6 +3079,7 @@ function renderCockpit(){
   const traces=[
     Object.assign({type:'candlestick',x:x,open:R.map(r=>r.o),high:R.map(r=>r.h),low:R.map(r=>r.l),close:R.map(r=>r.c),
      name:CHIP_SYM,showlegend:false},
+     (CHIP_FC&&CHIP_PD==='d'&&FCL)?{text:R.map(r=>{const c=fcClimOf(r.d);if(c==null)return '';const p=Math.round(c*100);return '🌐資金氣候 '+p+'% '+fcLab(p);})}:{},
      // 手機 K 棒仿富途(2026-08-05):實心填色、細影線(0.6)、無端帽;配合 layout.boxgap:0(實測
      // 是 Plotly 2.35 唯一可加寬燭身的參數:身寬 49%→70% 槽位,trace.width 無效)。桌機維持原樣。
      MB?{increasing:{fillcolor:CPAL.up,line:{color:CPAL.up,width:0.6}},decreasing:{fillcolor:CPAL.dn,line:{color:CPAL.dn,width:0.6}},whiskerwidth:0}
@@ -2959,11 +3094,11 @@ function renderCockpit(){
     {type:'scatter',mode:'markers+text',x:x,y:topY,text:topT,textposition:'top center',textfont:{size:8.5,color:CPAL.dia},
      marker:{symbol:shortH?'diamond-open':'diamond',size:11,color:CPAL.dia,line:{width:2,color:shortH?CPAL.dia:CPAL.edge}},name:'減碼',
      hovertemplate:shortH?'◇ 短史版減碼(上市未滿一年:檔位成分缺 → 3成分制 2/3 齊發)⚠ 無回測樣本,僅供關注、非訊號<extra></extra>'
-       :'◆ TOP≥3 齊發:延伸位減碼(298檔×2年:後20日深跌≥15%機率×1.5、≥20%×1.75;平均報酬仍+,動能常續 → 縮部位訊號,非放空)<extra></extra>'},
+       :'◆ TOP≥3 齊發:延伸位減碼(298檔×2年:後20日深跌≥15%機率×1.5、≥20%×1.75;平均報酬仍+,動能常續 → 縮部位訊號,非放空)<br>2026-10 長史複驗(259檔×2007–2026):20日後下跌機率 41–47% vs 平常 43–46% ≈ 擲硬幣 → 減碼請以 🌐▼ 為準<extra></extra>'},
     {type:'scatter',mode:'markers+text',x:x,y:botY,text:botT,textposition:'bottom center',textfont:{size:8.5,color:CPAL.star},
      marker:{symbol:shortH?'star-open':'star',size:12,color:CPAL.star,line:{width:1.5,color:shortH?CPAL.star:CPAL.edge}},name:'抄底',
      hovertemplate:shortH?'☆ 短史版抄底(上市未滿一年:檔位成分缺 → 3成分制 2/3 齊發)⚠ 無回測樣本,僅供關注、非訊號<extra></extra>'
-       :'★ BOT≥3 齊發:跌勢延伸位(298檔×2年:10日反彈51%、20日56% vs 基準53% → 位置標記非預測;快殺型崩跌常整段無★,放寬變體回測無增益)<extra></extra>'},
+       :'★ BOT≥3 齊發:跌勢延伸位(298檔×2年:10日反彈51%、20日56% vs 基準53% → 位置標記非預測;快殺型崩跌常整段無★,放寬變體回測無增益)<br>2026-10 長史複驗(259檔×2007–2026):20日後上漲機率 55–57% vs 平常 54–57% ≈ 擲硬幣 → 抄底請以 🌐▲ 為準<extra></extra>'},
     ...(function(){try{   // C訊號(Claude 參考層):與◆★成分零重疊;無⑦資料或無觸發=不畫(fail-open);僅日K(回測口徑)
       if(CHIP_PD!=='d')return [];
       const cs=csigCompute(CHIP_SYM,rows), off=rows.length-R.length;
@@ -3087,6 +3222,56 @@ function renderCockpit(){
       if(anyE)out2.push({type:'scatter',mode:'text',x:x,y:yE,text:tE,customdata:hE,textfont:{size:12,color:'#f87171'},showlegend:false,name:'技判出場',hovertemplate:'%{customdata}<extra></extra>'});
       return out2;
     }catch(_){try{const s9=document.getElementById('tjstrip');if(s9)s9.style.display='none';}catch(__){}return [];}})(),
+    ...(function(){try{   // 🌐 全球資金氣候:▲抄底 / ▼減碼(個股轉折 × 氣候)+ 價格窗底部氣候色帶;僅日K;fail-open
+      _FCB=null;
+      if(CHIP_PD!=='d'||!CHIP_FC){fcStrip({off:true});return [];}
+      if(!FCL){fcStrip({loading:true});return [];}
+      const runs=[];let cur=null;   // 色帶:每根K棒當日氣候,同級距連續段合併(減少 shape 數)
+      R.forEach((r,i2)=>{const c=fcClimOf(r.d);const k=c==null?'':(c<=0.2?'a':c<=0.35?'b':c<0.65?'':c<0.8?'d':'e');
+        if(cur&&cur.k===k)cur.x1=i2+0.5; else{cur={k:k,x0:i2-0.5,x1:i2+0.5};runs.push(cur);}});
+      _FCB=runs.filter(r=>r.k);
+      const _bars=chipBars(CHIP_SYM,'d')||[];
+      const lastDone=tjLastDone();
+      const B=_bars.filter(b=>b[0]<=lastDone);
+      const live=(_bars.length&&_bars[_bars.length-1][0]>lastDone)?_bars[_bars.length-1]:null;
+      if(B.length<70){fcStrip({short:true});return [];}
+      const T=fcSeriesJS(B);
+      fcStrip({T:T,live:live});
+      const di={};R.forEach((r,i2)=>{di[r.d]=i2;});
+      const SS=FCL.stats||{},st=SS.trim||{},sb=SS.buy||{};
+      const f2=v=>v==null?'—':(+v).toFixed(2);
+      const yT=new Array(R.length).fill(null),tT=new Array(R.length).fill(''),hT=new Array(R.length).fill('');
+      const yB=new Array(R.length).fill(null),tB=new Array(R.length).fill(''),hB=new Array(R.length).fill('');
+      let anyT=false,anyB=false;
+      T.ev.forEach(e=>{const i2=di[e.d]; if(i2==null)return; const cp=Math.round(e.clim*100);
+        if(e.k==='trim'){
+          yT[i2]=R[i2].h+o3*1.45; tT[i2]='減碼'; anyT=true;
+          hT[i2]='<b>▼ 減碼</b>(個股轉折 × 全球資金氣候)· '+e.d+' 收 '+f2(e.c)
+            +'<br>個股:這一波曾高於50日線 '+(e.ext*100).toFixed(0)+'%,今天第一次收盤跌破20日線('+f2(e.s20)+')=技判「出」'
+            +'<br>資金氣候 '+cp+'%('+fcLab(cp)+'):日圓套利、利率、美元三者偏緊時,這種轉折才是真頂'
+            +'<br>歷史(259檔×2009–2026,n='+(st.n||'—')+'):20日後股價較低 '+(st.down20||'—')+'%(平常 '+(st.base_down20||'—')+'%)'
+            +' · 40日內曾再跌≥10% '+(st.dd40||'—')+'%(平常 '+(st.base_dd40||'—')+'%)'
+            +'<br>平均:20日 '+(st.mu20||'—')+'%(平常 +'+(st.base_mu20||'—')+'%)· 40日 '+(st.mu40||'—')+'%(平常 +'+(st.base_mu40||'—')+'%)'
+            +'<br>'+(st.p1||'')+'<br>'+(st.p2||'')+'<br>'+(st.ai||'')
+            +'<br>⚠ 同樣的轉折若氣候不緊≈擲硬幣 · 減碼=降部位非放空 · 歷史頻率非未來機率 · 非買賣建議';
+        }else{
+          yB[i2]=R[i2].l-o3*1.45; tB[i2]='抄底'; anyB=true;
+          hB[i2]='<b>▲ 抄底</b>(個股轉折 × 全球資金氣候)· '+e.d+' 收 '+f2(e.c)
+            +'<br>個股:這一波曾低於50日線 '+(-e.dip*100).toFixed(0)+'%,今天第一次收盤站回20日線('+f2(e.s20)+')'
+            +'<br>資金氣候 '+cp+'%('+fcLab(cp)+'):全球資金寬鬆時,深跌後的收復才可信'
+            +'<br>歷史(259檔×2009–2026,n='+(sb.n||'—')+'):40日後股價較高 '+(sb.up40||'—')+'%(平常 '+(sb.base_up40||'—')+'%)'
+            +' · 20日後較高 '+(sb.up20||'—')+'%(平常 '+(sb.base_up20||'—')+'%)'
+            +'<br>平均:20日 +'+(sb.mu20||'—')+'%(平常 +'+(sb.base_mu20||'—')+'%)· 40日 +'+(sb.mu40||'—')+'%(平常 +'+(sb.base_mu40||'—')+'%)'
+            +'<br>'+(sb.p1||'')+'<br>'+(sb.p2||'')+'<br>'+(sb.ai||'')
+            +'<br>⚠ 過程顛簸:40日內曾再跌≥10% 的機率 '+(sb.dd40||'—')+'%(平常 '+(sb.base_dd40||'—')+'%)→ 宜分批 · 歷史頻率非未來機率 · 非買賣建議';
+        }});
+      const out=[];
+      if(anyT)out.push({type:'scatter',mode:'markers+text',x:x,y:yT,text:tT,textposition:'top center',textfont:{size:9,color:'#fdba74'},customdata:hT,
+        marker:{symbol:'triangle-down',size:14,color:'#f97316',line:{width:1.5,color:'#fff7ed'}},name:'▼減碼',showlegend:false,hovertemplate:'%{customdata}<extra></extra>'});
+      if(anyB)out.push({type:'scatter',mode:'markers+text',x:x,y:yB,text:tB,textposition:'bottom center',textfont:{size:9,color:'#86efac'},customdata:hB,
+        marker:{symbol:'triangle-up',size:14,color:'#22c55e',line:{width:1.5,color:'#f0fdf4'}},name:'▲抄底',showlegend:false,hovertemplate:'%{customdata}<extra></extra>'});
+      return out;
+    }catch(_){_FCB=null;try{fcStrip({off:true});}catch(__){}return [];}})(),
     ...(function(){try{   // 💼 持倉層(手冊v0.2出場規則):成本線/回本線+持倉條;僅日K;持倉只存本機 localStorage;fail-open
       const strip=document.getElementById('posstrip');
       const pos=(posLoad()||{})[CHIP_SYM];
@@ -3209,7 +3394,7 @@ function renderCockpit(){
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 <span style="color:#4ade80">買</span>=進場路徑成立·<span style="color:#f87171">出</span>=波段頂確認</span>':'')
+        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>')+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 <span style="color:#4ade80">買</span>=進場路徑成立·<span style="color:#f87171">出</span>=波段頂確認</span>':'')+(CHIP_FC&&CHIP_PD==='d'?' · <span style="color:#22c55e">▲抄底</span><span style="color:#f97316">▼減碼</span>=個股轉折×🌐資金氣候(底部色帶:<span style="color:#f87171">緊</span>/<span style="color:#22c55e">鬆</span>)':'')
         +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
     {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
     {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
@@ -3248,7 +3433,7 @@ function renderCockpit(){
   // 右緣標籤蓋最新K棒問題根治:數值上移圖頂,虛線照畫)
   if(MB){
     ann.push({xref:'paper',yref:'paper',x:0,y:1.030,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span> <span style="color:#e6e9ef">AI▲▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判</span>':'')
+      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>')+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span> <span style="color:#e6e9ef">AI▲▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判</span>':'')+(CHIP_FC&&CHIP_PD==='d'?' · <span style="color:#22c55e">▲</span><span style="color:#f97316">▼</span>🌐':'')
         +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
     if(CHIP_CTA&&_ctaVals)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,
       font:{size:9,color:MUT2},text:'┈CTA '+_ctaVals});
@@ -3595,7 +3780,7 @@ function renderCockpit(){
     yaxis11:Object.assign({overlaying:'y10',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
       _y11r?{range:_y11r}:{}),
     shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
-            {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot),
+            {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot).concat((function(){try{return fcBandShapes(DOM.y,XW);}catch(_){return [];}})()),
     annotations:ann};
   // P7-1 縮放模式時改用專屬 config(scrollZoom 開、雙擊還原);關閉時完全沿用既有 CFG(行為不變)
   Plotly.react('cockpit',traces,_ckLay,
@@ -3738,7 +3923,7 @@ function renderChips(){
   const el=document.getElementById('chipflow'); if(!el)return;
   if(DATA&&DATA._partial){   // 首載備援先畫階段:個股清單/⑦尚未到 → 不選股(否則會誤選清單第一檔)、不畫,等 Mac 全量
     chartMsg(document.getElementById('cockpit'),'個股資料下載中…(網路較慢時需數秒;K 線已優先下載)',30); return; }
-  ensureExtDaily(); ensureChipVwap(); ensureSignals();
+  ensureExtDaily(); ensureChipVwap(); ensureSignals(); ensureFlowClimate();
   const D=chipDaily(); const dates=Object.keys(D).sort();
   const syms=chipSyms();
   if(!syms.length){chartMsg(el,'個股日檔累積中(需採集器歷史回填)',30);return;}

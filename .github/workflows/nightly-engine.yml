@@ -6,10 +6,19 @@ name: nightly-engine
 # 全部資料來源為公開讀取(gist raw / Yahoo / Nasdaq / SEC / CBOE);唯一秘密=SEC 聯絡 email(repo secret SEC_CONTACT)。
 # 每個階段跑完就各自提交(analyst ~340 檔約 1 小時;前面的成果不因後段逾時而遺失)。
 # 2026-10-09 首測(run 37902232950):signals 1 分、tj+scan 3 分、analyst 62 分,四檔皆提交、Pages 自動更新、資料品質與雲端 Claude 版相同。
+# 2026-10-09 加:🌐 全球資金氣候 + ▲抄底/▼減碼(scripts/flow_climate.py → data/flow_climate.json,約 1 分;K線圖 🌐資金 chip 讀它)。
+#   手動執行可選 steps=flow 只跑這一步(測試用;排程一律全跑)。
 on:
   schedule:
     - cron: "30 22 * * 1-5"   # 22:30 UTC 週一~五 = 台灣 06:30 週二~六;EDT/EST 皆在美股收盤後(非交易日由閘門跳過)
   workflow_dispatch:
+    inputs:
+      steps:
+        description: "all = 全部;flow = 只跑全球資金氣候"
+        required: false
+        default: "all"
+        type: choice
+        options: ["all", "flow"]
 permissions:
   contents: write
   pages: write
@@ -75,22 +84,29 @@ jobs:
           echo "push failed: $*"; exit 1
           EOF
           chmod +x /tmp/commit_data.sh
-      - name: signals engine (13 core)
+      - name: flow climate (global money climate + ▲▼ scan; ~1 min)
         if: steps.day.outputs.run == '1'
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          python3 scripts/flow_climate.py --out data/flow_climate.json --config config.json --scan
+          /tmp/commit_data.sh data/flow_climate.json
+      - name: signals engine (13 core)
+        if: steps.day.outputs.run == '1' && (github.event_name != 'workflow_dispatch' || inputs.steps != 'flow')
         continue-on-error: true
         timeout-minutes: 20
         run: |
           python3 scripts/stock_signals.py --mode full --out data/signals.json --prev data/signals.json --config config.json
           /tmp/commit_data.sh data/signals.json
       - name: tech_judge + scan
-        if: steps.day.outputs.run == '1'
+        if: steps.day.outputs.run == '1' && (github.event_name != 'workflow_dispatch' || inputs.steps != 'flow')
         continue-on-error: true
         timeout-minutes: 30
         run: |
           python3 scripts/nightly_calc.py tj scan
           /tmp/commit_data.sh data/tech_judge.json data/scan.json
       - name: analyst consensus (~340 symbols, slow)
-        if: steps.day.outputs.run == '1'
+        if: steps.day.outputs.run == '1' && (github.event_name != 'workflow_dispatch' || inputs.steps != 'flow')
         continue-on-error: true
         timeout-minutes: 120
         run: |
