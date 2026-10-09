@@ -3,7 +3,7 @@ name: nightly-engine
 #   signals 引擎事實(財報日/gamma/內部人等,13 核心) + 技術判斷 tech_judge(📐技判卡片/ATM 旗標)
 #   + 全市場掃描 scan + 分析師共識 analyst → 只提交這 4 個 data 檔到 main(Pages 自動更新)。
 # 不做 Claude 逐檔判讀(使用者 2026-10-09:只看 K 線圖 + 📐技判,判讀卡停在最後一次)。
-# 全部資料來源為公開讀取(gist raw / Yahoo / Nasdaq / SEC / CBOE);本 workflow 不含任何秘密。
+# 全部資料來源為公開讀取(gist raw / Yahoo / Nasdaq / SEC / CBOE);唯一秘密=SEC 聯絡 email(repo secret SEC_CONTACT)。
 # 每個階段跑完就各自提交(analyst ~340 檔可能跑 1 小時;前面的成果不因後段逾時而遺失)。
 on:
   workflow_dispatch:
@@ -17,6 +17,10 @@ jobs:
   engine:
     runs-on: ubuntu-latest
     timeout-minutes: 180
+    env:
+      # SEC EDGAR 要求宣告聯絡 email 的 User-Agent;github.com / noreply 網域會被 SEC 直接 403(2026-10-09 實測)
+      # → 用 repo secret(加密、不出現在公開檔案),腳本讀環境變數 SEC_CONTACT
+      SEC_CONTACT: ${{ secrets.SEC_CONTACT }}
     steps:
       - uses: actions/checkout@v4
       - name: market-day gate (schedule only; manual runs always go)
