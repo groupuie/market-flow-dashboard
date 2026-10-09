@@ -1,0 +1,80 @@
+name: nightly-engine
+# 盤後引擎(2026-10-09;零 Claude token):取代雲端 Claude 排程的「純運算」部分,免費由 GitHub Actions 跑。
+#   signals 引擎事實(財報日/gamma/內部人等,13 核心) + 技術判斷 tech_judge(📐技判卡片/ATM 旗標)
+#   + 全市場掃描 scan + 分析師共識 analyst → 只提交這 4 個 data 檔到 main(Pages 自動更新)。
+# 不做 Claude 逐檔判讀(使用者 2026-10-09:只看 K 線圖 + 📐技判,判讀卡停在最後一次)。
+# 全部資料來源為公開讀取(gist raw / Yahoo / Nasdaq / SEC / CBOE);本 workflow 不含任何秘密。
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: nightly-engine
+  cancel-in-progress: false
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - name: market-day gate (schedule only; manual runs always go)
+        id: day
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, datetime
+          from zoneinfo import ZoneInfo
+          run = "1"
+          if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+              try:
+                  d = json.load(urllib.request.urlopen(urllib.request.Request(
+                      "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=5d&interval=1d",
+                      headers={"User-Agent": "Mozilla/5.0"}), timeout=20))
+                  ts = d["chart"]["result"][0]["timestamp"][-1]
+                  last = datetime.datetime.fromtimestamp(ts, ZoneInfo("America/New_York")).date()
+                  today = datetime.datetime.now(ZoneInfo("America/New_York")).date()
+                  run = "1" if last == today else "0"
+                  print("SPY last bar", last, "ET today", today)
+              except Exception as e:
+                  print("market-day check failed → fail-open:", e)
+          open(os.environ["GITHUB_OUTPUT"], "a").write(f"run={run}\n")
+          print("run =", run)
+          PY
+      - name: config (public URLs only)
+        if: steps.day.outputs.run == '1'
+        run: |
+          cat > config.json <<'EOF'
+          {"market_data_url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json",
+           "futu_relay": {"transport": "gist", "raw_url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/futu_snapshot.json"},
+           "public_backup_url": "https://raw.githubusercontent.com/groupuie/market-flow-dashboard/data/market_public.json"}
+          EOF
+      - name: signals engine (13 core)
+        if: steps.day.outputs.run == '1'
+        continue-on-error: true
+        run: python3 scripts/stock_signals.py --mode full --out data/signals.json --prev data/signals.json --config config.json
+      - name: tech_judge + scan + analyst
+        if: steps.day.outputs.run == '1'
+        continue-on-error: true
+        run: python3 scripts/nightly_calc.py tj scan analyst
+      - name: validate & commit (data files only)
+        if: steps.day.outputs.run == '1'
+        run: |
+          FILES="data/signals.json data/tech_judge.json data/scan.json data/analyst.json"
+          for f in $FILES; do
+            python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" || { echo "invalid $f → restore"; git checkout -- "$f"; }
+          done
+          git config user.name "actions-nightly"
+          git config user.email "actions@users.noreply.github.com"
+          git add $FILES
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -q -m "nightly-engine: $(git diff --cached --name-only | tr '\n' ' ')"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && { echo "pushed"; break; }
+            sleep 10
+          done
+      - name: request Pages build (fallback; harmless if redundant)
+        if: steps.day.outputs.run == '1'
+        run: |
+          curl -s -o /dev/null -w "pages build request → %{http_code}\n" -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds" || true

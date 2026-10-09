@@ -63,8 +63,12 @@ def main():
     for t in targets:
         if t in ("index", "app", "stock") and os.path.exists(FILES[t][0]):
             _p = FILES[t][0]; _s = open(_p, encoding="utf-8").read()
-            _new = "const BUILD='" + _dt.now(_tz.utc).strftime("%Y-%m-%dT%H:%MZ") + "'"
+            _stamp = _dt.now(_tz.utc).strftime("%Y-%m-%dT%H:%MZ")
+            _new = "const BUILD='" + _stamp + "'"
             _s2 = _re.sub(r"const BUILD='[^']*'", _new, _s, count=1)
+            # 2026-09-23 起 index.html 版本戳單一來源=<head> <meta name="build">(checkVersion 只抓檔頭 4KB)→ 一併更新
+            _s2 = _re.sub(r'<meta name="build" content="[^"]*">', '<meta name="build" content="' + _stamp + '">', _s2, count=1)
+            _s2 = _re.sub(r"(const BUILD=\(\(document\.querySelector\('meta\[name=build\]'\)\|\|\{\}\)\.content\)\|\|')[^']*(')", r"\g<1>" + _stamp + r"\g<2>", _s2, count=1)
             if _s2 != _s:
                 open(_p, "w", encoding="utf-8").write(_s2)
                 print(f"BUILD 自動更新（{t}）→", _new.split("'")[1])
