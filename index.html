@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-09T10:38Z">
+<meta name="build" content="2026-10-09T12:22Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -368,6 +368,21 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   .wsxTab:hover{color:#e8e7de}
   #wsxRail button:hover{background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.06));color:#f2f1ea;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
 }
+/* 2026-10-09 技判/資金/持倉 狀態列 → 單行精簡列 + 觸發式懸浮詳情(使用者:打開技判後 K 線整組被往下擠)
+   精簡列固定一行(不換行,窄螢幕可左右滑);詳情 #stripPop = position:fixed 疊在圖上,不佔版面。 */
+.sbar{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:none;
+  padding:3px 8px;margin:2px 0 3px;border-radius:8px;font-size:11px;color:#c3c2b7;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sbar::-webkit-scrollbar{display:none}
+.sbar>*{flex:none}
+.sbar .sbi{margin-left:auto;position:sticky;right:-8px;padding:0 8px 0 14px;border-radius:0 7px 7px 0;color:#8ab4f8;font-weight:700;background:linear-gradient(90deg,rgba(20,23,29,0),#14171d 12px)}   /* 黏在右緣:列太長被裁切時「ⓘ詳情」仍看得到 */
+.sbar.sbon .sbi{color:#c7dbff}
+#stripPop{position:fixed;z-index:9999;display:none;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  background:#14171d;border:1px solid rgba(255,255,255,.16);border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.62);
+  padding:7px 11px 10px;font-size:11.5px;line-height:1.55;color:#c3c2b7}
+#stripPop .spx{position:sticky;top:-7px;float:right;margin:-3px -7px 0 8px;cursor:pointer;color:#a3a29a;font-size:15px;line-height:1;padding:3px 7px;background:#14171d;border-radius:6px}
+#stripPop .sprow{display:flex;gap:5px 9px;flex-wrap:wrap;align-items:center;margin:3px 0}
+#stripPop .sphr{border-top:1px dashed rgba(255,255,255,.13);margin:6px 0}
+#stripPop .spmut{color:#898781}
 </style>
 </head>
 <body>
@@ -650,7 +665,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-09T10:38Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-09T12:22Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1058,7 +1073,7 @@ function ensureSignals(){
 // 跌破中軌皆然);能分辨真假的是「全球資金氣候」= 日圓套利擁擠度(CFTC)+ 5年期殖利率20日衝擊 + 美元趨勢,三者在
 // 四個子期間方向一致。▼=技判「出」(曾高於50日線≥15%後首次收破20日線)且氣候≤35%;▲=曾低於50日線≥15%後首次站回
 // 20日線且氣候≥80%。各自 20 交易日冷卻。與 Python fc_events 逐位元同口徑(JS↔Py 對拍見文件)。
-let FCL=null,FCL_req=0,FC_MORE=false;
+let FCL=null,FCL_req=0;
 function ensureFlowClimate(){
   const _n=Date.now()/1000; if(_n-FCL_req<600)return; FCL_req=_n;
   const bust='?t='+Math.floor(Date.now()/600000);
@@ -1102,87 +1117,163 @@ function fcBandShapes(domY,XW){   // 價格窗底部細色帶:≤20 紅 · 20–
   const y0=domY[0],y1=domY[0]+0.011;
   return _FCB.map(r=>({type:'rect',xref:'x',yref:'paper',x0:r.x0,x1:r.x1,y0:y0,y1:y1,fillcolor:col[r.k],line:{width:0},layer:'below'}));
 }
+// ===== 精簡狀態列 + 觸發式懸浮詳情(2026-10-09 使用者:「打開技判後 K 線整組被往下擠 → 應該改成觸發式懸浮視窗」)=====
+// 狀態列只留一行重點(不換行、窄螢幕可左右滑);詳情放懸浮窗(position:fixed 疊在圖上,不佔版面):
+//   桌機:滑過即開、離開自動收,點一下=釘住(再點/點外面/Esc 關);觸控:點一下開、再點或點外面關。
+const SPOP={el:null,cur:null,host:null,pin:false,t:null};
+const _spHover=(function(){try{return window.matchMedia('(hover:hover) and (pointer:fine)').matches;}catch(_){return false;}})();
+function spGo(sy){const sel=document.getElementById('chipSym');
+  if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}else CHIP_SYM=sy;
+  try{ensureChipK(sy);}catch(_){} renderChips();}
+function spPop(){
+  if(SPOP.el)return SPOP.el;
+  const p=document.createElement('div');p.id='stripPop';document.body.appendChild(p);
+  p.addEventListener('mouseenter',()=>{clearTimeout(SPOP.t);});
+  p.addEventListener('mouseleave',()=>{if(!SPOP.pin)SPOP.t=setTimeout(spHide,280);});
+  p.addEventListener('click',e=>{
+    if(e.target.closest('.spx')){spHide();return;}
+    const s=e.target.closest('[data-sym]'); if(s&&s.dataset.sym){spHide();spGo(s.dataset.sym);}
+  });
+  document.addEventListener('click',e=>{
+    if(!SPOP.cur||p.style.display==='none')return;
+    if(p.contains(e.target)||SPOP.cur.contains(e.target))return;
+    spHide();},true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')spHide();});
+  window.addEventListener('scroll',spPlace,{passive:true}); window.addEventListener('resize',spPlace);
+  SPOP.el=p; return p;
+}
+function spPlace(){
+  const p=SPOP.el,b=SPOP.cur; if(!p||!b||p.style.display==='none')return;
+  if(!b.isConnected||!b.offsetParent){spHide();return;}
+  const r=b.getBoundingClientRect(),vw=document.documentElement.clientWidth||innerWidth,vh=innerHeight;
+  if(r.bottom<0||r.top>vh){spHide();return;}
+  const w=Math.min(660,vw-16); p.style.width=w+'px';
+  p.style.left=Math.min(Math.max(8,r.left),vw-w-8)+'px';
+  const below=vh-r.bottom-12, above=r.top-12;
+  if(below>=240||below>=above){p.style.top=(r.bottom+4)+'px';p.style.bottom='auto';p.style.maxHeight=Math.max(170,below)+'px';}
+  else{p.style.top='auto';p.style.bottom=(vh-r.top+4)+'px';p.style.maxHeight=Math.max(170,above)+'px';}
+}
+function spFill(bar){const p=spPop(); p.innerHTML='<span class="spx" title="關閉">✕</span>'+(bar._pop||''); p.style.borderColor=bar._acc||'rgba(255,255,255,.16)';}
+function spShow(bar,pin){
+  const p=spPop(); clearTimeout(SPOP.t);
+  if(SPOP.cur&&SPOP.cur!==bar)SPOP.cur.classList.remove('sbon');
+  SPOP.cur=bar; SPOP.host=bar.parentNode; SPOP.pin=!!pin; bar.classList.add('sbon');
+  spFill(bar); p.style.display='block'; p.scrollTop=0; spPlace();
+}
+function spHide(){
+  clearTimeout(SPOP.t); if(SPOP.el)SPOP.el.style.display='none';
+  if(SPOP.cur)SPOP.cur.classList.remove('sbon'); SPOP.cur=null; SPOP.host=null; SPOP.pin=false;
+}
+function stripHide(host){ if(!host)return; host.style.display='none'; if(SPOP.host===host)spHide(); }
+function stripSet(host,o){   // host=#fcstrip/#tjstrip/#posstrip;o={bar:一行重點 HTML, pop:詳情 HTML, acc:框色, bg:底色}
+  if(!host)return;
+  host.style.display='';
+  host.innerHTML='<div class="sbar" style="background:'+(o.bg||'rgba(255,255,255,.03)')+';border:1px solid '+(o.acc||'rgba(255,255,255,.15)')+'">'
+    +o.bar+(o.pop?'<span class="sbi">ⓘ 詳情</span>':'')+'</div>';
+  const bar=host.firstChild; bar._pop=o.pop||''; bar._acc=o.acc;
+  if(o.pop){
+    bar.addEventListener('mouseenter',()=>{if(_spHover&&!(SPOP.pin&&SPOP.cur&&SPOP.cur!==bar))spShow(bar,false);});
+    bar.addEventListener('mouseleave',()=>{if(_spHover&&!SPOP.pin)SPOP.t=setTimeout(spHide,280);});
+    bar.addEventListener('click',e=>{
+      const s=e.target.closest('[data-sym]'); if(s&&s.dataset.sym){e.stopPropagation();spHide();spGo(s.dataset.sym);return;}
+      const open=SPOP.cur===bar&&SPOP.el&&SPOP.el.style.display!=='none';
+      if(open){ if(SPOP.pin||!_spHover)spHide(); else SPOP.pin=true; }
+      else spShow(bar,true);
+    });
+  }
+  // 重繪時(每分鐘行情更新)若懸浮窗正開著這一條 → 接到新元素、原地更新內容,不關閉
+  if(SPOP.host===host&&SPOP.el&&SPOP.el.style.display!=='none'){
+    if(o.pop){SPOP.cur=bar;bar.classList.add('sbon');const st=SPOP.el.scrollTop;spFill(bar);SPOP.el.scrollTop=st;spPlace();}
+    else spHide();
+  }
+}
 function fcStrip(a){
   const strip=document.getElementById('fcstrip'); if(!strip)return;
   if(a!==undefined)_FCST=a; a=_FCST;
-  if(!a||a.off){strip.style.display='none';return;}
-  strip.style.display='';
-  const box=inner=>'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 8px;margin:2px 0 4px;background:rgba(45,212,191,.05);border:1px solid rgba(45,212,191,.28);border-radius:8px;font-size:11px;color:#c3c2b7">'+inner+'</div>';
-  if(a.loading||!FCL){strip.innerHTML=box('<b style="color:#2dd4bf">🌐 資金氣候</b><span style="color:#898781">載入中…(資料=每日盤後引擎產出;首次部署後當晚出現)</span>');return;}
+  if(!a||a.off){stripHide(strip);return;}
+  const ACC='rgba(45,212,191,.32)',BG='rgba(45,212,191,.05)';
+  if(a.loading||!FCL){stripSet(strip,{bar:'<b style="color:#2dd4bf">🌐 資金氣候</b><span style="color:#898781">載入中…(每日盤後引擎產出)</span>',acc:ACC,bg:BG});return;}
   const N=FCL.now||{},S=FCL.stats||{},raw=N.raw||{},cot=raw.cot||{},cx=N.ctx||{},th=FCL.th||{};
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-  const pill=(txt,c,tip)=>'<span'+(tip?' title="'+esc(tip)+'"':'')+' style="padding:1px 7px;border-radius:6px;font-weight:700;background:'+c+'26;color:'+c+(tip?';cursor:help':'')+'">'+txt+'</span>';
+  const pill=(txt,c)=>'<span style="padding:1px 7px;border-radius:6px;font-weight:700;background:'+c+'26;color:'+c+'">'+txt+'</span>';
   const sg=v=>v==null?'—':((v>0?'+':'')+v);
   const p=N.climate, cb=(S.climate||{});
   const stale=(function(){try{return (Date.now()-Date.parse(FCL.updated_utc))/864e5>4;}catch(_){return false;}})();
-  const tipC='全球資金氣候 '+p+'%(近3年百分位;高=順風、低=收緊)\n'
-    +'由 2007–2026 四段期間方向都一致的三個大戶/機構資金量組成:\n'
-    +'① 日圓套利擁擠度 '+N.yen+'(CFTC 交易商日圓淨部位 z='+(cot.z!=null?cot.z:'—')+',報告日 '+(cot.report||'—')+';投機資金越是放空日圓借錢買全球資產,分數越低)\n'
-    +'② 利率衝擊 '+N.rate+'(5年期美債殖利率 20日 '+sg(raw.fvx_chg20_bp)+'bp;急升=金融條件收緊)\n'
-    +'③ 美元趨勢 '+N.usd+'(美元指數趨勢強度 '+sg(raw.dxy_trend)+';走強=全球流動性收緊)\n'
-    +'歷史(259檔個股,2009–2026)20日上漲機率/平均:≤20% '+(cb.le20?cb.le20.up20+'% / '+cb.le20.mu20+'%':'—')
-    +' · 中性 '+(cb['35_65']?cb['35_65'].up20+'% / +'+cb['35_65'].mu20+'%':'—')+' · ≥80% '+(cb.ge80?cb.ge80.up20+'% / +'+cb.ge80.mu20+'%':'—')
-    +'(全部 '+(cb.all?cb.all.up20+'% / +'+cb.all.mu20+'%':'—')+')\n氣候只說「大環境順不順」;個股▲▼要等K線轉折確認。非買賣建議。';
-  let h='<b style="color:#2dd4bf">🌐 資金氣候</b>'
-    +pill(p+'% '+fcLab(p),fcCol(p),tipC)
-    +'<span title="'+esc(tipC)+'" style="cursor:help">日圓套利 <b style="color:'+fcCol(N.yen)+'">'+N.yen+'</b> · 利率 <b style="color:'+fcCol(N.rate)+'">'+N.rate+'</b> · 美元 <b style="color:'+fcCol(N.usd)+'">'+N.usd+'</b></span>'
-    +'<span style="color:'+(stale?'#f87171':'#898781')+'">'+(N.date||'')+(stale?' · 資料未更新':'')+'</span>'
-    +(function(){const bad=(FCL.dq||[]).filter(q=>!q.ok);return bad.length?pill('⚠ 資料源 '+bad.length,'#fab219',bad.map(q=>q.src+':'+(q.err||'失敗')).join('\n')):'';})();
-  // —— 本檔狀態(最近已收盤K)——
-  const T=a.T;
-  if(a.short)h+=pill('本檔日K不足70根','#898781');
+  const bad=(FCL.dq||[]).filter(q=>!q.ok);
+  // ---------- 一行重點 ----------
+  let bar='<b style="color:#2dd4bf">🌐 資金氣候</b>'+pill(p+'% '+fcLab(p),fcCol(p));
+  // ---------- 詳情 ----------
+  let pop='<div class="sprow"><b style="color:#2dd4bf;font-size:12.5px">🌐 全球資金氣候</b>'+pill(p+'% '+fcLab(p),fcCol(p))
+    +'<span class="spmut">'+(N.date||'')+' 收盤 · 引擎更新 '+String(FCL.updated_utc||'').replace('T',' ').slice(0,16)+' UTC</span>'
+    +(stale?pill('資料未更新','#f87171'):'')+'</div>'
+    +'<div class="sprow"><span>① 日圓套利擁擠度 <b style="color:'+fcCol(N.yen)+'">'+N.yen+'</b></span><span class="spmut">CFTC 交易商日圓淨部位 z='+(cot.z!=null?cot.z:'—')+'(報告 '+(cot.report||'—')+');投機資金越是放空日圓借錢買全球資產,分數越低</span></div>'
+    +'<div class="sprow"><span>② 利率衝擊 <b style="color:'+fcCol(N.rate)+'">'+N.rate+'</b></span><span class="spmut">5年期美債殖利率 20日 '+sg(raw.fvx_chg20_bp)+'bp;急升=金融條件收緊</span></div>'
+    +'<div class="sprow"><span>③ 美元趨勢 <b style="color:'+fcCol(N.usd)+'">'+N.usd+'</b></span><span class="spmut">美元指數趨勢強度 '+sg(raw.dxy_trend)+';走強=全球流動性收緊</span></div>'
+    +'<div class="spmut" style="margin-top:2px">氣候=三者近3年百分位(0–100,高=順風);這三個是 2007–2026 四段期間方向都一致的大戶/機構資金量。'
+    +'歷史(259檔個股)20日上漲機率/平均:≤20% '+(cb.le20?cb.le20.up20+'% / '+cb.le20.mu20+'%':'—')+' · 中性 '+(cb['35_65']?cb['35_65'].up20+'% / +'+cb['35_65'].mu20+'%':'—')
+    +' · ≥80% '+(cb.ge80?cb.ge80.up20+'% / +'+cb.ge80.mu20+'%':'—')+'(全部 '+(cb.all?cb.all.up20+'% / +'+cb.all.mu20+'%':'—')+')。氣候只說「大環境順不順」,個股▲▼要等K線轉折確認。</div>'
+    +(bad.length?'<div class="sprow">'+pill('⚠ 資料源','#fab219')+'<span class="spmut">'+esc(bad.map(q=>q.src+':'+(q.err||'失敗')).join(' · '))+'</span></div>':'');
+  // ---------- 本檔狀態(最近已收盤K)----------
+  const T=a.T, f2=v=>v==null?'—':(+v).toFixed(2);
+  let st='';
+  if(a.short){bar+='<span style="color:#898781">本檔日K不足70根</span>';st='本檔日K不足 70 根,不判讀。';}
   else if(T&&T.n){
     const i9=T.n-1, cl=fcClimOf(T.D[i9]), cp=cl==null?null:Math.round(cl*100);
     let le=null; for(let k=T.ev.length-1;k>=0;k--){if(T.ev[k].i>=i9-4){le=T.ev[k];break;}}
-    const f2=v=>v==null?'—':(+v).toFixed(2);
-    const lastRaw=k=>k==='t'?T.lt:T.lb;   // 冷卻起點=最後一次被接受的轉折(與回測同口徑)
-    if(le){h+=le.k==='trim'?pill('▼減碼 確認 '+le.d.slice(5),'#f97316','技判「出」轉折 × 資金氣候 '+Math.round(le.clim*100)+'%:見K線上的▼(hover 有歷史統計)')
-                            :pill('▲抄底 確認 '+le.d.slice(5),'#22c55e','深跌後站回20日線 × 資金氣候 '+Math.round(le.clim*100)+'%:見K線上的▲(hover 有歷史統計)');}
-    else if(cl!=null&&cl<=th.trim&&T.ext[i9]!=null&&T.ext[i9]>=th.ext&&T.s20[i9]!=null&&T.C[i9]>=T.s20[i9]&&(i9+1-lastRaw('t'))>th.cool){
+    if(le){
+      bar+=le.k==='trim'?pill('▼減碼 '+le.d.slice(5),'#f97316'):pill('▲抄底 '+le.d.slice(5),'#22c55e');
+      st=le.k==='trim'?('<b style="color:#f97316">▼減碼 確認 '+le.d+'</b>:技判「出」轉折(曾高於50日線 '+(le.ext*100).toFixed(0)+'%,收破20日線 '+f2(le.s20)+')× 資金氣候 '+Math.round(le.clim*100)+'%。K線上的▼滑過/點擊有歷史統計。')
+                      :('<b style="color:#22c55e">▲抄底 確認 '+le.d+'</b>:深跌(曾低於50日線 '+(-le.dip*100).toFixed(0)+'%)後站回20日線 '+f2(le.s20)+' × 資金氣候 '+Math.round(le.clim*100)+'%。K線上的▲滑過/點擊有歷史統計。');
+    }else if(cl!=null&&cl<=th.trim&&T.ext[i9]!=null&&T.ext[i9]>=th.ext&&T.s20[i9]!=null&&T.C[i9]>=T.s20[i9]&&(i9+1-T.lt)>th.cool){
       const gap=(T.C[i9]/T.s20[i9]-1)*100;
-      h+=pill('⚠ 高檔待確認:收盤跌破 20日線 '+f2(T.s20[i9])+'('+(gap>=0?'還差 '+gap.toFixed(1)+'%':'')+')即 ▼減碼','#fab219',
-        '這一波曾高於50日線 '+(T.ext[i9]*100).toFixed(0)+'%,資金氣候 '+cp+'%(偏緊)。若之後收盤第一次跌破20日線 → ▼減碼。\n(歷史:這種時候的轉折,40日內再跌≥10% 的機率約 '+((S.trim||{}).dd40||'—')+'%,平常 '+((S.trim||{}).base_dd40||'—')+'%)');}
-    else if(cl!=null&&cl>=th.buy&&T.dip[i9]!=null&&T.dip[i9]<=-th.dip&&T.s20[i9]!=null&&T.C[i9]<=T.s20[i9]&&(i9+1-lastRaw('b'))>th.cool){
+      bar+=pill('⚠ 收破 '+f2(T.s20[i9])+' 即▼','#fab219');
+      st='<b style="color:#fab219">⚠ 高檔待確認</b>:這一波曾高於50日線 '+(T.ext[i9]*100).toFixed(0)+'%,資金氣候 '+cp+'%(偏緊)。若之後收盤第一次跌破 20日線 <b>'+f2(T.s20[i9])+'</b>(還差 '+gap.toFixed(1)+'%)→ ▼減碼。'
+        +'<span class="spmut">(歷史:這種轉折之後 40 日內再跌≥10% 約 '+((S.trim||{}).dd40||'—')+'%,平常 '+((S.trim||{}).base_dd40||'—')+'%)</span>';
+    }else if(cl!=null&&cl>=th.buy&&T.dip[i9]!=null&&T.dip[i9]<=-th.dip&&T.s20[i9]!=null&&T.C[i9]<=T.s20[i9]&&(i9+1-T.lb)>th.cool){
       const gap=(T.s20[i9]/T.C[i9]-1)*100;
-      h+=pill('👀 深跌待確認:收盤站回 20日線 '+f2(T.s20[i9])+'(還差 '+gap.toFixed(1)+'%)即 ▲抄底','#22c55e',
-        '這一波曾低於50日線 '+(-T.dip[i9]*100).toFixed(0)+'%,資金氣候 '+cp+'%(寬鬆)。若之後收盤第一次站回20日線 → ▲抄底。');}
-    else h+='<span style="color:#898781" title="▼只在氣候≤'+Math.round(th.trim*100)+'%、▲只在氣候≥'+Math.round(th.buy*100)+'% 時才會出現;其餘時間個股轉折回測≈擲硬幣">本檔無▲▼訊號</span>';
-    // 盤中暫定(未收盤的最新K):只提示,不上圖
+      bar+=pill('👀 站回 '+f2(T.s20[i9])+' 即▲','#22c55e');
+      st='<b style="color:#22c55e">👀 深跌待確認</b>:這一波曾低於50日線 '+(-T.dip[i9]*100).toFixed(0)+'%,資金氣候 '+cp+'%(寬鬆)。若之後收盤第一次站回 20日線 <b>'+f2(T.s20[i9])+'</b>(還差 '+gap.toFixed(1)+'%)→ ▲抄底。';
+    }else{
+      bar+='<span style="color:#898781">本檔無訊號</span>';
+      st='本檔目前無▲▼。▼只在氣候≤'+Math.round(th.trim*100)+'%、▲只在氣候≥'+Math.round(th.buy*100)+'% 時才會出現;其餘時間個股轉折回測≈擲硬幣。';
+    }
     const L=a.live;
     if(L&&!le&&T.n>=20){const lc=+L[4],s20L=(T.C.slice(i9-18,i9+1).reduce((x,y)=>x+y,0)+lc)/20;
-      if(cl!=null&&cl<=th.trim&&T.ext[i9]!=null&&T.ext[i9]>=th.ext&&T.C[i9]>=T.s20[i9]&&lc<s20L)h+=pill('盤中已跌破20日線(收盤確認才算)','#fb923c');
-      else if(cl!=null&&cl>=th.buy&&T.dip[i9]!=null&&T.dip[i9]<=-th.dip&&T.C[i9]<=T.s20[i9]&&lc>s20L)h+=pill('盤中已站回20日線(收盤確認才算)','#22c55e');}
+      if(cl!=null&&cl<=th.trim&&T.ext[i9]!=null&&T.ext[i9]>=th.ext&&T.C[i9]>=T.s20[i9]&&lc<s20L){bar+=pill('盤中已破','#fb923c');st+='<br><b style="color:#fb923c">盤中</b>:現價已低於 20日線,收盤確認才算。';}
+      else if(cl!=null&&cl>=th.buy&&T.dip[i9]!=null&&T.dip[i9]<=-th.dip&&T.C[i9]<=T.s20[i9]&&lc>s20L){bar+=pill('盤中已站回','#22c55e');st+='<br><b style="color:#22c55e">盤中</b>:現價已高於 20日線,收盤確認才算。';}}
   }
-  // —— 全追蹤宇宙近 5 日 ——
+  if(st)pop+='<div class="sphr"></div><div><b>本檔 '+esc(CHIP_SYM)+'</b>:'+st+'</div>';
+  // ---------- 全追蹤宇宙 ----------
   const sc=FCL.scan;
   if(sc){
-    const ord=arr=>arr.slice().sort((x,y)=>(x.etf?1:0)-(y.etf?1:0));   // 個股在前、ETF/槓桿ETF 在後(淡色)
-    const lst=(arr,c)=>{const o=ord(arr);return o.slice(0,8).map(e=>'<span class="fcsym" data-sym="'+e.s+'" title="'+e.d+' 收 '+e.c+' · 氣候 '+e.clim+'%'+(e.etf?' · ETF':'')+'" style="cursor:pointer;color:'+c+';opacity:'+(e.etf?.6:1)+';text-decoration:underline dotted">'+e.s+'</span>').join(' ')+(o.length>8?' <span style="color:#898781">+'+(o.length-8)+'</span>':'');};
-    h+='<span style="color:#898781">近5日全追蹤:</span>'+(sc.trim&&sc.trim.length?'<span><b style="color:#f97316">▼'+sc.trim.length+'</b> '+lst(sc.trim,'#fdba74')+'</span>':'<span style="color:#898781">▼0</span>')
-      +(sc.buy&&sc.buy.length?'<span><b style="color:#22c55e">▲'+sc.buy.length+'</b> '+lst(sc.buy,'#86efac')+'</span>':'<span style="color:#898781">▲0</span>');}
-  h+='<span class="fcmore" style="cursor:pointer;color:#2dd4bf;text-decoration:underline dotted">'+(FC_MORE?'收合 ▴':'參考面板 ▾')+'</span>';
-  let more='';
-  if(FC_MORE){
-    const ct=cx.cta||{},vc=cx.volctl||{},vx=cx.vix||{},gd=cx.gexdix||{},mc=cx.macro||{};
-    const pc=v=>v==null?'—':(v>0?'+':'')+v+'%';
-    more='<div style="flex-basis:100%;height:0"></div><span style="color:#c3c2b7;white-space:pre-line;line-height:1.5">'+esc(tipC)+'</span>'   // 觸控裝置看不到 title 提示 → 說明直接展開
-      +'<div style="flex-basis:100%;height:0"></div><span style="color:#898781" title="這些量在 2012–2026 對大盤有預測力,但 2008 金融海嘯時失效(越恐慌越跌);或(原油/黃金/白銀)在不同年代正負號會翻 → 只當背景,不計入氣候分數">參考(不計分:2012 後有效但 2008 失效,或沒有穩定領先性)</span>'
-      +'<span>CTA趨勢基金部位 SPX '+(ct.spx_pct!=null?ct.spx_pct+'%':'—')+' / NDX '+(ct.ndx_pct!=null?ct.ndx_pct+'%':'—')+'</span>'
-      +'<span>波動控制基金曝險 '+(vc.exposure!=null?vc.exposure+'×':'—')+(vc.pct!=null?'('+vc.pct+'%)':'')+'</span>'
-      +'<span>VIX '+(vx.vix!=null?vx.vix:'—')+' · VIX/VIX3M '+(vx.ratio!=null?vx.ratio+(vx.ratio>=1?'(倒掛=恐慌)':'(正常)'):'—')+'</span>'
-      +'<span>造市商Gamma '+(gd.gex_bn!=null?gd.gex_bn+'B':'—')+(gd.gex_pct!=null?'('+gd.gex_pct+'%)':'')+' · 暗池買盤DIX '+(gd.dix!=null?gd.dix+'%':'—')+(gd.dix5_pct!=null?'('+gd.dix5_pct+'%)':'')+'</span>'
-      +'<span>10Y '+(mc.tnx!=null?mc.tnx+'%':'—')+'('+sg(mc.tnx_chg20_bp)+'bp/20日)</span>'
-      +'<span>20日:原油 '+pc(mc.oil_20d)+' · 黃金 '+pc(mc.gold_20d)+' · 白銀 '+pc(mc.silver_20d)+' · 銅 '+pc(mc.copper_20d)+' · 美元 '+pc(mc.dxy_20d)+' · USDJPY '+pc(mc.jpy_20d)+' · 高收益債/公債 '+pc(mc.hyg_ief_20d)+'</span>';
-    if(sc&&sc.watch_trim&&sc.watch_trim.length)more+='<div style="flex-basis:100%;height:0"></div><span style="color:#fab219">⚠ 待確認▼(收破20日線即減碼,差距由近到遠):</span>'
-      +sc.watch_trim.slice(0,14).map(w=>'<span class="fcsym" data-sym="'+w.s+'" title="現價 '+w.px+' · 20日線 '+w.s20+' · 曾高於50日線 '+w.ext+'%'+(w.etf?' · ETF':'')+'" style="cursor:pointer;opacity:'+(w.etf?.6:1)+';text-decoration:underline dotted">'+w.s+'('+w.gap+'%)</span>').join(' ');
-    if(sc&&sc.watch_buy&&sc.watch_buy.length)more+='<div style="flex-basis:100%;height:0"></div><span style="color:#22c55e">👀 待確認▲(站回20日線即抄底):</span>'
-      +sc.watch_buy.slice(0,14).map(w=>'<span class="fcsym" data-sym="'+w.s+'" title="現價 '+w.px+' · 20日線 '+w.s20+' · 曾低於50日線 '+w.dip+'%'+(w.etf?' · ETF':'')+'" style="cursor:pointer;opacity:'+(w.etf?.6:1)+';text-decoration:underline dotted">'+w.s+'('+w.gap+'%)</span>').join(' ');
+    const nT=(sc.trim||[]).length,nB=(sc.buy||[]).length;
+    bar+='<span style="color:#898781">近5日全追蹤 <b style="color:'+(nT?'#f97316':'#898781')+'">▼'+nT+'</b> <b style="color:'+(nB?'#22c55e':'#898781')+'">▲'+nB+'</b></span>';
+    const ord=arr=>arr.slice().sort((x,y)=>(x.etf?1:0)-(y.etf?1:0));
+    const sym=(e,c,tip,lab)=>'<span data-sym="'+e.s+'" title="'+esc(tip)+'" style="cursor:pointer;color:'+c+';opacity:'+(e.etf?.6:1)+';text-decoration:underline dotted">'+(lab||e.s)+'</span>';
+    pop+='<div class="sphr"></div><div class="sprow"><b>近5日全追蹤('+(sc.since||'')+' 起,點代號換股)</b></div>'
+      +'<div class="sprow"><b style="color:#f97316">▼'+nT+'</b>'+(nT?ord(sc.trim).map(e=>sym(e,'#fdba74',e.d+' 收 '+e.c+' · 氣候 '+e.clim+'%'+(e.etf?' · ETF':''))).join(' '):'<span class="spmut">無</span>')+'</div>'
+      +'<div class="sprow"><b style="color:#22c55e">▲'+nB+'</b>'+(nB?ord(sc.buy).map(e=>sym(e,'#86efac',e.d+' 收 '+e.c+' · 氣候 '+e.clim+'%'+(e.etf?' · ETF':''))).join(' '):'<span class="spmut">無</span>')+'</div>';
+    if(sc.watch_trim&&sc.watch_trim.length)pop+='<div class="sprow"><span style="color:#fab219">⚠ 待確認▼(收破20日線即減碼,差距由近到遠)</span>'
+      +sc.watch_trim.slice(0,24).map(w=>sym(w,'#e6e9ef','現價 '+w.px+' · 20日線 '+w.s20+' · 曾高於50日線 '+w.ext+'%'+(w.etf?' · ETF':''),w.s+'('+w.gap+'%)')).join(' ')+'</div>';
+    if(sc.watch_buy&&sc.watch_buy.length)pop+='<div class="sprow"><span style="color:#22c55e">👀 待確認▲(站回20日線即抄底)</span>'
+      +sc.watch_buy.slice(0,24).map(w=>sym(w,'#e6e9ef','現價 '+w.px+' · 20日線 '+w.s20+' · 曾低於50日線 '+w.dip+'%'+(w.etf?' · ETF':''),w.s+'('+w.gap+'%)')).join(' ')+'</div>';
   }
-  strip.innerHTML=box(h+more);
-  const mo=strip.querySelector('.fcmore'); if(mo)mo.onclick=()=>{FC_MORE=!FC_MORE;fcStrip();};
-  strip.querySelectorAll('.fcsym').forEach(c=>c.onclick=()=>{const sy=c.dataset.sym;const sel=document.getElementById('chipSym');
-    if(sel&&Array.from(sel.options).some(o=>o.value===sy)){sel.value=sy;CHIP_SYM=sy;}else CHIP_SYM=sy;
-    try{ensureChipK(sy);}catch(_){} renderChips();});
+  if(bad.length)bar+=pill('⚠ 資料源','#fab219');
+  if(stale)bar+=pill('資料未更新','#f87171');
+  // ---------- 參考(不計分)----------
+  const ct=cx.cta||{},vc=cx.volctl||{},vx=cx.vix||{},gd=cx.gexdix||{},mc=cx.macro||{};
+  const pc=v=>v==null?'—':(v>0?'+':'')+v+'%';
+  pop+='<div class="sphr"></div><div class="sprow"><b>參考(不計分)</b><span class="spmut">2012 後對大盤有預測力但 2008 金融海嘯失效,或(油金銀)不同年代正負號會翻 → 只當背景</span></div>'
+    +'<div class="sprow"><span>CTA趨勢基金部位 SPX '+(ct.spx_pct!=null?ct.spx_pct+'%':'—')+' / NDX '+(ct.ndx_pct!=null?ct.ndx_pct+'%':'—')+'</span>'
+    +'<span>波動控制基金曝險 '+(vc.exposure!=null?vc.exposure+'×':'—')+(vc.pct!=null?'('+vc.pct+'%)':'')+'</span>'
+    +'<span>VIX '+(vx.vix!=null?vx.vix:'—')+' · VIX/VIX3M '+(vx.ratio!=null?vx.ratio+(vx.ratio>=1?'(倒掛=恐慌)':'(正常)'):'—')+'</span>'
+    +'<span>造市商Gamma '+(gd.gex_bn!=null?gd.gex_bn+'B':'—')+(gd.gex_pct!=null?'('+gd.gex_pct+'%)':'')+'</span>'
+    +'<span>暗池買盤DIX '+(gd.dix!=null?gd.dix+'%':'—')+(gd.dix5_pct!=null?'('+gd.dix5_pct+'%)':'')+'</span>'
+    +'<span>10Y '+(mc.tnx!=null?mc.tnx+'%':'—')+'('+sg(mc.tnx_chg20_bp)+'bp/20日)</span></div>'
+    +'<div class="sprow"><span>20日:原油 '+pc(mc.oil_20d)+'</span><span>黃金 '+pc(mc.gold_20d)+'</span><span>白銀 '+pc(mc.silver_20d)+'</span><span>銅 '+pc(mc.copper_20d)+'</span>'
+    +'<span>美元 '+pc(mc.dxy_20d)+'</span><span>USDJPY '+pc(mc.jpy_20d)+'</span><span>高收益債/公債 '+pc(mc.hyg_ief_20d)+'</span></div>'
+    +'<div class="spmut" style="margin-top:4px">歷史頻率非未來機率 · 非買賣建議 · 方法與回測:專案文件 flow_climate_2026-10</div>';
+  stripSet(strip,{bar:bar,pop:pop,acc:ACC,bg:BG});
 }
 let CHIP_IDX={SPY:false,QQQ:false};   // P7-3 K線圖(駕駛艙)疊加 SPY/QQQ 相對強弱(預設關,使用者可切)
 let CHIP_TL=false;  // 駕駛艙自動趨勢線層開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
@@ -3143,12 +3234,12 @@ function renderCockpit(){
     }catch(_){return [];}})(),
     ...(function(){try{   // 📐 技術判斷層(手冊 v0.2):路徑成立首日 趨/循/災 + 出貨證據 ⚠ + 警示條;僅日K;fail-open
       const strip=document.getElementById('tjstrip');
-      if(CHIP_PD!=='d'||!CHIP_TJ){if(strip)strip.style.display='none';return [];}
+      if(CHIP_PD!=='d'||!CHIP_TJ){stripHide(strip);return [];}
       const _bars=chipBars(CHIP_SYM)||[];
       const lastDone=tjLastDone();
       const B=_bars.filter(b=>b[0]<=lastDone);
       const f1=v=>v==null?'—':(+v).toFixed(2);
-      if(B.length<70){if(strip){strip.style.display='';strip.innerHTML='<div style="padding:4px 8px;margin:2px 0 4px;border:1px solid rgba(244,114,182,.25);border-radius:8px;font-size:11px;color:#898781"><b style="color:#f472b6">📐 技判</b> 日K不足 70 根,資料不足不判讀(手冊 v0.2)</div>';}return [];}
+      if(B.length<70){stripSet(strip,{bar:'<b style="color:#f472b6">📐 技判</b><span style="color:#898781">日K不足 70 根,資料不足不判讀(手冊 v0.2)</span>',acc:'rgba(244,114,182,.28)',bg:'rgba(244,114,182,.05)'});return [];}
       const FM={};Object.keys(D0||{}).forEach(dd=>{const e=(D0[dd]||{})[CHIP_SYM];if(e&&e.m!=null&&dd<=lastDone)FM[dd]=+e.m;});
       const T=tjSeriesJS(B,FM);
       const di={};R.forEach((r,i2)=>{di[r.d]=i2;});
@@ -3195,35 +3286,40 @@ function renderCockpit(){
       if(!hits.length&&!veto&&T.reg[i9]==='cycle'&&T.lo[i9]!=null)conc+=';災後觀察價位=下軌 '+Math.round(T.lo[i9])+' 附近';
       const bg=(on,txt,col)=>'<span style="padding:1px 7px;border-radius:6px;font-weight:600;'+(on?('background:'+col+'26;color:'+col):'color:#898781;opacity:.7')+'">'+txt+'</span>';
       const f20v=T.f20r(i9),s5v=T.sl5(i9),fokv=T.fok(i9);
-      if(strip){strip.innerHTML='<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 8px;margin:2px 0 4px;background:rgba(244,114,182,.05);border:1px solid rgba(244,114,182,.25);border-radius:8px;font-size:11px;color:#c3c2b7">'
-        +'<b style="color:#f472b6">📐 技判</b><span style="color:'+(T.D[i9]<lastDone?'#f87171':'#898781')+'">'+T.D[i9]+(T.D[i9]<lastDone?' · 資料未更新':'')+'</span>'
-        +bg(true,regZ,T.reg[i9]==='trend'?'#3987e5':'#fab219')
-        +(veto?bg(true,'🚫 財報否決(5交易日內:'+earn+')','#f87171')
-          :bg(pT,'趨勢'+(pT?'✓':'✗'),'#3987e5')+bg(pC,'循環'+(pC?'✓':'✗'),'#fab219')+bg(pD,'災後'+(pD?'✓':'✗'),'#4ade80'))
-        +(function(){let lc=-1;for(let k=i9;k>=Math.max(0,i9-4);k--)if(T.topC[k]){lc=k;break;}
-          if(lc>=0)return bg(true,'出 波段頂確認('+T.D[lc].slice(5)+')','#f87171');
-          if(T.topWait){const a50=T.s50a(i9);return bg(true,'高檔 · 高於50日線'+(a50?((T.C[i9]/a50-1)*100).toFixed(0):'')+'% · 收破 '+f1(T.s20a(i9))+' 即確認頂','#fab219');}
-          return '';})()
-        +(T.exOn[i9]?'<span style="color:#898781" title="手冊v0.2原始出貨證據(TD賣9+%B>0.8 / 出貨背離);回測≈雜訊,僅供參考">手冊出貨證據亮(參考)</span>':'')
-        +(function(){try{var pv=posVeto(CHIP_SYM);return pv?bg(true,'🚫 '+pv.t+'(至'+pv.until+')','#f87171'):'';}catch(_){return '';}})()
-        +'<span>TD買'+T.tdb[i9]+'/賣'+T.tds[i9]+'</span><span>%B '+f1(T.pb[i9])+'</span>'
-        +'<span>帶寬 '+(T.bw[i9]!=null?(T.bw[i9]*100).toFixed(1)+'%':'—')+(T.sqz[i9]?' <b style="color:#fab219">SQZ</b>':'')+'</span>'
-        +'<span>⑦flow20 '+(fokv&&f20v!=null?((f20v>0?'+':'')+f20v.toFixed(0)+'M'):'覆蓋不足')+'</span>'
-        +'<span>5日 '+(fokv&&s5v!=null?((s5v>0?'+':'')+s5v.toFixed(0)+'M'):'—')+'</span>'
-        +(earn&&!veto?'<span>財報 '+earn+'</span>':'')
-        +'<span style="color:#e6e9ef;background:rgba(255,255,255,.05);padding:1px 7px;border-radius:6px">'+conc+'</span>'
-        +'<span style="color:#898781">手冊v0.2 · 規則引擎 · 非投資建議</span>'
-        +'<span style="flex-basis:100%;display:flex;gap:9px;flex-wrap:wrap;align-items:center;color:#898781;font-size:10.5px;border-top:1px dashed rgba(244,114,182,.2);padding-top:3px;margin-top:1px">'
-          +'<span>圖上標記:</span>'
-          +'<span><b style="color:#4ade80">買</b>(K棒下)=進場路徑成立首日,滑過/點擊看是哪條路徑(趨勢/循環/災後)與當日條件</span>'
-          +'<span><b style="color:#f87171">出</b>(K棒上)=波段頂確認:先漲到高於50日線15%以上,之後第一次收盤跌破20日線(約每檔每年2次;通道內的小波動不標)</span>'
-        +'</span></div>';
-        strip.style.display='';}
+      {   // 2026-10-09:一行重點 + 觸發式懸浮詳情(不再把 K 線往下擠)
+        const lcTop=(function(){let lc=-1;for(let k=i9;k>=Math.max(0,i9-4);k--)if(T.topC[k]){lc=k;break;}return lc;})();
+        const topPill=lcTop>=0?bg(true,'出 波段頂確認('+T.D[lcTop].slice(5)+')','#f87171')
+          :(T.topWait?(function(){const a50=T.s50a(i9);return bg(true,'高檔 · 收破 '+f1(T.s20a(i9))+' 即確認頂','#fab219');})():'');
+        const pvPill=(function(){try{var pv=posVeto(CHIP_SYM);return pv?bg(true,'🚫 '+pv.t+'(至'+pv.until+')','#f87171'):'';}catch(_){return '';}})();
+        const barT='<b style="color:#f472b6">📐 技判</b><span style="color:'+(T.D[i9]<lastDone?'#f87171':'#898781')+'">'+T.D[i9].slice(5)+(T.D[i9]<lastDone?' · 資料未更新':'')+'</span>'
+          +bg(true,regZ,T.reg[i9]==='trend'?'#3987e5':'#fab219')
+          +(veto?bg(true,'🚫 財報否決','#f87171')
+            :bg(pT,'趨勢'+(pT?'✓':'✗'),'#3987e5')+bg(pC,'循環'+(pC?'✓':'✗'),'#fab219')+bg(pD,'災後'+(pD?'✓':'✗'),'#4ade80'))
+          +topPill+pvPill;
+        const popT='<div class="sprow"><b style="color:#f472b6;font-size:12.5px">📐 技判</b><span class="spmut">'+T.D[i9]+(T.D[i9]<lastDone?' · <b style="color:#f87171">資料未更新</b>':'')+' · 手冊v0.2 · 規則引擎 · 非投資建議</span></div>'
+          +'<div class="sprow">'+bg(true,regZ+' regime',T.reg[i9]==='trend'?'#3987e5':'#fab219')
+          +(veto?bg(true,'🚫 財報否決(5交易日內:'+earn+')','#f87171')
+            :bg(pT,'趨勢路徑'+(pT?'✓':'✗'),'#3987e5')+bg(pC,'循環路徑'+(pC?'✓':'✗'),'#fab219')+bg(pD,'災後路徑'+(pD?'✓':'✗'),'#4ade80'))
+          +(lcTop>=0?bg(true,'出 波段頂確認('+T.D[lcTop]+' 收破中軌)','#f87171')
+            :(T.topWait?(function(){const a50=T.s50a(i9);return bg(true,'高檔 · 高於50日線'+(a50?((T.C[i9]/a50-1)*100).toFixed(0):'')+'% · 收破 '+f1(T.s20a(i9))+' 即確認頂','#fab219');})():''))
+          +pvPill+'</div>'
+          +'<div style="color:#e6e9ef;background:rgba(255,255,255,.05);padding:3px 8px;border-radius:6px;margin:4px 0">'+conc+'</div>'
+          +'<div class="sprow"><span>TD買'+T.tdb[i9]+'/賣'+T.tds[i9]+'</span><span>%B '+f1(T.pb[i9])+'</span>'
+          +'<span>帶寬 '+(T.bw[i9]!=null?(T.bw[i9]*100).toFixed(1)+'%':'—')+(T.sqz[i9]?' <b style="color:#fab219">SQZ</b>':'')+'</span>'
+          +'<span>⑦flow20 '+(fokv&&f20v!=null?((f20v>0?'+':'')+f20v.toFixed(0)+'M'):'覆蓋不足')+'</span>'
+          +'<span>5日 '+(fokv&&s5v!=null?((s5v>0?'+':'')+s5v.toFixed(0)+'M'):'—')+'</span>'
+          +(earn?'<span>財報 '+earn+'</span>':'')+'</div>'
+          +(T.exOn[i9]?'<div class="spmut">手冊原始出貨證據亮(TD賣9+%B>0.8 / 出貨背離;回測≈雜訊,僅供參考)</div>':'')
+          +'<div class="sphr"></div>'
+          +'<div class="spmut"><b style="color:#4ade80">買</b>(K棒下)=進場路徑成立首日,滑過/點擊看是哪條路徑(趨勢/循環/災後)與當日條件</div>'
+          +'<div class="spmut"><b style="color:#f87171">出</b>(K棒上)=波段頂確認:先漲到高於50日線15%以上,之後第一次收盤跌破20日線(約每檔每年2次;通道內的小波動不標)</div>';
+        stripSet(strip,{bar:barT,pop:popT,acc:'rgba(244,114,182,.28)',bg:'rgba(244,114,182,.05)'});
+      }
       const out2=[];
       if(anyP)out2.push({type:'scatter',mode:'text',x:x,y:yP,text:tP,customdata:hP,textfont:{size:12,color:cP},showlegend:false,name:'技判路徑',hovertemplate:'%{customdata}<extra></extra>'});
       if(anyE)out2.push({type:'scatter',mode:'text',x:x,y:yE,text:tE,customdata:hE,textfont:{size:12,color:'#f87171'},showlegend:false,name:'技判出場',hovertemplate:'%{customdata}<extra></extra>'});
       return out2;
-    }catch(_){try{const s9=document.getElementById('tjstrip');if(s9)s9.style.display='none';}catch(__){}return [];}})(),
+    }catch(_){try{stripHide(document.getElementById('tjstrip'));}catch(__){}return [];}})(),
     ...(function(){try{   // 🌐 全球資金氣候:▲抄底 / ▼減碼(個股轉折 × 氣候)+ 價格窗底部氣候色帶;僅日K;fail-open
       _FCB=null;
       if(CHIP_PD!=='d'||!CHIP_FC){fcStrip({off:true});return [];}
@@ -3278,33 +3374,34 @@ function renderCockpit(){
       const strip=document.getElementById('posstrip');
       const pos=(posLoad()||{})[CHIP_SYM];
       _POSLV=null;
-      if(CHIP_PD!=='d'||!pos){if(strip)strip.style.display='none';return [];}
+      if(CHIP_PD!=='d'||!pos){stripHide(strip);return [];}
       const _bars=chipBars(CHIP_SYM,'d')||[];
       const lastDone=tjLastDone();
       const B=_bars.filter(b=>b[0]<=lastDone);
       const shTx=(+pos.sh||0)?((+pos.sh)+'股·'):'';
-      if(B.length<70){if(strip){strip.style.display='';strip.innerHTML='<div style="padding:4px 8px;margin:2px 0 4px;border:1px solid rgba(74,222,128,.3);border-radius:8px;font-size:11px;color:#898781"><b style="color:#4ade80">💼 持倉</b> '+shTx+'成本 '+(+pos.c).toFixed(2)+' · 日K不足70根,無法依手冊判讀出場規則</div>';}return [];}
+      if(B.length<70){stripSet(strip,{bar:'<b style="color:#4ade80">💼 持倉</b><span style="color:#898781">'+shTx+'成本 '+(+pos.c).toFixed(2)+' · 日K不足70根,無法依手冊判讀出場規則</span>',acc:'rgba(74,222,128,.3)',bg:'rgba(74,222,128,.05)'});return [];}
       const FM={};Object.keys(D0||{}).forEach(dd=>{const e=(D0[dd]||{})[CHIP_SYM];if(e&&e.m!=null&&dd<=lastDone)FM[dd]=+e.m;});
       const T=tjSeriesJS(B,FM);
       const earn=(typeof SIG!=='undefined'&&SIG&&SIG.symbols&&SIG.symbols[CHIP_SYM])?(SIG.symbols[CHIP_SYM].next_earnings||null):null;
       const atm=!!(window.TJPUB&&window.TJPUB.symbols&&window.TJPUB.symbols[CHIP_SYM]&&window.TJPUB.symbols[CHIP_SYM].atm_flag);
       const ev=posEval(CHIP_SYM,pos,T,B,earn,atm);
-      if(!ev){if(strip)strip.style.display='none';return [];}
+      if(!ev){stripHide(strip);return [];}
       const LVC={danger:'#f87171',warn:'#fab219',ok:'#4ade80'};
       const bg2=(txt,col)=>'<span style="padding:1px 7px;border-radius:6px;font-weight:700;background:'+col+'26;color:'+col+'">'+txt+'</span>';
-      if(strip){strip.innerHTML='<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:4px 8px;margin:2px 0 4px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.3);border-radius:8px;font-size:11px;color:#c3c2b7">'
-        +'<b style="color:#4ade80">💼 持倉</b>'
-        +bg2(ev.zero?'零成本':'未回本',ev.zero?'#4ade80':'#8ab4f8')
-        +'<span>'+shTx+'成本 '+ev.C0.toFixed(2)+'</span>'
-        +'<span>'+ev.asof+' 收 '+ev.P.toFixed(2)+' <b style="color:'+(ev.pl>=0?'#4ade80':'#f87171')+'">'+(ev.pl>=0?'+':'')+ev.pl.toFixed(1)+'%</b>'+(ev.stale?' <b style="color:#f87171">資料未更新</b>':'')+'</span>'
-        +bg2(ev.ins.t,LVC[ev.ins.lv])
-        +(ev.zero?'':'<span>f='+(ev.f!=null?ev.f.toFixed(2):'—')+'(≤0.7 可回本賣出;回本價 '+(ev.recovPx!=null?ev.recovPx.toFixed(2):'—')+')</span>')
-        +'<span>追蹤線 '+ev.trail.name+' '+(ev.trail.v!=null?ev.trail.v.toFixed(2):'—')+(ev.trailBrk?' <b style="color:#f87171">已破</b>':'')+'</span>'
-        +'<span>停損參考=下軌 '+(ev.lo!=null?ev.lo.toFixed(2):'—')+(ev.fok?'':'(⑦覆蓋不足)')+'</span>'
-        +(ev.earn?'<span>財報 '+ev.earn+(ev.eVeto?' <b style="color:#fab219">5日內</b>':'')+'</span>':'')
-        +(ev.add?'<span>加碼(第二批)'+(ev.add.on?'<b style="color:#4ade80">條件成立</b>':'未成立')+'(站上中軌'+(ev.add.above?'✓':'✗')+'·flow20>0'+(ev.add.flow?'✓':'✗')+')</span>':'')
-        +'<span style="color:#898781">手冊v0.2出場 · 僅存本機 · 非投資建議 · 明細/編輯在工作區「💼 持倉」分頁</span>'
-        +'</div>';strip.style.display='';}
+      {   // 2026-10-09:一行重點 + 觸發式懸浮詳情
+        const plTx='<b style="color:'+(ev.pl>=0?'#4ade80':'#f87171')+'">'+(ev.pl>=0?'+':'')+ev.pl.toFixed(1)+'%</b>';
+        const barP='<b style="color:#4ade80">💼 持倉</b>'+bg2(ev.zero?'零成本':'未回本',ev.zero?'#4ade80':'#8ab4f8')
+          +'<span>'+ev.P.toFixed(2)+' '+plTx+(ev.stale?' <b style="color:#f87171">資料未更新</b>':'')+'</span>'+bg2(ev.ins.t,LVC[ev.ins.lv]);
+        const popP='<div class="sprow"><b style="color:#4ade80;font-size:12.5px">💼 持倉</b>'+bg2(ev.zero?'零成本':'未回本',ev.zero?'#4ade80':'#8ab4f8')+bg2(ev.ins.t,LVC[ev.ins.lv])+'</div>'
+          +'<div class="sprow"><span>'+shTx+'成本 '+ev.C0.toFixed(2)+'</span><span>'+ev.asof+' 收 '+ev.P.toFixed(2)+' '+plTx+(ev.stale?' <b style="color:#f87171">資料未更新</b>':'')+'</span></div>'
+          +'<div class="sprow">'+(ev.zero?'':'<span>f='+(ev.f!=null?ev.f.toFixed(2):'—')+'(≤0.7 可回本賣出;回本價 '+(ev.recovPx!=null?ev.recovPx.toFixed(2):'—')+')</span>')
+          +'<span>追蹤線 '+ev.trail.name+' '+(ev.trail.v!=null?ev.trail.v.toFixed(2):'—')+(ev.trailBrk?' <b style="color:#f87171">已破</b>':'')+'</span>'
+          +'<span>停損參考=下軌 '+(ev.lo!=null?ev.lo.toFixed(2):'—')+(ev.fok?'':'(⑦覆蓋不足)')+'</span>'
+          +(ev.earn?'<span>財報 '+ev.earn+(ev.eVeto?' <b style="color:#fab219">5日內</b>':'')+'</span>':'')
+          +(ev.add?'<span>加碼(第二批)'+(ev.add.on?'<b style="color:#4ade80">條件成立</b>':'未成立')+'(站上中軌'+(ev.add.above?'✓':'✗')+'·flow20>0'+(ev.add.flow?'✓':'✗')+')</span>':'')+'</div>'
+          +'<div class="spmut" style="margin-top:4px">手冊v0.2出場 · 僅存本機 · 非投資建議 · 明細/編輯在工作區「💼 持倉」分頁</div>';
+        stripSet(strip,{bar:barP,pop:popP,acc:'rgba(74,222,128,.3)',bg:'rgba(74,222,128,.05)'});
+      }
       const out3=[{type:'scatter',mode:'lines',x:x,y:R.map(()=>ev.C0),line:{color:'rgba(230,233,239,.75)',width:1,dash:'dot'},showlegend:false,name:'持倉成本',hovertemplate:'持倉成本 '+ev.C0.toFixed(2)+'<extra></extra>'}];
       _POSLV=[{y:ev.C0,tag:'成本',col:'230,233,239'}];
       if(!ev.zero&&ev.recovPx!=null){
@@ -3312,7 +3409,7 @@ function renderCockpit(){
         _POSLV.push({y:ev.recovPx,tag:'回本',col:'74,222,128'});
       }
       return out3;
-    }catch(_){try{const s8=document.getElementById('posstrip');if(s8)s8.style.display='none';}catch(__){}return [];}})(),
+    }catch(_){try{stripHide(document.getElementById('posstrip'));}catch(__){}return [];}})(),
     {type:'bar',x:x,y:R.map(r=>r.v),yaxis:'y7',marker:{color:R.map(r=>r.volr>=1.75?CPAL.volHot:(r.c>=r.o?CPAL.volUp:CPAL.volDn))},showlegend:false,hovertemplate:'量 %{y:,.0f}<extra></extra>'},
     ...(CHIP_IND==='rv'?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.rv),yaxis:'y8',line:{color:CPAL.rv,width:2},fill:'tozeroy',fillcolor:CPAL.rvFill,showlegend:false,hovertemplate:'RVPOS %{y}<extra></extra>'},
