@@ -246,6 +246,11 @@ def main():
         for d, z in zip(cds, cz):
             zmap[(datetime.date.fromisoformat(d) + datetime.timedelta(days=6)).isoformat()] = z
         cot_z = align(cal, zmap, limit=10)
+        j = last_valid(cot_z)
+        if j is not None and j < len(cal) - 1 and len(cal) - 1 - j <= 40:
+            # CFTC 停更(例:2025-10 美國政府關門,COT 停發 6 週)→ 日圓分量沿用最後一份報告(最多 40 交易日),並在 dq 註記
+            for k in range(j + 1, len(cal)): cot_z[k] = cot_z[j]
+            dq.append({"src": "cftc yen TFF", "ok": False, "err": "COT 停更:沿用 %s 報告(%d 交易日)" % (cds[-1], len(cal) - 1 - j)})
         cot_last = {"report": cds[-1], "net_oi": r1(cs[-1] * 100, 1), "z": r1(cz[-1], 2)}
         dq.append({"src": "cftc yen TFF", "ok": True, "last": cds[-1]})
     except Exception as e:
@@ -259,6 +264,10 @@ def main():
     A = [(y + f) / 2 if not (isnan(y) or isnan(f)) else NAN for y, f in zip(yen, fin)]
     clim = roll_rank(A)
     li = last_valid(clim)
+    if li is None or cal[li] < cal[-1] and (datetime.date.fromisoformat(cal[-1]) - datetime.date.fromisoformat(cal[li])).days > 10:
+        # 氣候算不出來(多半是 CFTC/Yahoo 暫時失敗)→ 不覆寫舊檔,讓前端沿用上一份(fail-safe)
+        log("climate unavailable (last valid", cal[li] if li is not None else None, ") → keep previous file; dq:", dq)
+        sys.exit(2)
     log("climate last", cal[li], round(clim[li] * 100, 1), "%.0fs" % (time.time() - t0))
     if a.dump_series:
         json.dump({"d": cal, "clim": clim, "yen": yen, "rate": rate, "usd": usd, "cot_z": cot_z, "fvx20": fvx20, "cta_dxy": cdx},
