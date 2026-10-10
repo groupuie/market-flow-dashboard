@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-10T01:11Z">
+<meta name="build" content="2026-10-10T10:56Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T01:11Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T10:56Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1093,6 +1093,14 @@ function fcClimOf(d){   // 該交易日的氣候(0–1);晚於序列最後一天
     FCL._m=m;FCL._lc=lc;FCL._ld=ld;}
   const v=FCL._m[d]; if(v!=null)return v;
   return (FCL._ld&&d>FCL._ld)?FCL._lc:null;
+}
+function fcMktOf(d){   // 該交易日的大盤位元(QM;引擎 market_state 算好);晚於序列最後一天 → 沿用最新(盤中);沒資料 → null(不分強弱)
+  if(!FCL||!FCL.series||!FCL.series.m)return null;
+  if(!FCL._mk){const m={},S=FCL.series;let lv=null,ld='';
+    S.d.forEach((dd,i)=>{const v=S.m[i];if(v!=null){m[dd]=v;lv=v;ld=dd;}});
+    FCL._mk=m;FCL._mkl=lv;FCL._mkd=ld;}
+  const v=FCL._mk[d]; if(v!=null)return v;
+  return (FCL._mkd&&d>FCL._mkd)?FCL._mkl:null;
 }
 function fcSeriesJS(B){   // B=[[d,o,h,l,c,v],...] 已收盤日K(舊→新)
   const th=(FCL&&FCL.th)||{trim:0.35,trim_strong:0.20,buy:0.80,ext:0.15,dip:0.15,cool:20};
@@ -2930,6 +2938,27 @@ const TK_UL={NVDL:'NVDA',TSLL:'TSLA',MUU:'MU',SNXX:'SNDK',MVLL:'MRVL',AVGG:'AVGO
   LITX:'LITE',COHX:'COHR',AAOX:'AAOI',LABX:'ALAB',GGLL:'GOOGL',QCML:'QCOM',LNOK:'NOK',AMKL:'AMKR',STXL:'STX',
   TQQQ:'QQQ',SOXL:'SOXX',SPXL:'SPY',UPRO:'SPY',TNA:'IWM',UDOW:'DIA',FNGU:null};
 const TK_INV=new Set(['SQQQ','SOXS','NVDS','TSLZ','FNGD','SPXS','SPXU','TZA','SDOW']);   // 反向 ETF:頂K 不適用
+// ===== 📊量化 強/弱分級(2026-10-10 使用者:「記號全部保留,弱的變灰、強的照原色」)=====
+// 研究:research/requant_2026-10-10/t10–t17、專案文件 claude/signal_addons_2026-10-10.md(259 檔 × 2009–2026;與引擎 flow_climate.py 同規則)
+//   出  :強 = 油價 20 日走弱 或 10 年債殖利率 20 日急降(近 3 年最低 1/3)或 當天跌 ≥4% 或 前 20 根有頂K;都沒有 = 弱(灰)
+//   頂K :強 = 大盤 QQQ 收在 20 日線下;AI/半導體股且 QQQ 在線上 = 弱(灰);其餘照舊
+//   減碼:強 = QQQ 在 20 日線下 或 殖利率急降;其餘 = 弱(灰)
+//   抄底:強 = QQQ 離一年高點 ≥10%(大盤回檔);沒回檔且 VIX <20(只有個股自己跌)= 弱(灰);其餘照舊。「買」不分級。
+// 大盤位元 mk 由引擎逐日算好(data/flow_climate.json series.m),mk=null(沒資料)→ 不分級、照原色。
+const QM={OIL:1,YLD:2,QB:4,COR:8,VIX:16}, QGRAY='#8b8f98';
+function qGrade(w,j,C,TKtk,mk,isAI){   // 回傳 {g:'s'強|'n'照舊|'w'弱|null不分級, why:原因, best:出的最強層}
+  if(mk==null)return {g:null,why:''};
+  if(w==='出'){const r=[];if(mk&QM.OIL)r.push('油價走弱');if(mk&QM.YLD)r.push('殖利率急降');const mac=r.length>0;let px=false;
+    if(j>=1&&C[j-1]>0&&C[j]/C[j-1]-1<=-0.04){r.push('當天跌 '+((1-C[j]/C[j-1])*100).toFixed(1)+'%');px=true;}
+    for(let k=Math.max(0,j-20);k<j;k++)if(TKtk[k]){r.push('前面剛出過頂K');px=true;break;}
+    return (mac||px)?{g:'s',why:r.join('、'),best:mac&&px}:{g:'w',why:'沒有加分條件'};}
+  if(w==='頂K'){if(mk&QM.QB)return {g:'s',why:'大盤也跌破 20 日線'};return isAI?{g:'w',why:'AI 股、大盤還強'}:{g:'n',why:''};}
+  if(w==='減碼'){const r=[];if(mk&QM.QB)r.push('大盤在 20 日線下');if(mk&QM.YLD)r.push('殖利率急降');
+    return r.length?{g:'s',why:r.join('、')}:{g:'w',why:'沒有加分條件'};}
+  if(w==='抄底'){if(mk&QM.COR)return {g:'s',why:'大盤從高點回檔 1 成以上'};
+    return (mk&QM.VIX)?{g:'n',why:''}:{g:'w',why:'只有這檔自己跌、大盤沒回檔'};}
+  return {g:null,why:''};
+}
 function tkSeriesJS(B){   // B=[[d,o,h,l,c,…],…] 依日期排序(呼叫端決定是否含盤中棒)
   const n=B.length,D=B.map(b=>b[0]),H=B.map(b=>+b[2]),L=B.map(b=>+b[3]),C=B.map(b=>+b[4]);
   const P=new Array(n+1).fill(0);for(let i=0;i<n;i++)P[i+1]=P[i]+C[i];
@@ -3481,45 +3510,55 @@ function renderCockpit(){
       for(let j=1;j<T.n;j++){const a=T.passT[j]&&!T.passT[j-1],b=T.passC[j]&&!T.passC[j-1],c=T.passD[j]&&!T.passD[j-1];
         if((a||b||c)&&!E.some(x=>x.w==='抄底'&&Math.abs(x.j-j)<=3))E.push({w:'買',j:j,d:T.D[j],p:a?'T':b?'C':'D'});}
       E.sort((a,b)=>a.j-b.j);
+      // 強/弱分級(qGrade;記號全部保留,弱的變灰)。買 不分級。
+      E.forEach(x=>{x.q=x.w==='買'?{g:null,why:''}:qGrade(x.w,x.j,TK.C,TK.tk,fcMktOf(x.d),isAI);});
+      const isW=x=>!!(x&&x.q&&x.q.g==='w');
+      const GS=STS.grade||{trim:{strong:59,best:69,weak:49,base:46},topk:{strong:56,normal:51,weak:44,base:45},conf:{strong:57,weak:49,base:45},buy:{strong:74,normal:79,weak:47,base:54}};
+      const GK={'出':'trim','頂K':'topk','減碼':'conf','抄底':'buy'};
       const ACT={'頂K':'當晚可先賣一小部分','減碼':'再賣一部分','出':isAI?'分批賣掉大部分':'賣掉大部分','抄底':'可分批買','買':'參考,小量試單'};
-      const tip=x=>{const d=x.d.slice(5),j=x.j,h='<b>'+x.w+'</b> '+d+' · '+ACT[x.w]+pre;
+      const ACTW={'頂K':'較弱,可先觀察','減碼':'較弱,可先觀察','出':'較弱,可先觀察','抄底':'較弱,先別急著買'};
+      const gLine=x=>{const q=x.q;if(!q||!q.g||q.g==='n')return '';const s=GS[GK[x.w]]||{},dir=(x.w==='抄底')?'比較高':'比較低';   // 一行:強/弱 + 過去準確率
+        if(q.g==='s')return '<br><b>強</b>:'+q.why+' → 過去 20 天後'+dir+' '+((x.w==='出'&&q.best)?s.best:s.strong)+'%(平常 '+s.base+'%)';
+        return '<br><b style="color:'+QGRAY+'">弱</b>:'+q.why+' → 過去只有 '+s.weak+'%(平常 '+s.base+'%)';};
+      const tip=x=>{const d=x.d.slice(5),j=x.j,wk=isW(x),gd=!!(x.q&&x.q.g&&x.q.g!=='n'),h='<b>'+x.w+(wk?'(弱)':'')+'</b> '+d+' · '+(wk?ACTW[x.w]:ACT[x.w])+pre+gLine(x);
         if(x.w==='頂K')return h+'<br>漲多後碰到布林上緣,收盤從當天高點掉 '+((1-Cj(j)/Hj(j))*100).toFixed(1)+'%'
-          +'<br>過去約 1/3 是真正的頂;隔天收盤跌破 '+f2(Lj(j))+' → 減碼'+(isAI?'<br>AI 股常續漲,少賣一點':'');
-        if(x.w==='減碼')return h+'<br>頂K 隔天收盤跌破它的低點 '+f2(Lj(j-1))+'<br>過去約一半是真正的頂(這時價格已離高點約 1 成)';
+          +'<br>'+(gd?'':'過去約 1/3 是真正的頂;')+'隔天收盤跌破 '+f2(Lj(j))+' → 減碼'+(isAI&&!wk?'<br>AI 股常續漲,少賣一點':'');
+        if(x.w==='減碼')return h+'<br>頂K 隔天收盤跌破它的低點 '+f2(Lj(j-1))+(gd?'':'<br>過去約一半是真正的頂(這時價格已離高點約 1 成)');
         if(x.w==='出')return h+'<br>漲多後跌破 20 日線 '+f2(x.e.s20)+',全球資金又偏緊('+Math.round(x.e.clim*100)+'%)'
-          +'<br>過去 40 天內跌 10% 以上的機會 '+pc(sT.dd40!=null?sT.dd40:63)+'(平常 '+pc(sT.base_dd40!=null?sT.base_dd40:39)+')'
-          +(isAI?'<br>AI 股近年常續漲,所以分批':'')+'<br>收盤站回 20 日線就取消';
+          +(gd?'':'<br>過去 40 天內跌 10% 以上的機會 '+pc(sT.dd40!=null?sT.dd40:63)+'(平常 '+pc(sT.base_dd40!=null?sT.base_dd40:39)+')')
+          +(isAI&&!wk?'<br>AI 股近年常續漲,所以分批':'')+'<br>收盤站回 20 日線就取消';
         if(x.w==='抄底')return h+'<br>跌深後站回 20 日線 '+f2(x.e.s20)+',全球資金寬鬆('+Math.round(x.e.clim*100)+'%)'
-          +'<br>過去 40 天後比較高的機會 '+pc(sB.up40!=null?sB.up40:70)+'(平常 '+pc(sB.base_up40!=null?sB.base_up40:58)+');但一半的時候中途會再跌 1 成';
+          +(gd?'<br>中途常再跌 1 成,要分批':'<br>過去 40 天後比較高的機會 '+pc(sB.up40!=null?sB.up40:70)+'(平常 '+pc(sB.base_up40!=null?sB.base_up40:58)+');但一半的時候中途會再跌 1 成');
         if(x.w==='買')return h+'<br>手冊規則:'+({T:'上漲趨勢裡的回檔結束',C:'區間底部、有人在吸貨',D:'急跌後收回布林下緣'}[x.p])+'<br>這條規則資料只有幾個月,還沒驗證過';
         return h;};
       // ---- 盤中暫標(今天這根;收盤確認才算)----
       const PV=[];
       if(live){
-        const k=TKL.n-1;
-        if(TKL.tk[k])PV.push({w:'頂K',line:'頂K 成形中:現價離今天高點 −'+(TKL.off[k]*100).toFixed(1)+'%,收盤前還在 '+f2(TKL.H[k]*0.95)+' 以下就成立',
-          h:'<b>頂K?</b> 盤中'+pre+'<br>現價離今天高點 −'+(TKL.off[k]*100).toFixed(1)+'%<br>收盤前還在 '+f2(TKL.H[k]*0.95)+' 以下就成立 → 當晚可先賣一小部分'});
+        const k=TKL.n-1, mkL=fcMktOf(live[0]);   // 盤中:大盤位元沿用最近一次收盤(引擎盤後才更新)
+        const gq=(w,j,C)=>qGrade(w,j,C,TKL.tk,mkL,isAI), wl=q=>q&&q.g==='w'?'(弱)':'', wa=(q,w)=>q&&q.g==='w'?ACTW[w]:ACT[w];
+        if(TKL.tk[k]){const q=gq('頂K',k,TKL.C);PV.push({w:'頂K',q:q,line:'頂K'+wl(q)+' 成形中:現價離今天高點 −'+(TKL.off[k]*100).toFixed(1)+'%,收盤前還在 '+f2(TKL.H[k]*0.95)+' 以下就成立',
+          h:'<b>頂K?'+wl(q)+'</b> 盤中'+pre+gLine({w:'頂K',q:q})+'<br>現價離今天高點 −'+(TKL.off[k]*100).toFixed(1)+'%<br>收盤前還在 '+f2(TKL.H[k]*0.95)+' 以下就成立 → '+wa(q,'頂K')});}
         else if(TKL.hot[k]&&TKL.touch[k])PV.push({w:'頂K',watch:true,line:'已漲多又碰到布林上緣:收盤若在 '+f2(TKL.H[k]*0.95)+' 以下 → 頂K'});
-        if(TK.tk[TK.n-1]&&+live[4]<TK.L[TK.n-1])PV.push({w:'減碼',line:'已跌破昨天頂K的低點 '+f2(TK.L[TK.n-1])+',收盤還在下面 → 減碼',
-          h:'<b>減碼?</b> 盤中'+pre+'<br>已跌破昨天頂K的低點 '+f2(TK.L[TK.n-1])+'<br>收盤還在下面就成立 → 再賣一部分'});
+        if(TK.tk[TK.n-1]&&+live[4]<TK.L[TK.n-1]){const q=gq('減碼',k,TKL.C);PV.push({w:'減碼',q:q,line:'已跌破昨天頂K的低點 '+f2(TK.L[TK.n-1])+',收盤還在下面 → 減碼'+wl(q),
+          h:'<b>減碼?'+wl(q)+'</b> 盤中'+pre+gLine({w:'減碼',q:q})+'<br>已跌破昨天頂K的低點 '+f2(TK.L[TK.n-1])+'<br>收盤還在下面就成立 → '+wa(q,'減碼')});}
         if(FTL){const lastI=FTL.n-1;FTL.ev.forEach(e=>{if(e.i!==lastI)return;
-          if(e.k==='trim')PV.push({w:'出',line:'已跌破 20 日線 '+f2(e.s20)+'(全球資金偏緊),收盤還在下面 → 出',
-            h:'<b>出?</b> 盤中'+pre+'<br>已跌破 20 日線 '+f2(e.s20)+',全球資金偏緊<br>收盤還在下面就成立 → '+ACT['出']});
-          else PV.push({w:'抄底',line:'已站回 20 日線 '+f2(e.s20)+'(全球資金寬鬆),收盤還在上面 → 抄底',
-            h:'<b>抄底?</b> 盤中'+pre+'<br>已站回 20 日線 '+f2(e.s20)+',全球資金寬鬆<br>收盤還在上面就成立 → 可分批買'});});}
+          if(e.k==='trim'){const q=gq('出',lastI,FTL.C);PV.push({w:'出',q:q,line:'已跌破 20 日線 '+f2(e.s20)+'(全球資金偏緊),收盤還在下面 → 出'+wl(q),
+            h:'<b>出?'+wl(q)+'</b> 盤中'+pre+gLine({w:'出',q:q})+'<br>已跌破 20 日線 '+f2(e.s20)+',全球資金偏緊<br>收盤還在下面就成立 → '+wa(q,'出')});}
+          else{const q=gq('抄底',lastI,FTL.C);PV.push({w:'抄底',q:q,line:'已站回 20 日線 '+f2(e.s20)+'(全球資金寬鬆),收盤還在上面 → 抄底'+wl(q),
+            h:'<b>抄底?'+wl(q)+'</b> 盤中'+pre+gLine({w:'抄底',q:q})+'<br>已站回 20 日線 '+f2(e.s20)+',全球資金寬鬆<br>收盤還在上面就成立 → '+wa(q,'抄底')});}});}
       }
       // ---- 圖上的字 ----
       const COL={'頂K':'#fab219','減碼':'#fb923c','出':'#f87171','抄底':'#22c55e','買':'#4ade80'};
       const SELL={'頂K':1,'減碼':1,'出':1};
       const nUp=new Array(R.length).fill(0),nDn=new Array(R.length).fill(0);
-      const L5={};Object.keys(COL).forEach(w=>{L5[w]={y:new Array(R.length).fill(null),t:new Array(R.length).fill(''),h:new Array(R.length).fill('')};});
+      const L5={};Object.keys(COL).forEach(w=>{L5[w]={y:new Array(R.length).fill(null),t:new Array(R.length).fill(''),h:new Array(R.length).fill(''),c:new Array(R.length).fill(COL[w])};});
       const LV={x:[],y:[],t:[],h:[],c:[]};   // 盤中暫標(同一根可能不只一個字 → 用點列表)
       const yAt=(w,i2)=>SELL[w]?R[i2].h+o3*(1.0+0.85*(nUp[i2]++)):R[i2].l-o3*(1.0+0.85*(nDn[i2]++));
-      E.forEach(x=>{const i2=di[x.d];if(i2==null)return;const A=L5[x.w];A.y[i2]=yAt(x.w,i2);A.t[i2]='<b>'+x.w+'</b>';A.h[i2]=tip(x);});
+      E.forEach(x=>{const i2=di[x.d];if(i2==null)return;const A=L5[x.w];A.y[i2]=yAt(x.w,i2);A.t[i2]='<b>'+x.w+'</b>';A.h[i2]=tip(x);A.c[i2]=isW(x)?QGRAY:COL[x.w];});
       {const px=Math.max(1,((el&&el.clientWidth)||400)*0.88/Math.max(1,R.length)),gap=Math.ceil(30/px);   // 連續幾天的頂K:只有第一根寫字,其餘一個點
        let last=-1e9;L5['頂K'].y.forEach((v,i2)=>{if(v==null)return;if(i2-last<gap)L5['頂K'].t[i2]='<b>•</b>';else last=i2;});}
       const li2=R.length-1;
-      if(live&&R[li2]&&R[li2].d===live[0])PV.filter(p=>p.h).forEach(p=>{LV.x.push(x[li2]);LV.y.push(yAt(p.w,li2));LV.t.push('<b>'+p.w+'?</b>');LV.h.push(p.h);LV.c.push(COL[p.w]);});
+      if(live&&R[li2]&&R[li2].d===live[0])PV.filter(p=>p.h).forEach(p=>{LV.x.push(x[li2]);LV.y.push(yAt(p.w,li2));LV.t.push('<b>'+p.w+'?</b>');LV.h.push(p.h);LV.c.push(isW(p)?QGRAY:COL[p.w]);});
       // ---- 狀態列:結論(最近一個仍有效的訊號)----
       const i9=B.length-1, c9=Cj(i9), s20v=T.s20a(i9);
       const valid=x=>{const j=x.j;if(i9-j>10)return false;if(x.w==='頂K')return j===i9;if(x.w==='買')return i9-j<=5;
@@ -3531,12 +3570,13 @@ function renderCockpit(){
       let V=null;for(let k=E.length-1;k>=0;k--){if(valid(E[k])){V=E[k];break;}}
       const cl=FCL?fcClimOf(B[i9][0]):null, cp=cl==null?null:Math.round(cl*100), th=(FCL&&FCL.th)||{trim:0.35,buy:0.80,ext:0.15,dip:0.15,cool:20};
       let vTxt,vCol,why='',next='';
-      if(V){vTxt=V.w+':'+ACT[V.w];vCol=COL[V.w];const d=V.d.slice(5);
+      if(V){const wk=isW(V);vTxt=V.w+(wk?'(弱)':'')+':'+(wk?ACTW[V.w]:ACT[V.w]);vCol=wk?QGRAY:COL[V.w];const d=V.d.slice(5);
         if(V.w==='頂K'){why=d+' 漲多後碰到布林上緣,收盤從高點掉 '+((1-Cj(V.j)/Hj(V.j))*100).toFixed(1)+'%';next='明天收盤跌破 '+f2(Lj(V.j))+' → 減碼;漲過 '+f2(Hj(V.j))+' → 取消';}
         else if(V.w==='減碼'){why=d+' 頂K 隔天收盤跌破它的低點 '+f2(Lj(V.j-1));next='收盤漲回 '+f2(Hj(V.j-1))+'(頂K 高點)以上才取消';}
         else if(V.w==='出'){why=d+' 漲多後跌破 20 日線,全球資金偏緊';next='收盤站回 '+f2(s20v)+'(20 日線)才取消';}
         else if(V.w==='抄底'){why=d+' 跌深後站回 20 日線,全球資金寬鬆';next='收盤跌回 '+f2(s20v)+'(20 日線)以下就先停';}
-        else{why=d+' 手冊規則的進場點(還沒驗證過)';next='小量就好';}}
+        else{why=d+' 手冊規則的進場點(還沒驗證過)';next='小量就好';}
+        if(V.q&&(V.q.g==='s'||V.q.g==='w'))why+=' · '+(V.q.g==='s'?'<b>強</b>:':'<b style="color:'+QGRAY+'">弱</b>:')+V.q.why;}
       else{vTxt='沒有訊號:不用動';vCol='#94a3b8';
         const cool=FT&&(i9+1-FT.lt)<=th.cool;
         if(FT&&FT.ext[i9]!=null&&FT.ext[i9]>=th.ext&&s20v!=null&&c9>=s20v){why='漲多中';
@@ -3552,27 +3592,45 @@ function renderCockpit(){
       const ctaS=!sg.length?'—':(npos>=Math.ceil(sg.length*5/6)?'還沒開始賣(偏多)':nneg>=Math.ceil(sg.length*5/6)?'已經在賣(偏空)':'一半在賣');
       const guard=[[m50,'50 日線'],[m100,'100 日線'],[m200,'200 日線']].filter(g=>g[0]!=null&&g[0]<c9).sort((a,b)=>b[0]-a[0])[0];
       const ctaLine='趨勢基金(CTA):'+ctaS+(guard?';收盤跌破 '+f2(guard[0])+'('+guard[1]+')→ 它們會'+(npos>=Math.ceil(sg.length*5/6)?'開始賣':'再賣一批'):(m200!=null?';價格已在 200 日線之下':''));
+      // ---- 大盤狀態(2026-10-10;引擎 series.m / now.mkt):一句話告訴你「賣出訊號強不強、現在是不是抄底時機」----
+      const mb=fcMktOf(B[i9][0]), MN=(FCL&&FCL.now&&FCL.now.mkt)||null;
+      let mkBar='',mkLine='';
+      if(mb!=null){
+        const sHot=cl!=null&&cl<=th.trim&&!!(mb&(QM.OIL|QM.YLD)), cor=!!(mb&QM.COR), vx=!!(mb&QM.VIX);
+        const dk=cor?((cl!=null&&cl>=0.35)?'ok':'tight'):(vx?'mid':'solo');
+        mkBar='<span style="color:'+(sHot?'#f87171':'#94a3b8')+'">'+(sHot?'賣出偏強':'賣出普通')+'</span>'
+          +'<span style="color:'+({ok:'#22c55e',tight:'#fb923c',mid:'#94a3b8',solo:QGRAY}[dk])+'">'+({ok:'抄底時機',tight:'先別抄底',mid:'抄底普通',solo:'不宜抄底'}[dk])+'</span>';
+        const sg2=v=>(v>0?'+':'')+v;
+        const nums=MN?('QQQ 離一年高點 '+(MN.qqq_dd!=null?MN.qqq_dd+'%':'—')+((mb&QM.QB)?'(已跌破 20 日線)':'(在 20 日線上)')+' · VIX '+(MN.vix!=null?MN.vix:'—')
+          +' · 油價 20 天 '+(MN.oil_20d!=null?sg2(MN.oil_20d)+'%':'—')+((mb&QM.OIL)?'(走弱)':'')
+          +' · 10 年債 20 天 '+(MN.tnx_20d_bp!=null?sg2(MN.tnx_20d_bp)+'bp':'—')+((mb&QM.YLD)?'(急降)':'')):'';
+        const sWhy=sHot?'賣出訊號偏強(資金緊、'+((mb&QM.OIL)?'油價走弱':'殖利率急降')+')':'賣出訊號普通';
+        const dWhy={ok:'大盤從高點回檔 1 成以上、資金不緊 → 是抄底時機',tight:'大盤回檔但資金緊(像 2022 年)→ 先別抄底',
+          mid:'大盤還沒回檔 1 成,但 VIX 偏高 → 抄底普通',solo:'大盤沒回檔、VIX 低 → 只有個股自己跌時,反彈過去不準,不宜抄底'}[dk];
+        mkLine='<div>大盤:'+(cp!=null?'全球資金 '+fcLab(cp)+' '+cp+'% · ':'')+nums+'</div><div>→ '+sWhy+';'+dWhy+'</div>';
+      }
       const gmLine=cp==null?'全球資金:載入中…':('全球資金:'+fcLab(cp)+' '+cp+'% → '+(cp<=35?'大戶在收錢,「出」比較準、先別急著抄底':cp>=80?'大戶在放錢,「抄底」比較準':'普通,照原計畫'));
       // ---- 一行狀態列 + 詳情 ----
-      const liveP=PV.map(p=>pill('盤中 '+(p.watch?'注意頂K':p.w+'?'),COL[p.w])).join('');
+      const liveP=PV.map(p=>pill('盤中 '+(p.watch?'注意頂K':p.w+'?'+(isW(p)?'(弱)':'')),isW(p)?QGRAY:COL[p.w])).join('');
       const bar=head+'<span style="color:'+(B[i9][0]<lastDone?'#f87171':'#898781')+'">'+B[i9][0].slice(5)+(B[i9][0]<lastDone?' · 資料未更新':'')+'</span>'
-        +liveP+pill(vTxt,vCol)+(cp!=null?'<span style="color:'+fcCol(cp)+'">全球資金 '+fcLab(cp)+'</span>':'');
+        +liveP+pill(vTxt,vCol)+mkBar+(cp!=null?'<span style="color:'+fcCol(cp)+'">資金'+fcLab(cp)+'</span>':'');   // 大盤短結論放前面(手機列寬不夠時,被裁掉的是資金)
       let oth='';const sc=FCL&&FCL.scan;
       if(sc){const sy=(e,c)=>'<span data-sym="'+esc(e.s)+'" style="cursor:pointer;color:'+c+';text-decoration:underline dotted">'+esc(e.s)+'</span>';
-        const tr=(sc.trim||[]).filter(e=>!e.etf&&e.s!==S).slice(0,10),bu=(sc.buy||[]).filter(e=>!e.etf&&e.s!==S).slice(0,10);
-        oth='<div class="sprow"><span class="spmut">其他股票近 5 天(點名稱切換)</span><b style="color:#f87171">出</b>'+(tr.length?tr.map(e=>sy(e,'#fca5a5')).join(' '):'<span class="spmut">—</span>')
-          +' <b style="color:#22c55e">抄底</b>'+(bu.length?bu.map(e=>sy(e,'#86efac')).join(' '):'<span class="spmut">—</span>')+'</div>';}
+        const wsort=L=>L.filter(e=>!e.etf&&e.s!==S).sort((a,b)=>(a.w||0)-(b.w||0)).slice(0,10);   // 弱(w=1)排後面、灰色
+        const tr=wsort(sc.trim||[]),bu=wsort(sc.buy||[]);
+        oth='<div class="sprow"><span class="spmut">其他股票近 5 天(點名稱切換)</span><b style="color:#f87171">出</b>'+(tr.length?tr.map(e=>sy(e,e.w?QGRAY:'#fca5a5')).join(' '):'<span class="spmut">—</span>')
+          +' <b style="color:#22c55e">抄底</b>'+(bu.length?bu.map(e=>sy(e,e.w?QGRAY:'#86efac')).join(' '):'<span class="spmut">—</span>')+'</div>';}
       const pop='<div class="sprow"><b style="color:#8ab4f8;font-size:12.5px">📊 '+esc(CHIP_SYM)+' 量化訊號</b><span class="spmut">'+B[i9][0]+' 收盤'+(ul?' · 看正股 '+ul:'')+'</span></div>'
         +'<div style="margin:5px 0">'+pill(vTxt,vCol,true)+'</div>'
         +(why?'<div>為什麼:'+why+'</div>':'')+(next?'<div>接下來:'+next+'</div>':'')
-        +PV.map(p=>'<div><b style="color:'+COL[p.w]+'">盤中</b>:'+p.line+'</div>').join('')
-        +'<div class="sphr"></div><div>'+ctaLine+'</div><div>'+gmLine+'</div>'+oth
-        +'<div class="sphr"></div><div class="spmut"><b style="color:#fab219">頂K</b> 當晚先賣一小部分 · <b style="color:#fb923c">減碼</b> 再賣一部分 · <b style="color:#f87171">出</b> 賣掉大部分 · <b style="color:#22c55e">抄底</b> 分批買 · <b style="color:#4ade80">買</b> 參考,小量'
+        +PV.map(p=>'<div><b style="color:'+(isW(p)?QGRAY:COL[p.w])+'">盤中</b>:'+p.line+'</div>').join('')
+        +'<div class="sphr"></div><div>'+ctaLine+'</div>'+(mkLine||'<div>'+gmLine+'</div>')+oth
+        +'<div class="sphr"></div><div class="spmut"><b style="color:#fab219">頂K</b> 當晚先賣一小部分 · <b style="color:#fb923c">減碼</b> 再賣一部分 · <b style="color:#f87171">出</b> 賣掉大部分 · <b style="color:#22c55e">抄底</b> 分批買 · <b style="color:#4ade80">買</b> 參考,小量 · <b style="color:'+QGRAY+'">灰色</b> = 較弱(過去不太準)'
         +'<br>滑鼠移到K線上的字可以看那一次的原因 · 歷史統計,不保證未來 · 不是投資建議</div>';
       stripSet(strip,{bar:bar,pop:pop,acc:ACC,bg:BG});
       const out=[],HL=c=>({bgcolor:'#14171d',bordercolor:c,align:'left',font:{color:'#e6e9ef',size:12}});
       Object.keys(COL).forEach(w=>{const A=L5[w];if(!A.y.some(v=>v!=null))return;
-        out.push({type:'scatter',mode:'text',x:x,y:A.y,text:A.t,customdata:A.h,textfont:{size:12,color:COL[w]},hoverlabel:HL(COL[w]),
+        out.push({type:'scatter',mode:'text',x:x,y:A.y,text:A.t,customdata:A.h,textfont:{size:12,color:A.c},hoverlabel:HL(COL[w]),
           textposition:A.y.map((v,i2)=>i2>=R.length-2?'middle left':'middle center'),   // 最右兩根往左擺,字不會被價格軸切掉
           showlegend:false,name:'量化'+w,hovertemplate:'%{customdata}<extra></extra>'});});
       if(LV.x.length)out.push({type:'scatter',mode:'text',x:LV.x,y:LV.y,text:LV.t,customdata:LV.h,textfont:{size:12,color:LV.c},textposition:'middle left',
@@ -3748,7 +3806,7 @@ function renderCockpit(){
   const VBG=vbpGeom();
   const XR=_vb?(VBG.x0-0.016):0.998;   // 右緣標註錨點:VbP 開啟時退到右軌左側,避免壓字
   const XW=_vb?(VBG.x0-0.010):1;       // 橫跨全寬的 paper 色帶同步收邊
-  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span>';   // 📊量化圖例
+  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}

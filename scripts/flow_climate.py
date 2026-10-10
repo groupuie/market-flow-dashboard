@@ -19,8 +19,10 @@
   參考(只顯示、不計分):CTA 趨勢基金部位估計、波動控制基金曝險、VIX 期限結構、造市商 gamma(GEX)、
     暗池買盤(DIX)、10 年期殖利率、原油/黃金/白銀/銅 —— 2012–2026 有效但 2008 金融海嘯失效,或無穩定領先性。
 
-輸出 data/flow_climate.json:series(2020-06 起逐日氣候)、now(最新各分量原始值+參考面板)、stats(回測數字,
-  hover 用)、scan(全追蹤宇宙近 5 日的 ▲▼ 與「待確認」清單,需 --scan)。
+輸出 data/flow_climate.json:series(2020-06 起逐日氣候;m=大盤位元,見 market_state)、now(最新各分量原始值+參考面板;
+  mkt=大盤狀態一句話用)、stats(回測數字,hover 用;grade=強/弱分級的歷史準確率)、scan(全追蹤宇宙近 5 日的 ▲▼
+  與「待確認」清單,弱訊號 w=1,需 --scan)。
+2026-10-10 加:📊量化 強/弱分級(使用者:記號全部保留,弱的變灰)。研究 research/requant_2026-10-10/t10–t17。
 資料源全部公開:Yahoo 日K(^FVX、DX-Y.NYB 等)、CFTC Socrata(publicreporting.cftc.gov)、SqueezeMetrics DIX.csv、gist K線。
 用法:python3 scripts/flow_climate.py --out data/flow_climate.json [--config config.json --scan]
 """
@@ -170,6 +172,78 @@ def last_valid(x):
 def r1(v, n=1):
     return None if isnan(v) else round(v, n)
 
+def roll_mean_strict(x, k):
+    """= pandas x.rolling(k).mean()(視窗內 k 根都要有值)"""
+    out = [NAN] * len(x)
+    for i in range(k - 1, len(x)):
+        w = x[i - k + 1:i + 1]
+        if any(isnan(a) for a in w): continue
+        out[i] = sum(w) / k
+    return out
+
+def roll_max(x, w, mp):
+    """= pandas x.rolling(w, min_periods=mp).max()"""
+    out = []
+    for i in range(len(x)):
+        win = [a for a in x[max(0, i - w + 1):i + 1] if not isnan(a)]
+        out.append(max(win) if len(win) >= mp else NAN)
+    return out
+
+# ---------------- 大盤狀態(2026-10-10;📊量化 強/弱分級)----------------
+# 研究:research/requant_2026-10-10/t10–t17、專案文件 claude/signal_addons_2026-10-10.md(259 檔 × 2009–2026)。
+# 位元:1=油價 20 日走弱(近 3 年最低 1/3) 2=10 年債殖利率 20 日急降(最低 1/3) 4=QQQ 收在 20 日線下
+#       8=QQQ 離一年高點 ≥10%(大盤回檔) 16=VIX ≥20。缺值 = 該位元 0(與 pandas 的 NaN 比較同語意)。
+MK = {"oil": 1, "yld": 2, "qb": 4, "cor": 8, "vix": 16}
+def market_state(S):
+    oil20 = chg(S["oil"], 20, log_=True); tnx20 = chg(S["tnx"], 20, 100.0)
+    oilr = roll_rank(oil20); tnr = roll_rank(tnx20)
+    q = S.get("qqq") or [NAN] * len(S["vix"])
+    q20 = roll_mean_strict(q, 20); qmx = roll_max(q, 252, 60); vix = S["vix"]
+    m = []
+    for i in range(len(q)):
+        b = 0
+        if not isnan(oilr[i]) and oilr[i] <= 1 / 3: b |= MK["oil"]
+        if not isnan(tnr[i]) and tnr[i] <= 1 / 3: b |= MK["yld"]
+        if not (isnan(q[i]) or isnan(q20[i])) and q[i] < q20[i]: b |= MK["qb"]
+        if not (isnan(q[i]) or isnan(qmx[i])) and q[i] <= qmx[i] * 0.9: b |= MK["cor"]
+        if not isnan(vix[i]) and vix[i] >= 20: b |= MK["vix"]
+        m.append(b)
+    return {"m": m, "oilr": oilr, "tnr": tnr, "q": q, "q20": q20, "qmx": qmx, "oil20": oil20, "tnx20": tnx20}
+
+# ---------------- ⚠頂K(與前端 tkSeriesJS 逐位元同口徑;scan 分強弱用)----------------
+TK_TH = {"r20": 0.30, "atr": 3.0, "ext": 0.25, "off": 0.05}
+def topk_flags(H, L, C):
+    n = len(C); pre = [0.0]
+    for c in C: pre.append(pre[-1] + c)
+    TR = [None] * n
+    for i in range(1, n): TR[i] = max(H[i] - L[i], abs(H[i] - C[i - 1]), abs(L[i] - C[i - 1]))
+    tk = [False] * n
+    for i in range(n):
+        m20 = up = s50 = atr = r20 = ext = dA = None
+        if i >= 19:
+            m20 = (pre[i + 1] - pre[i - 19]) / 20; s = 0.0
+            for j in range(i - 19, i + 1): s += (C[j] - m20) ** 2
+            up = m20 + 2 * math.sqrt(s / 20)
+        if i >= 49: s50 = (pre[i + 1] - pre[i - 49]) / 50
+        sT, k = 0.0, 0
+        for j in range(max(0, i - 13), i + 1):
+            if TR[j] is not None: sT += TR[j]; k += 1
+        if k >= 10: atr = sT / k
+        if i >= 20 and C[i - 20] > 0: r20 = C[i] / C[i - 20] - 1
+        if s50: ext = C[i] / s50 - 1
+        if m20 is not None and atr: dA = (C[i] - m20) / atr
+        hot = (r20 is not None and r20 >= TK_TH["r20"]) or (dA is not None and dA >= TK_TH["atr"]) or (ext is not None and ext >= TK_TH["ext"])
+        touch = up is not None and H[i] >= up
+        off = 1 - C[i] / H[i] if H[i] > 0 else None
+        tk[i] = bool(hot and touch and off is not None and off >= TK_TH["off"])
+    return tk
+
+def trim_strong(i, C, tk, mbits):
+    """出 的強弱:總經(油價走弱/殖利率急降)或 價格(當天跌 ≥4% / 前 20 根有頂K)任一 = 強"""
+    mac = mbits is not None and (mbits & (MK["oil"] | MK["yld"])) != 0
+    px = (i >= 1 and C[i - 1] > 0 and C[i] / C[i - 1] - 1 <= -0.04) or any(tk[max(0, i - 20):i])
+    return mac or px
+
 # ---------------- 個股轉折 × 氣候(與前端 fcSeriesJS 逐位元同口徑) ----------------
 def fc_events(dates, closes, clim_of, th=TH):
     n = len(closes); C = closes
@@ -212,6 +286,11 @@ STATS = {   # 2009-07~2026-09、259 檔美股(使用者追蹤清單中的個股)
             "p1": "2009-17:40日後較高 65%(平常62%)、平均 +3.3%(平常 +2.7%)— 優勢小",
             "p2": "2018-26:40日後較高 73%(平常56%)、平均 +12.6%(平常 +1.9%)",
             "ai": "AI/半導體子集:40日後較高 72%(平常60%)、平均 +8.0%(平常 +3.8%)"},
+    "grade": {"src": "2018–26、259 檔、20 個交易日後方向對的比例(%);research/requant_2026-10-10/t17",
+              "trim": {"strong": 59, "best": 69, "weak": 49, "base": 46},
+              "topk": {"strong": 56, "normal": 51, "weak": 44, "base": 45},
+              "conf": {"strong": 57, "weak": 49, "base": 45},
+              "buy": {"strong": 74, "normal": 79, "weak": 47, "base": 54}},
     "raw": "同樣的轉折若不看氣候:減碼 20日後較低 46%(平常44%)、抄底 40日後較高 58%(平常58%)≈擲硬幣",
     "climate": {"le20": {"up20": 49.5, "mu20": -0.85, "dd20": 34.2}, "20_35": {"up20": 55.9, "mu20": 0.45, "dd20": 27.9},
                 "35_65": {"up20": 57.8, "mu20": 1.29, "dd20": 24.2}, "65_80": {"up20": 55.5, "mu20": 1.41, "dd20": 25.7},
@@ -229,7 +308,8 @@ def main():
     spy = yahoo("SPY"); cal = sorted(d for d in spy if d >= START)
     log("calendar", cal[0], "→", cal[-1], len(cal))
     need = {"fvx": "^FVX", "dxy": "DX-Y.NYB", "spx": "^GSPC", "ndx": "^NDX", "vix": "^VIX", "vix3m": "^VIX3M", "vix9d": "^VIX9D",
-            "tnx": "^TNX", "oil": "CL=F", "gold": "GC=F", "silver": "SI=F", "copper": "HG=F", "hyg": "HYG", "ief": "IEF", "jpy": "JPY=X"}
+            "tnx": "^TNX", "oil": "CL=F", "gold": "GC=F", "silver": "SI=F", "copper": "HG=F", "hyg": "HYG", "ief": "IEF", "jpy": "JPY=X",
+            "qqq": "QQQ"}
     raw = {}
     with cf.ThreadPoolExecutor(6) as ex:
         futs = {ex.submit(yahoo, s): k for k, s in need.items()}
@@ -308,29 +388,45 @@ def main():
         h = S["hyg"]; f_ = S["ief"]; i = last_valid(h)
         ctx["macro"]["hyg_ief_20d"] = r1((math.log(h[i] / f_[i]) - math.log(h[i - 20] / f_[i - 20])) * 100, 2)
     except Exception: pass
+    # ---- 大盤狀態(📊量化 強/弱分級) ----
+    try:
+        MS = market_state(S)
+        if not S.get("qqq") or isnan(S["qqq"][li]): dq.append({"src": "mkt qqq", "ok": False, "err": "QQQ 缺最新值"})
+    except Exception as e:
+        MS = None; dq.append({"src": "mkt state", "ok": False, "err": str(e)[:80]})
+    if a.dump_series and MS:
+        json.dump({"d": cal, "m": MS["m"], "oilr": MS["oilr"], "tnr": MS["tnr"], "q": MS["q"]}, open(a.dump_series + ".mkt.json", "w"))
     # ---- 輸出 ----
     k0 = next(k for k, d in enumerate(cal) if d >= SERIES_FROM)
     pc = lambda v: None if isnan(v) else int(round(v * 100))
     ser = {"d": cal[k0:li + 1], "c": [pc(v) for v in clim[k0:li + 1]], "y": [pc(v) for v in yen[k0:li + 1]],
            "r": [pc(v) for v in rate[k0:li + 1]], "u": [pc(v) for v in usd[k0:li + 1]]}
+    if MS: ser["m"] = MS["m"][k0:li + 1]
     lab = lambda v: ("寬鬆" if v >= 80 else "偏寬" if v >= 65 else "中性" if v > 35 else "偏緊" if v > 20 else "緊縮")
     cnow = pc(clim[li])
     now = {"date": cal[li], "climate": cnow, "label": lab(cnow), "yen": pc(yen[li]), "rate": pc(rate[li]), "usd": pc(usd[li]),
            "raw": {"cot": cot_last, "fvx": r1(S["fvx"][li], 3), "fvx_chg20_bp": r1(fvx20[li], 1), "dxy": r1(S["dxy"][li], 2), "dxy_trend": r1(cdx[li], 2)},
            "ctx": ctx}
+    if MS:
+        q, q20, qmx = MS["q"][li], MS["q20"][li], MS["qmx"][li]
+        now["mkt"] = {"m": MS["m"][li], "qqq_dd": r1((q / qmx - 1) * 100, 1) if not (isnan(q) or isnan(qmx)) else None,
+                      "qqq_vs20": r1((q / q20 - 1) * 100, 1) if not (isnan(q) or isnan(q20)) else None,
+                      "vix": r1(S["vix"][li], 1), "oil_r": pc(MS["oilr"][li]), "tnx_r": pc(MS["tnr"][li]),
+                      "oil_20d": r1((math.exp(MS["oil20"][li]) - 1) * 100, 1) if not isnan(MS["oil20"][li]) else None,
+                      "tnx_20d_bp": r1(MS["tnx20"][li], 0)}
     out = {"updated_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-           "version": "fc-2026-10-09", "th": TH, "series": ser, "now": now, "stats": STATS, "dq": dq}
+           "version": "fc-2026-10-10", "th": TH, "series": ser, "now": now, "stats": STATS, "dq": dq}
     # ---- 全宇宙掃描(近 5 個交易日 ▲▼ + 待確認) ----
     if a.scan and a.config:
         try:
-            out["scan"] = scan(a.config, ser, cal)
+            out["scan"] = scan(a.config, ser, cal, dict(zip(cal, MS["m"])) if MS else None)
         except Exception as e:
             dq.append({"src": "scan", "ok": False, "err": str(e)[:100]})
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     json.dump(out, open(a.out, "w"), ensure_ascii=False, separators=(",", ":"))
     log("wrote", a.out, os.path.getsize(a.out), "bytes", "%.0fs" % (time.time() - t0))
 
-def scan(cfg_path, ser, cal):
+def scan(cfg_path, ser, cal, mmap=None):
     cfg = json.load(open(cfg_path)); mdu = cfg["market_data_url"]; base = mdu.rsplit("/", 1)[0] + "/"
     md = http(mdu + "?t=%d" % time.time(), timeout=60)
     uni = []
@@ -340,14 +436,21 @@ def scan(cfg_path, ser, cal):
     cm = {d: c / 100 for d, c in zip(ser["d"], ser["c"]) if c is not None}
     lastc = [c for c in ser["c"] if c is not None][-1] / 100; lastd = ser["d"][-1]
     def clim_of(d): return cm.get(d, lastc if d > lastd else None)
+    lastm = mmap.get(cal[-1]) if mmap else None
+    def m_of(d):
+        if not mmap: return None
+        v = mmap.get(d)
+        return v if v is not None else (lastm if d > cal[-1] else None)
     def one(s):
         try: bars = (http(base + "kline_%s.json" % s, timeout=30) or {}).get("bars") or []
         except Exception: return s, None
         bars = [b for b in bars if b and b[4]]
         if len(bars) < 70: return s, None
         D = [b[0] for b in bars]; C = [float(b[4]) for b in bars]
+        num = lambda v: 0.0 if v is None else float(v)     # = JS 的 +null → 0
+        H = [num(b[2]) for b in bars]; L = [num(b[3]) for b in bars]
         ev, st = fc_events(D, C, clim_of)
-        return s, (D, C, ev, st)
+        return s, (D, C, ev, st, topk_flags(H, L, C))
     res = {}
     with cf.ThreadPoolExecutor(8) as ex:
         for s, r in ex.map(one, uni): res[s] = r
@@ -355,10 +458,15 @@ def scan(cfg_path, ser, cal):
     buy, trim, wtrim, wbuy = [], [], [], []
     for s, r in res.items():
         if not r: continue
-        D, C, ev, st = r; n = len(C) - 1
+        D, C, ev, st, tk = r; n = len(C) - 1
         for e in ev:
             if e["d"] >= recent_from:
-                (buy if e["k"] == "buy" else trim).append({"s": s, "d": e["d"], "c": round(e["c"], 2), "clim": int(round(e["clim"] * 100))})
+                it = {"s": s, "d": e["d"], "c": round(e["c"], 2), "clim": int(round(e["clim"] * 100))}
+                mb = m_of(e["d"])          # 強/弱(與前端 qGrade 同規則):弱 → w=1(前端列表灰色、排後面)
+                if mb is not None:
+                    if e["k"] == "trim" and not trim_strong(e["i"], C, tk, mb): it["w"] = 1
+                    if e["k"] == "buy" and not (mb & MK["cor"]) and not (mb & MK["vix"]): it["w"] = 1
+                (buy if e["k"] == "buy" else trim).append(it)
         cl = clim_of(D[n])
         if cl is None: continue
         s20 = st["s20"][n]; ex_, dp = st["ext"][n], st["dip"][n]
