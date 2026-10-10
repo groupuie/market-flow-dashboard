@@ -33,8 +33,9 @@ def sy(a,b): return C.loc[_pm(a,b)].notna().values.sum()/252
 def stats(mask,a,b):
     pm=_pm(a,b); M=mask.reindex(index=dates,columns=cols).fillna(False).values&pm[:,None]&~np.isnan(FRC20)
     I,J=np.nonzero(M); P=Cv[I,J]
-    lo10=np.nanmean(FRC10[I,J]<0)*100; lo20=np.nanmean(FRC20[I,J]<0)*100; lo40=np.nanmean(FRC40[I,J]<0)*100
-    dd=np.nanmean(M40[I,J]<=np.log(0.9))*100; m40=np.nanmean(np.exp(FRC40[I,J])-1)*100
+    obs=lambda v,f: f(v[~np.isnan(v)]).mean()*100 if (~np.isnan(v)).any() else np.nan   # 2026-10-11 修正D:未完成的 40 日不算「沒跌/沒變低」
+    lo10=obs(FRC10[I,J],lambda v:v<0); lo20=obs(FRC20[I,J],lambda v:v<0); lo40=obs(FRC40[I,J],lambda v:v<0)
+    dd=obs(M40[I,J],lambda v:v<=np.log(0.9)); m40=np.nanmean(np.exp(FRC40[I,J])-1)*100
     g=np.where(mn10[I,J]<=P*0.97,1/0.97-1,P/C10[I,J]-1); g=g[~np.isnan(g)]
     return len(P),lo10,lo20,lo40,dd,m40,np.mean(g)*100,np.mean(g>0)*100
 for per,(a,b) in {"2009-17":("2009-07-01","2017-12-31"),"2018-26":("2018-01-01","2026-12-31")}.items():

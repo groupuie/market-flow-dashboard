@@ -29,7 +29,8 @@ C10=np.roll(Cv,-10,axis=0); C10[-10:]=np.nan
 G=np.where(mn10<=Cv*0.97,1/0.97-1,Cv/C10-1)                       # 成本調節:收盤賣,10天內限價−3%買回,沒成交第10天收盤買回
 r=np.log(C/C.shift(1)); vol=r.rolling(20).std().values
 def sy(a,b): return C.loc[_pm(a,b)].notna().values.sum()/252
-OUT={"lo10":lambda I,J:(FRC10[I,J]<0),"lo20":lambda I,J:(FRC20[I,J]<0),"lo40":lambda I,J:(FRC40[I,J]<0),
+OUT={"lo10":lambda I,J:(FRC10[I,J]<0),"lo20":lambda I,J:(FRC20[I,J]<0),"lo40":lambda I,J:np.where(np.isnan(FRC40[I,J]),np.nan,FRC40[I,J]<0),   # 2026-10-11 修正D:未完成=NaN(不算沒變低)
+
      "save":lambda I,J:(G[I,J]>0),"g":lambda I,J:G[I,J]}
 for per,(a,b) in {"2009-17":("2009-07-01","2017-12-31"),"2018-26":("2018-01-01","2026-12-31")}.items():
     pm=_pm(a,b); ok=pm[:,None]&~np.isnan(FRC20)&~np.isnan(vol)&~np.isnan(G)

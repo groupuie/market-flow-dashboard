@@ -2,7 +2,7 @@
 from t23_dip import *
 from t10lib import _pm
 rsi40=(R14<=40)&(R14.shift(1)>40); lob=(L<=lo)&above_n(L,lo,10)
-recentCHU=anyN(X.astype(bool),10).shift(1).fillna(False).astype(bool)
+recentCHU=X.fillna(False).astype(bool).astype(int).rolling(11,min_periods=1).max().astype(bool)   # 2026-10-11 修正B:當日 + 前 10 根有出就不標(原本只看前 10 根)
 ADD=first(((rsi40|lob)&UTS&qdip&~recentCHU),10)
 u20=(FR[20]>0).values.astype(float); val=~np.isnan(FR[20].values); O1v=O.shift(-1).values; Cv=C.values; n=len(dates)
 for per,(a,b) in [("2009–17",("2009-07-01","2017-12-31")),("2018–26",("2018-01-01","2026-12-31"))]:

@@ -18,6 +18,7 @@ cumH=H.groupby(wk.values).cummax().set_axis(dates); touchW=(cumH>=upW)
 U=first((tdD>=9)&touchD&(tdW>=9)&touchW)
 SIG={"使用者規則(日+週)":U,"頂K":TK,"減碼":CF}
 FRC10=FRC[10].values; FRC20=FRC[20].values; FRC40=FRC[40].values
+lt0=lambda v: np.where(np.isnan(v),np.nan,v<0)   # 2026-10-11 修正D:40 日未完成=NaN(不算「沒變低」)
 r20=(C/C.shift(20)-1).values; e50=(C/C.rolling(50).mean()-1).values
 vol=np.log(C/C.shift(1)).rolling(20).std().values
 for per,(a,b) in {"2009-17":("2009-07-01","2017-12-31"),"2018-26":("2018-01-01","2026-12-31")}.items():
@@ -30,7 +31,7 @@ for per,(a,b) in {"2009-17":("2009-07-01","2017-12-31"),"2018-26":("2018-01-01",
     br=np.digitize(r20[I0,J0],q)
     for k in range(7):
         s=br==k; I,J=I0[s],J0[s]
-        print(f"    {lab[k]:9s}(20日漲幅 {np.min(r20[I,J])*100:+6.1f}%~{np.max(r20[I,J])*100:+6.1f}%):10天後較低 {np.mean(FRC10[I,J]<0)*100:.0f}% 20天 {np.mean(FRC20[I,J]<0)*100:.0f}% 40天 {np.nanmean(FRC40[I,J]<0)*100:.0f}% | 20天中位數 {np.median(np.exp(FRC20[I,J])-1)*100:+.1f}%")
+        print(f"    {lab[k]:9s}(20日漲幅 {np.min(r20[I,J])*100:+6.1f}%~{np.max(r20[I,J])*100:+6.1f}%):10天後較低 {np.mean(FRC10[I,J]<0)*100:.0f}% 20天 {np.mean(FRC20[I,J]<0)*100:.0f}% 40天 {np.nanmean(lt0(FRC40[I,J]))*100:.0f}% | 20天中位數 {np.median(np.exp(FRC20[I,J])-1)*100:+.1f}%")
     print("  ② 離 50 日線:")
     for lo_,hi_ in [(-9,0),(0,0.10),(0.10,0.15),(0.15,0.25),(0.25,0.40),(0.40,99)]:
         s=(e50[I0,J0]>=lo_)&(e50[I0,J0]<hi_); I,J=I0[s],J0[s]
@@ -40,9 +41,9 @@ for per,(a,b) in {"2009-17":("2009-07-01","2017-12-31"),"2018-26":("2018-01-01",
     cell=bv*7+br
     base10=np.array([np.mean(FRC10[I0[cell==c],J0[cell==c]]<0) if np.any(cell==c) else np.nan for c in range(70)])
     base20=np.array([np.mean(FRC20[I0[cell==c],J0[cell==c]]<0) if np.any(cell==c) else np.nan for c in range(70)])
-    base40=np.array([np.nanmean(FRC40[I0[cell==c],J0[cell==c]]<0) if np.any(cell==c) else np.nan for c in range(70)])
+    base40=np.array([np.nanmean(lt0(FRC40[I0[cell==c],J0[cell==c]])) if np.any(cell==c) else np.nan for c in range(70)])
     CI=np.full(FRC20.shape,-1); CI[I0,J0]=cell
     print("  ③ 訊號 vs「同波動、同漲幅」的隨便一天:")
     for nm,s in SIG.items():
         M=s.reindex(index=dates,columns=cols).fillna(False).values&ok; I,J=np.nonzero(M); c=CI[I,J]
-        print(f"    {nm:12s} n={len(I):5d} | 10天後較低 {np.mean(FRC10[I,J]<0)*100:.0f}%(配對 {np.nanmean(base10[c])*100:.0f}%) 20天 {np.mean(FRC20[I,J]<0)*100:.0f}%({np.nanmean(base20[c])*100:.0f}%) 40天 {np.nanmean(FRC40[I,J]<0)*100:.0f}%({np.nanmean(base40[c])*100:.0f}%)")
+        print(f"    {nm:12s} n={len(I):5d} | 10天後較低 {np.mean(FRC10[I,J]<0)*100:.0f}%(配對 {np.nanmean(base10[c])*100:.0f}%) 20天 {np.mean(FRC20[I,J]<0)*100:.0f}%({np.nanmean(base20[c])*100:.0f}%) 40天 {np.nanmean(lt0(FRC40[I,J]))*100:.0f}%({np.nanmean(base40[c][~np.isnan(FRC40[I,J])])*100:.0f}%)")

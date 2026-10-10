@@ -41,3 +41,17 @@ SEC 請求的聯絡資訊從本機 config.json 讀取(不在檔案內)。
 | `t23_dip.py` `t23b_dip.py` `t23c_dip.py` `t23d_mkt.py` | 使用者:穩健上漲股(像 TSM)的波段抄底/短線加碼 — 反向熱(日+週 TD買9–13+下緣)、碰 CTA 線(50/63/100/200 日、價格下方第二條)、跌破中軌沒到下緣、碰週中軌 + 其他 15 種回檔買法;同股上升趨勢基準、大盤一起回檔 vs 只有個股跌、拆功勞、換大盤定義、TSM 每一次 | `t23.log` `t23b.log` `t23c.log` `t23d.log` |
 | `t23e_plan.py` | 「加碼」照做版:隔天開盤買、之後 20 天最多再跌多少、第二筆掛低 5% 的成交率與平均成本、低波動股(像 TSM)子集、TSM 2023 年後每一次 | `t23e.log` |
 | `t23f_add.py` `t23g_add.py` `t23h_check.py` `t23h_jscheck.py` `t23h_jscheck.js` | 上線版「加」:RSI14 跌破 40 或碰下緣 + QQQ 在 20 日線下 + 穩健上漲 + 前 10 根沒有出 —— 類似股票能不能用(低/高波動、AI/非 AI、四段、每一檔各自)、前面有出時會不會打架、第二筆掛 5% 或 8%(用近 20 天日波動 2% 分)、上升趨勢 vs 穩健上升、JS↔pandas 對拍 | `t23f.log` `t23g.log` `t23h.log` |
+
+## 追加:Codex v0.1 交班修正(2026-10-11,台灣時間)
+完整說明:專案文件 `claude/美股量化_Claude_v0.1_*_修正回報.md`。
+
+| 腳本 | 內容 | 輸出 |
+|---|---|---|
+| `qlib.py`(`qm_risk_summary`)、`t10lib.py`、`t16_extra.py`、`t22_mtf.py`、`t22b_mtf.py`、`t22c_overext.py` | 修正 D:「期間內曾跌 ≥10%」與「40 天後較低」的比例,期間還沒走完(NaN)的事件不再算成「沒跌/沒變低」;回報有效 n(`risk_n`)與未完成 n(`risk_missing_n`);賣出側的同波動對照只用完整期間的日子 | 重跑覆蓋 `t2`–`t7`、`t9`、`t11`、`t13`、`t14`、`t16`、`t22`、`t22b`、`t22c` 的 log |
+| `t25_verify_risk.py` | 修正 D 的測試:合成資料(NaN、inf、索引外、全未完成、同波動配對)+ 真實面板(頂K、出 兩段) | `t25_verify_risk.log` |
+| `t25_fixD.py` | 上線 6 種記號(頂K/減碼/熱/出/抄底/加)× 4 期間:40 天內曾跌 ≥10% 舊 → 新、有效 n、未完成 n、進場價基準 | `t25_fixD.log` |
+| —(比對) | 修正前(git 6b74e7d)與修正後所有重跑 log 的差異:只有風險數字改變,其他數字逐字相同 | `t25_fixD_rerun.log` |
+| `t24_fixB.py`、`t23g_add.py`、`t23h_check.py` | 修正 B:「加」改成「當日 + 前 10 根」有出就不標(原本只看前 10 根);259 檔事件差異(消失 25、新增 0,全是當日同時有出)與新版統計 | `t24.log` `t23g.log` `t23h.log` |
+| `t25_jscheck.py`、`t25_jscheck.js` | 修正 B 對拍:pandas(`scripts/flow_climate.py` 的 `fc_events` 出 + 加)vs 前端(`fcSeriesJS` + `adSeriesJS`,直接從 index.html 抽函式),21 檔新舊兩版都逐字相同 | `t25_jscheck.log` |
+
+註:`t23f_add.py` 是當時比較「出之後幾根內不標」的探索腳本,保留原樣(用的是前 k 根、不含當日)。`t21*`、`t22e_hot.py`、`t23_dip.py`、`t23e_plan.py`、`wick_bb_2026-10/*` 檢查過:選樣本時已要求該期間完整(或已 dropna),不受修正 D 影響(`t25_fixD.log` 末行:隔天開盤 40 天報酬完整但 40 天最低價不完整的股票日 = 0)。

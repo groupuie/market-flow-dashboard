@@ -5,7 +5,7 @@ from t10lib import _pm
 SUB4=[("2009-07-01","2013-12-31"),("2014-01-01","2018-12-31"),("2019-01-01","2022-12-31"),("2023-01-01","2026-12-31")]
 PER=[("2009–17",("2009-07-01","2017-12-31")),("2018–26",("2018-01-01","2026-12-31")),("近兩年",("2024-10-01","2026-12-31"))]+[(f"四段{k+1}",ab) for k,ab in enumerate(SUB4)]
 rsi40=(R14<=40)&(R14.shift(1)>40); lob=(L<=lo)&above_n(L,lo,10)
-recentCHU=anyN(X.astype(bool),10).shift(1).fillna(False).astype(bool)
+recentCHU=X.fillna(False).astype(bool).astype(int).rolling(11,min_periods=1).max().astype(bool)   # 2026-10-11 修正B:當日 + 前 10 根有出就不標(原本只看前 10 根)
 u20=(FR[20]>0).values.astype(float); val=~np.isnan(FR[20].values); O1v=O.shift(-1).values; Cv=C.values; n=len(dates)
 Lmin20=L[::-1].rolling(20,min_periods=20).min()[::-1].shift(-1).values
 v20=np.log(C).diff().rolling(20).std().values                      # 前端可算:近 20 天日報酬標準差
@@ -14,8 +14,8 @@ def sbase(state,a,b):
     cnt=np.bincount(J,minlength=len(cols)); sm=np.bincount(J,weights=u20[I,J],minlength=len(cols))
     bs=np.full(len(cols),np.nan); bs[cnt>=40]=sm[cnt>=40]/cnt[cnt>=40]; return bs
 VERS={"上升趨勢 · 前10根有出也標":(UT,first(((rsi40|lob)&UT&qdip),10)),
-      "上升趨勢 · 前10根有出不標(上線版)":(UT,first(((rsi40|lob)&UT&qdip&~recentCHU),10)),
-      "穩健上升 · 前10根有出不標":(UTS,first(((rsi40|lob)&UTS&qdip&~recentCHU),10))}
+      "上升趨勢 · 當日或前10根有出不標":(UT,first(((rsi40|lob)&UT&qdip&~recentCHU),10)),
+      "穩健上升 · 當日或前10根有出不標(上線版)":(UTS,first(((rsi40|lob)&UTS&qdip&~recentCHU),10))}
 for nm,(state,S) in VERS.items():
     line=f"{nm:26s}"
     for per,(a,b) in PER:
@@ -24,7 +24,7 @@ for nm,(state,S) in VERS.items():
     pm=_pm("2018-01-01","2026-12-31"); yrs=(state.values&pm[:,None]&val).sum()/252
     print(line+f" | 每檔每個上升趨勢年 {(S.values&pm[:,None]&val).sum()/yrs:.2f} 次",flush=True)
 # (3) 每一檔
-state,S=VERS["上升趨勢 · 前10根有出不標(上線版)"]
+state,S=VERS["上升趨勢 · 當日或前10根有出不標"]
 for per,(a,b) in PER[:2]:
     pm=_pm(a,b); bs=sbase(state,a,b); M=S.values&pm[:,None]&val; I,J=np.nonzero(M)
     better=[];

@@ -61,7 +61,8 @@ def hit(d, mk, side, h=20, per="p1", boot=500, seed=0):
     b=base(side,d.attrs["entry"],h,per)
     r=dict(n=int(sel.sum()),hit=g.mean()*100 if len(g) else np.nan,base=b,mean=np.nanmean(f)*100 if len(f) else np.nan,
            xm=np.nanmean(d[f"x{h}"].values[sel])*100 if len(f) else np.nan, ci=(np.nan,np.nan))
-    mae=d["mae40"].values[sel]; r["dd10"]=np.nanmean(mae<=np.log(0.9))*100 if len(f) else np.nan
+    mae=d["mae40"].values[sel]; okm=~np.isnan(mae)   # 2026-10-11 修正D:40 日還沒走完的事件不算「沒跌」,從分母移除
+    r["dd10"]=(mae[okm]<=np.log(0.9)).mean()*100 if okm.any() else np.nan; r["dd10_n"]=int(okm.sum()); r["dd10_missing_n"]=int((~okm).sum())
     if boot and len(f)>20:
         blk=d.i.values[sel]//20
         A=pd.DataFrame({"b":blk,"g":g.astype(float),"n":1.0}).groupby("b").sum().values; k=len(A); rng=np.random.default_rng(seed); out=[]

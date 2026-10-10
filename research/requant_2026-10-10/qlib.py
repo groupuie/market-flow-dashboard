@@ -30,6 +30,27 @@ def cool(raw,k=20):
     return pd.DataFrame(out,index=raw.index,columns=raw.columns)
 def _pm(a,b): return (dates>=a)&(dates<=b)
 def _stk(X,pm,cs): return X.loc[pm,cs].stack()
+def qm_risk_summary(dd, idx, vq=None):
+    """期間內曾跌 ≥10% 的比例(2026-10-11 修正D,Codex v0.1)。
+    舊寫法 (dd.reindex(idx)<=cut).dropna() 會把「期間還沒走完」(NaN)當成「沒跌」→ 低估風險。
+    新寫法:只用結果已完整的事件當分母,並回報 risk_n(有效)與 risk_missing_n(未完成);
+    有 vq 時,對照組 = 同波動十分位的平常日子(也只用已完整的),事件也只取有波動分組的那些(risk_matched)。"""
+    clean=dd.replace([np.inf,-np.inf],np.nan).dropna()
+    observed=clean.reindex(idx).dropna()
+    cut=np.log(0.9)
+    out={"risk":float((observed<=cut).mean()*100) if len(observed) else np.nan,
+         "risk_n":int(len(observed)),"risk_missing_n":int(len(idx)-len(observed))}
+    if vq is None: return out
+    vq=vq.replace([np.inf,-np.inf],np.nan).dropna()
+    bins=(vq*10).clip(0,9.999).astype(int)
+    pool=pd.DataFrame({"dd":clean,"bin":bins}).dropna()
+    rates=(pool["dd"]<=cut).groupby(pool["bin"]).mean()
+    matched=pd.DataFrame({"dd":observed,"bin":bins.reindex(observed.index)}).dropna()
+    matched["base"]=matched["bin"].map(rates); matched=matched.dropna(subset=["base"])
+    out.update({"risk_matched":float((matched["dd"]<=cut).mean()*100) if len(matched) else np.nan,
+                "risk_base":float(matched["base"].mean()*100) if len(matched) else np.nan,
+                "risk_matched_n":int(len(matched))})
+    return out
 def evaluate(sig,side,per="all",h=20,cs=None,boot=0,vmatch=True,entry="open"):
     """sig: bool frame。side: 'top'(賣出訊號,看之後跌)或 'bot'(買進訊號,看之後漲)。回傳 dict。"""
     cs=cs or cols; a,b=PERIODS[per] if isinstance(per,str) else per; pm=_pm(a,b)
@@ -44,13 +65,8 @@ def evaluate(sig,side,per="all",h=20,cs=None,boot=0,vmatch=True,entry="open"):
        "mean":e.mean()*100,"bmean":base.mean()*100,"xmean":ex.mean()*100}
     hh=40 if h>=40 else 20
     dd=_stk(MAEx[hh],pm,cs)
-    if side=="top":
-        ev=(dd.reindex(idx)<=np.log(0.9)).dropna(); r["risk"]=ev.mean()*100
-        if vmatch:   # 同波動百分位的平常日子:跌 ≥10% 的機率
-            vq=_stk(VQ,pm,cs).dropna(); bins=(vq*10).clip(0,9.999).astype(int); ddn=dd.dropna(); bd=(ddn<=np.log(0.9)); tab=bd.groupby(bins.reindex(bd.index)).mean()
-            eb=bins.reindex(idx).dropna().astype(int); r["risk_base"]=tab.reindex(eb.values).mean()*100
-    else:
-        ev=(dd.reindex(idx)<=np.log(0.9)).dropna(); r["risk"]=ev.mean()*100   # 買進後中途再跌 ≥10%
+    vq=_stk(VQ,pm,cs) if (side=="top" and vmatch) else None   # 賣出側:同波動百分位的平常日子當對照
+    r.update(qm_risk_summary(dd,idx,vq)); r["risk_horizon"]=hh  # 2026-10-11 修正D:期間還沒走完的事件不算「沒跌」
     if boot and len(e)>20:
         blk=dix.reindex(e.index.get_level_values(0)).values//20
         g=pd.DataFrame({"b":blk,"g":good.values.astype(float),"v":e.values}).groupby("b").agg(gs=("g","sum"),vs=("v","sum"),n=("g","count"))
@@ -66,8 +82,9 @@ def fmt(r,side):
     s+=f" | 平均 {r['mean']:+.2f}% vs {r['bmean']:+.2f}%"
     if "mean_ci" in r: s+=f" [{r['mean_ci'][0]:+.2f},{r['mean_ci'][1]:+.2f}]"
     s+=f" | 扣大盤 {r['xmean']:+.2f}%"
-    if side=="top" and "risk_base" in r: s+=f" | 跌≥10% {r['risk']:.0f}% vs 同波動 {r['risk_base']:.0f}%"
-    elif "risk" in r: s+=f" | 中途再跌≥10% {r['risk']:.0f}%"
+    hh=r.get("risk_horizon",40); miss=f" 未完成{r['risk_missing_n']}" if r.get("risk_missing_n") else ""
+    if side=="top" and "risk_base" in r: s+=f" | {hh}日內跌≥10% {r['risk_matched']:.0f}% vs 同波動 {r['risk_base']:.0f}%(完整{hh}日 n={r['risk_matched_n']}{miss})"
+    elif "risk" in r: s+=f" | {hh}日內{'跌' if side=='top' else '中途再跌'}≥10% {r['risk']:.0f}%(完整{hh}日 n={r['risk_n']}{miss})"
     return s
 def report(name,sig,side,h=20,boot=400,cs=None,entry="open"):
     out=[]

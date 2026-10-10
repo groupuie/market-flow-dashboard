@@ -3,8 +3,8 @@ import sys; sys.path.insert(0,"."); from t1x_cands import *; from t10lib import 
 qmax=Q.c.rolling(252,min_periods=60).max(); COR=Q.c<=qmax*0.9
 def state_stats(state,per,h=20):
     a,b=PERIODS[per]; pm=_pm(a,b); sm=np.asarray(state.reindex(dates).fillna(False).values,dtype=bool)
-    v=FR[h].values[pm&sm]; mae=MAE[40].values[pm&sm]; ok=~np.isnan(v)
-    return dict(share=sm[pm].mean()*100,hit=(v[ok]>0).mean()*100,mean=v[ok].mean()*100,dd10=np.nanmean(mae<=np.log(0.9))*100)
+    v=FR[h].values[pm&sm]; mae=MAE[40].values[pm&sm]; ok=~np.isnan(v); okm=~np.isnan(mae)   # 2026-10-11 修正D:沒資料/40日未完成不算「沒跌」
+    return dict(share=sm[pm].mean()*100,hit=(v[ok]>0).mean()*100,mean=v[ok].mean()*100,dd10=(mae[okm]<=np.log(0.9)).mean()*100)
 for lab,st in (("回檔≥10% 且 資金≥35%",COR&(cr>=0.35)),("回檔≥10% 且 資金<35%",COR&(cr<0.35)),("沒回檔 且 VIX<20",(~COR)&(vix<20))):
     for per in ("p1","p2"):
         s=state_stats(st,per); print(f"{lab:16s} {per}: 佔交易日 {s['share']:4.1f}% | 所有股票 20日上漲 {s['hit']:4.1f}% 平均 {s['mean']:+5.2f}% 40日內曾跌≥10% {s['dd10']:3.0f}%",flush=True)
