@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-10T15:33Z">
+<meta name="build" content="2026-10-10T16:19Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T15:33Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T16:19Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3012,6 +3012,50 @@ function htSeriesJS(B){   // B=[[d,o,h,l,c,…],…] 已收盤日K、依日期�
     sig[i]=raw[i]&&!rec;}
   return {n,D,tdD,tdW,up,upW,touch,touchW,raw,sig};
 }
+// ===== 加 = 加碼參考(2026-10-10 使用者:「可以, 做」;類似的穩健上漲股都適用)=====
+// 研究 research/requant_2026-10-10/t23*.py(259 檔 × 2009–2026;與本函式同公式,部署前 JS↔pandas 對拍):
+//   ① 穩健上漲(用前一天收盤判斷):收盤 > 200 日線、50 日線 > 200 日線、200 日線比 20 天前高、50 > 100 > 200 日線、近 40 根內收盤創過一年新高
+//   ② 跌夠深:RSI14 收盤跌破 40(前一天 > 40),或 第一次碰布林下緣(前 10 根最低都在下緣之上)
+//   ③ 大盤也在跌:QQQ 收盤 < 20 日線        ④ 前 10 根沒有「出」
+//   同時成立 → 標「加」(同一段只標第一天:前 10 根成立過就不標)。只標已收盤K。隔天開盤買一半、另一半掛再低 5%(近 20 天日波動 >2% 的股票 8%)。
+//   2018–26 隔天開盤買:20 天後較高 58%(同一檔穩健上漲時隨便一天 53%);只有個股跌(QQQ 在線上)≈ 平常;2/3 的股票比自己平常好;每檔每年約 4 次(只算穩健上漲的時候)。
+const AD_TH={rsi:40,gap:10,lbN:10,hiN:40,vol:0.02,stepLo:0.05,stepHi:0.08};
+function adSeriesJS(B,qd,chu){   // B=[[d,o,h,l,c,…],…] 已收盤日K;qd(date)→true(QQQ 在 20 日線下)/false/null(不知道);chu=該根是否「出」(可省略)
+  const n=B.length,D=B.map(b=>b[0]),H=B.map(b=>+b[2]),L=B.map(b=>+b[3]),C=B.map(b=>+b[4]);
+  const P=new Array(n+1).fill(0);for(let i=0;i<n;i++)P[i+1]=P[i]+C[i];
+  const sma=(i,k)=>i>=k-1?(P[i+1]-P[i+1-k])/k:null;
+  const N=()=>new Array(n).fill(null),F=()=>new Array(n).fill(false);
+  const s50=N(),s100=N(),s200=N(),lo=N(),rsi=N(),v20=N(),u=F(),ma3=F(),nh=F(),ut=F(),rsiX=F(),lbT=F(),mk=N(),raw=F(),sig=F();
+  let ag=null,al=null;   // RSI14:與研究同(pandas ewm alpha=1/14、adjust=False,從第一筆漲跌開始)
+  for(let i=1;i<n;i++){const d=C[i]-C[i-1],g=Math.max(d,0),l=Math.max(-d,0);
+    if(ag==null){ag=g;al=l;}else{ag+=(g-ag)/14;al+=(l-al)/14;}
+    rsi[i]=al>0?100-100/(1+ag/al):null;}
+  for(let i=0;i<n;i++){
+    s50[i]=sma(i,50);s100[i]=sma(i,100);s200[i]=sma(i,200);
+    if(i>=19){const m=(P[i+1]-P[i-19])/20;let s=0;for(let j=i-19;j<=i;j++){const d2=C[j]-m;s+=d2*d2;}lo[i]=m-2*Math.sqrt(s/20);}
+    if(i>=20){let m=0;const r=[];for(let j=i-19;j<=i;j++){const x=Math.log(C[j]/C[j-1]);r.push(x);m+=x;}m/=20;let s=0;r.forEach(x=>{s+=(x-m)*(x-m);});v20[i]=Math.sqrt(s/19);}
+    if(i>=199){let mx=-Infinity;for(let j=Math.max(0,i-251);j<=i;j++)if(C[j]>mx)mx=C[j];nh[i]=C[i]>=mx;}
+    u[i]=s200[i]!=null&&C[i]>s200[i]&&s50[i]>s200[i]&&i>=20&&s200[i-20]!=null&&s200[i]>s200[i-20];
+    ma3[i]=s200[i]!=null&&s50[i]>s100[i]&&s100[i]>s200[i];}
+  const utAt=k=>{if(k<0||!u[k]||!ma3[k])return false;for(let q=Math.max(0,k-39);q<=k;q++)if(nh[q])return true;return false;};   // 以第 k 根收盤判斷
+  for(let i=0;i<n;i++){
+    ut[i]=utAt(i-1);
+    rsiX[i]=i>=1&&rsi[i]!=null&&rsi[i-1]!=null&&rsi[i]<=AD_TH.rsi&&rsi[i-1]>AD_TH.rsi;
+    let ab=i>=AD_TH.lbN;for(let q=i-AD_TH.lbN;ab&&q<i;q++)if(!(lo[q]!=null&&L[q]>lo[q]))ab=false;
+    lbT[i]=ab&&lo[i]!=null&&L[i]<=lo[i];
+    mk[i]=qd?qd(D[i]):null;
+    let c10=false;if(chu)for(let q=Math.max(0,i-10);q<i;q++)if(chu[q]){c10=true;break;}
+    raw[i]=ut[i]&&(rsiX[i]||lbT[i])&&mk[i]===true&&!c10;
+    let rec=false;for(let q=Math.max(0,i-AD_TH.gap);q<i;q++)if(raw[q]){rec=true;break;}
+    sig[i]=raw[i]&&!rec;}
+  // 明天的觸發價(收盤跌到這裡 RSI14 會跌破 40;只在今天 RSI14 > 40 時有意義)
+  const k=n-1, d40=(ag!=null&&al!=null)?13*(1.5*ag-al):null;
+  const p40=(rsi[k]!=null&&rsi[k]>AD_TH.rsi&&d40!=null&&d40>0)?C[k]-d40:null;
+  let c10n=false;if(chu)for(let q=Math.max(0,n-10);q<n;q++)if(chu[q]){c10n=true;break;}
+  let lbArmed=n>=AD_TH.lbN;for(let q=n-AD_TH.lbN;lbArmed&&q<n;q++)if(!(lo[q]!=null&&L[q]>lo[q]))lbArmed=false;   // 明天碰下緣算「第一次」嗎
+  let rawRecent=false;for(let q=Math.max(0,n-AD_TH.gap);q<n;q++)if(raw[q]){rawRecent=true;break;}
+  return {n,D,C,s200,lo,rsi,v20,ut,rsiX,lbT,mk,raw,sig,utNext:utAt(k),p40,loNow:lbArmed?lo[k]:null,chuRecent:c10n,rawRecent};
+}
 function snapDate(){   // 快照 OHLCV 所屬交易日(與採集器 snap_trade_date 同規則):交易日 ET 09:30 後=今日,否則=最近已收盤交易日
   try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',weekday:'short'}).formatToParts(new Date()),o={};
       p.forEach(function(x2){o[x2.type]=x2.value;});
@@ -3204,7 +3248,7 @@ function renderCockpit(){
     +(CHIP_FC?':F1':':F0')+(FCL&&FCL.updated_utc?':f'+FCL.updated_utc:'')
     +(CHIP_Q?':Q1'+(function(){const u=CHIP_PD==='d'?TK_UL[CHIP_SYM]:null;if(!u)return '';   // 📊量化:槓桿ETF看正股 → 正股日K/盤中價變動也要重繪
       try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':q'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':Q0')
-    +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-');   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
+    +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?(QQQK?':k1':':k0'):'');   // 📊量化「加」要 QQQ 日K:到了就重畫   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   // x 類別標籤必須唯一(2026-08-08 使用者揪出:週/月K跨年後 'MM-DD' 重複 → category 軸同名互撞、K棒疊格錯亂)
@@ -3510,6 +3554,7 @@ function renderCockpit(){
     ...(function(){try{   // 📊 量化整合層(2026-10-10 使用者:「CTA、技判、資金整合在一起,K線上直接標 頂K/減碼/出/抄底/買,滑過字再出現簡短說明」)
       // 字 = 動作(由輕到重):頂K(當晚先賣一小部分)→ 減碼(頂K隔天收破它的低點)→ 出(漲多後跌破20日線 且 全球資金偏緊 = 🌐▼)
       //                    抄底(深跌後站回20日線 且 全球資金寬鬆 = 🌐▲)· 買(手冊 v0.2 路徑首日;資料只有幾個月,參考)
+      //   加(青綠,K棒下,2026-10-10 使用者:「可以, 做」):穩健上漲中跌夠深(RSI14 跌破 40/碰下緣)+ 大盤也在跌(QQQ<20日線)+ 前 10 根沒有出 → 分兩筆加碼(adSeriesJS)
       //   熱(灰色小字,2026-10-10 使用者核可):日K TD9–13+碰布林上緣、週K TD≥9+碰週布林上緣 = 過熱提醒,給成本調節參考;不是動作、不進狀態列結論(htSeriesJS)
       // 為什麼「資金不緊時的跌破20日線」不標:259檔×2009–26 同型轉折在氣候>35% 時(n=3101)20日後較低 42.6% vs 平常 43.7%,
       //   40日平均 +4.6% vs +2.1% → 方向上≈沒資訊(research/flow_climate_2026-10、scratchpad raw_nontight.py)。
@@ -3540,15 +3585,23 @@ function renderCockpit(){
       if(FT)FT.ev.forEach(e=>E.push({w:e.k==='trim'?'出':'抄底',j:e.i,d:e.d,e:e}));
       for(let j=1;j<T.n;j++){const a=T.passT[j]&&!T.passT[j-1],b=T.passC[j]&&!T.passC[j-1],c=T.passD[j]&&!T.passD[j-1];
         if((a||b||c)&&!E.some(x=>x.w==='抄底'&&Math.abs(x.j-j)<=3))E.push({w:'買',j:j,d:T.D[j],p:a?'T':b?'C':'D'});}
+      // 加 = 加碼參考(adSeriesJS):大盤也在跌 = QQQ 收盤 < 20 日線(用 QQQ 日K;還沒載到時只用引擎 series.m 同一天的資料,不往後沿用)
+      try{ensureQQQK();}catch(_){}
+      const QD={};if(QQQK){const ds=Object.keys(QQQK).filter(d=>d<=lastDone).sort();let s0=0;
+        ds.forEach((d,i)=>{s0+=+QQQK[d];if(i>=20)s0-=+QQQK[ds[i-20]];if(i>=19)QD[d]=(+QQQK[d])<s0/20;});}
+      const qdOf=d=>{if(d in QD)return QD[d];if(QQQK)return null;const v=fcMktOf(d);return (v!=null&&FCL&&FCL._mkd&&d<=FCL._mkd)?!!(v&QM.QB):null;};
+      const chuB=new Array(B.length).fill(false);E.forEach(x=>{if(x.w==='出')chuB[x.j]=true;});
+      const AD=adSeriesJS(B,qdOf,chuB);
+      for(let j=0;j<AD.n;j++)if(AD.sig[j])E.push({w:'加',j:j,d:AD.D[j],r:AD.rsiX[j],lb:AD.lbT[j]});
       E.sort((a,b)=>a.j-b.j);
       // 熱 = 過熱提醒(htSeriesJS;只提醒、不是動作)→ 另放 HE,不進狀態列的結論(E)
       const HE=[];for(let j=0;j<HT.n;j++)if(HT.sig[j])HE.push({w:'熱',j:j,d:HT.D[j]});
       // 強/弱分級(qGrade;記號全部保留,弱的變灰)。買 不分級。
-      E.forEach(x=>{x.q=x.w==='買'?{g:null,why:''}:qGrade(x.w,x.j,TK.C,TK.tk,fcMktOf(x.d),isAI);});
+      E.forEach(x=>{x.q=(x.w==='買'||x.w==='加')?{g:null,why:''}:qGrade(x.w,x.j,TK.C,TK.tk,fcMktOf(x.d),isAI);});
       const isW=x=>!!(x&&x.q&&x.q.g==='w');
       const GS=STS.grade||{trim:{strong:59,best:69,weak:49,base:46},topk:{strong:56,normal:51,weak:44,base:45},conf:{strong:57,weak:49,base:45},buy:{strong:74,normal:79,weak:47,base:54}};
       const GK={'出':'trim','頂K':'topk','減碼':'conf','抄底':'buy'};
-      const ACT={'頂K':'當晚可先賣一小部分','減碼':'再賣一部分','出':isAI?'分批賣掉大部分':'賣掉大部分','抄底':'可分批買','買':'參考,小量試單'};
+      const ACT={'頂K':'當晚可先賣一小部分','減碼':'再賣一部分','出':isAI?'分批賣掉大部分':'賣掉大部分','抄底':'可分批買','買':'參考,小量試單','加':'可以加碼(分兩筆)'};
       const ACTW={'頂K':'較弱,可先觀察','減碼':'較弱,可先觀察','出':'較弱,可先觀察','抄底':'較弱,先別急著買'};
       const gLine=x=>{const q=x.q;if(!q||!q.g||q.g==='n')return '';const s=GS[GK[x.w]]||{},dir=(x.w==='抄底')?'比較高':'比較低';   // 一行:強/弱 + 過去準確率
         if(q.g==='s')return '<br><b>強</b>:'+q.why+' → 過去 20 天後'+dir+' '+((x.w==='出'&&q.best)?s.best:s.strong)+'%(平常 '+s.base+'%)';
@@ -3563,6 +3616,10 @@ function renderCockpit(){
         if(x.w==='抄底')return h+'<br>跌深後站回 20 日線 '+f2(x.e.s20)+',全球資金寬鬆('+Math.round(x.e.clim*100)+'%)'
           +(gd?'<br>中途常再跌 1 成,要分批':'<br>過去 40 天後比較高的機會 '+pc(sB.up40!=null?sB.up40:70)+'(平常 '+pc(sB.base_up40!=null?sB.base_up40:58)+');但一半的時候中途會再跌 1 成');
         if(x.w==='買')return h+'<br>手冊規則:'+({T:'上漲趨勢裡的回檔結束',C:'區間底部、有人在吸貨',D:'急跌後收回布林下緣'}[x.p])+'<br>這條規則資料只有幾個月,還沒驗證過';
+        if(x.w==='加'){const vol=AD.v20[j]!=null&&AD.v20[j]>AD_TH.vol,st=vol?AD_TH.stepHi:AD_TH.stepLo,pc_=Math.round(st*100),nb=B[j+1];   // 2026-10-10 t23f–h
+          return h+'<br>穩健上漲中跌夠深('+[x.r?'RSI14 跌破 40':'',x.lb?'碰布林下緣':''].filter(Boolean).join('、')+'),大盤也在跌(QQQ 在 20 日線下)'
+            +'<br>隔天開盤先買一半,另一半'+(ul?'等正股再跌 '+pc_+'%':'掛約 '+f2((nb?+nb[1]:Cj(j))*(1-st))+'(再低 '+pc_+'%)')
+            +'<br>過去 20 天後比較高 58%(平常 53%);買完一半常常還會再跌約 '+(vol?'8':'4–5')+'%';}
         return h;};
       const tipH=x=>'<b>熱</b> '+x.d.slice(5)+' · 過熱提醒(不是賣出訊號)'+pre   // 2026-10-10 使用者核可的文字(t22)
         +'<br>日K、週K 都過熱:日K TD'+HT.tdD[x.j]+'、碰布林上緣;週K TD'+HT.tdW[x.j]+'、碰週布林上緣'
@@ -3585,7 +3642,7 @@ function renderCockpit(){
             h:'<b>抄底?'+wl(q)+'</b> 盤中'+pre+gLine({w:'抄底',q:q})+'<br>已站回 20 日線 '+f2(e.s20)+',全球資金寬鬆<br>收盤還在上面就成立 → '+wa(q,'抄底')});}});}
       }
       // ---- 圖上的字 ----
-      const COL={'頂K':'#fab219','減碼':'#fb923c','出':'#f87171','抄底':'#22c55e','買':'#4ade80','熱':QGRAY};
+      const COL={'頂K':'#fab219','減碼':'#fb923c','出':'#f87171','抄底':'#22c55e','買':'#4ade80','熱':QGRAY,'加':'#2dd4bf'};
       const SELL={'頂K':1,'減碼':1,'出':1,'熱':1};
       const nUp=new Array(R.length).fill(0),nDn=new Array(R.length).fill(0);
       const L5={};Object.keys(COL).forEach(w=>{L5[w]={y:new Array(R.length).fill(null),t:new Array(R.length).fill(''),h:new Array(R.length).fill(''),c:new Array(R.length).fill(COL[w])};});
@@ -3600,6 +3657,7 @@ function renderCockpit(){
       // ---- 狀態列:結論(最近一個仍有效的訊號)----
       const i9=B.length-1, c9=Cj(i9), s20v=T.s20a(i9);
       const valid=x=>{const j=x.j;if(i9-j>10)return false;if(x.w==='頂K')return j===i9;if(x.w==='買')return i9-j<=5;
+        if(x.w==='加'){if(i9-j>5)return false;for(let k=j+1;k<=i9;k++){const m=AD.s200[k];if(m!=null&&Cj(k)<m)return false;}return true;}   // 加:5 根內;收盤跌破 200 日線就不算
         for(let k=j+1;k<=i9;k++){const c=Cj(k),m=T.s20a(k);   // 出:10 根內都算數,站回 20 日線不取消(2026-10-10 t19:站回後 20 日仍較低 55%/56% vs 平常 41%/45%;站回的 79% 十天內又跌破)
           if(x.w==='減碼'&&c>Hj(j-1))return false;
           if(x.w==='抄底'&&m!=null&&c<m)return false;}
@@ -3613,11 +3671,14 @@ function renderCockpit(){
         else if(V.w==='出'){const rem=10-(i9-V.j);why=d+' 漲多後跌破 20 日線,全球資金偏緊';if(s20v!=null&&c9>=s20v&&V.j<i9)tail=' · 之後已站回 20 日線,但這種反彈過去約 8 成撐不到 10 天';
           next=(rem>0?'還有 '+rem+' 個交易日都算數':'今天是最後一天')+'(站回 20 日線也不取消)';}
         else if(V.w==='抄底'){why=d+' 跌深後站回 20 日線,全球資金寬鬆';next='收盤跌回 '+f2(s20v)+'(20 日線)以下就先停';}
+        else if(V.w==='加'){const vol=AD.v20[V.j]!=null&&AD.v20[V.j]>AD_TH.vol,st=vol?AD_TH.stepHi:AD_TH.stepLo,pc_=Math.round(st*100),nb=B[V.j+1];
+          why=d+' 穩健上漲中跌夠深('+[V.r?'RSI14 跌破 40':'',V.lb?'碰布林下緣':''].filter(Boolean).join('、')+'),大盤也在跌';
+          next=(V.j===i9?'明天開盤先買一半;':'')+'另一半'+(ul?'等正股再跌 '+pc_+'%':'掛約 '+f2((nb?+nb[1]:Cj(V.j))*(1-st))+'(再低 '+pc_+'%)')+',20 個交易日內沒成交就第 20 天補';}
         else{why=d+' 手冊規則的進場點(還沒驗證過)';next='小量就好';}
         if(V.q&&(V.q.g==='s'||V.q.g==='w'))why+=' · '+(V.q.g==='s'?'<b>強</b>:':'<b style="color:'+QGRAY+'">弱</b>:')+V.q.why;
         why+=tail;}
       else{vTxt='沒有訊號:不用動';vCol='#94a3b8';
-        const R=E.slice().reverse().find(x=>x.w!=='買'&&i9-x.j<=10);   // 最近 10 根內的記號已失效 → 說清楚(圖上還看得到那個字)
+        const R=E.slice().reverse().find(x=>x.w!=='買'&&x.w!=='加'&&i9-x.j<=10);   // 最近 10 根內的記號已失效 → 說清楚(圖上還看得到那個字)
         if(R){const d=R.d.slice(5);
           if(R.w==='頂K'){vTxt='頂K 已過:不用再賣';why=d+' 頂K 隔天沒有收破低點 '+f2(Lj(R.j))+',沒接著減碼';}
           else if(R.w==='減碼'){vTxt='減碼已取消:不用動';why=d+' 減碼後,收盤漲回頂K高點 '+f2(Hj(R.j-1))+' 以上';}
@@ -3657,6 +3718,17 @@ function renderCockpit(){
       // ---- 一行狀態列 + 詳情 ----
       const hL=HE.length?HE[HE.length-1]:null;   // 最近 10 根內有「熱」→ 詳情多一行提醒(不改上面的結論)
       const hotLine=(hL&&i9-hL.j<=10)?'<div><b style="color:'+QGRAY+'">熱</b>:'+hL.d.slice(5)+' 日K、週K 都過熱 → 想做成本調節可先賣一小部分(只是提醒,不是賣出訊號)</div>':'';
+      // 加碼條件(2026-10-10 使用者:「詳情裡每天直接寫出要到哪裡才成立」;價位是明天的收盤觸發價,每天會變)
+      const qT=(function(){if(!QQQK)return null;const ds=Object.keys(QQQK).filter(d=>d<=lastDone).sort();if(ds.length<20)return null;
+        let s=0;ds.slice(-19).forEach(d=>{s+=+QQQK[d];});return {below:QD[ds[ds.length-1]]===true,trig:s/19};})();
+      let addLine='';
+      if(!(V&&V.w==='加')){const tag='<b style="color:#2dd4bf">加</b>碼';
+        if(!AD.utNext)addLine='<div>'+tag+'規則:目前不在穩健上漲,不適用</div>';
+        else if(AD.chuRecent)addLine='<div>'+tag+'規則:前 10 天出過「出」,先不加碼</div>';
+        else if(AD.rawRecent)addLine='<div>'+tag+':前 10 天已經標過「加」,同一段回檔不重複標</div>';
+        else if(AD.p40==null&&AD.loNow==null)addLine='<div>'+tag+':這段已經跌過 RSI14 40、碰過下緣,等下一段回檔</div>';
+        else{const a=[];if(AD.p40!=null)a.push('收盤跌到約 '+f2(AD.p40)+'(RSI14 跌破 40)');if(AD.loNow!=null)a.push('碰到約 '+f2(AD.loNow)+'(布林下緣)');
+          addLine='<div>'+tag+'條件:'+(ul?'正股 '+ul+' ':'')+a.join(' 或 ')+',而且 '+(qT?(qT.below?'QQQ 已在 20 日線下 ✓':'QQQ 收盤跌破約 '+f2(qT.trig)):'QQQ 資料載入中')+' → 會標「加」</div>';}}
       const liveP=PV.map(p=>pill('盤中 '+(p.watch?'注意頂K':p.w+'?'+(isW(p)?'(弱)':'')),isW(p)?QGRAY:COL[p.w])).join('');
       const bar=head+'<span style="color:'+(B[i9][0]<lastDone?'#f87171':'#898781')+'">'+B[i9][0].slice(5)+(B[i9][0]<lastDone?' · 資料未更新':'')+'</span>'
         +liveP+pill(vTxt,vCol)+mkBar+(cp!=null?'<span style="color:'+fcCol(cp)+'">資金'+fcLab(cp)+'</span>':'');   // 大盤短結論放前面(手機列寬不夠時,被裁掉的是資金)
@@ -3670,9 +3742,9 @@ function renderCockpit(){
         +'<div style="margin:5px 0">'+pill(vTxt,vCol,true)+'</div>'
         +(why?'<div>為什麼:'+why+'</div>':'')+(next?'<div>接下來:'+next+'</div>':'')
         +PV.map(p=>'<div><b style="color:'+(isW(p)?QGRAY:COL[p.w])+'">盤中</b>:'+p.line+'</div>').join('')
-        +hotLine
+        +hotLine+addLine
         +'<div class="sphr"></div><div>'+ctaLine+'</div>'+(mkLine||'<div>'+gmLine+'</div>')+oth
-        +'<div class="sphr"></div><div class="spmut"><b style="color:#fab219">頂K</b> 當晚先賣一小部分 · <b style="color:#fb923c">減碼</b> 再賣一部分 · <b style="color:#f87171">出</b> 賣掉大部分 · <b style="color:#22c55e">抄底</b> 分批買 · <b style="color:#4ade80">買</b> 參考,小量 · <b style="color:'+QGRAY+'">熱</b> 過熱提醒(不是賣) · <b style="color:'+QGRAY+'">灰色</b> = 較弱(過去不太準)'
+        +'<div class="sphr"></div><div class="spmut"><b style="color:#fab219">頂K</b> 當晚先賣一小部分 · <b style="color:#fb923c">減碼</b> 再賣一部分 · <b style="color:#f87171">出</b> 賣掉大部分 · <b style="color:#22c55e">抄底</b> 分批買 · <b style="color:#4ade80">買</b> 參考,小量 · <b style="color:#2dd4bf">加</b> 穩健上漲中回檔+大盤也跌:分兩筆加碼 · <b style="color:'+QGRAY+'">熱</b> 過熱提醒(不是賣) · <b style="color:'+QGRAY+'">灰色</b> = 較弱(過去不太準)'
         +'<br>滑鼠移到K線上的字可以看那一次的原因 · 歷史統計,不保證未來 · 不是投資建議</div>';
       stripSet(strip,{bar:bar,pop:pop,acc:ACC,bg:BG});
       const out=[],HL=c=>({bgcolor:'#14171d',bordercolor:c,align:'left',font:{color:'#e6e9ef',size:12}});
@@ -3857,7 +3929,7 @@ function renderCockpit(){
   const VBG=vbpGeom();
   const XR=_vb?(VBG.x0-0.016):0.998;   // 右緣標註錨點:VbP 開啟時退到右軌左側,避免壓字
   const XW=_vb?(VBG.x0-0.010):1;       // 橫跨全寬的 paper 色帶同步收邊
-  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:'+QGRAY+'">熱=過熱提醒</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
+  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:#2dd4bf">加</span> <span style="color:'+QGRAY+'">熱=過熱提醒</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
