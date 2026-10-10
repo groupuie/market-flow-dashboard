@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-10T10:56Z">
+<meta name="build" content="2026-10-10T12:08Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T10:56Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T12:08Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3526,7 +3526,7 @@ function renderCockpit(){
         if(x.w==='減碼')return h+'<br>頂K 隔天收盤跌破它的低點 '+f2(Lj(j-1))+(gd?'':'<br>過去約一半是真正的頂(這時價格已離高點約 1 成)');
         if(x.w==='出')return h+'<br>漲多後跌破 20 日線 '+f2(x.e.s20)+',全球資金又偏緊('+Math.round(x.e.clim*100)+'%)'
           +(gd?'':'<br>過去 40 天內跌 10% 以上的機會 '+pc(sT.dd40!=null?sT.dd40:63)+'(平常 '+pc(sT.base_dd40!=null?sT.base_dd40:39)+')')
-          +(isAI&&!wk?'<br>AI 股近年常續漲,所以分批':'')+'<br>收盤站回 20 日線就取消';
+          +(isAI&&!wk?'<br>AI 股近年常續漲,所以分批':'')+'<br>之後 10 個交易日都算數(站回 20 日線也不取消)';
         if(x.w==='抄底')return h+'<br>跌深後站回 20 日線 '+f2(x.e.s20)+',全球資金寬鬆('+Math.round(x.e.clim*100)+'%)'
           +(gd?'<br>中途常再跌 1 成,要分批':'<br>過去 40 天後比較高的機會 '+pc(sB.up40!=null?sB.up40:70)+'(平常 '+pc(sB.base_up40!=null?sB.base_up40:58)+');但一半的時候中途會再跌 1 成');
         if(x.w==='買')return h+'<br>手冊規則:'+({T:'上漲趨勢裡的回檔結束',C:'區間底部、有人在吸貨',D:'急跌後收回布林下緣'}[x.p])+'<br>這條規則資料只有幾個月,還沒驗證過';
@@ -3562,26 +3562,32 @@ function renderCockpit(){
       // ---- 狀態列:結論(最近一個仍有效的訊號)----
       const i9=B.length-1, c9=Cj(i9), s20v=T.s20a(i9);
       const valid=x=>{const j=x.j;if(i9-j>10)return false;if(x.w==='頂K')return j===i9;if(x.w==='買')return i9-j<=5;
-        for(let k=j+1;k<=i9;k++){const c=Cj(k),m=T.s20a(k);
-          if(x.w==='出'&&m!=null&&c>=m)return false;
+        for(let k=j+1;k<=i9;k++){const c=Cj(k),m=T.s20a(k);   // 出:10 根內都算數,站回 20 日線不取消(2026-10-10 t19:站回後 20 日仍較低 55%/56% vs 平常 41%/45%;站回的 79% 十天內又跌破)
           if(x.w==='減碼'&&c>Hj(j-1))return false;
           if(x.w==='抄底'&&m!=null&&c<m)return false;}
         return true;};
       let V=null;for(let k=E.length-1;k>=0;k--){if(valid(E[k])){V=E[k];break;}}
       const cl=FCL?fcClimOf(B[i9][0]):null, cp=cl==null?null:Math.round(cl*100), th=(FCL&&FCL.th)||{trim:0.35,buy:0.80,ext:0.15,dip:0.15,cool:20};
-      let vTxt,vCol,why='',next='';
+      let vTxt,vCol,why='',next='',tail='';
       if(V){const wk=isW(V);vTxt=V.w+(wk?'(弱)':'')+':'+(wk?ACTW[V.w]:ACT[V.w]);vCol=wk?QGRAY:COL[V.w];const d=V.d.slice(5);
         if(V.w==='頂K'){why=d+' 漲多後碰到布林上緣,收盤從高點掉 '+((1-Cj(V.j)/Hj(V.j))*100).toFixed(1)+'%';next='明天收盤跌破 '+f2(Lj(V.j))+' → 減碼;漲過 '+f2(Hj(V.j))+' → 取消';}
         else if(V.w==='減碼'){why=d+' 頂K 隔天收盤跌破它的低點 '+f2(Lj(V.j-1));next='收盤漲回 '+f2(Hj(V.j-1))+'(頂K 高點)以上才取消';}
-        else if(V.w==='出'){why=d+' 漲多後跌破 20 日線,全球資金偏緊';next='收盤站回 '+f2(s20v)+'(20 日線)才取消';}
+        else if(V.w==='出'){const rem=10-(i9-V.j);why=d+' 漲多後跌破 20 日線,全球資金偏緊';if(s20v!=null&&c9>=s20v&&V.j<i9)tail=' · 之後已站回 20 日線,但這種反彈過去約 8 成撐不到 10 天';
+          next=(rem>0?'還有 '+rem+' 個交易日都算數':'今天是最後一天')+'(站回 20 日線也不取消)';}
         else if(V.w==='抄底'){why=d+' 跌深後站回 20 日線,全球資金寬鬆';next='收盤跌回 '+f2(s20v)+'(20 日線)以下就先停';}
         else{why=d+' 手冊規則的進場點(還沒驗證過)';next='小量就好';}
-        if(V.q&&(V.q.g==='s'||V.q.g==='w'))why+=' · '+(V.q.g==='s'?'<b>強</b>:':'<b style="color:'+QGRAY+'">弱</b>:')+V.q.why;}
+        if(V.q&&(V.q.g==='s'||V.q.g==='w'))why+=' · '+(V.q.g==='s'?'<b>強</b>:':'<b style="color:'+QGRAY+'">弱</b>:')+V.q.why;
+        why+=tail;}
       else{vTxt='沒有訊號:不用動';vCol='#94a3b8';
+        const R=E.slice().reverse().find(x=>x.w!=='買'&&i9-x.j<=10);   // 最近 10 根內的記號已失效 → 說清楚(圖上還看得到那個字)
+        if(R){const d=R.d.slice(5);
+          if(R.w==='頂K'){vTxt='頂K 已過:不用再賣';why=d+' 頂K 隔天沒有收破低點 '+f2(Lj(R.j))+',沒接著減碼';}
+          else if(R.w==='減碼'){vTxt='減碼已取消:不用動';why=d+' 減碼後,收盤漲回頂K高點 '+f2(Hj(R.j-1))+' 以上';}
+          else if(R.w==='抄底'){vTxt='抄底已暫停:先別加碼';why=d+' 抄底後,收盤跌回 20 日線以下';}}
         const cool=FT&&(i9+1-FT.lt)<=th.cool;
-        if(FT&&FT.ext[i9]!=null&&FT.ext[i9]>=th.ext&&s20v!=null&&c9>=s20v){why='漲多中';
+        if(FT&&FT.ext[i9]!=null&&FT.ext[i9]>=th.ext&&s20v!=null&&c9>=s20v){if(!why)why='漲多中';
           next='收盤跌破 '+f2(s20v)+'(20 日線)'+(cl!=null&&cl<=th.trim&&!cool?' → 出':(cl!=null&&cl>th.trim?',但全球資金不緊 → 先不用出':''));}
-        else if(FT&&FT.dip[i9]!=null&&FT.dip[i9]<=-0.10&&s20v!=null&&c9<=s20v){why='跌深中';
+        else if(FT&&FT.dip[i9]!=null&&FT.dip[i9]<=-0.10&&s20v!=null&&c9<=s20v){if(!why)why='跌深中';
           next='收盤站回 '+f2(s20v)+'(20 日線)'+(cl!=null&&cl>=th.buy&&FT.dip[i9]<=-th.dip?' → 抄底':',但全球資金不夠寬鬆 → 只算反彈,先不抄底');}}
       if(PV.some(p=>!p.watch))next='';   // 盤中已有暫標 → 「盤中」那行就是接下來要看的
       // ---- CTA(趨勢基金)一句話 ----
