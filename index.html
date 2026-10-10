@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-10T12:08Z">
+<meta name="build" content="2026-10-10T14:28Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T12:08Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T14:28Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3604,7 +3604,7 @@ function renderCockpit(){
       if(mb!=null){
         const sHot=cl!=null&&cl<=th.trim&&!!(mb&(QM.OIL|QM.YLD)), cor=!!(mb&QM.COR), vx=!!(mb&QM.VIX);
         const dk=cor?((cl!=null&&cl>=0.35)?'ok':'tight'):(vx?'mid':'solo');
-        mkBar='<span style="color:'+(sHot?'#f87171':'#94a3b8')+'">'+(sHot?'賣出偏強':'賣出普通')+'</span>'
+        mkBar='<span style="color:#898781">大盤:</span><span style="color:'+(sHot?'#f87171':'#94a3b8')+'">'+(sHot?'賣出偏強':'賣出普通')+'</span>'   // 「大盤:」= 這幾個字每檔都一樣(使用者 2026-10-10 問「為何一直亮」)
           +'<span style="color:'+({ok:'#22c55e',tight:'#fb923c',mid:'#94a3b8',solo:QGRAY}[dk])+'">'+({ok:'抄底時機',tight:'先別抄底',mid:'抄底普通',solo:'不宜抄底'}[dk])+'</span>';
         const sg2=v=>(v>0?'+':'')+v;
         const nums=MN?('QQQ 離一年高點 '+(MN.qqq_dd!=null?MN.qqq_dd+'%':'—')+((mb&QM.QB)?'(已跌破 20 日線)':'(在 20 日線上)')+' · VIX '+(MN.vix!=null?MN.vix:'—')
