@@ -52,6 +52,9 @@ SEC 請求的聯絡資訊從本機 config.json 讀取(不在檔案內)。
 | `t25_fixD.py` | 上線 6 種記號(頂K/減碼/熱/出/抄底/加)× 4 期間:40 天內曾跌 ≥10% 舊 → 新、有效 n、未完成 n、進場價基準 | `t25_fixD.log` |
 | —(比對) | 修正前(git 6b74e7d)與修正後所有重跑 log 的差異:只有風險數字改變,其他數字逐字相同 | `t25_fixD_rerun.log` |
 | `t24_fixB.py`、`t23g_add.py`、`t23h_check.py` | 修正 B:「加」改成「當日 + 前 10 根」有出就不標(原本只看前 10 根);259 檔事件差異(消失 25、新增 0,全是當日同時有出)與新版統計 | `t24.log` `t23g.log` `t23h.log` |
+| `t25_add_tranche.py` | 「加」第二筆的統計改用上線的穩健上漲版重算(t23g 第 4 段原本用上升趨勢版);兩版 × 兩種波動門檻並列 | `t25_add_tranche.log` |
+| `t25_panel_gaps.py` | 面板 O/H/L/C 中間缺值檢查(= 0 → 最遠期間完整就保證較近期間完整;修正 D 的範圍判斷用) | `t25_panel_gaps.log` |
+| `t25_browser_conflict.py` | 修正 C 的真實資料回放(BKNG、MRNA、CRDO、TWLO 舊版 vs 新版狀態列) | 併入 `t25_browser.log` |
 | `t25_jscheck.py`、`t25_jscheck.js` | 修正 B 對拍:pandas(`scripts/flow_climate.py` 的 `fc_events` 出 + 加)vs 前端(`fcSeriesJS` + `adSeriesJS`,直接從 index.html 抽函式),21 檔新舊兩版都逐字相同 | `t25_jscheck.log` |
 
 註:`t23f_add.py` 是當時比較「出之後幾根內不標」的探索腳本,保留原樣(用的是前 k 根、不含當日)。`t21*`、`t22e_hot.py`、`t23_dip.py`、`t23e_plan.py`、`wick_bb_2026-10/*` 檢查過:選樣本時已要求該期間完整(或已 dropna),不受修正 D 影響(`t25_fixD.log` 末行:隔天開盤 40 天報酬完整但 40 天最低價不完整的股票日 = 0)。
