@@ -37,3 +37,4 @@ SEC 請求的聯絡資訊從本機 config.json 讀取(不在檔案內)。
 | `t20_td13.py` `t20b_thr10.py` | 使用者問 TSM「TD13 了為何沒有減碼/出」→ TD 賣方連數 9/13/20 與數到 ≥13 後中斷的回測;「出」漲多門檻 15%→10% 的比較 | `t20.log` `t20b.log` |
 | `t21_wave.py` `t21b_wave.py` `t21c_wave.py` | 使用者要「上升通道裡的波段頂也標」做短線/成本調節 → 6 種波段頂 × 3 種買回點、限價買回、資金/大盤條件 | `t21.log` `t21b.log` `t21c.log` |
 | `t22_mtf.py` `t22b_mtf.py` `t22c_overext.py` `t22d_tsm.py` | 使用者:TSM 兩次頂用「日K TD9–13+布林上緣、週K TD9+週布林上緣」抓得到、漲多就是要跌 → 這個規則回測(週K 截至當天,不偷看未來)、同波動/同漲幅配對基準、加確認、按漲幅分組、TSM 歷來每一次 | `t22.log` `t22b.log` `t22c.log` `t22d.log` |
+| `t22e_hot.py` `t22e_jscheck.py` `t22e_jscheck.js` | 上線版「熱」(日K TD 9–13+碰上緣、週K TD≥9+碰週上緣、10 根內只標第一天)的確切統計(給 tooltip),與 index.html `htSeriesJS` 的 JS↔pandas 對拍(8 檔、5 年日K,訊號日完全一致) | `t22e.log` |

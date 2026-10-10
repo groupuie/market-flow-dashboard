@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-10T14:28Z">
+<meta name="build" content="2026-10-10T15:33Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T14:28Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T15:33Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2982,6 +2982,36 @@ function tkSeriesJS(B){   // B=[[d,o,h,l,c,…],…] 依日期排序(呼叫端�
   }
   return {n,D,H,L,C,m20,up,s50,atr,r20,ext,dA,off,hot,touch,tk,cf};
 }
+// ===== 熱 = 過熱提醒(2026-10-10 使用者:「日K TD9-13 碰布林上緣,還有週K TD9 碰布林上緣」)=====
+// 研究 research/requant_2026-10-10/t22*.py(259 檔 × 2009–2026;與本函式同公式,部署前 JS↔pandas 對拍):
+//   日K:TD 賣方連數(收盤 > 4 根前的收盤,連續)9–13,且今天最高 ≥ 布林上緣(20 日、2 倍母體標準差)
+//   週K:週 TD 賣方連數 ≥9,且本週到今天的最高 ≥ 週布林上緣(19 個完整週 + 本週);本週還沒收完就用今天的收盤當本週收盤(不偷看未來)
+//   週 = 圖上週K同一桶(ISO 週一錨定)。同一段只標第一天(前 10 根成立過就不標)。
+//   只是提醒、不是賣出訊號:之後 10 天較低 51% / 47%,同波動的隨便一天 43% / 46%(2009–17 / 2018–26);每檔每年約 0.25 次。
+const HT_TH={tdLo:9,tdHi:13,tdW:9,gap:10};
+function htSeriesJS(B){   // B=[[d,o,h,l,c,…],…] 已收盤日K、依日期排序
+  const n=B.length,D=B.map(b=>b[0]),H=B.map(b=>+b[2]),C=B.map(b=>+b[4]);
+  const P=new Array(n+1).fill(0);for(let i=0;i<n;i++)P[i+1]=P[i]+C[i];
+  const tdD=new Array(n).fill(0),up=new Array(n).fill(null);
+  for(let i=4;i<n;i++)tdD[i]=C[i]>C[i-4]?tdD[i-1]+1:0;
+  for(let i=19;i<n;i++){const m=(P[i+1]-P[i-19])/20;let s=0;for(let j=i-19;j<=i;j++){const d2=C[j]-m;s+=d2*d2;}up[i]=m+2*Math.sqrt(s/20);}
+  const wI=new Array(n),Wc=[];let w=-1,pk='';   // Wc[w] = 第 w 週最後一根的收盤
+  for(let i=0;i<n;i++){const k=periodKey(String(D[i]),'w');if(k!==pk){w++;pk=k;}wI[i]=w;Wc[w]=C[i];}
+  const tdWd=new Array(Wc.length).fill(0);   // 已收完的週 TD
+  for(let k=4;k<Wc.length;k++)tdWd[k]=Wc[k]>Wc[k-4]?tdWd[k-1]+1:0;
+  const N=()=>new Array(n).fill(null),F=()=>new Array(n).fill(false);
+  const tdW=N(),upW=N(),cumH=N(),touch=F(),touchW=F(),raw=F(),sig=F();
+  for(let i=0;i<n;i++){const k=wI[i];
+    cumH[i]=(i>0&&wI[i-1]===k)?Math.max(cumH[i-1],H[i]):H[i];
+    if(k>=4)tdW[i]=C[i]>Wc[k-4]?tdWd[k-1]+1:0;
+    if(k>=19){let s1=C[i],s2=C[i]*C[i];for(let q=k-19;q<k;q++){s1+=Wc[q];s2+=Wc[q]*Wc[q];}const m=s1/20;upW[i]=m+2*Math.sqrt(Math.max(0,s2/20-m*m));}
+    touch[i]=up[i]!=null&&H[i]>=up[i];
+    touchW[i]=upW[i]!=null&&cumH[i]>=upW[i];
+    raw[i]=tdD[i]>=HT_TH.tdLo&&tdD[i]<=HT_TH.tdHi&&touch[i]&&tdW[i]!=null&&tdW[i]>=HT_TH.tdW&&touchW[i];
+    let rec=false;for(let q=Math.max(0,i-HT_TH.gap);q<i;q++)if(raw[q]){rec=true;break;}
+    sig[i]=raw[i]&&!rec;}
+  return {n,D,tdD,tdW,up,upW,touch,touchW,raw,sig};
+}
 function snapDate(){   // 快照 OHLCV 所屬交易日(與採集器 snap_trade_date 同規則):交易日 ET 09:30 後=今日,否則=最近已收盤交易日
   try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',weekday:'short'}).formatToParts(new Date()),o={};
       p.forEach(function(x2){o[x2.type]=x2.value;});
@@ -3480,6 +3510,7 @@ function renderCockpit(){
     ...(function(){try{   // 📊 量化整合層(2026-10-10 使用者:「CTA、技判、資金整合在一起,K線上直接標 頂K/減碼/出/抄底/買,滑過字再出現簡短說明」)
       // 字 = 動作(由輕到重):頂K(當晚先賣一小部分)→ 減碼(頂K隔天收破它的低點)→ 出(漲多後跌破20日線 且 全球資金偏緊 = 🌐▼)
       //                    抄底(深跌後站回20日線 且 全球資金寬鬆 = 🌐▲)· 買(手冊 v0.2 路徑首日;資料只有幾個月,參考)
+      //   熱(灰色小字,2026-10-10 使用者核可):日K TD9–13+碰布林上緣、週K TD≥9+碰週布林上緣 = 過熱提醒,給成本調節參考;不是動作、不進狀態列結論(htSeriesJS)
       // 為什麼「資金不緊時的跌破20日線」不標:259檔×2009–26 同型轉折在氣候>35% 時(n=3101)20日後較低 42.6% vs 平常 43.7%,
       //   40日平均 +4.6% vs +2.1% → 方向上≈沒資訊(research/flow_climate_2026-10、scratchpad raw_nontight.py)。
       // CTA 煞車線/◯ 不再畫線,改成詳情裡一句「趨勢基金在買還是在賣、跌破哪裡會再賣」;◆★ 在本層開啟時不畫(長史≈擲硬幣)。
@@ -3497,7 +3528,7 @@ function renderCockpit(){
       const B=sb.filter(b=>b[0]<=lastDone), live=(sb.length&&sb[sb.length-1][0]>lastDone)?sb[sb.length-1]:null;
       if(B.length<70){stripSet(strip,{bar:head+'<span style="color:#898781">'+(ul&&!sb.length?'正股 '+ul+' 日K載入中…':'日K不足 70 根,先不判斷')+'</span>',acc:ACC,bg:BG});return [];}
       const FM={};Object.keys(D0||{}).forEach(dd=>{const e=(D0[dd]||{})[S];if(e&&e.m!=null&&dd<=lastDone)FM[dd]=+e.m;});
-      const T=tjSeriesJS(B,FM), TK=tkSeriesJS(B), FT=FCL?fcSeriesJS(B):null;
+      const T=tjSeriesJS(B,FM), TK=tkSeriesJS(B), FT=FCL?fcSeriesJS(B):null, HT=htSeriesJS(B);
       const TKL=live?tkSeriesJS(B.concat([live])):null, FTL=(live&&FCL)?fcSeriesJS(B.concat([live])):null;
       const STS=(FCL&&FCL.stats)||{}, sT=STS.trim||{}, sB=STS.buy||{};
       const isAI=TK_AI.has(S), pre=ul?'(看正股 '+ul+')':'';
@@ -3510,6 +3541,8 @@ function renderCockpit(){
       for(let j=1;j<T.n;j++){const a=T.passT[j]&&!T.passT[j-1],b=T.passC[j]&&!T.passC[j-1],c=T.passD[j]&&!T.passD[j-1];
         if((a||b||c)&&!E.some(x=>x.w==='抄底'&&Math.abs(x.j-j)<=3))E.push({w:'買',j:j,d:T.D[j],p:a?'T':b?'C':'D'});}
       E.sort((a,b)=>a.j-b.j);
+      // 熱 = 過熱提醒(htSeriesJS;只提醒、不是動作)→ 另放 HE,不進狀態列的結論(E)
+      const HE=[];for(let j=0;j<HT.n;j++)if(HT.sig[j])HE.push({w:'熱',j:j,d:HT.D[j]});
       // 強/弱分級(qGrade;記號全部保留,弱的變灰)。買 不分級。
       E.forEach(x=>{x.q=x.w==='買'?{g:null,why:''}:qGrade(x.w,x.j,TK.C,TK.tk,fcMktOf(x.d),isAI);});
       const isW=x=>!!(x&&x.q&&x.q.g==='w');
@@ -3531,6 +3564,10 @@ function renderCockpit(){
           +(gd?'<br>中途常再跌 1 成,要分批':'<br>過去 40 天後比較高的機會 '+pc(sB.up40!=null?sB.up40:70)+'(平常 '+pc(sB.base_up40!=null?sB.base_up40:58)+');但一半的時候中途會再跌 1 成');
         if(x.w==='買')return h+'<br>手冊規則:'+({T:'上漲趨勢裡的回檔結束',C:'區間底部、有人在吸貨',D:'急跌後收回布林下緣'}[x.p])+'<br>這條規則資料只有幾個月,還沒驗證過';
         return h;};
+      const tipH=x=>'<b>熱</b> '+x.d.slice(5)+' · 過熱提醒(不是賣出訊號)'+pre   // 2026-10-10 使用者核可的文字(t22)
+        +'<br>日K、週K 都過熱:日K TD'+HT.tdD[x.j]+'、碰布林上緣;週K TD'+HT.tdW[x.j]+'、碰週布林上緣'
+        +'<br>想做成本調節可以先賣一小部分'
+        +'<br>但過去 10 天後變低的機率大約 5 成(47%),跟平常差不多(46%)';
       // ---- 盤中暫標(今天這根;收盤確認才算)----
       const PV=[];
       if(live){
@@ -3548,13 +3585,14 @@ function renderCockpit(){
             h:'<b>抄底?'+wl(q)+'</b> 盤中'+pre+gLine({w:'抄底',q:q})+'<br>已站回 20 日線 '+f2(e.s20)+',全球資金寬鬆<br>收盤還在上面就成立 → '+wa(q,'抄底')});}});}
       }
       // ---- 圖上的字 ----
-      const COL={'頂K':'#fab219','減碼':'#fb923c','出':'#f87171','抄底':'#22c55e','買':'#4ade80'};
-      const SELL={'頂K':1,'減碼':1,'出':1};
+      const COL={'頂K':'#fab219','減碼':'#fb923c','出':'#f87171','抄底':'#22c55e','買':'#4ade80','熱':QGRAY};
+      const SELL={'頂K':1,'減碼':1,'出':1,'熱':1};
       const nUp=new Array(R.length).fill(0),nDn=new Array(R.length).fill(0);
       const L5={};Object.keys(COL).forEach(w=>{L5[w]={y:new Array(R.length).fill(null),t:new Array(R.length).fill(''),h:new Array(R.length).fill(''),c:new Array(R.length).fill(COL[w])};});
       const LV={x:[],y:[],t:[],h:[],c:[]};   // 盤中暫標(同一根可能不只一個字 → 用點列表)
       const yAt=(w,i2)=>SELL[w]?R[i2].h+o3*(1.0+0.85*(nUp[i2]++)):R[i2].l-o3*(1.0+0.85*(nDn[i2]++));
       E.forEach(x=>{const i2=di[x.d];if(i2==null)return;const A=L5[x.w];A.y[i2]=yAt(x.w,i2);A.t[i2]='<b>'+x.w+'</b>';A.h[i2]=tip(x);A.c[i2]=isW(x)?QGRAY:COL[x.w];});
+      HE.forEach(x=>{const i2=di[x.d];if(i2==null)return;const A=L5['熱'];A.y[i2]=yAt('熱',i2)+o3*0.3;A.t[i2]='熱';A.h[i2]=tipH(x);});   // 灰色小字、不加粗(只是提醒);熱一定落在 TD 9–13 那根,+0.3 格避開 TD 大字「9/13」
       {const px=Math.max(1,((el&&el.clientWidth)||400)*0.88/Math.max(1,R.length)),gap=Math.ceil(30/px);   // 連續幾天的頂K:只有第一根寫字,其餘一個點
        let last=-1e9;L5['頂K'].y.forEach((v,i2)=>{if(v==null)return;if(i2-last<gap)L5['頂K'].t[i2]='<b>•</b>';else last=i2;});}
       const li2=R.length-1;
@@ -3617,6 +3655,8 @@ function renderCockpit(){
       }
       const gmLine=cp==null?'全球資金:載入中…':('全球資金:'+fcLab(cp)+' '+cp+'% → '+(cp<=35?'大戶在收錢,「出」比較準、先別急著抄底':cp>=80?'大戶在放錢,「抄底」比較準':'普通,照原計畫'));
       // ---- 一行狀態列 + 詳情 ----
+      const hL=HE.length?HE[HE.length-1]:null;   // 最近 10 根內有「熱」→ 詳情多一行提醒(不改上面的結論)
+      const hotLine=(hL&&i9-hL.j<=10)?'<div><b style="color:'+QGRAY+'">熱</b>:'+hL.d.slice(5)+' 日K、週K 都過熱 → 想做成本調節可先賣一小部分(只是提醒,不是賣出訊號)</div>':'';
       const liveP=PV.map(p=>pill('盤中 '+(p.watch?'注意頂K':p.w+'?'+(isW(p)?'(弱)':'')),isW(p)?QGRAY:COL[p.w])).join('');
       const bar=head+'<span style="color:'+(B[i9][0]<lastDone?'#f87171':'#898781')+'">'+B[i9][0].slice(5)+(B[i9][0]<lastDone?' · 資料未更新':'')+'</span>'
         +liveP+pill(vTxt,vCol)+mkBar+(cp!=null?'<span style="color:'+fcCol(cp)+'">資金'+fcLab(cp)+'</span>':'');   // 大盤短結論放前面(手機列寬不夠時,被裁掉的是資金)
@@ -3630,17 +3670,22 @@ function renderCockpit(){
         +'<div style="margin:5px 0">'+pill(vTxt,vCol,true)+'</div>'
         +(why?'<div>為什麼:'+why+'</div>':'')+(next?'<div>接下來:'+next+'</div>':'')
         +PV.map(p=>'<div><b style="color:'+(isW(p)?QGRAY:COL[p.w])+'">盤中</b>:'+p.line+'</div>').join('')
+        +hotLine
         +'<div class="sphr"></div><div>'+ctaLine+'</div>'+(mkLine||'<div>'+gmLine+'</div>')+oth
-        +'<div class="sphr"></div><div class="spmut"><b style="color:#fab219">頂K</b> 當晚先賣一小部分 · <b style="color:#fb923c">減碼</b> 再賣一部分 · <b style="color:#f87171">出</b> 賣掉大部分 · <b style="color:#22c55e">抄底</b> 分批買 · <b style="color:#4ade80">買</b> 參考,小量 · <b style="color:'+QGRAY+'">灰色</b> = 較弱(過去不太準)'
+        +'<div class="sphr"></div><div class="spmut"><b style="color:#fab219">頂K</b> 當晚先賣一小部分 · <b style="color:#fb923c">減碼</b> 再賣一部分 · <b style="color:#f87171">出</b> 賣掉大部分 · <b style="color:#22c55e">抄底</b> 分批買 · <b style="color:#4ade80">買</b> 參考,小量 · <b style="color:'+QGRAY+'">熱</b> 過熱提醒(不是賣) · <b style="color:'+QGRAY+'">灰色</b> = 較弱(過去不太準)'
         +'<br>滑鼠移到K線上的字可以看那一次的原因 · 歷史統計,不保證未來 · 不是投資建議</div>';
       stripSet(strip,{bar:bar,pop:pop,acc:ACC,bg:BG});
       const out=[],HL=c=>({bgcolor:'#14171d',bordercolor:c,align:'left',font:{color:'#e6e9ef',size:12}});
       Object.keys(COL).forEach(w=>{const A=L5[w];if(!A.y.some(v=>v!=null))return;
-        out.push({type:'scatter',mode:'text',x:x,y:A.y,text:A.t,customdata:A.h,textfont:{size:12,color:A.c},hoverlabel:HL(COL[w]),
+        out.push({type:'scatter',mode:'text',x:x,y:A.y,text:A.t,customdata:A.h,textfont:{size:w==='熱'?11:12,color:A.c},hoverlabel:HL(COL[w]),
           textposition:A.y.map((v,i2)=>i2>=R.length-2?'middle left':'middle center'),   // 最右兩根往左擺,字不會被價格軸切掉
           showlegend:false,name:'量化'+w,hovertemplate:'%{customdata}<extra></extra>'});});
       if(LV.x.length)out.push({type:'scatter',mode:'text',x:LV.x,y:LV.y,text:LV.t,customdata:LV.h,textfont:{size:12,color:LV.c},textposition:'middle left',
         hoverlabel:HL('#fab219'),showlegend:false,name:'量化盤中',hovertemplate:'%{customdata}<extra></extra>'});
+      {let yT=null,xT=null;   // 最高的字若在整張圖頂端,多放一個看不見的點把價格軸往上撐半格 → 字不會被切到、不壓到標題列(2026-10-10 熱 常落在最高那根)
+       Object.keys(L5).forEach(w=>L5[w].y.forEach((v,i2)=>{if(v!=null&&(yT==null||v>yT)){yT=v;xT=x[i2];}}));
+       LV.y.forEach((v,k)=>{if(v!=null&&(yT==null||v>yT)){yT=v;xT=LV.x[k];}});
+       if(yT!=null)out.push({type:'scatter',mode:'markers',x:[xT],y:[yT+o3*0.55],marker:{size:1,opacity:0},hoverinfo:'skip',showlegend:false,name:'qpad'});}
       return out;
     }catch(e){try{console.warn('qlayer',e);stripHide(document.getElementById('qstrip'));}catch(_){}return [];}})(),
     ...(function(){try{   // 🌐 全球資金氣候:▲抄底 / ▼減碼(個股轉折 × 氣候)+ 價格窗底部氣候色帶;僅日K;fail-open
@@ -3812,7 +3857,7 @@ function renderCockpit(){
   const VBG=vbpGeom();
   const XR=_vb?(VBG.x0-0.016):0.998;   // 右緣標註錨點:VbP 開啟時退到右軌左側,避免壓字
   const XW=_vb?(VBG.x0-0.010):1;       // 橫跨全寬的 paper 色帶同步收邊
-  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
+  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:'+QGRAY+'">熱=過熱提醒</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
         text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')}
