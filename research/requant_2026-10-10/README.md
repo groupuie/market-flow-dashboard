@@ -39,3 +39,4 @@ SEC 請求的聯絡資訊從本機 config.json 讀取(不在檔案內)。
 | `t22_mtf.py` `t22b_mtf.py` `t22c_overext.py` `t22d_tsm.py` | 使用者:TSM 兩次頂用「日K TD9–13+布林上緣、週K TD9+週布林上緣」抓得到、漲多就是要跌 → 這個規則回測(週K 截至當天,不偷看未來)、同波動/同漲幅配對基準、加確認、按漲幅分組、TSM 歷來每一次 | `t22.log` `t22b.log` `t22c.log` `t22d.log` |
 | `t22e_hot.py` `t22e_jscheck.py` `t22e_jscheck.js` | 上線版「熱」(日K TD 9–13+碰上緣、週K TD≥9+碰週上緣、10 根內只標第一天)的確切統計(給 tooltip),與 index.html `htSeriesJS` 的 JS↔pandas 對拍(8 檔、5 年日K,訊號日完全一致) | `t22e.log` |
 | `t23_dip.py` `t23b_dip.py` `t23c_dip.py` `t23d_mkt.py` | 使用者:穩健上漲股(像 TSM)的波段抄底/短線加碼 — 反向熱(日+週 TD買9–13+下緣)、碰 CTA 線(50/63/100/200 日、價格下方第二條)、跌破中軌沒到下緣、碰週中軌 + 其他 15 種回檔買法;同股上升趨勢基準、大盤一起回檔 vs 只有個股跌、拆功勞、換大盤定義、TSM 每一次 | `t23.log` `t23b.log` `t23c.log` `t23d.log` |
+| `t23e_plan.py` | 「加碼」照做版:隔天開盤買、之後 20 天最多再跌多少、第二筆掛低 5% 的成交率與平均成本、低波動股(像 TSM)子集、TSM 2023 年後每一次 | `t23e.log` |
