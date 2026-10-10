@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-10T16:19Z">
+<meta name="build" content="2026-10-10T17:38Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T16:19Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-10T17:38Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2930,6 +2930,27 @@ function tjSeriesJS(B,FM){   // B=[[d,o,h,l,c,v,tor],…](已濾未收盤bar、�
 //   漲多 = 20日漲 ≥30% 或 (收盤−20日線)÷ATR14 ≥3 或 收盤高於50日線 ≥25%(任一;ATR14=真實波幅 14 日簡單平均,至少 10 根)
 //   確認 = 隔天收盤 < 頂K那根的最低價。圖上只標已收盤日K;盤中棒只進狀態列(收盤前仍 ≥5% 才算 —
 //   盤中先跌 5% 又拉回的日子,之後 20 日平均再漲 3–5%,兩期皆然)。
+// ===== 📊量化 事件的因果去重與結論選擇(2026-10-11 Codex v0.1 審查 A、C;Claude 核對後採用)=====
+// A:「買」只被「當日或之前 3 根」的抄底去重(原本用 |j−x.j|≤3,未來 3 根內的抄底會把歷史上已顯示過的「買」刪掉 = 回改歷史)。
+function qmAppendPathBuys(E,T){
+  for(let j=1;j<T.n;j++){
+    const a=T.passT[j]&&!T.passT[j-1], b=T.passC[j]&&!T.passC[j-1], c=T.passD[j]&&!T.passD[j-1];
+    const hasKnownBottom=E.some(x=>x.w==='抄底'&&x.j<=j&&j-x.j<=3);
+    if((a||b||c)&&!hasKnownBottom)E.push({w:'買',j:j,d:T.D[j],p:a?'T':b?'C':'D'});
+  }
+}
+// C:結論 = 最近一天「仍有效」的記號;同一天有賣也有買 → 衝突(不挑一邊);同方向依固定顯示順序
+//   (出 > 減碼 > 頂K、抄底 > 加 > 買 —— 只是畫面排序,不代表勝率)。原本靠事件加入陣列的順序決定。
+function qmSelectLatestValid(events,valid,asOfIndex){
+  const sell=new Set(['頂K','減碼','出']), buy=new Set(['買','加','抄底']);
+  const rank={'頂K':1,'減碼':2,'出':3,'買':1,'加':2,'抄底':3};
+  const cand=events.filter(x=>Number.isInteger(x.j)&&x.j>=0&&x.j<=asOfIndex&&(sell.has(x.w)||buy.has(x.w))&&valid(x));
+  if(!cand.length)return {conflict:false,events:[],selected:null};
+  const latest=cand.reduce((m,x)=>Math.max(m,x.j),-1);
+  const same=cand.filter(x=>x.j===latest).sort((a,b)=>rank[b.w]-rank[a.w]||a.w.localeCompare(b.w));
+  const conflict=same.some(x=>sell.has(x.w))&&same.some(x=>buy.has(x.w));
+  return {conflict:conflict,events:same,selected:conflict?null:same[0]};
+}
 const TK_TH={r20:0.30,atr:3,ext:0.25,off:0.05};
 const TK_AI=new Set(('NVDA AMD AVGO MU SNDK WDC STX MRVL LITE COHR AAOI TSM ASML AMAT LRCX KLAC SMCI ANET ARM MPWR QCOM INTC TXN ADI ON '
   +'MCHP NXPI CRDO ALAB CIEN GLW VRT DELL TER ENTG AMKR WOLF POET AEHR MXL GFS SWKS QRVO MTSI').split(' '));   // 與研究 AI 子集同一份
@@ -3016,7 +3037,7 @@ function htSeriesJS(B){   // B=[[d,o,h,l,c,…],…] 已收盤日K、依日期�
 // 研究 research/requant_2026-10-10/t23*.py(259 檔 × 2009–2026;與本函式同公式,部署前 JS↔pandas 對拍):
 //   ① 穩健上漲(用前一天收盤判斷):收盤 > 200 日線、50 日線 > 200 日線、200 日線比 20 天前高、50 > 100 > 200 日線、近 40 根內收盤創過一年新高
 //   ② 跌夠深:RSI14 收盤跌破 40(前一天 > 40),或 第一次碰布林下緣(前 10 根最低都在下緣之上)
-//   ③ 大盤也在跌:QQQ 收盤 < 20 日線        ④ 前 10 根沒有「出」
+//   ③ 大盤也在跌:QQQ 收盤 < 20 日線        ④ 當日及前 10 根沒有「出」(2026-10-11 修正B:原本漏了當日)
 //   同時成立 → 標「加」(同一段只標第一天:前 10 根成立過就不標)。只標已收盤K。隔天開盤買一半、另一半掛再低 5%(近 20 天日波動 >2% 的股票 8%)。
 //   2018–26 隔天開盤買:20 天後較高 58%(同一檔穩健上漲時隨便一天 53%);只有個股跌(QQQ 在線上)≈ 平常;2/3 的股票比自己平常好;每檔每年約 4 次(只算穩健上漲的時候)。
 const AD_TH={rsi:40,gap:10,lbN:10,hiN:40,vol:0.02,stepLo:0.05,stepHi:0.08};
@@ -3044,7 +3065,7 @@ function adSeriesJS(B,qd,chu){   // B=[[d,o,h,l,c,…],…] 已收盤日K;qd(dat
     let ab=i>=AD_TH.lbN;for(let q=i-AD_TH.lbN;ab&&q<i;q++)if(!(lo[q]!=null&&L[q]>lo[q]))ab=false;
     lbT[i]=ab&&lo[i]!=null&&L[i]<=lo[i];
     mk[i]=qd?qd(D[i]):null;
-    let c10=false;if(chu)for(let q=Math.max(0,i-10);q<i;q++)if(chu[q]){c10=true;break;}
+    let c10=false;if(chu)for(let q=Math.max(0,i-10);q<=i;q++)if(chu[q]){c10=true;break;}   // 2026-10-11 修正B:當日 + 前 10 根(原本漏了當日)
     raw[i]=ut[i]&&(rsiX[i]||lbT[i])&&mk[i]===true&&!c10;
     let rec=false;for(let q=Math.max(0,i-AD_TH.gap);q<i;q++)if(raw[q]){rec=true;break;}
     sig[i]=raw[i]&&!rec;}
@@ -3554,7 +3575,7 @@ function renderCockpit(){
     ...(function(){try{   // 📊 量化整合層(2026-10-10 使用者:「CTA、技判、資金整合在一起,K線上直接標 頂K/減碼/出/抄底/買,滑過字再出現簡短說明」)
       // 字 = 動作(由輕到重):頂K(當晚先賣一小部分)→ 減碼(頂K隔天收破它的低點)→ 出(漲多後跌破20日線 且 全球資金偏緊 = 🌐▼)
       //                    抄底(深跌後站回20日線 且 全球資金寬鬆 = 🌐▲)· 買(手冊 v0.2 路徑首日;資料只有幾個月,參考)
-      //   加(青綠,K棒下,2026-10-10 使用者:「可以, 做」):穩健上漲中跌夠深(RSI14 跌破 40/碰下緣)+ 大盤也在跌(QQQ<20日線)+ 前 10 根沒有出 → 分兩筆加碼(adSeriesJS)
+      //   加(青綠,K棒下,2026-10-10 使用者:「可以, 做」):穩健上漲中跌夠深(RSI14 跌破 40/碰下緣)+ 大盤也在跌(QQQ<20日線)+ 當日及前 10 根沒有出 → 分兩筆加碼(adSeriesJS)
       //   熱(灰色小字,2026-10-10 使用者核可):日K TD9–13+碰布林上緣、週K TD≥9+碰週布林上緣 = 過熱提醒,給成本調節參考;不是動作、不進狀態列結論(htSeriesJS)
       // 為什麼「資金不緊時的跌破20日線」不標:259檔×2009–26 同型轉折在氣候>35% 時(n=3101)20日後較低 42.6% vs 平常 43.7%,
       //   40日平均 +4.6% vs +2.1% → 方向上≈沒資訊(research/flow_climate_2026-10、scratchpad raw_nontight.py)。
@@ -3583,8 +3604,7 @@ function renderCockpit(){
       const E=[];
       for(let j=0;j<TK.n;j++){if(TK.tk[j])E.push({w:'頂K',j:j,d:TK.D[j]}); if(TK.cf[j])E.push({w:'減碼',j:j,d:TK.D[j]});}
       if(FT)FT.ev.forEach(e=>E.push({w:e.k==='trim'?'出':'抄底',j:e.i,d:e.d,e:e}));
-      for(let j=1;j<T.n;j++){const a=T.passT[j]&&!T.passT[j-1],b=T.passC[j]&&!T.passC[j-1],c=T.passD[j]&&!T.passD[j-1];
-        if((a||b||c)&&!E.some(x=>x.w==='抄底'&&Math.abs(x.j-j)<=3))E.push({w:'買',j:j,d:T.D[j],p:a?'T':b?'C':'D'});}
+      qmAppendPathBuys(E,T);   // 2026-10-11 修正A:只被當日/之前 3 根的抄底去重(不讓未來的抄底改寫歷史)
       // 加 = 加碼參考(adSeriesJS):大盤也在跌 = QQQ 收盤 < 20 日線(用 QQQ 日K;還沒載到時只用引擎 series.m 同一天的資料,不往後沿用)
       try{ensureQQQK();}catch(_){}
       const QD={};if(QQQK){const ds=Object.keys(QQQK).filter(d=>d<=lastDone).sort();let s0=0;
@@ -3662,10 +3682,12 @@ function renderCockpit(){
           if(x.w==='減碼'&&c>Hj(j-1))return false;
           if(x.w==='抄底'&&m!=null&&c<m)return false;}
         return true;};
-      let V=null;for(let k=E.length-1;k>=0;k--){if(valid(E[k])){V=E[k];break;}}
+      const selection=qmSelectLatestValid(E,valid,i9), V=selection.selected;   // 2026-10-11 修正C:同日買賣衝突不挑邊;同方向固定順序
       const cl=FCL?fcClimOf(B[i9][0]):null, cp=cl==null?null:Math.round(cl*100), th=(FCL&&FCL.th)||{trim:0.35,buy:0.80,ext:0.15,dip:0.15,cool:20};
       let vTxt,vCol,why='',next='',tail='';
-      if(V){const wk=isW(V);vTxt=V.w+(wk?'(弱)':'')+':'+(wk?ACTW[V.w]:ACT[V.w]);vCol=wk?QGRAY:COL[V.w];const d=V.d.slice(5);
+      if(selection.conflict){vTxt='買賣同時出現:先不動';vCol='#f59e0b';   // 同一天有賣也有買(例:減碼+加)→ 不替使用者挑一邊
+        why=selection.events[0].d.slice(5)+' 同一天出現 '+selection.events.map(x=>x.w).join('、')+'(一賣一買,互相矛盾)';next='等下一根收盤再看;滑過圖上的字看各自原因';}
+      else if(V){const wk=isW(V);vTxt=V.w+(wk?'(弱)':'')+':'+(wk?ACTW[V.w]:ACT[V.w]);vCol=wk?QGRAY:COL[V.w];const d=V.d.slice(5);
         if(V.w==='頂K'){why=d+' 漲多後碰到布林上緣,收盤從高點掉 '+((1-Cj(V.j)/Hj(V.j))*100).toFixed(1)+'%';next='明天收盤跌破 '+f2(Lj(V.j))+' → 減碼;漲過 '+f2(Hj(V.j))+' → 取消';}
         else if(V.w==='減碼'){why=d+' 頂K 隔天收盤跌破它的低點 '+f2(Lj(V.j-1));next='收盤漲回 '+f2(Hj(V.j-1))+'(頂K 高點)以上才取消';}
         else if(V.w==='出'){const rem=10-(i9-V.j);why=d+' 漲多後跌破 20 日線,全球資金偏緊';if(s20v!=null&&c9>=s20v&&V.j<i9)tail=' · 之後已站回 20 日線,但這種反彈過去約 8 成撐不到 10 天';
@@ -3722,13 +3744,13 @@ function renderCockpit(){
       const qT=(function(){if(!QQQK)return null;const ds=Object.keys(QQQK).filter(d=>d<=lastDone).sort();if(ds.length<20)return null;
         let s=0;ds.slice(-19).forEach(d=>{s+=+QQQK[d];});return {below:QD[ds[ds.length-1]]===true,trig:s/19};})();
       let addLine='';
-      if(!(V&&V.w==='加')){const tag='<b style="color:#2dd4bf">加</b>碼';
+      if(!selection.conflict&&!(V&&V.w==='加')){const tag='<b style="color:#2dd4bf">加</b>碼';
         if(!AD.utNext)addLine='<div>'+tag+'規則:目前不在穩健上漲,不適用</div>';
         else if(AD.chuRecent)addLine='<div>'+tag+'規則:前 10 天出過「出」,先不加碼</div>';
         else if(AD.rawRecent)addLine='<div>'+tag+':前 10 天已經標過「加」,同一段回檔不重複標</div>';
         else if(AD.p40==null&&AD.loNow==null)addLine='<div>'+tag+':這段已經跌過 RSI14 40、碰過下緣,等下一段回檔</div>';
         else{const a=[];if(AD.p40!=null)a.push('收盤跌到約 '+f2(AD.p40)+'(RSI14 跌破 40)');if(AD.loNow!=null)a.push('碰到約 '+f2(AD.loNow)+'(布林下緣)');
-          addLine='<div>'+tag+'條件:'+(ul?'正股 '+ul+' ':'')+a.join(' 或 ')+',而且 '+(qT?(qT.below?'QQQ 已在 20 日線下 ✓':'QQQ 收盤跌破約 '+f2(qT.trig)):'QQQ 資料載入中')+' → 會標「加」</div>';}}
+          addLine='<div>'+tag+'條件:'+(ul?'正股 '+ul+' ':'')+a.join(' 或 ')+',而且 '+(qT?(qT.below?'QQQ 已在 20 日線下 ✓':'QQQ 收盤跌破約 '+f2(qT.trig)):'QQQ 資料載入中')+' → 會標「加」(當天沒有「出」才算)</div>';}}
       const liveP=PV.map(p=>pill('盤中 '+(p.watch?'注意頂K':p.w+'?'+(isW(p)?'(弱)':'')),isW(p)?QGRAY:COL[p.w])).join('');
       const bar=head+'<span style="color:'+(B[i9][0]<lastDone?'#f87171':'#898781')+'">'+B[i9][0].slice(5)+(B[i9][0]<lastDone?' · 資料未更新':'')+'</span>'
         +liveP+pill(vTxt,vCol)+mkBar+(cp!=null?'<span style="color:'+fcCol(cp)+'">資金'+fcLab(cp)+'</span>':'');   // 大盤短結論放前面(手機列寬不夠時,被裁掉的是資金)
