@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-11T18:51Z">
+<meta name="build" content="2026-10-11T23:18Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -673,7 +673,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T18:51Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T23:18Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1319,7 +1319,7 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipQ" title="CTA+技判+資金 整合:K線上直接標 頂K/減碼/出/抄底/買,滑過字看說明" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #8ab4f8;'+(CHIP_Q?'background:rgba(138,180,248,.15);color:#8ab4f8':'color:var(--muted);opacity:.55')+'">📊量化</span>'
-    +' <span class="cidxchipW" role="button" tabindex="0" aria-pressed="'+CHIP_SW+'" title="短線 ▲底/▼頂:超賣/超買(RSI2、布林、九轉)+ 隔天真的轉向;△回檔:長期向上(200 日線上)收到 7 天最低。底/回檔買、下一個頂賣;個股的底看大盤量化基金(CTA)分強弱、上升趨勢中的頂標灰(灰=較弱,先不照著做);滑過看這檔過去的成績" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+SW_C.bot+';'+(CHIP_SW?'background:rgba(56,189,248,.15);color:'+SW_C.bot:'color:var(--muted);opacity:.55')+'">短線</span>'
+    +' <span class="cidxchipW" role="button" tabindex="0" aria-pressed="'+CHIP_SW+'" title="短線 ▲底/▼頂:超賣/超買(RSI2、布林、九轉)+ 隔天真的轉向;△回檔:長期向上(200 日線上)收到 7 天最低。底/回檔買、下一個頂賣;個股的底看大盤量化基金(CTA)分強弱(灰=較弱);破底中的第幾個買點標 ②③;頂 = 每個減一小部分;滑過看這檔過去的成績" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+SW_C.bot+';'+(CHIP_SW?'background:rgba(56,189,248,.15);color:'+SW_C.bot:'color:var(--muted);opacity:.55')+'">短線</span>'
     +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="Astra 研究用:圖上 A候/A進/A出(v0.1 規則)+ K 線下方粉紅軌道(v0.3 研究事件,只標日期);還沒證明有用,不是買賣建議" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
@@ -5388,23 +5388,25 @@ function astra3Lane(R,x,MB,XW){   // 回傳 {traces, n(視窗內輪數), label};
   return {traces:T,n:inWin,label:txt?{text:txt,x:(best[0]+best[1])/2}:null};
 }
 // ===== 📍 短線 底/頂/回檔(2026-10-12 使用者:「要日K的短期底、短期頂,做槓桿 ETF 成本調節;70% 是目標、不是上線門檻,先上線我才能幫你找 bug」)=====
-// 規則(研究 research/swing_marks_2026-10-11/s1–s3、research/swing_tune_2026-10-12/s4–s6(預先登記 p0/p1/p2);Python 參考 research/swing_tune_2026-10-12/swing_ref_v09.py,與本函式同式):
+// 規則(研究 research/swing_marks_2026-10-11/s1–s3、research/swing_tune_2026-10-12/s4–s6(預先登記 p0/p1/p2);Python 參考 research/swing_tune_2026-10-12/swing_ref_v10.py,與本函式同式):
 //   ▲底 = 近 3 天(含今天)出現過超賣(RSI2 ≤10、收盤 ≤ 布林下緣、九轉買 9 任一)+ 今天收盤 > 昨天最高(真的轉向);同邊冷卻 5 根
 //   ▼頂 = 近 3 天出現過超買(RSI2 ≥90、收盤 ≥ 布林上緣、九轉賣 9 任一)+ 今天收盤 < 昨天最低;同邊冷卻 5 根
 //   △回檔 = 收盤 > 200 日均線,而且是 7 天最低收盤(Connors「Double 7s」;第 1 輪 D1 通過);冷卻 5 根
 //   ▲底的強/弱(只分個股;第 1 輪 D2):大盤 QQQ 的 CTA 趨勢部位 ≤ 0(趨勢型量化基金已經賣到空手/淨空)= 強;其餘 = 弱(灰)
-//   ▼頂的灰色(2026-10-12 使用者選「上升趨勢中的頂改成灰色」):50 日線 > 200 日線而且比 20 根前高 → 灰(先不賣主倉,最多減一點)
-//     第 2、3 輪(s5、s6)的預先登記規則沒有通過;資料顯示上升趨勢中的頂之後 10 天比較低的比例 ≈ 隨便一天(沒有參考價值),所以標灰是誠實標示,不是變準
+//   ▼頂:一律原色(v0.9 曾把上升趨勢中的頂標灰;2026-10-12 使用者看 NBIS 後選回原色 — 第 4 輪 s7:大跌的山有 62–83% 山頂附近的頂在上升趨勢,
+//     標灰會把大部分大頂的警告蓋掉);滑過寫「每個頂減一小部分,不要全賣」
+//   破底計數(使用者選「加在記號旁邊」):買點(▲底/△回檔)今天收盤比 20 根內某個買點那根的最低還低 = 破底,
+//     計數 = 那些買點的計數最大值 +1(沒有 = 1);≥2 才在字旁加 ②③…。第 4 輪 s7:破底中的買點平均成績和第一個差不多 → 不變灰、不刪,只幫使用者數
 //   RSI2 = Wilder 2 日;布林 = 20 日、2 倍母體標準差;九轉 = 收盤比 4 根前低(高)連續第 9 根;CTA = scripts/flow_climate.py cta_pos
 // 成績(2010-01~2026-07;隔天開盤成交、成本 0(使用者用 Firstrade 免手續費);底/回檔買 → 下一個頂賣,40 根內沒頂就第 40 根賣)= SW_GRP
 //   頂單獨用沒有優勢(10 天後比較低 ≈ 隨便一天),但大跌的「山」前後幾乎都有頂 → 用來分批賣掉前面在底買的,不適合賣光等更低
 // 槓桿 ETF 看正股(TK_UL),反向 ETF 不適用;只標已收盤日K(盤中棒不標)。
 const SW_GRP={   // research/swing_tune_2026-10-12/site_numbers_v09.json(全期 2010-01~2026-07、成本 0);b0/b2=[勝率%,平均%,中途套牢%];base=[隨便一天勝率%,平均%]
-  // tu/to = 頂之後 10 天比較低的比例(上升趨勢中 / 其他時候);s10b = 隨便一天;mtn = 大跌的山,山頂附近第一個頂躲掉的跌幅中位數
-  idx:{n:'指數 SPY/QQQ',tr:5,b0:[76.4,1.77,21.3],base:[68.7,1.40],b2:[75.7,1.83,23.4],tu:32.8,to:35.3,s10b:36.0,mtn:85},
-  mag:{n:'七巨頭',tr:10,b0:[66.8,3.02,20.6],base:[62.6,2.59],b2:[71.0,3.55,20.0],tu:41.6,to:47.6,s10b:41.6,mtn:78,cta:[72.3,65.2]},
-  ndx:{n:'Nasdaq-100',tr:10,b0:[62.7,2.19,21.9],base:[59.5,1.95],b2:[64.8,2.34,21.4],tu:43.7,to:45.3,s10b:43.5,mtn:78,cta:[70.2,60.8]},
-  all:{n:'追蹤股',tr:10,b0:[60.8,2.01,24.7],base:[57.9,1.89],b2:[63.2,2.07,23.8],tu:44.3,to:46.5,s10b:44.9,mtn:76,cta:[67.6,59.1]}};
+  // s10/s10b = 頂之後 10 天比較低的比例 / 隨便一天(s4);mtn = 大跌的山,山頂附近第一個頂躲掉的跌幅中位數
+  idx:{n:'指數 SPY/QQQ',tr:5,b0:[76.4,1.77,21.3],base:[68.7,1.40],b2:[75.7,1.83,23.4],s10:33.5,s10b:36.0,mtn:85},
+  mag:{n:'七巨頭',tr:10,b0:[66.8,3.02,20.6],base:[62.6,2.59],b2:[71.0,3.55,20.0],s10:44.1,s10b:41.6,mtn:78,cta:[72.3,65.2]},
+  ndx:{n:'Nasdaq-100',tr:10,b0:[62.7,2.19,21.9],base:[59.5,1.95],b2:[64.8,2.34,21.4],s10:44.4,s10b:43.5,mtn:78,cta:[70.2,60.8]},
+  all:{n:'追蹤股',tr:10,b0:[60.8,2.01,24.7],base:[57.9,1.89],b2:[63.2,2.07,23.8],s10:45.4,s10b:44.9,mtn:76,cta:[67.6,59.1]}};
 const SW_MAG=new Set(['AAPL','MSFT','NVDA','AMZN','GOOGL','META','TSLA']);
 const SW_NDX=new Set(['ADBE','AMD','ABNB','AMGN','ADI','AMAT','APP','ARM','ASML','ALAB','BKR','BKNG','AVGO','CDNS','CSCO','CEG','CRWV','COST','CRWD','DDOG','DASH','GILD','HON','INTC','INTU','ISRG','KLAC','LRCX','LITE','MAR','MRVL','MCHP','MU','MSTR','MPWR','NBIS','NFLX','NXPI','PLTR','PANW','PYPL','PDD','PEP','QCOM','REGN','RKLB','SNDK','STX','SHOP','SBUX','SNPS','TER','TXN','VRTX','WMT','WBD','WDC','WDAY']);   // Nasdaq-100(2026-06-05 版)扣七巨頭
 function ctaPosJS(C){   // = scripts/flow_climate.py cta_pos(回看 21/63/126/252 根、波動 90 根(至少 60)、目標 15%、上限 2)
@@ -5452,10 +5454,10 @@ function swSeriesJS(B){   // B=[[d,o,h,l,c,…],…] 已收盤日K(舊→新)→
   bot.forEach(i=>{const e=ex(top,i);if(e>=n||i+1>=n)return;rt.bn++;if(O[e]>O[i+1])rt.bw++;});
   b2.forEach(i=>{const e=ex(top,i);if(e>=n||i+1>=n)return;rt.b2n++;if(O[e]>O[i+1])rt.b2w++;});
   top.forEach(i=>{const e=ex(bot,i);if(e>=n||i+1>=n)return;rt.tn++;if(O[e]<O[i+1])rt.tw++;});
-  // ▼頂當天是不是上升趨勢:50 日線 > 200 日線,而且 50 日線比 20 根前高(逐根相加,和 Python 參考同式)
-  const ma=(i,k)=>{if(i-k+1<0)return null;let s=0;for(let q=i-k+1;q<=i;q++)s+=C[q];return s/k;};
-  const tup={};top.forEach(i=>{const a=ma(i,50),b=ma(i,200),c=ma(i-20,50);tup[i]=(a!=null&&b!=null&&c!=null&&a>b&&a>c);});
-  return {n:n,D:D,H:H,L:L,C:C,bot:bot,top:top,b2:b2,m200:m200,why:why,rt:rt,tup:tup,y0:D[0]};
+  // 破底計數:買點 t 的收盤 < 20 根內買點 s 那根的最低(破底)→ rep[t] = 這些 s 的 rep 最大值 +1;都沒有 = 1
+  const buys=bot.concat(b2).sort((a,b)=>a-b), rep={};
+  buys.forEach(t=>{let best=0;for(const s of buys){if(s<t-20||s>=t)continue;if(C[t]<L[s]&&rep[s]>best)best=rep[s];}rep[t]=best+1;});
+  return {n:n,D:D,H:H,L:L,C:C,bot:bot,top:top,b2:b2,m200:m200,why:why,rt:rt,rep:rep,y0:D[0]};
 }
 function swLayer(R,x,o3,MB){   // 回傳 {traces, up[], dn[], n}(up/dn = 這根有沒有 頂/底/回檔,給 量化 往外排字用);不適用 → null
   const ul=TK_UL[CHIP_SYM]||null, na=TK_INV.has(CHIP_SYM)||(CHIP_SYM in TK_UL&&!ul); if(na)return null;
@@ -5472,39 +5474,37 @@ function swLayer(R,x,o3,MB){   // 回傳 {traces, up[], dn[], n}(up/dn = 這根�
   const r2_=W.rt.b2n?W.rt.b2n+' 次有 '+W.rt.b2w+' 次賺('+pct(W.rt.b2w,W.rt.b2n)+')':'次數不夠';
   const rT=W.rt.tn?W.rt.tn+' 次有 '+W.rt.tw+' 次買得比較便宜('+pct(W.rt.tw,W.rt.tn)+')':'次數不夠';
   const trap=g.tr+'%';
-  const up=new Array(R.length).fill(0),dn=new Array(R.length).fill(0),P={b:{x:[],y:[],h:[],c:[]},t:{x:[],y:[],h:[],c:[]},r:{x:[],y:[],h:[]}};
+  const CIRC='②③④⑤⑥⑦⑧⑨⑩', cn=k=>k>=2?(k<=10?CIRC[k-2]:'('+k+')'):'';   // 破底中的第 k 個買點
+  const repL=k=>k>=2?'<br><b>破底中的第 '+k+' 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)':'';
+  const up=new Array(R.length).fill(0),dn=new Array(R.length).fill(0),P={b:{x:[],y:[],h:[],c:[],t:[]},t:{x:[],y:[],h:[]},r:{x:[],y:[],h:[],t:[]}};
   W.bot.forEach(j=>{const i=di.get(W.D[j]);if(i==null)return;dn[i]=1;P.b.x.push(x[i]);P.b.y.push(R[i].l-o3*1.0);
     let gl='',col=SW_C.bot;
     if(!isIdx){const cv=Q?Q.get(W.D[j]):undefined;
       if(cv==null)gl='<br>大盤量化部位資料還沒到,先不分強弱';
       else if(cv<=0)gl='<br><b>強</b>:大盤的趨勢型量化基金(CTA)已經賣到空手 → '+g.n+' 過去 '+g.cta[0]+'%';
       else{gl='<br><b style="color:'+QGRAY+'">弱</b>:大盤還在多頭、量化基金還有多單 → '+g.n+' 過去 '+g.cta[1]+'%(隨便一天 '+g.base[0]+'%)';col=QGRAY;}}
-    P.b.c.push(col);
-    P.b.h.push('<b>底</b> '+W.D[j].slice(5)+' · 短線轉向,可以買一部分'+pre+gl+'<br>近 3 天超賣('+astraEsc(W.why[j])+'),今天收盤站上昨天最高 '+f2(W.H[j-1])
+    P.b.c.push(col);P.b.t.push('底'+cn(W.rep[j]||1));
+    P.b.h.push('<b>底</b> '+W.D[j].slice(5)+' · 短線轉向,可以買一部分'+pre+repL(W.rep[j]||1)+gl+'<br>近 3 天超賣('+astraEsc(W.why[j])+'),今天收盤站上昨天最高 '+f2(W.H[j-1])
       +'<br>到下一個「頂」賣(40 天內沒頂就第 40 天賣):這檔近 '+yrs+' 年 '+rB
       +'<br>'+g.n+'(2010–2026)'+g.b0[0]+'%,隨便一天買 '+g.base[0]+'%;中途被套超過 '+trap+':'+g.b0[2]+'%');});
-  W.b2.forEach(j=>{const i=di.get(W.D[j]);if(i==null)return;dn[i]=1;P.r.x.push(x[i]);P.r.y.push(R[i].l-o3*1.0);
-    P.r.h.push('<b>回檔</b> '+W.D[j].slice(5)+' · 長期向上中的回檔'+pre+'<br>收盤是 7 天最低,但還在 200 日線('+f2(W.m200[j])+')上面'
+  W.b2.forEach(j=>{const i=di.get(W.D[j]);if(i==null)return;dn[i]=1;P.r.x.push(x[i]);P.r.y.push(R[i].l-o3*1.0);P.r.t.push('回'+cn(W.rep[j]||1));
+    P.r.h.push('<b>回檔</b> '+W.D[j].slice(5)+' · 長期向上中的回檔'+pre+repL(W.rep[j]||1)+'<br>收盤是 7 天最低,但還在 200 日線('+f2(W.m200[j])+')上面'
       +'<br>還沒轉向:可以先買一小部分,等「底」出現再加'
       +'<br>到下一個「頂」賣:這檔近 '+yrs+' 年 '+r2_
       +'<br>'+g.n+'(2010–2026)'+g.b2[0]+'%,隨便一天買 '+g.base[0]+'%;中途被套超過 '+trap+':'+g.b2[2]+'%');});
   W.top.forEach(j=>{const i=di.get(W.D[j]);if(i==null)return;up[i]=1;P.t.x.push(x[i]);P.t.y.push(R[i].h+o3*1.0);
-    const gu=!!W.tup[j];P.t.c.push(gu?QGRAY:SW_C.top);
-    P.t.h.push(gu?('<b style="color:'+QGRAY+'">頂</b> '+W.D[j].slice(5)+' · 上升趨勢中:先不賣主倉,最多減一點'+pre
-        +'<br>50 日線在 200 日線上、還在往上;這種頂之後 10 天還比較高 '+Math.round(100-g.tu)+'%(和隨便一天差不多)'
-        +'<br>近 3 天超買('+astraEsc(W.why[j])+'),今天收盤跌破昨天最低 '+f2(W.L[j-1]))
-      :('<b>頂</b> '+W.D[j].slice(5)+' · 前面在底買的可以先賣一部分'+pre+'<br>近 3 天超買('+astraEsc(W.why[j])+'),今天收盤跌破昨天最低 '+f2(W.L[j-1])
-        +'<br>不在上升趨勢:之後 10 天比較低 '+g.to+'%(隨便一天 '+g.s10b+'%);大跌前後幾乎都有頂 → 分批賣,不要一次賣光'
-        +'<br>這檔:賣了等下一個底(最多 40 天)買回,近 '+yrs+' 年 '+rT));});
+    P.t.h.push('<b>頂</b> '+W.D[j].slice(5)+' · 減一小部分,不要全賣'+pre+'<br>近 3 天超買('+astraEsc(W.why[j])+'),今天收盤跌破昨天最低 '+f2(W.L[j-1])
+      +'<br>大跌前幾乎都會出現頂(大跌的山:山頂附近的頂中位數躲掉 '+g.mtn+'% 跌幅),但上漲途中也常出現 → 每個頂減一點'
+      +'<br>單看 10 天:頂之後比較低 '+g.s10+'%(隨便一天 '+g.s10b+'%)· 這檔賣了等下一個底買回,近 '+yrs+' 年 '+rT);});
   const T=[], hl=c=>({bgcolor:'#1d1f24',bordercolor:c,font:{size:11,color:'#e6e9ef'}});
-  if(P.b.x.length)T.push({type:'scatter',mode:'markers+text',x:P.b.x,y:P.b.y,text:P.b.x.map(()=>'底'),textposition:'bottom center',
+  if(P.b.x.length)T.push({type:'scatter',mode:'markers+text',x:P.b.x,y:P.b.y,text:P.b.t,textposition:'bottom center',
     marker:{symbol:'triangle-up',size:MB?6:7,color:P.b.c},textfont:{size:MB?9:10,color:P.b.c},customdata:P.b.h,
     hovertemplate:'%{customdata}<extra></extra>',hoverlabel:hl(SW_C.bot),showlegend:false,name:'短線 底',meta:'swing'});
-  if(P.r.x.length)T.push({type:'scatter',mode:'markers+text',x:P.r.x,y:P.r.y,text:P.r.x.map(()=>'回'),textposition:'bottom center',
+  if(P.r.x.length)T.push({type:'scatter',mode:'markers+text',x:P.r.x,y:P.r.y,text:P.r.t,textposition:'bottom center',
     marker:{symbol:'triangle-up-open',size:MB?6:7,color:SW_C.bot,line:{width:1.4,color:SW_C.bot}},textfont:{size:MB?9:10,color:SW_C.bot},customdata:P.r.h,
     hovertemplate:'%{customdata}<extra></extra>',hoverlabel:hl(SW_C.bot),showlegend:false,name:'短線 回檔',meta:'swing'});
   if(P.t.x.length)T.push({type:'scatter',mode:'markers+text',x:P.t.x,y:P.t.y,text:P.t.x.map(()=>'頂'),textposition:'top center',
-    marker:{symbol:'triangle-down',size:MB?6:7,color:P.t.c},textfont:{size:MB?9:10,color:P.t.c},customdata:P.t.h,
+    marker:{symbol:'triangle-down',size:MB?6:7,color:SW_C.top},textfont:{size:MB?9:10,color:SW_C.top},customdata:P.t.h,
     hovertemplate:'%{customdata}<extra></extra>',hoverlabel:hl(SW_C.top),showlegend:false,name:'短線 頂',meta:'swing'});
   // 最高的「頂」字、最低的「底/回」字可能被價格區上下緣切掉 → 各放一個看不見的點把價格軸撐開(同 量化 qpad)
   const pad=(X,Y,s)=>{if(!Y.length)return;let k=0;Y.forEach((v,i2)=>{if(s*v>s*Y[k])k=i2;});

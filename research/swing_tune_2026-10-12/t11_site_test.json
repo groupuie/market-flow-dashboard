@@ -1,0 +1,1203 @@
+{
+ "checks": [
+  {
+   "key": "MU:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 15,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 3,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 5
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 6,
+    "2": 2,
+    "3": 2
+   }
+  },
+  {
+   "key": "MU:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 37,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 6,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 15
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 4,
+    "1": 14,
+    "3": 4
+   }
+  },
+  {
+   "key": "SNDK:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 20,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 4,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 6
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 2,
+    "3": 2,
+    "4": 2,
+    "1": 7,
+    "5": 1
+   }
+  },
+  {
+   "key": "SNDK:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 30,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 5,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 11
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 12,
+    "2": 2,
+    "3": 2,
+    "4": 2,
+    "5": 1
+   }
+  },
+  {
+   "key": "NVDA:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 13,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 3,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 3
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 1,
+    "4": 2,
+    "1": 6,
+    "3": 1
+   }
+  },
+  {
+   "key": "NVDA:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 33,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 8,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 7
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 15,
+    "2": 5,
+    "3": 4,
+    "4": 2
+   }
+  },
+  {
+   "key": "NBIS:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 22,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 5,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 7
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 6,
+    "2": 4,
+    "4": 3,
+    "3": 2
+   }
+  },
+  {
+   "key": "NBIS:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 48,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 13,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 13
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 14,
+    "4": 5,
+    "2": 11,
+    "3": 4,
+    "5": 1
+   }
+  },
+  {
+   "key": "QQQ:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 13,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 0,
+    "未分": 0,
+    "不分(指數)": 3
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 4
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 3,
+    "3": 3,
+    "1": 3
+   }
+  },
+  {
+   "key": "QQQ:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 34,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 0,
+    "未分": 0,
+    "不分(指數)": 9
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 10
+   },
+   "rep_match_py": true,
+   "reps": {
+    "3": 6,
+    "1": 11,
+    "2": 7
+   }
+  },
+  {
+   "key": "SPY:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 20,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 0,
+    "未分": 0,
+    "不分(指數)": 4
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 7
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 7,
+    "2": 5,
+    "3": 1
+   }
+  },
+  {
+   "key": "SPY:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 43,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 0,
+    "未分": 0,
+    "不分(指數)": 11
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 15
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 10,
+    "1": 15,
+    "4": 1,
+    "3": 2
+   }
+  },
+  {
+   "key": "AAPL:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 15,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 2,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 6
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 4,
+    "1": 4,
+    "3": 1
+   }
+  },
+  {
+   "key": "AAPL:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 40,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 7,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 15
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 9,
+    "4": 2,
+    "1": 10,
+    "3": 4
+   }
+  },
+  {
+   "key": "TSLA:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 11,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 4,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 6
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 3,
+    "2": 1,
+    "3": 1
+   }
+  },
+  {
+   "key": "TSLA:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 34,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 2,
+    "弱": 11,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 10
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 6,
+    "5": 3,
+    "1": 7,
+    "7": 1,
+    "8": 1,
+    "9": 1,
+    "3": 2,
+    "4": 1,
+    "6": 2
+   }
+  },
+  {
+   "key": "AVGO:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 17,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 5,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 6
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 3,
+    "1": 5,
+    "4": 1,
+    "5": 1,
+    "3": 1
+   }
+  },
+  {
+   "key": "AVGO:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 38,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 13,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 10
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 12,
+    "2": 9,
+    "4": 3,
+    "3": 3,
+    "5": 1
+   }
+  },
+  {
+   "key": "META:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 13,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 4,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 7
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 3,
+    "2": 2,
+    "3": 1
+   }
+  },
+  {
+   "key": "META:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 25,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 2,
+    "弱": 8,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 13
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 7,
+    "2": 4,
+    "3": 1
+   }
+  },
+  {
+   "key": "PLTR:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 11,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 5,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 5
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 5,
+    "2": 1
+   }
+  },
+  {
+   "key": "PLTR:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 30,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 13,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 8
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 12,
+    "3": 3,
+    "2": 4,
+    "4": 1,
+    "5": 1,
+    "6": 1
+   }
+  },
+  {
+   "key": "MUU:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 15,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 3,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 5
+   },
+   "rep_match_py": true,
+   "reps": {
+    "1": 6,
+    "2": 2,
+    "3": 2
+   }
+  },
+  {
+   "key": "MUU:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 37,
+   "names": [
+    "短線 回檔",
+    "短線 底",
+    "短線 頂"
+   ],
+   "marks_same_as_old": true,
+   "legend": true,
+   "grade_match_py": true,
+   "grades": {
+    "強": 1,
+    "弱": 6,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 15
+   },
+   "rep_match_py": true,
+   "reps": {
+    "2": 4,
+    "1": 14,
+    "3": 4
+   }
+  },
+  {
+   "key": "SQQQ:100",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 0,
+   "names": [],
+   "marks_same_as_old": true,
+   "legend": null,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 0,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 0
+   },
+   "rep_match_py": true,
+   "reps": {}
+  },
+  {
+   "key": "SQQQ:250",
+   "off_all_same_as_old": true,
+   "on_other_same_as_off": true,
+   "on_other_same_as_old_on": true,
+   "on_quant_text_same": true,
+   "x_category": true,
+   "n_swing": 0,
+   "names": [],
+   "marks_same_as_old": true,
+   "legend": null,
+   "grade_match_py": true,
+   "grades": {
+    "強": 0,
+    "弱": 0,
+    "未分": 0,
+    "不分(指數)": 0
+   },
+   "top_gray_match_py": true,
+   "tops": {
+    "灰": 0,
+    "原": 0
+   },
+   "rep_match_py": true,
+   "reps": {}
+  }
+ ],
+ "jspy": {
+  "MU": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 49,
+   "n_top": 63,
+   "n_b2": 52,
+   "rt": {
+    "bn": 49,
+    "bw": 32,
+    "tn": 60,
+    "tw": 34,
+    "b2n": 51,
+    "b2w": 37
+   }
+  },
+  "SNDK": {
+   "bars": 416,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 12,
+   "n_top": 20,
+   "n_b2": 17,
+   "rt": {
+    "bn": 12,
+    "bw": 9,
+    "tn": 19,
+    "tw": 7,
+    "b2n": 15,
+    "b2w": 13
+   }
+  },
+  "NVDA": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 42,
+   "n_top": 55,
+   "n_b2": 54,
+   "rt": {
+    "bn": 42,
+    "bw": 31,
+    "tn": 53,
+    "tw": 23,
+    "b2n": 53,
+    "b2w": 44
+   }
+  },
+  "NBIS": {
+   "bars": 494,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 19,
+   "n_top": 20,
+   "n_b2": 24,
+   "rt": {
+    "bn": 19,
+    "bw": 12,
+    "tn": 18,
+    "tw": 7,
+    "b2n": 23,
+    "b2w": 15
+   }
+  },
+  "QQQ": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 49,
+   "n_top": 58,
+   "n_b2": 59,
+   "rt": {
+    "bn": 49,
+    "bw": 33,
+    "tn": 57,
+    "tw": 24,
+    "b2n": 59,
+    "b2w": 44
+   }
+  },
+  "SPY": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 51,
+   "n_top": 60,
+   "n_b2": 57,
+   "rt": {
+    "bn": 51,
+    "bw": 41,
+    "tn": 58,
+    "tw": 28,
+    "b2n": 57,
+    "b2w": 47
+   }
+  },
+  "AAPL": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 45,
+   "n_top": 64,
+   "n_b2": 53,
+   "rt": {
+    "bn": 45,
+    "bw": 30,
+    "tn": 61,
+    "tw": 27,
+    "b2n": 52,
+    "b2w": 36
+   }
+  },
+  "TSLA": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 63,
+   "n_top": 49,
+   "n_b2": 36,
+   "rt": {
+    "bn": 63,
+    "bw": 37,
+    "tn": 46,
+    "tw": 21,
+    "b2n": 36,
+    "b2w": 16
+   }
+  },
+  "AVGO": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 51,
+   "n_top": 67,
+   "n_b2": 62,
+   "rt": {
+    "bn": 51,
+    "bw": 38,
+    "tn": 65,
+    "tw": 36,
+    "b2n": 62,
+    "b2w": 44
+   }
+  },
+  "META": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 44,
+   "n_top": 60,
+   "n_b2": 42,
+   "rt": {
+    "bn": 44,
+    "bw": 22,
+    "tn": 58,
+    "tw": 33,
+    "b2n": 41,
+    "b2w": 28
+   }
+  },
+  "PLTR": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 50,
+   "n_top": 54,
+   "n_b2": 49,
+   "rt": {
+    "bn": 50,
+    "bw": 29,
+    "tn": 53,
+    "tw": 22,
+    "b2n": 49,
+    "b2w": 36
+   }
+  },
+  "MUU": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 49,
+   "n_top": 63,
+   "n_b2": 52,
+   "rt": {
+    "bn": 49,
+    "bw": 32,
+    "tn": 60,
+    "tw": 34,
+    "b2n": 51,
+    "b2w": 37
+   }
+  },
+  "SQQQ": {
+   "bars": 1250,
+   "same_bot": true,
+   "same_top": true,
+   "same_b2": true,
+   "same_tup": true,
+   "same_rt": true,
+   "cta_maxdiff": 6.661338147750939e-16,
+   "cta_null_mismatch": 0,
+   "n_bot": 55,
+   "n_top": 49,
+   "n_b2": 5,
+   "rt": {
+    "bn": 54,
+    "bw": 23,
+    "tn": 49,
+    "tw": 36,
+    "b2n": 5,
+    "b2w": 3
+   }
+  }
+ },
+ "scen": {
+  "MUU_follows_MU": {
+   "MU": 37,
+   "MUU": 37,
+   "MUU_subset_of_MU": true
+  },
+  "inverse_SQQQ_no_swing": true,
+  "weekly_no_swing": true,
+  "hover_samples": {
+   "短線 底:弱:底②": "<b>底</b> 11-24 · 短線轉向,可以買一部分<br><b>破底中的第 2 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)<br><b style=\"color:#8b8f98\">弱</b>:大盤還在多頭、量化基金還有多單 → Nasdaq-100 過去 60.8%(隨便一天 59.5%)<br>近 3 天超賣(RSI2 2、碰布林下緣),今天收盤站上昨天最高 211.79<br>到下一個「頂」賣(40 天內沒頂就第 40 天賣):這檔近 5 年 49 次有 32 次賺(65%)<br>Nasdaq-100(2010–2026)62.7%,隨便一天買 59.5%;中途被套超過 10%:21.9%",
+   "短線 底:弱:底": "<b>底</b> 12-18 · 短線轉向,可以買一部分<br><b style=\"color:#8b8f98\">弱</b>:大盤還在多頭、量化基金還有多單 → Nasdaq-100 過去 60.8%(隨便一天 59.5%)<br>近 3 天超賣(RSI2 4、RSI2 9),今天收盤站上昨天最高 237.22<br>到下一個「頂」賣(40 天內沒頂就第 40 天賣):這檔近 5 年 49 次有 32 次賺(65%)<br>Nasdaq-100(2010–2026)62.7%,隨便一天買 59.5%;中途被套超過 10%:21.9%",
+   "短線 底:強:底③": "<b>底</b> 04-01 · 短線轉向,可以買一部分<br><b>破底中的第 3 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)<br><b>強</b>:大盤的趨勢型量化基金(CTA)已經賣到空手 → Nasdaq-100 過去 70.2%<br>近 3 天超賣(RSI2 2、碰布林下緣),今天收盤站上昨天最高 337.79<br>到下一個「頂」賣(40 天內沒頂就第 40 天賣):這檔近 5 年 49 次有 32 次賺(65%)<br>Nasdaq-100(2010–2026)62.7%,隨便一天買 59.5%;中途被套超過 10%:21.9%",
+   "短線 底:弱:底③": "<b>底</b> 07-30 · 短線轉向,可以買一部分<br><b>破底中的第 3 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)<br><b style=\"color:#8b8f98\">弱</b>:大盤還在多頭、量化基金還有多單 → Nasdaq-100 過去 60.8%(隨便一天 59.5%)<br>近 3 天超賣(RSI2 3、碰布林下緣、RSI2 6),今天收盤站上昨天最高 841.80<br>到下一個「頂」賣(40 天內沒頂就第 40 天賣):這檔近 5 年 49 次有 32 次賺(65%)<br>Nasdaq-100(2010–2026)62.7%,隨便一天買 59.5%;中途被套超過 10%:21.9%",
+   "短線 回檔:None:回": "<b>回檔</b> 11-04 · 長期向上中的回檔<br>收盤是 7 天最低,但還在 200 日線(118.45)上面<br>還沒轉向:可以先買一小部分,等「底」出現再加<br>到下一個「頂」賣:這檔近 5 年 51 次有 37 次賺(73%)<br>Nasdaq-100(2010–2026)64.8%,隨便一天買 59.5%;中途被套超過 10%:21.4%",
+   "短線 回檔:None:回③": "<b>回檔</b> 03-06 · 長期向上中的回檔<br><b>破底中的第 3 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)<br>收盤是 7 天最低,但還在 200 日線(214.94)上面<br>還沒轉向:可以先買一小部分,等「底」出現再加<br>到下一個「頂」賣:這檔近 5 年 51 次有 37 次賺(73%)<br>Nasdaq-100(2010–2026)64.8%,隨便一天買 59.5%;中途被套超過 10%:21.4%",
+   "短線 回檔:None:回②": "<b>回檔</b> 07-13 · 長期向上中的回檔<br><b>破底中的第 2 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)<br>收盤是 7 天最低,但還在 200 日線(468.15)上面<br>還沒轉向:可以先買一小部分,等「底」出現再加<br>到下一個「頂」賣:這檔近 5 年 51 次有 37 次賺(73%)<br>Nasdaq-100(2010–2026)64.8%,隨便一天買 59.5%;中途被套超過 10%:21.4%",
+   "短線 頂:None:頂": "<b>頂</b> 10-21 · 減一小部分,不要全賣<br>近 3 天超買(RSI2 93),今天收盤跌破昨天最低 205.30<br>大跌前幾乎都會出現頂(大跌的山:山頂附近的頂中位數躲掉 78% 跌幅),但上漲途中也常出現 → 每個頂減一點<br>單看 10 天:頂之後比較低 44.4%(隨便一天 43.5%)· 這檔賣了等下一個底買回,近 5 年 60 次有 34 次買得比較便宜(57%)"
+  },
+  "hover_samples_QQQ": {
+   "短線 底": "<b>底</b> 11-24 · 短線轉向,可以買一部分<br><b>破底中的第 3 個買點</b>:收盤比前一個買點的最低還低 → 照你自己的分批上限(例如最多 3 批)<br>近 3 天超賣(RSI2 10、碰布林下緣),今天收盤站上昨天最高 594.19<br>到下一個「頂」賣(40 天內沒頂就第 40 天賣):這檔近 5 年 49 次有 33 次賺(67%)<br>指數 SPY/QQQ(2010–2026)76.4%,隨便一天買 68.7%;中途被套超過 5%:21.3%"
+  }
+ },
+ "old_build": "2026-10-11T18:51Z",
+ "old_errors": [],
+ "new_build": "2026-10-11T18:51Z",
+ "default_sw_on": true,
+ "new_errors": [],
+ "mobile": {
+  "n_swing": 15,
+  "overflow": false,
+  "errors": [],
+  "legend": true
+ }
+}
