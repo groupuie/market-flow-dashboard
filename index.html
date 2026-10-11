@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-11T07:20Z">
+<meta name="build" content="2026-10-11T07:45Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -673,7 +673,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T07:20Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T07:45Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -2293,8 +2293,8 @@ const CKC={};
 function cockpitRows(sym){
   const bars=chipBars(sym); if(!bars||bars.length<(CHIP_PD==='y'?5:CHIP_PD==='m'?12:30))return null;   // 260→30(2026-08-06);月K≥12根/年K≥5根即可看
   const _ck=sym+':'+CHIP_PD;   // 快取鍵含週期(2026-08-08 多週期)
-  const cch=CKC[_ck];
-  if(cch&&cch.n===bars.length&&cch.last===+bars[bars.length-1][4])return cch.rows;
+  const cch=CKC[_ck], _kb=(CHIPK[sym]||{}).bars;   // 2026-10-11:日K檔換了一份(補中間的天、前復權改舊價)→ 一定重算(原本只比筆數+最後收盤,會沿用舊結果)
+  if(cch&&cch.n===bars.length&&cch.last===+bars[bars.length-1][4]&&cch.kb===_kb)return cch.rows;
   const n=bars.length, C=bars.map(b=>+b[4]), V=bars.map(b=>+(b[5]||0));
   const P=new Array(n+1).fill(0), PV=new Array(n+1).fill(0);
   for(let i=0;i<n;i++){P[i+1]=P[i]+C[i];PV[i+1]=PV[i]+V[i];}
@@ -2332,7 +2332,7 @@ function cockpitRows(sym){
       tds:Math.max(tds[i],tds[i-1],tds[i-2]),tdb:Math.max(tdb[i],tdb[i-1],tdb[i-2]),
       tds0:tds[i],tdb0:tdb[i],volr:v60>0?V[i]/v60:1,volr5:(v60>0&&v5!=null)?v5/v60:1,c5:i>=5?C[i-5]:null});
   }
-  CKC[_ck]={n:bars.length,last:+bars[bars.length-1][4],rows:rows};
+  CKC[_ck]={n:bars.length,last:+bars[bars.length-1][4],kb:_kb,rows:rows};
   return rows;
 }
 // ===== C訊號(Claude 參考層,2026-08-07):與使用者◆★指標組完全獨立的第二參考;純前端自算、零token =====
@@ -3214,7 +3214,8 @@ function dqBanner(){
     const lag=lastClosed?dqTradLag(lastClosed,lastDone):99;
     if(lag>=1){
       // 停更自癒:每 10 分鐘重抓一次此檔(修復檔推上 gist 後,不必手動重新整理頁面)
-      if(Date.now()-(CHIPK[sym+'_t']||0)>600e3){delete CHIPK[sym];delete CHIPK[sym+'_r'];try{ensureChipK(sym);}catch(_){}}
+      // 2026-10-11:改走 chipKRefresh(10 分鐘一次背景重抓;舊圖先留著,抓失敗不清掉、不閃「載入中」/「尚無日K」)。原本是先刪快取再重抓。
+      try{chipKRefresh(sym);}catch(_){}
       const why=(src==='yahoo-lookup'||src==='yahoo-ext')
         ?'每日自動補檔尚未跑到(2026-09-22 起:收盤後約 1 小時內補齊,⚡點播檔同樣每日更新;連續多日未補=Mac 採集器待查)'
         :'日K更新延遲(富途採集待查)';
@@ -5071,11 +5072,27 @@ function idxKNeed(K,t){
   let l='';for(const d in K)if(d>l)l=d;
   return l<tjLastDone()&&Date.now()-t>600e3;
 }
+// 2026-10-11 Codex v0.4「資料補好了,畫面還留著舊判斷」:
+//   ① 日K檔固定 1250 根(每天丟最舊、加最新,筆數不變),又是富途前復權(配息後整段舊價會重算)→ 檔有沒有變要比「內容」,不能比筆數;
+//   ② 駕駛艙快取鍵(dataset.sig)只看最後一根:中間補回一天、舊價重算,鍵都不變 → 不重畫。
+//   → 收到內容真的不同的檔:換上、清掉駕駛艙快取鍵(個股另清它的指標快取 CKC)、重畫一次;內容相同或比手上舊 → 不動、不重畫。
+function idxKLast(K){let l='';for(const d in (K||{}))if(d>l)l=d;return l;}
+function idxKEqual(a,b){
+  if(!a||!b)return a===b;
+  const ks=Object.keys(a);
+  return ks.length===Object.keys(b).length&&ks.every(d=>Object.prototype.hasOwnProperty.call(b,d)&&+a[d]===+b[d]);
+}
+function invalidateCockpitK(sym){
+  if(sym&&typeof CKC!=='undefined')Object.keys(CKC).forEach(k=>{if(k.startsWith(sym+':'))delete CKC[k];});
+  const el=document.getElementById('cockpit');if(el)el.dataset.sig='';
+}
 function ensureSpyK(){
   if(SPYK_req||!idxKNeed(SPYK,SPYK_t))return; SPYK_req=true; SPYK_t=Date.now();
   fetch(DATA_URL.replace('market_data.json','kline_SPY.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(d=>{if(d&&d.bars){const k={};d.bars.forEach(b=>{k[b[0]]=b[4];});const chg=!SPYK||Object.keys(k).length!==Object.keys(SPYK).length;SPYK=k;if(chg)render();}})
+    .then(d=>{if(!(d&&d.bars&&d.bars.length))return;const k={};d.bars.forEach(b=>{k[b[0]]=b[4];});
+      if(idxKLast(k)<idxKLast(SPYK)||idxKEqual(SPYK,k))return;
+      SPYK=k;invalidateCockpitK();render();})
     .catch(()=>{}).finally(()=>{SPYK_req=false;});
 }
 let QQQK=null,QQQK_req=false,QQQK_t=0;   // QQQ 日K快取(池水位線多日疊圖;📊量化「加」的大盤條件)
@@ -5083,7 +5100,9 @@ function ensureQQQK(){
   if(QQQK_req||!idxKNeed(QQQK,QQQK_t))return; QQQK_req=true; QQQK_t=Date.now();
   fetch(DATA_URL.replace('market_data.json','kline_QQQ.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(d=>{if(d&&d.bars){const k={};d.bars.forEach(b=>{k[b[0]]=b[4];});const chg=!QQQK||Object.keys(k).length!==Object.keys(QQQK).length;QQQK=k;if(chg)render();}})
+    .then(d=>{if(!(d&&d.bars&&d.bars.length))return;const k={};d.bars.forEach(b=>{k[b[0]]=b[4];});
+      if(idxKLast(k)<idxKLast(QQQK)||idxKEqual(QQQK,k))return;
+      QQQK=k;invalidateCockpitK();render();})
     .catch(()=>{}).finally(()=>{QQQK_req=false;});
 }
 // 📊量化「加」用的 QQQ 收盤 = 日K檔(QQQK)+ 富途當日快照棒(kline_today)。規則同個股 chipBars:
@@ -5109,9 +5128,14 @@ function chipKRefresh(sym){
   CHIPK[sym+'_rr']=true; K._rt=Date.now();
   fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(d=>{if(d&&d.bars&&d.bars.length&&d.bars[d.bars.length-1][0]>fl){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
+    .then(d=>{if(!(d&&d.bars&&d.bars.length))return;
+      const cur=(CHIPK[sym]&&CHIPK[sym].bars&&CHIPK[sym].bars.length)?CHIPK[sym]:K;   // 跟「現在手上」那份比(等回應期間可能已被換新)
+      // 末日相同也可能是補回中間的天、或前復權改了舊價(2026-10-11 Codex v0.4);比手上舊、或內容完全相同 → 不動、不重畫
+      if(d.bars[d.bars.length-1][0]<cur.bars[cur.bars.length-1][0]||JSON.stringify(d.bars)===JSON.stringify(cur.bars))return;
+      const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
       CHIPK[sym]={close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||'',_rt:Date.now()};
-      if(DATA&&!DATA._partial){try{renderChips();}catch(e){console.warn(e);}}}})
+      invalidateCockpitK(sym);
+      if(DATA&&!DATA._partial){try{renderChips();}catch(e){console.warn(e);}}})
     .catch(()=>{}).finally(()=>{delete CHIPK[sym+'_rr'];});
 }
 // ===== 🧪 Astra資金 研究層(2026-10-11 接入 Astra v0.1.0;預設關)=====
