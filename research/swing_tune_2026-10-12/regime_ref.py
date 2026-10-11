@@ -11,12 +11,12 @@ def atr_wilder(H, L, C, n=14):
         out[i] = a
     return out
 
-def zz_pivots(H, L, C, atr, k=1.5, lo=0.03, hi=0.08):
+def zz_pivots(H, L, C, atr, k=1.5, dlo=0.03, dhi=0.08):
     n = len(C); piv = []
     if n < 2: return piv
     dirn = 0; hi = 0; lo = 0; ext = 0
     for t in range(1, n):
-        dev = min(hi, max(lo, k * atr[t] / C[t])) if (atr[t] is not None and C[t] > 0) else 0.05
+        dev = min(dhi, max(dlo, k * atr[t] / C[t])) if (atr[t] is not None and C[t] > 0) else 0.05
         if dirn == 0:
             if H[t] > H[hi]: hi = t
             if L[t] < L[lo]: lo = t
@@ -43,8 +43,8 @@ def zz_pivots(H, L, C, atr, k=1.5, lo=0.03, hi=0.08):
                 ext = m
     return piv
 
-def regime(H, L, C, k=1.5, lo=0.03, hi=0.08):   # 第 2 輪 = 預設(1.5 倍 ATR、3–8%);第 3 輪通道尺度 = (3, 0.03, 0.30)
-    n = len(C); atr = atr_wilder(H, L, C); piv = zz_pivots(H, L, C, atr, k, lo, hi)
+def regime(H, L, C, k=1.5, dlo=0.03, dhi=0.08):   # 第 2 輪 = 預設(1.5 倍 ATR、3–8%);第 3 輪通道尺度 = (3, 0.03, 0.30)
+    n = len(C); atr = atr_wilder(H, L, C); piv = zz_pivots(H, L, C, atr, k, dlo, dhi)
     reg = [0] * n; lastH = [None] * n; lastL = [None] * n; prevH = [None] * n; prevL = [None] * n
     hs = []; ls = []; p = 0
     for t in range(n):
