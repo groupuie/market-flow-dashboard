@@ -1,0 +1,16 @@
+舊版 BUILD 2026-10-11T14:23Z / 新版 BUILD 2026-10-11T14:23Z / 短線預設開 True
+  off_other_same_as_old: 24/24 OK
+  off_quant_same_except_chaodi: 24/24 OK
+  off_quant_y_changed_only_on_chaodi_bars: 24/24 OK
+  on_other_same_as_off: 24/24 OK
+  qpad_outward: 24/24 OK
+  on_quant_same_text: 24/24 OK
+  x_category: 24/24 OK
+  抄底 舊→新: {'MU:100': (0, 1), 'MU:250': (0, 2), 'SNDK:100': (0, 1), 'SNDK:250': (0, 1), 'NVDA:100': (0, 0), 'NVDA:250': (0, 0), 'QQQ:100': (0, 0), 'QQQ:250': (0, 0), 'SPY:100': (0, 0), 'SPY:250': (0, 0), 'AAPL:100': (0, 0), 'AAPL:250': (0, 0), 'TSLA:100': (0, 1), 'TSLA:250': (0, 1), 'AVGO:100': (0, 0), 'AVGO:250': (0, 0), 'INTC:100': (0, 2), 'INTC:250': (0, 2), 'META:100': (0, 0), 'META:250': (0, 2), 'MUU:100': (0, 1), 'MUU:250': (0, 2), 'SQQQ:100': (0, 0), 'SQQQ:250': (0, 0)}
+  新抄底 3 根內不再標的「買」: {'META:250': ['04-09']}
+  短線記號數: {'MU:100': 8, 'MU:250': 22, 'SNDK:100': 10, 'SNDK:250': 17, 'NVDA:100': 6, 'NVDA:250': 16, 'QQQ:100': 7, 'QQQ:250': 19, 'SPY:100': 11, 'SPY:250': 26, 'AAPL:100': 8, 'AAPL:250': 23, 'TSLA:100': 10, 'TSLA:250': 23, 'AVGO:100': 11, 'AVGO:250': 24, 'INTC:100': 9, 'INTC:250': 20, 'META:100': 11, 'META:250': 23, 'MUU:100': 8, 'MUU:250': 22, 'SQQQ:100': 0, 'SQQQ:250': 0}
+  量化狀態列(短線開關)相同: True
+JS↔Python: {'MU': (True, True, True, 49, 63), 'SNDK': (True, True, True, 12, 20), 'NVDA': (True, True, True, 42, 55), 'QQQ': (True, True, True, 49, 58), 'SPY': (True, True, True, 51, 60), 'AAPL': (True, True, True, 45, 64), 'TSLA': (True, True, True, 63, 49), 'AVGO': (True, True, True, 51, 67), 'INTC': (True, True, True, 52, 47), 'META': (True, True, True, 44, 60), 'MUU': (True, True, True, 49, 63), 'SQQQ': (True, True, True, 55, 49)}
+情境: {"MUU_follows_MU": {"MU": 22, "MUU": 22, "MUU_subset_of_MU": true}, "inverse_SQQQ_no_swing": true, "weekly_no_swing": true, "hover_sample": "<b>底</b> 11-24 · 短線可以買一部分<br>近 3 天超賣(RSI2 2、碰布林下緣),今天收盤站上昨天最高 211.79<br>到下一個「頂」賣:這檔近 5 年 47 次有 31 次賣得比買高(66%)<br>追蹤股(2010–2026)64%,隨便一天買是 61%;通常 2~3 週", "toggle_off": true}
+手機: {'n_swing': 8, 'overflow': False, 'errors': []}
+頁面錯誤 舊: []  新: []
