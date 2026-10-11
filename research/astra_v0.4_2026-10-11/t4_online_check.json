@@ -1,0 +1,112 @@
+{
+ "files": {
+  "index.html": {
+   "live": "071a339e246496e08c2dc5db1bb935b470ab2e9df7caf462ac4253cdba07d4a6",
+   "repo": "071a339e246496e08c2dc5db1bb935b470ab2e9df7caf462ac4253cdba07d4a6",
+   "same": true
+  },
+  "astra-v03-events.json?v=0.3.0-1": {
+   "live": "3b059cf8f35bff92d481992f2b33c65204dc4d29b8db709b4d659f4d1e0d0a46",
+   "repo": "3b059cf8f35bff92d481992f2b33c65204dc4d29b8db709b4d659f4d1e0d0a46",
+   "same": true
+  },
+  "astra-flow.js?v=0.1.0": {
+   "live": "854637a925a22f8b04b50576431410d22560ef671996c06b1dcee0dee20f03c4",
+   "repo": "854637a925a22f8b04b50576431410d22560ef671996c06b1dcee0dee20f03c4",
+   "same": true
+  },
+  "astra-dashboard-adapter.js?v=0.1.0": {
+   "live": "5a9d1513bcc3a00a6fd4bd14295f7c7e8db34b1f2dcd5d08d9a3be90e8162c2d",
+   "repo": "5a9d1513bcc3a00a6fd4bd14295f7c7e8db34b1f2dcd5d08d9a3be90e8162c2d",
+   "same": true
+  }
+ },
+ "desktop": {
+  "build": "2026-10-11T14:23Z",
+  "defaultOff": true,
+  "symbols": {
+   "MU": {
+    "lane_match": true,
+    "n": 16,
+    "y12": true,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 研究 15 輪 ⓘ 詳情",
+    "xType": "category"
+   },
+   "NVDA": {
+    "lane_match": true,
+    "n": 0,
+    "y12": true,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 4 輪 ⓘ 詳情",
+    "xType": "category"
+   },
+   "AAPL": {
+    "lane_match": true,
+    "n": 0,
+    "y12": true,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-11) · v0.3 這檔沒事件 ⓘ 詳情",
+    "xType": "category"
+   },
+   "TSM": {
+    "lane_match": true,
+    "n": 0,
+    "y12": false,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 A候:先觀察(還不是買點) · v0.3 沒研究這檔 ⓘ 詳情",
+    "xType": "category"
+   }
+  },
+  "overflow": false,
+  "errors": []
+ },
+ "mobile": {
+  "build": "2026-10-11T14:23Z",
+  "defaultOff": true,
+  "symbols": {
+   "MU": {
+    "lane_match": true,
+    "n": 16,
+    "y12": true,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 研究 15 輪 ⓘ 詳情",
+    "xType": "category"
+   },
+   "NVDA": {
+    "lane_match": true,
+    "n": 0,
+    "y12": true,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 4 輪 ⓘ 詳情",
+    "xType": "category"
+   },
+   "AAPL": {
+    "lane_match": true,
+    "n": 0,
+    "y12": true,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-11) · v0.3 這檔沒事件 ⓘ 詳情",
+    "xType": "category"
+   },
+   "TSM": {
+    "lane_match": true,
+    "n": 0,
+    "y12": false,
+    "a3": "ok",
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra 研究用 10-09 v0.1 A候:先觀察(還不是買點) · v0.3 沒研究這檔 ⓘ 詳情",
+    "xType": "category"
+   }
+  },
+  "overflow": false,
+  "errors": []
+ }
+}
