@@ -1,0 +1,98 @@
+{
+ "MU": {
+  "bars": 251,
+  "hotTouch": 37,
+  "blockedOff": 35,
+  "marked": 2,
+  "markedDates": [
+   "2026-01-30",
+   "2026-05-07"
+  ],
+  "conjunctionEqualsOfficial": true
+ },
+ "SNDK": {
+  "bars": 251,
+  "hotTouch": 52,
+  "blockedOff": 47,
+  "marked": 5,
+  "markedDates": [
+   "2025-10-17",
+   "2025-10-27",
+   "2026-01-08",
+   "2026-01-30",
+   "2026-06-16"
+  ],
+  "conjunctionEqualsOfficial": true
+ },
+ "TSM": {
+  "bars": 251,
+  "hotTouch": 6,
+  "blockedOff": 6,
+  "marked": 0,
+  "markedDates": [],
+  "conjunctionEqualsOfficial": true
+ },
+ "TSM_2026-06-03": {
+  "date": "2026-06-03",
+  "index": 1160,
+  "ready": true,
+  "marked": false,
+  "gates": {
+   "hot": false,
+   "touch": true,
+   "off": false
+  },
+  "blocked": [
+   "hot",
+   "off"
+  ],
+  "unknown": [],
+  "offPct": 2.9931,
+  "thresholdPct": 5,
+  "r20Pct": 10.7198,
+  "ext50Pct": 13.2357,
+  "distanceAtr": 1.4993979608349213,
+  "high": 447.927,
+  "close": 434.52,
+  "upperBand": 439.66987082081874
+ },
+ "TSM_2026-10-05": {
+  "date": "2026-10-05",
+  "index": 1245,
+  "ready": true,
+  "marked": false,
+  "gates": {
+   "hot": true,
+   "touch": true,
+   "off": false
+  },
+  "blocked": [
+   "off"
+  ],
+  "unknown": [],
+  "offPct": 0.3426,
+  "thresholdPct": 5,
+  "r20Pct": 13.5646,
+  "ext50Pct": 14.1065,
+  "distanceAtr": 4.088748623700442,
+  "high": 487.47,
+  "close": 485.8,
+  "upperBand": 480.00332537913346
+ },
+ "NVDA": {
+  "bars": 251,
+  "hotTouch": 4,
+  "blockedOff": 4,
+  "marked": 0,
+  "markedDates": [],
+  "conjunctionEqualsOfficial": true
+ },
+ "META": {
+  "bars": 251,
+  "hotTouch": 10,
+  "blockedOff": 10,
+  "marked": 0,
+  "markedDates": [],
+  "conjunctionEqualsOfficial": true
+ }
+}
