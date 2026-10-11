@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-11T07:45Z">
+<meta name="build" content="2026-10-11T14:23Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -673,7 +673,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T07:45Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T14:23Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1301,6 +1301,7 @@ let CHIP_FC=false;  // 🌐 全球資金氣候 ▲▼ 舊版獨立層(2026-10-10
 let CHIP_Q=true;    // 📊 量化整合層(2026-10-10 使用者:CTA+技判+資金整合,K線上直接標 頂K/減碼/出/抄底/買;預設開)
 let CHIP_ASTRA=false;   // 🧪 Astra資金 研究層(2026-10-11 接入 Astra v0.1.0;預設關;與 📊量化 完全獨立,不讀寫 CHIP_Q)
 let ASTRA_UI={key:'',rev:0,res:null};   // Astra 計算快取:輸入(日K、SPY、截止日、版本)沒變就不重算
+let ASTRA3={st:'idle',d:null,rev:0};   // 🧪 Astra v0.3 研究事件(K 線下方「只標日期」的軌道;2026-10-11 依 Astra v0.4 §5;靜態研究檔,開 Astra 才載入)
 const ASTRA_C='#f472b6', ASTRA_C2='#f9a8d4';   // Astra 記號統一粉紅:避開量化 頂K(琥珀)、加(青綠)、出(紅) 與 TD 買方計數(青)
 let CHIP_ZOOM=false;// P7-1 滑鼠滾輪縮放+拖曳模式(預設關;開啟後滾輪不再捲頁而是縮放)
 let CHIPF_IDX={SPY:false,QQQ:false};   // P7-7 現金池變化圖專屬疊加(與上方 K線圖疊加鈕獨立)
@@ -1316,7 +1317,7 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipQ" title="CTA+技判+資金 整合:K線上直接標 頂K/減碼/出/抄底/買,滑過字看說明" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #8ab4f8;'+(CHIP_Q?'background:rgba(138,180,248,.15);color:#8ab4f8':'color:var(--muted);opacity:.55')+'">📊量化</span>'
-    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="Astra 的研究用記號 A候/A進/A出(只看已收盤日K);還沒證明有用,不是買賣建議" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
+    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="Astra 研究用:圖上 A候/A進/A出(v0.1 規則)+ K 線下方粉紅軌道(v0.3 研究事件,只標日期);還沒證明有用,不是買賣建議" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
@@ -3284,7 +3285,7 @@ function renderCockpit(){
     +(CHIP_Q?':Q1'+(function(){const u=CHIP_PD==='d'?TK_UL[CHIP_SYM]:null;if(!u)return '';   // 📊量化:槓桿ETF看正股 → 正股日K/盤中價變動也要重繪
       try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':q'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':Q0')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?':k'+qqqSig():'')   // 📊量化「加」要 QQQ 日K:到了、或有新收盤(含當日快照)就重畫(2026-10-11)   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
-    +(CHIP_ASTRA?':A1r'+ASTRA_UI.rev:':A0');   // 🧪 Astra:開關 + 計算版次(日K/SPY/截止日/程式版本任一變就換)
+    +(CHIP_ASTRA?':A1r'+ASTRA_UI.rev+':A3r'+ASTRA3.rev:':A0');   // 🧪 Astra:開關 + 計算版次(日K/SPY/截止日/程式版本任一變就換)+ v0.3 事件檔載入版次
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   // x 類別標籤必須唯一(2026-08-08 使用者揪出:週/月K跨年後 'MM-DD' 重複 → category 軸同名互撞、K棒疊格錯亂)
@@ -4320,6 +4321,8 @@ function renderCockpit(){
   }catch(e){}
   // 🧪 Astra資金:記號放在所有既有圖層之後(不改變任何既有 trace 的順序與內容);只在日K畫
   if(CHIP_ASTRA&&CHIP_PD==='d'&&astraRes){try{traces.push(...astraTraces(astraRes,R,x));}catch(e){try{console.warn('astra traces',e);}catch(_){}}}
+  let _a3=null;   // 🧪 Astra v0.3 研究事件:K 線下方「只標日期」的細軌道(自己的 y12 軸,不在價格座標上;Astra 關 = null、版面完全不變)
+  if(CHIP_ASTRA&&CHIP_PD==='d'){try{_a3=astra3Lane(R,x,MB,XW);if(_a3)traces.push(..._a3.traces);}catch(e){_a3=null;try{console.warn('astra v0.3 lane',e);}catch(_){}}}
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   // ===== 手機版面(2026-08-04 使用者指定,參照富途 App 比例)=====
   // 問題:五面板共用桌機版 960px 高 + l40/r44 邊距 → 手機繪圖區僅 ~306px 寬、主圖 518px 高
@@ -4332,8 +4335,11 @@ function renderCockpit(){
   // 手機主圖壓扁(2026-08-05 二次調整,使用者指定仿富途「扁平」感):
   // 富途手機主圖 ≈ 390×245pt = 1.6:1 寬扁 → 走勢讀起來是緩坡;原 46.5% 高(310×262≈1.2:1)偏方形。
   // 改:總高 600px、主圖 38.2%(=200px,310/200≈1.55:1),副圖像素高度幾乎不變。
-  const DOM=MB?{y:[0.618,1.0],y7:[0.508,0.603],y8:[0.359,0.493],y9:[0.244,0.334],y10:[0,0.229]}
-              :{y:[0.46,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
+  const _a3g=_a3?(MB?0.014:0.016):0;   // 🧪 Astra v0.3 軌道開著:K 線區底邊上移一點,讓出細軌道(手機約 15px、桌機約 18px);沒開 = 0
+  const DOM=MB?{y:[0.618+_a3g,1.0],y7:[0.508,0.603],y8:[0.359,0.493],y9:[0.244,0.334],y10:[0,0.229]}
+              :{y:[0.46+_a3g,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
+  if(_a3&&_a3.label)ann.push({xref:'x',x:_a3.label.x,xanchor:'center',yref:'paper',y:(DOM.y7[1]+DOM.y[0])/2,yanchor:'middle',showarrow:false,
+    text:_a3.label.text,font:{size:MB?7.5:8,color:'rgba(249,168,212,.85)'}});   // 軌道標籤:放在最長的空白段中間(不蓋事件)
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     ...(MB?{boxgap:0}:{}),   // 燭身加寬(見上方 K 棒註解;本圖無其他 box 族 trace,無副作用)
     margin:{l:MB?6:10,r:MB?8:50,t:MB?58:34,b:MB?26:30},   // MB t58:三行標頭(標題/圖例/CTA數值列,2026-08-08)
@@ -4359,6 +4365,7 @@ function renderCockpit(){
       _y10r?{range:_y10r}:{}),
     yaxis11:Object.assign({overlaying:'y10',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
       _y11r?{range:_y11r}:{}),
+    ...(_a3?{yaxis12:{domain:[DOM.y7[1],DOM.y[0]],range:[0,1],fixedrange:true,showgrid:false,zeroline:false,showline:false,showticklabels:false,ticks:''}}:{}),   // 🧪 Astra v0.3 只標日期軌道(固定 0–1,沒有價格)
     shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
             {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot).concat((function(){try{return fcBandShapes(DOM.y,XW);}catch(_){return [];}})()),
     annotations:ann};
@@ -5144,6 +5151,7 @@ function chipKRefresh(sym){
 //   ・與 📊量化 完全獨立:不讀寫 CHIP_Q、不動任何量化記號;週/月/年/全史不標
 //   ・槓桿/反向 ETF(TK_UL / TK_INV 名單,再補資金流分類「槓桿/反向」,例:SH)不適用,也不拿正股代替;債券/現金/商品/加密 不在範圍
 //   ・網站端顯示調整:記號統一粉紅(ASTRA_C),滑過說明縮短(使用者 2026-10-10:說明要短、只要知道要不要動作)
+//   ・2026-10-11 晚(Astra v0.4 × Claude v0.5 共識):詳情窗先講「目前沒有通過驗證的買賣點」;K 線下方加 v0.3「只標日期」研究軌道(astra3Lane,見下方)
 const ASTRA_WHY={PERSISTENT_PRESSURE_BREAKOUT:'買壓持續、放量突破',DRY_BASE_RECLAIM:'量縮守穩後轉強',
   CLOSE_BELOW_RISK_LINE:'收盤跌破風險線',TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE:'連兩天收在 20 日線下、買壓轉負',
   DISTRIBUTION_BELOW_SIGNAL_AVWAP:'跌破進場後均價、又有放量下跌',
@@ -5166,6 +5174,7 @@ function astraScope(sym){   // Astra v0.1 適用範圍 = 一般美股 + 非槓�
 function astraPrepare(){   // renderCockpit 開頭呼叫(在快取早退之前):時間推進、SPY 到檔、換股都會即時反映
   const host=document.getElementById('astrastrip');
   if(!CHIP_ASTRA){stripHide(host);if(host)host._ak='';return null;}
+  try{astra3Load();}catch(_){}   // v0.3 研究事件檔(靜態、約 13KB):第一次開 Astra 才抓,抓到後自己重畫
   const sym=CHIP_SYM, period=CHIP_WIN==='max'?'max':CHIP_PD, asOfDate=tjLastDone();
   const scope=astraScope(sym), na=scope==='lev';
   let key,run=null;
@@ -5202,12 +5211,21 @@ function astraFail(e){   // 外掛出錯:顯示錯誤、清掉舊結果(不能�
 function astraStrip(res,sym){   // 一行狀態列 + 「ⓘ 詳情」懸浮窗(沿用 stripSet;只有點詳情框才開)
   const host=document.getElementById('astrastrip'); if(!host)return;
   const ACC='rgba(244,114,182,.30)',BG='rgba(244,114,182,.05)';
-  const head='<b style="color:'+ASTRA_C+'">🧪 Astra資金</b><span style="color:#898781">研究用</span>';
+  const head='<b style="color:'+ASTRA_C+'">🧪 Astra</b><span style="color:#898781">研究用</span>';
   const pill=(t,c,big)=>'<span style="padding:'+(big?'2px 10px':'1px 8px')+';border-radius:6px;font-weight:700;'+(big?'font-size:13px;':'')+'background:'+c+'26;color:'+c+'">'+t+'</span>';
   const mut=t=>'<span style="color:#898781">'+t+'</span>';
-  const legend='<div class="sphr"></div><div><b style="color:'+ASTRA_C2+'">A候</b> 條件快到了,先觀察(不是買) · <b style="color:'+ASTRA_C+'">A進</b> 規則的進場日 · <b style="color:'+ASTRA_C+'">A出</b> 規則的出場日</div>'
-    +'<div>這是 Astra 的研究規則,<b>還沒證明有用</b>:過去約 5 年 19 檔回放,只有 1 檔贏過一直抱著 → 先別照著買賣。</div>'
+  // 2026-10-11 依 Astra v0.4 × Claude v0.5 的共識改寫:先講結論(不要照著買賣),再分「圖上 v0.1 規則」與「K 線下方 v0.3 研究事件」
+  const I3=(CHIP_PD==='d'&&CHIP_WIN!=='max')?astra3Info(sym):null;   // v0.3 軌道只在日K
+  const n3=!I3?'':I3.st==='loading'?'v0.3 載入中':I3.st==='err'?'v0.3 資料沒載入':I3.st==='out'?'v0.3 沒研究這檔':(I3.n?'v0.3 研究 '+I3.n+' 輪':'v0.3 這檔沒事件');
+  const note3=n3?mut('· '+n3):'';
+  const top='<div style="margin:4px 0 1px"><b>結論:目前沒有通過驗證的買賣點 → 先別照著買賣</b></div>'
+    +'<div class="spmut">Astra v0.4 × Claude v0.5 討論後的共識(還在繼續談)</div>';
+  const v1leg='<div class="sphr"></div><div><b style="color:'+ASTRA_C+'">圖上記號</b>(Astra v0.1 規則):<b style="color:'+ASTRA_C2+'">A候</b> 條件快到了,先觀察(不是買) · <b style="color:'+ASTRA_C+'">A進</b> 規則的進場日 · <b style="color:'+ASTRA_C+'">A出</b> 規則的出場日</div>';
+  const v1note='<div class="spmut">v0.1 回放:約 5 年 19 檔,只有 1 檔贏過一直抱著</div>';
+  const rest=astra3Pop(I3,sym)
+    +'<div class="sphr"></div><div class="spmut">還沒做到:70% 勝率;「放空比例高 → 之後偏弱」換 341 檔沒重現;散戶/機構逐筆分類只試了 AAPL 一天</div>'
     +'<div class="spmut">只用已收盤的日K(不含盤中);和 📊量化 分開算、互不影響 · 不是投資建議</div>';
+  const legend=top+v1leg+v1note+rest;
   const st=res&&res.status;
   let bar,pop='';
   if(!res||st==='WAIT')bar=head+mut('日K / SPY 載入中…');
@@ -5238,10 +5256,10 @@ function astraStrip(res,sym){   // 一行狀態列 + 「ⓘ 詳情」懸浮窗(�
         +(noSpy?'SPY 日K沒載入,暫時不會標 A進':(miss.length?'要標 A進 還缺:'+miss.join('、'):''));
     }
     const warn=noSpy?'SPY 沒載入':(stale?'日K檔還沒更新':'');   // STALE:只用日K檔(不含富途快照)→ 收盤後到日K檔補上前會先亮這個
-    bar=head+'<span style="color:'+(warn?'#f87171':'#898781')+'">'+(res.dataThrough?res.dataThrough.slice(5):'—')+(warn?' · '+warn:'')+'</span>'+pill(p,pc);
-    pop='<div class="sprow"><b style="color:'+ASTRA_C+';font-size:12.5px">🧪 '+astraEsc(sym)+' Astra資金(研究用)</b><span class="spmut">'+astraEsc(res.dataThrough||'')+' 收盤'
+    bar=head+'<span style="color:'+(warn?'#f87171':'#898781')+'">'+(res.dataThrough?res.dataThrough.slice(5):'—')+(warn?' · '+warn:'')+'</span>'+pill('v0.1 '+p,pc)+note3;   // 標 v0.1:這是舊規則的狀態,不是兩邊的結論
+    pop='<div class="sprow"><b style="color:'+ASTRA_C+';font-size:12.5px">🧪 '+astraEsc(sym)+' Astra(研究用)</b><span class="spmut">'+astraEsc(res.dataThrough||'')+' 收盤'
       +(warn?' · <b style="color:#f87171">'+(noSpy?'SPY 日K沒載入':'日K檔還沒更新到最近收盤日 '+astraEsc(res.asOfDate||''))+'</b>':'')+'</span></div>'
-      +'<div style="margin:5px 0">'+pill(p,pc,true)+'</div>'+(now?'<div>現在:'+now+'</div>':'')+legend;
+      +top+v1leg+'<div style="margin:5px 0">'+pill(p,pc,true)+'</div>'+(now?'<div>現在:'+now+'</div>':'')+v1note+rest;
   }
   const html=bar+'\u0001'+pop;
   if(host._ak===html&&host.style.display!=='none')return;   // 內容沒變就不重建(每分鐘行情更新不閃)
@@ -5270,6 +5288,89 @@ function astraTraces(res,R,x){   // 圖上記號:用 Astra 原版 traces(完整�
     t.hoverlabel=Object.assign({},t.hoverlabel,{bordercolor:c});
   });
   return T;
+}
+// ===== 🧪 Astra v0.3 研究事件軌道(2026-10-11;依 Astra v0.4.0「給 Claude 的接入結論」第 5 點)=====
+// K 線下方另畫「只表示事件日期」的研究軌道:沒有價格座標、不是本圖成交價(Astra 研究用 Alpaca 只除權的價格,和本圖口徑不同,
+// 所以 v0.3 不畫在 K 棒上,原 adapter 的價格守門也沒有放寬)。
+// 資料 = astra-v03-events.json(research/astra_v0.4_2026-10-11/build_events.py 由 Astra 交付的帳本轉出,SHA-256 逐位元核對;網頁不重算)。
+// 顯示的是 Astra 的「診斷模型」(只用價格的邏輯迴歸,門檻 0.55);Astra 事前選定的模型(梯度提升樹·價+量)評估期 0 筆 → 沒有事件可畫,詳情窗照實寫。
+const A3_ACT={ENTRY:'建倉',ADD:'回補',REDUCE:'減碼 1/3',EXIT:'出清'};
+const A3_WHY={MODEL_ENTRY_NEXT_OPEN:'模型分數過門檻,隔天開盤買',TRIM_NEXT_OPEN:'漲多或出現出貨量,隔天開盤減 1/3',
+  CASH_FUNDED_ADD_NEXT_OPEN:'回檔後重新轉強,用減碼的錢買回',TREND_EXIT_NEXT_OPEN:'連兩天收在 20 日線下、資金轉負,隔天開盤賣',
+  STOP:'碰到停損',GAP_STOP:'開盤跳空跌破停損',TIME_63_CLOSE:'持有滿 63 天(約 3 個月)'};
+function astra3Load(){   // 只抓一次;成功或失敗都換版次 → renderCockpit 的快取鍵會變、自己重畫
+  if(ASTRA3.st!=='idle')return;
+  ASTRA3.st='loading';
+  fetch('astra-v03-events.json?v=0.3.0-1').then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(d=>{if(!d||d.schema!==1||!d.campaigns||!Array.isArray(d.symbols))throw new Error('事件檔格式不對');ASTRA3={st:'ok',d:d,rev:ASTRA3.rev+1};})
+    .catch(e=>{try{console.warn('astra v0.3 events',e);}catch(_){}ASTRA3={st:'err',d:null,rev:ASTRA3.rev+1};})
+    .finally(()=>{try{if(CHIP_ASTRA)renderChips();}catch(_){}});
+}
+function astra3Info(sym){   // 這一檔在 v0.3 研究裡的狀態(狀態列、詳情窗、軌道共用)
+  if(ASTRA3.st==='idle'||ASTRA3.st==='loading')return {st:'loading'};
+  if(ASTRA3.st!=='ok')return {st:'err'};
+  if(!ASTRA3.d.symbols.includes(sym))return {st:'out'};
+  const C=ASTRA3.d.campaigns[sym]||[];
+  return {st:'ok',C:C,n:C.length,w:C.filter(c=>c.ret>0).length};
+}
+function astra3Pop(I,sym){   // 詳情窗裡的 v0.3 段落(短句、先講怎麼看)
+  if(!I)return '';
+  let s='<div class="sphr"></div><div><b style="color:'+ASTRA_C+'">K 線下方粉紅軌道</b> = Astra v0.3 研究事件(只標日期)</div>';
+  if(I.st==='loading')return s+'<div class="spmut">研究事件載入中…</div>';
+  if(I.st==='err')return s+'<div class="spmut">研究事件檔沒載入(網路或部署問題)</div>';
+  if(I.st==='out')return s+'<div class="spmut">'+astraEsc(sym)+' 不在 v0.3 研究的 30 檔裡 → 沒有軌道</div>';
+  const D=ASTRA3.d, S=D.summary||{}, p=(D.period||{}).evaluationSignals||[];
+  let d0=null; try{const rows=cockpitRows(sym)||[]; if(rows.length)d0=rows.slice(-Math.max(30,Math.min(+CHIP_WIN||250,250)))[0].d;}catch(_){}
+  const early=d0?I.C.filter(c=>{const f=c.f||[];return f.length&&f[f.length-1][1]<d0;}).length:0;   // 整輪在目前視窗之前 → 圖上看不到
+  return s+'<div>▲建倉 △回補 ▽減碼 ▼出清;橫線 = 研究裡持有的期間</div>'
+    +'<div>這檔(研究期 '+String(p[0]||'').slice(0,7)+' ~ '+String(p[1]||'').slice(0,7)+')'+(I.n?'共 '+I.n+' 輪:賺 '+I.w+'、賠 '+(I.n-I.w):'沒有事件')+'</div>'
+    +(early?'<div class="spmut">其中 '+early+' 輪在 '+astraEsc(d0)+' 以前,這個視窗看不到(日K最多看 250 天)</div>':'')
+    +'<div class="spmut">這是 Astra 的診斷模型(只用價格),不是它事先選定的模型——選定的模型這段期間一次都沒出手。30 檔合計 '
+    +S.n+' 輪、賺 '+S.wins+' 輪('+(+S.winRate).toFixed(1)+'%)。軌道沒有價格位置,也不是本圖的成交價。</div>';
+}
+function astra3Lane(R,x,MB,XW){   // 回傳 {traces, n(視窗內輪數), label};不在研究名單/還沒載入 → null(不畫軌道、版面不變)
+  if(CHIP_PD!=='d'||!R||!R.length)return null;
+  const I=astra3Info(CHIP_SYM); if(I.st!=='ok')return null;
+  const di=new Map();R.forEach((r,i)=>di.set(r.d,i));
+  const d0=R[0].d,d1=R[R.length-1].d, sx=[],sy=[], P={ENTRY:[],ADD:[],REDUCE:[],EXIT:[]}, occ=[];
+  let inWin=0;
+  I.C.forEach(c=>{
+    const f=c.f||[]; if(!f.length)return;
+    const e=f[0][1], z=f[f.length-1][1];
+    if(z<d0||e>d1)return;   // 整輪都在視窗外
+    inWin++;
+    const i0=e<d0?0:di.get(e), i1=z>d1?R.length-1:di.get(z);
+    if(i0!=null&&i1!=null&&i1>i0){sx.push(x[i0],x[i1],null);sy.push(0.5,0.5,null);occ.push([i0,i1]);}   // 持有期間 = 橫線(視窗外的部分切掉)
+    f.forEach(q=>{const k=q[0],d=q[1],i=di.get(d); if(i==null||!P[k])return;
+      occ.push([i,i]);
+      P[k].push({x:x[i],d:d,tip:'<b>🧪 Astra v0.3 研究事件</b> '+astraEsc(d.slice(5))+' '+A3_ACT[k]
+        +'<br>'+astraEsc(A3_WHY[q[2]]||q[2])
+        +(k==='EXIT'?'<br>這一輪研究結果 '+(c.ret>0?'+':'')+(+c.ret).toFixed(1)+'%(持有 '+c.hold+' 天)':'')
+        +'<br><span style="color:#898781">診斷模型 · 只標日期,不是本圖價格 · 不是買賣建議</span>'});});
+  });
+  const sz=MB?8:9, T=[];
+  if(sx.length)T.push({type:'scatter',mode:'lines',x:sx,y:sy,yaxis:'y12',line:{color:'rgba(244,114,182,.45)',width:MB?2:2.5},
+    hoverinfo:'skip',showlegend:false,name:'Astra3 hold',meta:'astra-v03',cliponaxis:false});
+  const SYM={ENTRY:'triangle-up',ADD:'triangle-up-open',REDUCE:'triangle-down-open',EXIT:'triangle-down'};
+  ['ENTRY','ADD','REDUCE','EXIT'].forEach(k=>{const p=P[k]; if(!p.length)return;
+    T.push({type:'scatter',mode:'markers',x:p.map(o=>o.x),y:p.map(()=>0.5),yaxis:'y12',
+      marker:{symbol:SYM[k],size:sz,color:ASTRA_C,line:{width:(k==='ADD'||k==='REDUCE')?1.6:0,color:ASTRA_C}},
+      customdata:p.map(o=>o.tip),hovertemplate:'%{customdata}<extra></extra>',
+      hoverlabel:{bgcolor:'#1d1f24',bordercolor:ASTRA_C,font:{size:11,color:'#e6e9ef'}},
+      showlegend:false,name:'Astra3 '+k,meta:'astra-v03',cliponaxis:false});});
+  // 軌道標籤放在「最長的空白段」中間,永遠不蓋到事件;空白太短就用短標籤,再不夠就不標(詳情窗有說明)
+  const n=R.length, fs=MB?7.5:8;
+  const pxBar=Math.max(0.5,((document.getElementById('cockpit')||{}).clientWidth||400)*(MB?0.95:0.9)*(XW||1)/n);
+  const wPx=t=>Array.from(t).reduce((s,ch)=>s+(ch.charCodeAt(0)>0x2e80?fs:fs*0.6),0);
+  const pad=(sz/2+3)/pxBar, iv=occ.map(o=>[o[0]-pad,o[1]+pad]).sort((a,b)=>a[0]-b[0]);
+  let best=[-0.5,n-0.5], cur=-0.5;
+  if(iv.length){best=[0,0];
+    iv.forEach(o=>{if(o[0]-cur>best[1]-best[0])best=[cur,o[0]];cur=Math.max(cur,o[1]);});
+    if(n-0.5-cur>best[1]-best[0])best=[cur,n-0.5];}
+  const room=(best[1]-best[0])*pxBar;
+  const cand=inWin?[MB?'Astra v0.3 · 只標日期':'Astra v0.3 研究事件 · 只標日期','Astra v0.3']:['Astra v0.3:這段沒有事件','Astra v0.3'];
+  const txt=cand.find(t=>wPx(t)+10<=room)||null;
+  return {traces:T,n:inWin,label:txt?{text:txt,x:(best[0]+best[1])/2}:null};
 }
 let IDX_SHOW={SPY:true,QQQ:true};   // 疊加指數線顯示開關(使用者可切)
 function buildIdxToggle(){

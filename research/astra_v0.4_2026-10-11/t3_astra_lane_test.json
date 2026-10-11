@@ -1,0 +1,2298 @@
+{
+ "old": {
+  "MU:30:off": {
+   "sym": "MU",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "d32f06de1fab1c6d3b2fa914d0ef49c224ca8caf986f33f9643c89a65d816b75",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "fe96a9d8fdea94744ea4797f4b434033784dc5d8d81e923a076519162bf53e06",
+   "anns_sha256": "2f2c3a44c442acb7f7ee7dd16b1240027eae9cb92b460df0d640466e53cdd215"
+  },
+  "MU:30:on": {
+   "sym": "MU",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nV1": 2,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "d32f06de1fab1c6d3b2fa914d0ef49c224ca8caf986f33f9643c89a65d816b75",
+   "v1_sha256": "f4840075c1b7ce3d0de67a5f3d1724cb76eaa3dc85372282ae53b14c8b5b6640",
+   "layoutNoAnn_sha256": "fe96a9d8fdea94744ea4797f4b434033784dc5d8d81e923a076519162bf53e06",
+   "anns_sha256": "2f2c3a44c442acb7f7ee7dd16b1240027eae9cb92b460df0d640466e53cdd215"
+  },
+  "MU:100:off": {
+   "sym": "MU",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "3abcf7bfc216821657596a7b6893a0f68c726662a830251daf127425b08b7445",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "8b41d1b46aa25bdf65c704e23df991bc786b8e2197b2dc37278734f4ee91a1dd",
+   "anns_sha256": "33f14128286fcbd2e73eb9c67bf1d50f91b54e8aacb4d3be8c916378c2bc486b"
+  },
+  "MU:100:on": {
+   "sym": "MU",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 19,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "3abcf7bfc216821657596a7b6893a0f68c726662a830251daf127425b08b7445",
+   "v1_sha256": "48328e1770421df4b4c29e8afa70fbf1f7366fcf71ea5912ecb7388fe3fd0356",
+   "layoutNoAnn_sha256": "8b41d1b46aa25bdf65c704e23df991bc786b8e2197b2dc37278734f4ee91a1dd",
+   "anns_sha256": "33f14128286fcbd2e73eb9c67bf1d50f91b54e8aacb4d3be8c916378c2bc486b"
+  },
+  "MU:250:off": {
+   "sym": "MU",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "5f09f2f09e81426b5104c87152cb2e5a98a30ee3864f171bed00e13fe25e171f",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "4c841d14a8a4b023645821f35d48a13510a0b6b0d8ab4239b379766b0c61b718",
+   "anns_sha256": "776c5fbf244f6695a67edf17c6fb032bd06a6adcad3c253966744c7763116586"
+  },
+  "MU:250:on": {
+   "sym": "MU",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "5f09f2f09e81426b5104c87152cb2e5a98a30ee3864f171bed00e13fe25e171f",
+   "v1_sha256": "7ae6acd71feb475cdc0a958be731f88694d4cbd9a4442fa4f8463bfbe79138ca",
+   "layoutNoAnn_sha256": "4c841d14a8a4b023645821f35d48a13510a0b6b0d8ab4239b379766b0c61b718",
+   "anns_sha256": "776c5fbf244f6695a67edf17c6fb032bd06a6adcad3c253966744c7763116586"
+  },
+  "INTC:30:off": {
+   "sym": "INTC",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "acffe54388e655be06a90ba95b44ff548afa446deb326e5a06aed95be041c049",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "08e8a69318466524fca6be5a2c0b39e2cbfdd6e05e5503b99fef7200ee94ace8",
+   "anns_sha256": "44d83d55de0f02be1ceaebd2a603606b3184171f880e039aa3b4c34a4044ff12"
+  },
+  "INTC:30:on": {
+   "sym": "INTC",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 2,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A出 10-07:規則已出場 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "acffe54388e655be06a90ba95b44ff548afa446deb326e5a06aed95be041c049",
+   "v1_sha256": "eee8c17b9efa0c17316aa7f5ffc999c019c998c1d916db3b2d723db385f2c5c2",
+   "layoutNoAnn_sha256": "08e8a69318466524fca6be5a2c0b39e2cbfdd6e05e5503b99fef7200ee94ace8",
+   "anns_sha256": "44d83d55de0f02be1ceaebd2a603606b3184171f880e039aa3b4c34a4044ff12"
+  },
+  "INTC:100:off": {
+   "sym": "INTC",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "9edafe1a612a7e6992f0b365b749ec59683ce37c9a2ab88965cd321e6eaff17d",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "8b05aa47155be55eb343e5646ca0439ce207dafafb7a3d4d55aec3ca98d1a4e7",
+   "anns_sha256": "47530ab6221001758916e99195a9b5880cb99f52bd693e9bde1c5427b5c8621c"
+  },
+  "INTC:100:on": {
+   "sym": "INTC",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 2,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A出 10-07:規則已出場 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "9edafe1a612a7e6992f0b365b749ec59683ce37c9a2ab88965cd321e6eaff17d",
+   "v1_sha256": "eee8c17b9efa0c17316aa7f5ffc999c019c998c1d916db3b2d723db385f2c5c2",
+   "layoutNoAnn_sha256": "8b05aa47155be55eb343e5646ca0439ce207dafafb7a3d4d55aec3ca98d1a4e7",
+   "anns_sha256": "47530ab6221001758916e99195a9b5880cb99f52bd693e9bde1c5427b5c8621c"
+  },
+  "INTC:250:off": {
+   "sym": "INTC",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "c0cfff2a069ca1abaca71948415684cdd5399f6320791f51a41efcd9e665f9b8",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "40b889f0c2ef8ec5b898b58297325251d890294dbc35afadeb6273775a8a08b8",
+   "anns_sha256": "41e637d33753045552c7682cee8fd600b5d42dd6bc2a52ee49a0e6473b9fe61d"
+  },
+  "INTC:250:on": {
+   "sym": "INTC",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 18,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A出 10-07:規則已出場 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "c0cfff2a069ca1abaca71948415684cdd5399f6320791f51a41efcd9e665f9b8",
+   "v1_sha256": "5de5eb3b3166b69a2f49496f4f565ef9dd769eae9a52b960d7dc6d5544785b4f",
+   "layoutNoAnn_sha256": "40b889f0c2ef8ec5b898b58297325251d890294dbc35afadeb6273775a8a08b8",
+   "anns_sha256": "41e637d33753045552c7682cee8fd600b5d42dd6bc2a52ee49a0e6473b9fe61d"
+  },
+  "NVDA:30:off": {
+   "sym": "NVDA",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "4541e3c5c190b6c38b39337f7b53cfa6a823e5b8abb7217e3d4a901416d684c3",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "15e143745c12955fae26d7035a7d3d2487f6c34de7f4a0e7e626d186dd382fc8",
+   "anns_sha256": "d5c8b1930bb8b8e0b7be5363e3e67671a95f058d7f2891190af4da25e44afceb"
+  },
+  "NVDA:30:on": {
+   "sym": "NVDA",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 1,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "4541e3c5c190b6c38b39337f7b53cfa6a823e5b8abb7217e3d4a901416d684c3",
+   "v1_sha256": "ca58a5c74d1d44880591b7205b59428e568b0b2350468183a959b996fb459f1e",
+   "layoutNoAnn_sha256": "15e143745c12955fae26d7035a7d3d2487f6c34de7f4a0e7e626d186dd382fc8",
+   "anns_sha256": "d5c8b1930bb8b8e0b7be5363e3e67671a95f058d7f2891190af4da25e44afceb"
+  },
+  "NVDA:100:off": {
+   "sym": "NVDA",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "07bb111f1bffb3596136646a03a4ce882f5c127d68d8bf2d2129b5a75a0bf38c",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "bddc3b452a0be48e2944e5dd9a8f518254f24ee62879806c04bbcf0ce391ef83",
+   "anns_sha256": "88e10a7c0bddd28dba2c4430a3d1722748fa087d6a0e8d44c257d31e0216bc0d"
+  },
+  "NVDA:100:on": {
+   "sym": "NVDA",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "07bb111f1bffb3596136646a03a4ce882f5c127d68d8bf2d2129b5a75a0bf38c",
+   "v1_sha256": "ffa08b361084cfb0e2117fe08b02ebbeae22a15eace8fe0d17224547962d7600",
+   "layoutNoAnn_sha256": "bddc3b452a0be48e2944e5dd9a8f518254f24ee62879806c04bbcf0ce391ef83",
+   "anns_sha256": "88e10a7c0bddd28dba2c4430a3d1722748fa087d6a0e8d44c257d31e0216bc0d"
+  },
+  "NVDA:250:off": {
+   "sym": "NVDA",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "93e063ba64f43b53f90ece7b37a88642b27941890e8f43809939091acf354af8",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "c9028b3ddc7b0341c47a6b41b47e631cdf30932bf3e330fd44424b3896b2f86d",
+   "anns_sha256": "5b579a5cf36e39c270b50fe92382ced974b9e7d06f13a7dc7057a9f383c04f9a"
+  },
+  "NVDA:250:on": {
+   "sym": "NVDA",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 18,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "93e063ba64f43b53f90ece7b37a88642b27941890e8f43809939091acf354af8",
+   "v1_sha256": "871b878518c32b00baf31dfdcaa9368c9aaf7c95e27527ed1eac0b06e2a4dc09",
+   "layoutNoAnn_sha256": "c9028b3ddc7b0341c47a6b41b47e631cdf30932bf3e330fd44424b3896b2f86d",
+   "anns_sha256": "5b579a5cf36e39c270b50fe92382ced974b9e7d06f13a7dc7057a9f383c04f9a"
+  },
+  "AVGO:30:off": {
+   "sym": "AVGO",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "9fa37c47009fc628533de820ef8281b01e4b51c3160e6a156695aa60d641df5f",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "9acfa6c655d4d9bd855c0bdaf757963d2ed472923c7efaab7859e87b4de48879",
+   "anns_sha256": "0a0170f0cddeb358fe096b1f299586f352d5fce6930176516f8fd047d64fb929"
+  },
+  "AVGO:30:on": {
+   "sym": "AVGO",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "9fa37c47009fc628533de820ef8281b01e4b51c3160e6a156695aa60d641df5f",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "9acfa6c655d4d9bd855c0bdaf757963d2ed472923c7efaab7859e87b4de48879",
+   "anns_sha256": "0a0170f0cddeb358fe096b1f299586f352d5fce6930176516f8fd047d64fb929"
+  },
+  "AVGO:100:off": {
+   "sym": "AVGO",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "30e371e54e5249b20337ad9bb7058ac4744a5fd3aa36f8f03ac91b7dc7f772b5",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "4abd0b8c7516fe2e51aee8c610c2cf08e8733e03261faafedcef744fe48c01e8",
+   "anns_sha256": "a47750a6b4af7adb602a20d2984a5b8933122ba1116a3e0b5c85888594f7c4b2"
+  },
+  "AVGO:100:on": {
+   "sym": "AVGO",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 19,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "30e371e54e5249b20337ad9bb7058ac4744a5fd3aa36f8f03ac91b7dc7f772b5",
+   "v1_sha256": "e8f80c0a944eaa8f663153bc387080c5d3f1b3257b73363c441cf54b9d414e9e",
+   "layoutNoAnn_sha256": "4abd0b8c7516fe2e51aee8c610c2cf08e8733e03261faafedcef744fe48c01e8",
+   "anns_sha256": "a47750a6b4af7adb602a20d2984a5b8933122ba1116a3e0b5c85888594f7c4b2"
+  },
+  "AVGO:250:off": {
+   "sym": "AVGO",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "48d7d3247e8ca6744687d5180562d42c4f0113799a0cc0d3fb14d0e8df1cdfa6",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "a5341e1de42a04190a5f2313b5ab9d4376cd07ac0867a78ed42e66499dc2ea8a",
+   "anns_sha256": "340961e46ccbd7e19155cc12563f8eda87b63bece3de419fbe9d3108e11c4641"
+  },
+  "AVGO:250:on": {
+   "sym": "AVGO",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "48d7d3247e8ca6744687d5180562d42c4f0113799a0cc0d3fb14d0e8df1cdfa6",
+   "v1_sha256": "6e7f209c7240ec9ad7c70e77c5cddf1815d5c437b4cc480724936e4c0e850b9d",
+   "layoutNoAnn_sha256": "a5341e1de42a04190a5f2313b5ab9d4376cd07ac0867a78ed42e66499dc2ea8a",
+   "anns_sha256": "340961e46ccbd7e19155cc12563f8eda87b63bece3de419fbe9d3108e11c4641"
+  },
+  "AAPL:30:off": {
+   "sym": "AAPL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "84193cb7189566bd1a0a017b20f37729917bdc80aea10c947a5b78b98d4dedd5",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "3948231d1d61dd93cba2ccc048bd3c5a83115d05226b2dc0b73392baed54f2af",
+   "anns_sha256": "7688d3195306853167856a802dffb098cd81e41d532f173423e214f1a18111ac"
+  },
+  "AAPL:30:on": {
+   "sym": "AAPL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nV1": 2,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "84193cb7189566bd1a0a017b20f37729917bdc80aea10c947a5b78b98d4dedd5",
+   "v1_sha256": "f3b6d37105669e8828d7cf08b384eaa31462473560c211797b9170cac206ea66",
+   "layoutNoAnn_sha256": "3948231d1d61dd93cba2ccc048bd3c5a83115d05226b2dc0b73392baed54f2af",
+   "anns_sha256": "7688d3195306853167856a802dffb098cd81e41d532f173423e214f1a18111ac"
+  },
+  "AAPL:100:off": {
+   "sym": "AAPL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "b73f19c42dd33375331128370bc8e6ad2d90e1479549f445ea05c4a26c98b6a3",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "6683613b46b29b8d6b05d5c3670db2c2197c16446d4e8de5bb010946ce9ee3c3",
+   "anns_sha256": "fa85051c9c92aac67e4bd6b1609253a67f8f1ec3cbf489c9b6e11922f15674dd"
+  },
+  "AAPL:100:on": {
+   "sym": "AAPL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "b73f19c42dd33375331128370bc8e6ad2d90e1479549f445ea05c4a26c98b6a3",
+   "v1_sha256": "e6df855aa5ef827b3d470b1f19f3961c9ca8bc28912d5b4deac48651b75c6abf",
+   "layoutNoAnn_sha256": "6683613b46b29b8d6b05d5c3670db2c2197c16446d4e8de5bb010946ce9ee3c3",
+   "anns_sha256": "fa85051c9c92aac67e4bd6b1609253a67f8f1ec3cbf489c9b6e11922f15674dd"
+  },
+  "AAPL:250:off": {
+   "sym": "AAPL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "14d5497f78c65567a4c334dac06f303b6cff76de6bb18f240293ecc4edaa0e8f",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "21246ef61ec1716d2dfe2836dd192beb50d6782f16e458f04b32346d5b7c206f",
+   "anns_sha256": "b863360beae0b0f2c0cf400a2f425ed163a5407d259204b5cefa375dea08b41c"
+  },
+  "AAPL:250:on": {
+   "sym": "AAPL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "14d5497f78c65567a4c334dac06f303b6cff76de6bb18f240293ecc4edaa0e8f",
+   "v1_sha256": "36db1863b60d97a98989edd6ae7d9caf92a576ec758eb0a8647863e932f1e95f",
+   "layoutNoAnn_sha256": "21246ef61ec1716d2dfe2836dd192beb50d6782f16e458f04b32346d5b7c206f",
+   "anns_sha256": "b863360beae0b0f2c0cf400a2f425ed163a5407d259204b5cefa375dea08b41c"
+  },
+  "SNDK:30:off": {
+   "sym": "SNDK",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "74f2111f3e4a90793d1cf6b792773e77d667662678b06a714604293594953267",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "caf2c1a7bd75a6ad8cce80eaf4b475d9402d89bb5b856be55f73cd4bb4ef3ea2",
+   "anns_sha256": "a21a65b208912c688b622ef280a7b7948420e258fd3fc5fa4745d9ce9e626676"
+  },
+  "SNDK:30:on": {
+   "sym": "SNDK",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "74f2111f3e4a90793d1cf6b792773e77d667662678b06a714604293594953267",
+   "v1_sha256": "467f53fa04d5540bfecf66b7e1915804a734f4309040d0cab74315c60fbcba86",
+   "layoutNoAnn_sha256": "caf2c1a7bd75a6ad8cce80eaf4b475d9402d89bb5b856be55f73cd4bb4ef3ea2",
+   "anns_sha256": "a21a65b208912c688b622ef280a7b7948420e258fd3fc5fa4745d9ce9e626676"
+  },
+  "SNDK:100:off": {
+   "sym": "SNDK",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "8e44edea84ec1c5dc214ca80809c82c25f39de37bd963f29283eb1b8d0be8bba",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "7f5abae45b8ae33ab1efd5d7addbeca943f497160c4dac3501b452e35488bd83",
+   "anns_sha256": "7255fa4a492c3a8ada9f0952a727e4086444767f944e8b97209103d1d16e4c1d"
+  },
+  "SNDK:100:on": {
+   "sym": "SNDK",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "8e44edea84ec1c5dc214ca80809c82c25f39de37bd963f29283eb1b8d0be8bba",
+   "v1_sha256": "853f4e46fb2b4780890efcf6029c80007d73e90012680c69273378f2c21c8bbc",
+   "layoutNoAnn_sha256": "7f5abae45b8ae33ab1efd5d7addbeca943f497160c4dac3501b452e35488bd83",
+   "anns_sha256": "7255fa4a492c3a8ada9f0952a727e4086444767f944e8b97209103d1d16e4c1d"
+  },
+  "SNDK:250:off": {
+   "sym": "SNDK",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-02-17",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "c9c95c700dd42f5058dd60bb0f5e5a4e7d4412e7883ef925f1007705a499e59e",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "c98d10dee71d80712cb706818857856c091dead1264a58bf041c71ad7ed06626",
+   "anns_sha256": "7d3d212b04e5b00336b7a5ba1a81bc8ad806b0049106f9aa90049be4df28d437"
+  },
+  "SNDK:250:on": {
+   "sym": "SNDK",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nV1": 3,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-02-17",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "c9c95c700dd42f5058dd60bb0f5e5a4e7d4412e7883ef925f1007705a499e59e",
+   "v1_sha256": "f297dbe4309055dbb7e87403571c72ee3e42abe5f9980ed769ca55865c7986ce",
+   "layoutNoAnn_sha256": "c98d10dee71d80712cb706818857856c091dead1264a58bf041c71ad7ed06626",
+   "anns_sha256": "7d3d212b04e5b00336b7a5ba1a81bc8ad806b0049106f9aa90049be4df28d437"
+  },
+  "SPY:30:off": {
+   "sym": "SPY",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "58e16594ec9abac6a1fec6cd776fb29f412f3edbd5348a48bd0900ad4051d19a",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "a1f2b3f51dd8c88b5e4626414f69744335e1b17101853c7ede609f5059f0be42",
+   "anns_sha256": "22b5aa6f53245359ab87855e7239878f7407d2321beda5f50ec48111923e82f1"
+  },
+  "SPY:30:on": {
+   "sym": "SPY",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 1,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "58e16594ec9abac6a1fec6cd776fb29f412f3edbd5348a48bd0900ad4051d19a",
+   "v1_sha256": "fd838ba6653d233c5aa34e722c4dd71658e97830508f3bae7fe464a83e831267",
+   "layoutNoAnn_sha256": "a1f2b3f51dd8c88b5e4626414f69744335e1b17101853c7ede609f5059f0be42",
+   "anns_sha256": "22b5aa6f53245359ab87855e7239878f7407d2321beda5f50ec48111923e82f1"
+  },
+  "SPY:100:off": {
+   "sym": "SPY",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "e6e41a7f56eb3544347ed7c1a51f2fe92ad596ed1f0dc20db46bdfc60d97b6d1",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "208ecfc7d6ed8affa8db13f5833c33eb1a742f7c191714ce28c3b280dedcde91",
+   "anns_sha256": "606c3a5efb28de305e47a6d6bd3954952f3613a2a47190893bb6ff69453cef99"
+  },
+  "SPY:100:on": {
+   "sym": "SPY",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 1,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "e6e41a7f56eb3544347ed7c1a51f2fe92ad596ed1f0dc20db46bdfc60d97b6d1",
+   "v1_sha256": "9063e3d50cb168d572afe9e22629fe03cf3c9c7825b7455852db011a2b911271",
+   "layoutNoAnn_sha256": "208ecfc7d6ed8affa8db13f5833c33eb1a742f7c191714ce28c3b280dedcde91",
+   "anns_sha256": "606c3a5efb28de305e47a6d6bd3954952f3613a2a47190893bb6ff69453cef99"
+  },
+  "SPY:250:off": {
+   "sym": "SPY",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "219fea4a25f5b600229d74e5d8deff7b67819e382d4fd6f6782c4218cc5a5713",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "b209f36ce08d67f0aff6565367de1afa0693177653b5728ee4a40bed8ceb1144",
+   "anns_sha256": "b8a990ad852c729975053ea2818708547e91b84e788e5604b4cc84af58a4a968"
+  },
+  "SPY:250:on": {
+   "sym": "SPY",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nV1": 1,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "219fea4a25f5b600229d74e5d8deff7b67819e382d4fd6f6782c4218cc5a5713",
+   "v1_sha256": "4622a382a8fd1930c402e0c2274a8db68ce35e3996dbde6ee52a7e36be0c426b",
+   "layoutNoAnn_sha256": "b209f36ce08d67f0aff6565367de1afa0693177653b5728ee4a40bed8ceb1144",
+   "anns_sha256": "b8a990ad852c729975053ea2818708547e91b84e788e5604b4cc84af58a4a968"
+  },
+  "NVDL:30:off": {
+   "sym": "NVDL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "09c09c610c5e9f3a7c80f75b97ca5c3765aa9f86b00dceeda2af3021a30a5fb2",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "e44e95dd6d708e84dd375a458915b24068443e0cd3f502c0e8cc629cbb5dc0b5",
+   "anns_sha256": "3462c2c1d12e38c98bcd8f38c64a50e20bf70570fca9499cc6935ef31db47da1"
+  },
+  "NVDL:30:on": {
+   "sym": "NVDL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "09c09c610c5e9f3a7c80f75b97ca5c3765aa9f86b00dceeda2af3021a30a5fb2",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "e44e95dd6d708e84dd375a458915b24068443e0cd3f502c0e8cc629cbb5dc0b5",
+   "anns_sha256": "3462c2c1d12e38c98bcd8f38c64a50e20bf70570fca9499cc6935ef31db47da1"
+  },
+  "NVDL:100:off": {
+   "sym": "NVDL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "fb275ecd5548d2189cc87d2165eb6703c9cb5f2b3aeb45549aead69521c3aad7",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "a5b6ba6b0ddad53f05898ab03f25192c2e66e874e4b16ce8d33133fc8da55aa2",
+   "anns_sha256": "ab28a9aac6d2fdf8fd367a7babd6657f449fed081db84bda3fb1fac81a0c32e5"
+  },
+  "NVDL:100:on": {
+   "sym": "NVDL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "fb275ecd5548d2189cc87d2165eb6703c9cb5f2b3aeb45549aead69521c3aad7",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "a5b6ba6b0ddad53f05898ab03f25192c2e66e874e4b16ce8d33133fc8da55aa2",
+   "anns_sha256": "ab28a9aac6d2fdf8fd367a7babd6657f449fed081db84bda3fb1fac81a0c32e5"
+  },
+  "NVDL:250:off": {
+   "sym": "NVDL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "90b473de1978610b9ad01f6d073878bbb16a1bb229b35ab71d8724b08bd66200",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "7915b957ad2ee0dc99944859c371391b7e485050a4078ddfc6bb469be10ef5b7",
+   "anns_sha256": "4b6d53a66cc363652990b93d97296b63f4f3c056171f11151e7d345242e4d5fd"
+  },
+  "NVDL:250:on": {
+   "sym": "NVDL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nV1": 0,
+   "nA3": 0,
+   "a3ann": [],
+   "lane": [],
+   "yDom": [
+    0.46,
+    1
+   ],
+   "y7Dom": [
+    0.375,
+    0.445
+   ],
+   "y12": null,
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "a3st": null,
+   "other_sha256": "90b473de1978610b9ad01f6d073878bbb16a1bb229b35ab71d8724b08bd66200",
+   "v1_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "layoutNoAnn_sha256": "7915b957ad2ee0dc99944859c371391b7e485050a4078ddfc6bb469be10ef5b7",
+   "anns_sha256": "4b6d53a66cc363652990b93d97296b63f4f3c056171f11151e7d345242e4d5fd"
+  }
+ },
+ "new": {},
+ "checks": [
+  {
+   "key": "MU:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 研究 15 輪 ⓘ 詳情"
+  },
+  {
+   "key": "MU:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 7,
+   "a3ann": [
+    "Astra v0.3 研究事件 · 只標日期"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 研究 15 輪 ⓘ 詳情"
+  },
+  {
+   "key": "MU:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 16,
+   "a3ann": [
+    "Astra v0.3"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 研究 15 輪 ⓘ 詳情"
+  },
+  {
+   "key": "INTC:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 A出 10-07:規則已出場 · v0.3 研究 11 輪 ⓘ 詳情"
+  },
+  {
+   "key": "INTC:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 5,
+   "a3ann": [
+    "Astra v0.3 研究事件 · 只標日期"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 A出 10-07:規則已出場 · v0.3 研究 11 輪 ⓘ 詳情"
+  },
+  {
+   "key": "INTC:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 8,
+   "a3ann": [
+    "Astra v0.3"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 A出 10-07:規則已出場 · v0.3 研究 11 輪 ⓘ 詳情"
+  },
+  {
+   "key": "NVDA:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 4 輪 ⓘ 詳情"
+  },
+  {
+   "key": "NVDA:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 4 輪 ⓘ 詳情"
+  },
+  {
+   "key": "NVDA:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 4 輪 ⓘ 詳情"
+  },
+  {
+   "key": "AVGO:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 6 輪 ⓘ 詳情"
+  },
+  {
+   "key": "AVGO:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 2,
+   "a3ann": [
+    "Astra v0.3 研究事件 · 只標日期"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 6 輪 ⓘ 詳情"
+  },
+  {
+   "key": "AVGO:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 2,
+   "a3ann": [
+    "Astra v0.3 研究事件 · 只標日期"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 研究 6 輪 ⓘ 詳情"
+  },
+  {
+   "key": "AAPL:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-11) · v0.3 這檔沒事件 ⓘ 詳情"
+  },
+  {
+   "key": "AAPL:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-11) · v0.3 這檔沒事件 ⓘ 詳情"
+  },
+  {
+   "key": "AAPL:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [
+    "Astra v0.3:這段沒有事件"
+   ],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-11) · v0.3 這檔沒事件 ⓘ 詳情"
+  },
+  {
+   "key": "SNDK:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 沒研究這檔 ⓘ 詳情"
+  },
+  {
+   "key": "SNDK:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 沒研究這檔 ⓘ 詳情"
+  },
+  {
+   "key": "SNDK:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 沒研究這檔 ⓘ 詳情"
+  },
+  {
+   "key": "SPY:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 沒研究這檔 ⓘ 詳情"
+  },
+  {
+   "key": "SPY:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 沒研究這檔 ⓘ 詳情"
+  },
+  {
+   "key": "SPY:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 10-09 v0.1 沒有訊號 · v0.3 沒研究這檔 ⓘ 詳情"
+  },
+  {
+   "key": "NVDL:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 槓桿/反向 ETF 不適用(不拿正股代替)"
+  },
+  {
+   "key": "NVDL:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 槓桿/反向 ETF 不適用(不拿正股代替)"
+  },
+  {
+   "key": "NVDL:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_layout_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "v1_same_as_old_on": true,
+   "off_again_restored": true,
+   "x_category": true,
+   "lane_events_match": true,
+   "lane_no_price": true,
+   "layout_shift": true,
+   "tips_ok": true,
+   "n_lane_events": 0,
+   "a3ann": [],
+   "strip_on": "🧪 Astra 研究用 槓桿/反向 ETF 不適用(不拿正股代替)"
+  }
+ ],
+ "scenarios": {
+  "period_w": {
+   "nA3": 0,
+   "y12": null,
+   "strip": "🧪 Astra 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "period_m": {
+   "nA3": 0,
+   "y12": null,
+   "strip": "🧪 Astra 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "max": {
+   "nA3": 0,
+   "strip": "🧪 Astra 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "back_to_daily": {
+   "nA3": 4,
+   "n": 16
+  },
+  "zoom": {
+   "xType": "category",
+   "a3": 4,
+   "y12": true
+  },
+  "popover": {
+   "MU": {
+    "afterHoverOrBarClick": false,
+    "afterInfoClick": true,
+    "afterSecondClick": false,
+    "text": "✕ 🧪 MU Astra(研究用) 2026-10-09 收盤 結論:目前沒有通過驗證的買賣點 → 先別照著買賣 Astra v0.4 × Claude v0.5 討論後的共識(還在繼續談) 圖上記號(Astra v0.1 規則):A候 條件快到了,先觀察(不是買) · A進 規則的進場日 · A出 規則的出場日 規則持有中(A進 09-21) 現在:09-21 買壓持續、放量突破 → A進(收盤 1043.96);收盤跌破 972.13 會標 A出(明顯轉弱也會出) v0.1 回放:約 5 年 19 檔,只有 1 檔贏過一直抱著 K 線下方粉紅軌道 = Astra v0.3 研究事件(只標日期) ▲建倉 △回補 ▽減碼 ▼出清;橫線 = 研究裡持有的期間 這檔(研究期 2024-01 ~ 2026-07)共 15 輪:賺 8、賠 7 其中 8 輪在 2025-10-13 以前,這個視窗看不到(日K最多看 250 天) 這是 Astra 的診斷模型(只用價格),不是它事先選定的模型——選定的模型這段期間一次都沒出手。30 檔合計 57 輪、賺 30 輪(52.6%)。軌道沒有價格位置,也不是本圖的成交價。 還沒做到:70% 勝率;「放空比例高 → 之後偏弱」換 341 檔沒重現;散戶/機構逐筆分類只試了 AAPL 一天 只用已收盤的日K(不含盤中);和 📊量化 分開算、互不影響 · 不是投資建議"
+   },
+   "AAPL": {
+    "afterHoverOrBarClick": false,
+    "afterInfoClick": true,
+    "afterSecondClick": false,
+    "text": "✕ 🧪 AAPL Astra(研究用) 2026-10-09 收盤 結論:目前沒有通過驗證的買賣點 → 先別照著買賣 Astra v0.4 × Claude v0.5 討論後的共識(還在繼續談) 圖上記號(Astra v0.1 規則):A候 條件快到了,先觀察(不是買) · A進 規則的進場日 · A出 規則的出場日 規則持有中(A進 09-11) 現在:09-11 買壓持續、放量突破 → A進(收盤 332.27);收盤跌破 322.37 會標 A出(明顯轉弱也會出) v0.1 回放:約 5 年 19 檔,只有 1 檔贏過一直抱著 K 線下方粉紅軌道 = Astra v0.3 研究事件(只標日期) ▲建倉 △回補 ▽減碼 ▼出清;橫線 = 研究裡持有的期間 這檔(研究期 2024-01 ~ 2026-07)沒有事件 這是 Astra 的診斷模型(只用價格),不是它事先選定的模型——選定的模型這段期間一次都沒出手。30 檔合計 57 輪、賺 30 輪(52.6%)。軌道沒有價格位置,也不是本圖的成交價。 還沒做到:70% 勝率;「放空比例高 → 之後偏弱」換 341 檔沒重現;散戶/機構逐筆分類只試了 AAPL 一天 只用已收盤的日K(不含盤中);和 📊量化 分開算、互不影響 · 不是投資建議"
+   },
+   "SNDK": {
+    "afterHoverOrBarClick": false,
+    "afterInfoClick": true,
+    "afterSecondClick": false,
+    "text": "✕ 🧪 SNDK Astra(研究用) 2026-10-09 收盤 結論:目前沒有通過驗證的買賣點 → 先別照著買賣 Astra v0.4 × Claude v0.5 討論後的共識(還在繼續談) 圖上記號(Astra v0.1 規則):A候 條件快到了,先觀察(不是買) · A進 規則的進場日 · A出 規則的出場日 沒有訊號 現在:要標 A進 還缺:趨勢向上、比 SPY 強、持續買壓、價格轉強(突破) v0.1 回放:約 5 年 19 檔,只有 1 檔贏過一直抱著 K 線下方粉紅軌道 = Astra v0.3 研究事件(只標日期) SNDK 不在 v0.3 研究的 30 檔裡 → 沒有軌道 還沒做到:70% 勝率;「放空比例高 → 之後偏弱」換 341 檔沒重現;散戶/機構逐筆分類只試了 AAPL 一天 只用已收盤的日K(不含盤中);和 📊量化 分開算、互不影響 · 不是投資建議"
+   }
+  },
+  "hover": {
+   "trace": "Astra3 ENTRY",
+   "text": "🧪 Astra v0.3 研究事件 07-06 出清連兩天收在 20 日線下、資金轉負,隔天開盤賣這一輪研究結果 +9.7%(持有 19 天)診斷模型 · 只標日期,不是本圖價格 · 不是買賣建議"
+  },
+  "events_404": {
+   "a3st": "err",
+   "nA3": 0,
+   "nV1": 3,
+   "strip": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 資料沒載入 ⓘ 詳情",
+   "layout_same_as_off": true,
+   "errors_other_than_404": []
+  }
+ },
+ "old_build": "2026-10-11T07:45Z",
+ "old_errors": [],
+ "new_build": "2026-10-11T14:23Z",
+ "default": {
+  "astraOff": true,
+  "stripHidden": true,
+  "a3": "idle"
+ },
+ "new_errors": [],
+ "mobile": {
+  "nA3": 4,
+  "lane_n": 7,
+  "strip": "🧪 Astra 研究用 10-09 v0.1 規則持有中(A進 09-21) · v0.3 研究 15 輪 ⓘ 詳情",
+  "a3ann": [
+   "Astra v0.3 · 只標日期"
+  ],
+  "shift": 0.014000000000000012,
+  "overflow": false,
+  "errors": []
+ }
+}

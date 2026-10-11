@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "version": "0.3.0",
+  "researchOnly": true,
+  "productionEnabled": false,
+  "datasetSha256": "d991dcf204aa2c527a2323ba40cb64b3fbbd90215ff3854c1f0735f95bc021dc",
+  "protocolSha256": "1a082c0b487e5a29db58e83bcc73bff07908d996f5d7dcdf4f532f5e3623c973",
+  "scoreCalibration": "uncalibrated",
+  "createdAt": "2026-10-11T10:41:57.437855+00:00",
+  "sklearnVersion": "1.7.2",
+  "modelId": "hist_gradient_boosting_100_leaf7_min100_l2_10_seed42__price_plus_volume_proxies",
+  "threshold": 0.75,
+  "period": "evaluation",
+  "selectionFingerprint": "ad4ebb7a43dc4489332c0ebdab6f238d2e1e2a27ecd451533fd09a486e42d00b",
+  "status": "RESEARCH_ONLY",
+  "campaignAccounting": "All partial sales and repurchases count toward one closed campaign; per-campaign stressNetReturn is paired-entry sensitivity, aggregate stress has its own nonoverlap schedule in stress-trades.json.",
+  "trades": []
+}

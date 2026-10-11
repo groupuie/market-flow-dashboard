@@ -1,0 +1,1271 @@
+{
+  "schemaVersion": 1,
+  "version": "0.3.0",
+  "researchOnly": true,
+  "productionEnabled": false,
+  "datasetSha256": "d991dcf204aa2c527a2323ba40cb64b3fbbd90215ff3854c1f0735f95bc021dc",
+  "protocolSha256": "1a082c0b487e5a29db58e83bcc73bff07908d996f5d7dcdf4f532f5e3623c973",
+  "scoreCalibration": "uncalibrated",
+  "createdAt": "2026-10-11T10:41:57.437855+00:00",
+  "sklearnVersion": "1.7.2",
+  "selectedModelId": "hist_gradient_boosting_100_leaf7_min100_l2_10_seed42__price_plus_volume_proxies",
+  "selectionStatus": "VALIDATION_ELIGIBLE_RESEARCH_ONLY",
+  "selectionFingerprint": "ad4ebb7a43dc4489332c0ebdab6f238d2e1e2a27ecd451533fd09a486e42d00b",
+  "featureNames": [
+    "return_1d",
+    "return_5d",
+    "return_20d",
+    "atr14_fraction",
+    "close_vs_sma20",
+    "range_position_20",
+    "relative_return_5d_vs_spy",
+    "spy_return_20d",
+    "clv_volume_pressure_5d",
+    "cmf20",
+    "normalized_obv_slope_20",
+    "volume_surprise_20"
+  ],
+  "priceFeatureCount": 8,
+  "datasetDiagnostics": {
+    "AAPL": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "MSFT": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "NVDA": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "AMD": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "AVGO": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "MU": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "INTC": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "AMZN": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "META": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "GOOGL": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "JPM": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "BAC": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "GS": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "V": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "UNH": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "JNJ": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "PFE": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "XOM": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "CVX": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "CAT": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "BA": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "IBM": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "WMT": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "COST": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "HD": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "MCD": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "KO": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "PEP": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "DIS": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "NKE": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "SPY": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    },
+    "QQQ": {
+      "rows": 2708,
+      "missingCalendarSessions": 0
+    }
+  },
+  "sampleExclusions": {
+    "warmup_or_missing_feature_session": 1770,
+    "immature_63_session_horizon": 1890
+  },
+  "maxHorizonPurgedByPeriod": {
+    "train": 1890,
+    "validation": 1890,
+    "evaluation": 0
+  },
+  "sampleCounts": {
+    "train": 41670,
+    "validation": 13140,
+    "evaluation": 18990
+  },
+  "signalDateRanges": {
+    "train": [
+      "2016-03-30",
+      "2021-10-01"
+    ],
+    "validation": [
+      "2022-01-03",
+      "2023-09-29"
+    ],
+    "evaluation": [
+      "2024-01-02",
+      "2026-07-13"
+    ]
+  },
+  "evaluation": [
+    {
+      "modelId": "logistic_C1_standardized__price_only",
+      "featureGroup": "price_only",
+      "threshold": 0.55,
+      "validationEligible": false,
+      "evaluationMetrics": {
+        "N": 57,
+        "wins": 30,
+        "losses": 27,
+        "flat": 0,
+        "netWinRate": 0.5263157894736842,
+        "wilson95": [
+          0.3991801621874118,
+          0.6501283201887471
+        ],
+        "meanNetReturn": 0.0500667049169125,
+        "medianNetReturn": 0.0072171595717303,
+        "unitNotionalProfitFactor": 3.3800186165995183,
+        "profitFactorUndefinedNoLosses": false,
+        "sumPositiveUnitReturns": 4.052869347369375,
+        "sumNegativeUnitReturnsAbs": 1.1990671671053639,
+        "meanHoldingBars": 14.385964912280702,
+        "holdingSessionsSum": 820,
+        "monthClusterBootstrap": {
+          "status": "ESTIMATED",
+          "cluster": "entry_calendar_month_all_symbols_together",
+          "months": 17,
+          "minimumMonths": 12,
+          "replicates": 2000,
+          "seed": 42,
+          "confidence": 0.95,
+          "winRate95Lower": 0.3513175675675676,
+          "meanReturn95Lower": -0.006996441697057782,
+          "caveat": "Conditional on fixed surviving universe; adjacent months can remain dependent. Not a future guarantee."
+        }
+      },
+      "targetAssessment": {
+        "pointWinRateAtLeast70Percent": false,
+        "registeredPointCriteriaMet": false,
+        "strongerIntervalCriteriaMet": false,
+        "productionEnabled": false,
+        "interpretation": "Historical campaign outcomes only; never a calibrated model score or approval to trade."
+      },
+      "coverageAndExposure": {
+        "eligibleMatureCandidateDays": 18990,
+        "eligibleSignalSessions": 633,
+        "thresholdPassingCandidateDays": 160,
+        "acceptedCampaigns": 57,
+        "entryCampaignCoverage": 0.0030015797788309636,
+        "thresholdPassCoverage": 0.00842548709847288,
+        "nonoverlapRejectedCandidates": 103,
+        "heldSymbolSessions": 820,
+        "totalPeriodSymbolSessions": 20880,
+        "fractionOfPeriodSymbolSessionsHeld": 0.039272030651340994,
+        "definition": "Unweighted stock-session occupancy, not portfolio allocation or leveraged exposure. Coverage denominator is all mature feature-complete stock-days."
+      },
+      "byEntryYear": {
+        "2024": {
+          "N": 7,
+          "wins": 4,
+          "losses": 3,
+          "flat": 0,
+          "netWinRate": 0.5714285714285714,
+          "wilson95": [
+            0.2504583645276572,
+            0.8417801447485302
+          ],
+          "meanNetReturn": 0.022823197320214265,
+          "medianNetReturn": 0.003354318948378429,
+          "unitNotionalProfitFactor": 4.187191401701561,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.20988876560492614,
+          "sumNegativeUnitReturnsAbs": 0.050126384363426285,
+          "meanHoldingBars": 14.0,
+          "holdingSessionsSum": 98
+        },
+        "2025": {
+          "N": 33,
+          "wins": 17,
+          "losses": 16,
+          "flat": 0,
+          "netWinRate": 0.5151515151515151,
+          "wilson95": [
+            0.3521837544891414,
+            0.674959578918663
+          ],
+          "meanNetReturn": 0.07165028103662151,
+          "medianNetReturn": 0.011421699319788474,
+          "unitNotionalProfitFactor": 4.112934134581119,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 3.124018960339381,
+          "sumNegativeUnitReturnsAbs": 0.7595596861308711,
+          "meanHoldingBars": 15.848484848484848,
+          "holdingSessionsSum": 523
+        },
+        "2026": {
+          "N": 17,
+          "wins": 9,
+          "losses": 8,
+          "flat": 0,
+          "netWinRate": 0.5294117647058824,
+          "wilson95": [
+            0.30963235060004424,
+            0.7383489355759056
+          ],
+          "meanNetReturn": 0.01938708969494134,
+          "medianNetReturn": 0.0072171595717303,
+          "unitNotionalProfitFactor": 1.8464214818913118,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.7189616214250691,
+          "sumNegativeUnitReturnsAbs": 0.38938109661106635,
+          "meanHoldingBars": 11.705882352941176,
+          "holdingSessionsSum": 199
+        }
+      },
+      "bySymbol": {
+        "AMD": {
+          "N": 7,
+          "wins": 5,
+          "losses": 2,
+          "flat": 0,
+          "netWinRate": 0.7142857142857143,
+          "wilson95": [
+            0.35893445183261935,
+            0.9177810759959433
+          ],
+          "meanNetReturn": 0.10417576080451953,
+          "medianNetReturn": 0.054779545615061036,
+          "unitNotionalProfitFactor": 15.895475267178,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.7781868250082284,
+          "sumNegativeUnitReturnsAbs": 0.048956499376591696,
+          "meanHoldingBars": 19.428571428571427,
+          "holdingSessionsSum": 136
+        },
+        "AMZN": {
+          "N": 1,
+          "wins": 1,
+          "losses": 0,
+          "flat": 0,
+          "netWinRate": 1.0,
+          "wilson95": [
+            0.20654931437723745,
+            1.0
+          ],
+          "meanNetReturn": 0.2389292386315707,
+          "medianNetReturn": 0.2389292386315707,
+          "unitNotionalProfitFactor": null,
+          "profitFactorUndefinedNoLosses": true,
+          "sumPositiveUnitReturns": 0.2389292386315707,
+          "sumNegativeUnitReturnsAbs": -0.0,
+          "meanHoldingBars": 63.0,
+          "holdingSessionsSum": 63
+        },
+        "AVGO": {
+          "N": 6,
+          "wins": 4,
+          "losses": 2,
+          "flat": 0,
+          "netWinRate": 0.6666666666666666,
+          "wilson95": [
+            0.299993315138392,
+            0.9032285888942195
+          ],
+          "meanNetReturn": 0.10278266280103991,
+          "medianNetReturn": 0.04764860665346511,
+          "unitNotionalProfitFactor": 28.327696322880037,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.6392626787162687,
+          "sumNegativeUnitReturnsAbs": 0.022566701910029366,
+          "meanHoldingBars": 15.666666666666666,
+          "holdingSessionsSum": 94
+        },
+        "BA": {
+          "N": 1,
+          "wins": 1,
+          "losses": 0,
+          "flat": 0,
+          "netWinRate": 1.0,
+          "wilson95": [
+            0.20654931437723745,
+            1.0
+          ],
+          "meanNetReturn": 0.18755057891748536,
+          "medianNetReturn": 0.18755057891748536,
+          "unitNotionalProfitFactor": null,
+          "profitFactorUndefinedNoLosses": true,
+          "sumPositiveUnitReturns": 0.18755057891748536,
+          "sumNegativeUnitReturnsAbs": -0.0,
+          "meanHoldingBars": 9.0,
+          "holdingSessionsSum": 9
+        },
+        "IBM": {
+          "N": 2,
+          "wins": 1,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.09453120573423074,
+            0.9054687942657693
+          ],
+          "meanNetReturn": 0.028759004038481556,
+          "medianNetReturn": 0.028759004038481556,
+          "unitNotionalProfitFactor": 1.4607610791738097,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.18235061802765298,
+          "sumNegativeUnitReturnsAbs": 0.12483260995068987,
+          "meanHoldingBars": 32.0,
+          "holdingSessionsSum": 64
+        },
+        "INTC": {
+          "N": 11,
+          "wins": 4,
+          "losses": 7,
+          "flat": 0,
+          "netWinRate": 0.36363636363636365,
+          "wilson95": [
+            0.15166471095367573,
+            0.6461988254921511
+          ],
+          "meanNetReturn": -0.012118642141762332,
+          "medianNetReturn": -0.012636228145487888,
+          "unitNotionalProfitFactor": 0.5609676024867878,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.17032870997181246,
+          "sumNegativeUnitReturnsAbs": 0.3036337735311981,
+          "meanHoldingBars": 10.727272727272727,
+          "holdingSessionsSum": 118
+        },
+        "META": {
+          "N": 3,
+          "wins": 2,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.6666666666666666,
+          "wilson95": [
+            0.2076596008020477,
+            0.9385080552796037
+          ],
+          "meanNetReturn": 0.04762227667299451,
+          "medianNetReturn": 0.07356435352161213,
+          "unitNotionalProfitFactor": 3.7282090286689225,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.19523335638030398,
+          "sumNegativeUnitReturnsAbs": 0.052366526361320435,
+          "meanHoldingBars": 19.666666666666668,
+          "holdingSessionsSum": 59
+        },
+        "MU": {
+          "N": 15,
+          "wins": 8,
+          "losses": 7,
+          "flat": 0,
+          "netWinRate": 0.5333333333333333,
+          "wilson95": [
+            0.30116980025498397,
+            0.7519046463426261
+          ],
+          "meanNetReturn": 0.04761347550268227,
+          "medianNetReturn": 0.011421699319788474,
+          "unitNotionalProfitFactor": 3.0383285201098267,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 1.0645883070425426,
+          "sumNegativeUnitReturnsAbs": 0.3503861745023085,
+          "meanHoldingBars": 10.266666666666667,
+          "holdingSessionsSum": 154
+        },
+        "NKE": {
+          "N": 3,
+          "wins": 0,
+          "losses": 3,
+          "flat": 0,
+          "netWinRate": 0.0,
+          "wilson95": [
+            5.551115123125783e-17,
+            0.5614970317550454
+          ],
+          "meanNetReturn": -0.00859870734035865,
+          "medianNetReturn": -0.003929912037404381,
+          "unitNotionalProfitFactor": 0.0,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.0,
+          "sumNegativeUnitReturnsAbs": 0.02579612202107595,
+          "meanHoldingBars": 3.0,
+          "holdingSessionsSum": 9
+        },
+        "NVDA": {
+          "N": 4,
+          "wins": 3,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.75,
+          "wilson95": [
+            0.30064184258240184,
+            0.9544127391902995
+          ],
+          "meanNetReturn": 0.13731943018443846,
+          "medianNetReturn": 0.03633675140980839,
+          "unitNotionalProfitFactor": 28.907380596688803,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.5689598875693814,
+          "sumNegativeUnitReturnsAbs": 0.019682166831627525,
+          "meanHoldingBars": 25.75,
+          "holdingSessionsSum": 103
+        },
+        "UNH": {
+          "N": 4,
+          "wins": 1,
+          "losses": 3,
+          "flat": 0,
+          "netWinRate": 0.25,
+          "wilson95": [
+            0.04558726080970055,
+            0.6993581574175981
+          ],
+          "meanNetReturn": -0.055841861379098176,
+          "medianNetReturn": -0.036298597800952515,
+          "unitNotionalProfitFactor": 0.10954562634103511,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.02747914710412959,
+          "sumNegativeUnitReturnsAbs": 0.2508465926205223,
+          "meanHoldingBars": 2.75,
+          "holdingSessionsSum": 11
+        }
+      },
+      "stress": {
+        "costBpsPerSide": 25,
+        "method": "Same frozen model and threshold, independent 25bps cash-budget/position simulation; no refit or threshold change.",
+        "metrics": {
+          "N": 57,
+          "wins": 30,
+          "losses": 27,
+          "flat": 0,
+          "netWinRate": 0.5263157894736842,
+          "wilson95": [
+            0.3991801621874118,
+            0.6501283201887471
+          ],
+          "meanNetReturn": 0.046860573555387246,
+          "medianNetReturn": 0.0042000262501642235,
+          "unitNotionalProfitFactor": 3.090817893331587,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 3.948568396524002,
+          "sumNegativeUnitReturnsAbs": 1.2775157038669294,
+          "meanHoldingBars": 14.385964912280702,
+          "holdingSessionsSum": 820,
+          "monthClusterBootstrap": {
+            "status": "ESTIMATED",
+            "cluster": "entry_calendar_month_all_symbols_together",
+            "months": 17,
+            "minimumMonths": 12,
+            "replicates": 2000,
+            "seed": 42,
+            "confidence": 0.95,
+            "winRate95Lower": 0.3513175675675676,
+            "meanReturn95Lower": -0.010037821965078932,
+            "caveat": "Conditional on fixed surviving universe; adjacent months can remain dependent. Not a future guarantee."
+          }
+        },
+        "byEntryYear": {
+          "2024": {
+            "N": 7,
+            "wins": 4,
+            "losses": 3,
+            "flat": 0,
+            "netWinRate": 0.5714285714285714,
+            "wilson95": [
+              0.2504583645276572,
+              0.8417801447485302
+            ],
+            "meanNetReturn": 0.019759315890694358,
+            "medianNetReturn": 0.0003487568208192961,
+            "unitNotionalProfitFactor": 3.345805749240504,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 0.19727798395363424,
+            "sumNegativeUnitReturnsAbs": 0.05896277271877372,
+            "meanHoldingBars": 14.0,
+            "holdingSessionsSum": 98
+          },
+          "2025": {
+            "N": 33,
+            "wins": 17,
+            "losses": 16,
+            "flat": 0,
+            "netWinRate": 0.5151515151515151,
+            "wilson95": [
+              0.3521837544891414,
+              0.674959578918663
+            ],
+            "meanNetReturn": 0.06840600708982848,
+            "medianNetReturn": 0.008391971239628955,
+            "unitNotionalProfitFactor": 3.8034808656235635,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 3.0626108757357464,
+            "sumNegativeUnitReturnsAbs": 0.8052126417714067,
+            "meanHoldingBars": 15.848484848484848,
+            "holdingSessionsSum": 523
+          },
+          "2026": {
+            "N": 17,
+            "wins": 9,
+            "losses": 8,
+            "flat": 0,
+            "netWinRate": 0.5294117647058824,
+            "wilson95": [
+              0.30963235060004424,
+              0.7383489355759056
+            ],
+            "meanNetReturn": 0.01619642632105133,
+            "medianNetReturn": 0.0042000262501642235,
+            "unitNotionalProfitFactor": 1.666132130194809,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 0.6886795368346215,
+            "sumNegativeUnitReturnsAbs": 0.4133402893767489,
+            "meanHoldingBars": 11.705882352941176,
+            "holdingSessionsSum": 199
+          }
+        }
+      }
+    },
+    {
+      "modelId": "logistic_C1_standardized__price_plus_volume_proxies",
+      "featureGroup": "price_plus_volume_proxies",
+      "threshold": 0.6,
+      "validationEligible": false,
+      "evaluationMetrics": {
+        "N": 19,
+        "wins": 9,
+        "losses": 10,
+        "flat": 0,
+        "netWinRate": 0.47368421052631576,
+        "wilson95": [
+          0.2732980516117956,
+          0.6829219075488682
+        ],
+        "meanNetReturn": 0.07856453620593788,
+        "medianNetReturn": -0.006280305060792601,
+        "unitNotionalProfitFactor": 3.536028865226481,
+        "profitFactorUndefinedNoLosses": false,
+        "sumPositiveUnitReturns": 2.0813339156799535,
+        "sumNegativeUnitReturnsAbs": 0.5886077277671332,
+        "meanHoldingBars": 19.842105263157894,
+        "holdingSessionsSum": 377,
+        "monthClusterBootstrap": {
+          "status": "INSUFFICIENT_MONTH_CLUSTERS",
+          "months": 10,
+          "minimumMonths": 12,
+          "winRate95Lower": null,
+          "meanReturn95Lower": null
+        }
+      },
+      "targetAssessment": {
+        "pointWinRateAtLeast70Percent": false,
+        "registeredPointCriteriaMet": false,
+        "strongerIntervalCriteriaMet": false,
+        "productionEnabled": false,
+        "interpretation": "Historical campaign outcomes only; never a calibrated model score or approval to trade."
+      },
+      "coverageAndExposure": {
+        "eligibleMatureCandidateDays": 18990,
+        "eligibleSignalSessions": 633,
+        "thresholdPassingCandidateDays": 46,
+        "acceptedCampaigns": 19,
+        "entryCampaignCoverage": 0.0010005265929436545,
+        "thresholdPassCoverage": 0.002422327540810953,
+        "nonoverlapRejectedCandidates": 27,
+        "heldSymbolSessions": 377,
+        "totalPeriodSymbolSessions": 20880,
+        "fractionOfPeriodSymbolSessionsHeld": 0.018055555555555554,
+        "definition": "Unweighted stock-session occupancy, not portfolio allocation or leveraged exposure. Coverage denominator is all mature feature-complete stock-days."
+      },
+      "byEntryYear": {
+        "2024": {
+          "N": 2,
+          "wins": 1,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.09453120573423074,
+            0.9054687942657693
+          ],
+          "meanNetReturn": 0.01181153096537128,
+          "medianNetReturn": 0.01181153096537128,
+          "unitNotionalProfitFactor": 2.6166311286861377,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.038235586403125695,
+          "sumNegativeUnitReturnsAbs": 0.014612524472383136,
+          "meanHoldingBars": 9.5,
+          "holdingSessionsSum": 19
+        },
+        "2025": {
+          "N": 7,
+          "wins": 3,
+          "losses": 4,
+          "flat": 0,
+          "netWinRate": 0.42857142857142855,
+          "wilson95": [
+            0.15821985525146975,
+            0.7495416354723428
+          ],
+          "meanNetReturn": 0.17950431823589705,
+          "medianNetReturn": -0.007582251538243562,
+          "unitNotionalProfitFactor": 5.595260829231514,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 1.52997068605969,
+          "sumNegativeUnitReturnsAbs": 0.2734404584084108,
+          "meanHoldingBars": 29.857142857142858,
+          "holdingSessionsSum": 209
+        },
+        "2026": {
+          "N": 10,
+          "wins": 5,
+          "losses": 5,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.236593090512564,
+            0.7634069094874361
+          ],
+          "meanNetReturn": 0.021257289833079833,
+          "medianNetReturn": 0.0004684272554688496,
+          "unitNotionalProfitFactor": 1.7072684825228328,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.5131276432171376,
+          "sumNegativeUnitReturnsAbs": 0.30055474488633926,
+          "meanHoldingBars": 14.9,
+          "holdingSessionsSum": 149
+        }
+      },
+      "bySymbol": {
+        "AMD": {
+          "N": 3,
+          "wins": 3,
+          "losses": 0,
+          "flat": 0,
+          "netWinRate": 1.0,
+          "wilson95": [
+            0.4385029682449546,
+            1.0
+          ],
+          "meanNetReturn": 0.24692234389705492,
+          "medianNetReturn": 0.08441508655370374,
+          "unitNotionalProfitFactor": null,
+          "profitFactorUndefinedNoLosses": true,
+          "sumPositiveUnitReturns": 0.7407670316911648,
+          "sumNegativeUnitReturnsAbs": -0.0,
+          "meanHoldingBars": 34.666666666666664,
+          "holdingSessionsSum": 104
+        },
+        "AVGO": {
+          "N": 2,
+          "wins": 1,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.09453120573423074,
+            0.9054687942657693
+          ],
+          "meanNetReturn": 0.21647404256538988,
+          "medianNetReturn": 0.21647404256538988,
+          "unitNotionalProfitFactor": 30.628561851104354,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.4475606096031629,
+          "sumNegativeUnitReturnsAbs": 0.014612524472383136,
+          "meanHoldingBars": 39.5,
+          "holdingSessionsSum": 79
+        },
+        "INTC": {
+          "N": 7,
+          "wins": 2,
+          "losses": 5,
+          "flat": 0,
+          "netWinRate": 0.2857142857142857,
+          "wilson95": [
+            0.08221892400405678,
+            0.6410655481673808
+          ],
+          "meanNetReturn": -0.04801680956288525,
+          "medianNetReturn": -0.012636228145487888,
+          "unitNotionalProfitFactor": 0.11912020543630288,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.045452745974856,
+          "sumNegativeUnitReturnsAbs": 0.3815704129150527,
+          "meanHoldingBars": 11.428571428571429,
+          "holdingSessionsSum": 80
+        },
+        "MU": {
+          "N": 4,
+          "wins": 2,
+          "losses": 2,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.15003898915214947,
+            0.8499610108478506
+          ],
+          "meanNetReturn": 0.05469273444555324,
+          "medianNetReturn": 0.03757334186561106,
+          "unitNotionalProfitFactor": 2.651148697664182,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.3512671436610051,
+          "sumNegativeUnitReturnsAbs": 0.13249620587879213,
+          "meanHoldingBars": 11.25,
+          "holdingSessionsSum": 45
+        },
+        "NVDA": {
+          "N": 1,
+          "wins": 1,
+          "losses": 0,
+          "flat": 0,
+          "netWinRate": 1.0,
+          "wilson95": [
+            0.20654931437723745,
+            1.0
+          ],
+          "meanNetReturn": 0.4962863847497646,
+          "medianNetReturn": 0.4962863847497646,
+          "unitNotionalProfitFactor": null,
+          "profitFactorUndefinedNoLosses": true,
+          "sumPositiveUnitReturns": 0.4962863847497646,
+          "sumNegativeUnitReturnsAbs": -0.0,
+          "meanHoldingBars": 63.0,
+          "holdingSessionsSum": 63
+        },
+        "UNH": {
+          "N": 2,
+          "wins": 0,
+          "losses": 2,
+          "flat": 0,
+          "netWinRate": 0.0,
+          "wilson95": [
+            0.0,
+            0.6576197724933469
+          ],
+          "meanNetReturn": -0.029964292250452596,
+          "medianNetReturn": -0.029964292250452596,
+          "unitNotionalProfitFactor": 0.0,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.0,
+          "sumNegativeUnitReturnsAbs": 0.05992858450090519,
+          "meanHoldingBars": 3.0,
+          "holdingSessionsSum": 6
+        }
+      },
+      "stress": {
+        "costBpsPerSide": 25,
+        "method": "Same frozen model and threshold, independent 25bps cash-budget/position simulation; no refit or threshold change.",
+        "metrics": {
+          "N": 19,
+          "wins": 9,
+          "losses": 10,
+          "flat": 0,
+          "netWinRate": 0.47368421052631576,
+          "wilson95": [
+            0.2732980516117956,
+            0.6829219075488682
+          ],
+          "meanNetReturn": 0.07521103488163068,
+          "medianNetReturn": -0.009257006535152448,
+          "unitNotionalProfitFactor": 3.3124586929781707,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 2.0469708255125925,
+          "sumNegativeUnitReturnsAbs": 0.6179611627616097,
+          "meanHoldingBars": 19.842105263157894,
+          "holdingSessionsSum": 377,
+          "monthClusterBootstrap": {
+            "status": "INSUFFICIENT_MONTH_CLUSTERS",
+            "months": 10,
+            "minimumMonths": 12,
+            "winRate95Lower": null,
+            "meanReturn95Lower": null
+          }
+        },
+        "byEntryYear": {
+          "2024": {
+            "N": 2,
+            "wins": 1,
+            "losses": 1,
+            "flat": 0,
+            "netWinRate": 0.5,
+            "wilson95": [
+              0.09453120573423074,
+              0.9054687942657693
+            ],
+            "meanNetReturn": 0.008780635138975153,
+            "medianNetReturn": 0.008780635138975153,
+            "unitNotionalProfitFactor": 1.9998294043731344,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 0.03512553694298277,
+            "sumNegativeUnitReturnsAbs": 0.01756426666503246,
+            "meanHoldingBars": 9.5,
+            "holdingSessionsSum": 19
+          },
+          "2025": {
+            "N": 7,
+            "wins": 3,
+            "losses": 4,
+            "flat": 0,
+            "netWinRate": 0.42857142857142855,
+            "wilson95": [
+              0.15821985525146975,
+              0.7495416354723428
+            ],
+            "meanNetReturn": 0.1759710962810667,
+            "medianNetReturn": -0.010555053013419803,
+            "unitNotionalProfitFactor": 5.328119710628958,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 1.5164010944649242,
+            "sumNegativeUnitReturnsAbs": 0.28460342049745735,
+            "meanHoldingBars": 29.857142857142858,
+            "holdingSessionsSum": 209
+          },
+          "2026": {
+            "N": 10,
+            "wins": 5,
+            "losses": 5,
+            "flat": 0,
+            "netWinRate": 0.5,
+            "wilson95": [
+              0.236593090512564,
+              0.7634069094874361
+            ],
+            "meanNetReturn": 0.017965071850556555,
+            "medianNetReturn": -0.0025284901424941124,
+            "unitNotionalProfitFactor": 1.5688867325860179,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 0.4954441941046856,
+            "sumNegativeUnitReturnsAbs": 0.3157934755991199,
+            "meanHoldingBars": 14.9,
+            "holdingSessionsSum": 149
+          }
+        }
+      }
+    },
+    {
+      "modelId": "hist_gradient_boosting_100_leaf7_min100_l2_10_seed42__price_only",
+      "featureGroup": "price_only",
+      "threshold": 0.7,
+      "validationEligible": false,
+      "evaluationMetrics": {
+        "N": 2,
+        "wins": 1,
+        "losses": 1,
+        "flat": 0,
+        "netWinRate": 0.5,
+        "wilson95": [
+          0.09453120573423074,
+          0.9054687942657693
+        ],
+        "meanNetReturn": -0.0038052986730312405,
+        "medianNetReturn": -0.0038052986730312405,
+        "unitNotionalProfitFactor": 0.8428445153812575,
+        "profitFactorUndefinedNoLosses": false,
+        "sumPositiveUnitReturns": 0.040816585227461476,
+        "sumNegativeUnitReturnsAbs": 0.04842718257352396,
+        "meanHoldingBars": 3.0,
+        "holdingSessionsSum": 6,
+        "monthClusterBootstrap": {
+          "status": "INSUFFICIENT_MONTH_CLUSTERS",
+          "months": 1,
+          "minimumMonths": 12,
+          "winRate95Lower": null,
+          "meanReturn95Lower": null
+        }
+      },
+      "targetAssessment": {
+        "pointWinRateAtLeast70Percent": false,
+        "registeredPointCriteriaMet": false,
+        "strongerIntervalCriteriaMet": false,
+        "productionEnabled": false,
+        "interpretation": "Historical campaign outcomes only; never a calibrated model score or approval to trade."
+      },
+      "coverageAndExposure": {
+        "eligibleMatureCandidateDays": 18990,
+        "eligibleSignalSessions": 633,
+        "thresholdPassingCandidateDays": 2,
+        "acceptedCampaigns": 2,
+        "entryCampaignCoverage": 0.00010531858873091101,
+        "thresholdPassCoverage": 0.00010531858873091101,
+        "nonoverlapRejectedCandidates": 0,
+        "heldSymbolSessions": 6,
+        "totalPeriodSymbolSessions": 20880,
+        "fractionOfPeriodSymbolSessionsHeld": 0.00028735632183908046,
+        "definition": "Unweighted stock-session occupancy, not portfolio allocation or leveraged exposure. Coverage denominator is all mature feature-complete stock-days."
+      },
+      "byEntryYear": {
+        "2025": {
+          "N": 2,
+          "wins": 1,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.09453120573423074,
+            0.9054687942657693
+          ],
+          "meanNetReturn": -0.0038052986730312405,
+          "medianNetReturn": -0.0038052986730312405,
+          "unitNotionalProfitFactor": 0.8428445153812575,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.040816585227461476,
+          "sumNegativeUnitReturnsAbs": 0.04842718257352396,
+          "meanHoldingBars": 3.0,
+          "holdingSessionsSum": 6
+        }
+      },
+      "bySymbol": {
+        "MU": {
+          "N": 1,
+          "wins": 1,
+          "losses": 0,
+          "flat": 0,
+          "netWinRate": 1.0,
+          "wilson95": [
+            0.20654931437723745,
+            1.0
+          ],
+          "meanNetReturn": 0.040816585227461476,
+          "medianNetReturn": 0.040816585227461476,
+          "unitNotionalProfitFactor": null,
+          "profitFactorUndefinedNoLosses": true,
+          "sumPositiveUnitReturns": 0.040816585227461476,
+          "sumNegativeUnitReturnsAbs": -0.0,
+          "meanHoldingBars": 3.0,
+          "holdingSessionsSum": 3
+        },
+        "PFE": {
+          "N": 1,
+          "wins": 0,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.0,
+          "wilson95": [
+            0.0,
+            0.7934506856227626
+          ],
+          "meanNetReturn": -0.04842718257352396,
+          "medianNetReturn": -0.04842718257352396,
+          "unitNotionalProfitFactor": 0.0,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.0,
+          "sumNegativeUnitReturnsAbs": 0.04842718257352396,
+          "meanHoldingBars": 3.0,
+          "holdingSessionsSum": 3
+        }
+      },
+      "stress": {
+        "costBpsPerSide": 25,
+        "method": "Same frozen model and threshold, independent 25bps cash-budget/position simulation; no refit or threshold change.",
+        "metrics": {
+          "N": 2,
+          "wins": 1,
+          "losses": 1,
+          "flat": 0,
+          "netWinRate": 0.5,
+          "wilson95": [
+            0.09453120573423074,
+            0.9054687942657693
+          ],
+          "meanNetReturn": -0.006789414064213874,
+          "medianNetReturn": -0.006789414064213874,
+          "unitNotionalProfitFactor": 0.7351900336955087,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.0376988043486451,
+          "sumNegativeUnitReturnsAbs": 0.05127763247707285,
+          "meanHoldingBars": 3.0,
+          "holdingSessionsSum": 6,
+          "monthClusterBootstrap": {
+            "status": "INSUFFICIENT_MONTH_CLUSTERS",
+            "months": 1,
+            "minimumMonths": 12,
+            "winRate95Lower": null,
+            "meanReturn95Lower": null
+          }
+        },
+        "byEntryYear": {
+          "2025": {
+            "N": 2,
+            "wins": 1,
+            "losses": 1,
+            "flat": 0,
+            "netWinRate": 0.5,
+            "wilson95": [
+              0.09453120573423074,
+              0.9054687942657693
+            ],
+            "meanNetReturn": -0.006789414064213874,
+            "medianNetReturn": -0.006789414064213874,
+            "unitNotionalProfitFactor": 0.7351900336955087,
+            "profitFactorUndefinedNoLosses": false,
+            "sumPositiveUnitReturns": 0.0376988043486451,
+            "sumNegativeUnitReturnsAbs": 0.05127763247707285,
+            "meanHoldingBars": 3.0,
+            "holdingSessionsSum": 6
+          }
+        }
+      }
+    },
+    {
+      "modelId": "hist_gradient_boosting_100_leaf7_min100_l2_10_seed42__price_plus_volume_proxies",
+      "featureGroup": "price_plus_volume_proxies",
+      "threshold": 0.75,
+      "validationEligible": true,
+      "evaluationMetrics": {
+        "N": 0,
+        "wins": 0,
+        "losses": 0,
+        "flat": 0,
+        "netWinRate": null,
+        "wilson95": [
+          null,
+          null
+        ],
+        "meanNetReturn": null,
+        "medianNetReturn": null,
+        "unitNotionalProfitFactor": null,
+        "profitFactorUndefinedNoLosses": false,
+        "sumPositiveUnitReturns": 0.0,
+        "sumNegativeUnitReturnsAbs": -0.0,
+        "meanHoldingBars": null,
+        "holdingSessionsSum": 0,
+        "monthClusterBootstrap": {
+          "status": "INSUFFICIENT_MONTH_CLUSTERS",
+          "months": 0,
+          "minimumMonths": 12,
+          "winRate95Lower": null,
+          "meanReturn95Lower": null
+        }
+      },
+      "targetAssessment": {
+        "pointWinRateAtLeast70Percent": false,
+        "registeredPointCriteriaMet": false,
+        "strongerIntervalCriteriaMet": false,
+        "productionEnabled": false,
+        "interpretation": "Historical campaign outcomes only; never a calibrated model score or approval to trade."
+      },
+      "coverageAndExposure": {
+        "eligibleMatureCandidateDays": 18990,
+        "eligibleSignalSessions": 633,
+        "thresholdPassingCandidateDays": 0,
+        "acceptedCampaigns": 0,
+        "entryCampaignCoverage": 0.0,
+        "thresholdPassCoverage": 0.0,
+        "nonoverlapRejectedCandidates": 0,
+        "heldSymbolSessions": 0,
+        "totalPeriodSymbolSessions": 20880,
+        "fractionOfPeriodSymbolSessionsHeld": 0.0,
+        "definition": "Unweighted stock-session occupancy, not portfolio allocation or leveraged exposure. Coverage denominator is all mature feature-complete stock-days."
+      },
+      "byEntryYear": {},
+      "bySymbol": {},
+      "stress": {
+        "costBpsPerSide": 25,
+        "method": "Same frozen model and threshold, independent 25bps cash-budget/position simulation; no refit or threshold change.",
+        "metrics": {
+          "N": 0,
+          "wins": 0,
+          "losses": 0,
+          "flat": 0,
+          "netWinRate": null,
+          "wilson95": [
+            null,
+            null
+          ],
+          "meanNetReturn": null,
+          "medianNetReturn": null,
+          "unitNotionalProfitFactor": null,
+          "profitFactorUndefinedNoLosses": false,
+          "sumPositiveUnitReturns": 0.0,
+          "sumNegativeUnitReturnsAbs": -0.0,
+          "meanHoldingBars": null,
+          "holdingSessionsSum": 0,
+          "monthClusterBootstrap": {
+            "status": "INSUFFICIENT_MONTH_CLUSTERS",
+            "months": 0,
+            "minimumMonths": 12,
+            "winRate95Lower": null,
+            "meanReturn95Lower": null
+          }
+        },
+        "byEntryYear": {}
+      }
+    }
+  ],
+  "baselines": {
+    "unconditionalEntrySameCampaignManagement": {
+      "description": "Enter first eligible close, next-open fill, then next eligible signal at/after each full exit; same costs and management; no trained entry filter.",
+      "metrics": {
+        "N": 2078,
+        "wins": 888,
+        "losses": 1190,
+        "flat": 0,
+        "netWinRate": 0.4273339749759384,
+        "wilson95": [
+          0.40621764907796776,
+          0.4487184707113486
+        ],
+        "meanNetReturn": 0.005989729997023121,
+        "medianNetReturn": -0.004439902297710121,
+        "unitNotionalProfitFactor": 1.3760558658799762,
+        "profitFactorUndefinedNoLosses": false,
+        "sumPositiveUnitReturns": 45.54455757897593,
+        "sumNegativeUnitReturnsAbs": 33.09789864516189,
+        "meanHoldingBars": 9.296438883541867,
+        "holdingSessionsSum": 19318,
+        "monthClusterBootstrap": {
+          "status": "ESTIMATED",
+          "cluster": "entry_calendar_month_all_symbols_together",
+          "months": 31,
+          "minimumMonths": 12,
+          "replicates": 2000,
+          "seed": 42,
+          "confidence": 0.95,
+          "winRate95Lower": 0.3968999066222729,
+          "meanReturn95Lower": 0.0002400512284759732,
+          "caveat": "Conditional on fixed surviving universe; adjacent months can remain dependent. Not a future guarantee."
+        }
+      },
+      "coverageAndExposure": {
+        "eligibleMatureCandidateDays": 18990,
+        "eligibleSignalSessions": 633,
+        "thresholdPassingCandidateDays": 18990,
+        "acceptedCampaigns": 2078,
+        "entryCampaignCoverage": 0.10942601369141654,
+        "thresholdPassCoverage": 1.0,
+        "nonoverlapRejectedCandidates": 16912,
+        "heldSymbolSessions": 19318,
+        "totalPeriodSymbolSessions": 20880,
+        "fractionOfPeriodSymbolSessionsHeld": 0.925191570881226,
+        "definition": "Unweighted stock-session occupancy, not portfolio allocation or leveraged exposure. Coverage denominator is all mature feature-complete stock-days."
+      }
+    },
+    "benchmarkBuyAndHoldPriceReturns": {
+      "SPY": {
+        "entryDate": "2024-01-03",
+        "exitDate": "2026-10-09",
+        "entryOpen": 470.43,
+        "exitClose": 778.57,
+        "netPriceReturn": 0.6517110209476771,
+        "costBpsPerSide": 10.0,
+        "cashDividendsIncluded": false,
+        "note": "Single buy-and-hold price return through evaluation end; no campaign selection or risk/exposure matching."
+      },
+      "QQQ": {
+        "entryDate": "2024-01-03",
+        "exitDate": "2026-10-09",
+        "entryOpen": 399.93,
+        "exitClose": 751.27,
+        "netPriceReturn": 0.8747504839320908,
+        "costBpsPerSide": 10.0,
+        "cashDividendsIncluded": false,
+        "note": "Single buy-and-hold price return through evaluation end; no campaign selection or risk/exposure matching."
+      }
+    }
+  },
+  "stressSampleExclusions": {
+    "warmup_or_missing_feature_session": 1770,
+    "immature_63_session_horizon": 1890
+  },
+  "stressPurges": {
+    "train": 1890,
+    "validation": 1890,
+    "evaluation": 0
+  },
+  "limitations": [
+    "Current selected surviving large companies are a convenience universe, not point-in-time constituents or the full US market.",
+    "Some 2024-2026 prices in the user's existing 19-stock project were inspected previously; this is a frozen new-model chronological evaluation, not wholly untouched research history.",
+    "Downloaded corrected historical bars are retrospective snapshots, not archived as-known-at-the-time data.",
+    "Daily bar opens and highs/lows are execution proxies, not independently verified regular-session executable prices.",
+    "Split adjustment is requested from provider; independent corporate-action audit is separate.",
+    "OHLCV volume features proxy pressure and cannot identify institutions or measure institutional net inflow.",
+    "Quote OFI pilot has only one full stock-day and is not included as a trained daily feature.",
+    "No portfolio capital allocation, live fills, future win-rate guarantee or production approval is implied.",
+    "All candidate entry models share the same volume-aware position-management rules; price-only is an entry-feature ablation, not a fully volume-free strategy.",
+    "Wilson intervals treat campaigns as independent; same-stock serial dependence and cross-stock co-movement remain. Monthly cluster bootstrap partially addresses shared timing, not all dependence.",
+    "Evaluation stops opening campaigns after the last signal with 63 complete future sessions, so late-period forecasts have no scored outcomes.",
+    "Feature ablation uses matched universe, dates, costs and management, but validation-selected thresholds may produce different entry sets. It does not identify institutional causation.",
+    "Profit factor uses sums of per-initial-unit net campaign returns under equal initial notional, not a capital-allocation simulation. No portfolio CAGR or drawdown is reported.",
+    "No cash dividends or cash interest; retrospective split-adjusted prices only."
+  ]
+}
