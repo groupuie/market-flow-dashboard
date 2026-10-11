@@ -1,0 +1,82 @@
+BUILD 2026-10-11T00:14Z | 最後已收盤日 2026-10-09 | ⑦ 合併後 250 天(2025-10-13~2026-10-09)| 資金氣候到 2026-10-09 | 頁面錯誤 無
+
+① 2026-09-01~10-09 正式事件 vs 研究副本(拿掉近 40 根新高)
+  SPY:日K 1250 根 2021-10-18~2026-10-09,⑦ 250 天,QQQ 日K到 2026-10-09
+    正式:加|2026-09-01, 買|2026-09-17
+    研究副本:新增 無;消失 無
+  QQQ:日K 1250 根 2021-10-18~2026-10-09,⑦ 250 天,QQQ 日K到 2026-10-09
+    正式:無
+    研究副本:新增 加|2026-09-14;消失 無
+  AMD:日K 1250 根 2021-10-18~2026-10-09,⑦ 250 天,QQQ 日K到 2026-10-09
+    正式:無
+    研究副本:新增 加|2026-09-03;消失 無
+  PLTR:日K 1250 根 2021-10-18~2026-10-09,⑦ 250 天,QQQ 日K到 2026-10-09
+    正式:出|2026-09-02
+    研究副本:新增 無;消失 無
+  AVGO:日K 1250 根 2021-10-18~2026-10-09,⑦ 250 天,QQQ 日K到 2026-10-09
+    正式:無
+    研究副本:新增 無;消失 無
+
+② ⑦ 覆蓋(近 20 根有資料的天數)與 20 日大單淨額
+  SPY:每天 cov20 ∈ [20];20 日大單淨額全期為負=False(最大 4162.0、最小 1025.7 百萬美元)
+  QQQ:每天 cov20 ∈ [20];20 日大單淨額全期為負=False(最大 1320.0、最小 -161.3 百萬美元)
+  AMD:每天 cov20 ∈ [20];20 日大單淨額全期為負=False(最大 445.7、最小 -422.7 百萬美元)
+  PLTR:每天 cov20 ∈ [20];20 日大單淨額全期為負=False(最大 352.8、最小 -173.8 百萬美元)
+  AVGO:每天 cov20 ∈ [20];20 日大單淨額全期為負=True(最大 -486.1、最小 -1032.3 百萬美元)
+
+③ 趨勢買(9/17 SPY vs QQQ)
+  SPY 9/17:收 760.711;50 日線 757.6501;10 根前 50 日線 753.4699;收在 50 日線上 通過;50 日線向上 通過;近 10 根 TD買最高 7;低檔/壓縮 通過;正資金 通過;passT True(前一天 False)
+  QQQ 9/17:收 716.173;50 日線 709.2483;10 根前 50 日線 710.1520;收在 50 日線上 通過;50 日線向上 不符;近 10 根 TD買最高 5;低檔/壓縮 通過;正資金 通過;passT False(前一天 False)
+  SPY 9/01:passT True、前一天 True → 不是路徑第一天;加 True
+
+④ 加碼(QQQ 9/14、AMD 9/03 與 10/01、PLTR 9/10、AVGO 9/03、9/14、10/01)
+  QQQ 2026-09-14:RSI 46.91 跌破40=False 首次碰下緣=True QQQ<20日線=True 當日+前10根有出=False
+    前一天 2026-09-11:收>200日線 通過、50>200 通過、200日線比20根前高 通過、50>100 通過、100>200 通過、近40根創一年新高 不符(最近一次新高 2026-06-02)→ 穩健上漲 正式 False / 研究副本 True
+    raw 正式 False / 研究副本 True;加 正式 False / 研究副本 True;Codex 診斷 加:failed ['stableUptrend'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)0.964;近10根 TD買最高 3;趨勢買缺 ['trendRegime', 'td6In10'];regime cycle
+  AMD 2026-09-03:RSI 42.75 跌破40=False 首次碰下緣=True QQQ<20日線=True 當日+前10根有出=False
+    前一天 2026-09-02:收>200日線 通過、50>200 通過、200日線比20根前高 通過、50>100 通過、100>200 通過、近40根創一年新高 不符(最近一次新高 2026-06-30)→ 穩健上漲 正式 False / 研究副本 True
+    raw 正式 False / 研究副本 True;加 正式 False / 研究副本 True;Codex 診斷 加:failed ['stableUptrend'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)0.616;近10根 TD買最高 4;趨勢買缺 ['trendRegime', 'td6In10', 'positiveFlowIn10'];regime cycle
+  AMD 2026-10-01:RSI 66.96 跌破40=False 首次碰下緣=False QQQ<20日線=False 當日+前10根有出=False
+    前一天 2026-09-30:收>200日線 通過、50>200 通過、200日線比20根前高 通過、50>100 通過、100>200 通過、近40根創一年新高 通過(最近一次新高 2026-09-25)→ 穩健上漲 正式 True / 研究副本 True
+    raw 正式 False / 研究副本 False;加 正式 False / 研究副本 False;Codex 診斷 加:failed ['rsiCrossOrFirstLowerTouch', 'qqqBelow20'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)0.836;近10根 TD買最高 4;趨勢買缺 ['td6In10', 'lowOrSqueezeIn10'];regime trend
+  PLTR 2026-09-10:RSI 48.09 跌破40=False 首次碰下緣=True QQQ<20日線=True 當日+前10根有出=True
+    前一天 2026-09-09:收>200日線 通過、50>200 通過、200日線比20根前高 不符、50>100 通過、100>200 不符、近40根創一年新高 不符(最近一次新高 2025-11-03)→ 穩健上漲 正式 False / 研究副本 False
+    raw 正式 False / 研究副本 False;加 正式 False / 研究副本 False;Codex 診斷 加:failed ['stableUptrend', 'noExitTodayAndPrevious10'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)0.739;近10根 TD買最高 4;趨勢買缺 ['td6In10'];regime trend
+  AVGO 2026-09-03:RSI 37.52 跌破40=True 首次碰下緣=False QQQ<20日線=True 當日+前10根有出=False
+    前一天 2026-09-02:收>200日線 不符、50>200 通過、200日線比20根前高 通過、50>100 不符、100>200 通過、近40根創一年新高 不符(最近一次新高 2026-06-02)→ 穩健上漲 正式 False / 研究副本 False
+    raw 正式 False / 研究副本 False;加 正式 False / 研究副本 False;Codex 診斷 加:failed ['stableUptrend'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)1.601;近10根 TD買最高 12;趨勢買缺 ['trendRegime', 'positiveFlowIn10'];regime cycle
+  AVGO 2026-09-14:RSI 34.33 跌破40=True 首次碰下緣=True QQQ<20日線=True 當日+前10根有出=False
+    前一天 2026-09-11:收>200日線 不符、50>200 通過、200日線比20根前高 通過、50>100 不符、100>200 通過、近40根創一年新高 不符(最近一次新高 2026-06-02)→ 穩健上漲 正式 False / 研究副本 False
+    raw 正式 False / 研究副本 False;加 正式 False / 研究副本 False;Codex 診斷 加:failed ['stableUptrend'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)1.144;近10根 TD買最高 5;趨勢買缺 ['trendRegime', 'td6In10', 'positiveFlowIn10'];regime cycle
+  AVGO 2026-10-01:RSI 39.81 跌破40=True 首次碰下緣=False QQQ<20日線=False 當日+前10根有出=False
+    前一天 2026-09-30:收>200日線 不符、50>200 通過、200日線比20根前高 不符、50>100 不符、100>200 通過、近40根創一年新高 不符(最近一次新高 2026-06-02)→ 穩健上漲 正式 False / 研究副本 False
+    raw 正式 False / 研究副本 False;加 正式 False / 研究副本 False;Codex 診斷 加:failed ['stableUptrend', 'qqqBelow20'] unknown [] 與正式比對 match / raw match
+    量比(近5根均量/再前20根均量)0.733;近10根 TD買最高 3;趨勢買缺 ['trendRegime', 'td6In10', 'positiveFlowIn10'];regime cycle
+
+⑤ Codex qmBuyDay 與正式事件逐日比對(五檔 × 28 天)
+  mismatch:無;unknown(資料或暖機不足而無法比):0 個 路徑×天
+
+⑥ 截斷檢查(只用 ≤ 截斷日的資料重算,截斷日以前的 買/加 與全資料相同)
+  SPY orig:28 個截斷日,不一致 無
+  SPY nohigh:28 個截斷日,不一致 無
+  QQQ orig:28 個截斷日,不一致 無
+  QQQ nohigh:28 個截斷日,不一致 無
+  AMD orig:28 個截斷日,不一致 無
+  AMD nohigh:28 個截斷日,不一致 無
+  PLTR orig:28 個截斷日,不一致 無
+  PLTR nohigh:28 個截斷日,不一致 無
+  AVGO orig:28 個截斷日,不一致 無
+  AVGO nohigh:28 個截斷日,不一致 無
+
+⑦ 全歷史「加」:正式 vs 研究副本(五檔,2021-10~2026-10)
+  SPY:正式 17、研究副本 18;共同 17、新增 1、消失 0 
+  QQQ:正式 10、研究副本 16;共同 10、新增 6、消失 0 
+  AMD:正式 6、研究副本 10;共同 6、新增 4、消失 0 
+  PLTR:正式 10、研究副本 12;共同 10、新增 2、消失 0 
+  AVGO:正式 13、研究副本 17;共同 13、新增 4、消失 0 
