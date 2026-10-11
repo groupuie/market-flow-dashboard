@@ -1,0 +1,79 @@
+{
+ "files": {
+  "index.html": {
+   "live": "198f848004cb8bec731817b35f41f761136e55b634a6b24e92334e9417fab954",
+   "repo": "198f848004cb8bec731817b35f41f761136e55b634a6b24e92334e9417fab954",
+   "same": true
+  },
+  "astra-flow.js?v=0.1.0": {
+   "live": "854637a925a22f8b04b50576431410d22560ef671996c06b1dcee0dee20f03c4",
+   "repo": "854637a925a22f8b04b50576431410d22560ef671996c06b1dcee0dee20f03c4",
+   "same": true
+  },
+  "astra-dashboard-adapter.js?v=0.1.0": {
+   "live": "5a9d1513bcc3a00a6fd4bd14295f7c7e8db34b1f2dcd5d08d9a3be90e8162c2d",
+   "repo": "5a9d1513bcc3a00a6fd4bd14295f7c7e8db34b1f2dcd5d08d9a3be90e8162c2d",
+   "same": true
+  }
+ },
+ "desktop": {
+  "build": "2026-10-11T07:20Z",
+  "astraLoaded": "0.1.0",
+  "defaultOff": true,
+  "symbols": {
+   "MU": {
+    "events_match_node": true,
+    "n": 15,
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+    "xType": "category"
+   },
+   "TSM": {
+    "events_match_node": true,
+    "n": 18,
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+    "xType": "category"
+   },
+   "NVDA": {
+    "events_match_node": true,
+    "n": 12,
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+    "xType": "category"
+   }
+  },
+  "overflow": false,
+  "errors": []
+ },
+ "mobile": {
+  "build": "2026-10-11T07:20Z",
+  "astraLoaded": "0.1.0",
+  "defaultOff": true,
+  "symbols": {
+   "MU": {
+    "events_match_node": true,
+    "n": 15,
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+    "xType": "category"
+   },
+   "TSM": {
+    "events_match_node": true,
+    "n": 18,
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+    "xType": "category"
+   },
+   "NVDA": {
+    "events_match_node": true,
+    "n": 12,
+    "quant_same_on_off": true,
+    "astra_bar": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+    "xType": "category"
+   }
+  },
+  "overflow": false,
+  "errors": []
+ }
+}
