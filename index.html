@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-11T00:14Z">
+<meta name="build" content="2026-10-11T06:15Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -669,7 +669,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T00:14Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T06:15Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3232,6 +3232,7 @@ function buildChipIdxRangeActive(){   // 縮放鈕 active 樣式即時反映(不
 function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   try{dqBanner();}catch(_){}   // 資料品質條:每次渲染都重估(含 sig 快取提前返回前;時間推進會改變 lastDone)
+  try{chipKRefresh(CHIP_SYM);if(CHIP_Q&&CHIP_PD==='d'){const _u=TK_UL[CHIP_SYM];if(_u)chipKRefresh(_u);ensureQQQK();}}catch(_){}   // 2026-10-11:日K檔(本檔、槓桿ETF的正股、QQQ)落後已收盤日 → 背景重抓
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'600px':(window.__wsxCkH||'660px');   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
   // 2026-08-08 校閱修正:此處原為 980(舊五軌高版遺留),完整渲染尾端才改 600;dataset.sig 快取提前返回時
@@ -3270,7 +3271,7 @@ function renderCockpit(){
     +(CHIP_FC?':F1':':F0')+(FCL&&FCL.updated_utc?':f'+FCL.updated_utc:'')
     +(CHIP_Q?':Q1'+(function(){const u=CHIP_PD==='d'?TK_UL[CHIP_SYM]:null;if(!u)return '';   // 📊量化:槓桿ETF看正股 → 正股日K/盤中價變動也要重繪
       try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':q'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':Q0')
-    +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?(QQQK?':k1':':k0'):'');   // 📊量化「加」要 QQQ 日K:到了就重畫   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
+    +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?':k'+qqqSig():'');   // 📊量化「加」要 QQQ 日K:到了、或有新收盤(含當日快照)就重畫(2026-10-11)   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   // x 類別標籤必須唯一(2026-08-08 使用者揪出:週/月K跨年後 'MM-DD' 重複 → category 軸同名互撞、K棒疊格錯亂)
@@ -3608,9 +3609,10 @@ function renderCockpit(){
       qmAppendPathBuys(E,T);   // 2026-10-11 修正A:只被當日/之前 3 根的抄底去重(不讓未來的抄底改寫歷史)
       // 加 = 加碼參考(adSeriesJS):大盤也在跌 = QQQ 收盤 < 20 日線(用 QQQ 日K;還沒載到時只用引擎 series.m 同一天的資料,不往後沿用)
       try{ensureQQQK();}catch(_){}
-      const QD={};if(QQQK){const ds=Object.keys(QQQK).filter(d=>d<=lastDone).sort();let s0=0;
-        ds.forEach((d,i)=>{s0+=+QQQK[d];if(i>=20)s0-=+QQQK[ds[i-20]];if(i>=19)QD[d]=(+QQQK[d])<s0/20;});}
-      const qdOf=d=>{if(d in QD)return QD[d];if(QQQK)return null;const v=fcMktOf(d);return (v!=null&&FCL&&FCL._mkd&&d<=FCL._mkd)?!!(v&QM.QB):null;};
+      const QC=qqqCloses();   // 2026-10-11:QQQ 收盤 = 日K檔 + 當日快照棒(收盤後不必等日K檔更新,當天的「加」才算得出來)
+      const QD={};if(QC){const ds=Object.keys(QC).filter(d=>d<=lastDone).sort();let s0=0;
+        ds.forEach((d,i)=>{s0+=+QC[d];if(i>=20)s0-=+QC[ds[i-20]];if(i>=19)QD[d]=(+QC[d])<s0/20;});}
+      const qdOf=d=>{if(d in QD)return QD[d];if(QC)return null;const v=fcMktOf(d);return (v!=null&&FCL&&FCL._mkd&&d<=FCL._mkd)?!!(v&QM.QB):null;};
       const chuB=new Array(B.length).fill(false);E.forEach(x=>{if(x.w==='出')chuB[x.j]=true;});
       const AD=adSeriesJS(B,qdOf,chuB);
       for(let j=0;j<AD.n;j++)if(AD.sig[j])E.push({w:'加',j:j,d:AD.D[j],r:AD.rsiX[j],lb:AD.lbT[j]});
@@ -3742,8 +3744,8 @@ function renderCockpit(){
       const hL=HE.length?HE[HE.length-1]:null;   // 最近 10 根內有「熱」→ 詳情多一行提醒(不改上面的結論)
       const hotLine=(hL&&i9-hL.j<=10)?'<div><b style="color:'+QGRAY+'">熱</b>:'+hL.d.slice(5)+' 日K、週K 都過熱 → 想做成本調節可先賣一小部分(只是提醒,不是賣出訊號)</div>':'';
       // 加碼條件(2026-10-10 使用者:「詳情裡每天直接寫出要到哪裡才成立」;價位是明天的收盤觸發價,每天會變)
-      const qT=(function(){if(!QQQK)return null;const ds=Object.keys(QQQK).filter(d=>d<=lastDone).sort();if(ds.length<20)return null;
-        let s=0;ds.slice(-19).forEach(d=>{s+=+QQQK[d];});return {below:QD[ds[ds.length-1]]===true,trig:s/19};})();
+      const qT=(function(){if(!QC)return null;const ds=Object.keys(QC).filter(d=>d<=lastDone).sort();if(ds.length<20)return null;
+        let s=0;ds.slice(-19).forEach(d=>{s+=+QC[d];});return {below:QD[ds[ds.length-1]]===true,trig:s/19};})();
       let addLine='';
       if(!selection.conflict&&!(V&&V.w==='加')){const tag='<b style="color:#2dd4bf">加</b>碼';
         if(!AD.utNext)addLine='<div>'+tag+'規則:目前不在穩健上漲,不適用</div>';
@@ -5045,21 +5047,57 @@ function renderCash(){
 }
 // ===== 目的地對照(diverging bar + 殘差;支援逐日動畫)=====
 let DEST_RANGE=null;  // 動畫時固定 x 軸範圍,長條變化才可比
-let SPYK=null,SPYK_req=false;   // SPY 日K(日期→收盤)快取,池水位線多日疊圖用
+let SPYK=null,SPYK_req=false,SPYK_t=0;   // SPY 日K(日期→收盤)快取,池水位線多日疊圖用
+// 2026-10-11 使用者:「先把 QQQ 這種失誤改掉」—— 原本 SPY/QQQ 日K只抓一次,網頁開著跨過美股收盤就一直少了新的一天
+//   (QQQ 少一天 → 📊量化「加」的大盤條件變成「不知道」→ 當天不可能標「加」)。
+//   改成:還沒抓到 → 失敗後 60 秒再試;已抓到但最後一天落後「最近已收盤日」→ 每 10 分鐘背景重抓一次(舊資料先留著用)。
+function idxKNeed(K,t){
+  if(!K)return Date.now()-t>60e3;
+  let l='';for(const d in K)if(d>l)l=d;
+  return l<tjLastDone()&&Date.now()-t>600e3;
+}
 function ensureSpyK(){
-  if(SPYK||SPYK_req)return; SPYK_req=true;
+  if(SPYK_req||!idxKNeed(SPYK,SPYK_t))return; SPYK_req=true; SPYK_t=Date.now();
   fetch(DATA_URL.replace('market_data.json','kline_SPY.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(d=>{if(d&&d.bars){SPYK={};d.bars.forEach(b=>{SPYK[b[0]]=b[4];});render();}})
-    .catch(()=>{});
+    .then(d=>{if(d&&d.bars){const k={};d.bars.forEach(b=>{k[b[0]]=b[4];});const chg=!SPYK||Object.keys(k).length!==Object.keys(SPYK).length;SPYK=k;if(chg)render();}})
+    .catch(()=>{}).finally(()=>{SPYK_req=false;});
 }
-let QQQK=null,QQQK_req=false;   // QQQ 日K快取(池水位線多日疊圖)
+let QQQK=null,QQQK_req=false,QQQK_t=0;   // QQQ 日K快取(池水位線多日疊圖;📊量化「加」的大盤條件)
 function ensureQQQK(){
-  if(QQQK||QQQK_req)return; QQQK_req=true;
+  if(QQQK_req||!idxKNeed(QQQK,QQQK_t))return; QQQK_req=true; QQQK_t=Date.now();
   fetch(DATA_URL.replace('market_data.json','kline_QQQ.json'),{cache:'no-store'})
     .then(r=>r.ok?r.json():null)
-    .then(d=>{if(d&&d.bars){QQQK={};d.bars.forEach(b=>{QQQK[b[0]]=b[4];});render();}})
-    .catch(()=>{});
+    .then(d=>{if(d&&d.bars){const k={};d.bars.forEach(b=>{k[b[0]]=b[4];});const chg=!QQQK||Object.keys(k).length!==Object.keys(QQQK).length;QQQK=k;if(chg)render();}})
+    .catch(()=>{}).finally(()=>{QQQK_req=false;});
+}
+// 📊量化「加」用的 QQQ 收盤 = 日K檔(QQQK)+ 富途當日快照棒(kline_today)。規則同個股 chipBars:
+//   快照欄位 ≤0 不用;快照日期不超過應屬交易日(snapDate);只接在日K檔最後一天(含)之後,同一天以快照為準。
+//   → 美股收盤後馬上有當天的 QQQ 收盤,不必等每天一次的日K檔更新(2026-10-11)
+function qqqCloses(){
+  if(!QQQK)return null;
+  const tb=((typeof DATA!=='undefined'&&DATA&&DATA.kline_today)||{}).QQQ;
+  if(!(tb&&tb.length>=5&&+tb[1]>0&&+tb[2]>0&&+tb[3]>0&&+tb[4]>0))return QQQK;
+  let d=tb[0];try{const sd=snapDate();if(d>sd)d=sd;}catch(_){}
+  let l='';for(const k in QQQK)if(k>l)l=k;
+  if(d<l||QQQK[d]===+tb[4])return QQQK;
+  const m=Object.assign({},QQQK);m[d]=+tb[4];return m;
+}
+function qqqSig(){const q=qqqCloses();if(!q)return '0';const ld=tjLastDone();let l='';for(const d in q)if(d>l&&d<=ld)l=d;return l+'_'+q[l];}   // 駕駛艙快取鍵:QQQ 有新收盤就重算「加」
+// 個股日K檔缺「已收盤」的日子 → 背景重抓(舊資料先留著、不閃「載入中」;10 分鐘最多一次)(2026-10-11)
+//   原本只靠 dqBanner(用「日K檔 + 當日快照」判斷落後):網頁開了兩天以上時,快照補了今天、檔裡卻少了昨天
+//   → 判成不落後,K 線中間缺一天、記號用缺一天的資料算。
+function chipKRefresh(sym){
+  const K=sym&&CHIPK[sym]; if(!K||!K.bars||!K.bars.length||CHIPK[sym+'_rr'])return;
+  const fl=K.bars[K.bars.length-1][0];
+  if(!(fl<tjLastDone())||Date.now()-(K._rt||CHIPK[sym+'_t']||0)<600e3)return;
+  CHIPK[sym+'_rr']=true; K._rt=Date.now();
+  fetch(DATA_URL.replace('market_data.json','kline_'+sym+'.json'),{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&d.bars&&d.bars.length&&d.bars[d.bars.length-1][0]>fl){const m={};d.bars.forEach(b=>{m[b[0]]=b[4];});
+      CHIPK[sym]={close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||'',_rt:Date.now()};
+      if(DATA&&!DATA._partial){try{renderChips();}catch(e){console.warn(e);}}}})
+    .catch(()=>{}).finally(()=>{delete CHIPK[sym+'_rr'];});
 }
 let IDX_SHOW={SPY:true,QQQ:true};   // 疊加指數線顯示開關(使用者可切)
 function buildIdxToggle(){
