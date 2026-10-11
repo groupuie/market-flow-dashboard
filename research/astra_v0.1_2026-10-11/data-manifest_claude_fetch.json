@@ -1,0 +1,220 @@
+{
+  "fetchedAt": "2026-10-11T06:45:52.449411+00:00",
+  "selection": "predeclared convenience diagnostic set, not point-in-time universe",
+  "files": [
+    {
+      "symbol": "SPY",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_SPY.json",
+      "sha256": "01267ada404cd116dad955f6d57d70db51e36378d8ea932b07d2ac0b4dbeb676",
+      "bytes": 85777,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:15",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "QQQ",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_QQQ.json",
+      "sha256": "00c0dd188e447631c07329bdf03ee40d59743e30396a45474ff2d9a32910913b",
+      "bytes": 85623,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:15",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "MU",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_MU.json",
+      "sha256": "4a63273bfbe661a1e2968249c26f70273277c64ad5e898a2dd6ccc828be3ba43",
+      "bytes": 82419,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:24",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "SNDK",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_SNDK.json",
+      "sha256": "f4924597903282bf9f9550ace7e1cc129d179227006f3c986343a1989c630ba1",
+      "bytes": 26462,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:25",
+      "first": "2025-02-13",
+      "last": "2026-10-09",
+      "bars": 416
+    },
+    {
+      "symbol": "TSM",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_TSM.json",
+      "sha256": "74fa2e7603c34ffa2a4dde44af18ac7504c9a13d4fdc4dcd0af6b5043ee6638c",
+      "bytes": 83469,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:36",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "NVDA",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_NVDA.json",
+      "sha256": "747acf26cbf21b9e1a7cb5a4957f88ddda393c368451fedbc70cb5ef4029a2e8",
+      "bytes": 84185,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:17",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "META",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_META.json",
+      "sha256": "dcf499fb563132e772a95a704801254c5bdc0feaf47308d18671986b446912c5",
+      "bytes": 85477,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:20",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "AVGO",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_AVGO.json",
+      "sha256": "c60da21458928eaaa803dc84ddc047a50eaf79718040d9acc5a09fc2d2dea075",
+      "bytes": 83536,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:21",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "PLTR",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_PLTR.json",
+      "sha256": "63b54aed9a1908a62c812edf7fccb90f7a3ac20b756c26a2f2f026698088eb2a",
+      "bytes": 76614,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:31",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "AMD",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_AMD.json",
+      "sha256": "ac3843e47fb14246df2911a5d274a2f0eb6f431e37df09854b9a86ae3e527ffe",
+      "bytes": 79888,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:30",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "MSFT",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_MSFT.json",
+      "sha256": "3c801537feb66b99e42170ce2dd25cd7a29dc64e9ea0f2c6c5426cebab481e0f",
+      "bytes": 85646,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:18",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "AAPL",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_AAPL.json",
+      "sha256": "57350d50bb659a0c5c4c8abe4b599a98976288deee5cc0c09ee8218a50949606",
+      "bytes": 85791,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:19",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "JPM",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_JPM.json",
+      "sha256": "1991fa716ef437522c79967179704e951cbd6a23c5aa88b7bf9c9b338de88c34",
+      "bytes": 85014,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:24:35",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "XOM",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_XOM.json",
+      "sha256": "6fb2bc0d4097c638c3f75f58ed1ac709646a3edcbf2cd8b07042d59add7161d0",
+      "bytes": 53433,
+      "source": "yahoo-ext",
+      "updated_utc": "2026-10-09 21:55:39",
+      "first": "2023-08-03",
+      "last": "2026-10-09",
+      "bars": 800
+    },
+    {
+      "symbol": "UNH",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_UNH.json",
+      "sha256": "a1a5c583d7c57f85b261a6a3a052f47d6e072cdcb806498fdac94072076e212c",
+      "bytes": 53462,
+      "source": "yahoo-ext",
+      "updated_utc": "2026-10-09 21:48:28",
+      "first": "2023-08-03",
+      "last": "2026-10-09",
+      "bars": 800
+    },
+    {
+      "symbol": "WMT",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_WMT.json",
+      "sha256": "36fd789e2c63ab0db0a8730be528aa5123d2808304af080108b1ccb32871497e",
+      "bytes": 51961,
+      "source": "yahoo-ext",
+      "updated_utc": "2026-10-09 21:55:31",
+      "first": "2023-08-03",
+      "last": "2026-10-09",
+      "bars": 800
+    },
+    {
+      "symbol": "CAT",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_CAT.json",
+      "sha256": "f42045641933d1badb3d598f5be6d7d3c68f9b8172c6446fd5fe77b7987b23c6",
+      "bytes": 84293,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:24:48",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    },
+    {
+      "symbol": "BA",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_BA.json",
+      "sha256": "1de8ae0aa7a909f95f2e491c79b5a8d40137f0aea386e40fc5862fbcbd958ffe",
+      "bytes": 50023,
+      "source": "yahoo-ext",
+      "updated_utc": "2026-10-09 20:18:24",
+      "first": "2023-08-03",
+      "last": "2026-10-09",
+      "bars": 800
+    },
+    {
+      "symbol": "TLT",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_TLT.json",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "symbol": "IWM",
+      "url": "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_IWM.json",
+      "sha256": "c14d09458322c7ca5e4cee04a01d6198a498a4f00b21a0e3417e284386002c13",
+      "bytes": 85609,
+      "source": "futu-qfq",
+      "updated_utc": "2026-10-10 17:25:17",
+      "first": "2021-10-18",
+      "last": "2026-10-09",
+      "bars": 1250
+    }
+  ]
+}

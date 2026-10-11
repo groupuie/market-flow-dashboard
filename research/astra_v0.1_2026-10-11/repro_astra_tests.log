@@ -1,0 +1,33 @@
+# Astra v0.1 自帶測試:Claude 端重跑(2026-10-11,台灣時間 15:18:20)
+## 交付檔 SHA-256(從 Astra MD 原文抽出,與 MD 標示逐一比對)
+854637a925a22f8b04b50576431410d22560ef671996c06b1dcee0dee20f03c4  astra-flow.js
+5a9d1513bcc3a00a6fd4bd14295f7c7e8db34b1f2dcd5d08d9a3be90e8162c2d  astra-dashboard-adapter.js
+d2ef00875bbdae69eb59b0f3923a16c4c377532f646fdd0ad0e9cde3674b1b8e  backtest.cjs
+89d12059bd6aa6cacfae41775a6c82f87f124a8e13c317f519d23c7986c61472  test-astra-flow.cjs
+431dc0efcc446be04f2145eb4a449be01fb72bc518abf3d231331002af609c65  test-backtest.cjs
+e7c5cc1ea1eb053c215797b9e04807e07655a8d89b844214d9c44f0472a91b26  test-real-replay.cjs
+e7aeeb4dde27f6cb6ffeedf0995d2b6b0893e9c5791496f10fc418adc5ab3503  evidence/adapter-validation.cjs
+555b53887a8384fc43c29afd495de16bb3ea1e2513ded398befc1a2ebe7d4744  fetch-snapshots.py
+## 資料快照:19 檔與 Astra data-manifest.json 雜湊逐一相同(TLT 404 同 Astra)
+same 19 different 0
+## node test-astra-flow.cjs
+RESULT: 18 passed; 0 failed.
+## node test-backtest.cjs
+PASS next-open fills and adverse gap; entry+exit costs; exposure; no final-day fill; open-tail separate; 30bps sensitivity; same-window buyhold.
+PASS terminal cost drawdown parity; compounded dollar P&L profit factor (+100%, -50% gives 1).
+## node evidence/adapter-validation.cjs
+{  "status": "pass",  "checks": 28,
+## node test-real-replay.cjs
+PASS 19 real symbols; 251 prefix replay comparisons; no input mutation. Data snapshot identity in data-manifest.json.
+## node backtest.cjs → 表格與 Astra MD 第 5 節逐列相同
+IDENTICAL 19 rows
+合計:完成交易 98 正報酬 47 (48.0%) 贏過持有 1/19 贏過均線 4/19 優於拿掉壓力濾網 12/19 期末未平倉 3
+進場路徑:A 持續壓力突破 83 筆;B 量縮守穩轉強 18 筆
+## 診斷(已看過的資料,只描述、不當證據):B 路徑的轉強觸發被壓力閘門擋掉的次數
+量縮守穩後轉強(非 20 日突破)的觸發日 145 天;其中持續買壓不成立 87 天;只差持續買壓一項就會進場 30 天
+## 拆股前後成交量是否連續(驗證成交量口徑)
+NVDA futu-qfq 06-05:528.4M 06-06:664.7M 06-07:412.4M 06-10:314.2M 06-11:222.6M 06-12:299.6M
+AVGO futu-qfq 07-10:41.1M 07-11:51.1M 07-12:30.5M 07-15:23.0M 07-16:22.2M 07-17:43.3M
+WMT yahoo-ext 02-21:40.5M 02-22:29.5M 02-23:74.4M 02-26:32.2M 02-27:18.0M 02-28:14.8M
+## 速度:1,250 根日K 跑一次 AstraFlow.run(Node 22)
+54.9 ms/次

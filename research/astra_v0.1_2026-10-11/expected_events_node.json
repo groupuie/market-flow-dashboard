@@ -1,0 +1,4813 @@
+{
+ "NVDA": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-03-21",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 26.625
+   },
+   {
+    "date": "2022-04-06",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 24.307
+   },
+   {
+    "date": "2022-07-20",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 17.738
+   },
+   {
+    "date": "2022-08-26",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 16.197
+   },
+   {
+    "date": "2022-11-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 16.606
+   },
+   {
+    "date": "2022-11-29",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 15.583
+   },
+   {
+    "date": "2022-12-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 16.896
+   },
+   {
+    "date": "2023-01-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 17.78
+   },
+   {
+    "date": "2023-02-23",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 23.585
+   },
+   {
+    "date": "2023-08-03",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 44.379
+   },
+   {
+    "date": "2023-09-08",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 45.436
+   },
+   {
+    "date": "2023-11-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 48.191
+   },
+   {
+    "date": "2023-12-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 49.274
+   },
+   {
+    "date": "2024-03-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 90.63
+   },
+   {
+    "date": "2024-03-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 89.144
+   },
+   {
+    "date": "2024-04-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 89.198
+   },
+   {
+    "date": "2024-05-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 91.096
+   },
+   {
+    "date": "2024-05-15",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 94.361
+   },
+   {
+    "date": "2024-06-24",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 117.784
+   },
+   {
+    "date": "2024-06-25",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 125.742
+   },
+   {
+    "date": "2024-08-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 129.641
+   },
+   {
+    "date": "2024-09-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 118.821
+   },
+   {
+    "date": "2024-10-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 124.586
+   },
+   {
+    "date": "2024-10-07",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 127.378
+   },
+   {
+    "date": "2024-11-04",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 135.686
+   },
+   {
+    "date": "2024-11-12",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 147.893
+   },
+   {
+    "date": "2025-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 146.836
+   },
+   {
+    "date": "2025-02-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 138.488
+   },
+   {
+    "date": "2025-05-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 114.212
+   },
+   {
+    "date": "2025-06-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 157.603
+   },
+   {
+    "date": "2025-09-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 178.004
+   },
+   {
+    "date": "2025-09-30",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 186.134
+   },
+   {
+    "date": "2025-10-16",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 181.375
+   },
+   {
+    "date": "2025-10-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 185.815
+   },
+   {
+    "date": "2025-12-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 188.17
+   },
+   {
+    "date": "2026-01-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 186.803
+   },
+   {
+    "date": "2026-04-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 201.22
+   },
+   {
+    "date": "2026-07-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 211.563
+   },
+   {
+    "date": "2026-07-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 211.823
+   },
+   {
+    "date": "2026-08-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 206.409
+   },
+   {
+    "date": "2026-08-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 218.975
+   },
+   {
+    "date": "2026-08-25",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 212.812
+   },
+   {
+    "date": "2026-09-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 225.51
+   },
+   {
+    "date": "2026-09-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 228.38
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "TSM": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-07-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 82.09
+   },
+   {
+    "date": "2022-08-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 81.041
+   },
+   {
+    "date": "2022-08-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 84.095
+   },
+   {
+    "date": "2022-08-26",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 79.383
+   },
+   {
+    "date": "2022-11-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 68.584
+   },
+   {
+    "date": "2022-12-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 74.952
+   },
+   {
+    "date": "2022-12-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 76.017
+   },
+   {
+    "date": "2023-01-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 83.748
+   },
+   {
+    "date": "2023-05-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 88.167
+   },
+   {
+    "date": "2023-06-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 101.957
+   },
+   {
+    "date": "2023-06-26",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 95.729
+   },
+   {
+    "date": "2023-07-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 98.636
+   },
+   {
+    "date": "2023-11-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 93.433
+   },
+   {
+    "date": "2023-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 96.451
+   },
+   {
+    "date": "2024-01-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 110.284
+   },
+   {
+    "date": "2024-02-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 123.012
+   },
+   {
+    "date": "2024-03-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 132.531
+   },
+   {
+    "date": "2024-04-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 140.976
+   },
+   {
+    "date": "2024-05-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 141.955
+   },
+   {
+    "date": "2024-06-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 157.963
+   },
+   {
+    "date": "2024-06-24",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 163.214
+   },
+   {
+    "date": "2024-07-02",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 170.887
+   },
+   {
+    "date": "2024-08-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 170.644
+   },
+   {
+    "date": "2024-08-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 166.588
+   },
+   {
+    "date": "2024-08-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 166.997
+   },
+   {
+    "date": "2024-09-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 177.638
+   },
+   {
+    "date": "2024-10-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 181.621
+   },
+   {
+    "date": "2024-10-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 186.267
+   },
+   {
+    "date": "2024-12-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 199.436
+   },
+   {
+    "date": "2024-12-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 196.82
+   },
+   {
+    "date": "2024-12-23",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 203.058
+   },
+   {
+    "date": "2025-01-27",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 188.32
+   },
+   {
+    "date": "2025-02-12",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 202.098
+   },
+   {
+    "date": "2025-05-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 176.238
+   },
+   {
+    "date": "2025-05-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 173.525
+   },
+   {
+    "date": "2025-05-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 190.925
+   },
+   {
+    "date": "2025-06-04",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 198.966
+   },
+   {
+    "date": "2025-08-20",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 225.543
+   },
+   {
+    "date": "2025-09-09",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 247.565
+   },
+   {
+    "date": "2025-10-23",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 287.747
+   },
+   {
+    "date": "2025-12-08",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 298.773
+   },
+   {
+    "date": "2025-12-17",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 274.823
+   },
+   {
+    "date": "2025-12-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 291.017
+   },
+   {
+    "date": "2025-12-26",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 300.504
+   },
+   {
+    "date": "2026-02-19",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 357.61
+   },
+   {
+    "date": "2026-02-24",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 382.774
+   },
+   {
+    "date": "2026-03-03",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 350.406
+   },
+   {
+    "date": "2026-03-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 354.682
+   },
+   {
+    "date": "2026-03-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 346.01
+   },
+   {
+    "date": "2026-05-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 392.45
+   },
+   {
+    "date": "2026-05-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 402.53
+   },
+   {
+    "date": "2026-05-27",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 420.63
+   },
+   {
+    "date": "2026-06-26",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 431.193
+   },
+   {
+    "date": "2026-08-13",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 429.338
+   },
+   {
+    "date": "2026-08-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 426.168
+   },
+   {
+    "date": "2026-09-04",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 427.774
+   },
+   {
+    "date": "2026-09-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 445.14
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "MU": {
+  "status": "RESEARCH",
+  "modelState": "LONG",
+  "events": [
+   {
+    "date": "2022-01-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 92.084
+   },
+   {
+    "date": "2022-02-25",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 88.076
+   },
+   {
+    "date": "2022-07-21",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 62.418
+   },
+   {
+    "date": "2022-08-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 61.339
+   },
+   {
+    "date": "2022-08-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 60.221
+   },
+   {
+    "date": "2022-10-25",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 54.913
+   },
+   {
+    "date": "2022-11-04",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 55.198
+   },
+   {
+    "date": "2022-11-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 57.92
+   },
+   {
+    "date": "2022-11-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 54.795
+   },
+   {
+    "date": "2023-01-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 55.52
+   },
+   {
+    "date": "2023-03-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 62.15
+   },
+   {
+    "date": "2023-04-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 58.722
+   },
+   {
+    "date": "2023-04-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 62.453
+   },
+   {
+    "date": "2023-04-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 60.232
+   },
+   {
+    "date": "2023-05-01",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 61.545
+   },
+   {
+    "date": "2023-05-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 64.082
+   },
+   {
+    "date": "2023-06-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 68.228
+   },
+   {
+    "date": "2023-08-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 67.417
+   },
+   {
+    "date": "2023-09-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 69.256
+   },
+   {
+    "date": "2023-09-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 70.067
+   },
+   {
+    "date": "2023-11-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 75.989
+   },
+   {
+    "date": "2023-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 74.255
+   },
+   {
+    "date": "2023-12-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 84.676
+   },
+   {
+    "date": "2024-01-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 81.596
+   },
+   {
+    "date": "2024-01-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 82.776
+   },
+   {
+    "date": "2024-01-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 82.607
+   },
+   {
+    "date": "2024-01-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 87.369
+   },
+   {
+    "date": "2024-04-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 120.903
+   },
+   {
+    "date": "2024-05-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 124.398
+   },
+   {
+    "date": "2024-06-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 132.758
+   },
+   {
+    "date": "2024-06-24",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 138.021
+   },
+   {
+    "date": "2024-06-25",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 140.115
+   },
+   {
+    "date": "2024-10-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 107.784
+   },
+   {
+    "date": "2024-10-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 104.511
+   },
+   {
+    "date": "2024-10-31",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 99.139
+   },
+   {
+    "date": "2025-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 104.438
+   },
+   {
+    "date": "2025-05-08",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 84.934
+   },
+   {
+    "date": "2025-06-03",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 101.99
+   },
+   {
+    "date": "2025-07-17",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 113.079
+   },
+   {
+    "date": "2025-08-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 124.071
+   },
+   {
+    "date": "2025-08-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 121.805
+   },
+   {
+    "date": "2025-09-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 131.159
+   },
+   {
+    "date": "2025-11-19",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 225.699
+   },
+   {
+    "date": "2025-12-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 233.931
+   },
+   {
+    "date": "2026-01-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 388.887
+   },
+   {
+    "date": "2026-02-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 382.67
+   },
+   {
+    "date": "2026-03-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 418.45
+   },
+   {
+    "date": "2026-03-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 425.886
+   },
+   {
+    "date": "2026-04-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 465.588
+   },
+   {
+    "date": "2026-06-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 981.459
+   },
+   {
+    "date": "2026-06-18",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 1133.816
+   },
+   {
+    "date": "2026-07-02",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 975.41
+   },
+   {
+    "date": "2026-08-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 1011.75
+   },
+   {
+    "date": "2026-08-21",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 966.78
+   },
+   {
+    "date": "2026-09-02",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 956.08
+   },
+   {
+    "date": "2026-09-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 927.6
+   },
+   {
+    "date": "2026-09-21",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 1043.96
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": 972.1325
+  }
+ },
+ "AMD": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-03-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 120.53
+   },
+   {
+    "date": "2022-03-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 123.23
+   },
+   {
+    "date": "2022-05-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 102.26
+   },
+   {
+    "date": "2022-06-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 105.28
+   },
+   {
+    "date": "2022-07-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 91.09
+   },
+   {
+    "date": "2022-07-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 89.82
+   },
+   {
+    "date": "2022-11-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 73.19
+   },
+   {
+    "date": "2022-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 70.47
+   },
+   {
+    "date": "2023-01-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 71.59
+   },
+   {
+    "date": "2023-01-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 70.07
+   },
+   {
+    "date": "2023-03-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 95.93
+   },
+   {
+    "date": "2023-05-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 107.93
+   },
+   {
+    "date": "2023-11-03",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 112.25
+   },
+   {
+    "date": "2023-12-06",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 116.82
+   },
+   {
+    "date": "2023-12-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 134.41
+   },
+   {
+    "date": "2024-01-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 158.74
+   },
+   {
+    "date": "2024-02-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 176.54
+   },
+   {
+    "date": "2024-02-29",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 192.53
+   },
+   {
+    "date": "2024-03-19",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 181.42
+   },
+   {
+    "date": "2024-03-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 179.73
+   },
+   {
+    "date": "2024-03-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 179.65
+   },
+   {
+    "date": "2024-07-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 178.69
+   },
+   {
+    "date": "2024-09-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 150.77
+   },
+   {
+    "date": "2024-09-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 158.32
+   },
+   {
+    "date": "2025-05-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 100.36
+   },
+   {
+    "date": "2025-05-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 112.86
+   },
+   {
+    "date": "2025-07-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 138.41
+   },
+   {
+    "date": "2025-07-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 173.66
+   },
+   {
+    "date": "2025-08-13",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 184.42
+   },
+   {
+    "date": "2025-08-19",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 166.55
+   },
+   {
+    "date": "2025-08-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 165.2
+   },
+   {
+    "date": "2025-11-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 259.65
+   },
+   {
+    "date": "2025-11-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 237.7
+   },
+   {
+    "date": "2026-04-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 246.83
+   },
+   {
+    "date": "2026-07-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 521.95
+   },
+   {
+    "date": "2026-09-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 503.6
+   },
+   {
+    "date": "2026-09-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 504.2
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "PLTR": {
+  "status": "RESEARCH",
+  "modelState": "LONG",
+  "events": [
+   {
+    "date": "2022-03-22",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 13.27
+   },
+   {
+    "date": "2022-03-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 13.42
+   },
+   {
+    "date": "2022-03-31",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 13.73
+   },
+   {
+    "date": "2022-04-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 12.9
+   },
+   {
+    "date": "2022-07-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 10.17
+   },
+   {
+    "date": "2022-07-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 9.28
+   },
+   {
+    "date": "2022-07-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 9.04
+   },
+   {
+    "date": "2022-07-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 10.11
+   },
+   {
+    "date": "2022-07-21",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 10.49
+   },
+   {
+    "date": "2022-08-09",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 9.25
+   },
+   {
+    "date": "2022-08-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 9.91
+   },
+   {
+    "date": "2022-10-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 8.29
+   },
+   {
+    "date": "2023-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 7.38
+   },
+   {
+    "date": "2023-01-25",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 7.22
+   },
+   {
+    "date": "2023-02-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 9.22
+   },
+   {
+    "date": "2023-02-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 8.09
+   },
+   {
+    "date": "2023-03-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 8.04
+   },
+   {
+    "date": "2023-03-29",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 8.22
+   },
+   {
+    "date": "2023-05-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 9.88
+   },
+   {
+    "date": "2023-05-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 10.25
+   },
+   {
+    "date": "2023-06-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 15.19
+   },
+   {
+    "date": "2023-06-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 15.65
+   },
+   {
+    "date": "2023-06-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 15.33
+   },
+   {
+    "date": "2023-07-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 16.15
+   },
+   {
+    "date": "2023-08-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 18.97
+   },
+   {
+    "date": "2023-08-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 17.04
+   },
+   {
+    "date": "2023-11-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 19.94
+   },
+   {
+    "date": "2024-02-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 24.51
+   },
+   {
+    "date": "2024-03-06",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 26.16
+   },
+   {
+    "date": "2024-03-15",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 23.49
+   },
+   {
+    "date": "2024-03-25",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 24.51
+   },
+   {
+    "date": "2024-06-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 23.31
+   },
+   {
+    "date": "2024-07-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 27.23
+   },
+   {
+    "date": "2024-08-02",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 24.74
+   },
+   {
+    "date": "2024-08-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 32.32
+   },
+   {
+    "date": "2024-09-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 30.59
+   },
+   {
+    "date": "2024-10-03",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 39.24
+   },
+   {
+    "date": "2025-01-10",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 67.26
+   },
+   {
+    "date": "2025-01-31",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 82.49
+   },
+   {
+    "date": "2025-02-21",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 101.35
+   },
+   {
+    "date": "2025-02-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 90.68
+   },
+   {
+    "date": "2025-04-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 98.4
+   },
+   {
+    "date": "2025-04-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 93.78
+   },
+   {
+    "date": "2025-04-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 93.99
+   },
+   {
+    "date": "2025-05-13",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 128.1
+   },
+   {
+    "date": "2025-07-02",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 132.12
+   },
+   {
+    "date": "2025-07-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 143.13
+   },
+   {
+    "date": "2025-07-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 154.63
+   },
+   {
+    "date": "2025-08-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 156.01
+   },
+   {
+    "date": "2025-09-18",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 176.97
+   },
+   {
+    "date": "2025-10-17",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 178.15
+   },
+   {
+    "date": "2025-10-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 184.63
+   },
+   {
+    "date": "2025-11-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 187.9
+   },
+   {
+    "date": "2025-11-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 177.93
+   },
+   {
+    "date": "2025-12-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 183.57
+   },
+   {
+    "date": "2025-12-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 185.69
+   },
+   {
+    "date": "2025-12-19",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 193.38
+   },
+   {
+    "date": "2025-12-31",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 177.75
+   },
+   {
+    "date": "2026-03-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 155.08
+   },
+   {
+    "date": "2026-03-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 160.84
+   },
+   {
+    "date": "2026-06-01",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 160.65
+   },
+   {
+    "date": "2026-07-20",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 134.85
+   },
+   {
+    "date": "2026-08-04",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 162.66
+   },
+   {
+    "date": "2026-09-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 177.64
+   },
+   {
+    "date": "2026-09-23",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 191.79
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "EXTENSION"
+   ],
+   "risk": 190.56528571428572
+  }
+ },
+ "AVGO": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-01-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 57.306
+   },
+   {
+    "date": "2022-03-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 56.7
+   },
+   {
+    "date": "2022-07-27",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 49.357
+   },
+   {
+    "date": "2022-08-29",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 48.084
+   },
+   {
+    "date": "2022-11-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 48.292
+   },
+   {
+    "date": "2022-11-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 50.322
+   },
+   {
+    "date": "2022-11-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 51.962
+   },
+   {
+    "date": "2022-12-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 52.592
+   },
+   {
+    "date": "2023-01-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 54.974
+   },
+   {
+    "date": "2023-02-01",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 57.314
+   },
+   {
+    "date": "2023-02-22",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 54.786
+   },
+   {
+    "date": "2023-03-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 60.183
+   },
+   {
+    "date": "2023-03-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 60.983
+   },
+   {
+    "date": "2023-03-29",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 59.905
+   },
+   {
+    "date": "2023-04-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 59.631
+   },
+   {
+    "date": "2023-05-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 60.113
+   },
+   {
+    "date": "2023-05-17",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 62.967
+   },
+   {
+    "date": "2023-08-04",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 84.887
+   },
+   {
+    "date": "2023-10-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 84.663
+   },
+   {
+    "date": "2023-11-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 92.694
+   },
+   {
+    "date": "2023-12-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 103.803
+   },
+   {
+    "date": "2024-01-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 108.431
+   },
+   {
+    "date": "2024-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 119.26
+   },
+   {
+    "date": "2024-01-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 118.43
+   },
+   {
+    "date": "2024-02-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 127.315
+   },
+   {
+    "date": "2024-03-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 136.834
+   },
+   {
+    "date": "2024-03-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 129.447
+   },
+   {
+    "date": "2024-04-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 130.294
+   },
+   {
+    "date": "2024-05-15",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 140.264
+   },
+   {
+    "date": "2024-06-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 138.01
+   },
+   {
+    "date": "2024-06-11",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 142.692
+   },
+   {
+    "date": "2024-06-21",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 161.991
+   },
+   {
+    "date": "2024-07-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 166.883
+   },
+   {
+    "date": "2024-07-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 169.822
+   },
+   {
+    "date": "2024-08-19",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 164.315
+   },
+   {
+    "date": "2024-08-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 158.123
+   },
+   {
+    "date": "2024-08-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 159.524
+   },
+   {
+    "date": "2024-09-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 164.295
+   },
+   {
+    "date": "2024-09-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 168.188
+   },
+   {
+    "date": "2024-10-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 170.557
+   },
+   {
+    "date": "2024-12-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 220.974
+   },
+   {
+    "date": "2025-01-21",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 236.853
+   },
+   {
+    "date": "2025-02-18",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 225.242
+   },
+   {
+    "date": "2025-04-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 190.275
+   },
+   {
+    "date": "2025-07-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 275.377
+   },
+   {
+    "date": "2025-07-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 281.115
+   },
+   {
+    "date": "2025-08-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 295.305
+   },
+   {
+    "date": "2025-10-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 335.873
+   },
+   {
+    "date": "2025-10-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 351.516
+   },
+   {
+    "date": "2025-10-31",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 366.902
+   },
+   {
+    "date": "2025-12-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 378.218
+   },
+   {
+    "date": "2025-12-10",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 409.922
+   },
+   {
+    "date": "2025-12-12",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 357.274
+   },
+   {
+    "date": "2026-03-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 343.855
+   },
+   {
+    "date": "2026-04-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 405.16
+   },
+   {
+    "date": "2026-05-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 420.428
+   },
+   {
+    "date": "2026-05-29",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 445.253
+   },
+   {
+    "date": "2026-06-04",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 417.488
+   },
+   {
+    "date": "2026-08-11",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 415.324
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TREND",
+    "RELATIVE_STRENGTH",
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "META": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-04-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 231.671
+   },
+   {
+    "date": "2022-04-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 220.221
+   },
+   {
+    "date": "2022-07-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 181.353
+   },
+   {
+    "date": "2022-08-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 176.648
+   },
+   {
+    "date": "2022-12-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 119.297
+   },
+   {
+    "date": "2022-12-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 115.771
+   },
+   {
+    "date": "2023-01-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 134.076
+   },
+   {
+    "date": "2023-02-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 173.28
+   },
+   {
+    "date": "2023-03-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 205.868
+   },
+   {
+    "date": "2023-04-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 238.04
+   },
+   {
+    "date": "2023-05-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 259.554
+   },
+   {
+    "date": "2023-05-31",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 262.209
+   },
+   {
+    "date": "2023-06-15",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 279.156
+   },
+   {
+    "date": "2023-07-24",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 288.844
+   },
+   {
+    "date": "2023-08-07",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 313.557
+   },
+   {
+    "date": "2023-09-19",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 302.176
+   },
+   {
+    "date": "2023-10-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 315.34
+   },
+   {
+    "date": "2023-11-13",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 326.067
+   },
+   {
+    "date": "2023-11-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 333.783
+   },
+   {
+    "date": "2023-12-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 323.492
+   },
+   {
+    "date": "2024-01-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 343.827
+   },
+   {
+    "date": "2024-01-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 364.875
+   },
+   {
+    "date": "2024-02-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 479.937
+   },
+   {
+    "date": "2024-03-19",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 492.054
+   },
+   {
+    "date": "2024-06-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 490.884
+   },
+   {
+    "date": "2024-07-12",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 495.153
+   },
+   {
+    "date": "2024-08-20",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 522.805
+   },
+   {
+    "date": "2024-08-26",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 517.237
+   },
+   {
+    "date": "2024-09-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 513.009
+   },
+   {
+    "date": "2024-10-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 578.979
+   },
+   {
+    "date": "2024-12-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 609.659
+   },
+   {
+    "date": "2025-01-02",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 595.822
+   },
+   {
+    "date": "2025-01-27",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 656.117
+   },
+   {
+    "date": "2025-02-21",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 679.652
+   },
+   {
+    "date": "2025-05-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 593.934
+   },
+   {
+    "date": "2025-05-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 589.635
+   },
+   {
+    "date": "2025-05-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 640.777
+   },
+   {
+    "date": "2025-06-02",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 667.667
+   },
+   {
+    "date": "2025-07-16",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 700.061
+   },
+   {
+    "date": "2025-08-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 778.96
+   },
+   {
+    "date": "2025-10-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 749.129
+   },
+   {
+    "date": "2025-12-18",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 662.744
+   },
+   {
+    "date": "2025-12-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 664.24
+   },
+   {
+    "date": "2026-04-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 658.02
+   },
+   {
+    "date": "2026-04-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 677.457
+   },
+   {
+    "date": "2026-07-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 605.622
+   },
+   {
+    "date": "2026-10-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 738.88
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "SNDK": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2025-06-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 38.64
+   },
+   {
+    "date": "2025-06-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 41.82
+   },
+   {
+    "date": "2025-06-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 42.5
+   },
+   {
+    "date": "2025-06-16",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 44.21
+   },
+   {
+    "date": "2025-07-15",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 42.72
+   },
+   {
+    "date": "2025-09-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 53.01
+   },
+   {
+    "date": "2025-10-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 127.29
+   },
+   {
+    "date": "2025-10-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 167.05
+   },
+   {
+    "date": "2025-10-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 195.82
+   },
+   {
+    "date": "2025-12-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 228.47
+   },
+   {
+    "date": "2025-12-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 244.9
+   },
+   {
+    "date": "2026-01-02",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 275.24
+   },
+   {
+    "date": "2026-03-03",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 565.41
+   },
+   {
+    "date": "2026-03-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 772.09
+   },
+   {
+    "date": "2026-03-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 702.48
+   },
+   {
+    "date": "2026-03-31",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 635.34
+   },
+   {
+    "date": "2026-06-11",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 1881.51
+   },
+   {
+    "date": "2026-07-02",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 1745
+   },
+   {
+    "date": "2026-08-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 1786.85
+   },
+   {
+    "date": "2026-09-04",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 1740
+   },
+   {
+    "date": "2026-09-16",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 1519.97
+   },
+   {
+    "date": "2026-09-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 1766.64
+   },
+   {
+    "date": "2026-09-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 1739.89
+   },
+   {
+    "date": "2026-10-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 1660.46
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TREND",
+    "RELATIVE_STRENGTH",
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "SPY": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-01-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 440.901
+   },
+   {
+    "date": "2022-03-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 423.29
+   },
+   {
+    "date": "2022-04-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 417.378
+   },
+   {
+    "date": "2022-07-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 370.919
+   },
+   {
+    "date": "2022-11-25",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 381.994
+   },
+   {
+    "date": "2022-11-30",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 387.074
+   },
+   {
+    "date": "2022-12-06",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 373.924
+   },
+   {
+    "date": "2022-12-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 373.288
+   },
+   {
+    "date": "2023-01-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 379.399
+   },
+   {
+    "date": "2023-01-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 377.597
+   },
+   {
+    "date": "2023-02-01",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 391.828
+   },
+   {
+    "date": "2023-02-22",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 380.134
+   },
+   {
+    "date": "2023-02-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 382.156
+   },
+   {
+    "date": "2023-03-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 386.525
+   },
+   {
+    "date": "2023-03-31",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 391.973
+   },
+   {
+    "date": "2023-08-03",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 431.342
+   },
+   {
+    "date": "2023-11-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 438.09
+   },
+   {
+    "date": "2024-01-19",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 467.144
+   },
+   {
+    "date": "2024-04-11",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 503.145
+   },
+   {
+    "date": "2024-05-10",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 505.904
+   },
+   {
+    "date": "2024-05-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 514.267
+   },
+   {
+    "date": "2024-06-12",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 525.835
+   },
+   {
+    "date": "2024-07-19",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 534.967
+   },
+   {
+    "date": "2024-08-20",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 544.429
+   },
+   {
+    "date": "2024-08-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 547.771
+   },
+   {
+    "date": "2024-09-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 540.258
+   },
+   {
+    "date": "2024-09-19",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 556.395
+   },
+   {
+    "date": "2024-10-31",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 555.814
+   },
+   {
+    "date": "2024-11-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 587.102
+   },
+   {
+    "date": "2025-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 598.002
+   },
+   {
+    "date": "2025-05-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 549.682
+   },
+   {
+    "date": "2025-06-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 603.666
+   },
+   {
+    "date": "2025-08-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 622.707
+   },
+   {
+    "date": "2025-08-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 634.072
+   },
+   {
+    "date": "2025-08-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 634.674
+   },
+   {
+    "date": "2025-08-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 637.96
+   },
+   {
+    "date": "2025-09-18",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 653.38
+   },
+   {
+    "date": "2025-10-10",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 646.05
+   },
+   {
+    "date": "2025-10-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 655.963
+   },
+   {
+    "date": "2025-10-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 664.125
+   },
+   {
+    "date": "2025-11-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 675.71
+   },
+   {
+    "date": "2025-12-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 676.591
+   },
+   {
+    "date": "2025-12-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 675.75
+   },
+   {
+    "date": "2025-12-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 682.629
+   },
+   {
+    "date": "2025-12-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 681.686
+   },
+   {
+    "date": "2026-02-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 684.187
+   },
+   {
+    "date": "2026-04-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 705.148
+   },
+   {
+    "date": "2026-07-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 749.848
+   },
+   {
+    "date": "2026-07-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 749.968
+   },
+   {
+    "date": "2026-07-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 746.427
+   },
+   {
+    "date": "2026-08-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 769.42
+   },
+   {
+    "date": "2026-08-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 770.756
+   },
+   {
+    "date": "2026-08-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 767.444
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "QQQ": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-03-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 346.832
+   },
+   {
+    "date": "2022-07-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 290.394
+   },
+   {
+    "date": "2022-11-25",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 279.817
+   },
+   {
+    "date": "2023-01-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 276.343
+   },
+   {
+    "date": "2023-03-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 300.7
+   },
+   {
+    "date": "2023-05-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 324.198
+   },
+   {
+    "date": "2023-06-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 357.409
+   },
+   {
+    "date": "2023-07-12",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 365.527
+   },
+   {
+    "date": "2023-08-02",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 367.066
+   },
+   {
+    "date": "2023-09-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 367.409
+   },
+   {
+    "date": "2023-09-08",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 365.291
+   },
+   {
+    "date": "2023-11-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 379.036
+   },
+   {
+    "date": "2024-01-18",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 406.52
+   },
+   {
+    "date": "2024-04-05",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 434.144
+   },
+   {
+    "date": "2024-05-13",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 436.716
+   },
+   {
+    "date": "2024-05-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 445.271
+   },
+   {
+    "date": "2024-08-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 473.857
+   },
+   {
+    "date": "2024-08-27",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 470.659
+   },
+   {
+    "date": "2024-08-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 470.175
+   },
+   {
+    "date": "2024-09-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 467.164
+   },
+   {
+    "date": "2024-09-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 480.507
+   },
+   {
+    "date": "2024-09-26",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 484.566
+   },
+   {
+    "date": "2024-10-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 495.149
+   },
+   {
+    "date": "2024-11-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 504.207
+   },
+   {
+    "date": "2024-12-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 525.496
+   },
+   {
+    "date": "2025-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 528.153
+   },
+   {
+    "date": "2025-01-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 517.414
+   },
+   {
+    "date": "2025-02-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 520.052
+   },
+   {
+    "date": "2025-02-13",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 531.386
+   },
+   {
+    "date": "2025-02-24",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 515.491
+   },
+   {
+    "date": "2025-05-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 478.334
+   },
+   {
+    "date": "2025-05-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 482.555
+   },
+   {
+    "date": "2025-06-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 543.035
+   },
+   {
+    "date": "2025-07-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 547.589
+   },
+   {
+    "date": "2025-08-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 567.075
+   },
+   {
+    "date": "2025-10-28",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 629.959
+   },
+   {
+    "date": "2025-11-06",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 608.809
+   },
+   {
+    "date": "2025-11-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 606.888
+   },
+   {
+    "date": "2025-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 621.36
+   },
+   {
+    "date": "2025-12-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 614.164
+   },
+   {
+    "date": "2026-04-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 653.709
+   },
+   {
+    "date": "2026-06-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 742.409
+   },
+   {
+    "date": "2026-07-10",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 724.754
+   },
+   {
+    "date": "2026-07-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 718.94
+   },
+   {
+    "date": "2026-08-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 730.309
+   },
+   {
+    "date": "2026-09-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 741.47
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "AAPL": {
+  "status": "RESEARCH",
+  "modelState": "LONG",
+  "events": [
+   {
+    "date": "2022-03-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 170.247
+   },
+   {
+    "date": "2022-04-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 166.658
+   },
+   {
+    "date": "2022-07-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 142.866
+   },
+   {
+    "date": "2022-10-28",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 152.756
+   },
+   {
+    "date": "2022-11-02",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 142.251
+   },
+   {
+    "date": "2022-11-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 148.077
+   },
+   {
+    "date": "2022-11-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 148.421
+   },
+   {
+    "date": "2022-12-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 144.059
+   },
+   {
+    "date": "2023-01-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 138.635
+   },
+   {
+    "date": "2023-03-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 159.756
+   },
+   {
+    "date": "2023-04-13",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 162.905
+   },
+   {
+    "date": "2023-08-03",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 188.365
+   },
+   {
+    "date": "2023-10-11",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 177.401
+   },
+   {
+    "date": "2023-11-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 176.838
+   },
+   {
+    "date": "2023-12-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 191.09
+   },
+   {
+    "date": "2024-01-02",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 183.404
+   },
+   {
+    "date": "2024-01-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 190.102
+   },
+   {
+    "date": "2024-06-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 214.624
+   },
+   {
+    "date": "2024-07-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 224.203
+   },
+   {
+    "date": "2024-07-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 216.476
+   },
+   {
+    "date": "2024-08-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 224.522
+   },
+   {
+    "date": "2024-09-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 220.535
+   },
+   {
+    "date": "2024-10-03",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 223.798
+   },
+   {
+    "date": "2024-10-10",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 227.14
+   },
+   {
+    "date": "2024-10-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 233.903
+   },
+   {
+    "date": "2024-11-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 233.237
+   },
+   {
+    "date": "2025-02-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 243.105
+   },
+   {
+    "date": "2025-05-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 209.776
+   },
+   {
+    "date": "2025-06-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 202.939
+   },
+   {
+    "date": "2025-08-22",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 226.922
+   },
+   {
+    "date": "2025-08-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 231.704
+   },
+   {
+    "date": "2025-09-03",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 237.592
+   },
+   {
+    "date": "2025-09-10",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 225.955
+   },
+   {
+    "date": "2025-09-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 233.209
+   },
+   {
+    "date": "2025-09-19",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 244.596
+   },
+   {
+    "date": "2025-11-18",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 266.714
+   },
+   {
+    "date": "2025-12-12",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 277.525
+   },
+   {
+    "date": "2025-12-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 273.067
+   },
+   {
+    "date": "2026-02-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 271.655
+   },
+   {
+    "date": "2026-04-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 262.931
+   },
+   {
+    "date": "2026-04-17",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 269.749
+   },
+   {
+    "date": "2026-06-09",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 290.3
+   },
+   {
+    "date": "2026-07-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 314.589
+   },
+   {
+    "date": "2026-08-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 310.732
+   },
+   {
+    "date": "2026-09-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 324.96
+   },
+   {
+    "date": "2026-09-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 326.57
+   },
+   {
+    "date": "2026-09-11",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 332.27
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "RELATIVE_STRENGTH",
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": 322.36542857142854
+  }
+ },
+ "MSFT": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-03-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 288.232
+   },
+   {
+    "date": "2022-07-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 253.278
+   },
+   {
+    "date": "2022-07-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 259.526
+   },
+   {
+    "date": "2022-07-29",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 271.115
+   },
+   {
+    "date": "2022-08-23",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 267.529
+   },
+   {
+    "date": "2022-08-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 266.9
+   },
+   {
+    "date": "2022-11-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 240.275
+   },
+   {
+    "date": "2022-12-13",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 249.339
+   },
+   {
+    "date": "2022-12-16",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 237.47
+   },
+   {
+    "date": "2023-01-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 240.682
+   },
+   {
+    "date": "2023-03-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 272.973
+   },
+   {
+    "date": "2023-03-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 267.778
+   },
+   {
+    "date": "2023-04-26",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 287.372
+   },
+   {
+    "date": "2023-07-27",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 322.469
+   },
+   {
+    "date": "2023-09-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 325.917
+   },
+   {
+    "date": "2023-10-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 322.555
+   },
+   {
+    "date": "2023-11-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 369.551
+   },
+   {
+    "date": "2024-01-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 367.935
+   },
+   {
+    "date": "2024-02-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 399.936
+   },
+   {
+    "date": "2024-03-14",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 417.102
+   },
+   {
+    "date": "2024-04-17",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 403.977
+   },
+   {
+    "date": "2024-05-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 413.697
+   },
+   {
+    "date": "2024-05-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 423.062
+   },
+   {
+    "date": "2024-05-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 422.866
+   },
+   {
+    "date": "2024-06-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 408.863
+   },
+   {
+    "date": "2024-06-12",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 433.42
+   },
+   {
+    "date": "2024-07-17",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 435.837
+   },
+   {
+    "date": "2024-07-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 432.742
+   },
+   {
+    "date": "2024-09-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 420.36
+   },
+   {
+    "date": "2024-12-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 425.127
+   },
+   {
+    "date": "2024-12-04",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 431.479
+   },
+   {
+    "date": "2024-12-27",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 424.683
+   },
+   {
+    "date": "2025-01-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 436.323
+   },
+   {
+    "date": "2025-04-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 389.468
+   },
+   {
+    "date": "2025-05-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 431.109
+   },
+   {
+    "date": "2025-05-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 449.823
+   },
+   {
+    "date": "2025-05-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 455.854
+   },
+   {
+    "date": "2025-06-05",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 463.102
+   },
+   {
+    "date": "2025-08-19",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 504.78
+   },
+   {
+    "date": "2025-09-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 510.401
+   },
+   {
+    "date": "2025-10-13",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 509.855
+   },
+   {
+    "date": "2025-10-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 509.389
+   },
+   {
+    "date": "2025-10-27",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 527.183
+   },
+   {
+    "date": "2025-10-31",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 513.584
+   },
+   {
+    "date": "2026-04-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 422.906
+   },
+   {
+    "date": "2026-05-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 449.394
+   },
+   {
+    "date": "2026-07-20",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 401.534
+   },
+   {
+    "date": "2026-08-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 486.734
+   },
+   {
+    "date": "2026-08-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 479.447
+   },
+   {
+    "date": "2026-08-25",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 491.71
+   },
+   {
+    "date": "2026-08-27",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 505.06
+   },
+   {
+    "date": "2026-09-09",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 491.65
+   },
+   {
+    "date": "2026-09-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 497.12
+   },
+   {
+    "date": "2026-09-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 508.96
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "SLB": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2024-03-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 46.458
+   },
+   {
+    "date": "2024-06-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 44.259
+   },
+   {
+    "date": "2024-07-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 43.958
+   },
+   {
+    "date": "2024-07-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 45.869
+   },
+   {
+    "date": "2024-10-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 43.203
+   },
+   {
+    "date": "2024-10-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 42.436
+   },
+   {
+    "date": "2024-10-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 41.393
+   },
+   {
+    "date": "2024-11-20",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 41.251
+   },
+   {
+    "date": "2024-12-02",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 41.346
+   },
+   {
+    "date": "2025-01-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 40.292
+   },
+   {
+    "date": "2025-02-13",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 40.409
+   },
+   {
+    "date": "2025-06-13",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 35.152
+   },
+   {
+    "date": "2025-06-23",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 32.664
+   },
+   {
+    "date": "2025-07-10",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 35.491
+   },
+   {
+    "date": "2025-07-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 34.504
+   },
+   {
+    "date": "2025-08-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 35.675
+   },
+   {
+    "date": "2025-09-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 35.151
+   },
+   {
+    "date": "2025-10-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 34.975
+   },
+   {
+    "date": "2025-10-31",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 35.199
+   },
+   {
+    "date": "2025-12-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 36.943
+   },
+   {
+    "date": "2025-12-04",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 37.504
+   },
+   {
+    "date": "2025-12-19",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 37.465
+   },
+   {
+    "date": "2025-12-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 37.357
+   },
+   {
+    "date": "2026-02-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 49.881
+   },
+   {
+    "date": "2026-02-11",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 51.026
+   },
+   {
+    "date": "2026-02-23",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 50.71
+   },
+   {
+    "date": "2026-04-08",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 51.343
+   },
+   {
+    "date": "2026-04-10",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 51.383
+   },
+   {
+    "date": "2026-05-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 54.589
+   },
+   {
+    "date": "2026-05-15",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 54.807
+   },
+   {
+    "date": "2026-06-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 56.258
+   },
+   {
+    "date": "2026-08-12",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 52.338
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TREND",
+    "RELATIVE_STRENGTH",
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "BKNG": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2023-11-17",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 122.506
+   },
+   {
+    "date": "2023-12-07",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 126.531
+   },
+   {
+    "date": "2024-01-03",
+    "kind": "EXIT",
+    "reason": "DISTRIBUTION_BELOW_SIGNAL_AVWAP",
+    "price": 133.213
+   },
+   {
+    "date": "2024-01-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 133.629
+   },
+   {
+    "date": "2024-01-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 136.902
+   },
+   {
+    "date": "2024-02-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 141.642
+   },
+   {
+    "date": "2024-02-07",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 144.921
+   },
+   {
+    "date": "2024-02-23",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 136.991
+   },
+   {
+    "date": "2024-03-26",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 143.418
+   },
+   {
+    "date": "2024-04-11",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 142.509
+   },
+   {
+    "date": "2024-05-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 146.314
+   },
+   {
+    "date": "2024-08-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 152.768
+   },
+   {
+    "date": "2024-09-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 149.662
+   },
+   {
+    "date": "2024-10-29",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 174.245
+   },
+   {
+    "date": "2024-12-18",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 194.867
+   },
+   {
+    "date": "2025-04-28",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 193.157
+   },
+   {
+    "date": "2025-05-27",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 215.348
+   },
+   {
+    "date": "2025-06-13",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 209.652
+   },
+   {
+    "date": "2025-06-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 212.448
+   },
+   {
+    "date": "2025-06-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 216.926
+   },
+   {
+    "date": "2025-06-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 225.272
+   },
+   {
+    "date": "2025-07-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 225.613
+   },
+   {
+    "date": "2025-08-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 225.768
+   },
+   {
+    "date": "2025-12-18",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 212.285
+   },
+   {
+    "date": "2026-04-15",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 184.778
+   },
+   {
+    "date": "2026-07-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 184.165
+   },
+   {
+    "date": "2026-07-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 192.774
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TREND",
+    "RELATIVE_STRENGTH",
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "TSLA": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2022-01-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 368.736
+   },
+   {
+    "date": "2022-03-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 331.323
+   },
+   {
+    "date": "2022-04-20",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 325.73
+   },
+   {
+    "date": "2022-07-18",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 240.544
+   },
+   {
+    "date": "2022-07-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 258.857
+   },
+   {
+    "date": "2022-08-22",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 289.91
+   },
+   {
+    "date": "2022-09-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 308.73
+   },
+   {
+    "date": "2023-01-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 160.27
+   },
+   {
+    "date": "2023-05-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 188.87
+   },
+   {
+    "date": "2023-05-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 182.9
+   },
+   {
+    "date": "2023-05-31",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 203.93
+   },
+   {
+    "date": "2023-07-17",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 290.38
+   },
+   {
+    "date": "2023-07-20",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 262.9
+   },
+   {
+    "date": "2023-09-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 273.58
+   },
+   {
+    "date": "2023-09-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 276.04
+   },
+   {
+    "date": "2023-11-21",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 241.2
+   },
+   {
+    "date": "2023-11-28",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 246.72
+   },
+   {
+    "date": "2024-01-04",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 237.93
+   },
+   {
+    "date": "2024-05-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 174.84
+   },
+   {
+    "date": "2024-07-05",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 251.52
+   },
+   {
+    "date": "2024-08-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 216.86
+   },
+   {
+    "date": "2024-09-05",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 230.17
+   },
+   {
+    "date": "2024-10-11",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 217.8
+   },
+   {
+    "date": "2024-10-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 257.55
+   },
+   {
+    "date": "2024-11-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 288.53
+   },
+   {
+    "date": "2024-11-26",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 338.23
+   },
+   {
+    "date": "2024-12-11",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 424.77
+   },
+   {
+    "date": "2025-01-03",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 410.44
+   },
+   {
+    "date": "2025-04-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 292.03
+   },
+   {
+    "date": "2025-05-09",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 298.26
+   },
+   {
+    "date": "2025-06-05",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 284.7
+   },
+   {
+    "date": "2025-08-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 322.27
+   },
+   {
+    "date": "2025-08-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 340.84
+   },
+   {
+    "date": "2025-08-14",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 335.58
+   },
+   {
+    "date": "2025-08-26",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 351.67
+   },
+   {
+    "date": "2025-09-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 421.62
+   },
+   {
+    "date": "2025-09-30",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 444.72
+   },
+   {
+    "date": "2025-10-15",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 435.15
+   },
+   {
+    "date": "2025-12-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 445.17
+   },
+   {
+    "date": "2025-12-11",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 446.89
+   },
+   {
+    "date": "2025-12-12",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 458.96
+   },
+   {
+    "date": "2025-12-31",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 449.72
+   },
+   {
+    "date": "2026-05-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 390.82
+   },
+   {
+    "date": "2026-05-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 404.11
+   },
+   {
+    "date": "2026-08-31",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 367.95
+   },
+   {
+    "date": "2026-09-29",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 352.84
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ },
+ "MRVL": {
+  "status": "RESEARCH",
+  "modelState": "LONG",
+  "events": [
+   {
+    "date": "2022-03-24",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 72.523
+   },
+   {
+    "date": "2022-03-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 71.785
+   },
+   {
+    "date": "2022-06-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 60.051
+   },
+   {
+    "date": "2022-07-19",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 51.323
+   },
+   {
+    "date": "2022-07-27",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 52.22
+   },
+   {
+    "date": "2022-11-25",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 42.408
+   },
+   {
+    "date": "2022-11-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 45.901
+   },
+   {
+    "date": "2022-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 41.145
+   },
+   {
+    "date": "2022-12-14",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 42.082
+   },
+   {
+    "date": "2023-01-23",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 42.25
+   },
+   {
+    "date": "2023-02-21",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 42.102
+   },
+   {
+    "date": "2023-02-22",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 42.468
+   },
+   {
+    "date": "2023-05-15",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 41.64
+   },
+   {
+    "date": "2023-07-06",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 58.277
+   },
+   {
+    "date": "2023-07-13",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 64.767
+   },
+   {
+    "date": "2023-08-08",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 61.388
+   },
+   {
+    "date": "2023-11-20",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 55.923
+   },
+   {
+    "date": "2023-12-01",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 52.372
+   },
+   {
+    "date": "2023-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 52.451
+   },
+   {
+    "date": "2023-12-12",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 53.82
+   },
+   {
+    "date": "2024-01-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 69.645
+   },
+   {
+    "date": "2024-03-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 77.062
+   },
+   {
+    "date": "2024-07-05",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 71.631
+   },
+   {
+    "date": "2024-08-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 71.452
+   },
+   {
+    "date": "2024-09-18",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 71.163
+   },
+   {
+    "date": "2024-10-01",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 69.93
+   },
+   {
+    "date": "2024-10-10",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 72.148
+   },
+   {
+    "date": "2024-10-29",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 84.481
+   },
+   {
+    "date": "2025-01-27",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 99.921
+   },
+   {
+    "date": "2025-05-12",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 64.31
+   },
+   {
+    "date": "2025-07-08",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 71.738
+   },
+   {
+    "date": "2025-07-09",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 72.047
+   },
+   {
+    "date": "2025-07-15",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 72.256
+   },
+   {
+    "date": "2025-08-11",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 77.116
+   },
+   {
+    "date": "2025-09-24",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 79.92
+   },
+   {
+    "date": "2025-10-30",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 88.44
+   },
+   {
+    "date": "2025-12-08",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 91.865
+   },
+   {
+    "date": "2025-12-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 92.335
+   },
+   {
+    "date": "2026-03-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 92.581
+   },
+   {
+    "date": "2026-04-06",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 109.428
+   },
+   {
+    "date": "2026-05-13",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 177.906
+   },
+   {
+    "date": "2026-06-29",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 277.681
+   },
+   {
+    "date": "2026-07-02",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 245.23
+   },
+   {
+    "date": "2026-09-17",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 240.707
+   },
+   {
+    "date": "2026-09-29",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 263.212
+   },
+   {
+    "date": "2026-10-01",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 268.021
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TRIGGER"
+   ],
+   "risk": 247.97978571428573
+  }
+ },
+ "NBIS": {
+  "status": "RESEARCH",
+  "modelState": "FLAT",
+  "events": [
+   {
+    "date": "2025-01-16",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 37.59
+   },
+   {
+    "date": "2025-01-22",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 39.52
+   },
+   {
+    "date": "2025-01-27",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 26.08
+   },
+   {
+    "date": "2025-02-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 40.97
+   },
+   {
+    "date": "2025-05-07",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 27.45
+   },
+   {
+    "date": "2025-07-07",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 47.84
+   },
+   {
+    "date": "2025-07-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 52.75
+   },
+   {
+    "date": "2025-07-31",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 54.43
+   },
+   {
+    "date": "2025-08-28",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 72.04
+   },
+   {
+    "date": "2025-09-29",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 110.22
+   },
+   {
+    "date": "2025-10-02",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 125.87
+   },
+   {
+    "date": "2025-10-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 132.64
+   },
+   {
+    "date": "2025-10-16",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 123.04
+   },
+   {
+    "date": "2025-10-31",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 130.82
+   },
+   {
+    "date": "2026-02-23",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 100.61
+   },
+   {
+    "date": "2026-03-04",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 97.78
+   },
+   {
+    "date": "2026-03-09",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 94.94
+   },
+   {
+    "date": "2026-04-10",
+    "kind": "WATCH",
+    "reason": "PRESSURE_WAIT_CONFIRMATION",
+    "price": 144.97
+   },
+   {
+    "date": "2026-05-04",
+    "kind": "ENTRY",
+    "reason": "PERSISTENT_PRESSURE_BREAKOUT",
+    "price": 176.42
+   },
+   {
+    "date": "2026-06-10",
+    "kind": "EXIT",
+    "reason": "TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE",
+    "price": 211.69
+   },
+   {
+    "date": "2026-09-04",
+    "kind": "WATCH",
+    "reason": "DRY_BASE_WAIT_CONFIRMATION",
+    "price": 226.39
+   },
+   {
+    "date": "2026-09-08",
+    "kind": "ENTRY",
+    "reason": "DRY_BASE_RECLAIM",
+    "price": 243.88
+   },
+   {
+    "date": "2026-09-14",
+    "kind": "EXIT",
+    "reason": "CLOSE_BELOW_RISK_LINE",
+    "price": 212.19
+   }
+  ],
+  "latest": {
+   "blockedBy": [
+    "TREND",
+    "RELATIVE_STRENGTH",
+    "PRESSURE",
+    "TRIGGER"
+   ],
+   "risk": null
+  }
+ }
+}

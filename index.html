@@ -2,10 +2,13 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-11T06:15Z">
+<meta name="build" content="2026-10-11T07:20Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
+<!-- 🧪 Astra資金 研究層(Astra v0.1.0 原檔,逐位元未改;?v= 防 Service Worker 用到舊版)。先核心、後轉接,順序不能反 -->
+<script src="astra-flow.js?v=0.1.0"></script>
+<script src="astra-dashboard-adapter.js?v=0.1.0"></script>
 <script>
 /* ===== wsxLazy(v10):隱藏中的圖不畫,顯示時才補畫 =====
  * 動機:2026-08-08 使用者回報 Mac 變慢、iPad Safari 當掉。量測發現首頁同時實體化 17 張
@@ -341,7 +344,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 #wsxRail button{border-radius:10px;transition:color .15s ease,transform .12s ease}
 #wsxRail button:active{transform:scale(.92)}
 /* 疊加指標小丸與大盤指數丸:行內樣式只定義配色 —— 這裡補玻璃邊光+膠囊,不碰顏色 */
-.idxchip,.fidxchip,.cidxchip,.cidxchip2,.cidxchip3,.cidxchip6,.cidxchip8,.cidxchip9,.cidxchipC,.cidxchipB,.cidxchipQ{
+.idxchip,.fidxchip,.cidxchip,.cidxchip2,.cidxchip3,.cidxchip6,.cidxchip8,.cidxchip9,.cidxchipC,.cidxchipB,.cidxchipQ,.cidxchipA{
   border-radius:999px!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 1px 3px rgba(0,0,0,.25);
 }
@@ -595,6 +598,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
     <div id="dqstrip" style="display:none"></div>
     <div id="qstrip" style="display:none"></div>
+    <div id="astrastrip" style="display:none"></div>
     <div id="fcstrip" style="display:none"></div>
     <div id="tjstrip" style="display:none"></div>
     <div id="posstrip" style="display:none"></div>
@@ -669,7 +673,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T06:15Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T07:20Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1295,6 +1299,9 @@ let CHIP_BB=false;  // P7-2 布林通道 BB(20,2) 上/中/下軌(預設關)
 let CHIP_TJ=false;  // 📐 技術判斷層(手冊 v0.2;2026-09-01):路徑成立/出貨證據上圖+警示條(預設關 —— 預設畫面只留 CTA)
 let CHIP_FC=false;  // 🌐 全球資金氣候 ▲▼ 舊版獨立層(2026-10-10 起併入 📊量化;程式保留)
 let CHIP_Q=true;    // 📊 量化整合層(2026-10-10 使用者:CTA+技判+資金整合,K線上直接標 頂K/減碼/出/抄底/買;預設開)
+let CHIP_ASTRA=false;   // 🧪 Astra資金 研究層(2026-10-11 接入 Astra v0.1.0;預設關;與 📊量化 完全獨立,不讀寫 CHIP_Q)
+let ASTRA_UI={key:'',rev:0,res:null};   // Astra 計算快取:輸入(日K、SPY、截止日、版本)沒變就不重算
+const ASTRA_C='#f472b6', ASTRA_C2='#f9a8d4';   // Astra 記號統一粉紅:避開量化 頂K(琥珀)、加(青綠)、出(紅) 與 TD 買方計數(青)
 let CHIP_ZOOM=false;// P7-1 滑鼠滾輪縮放+拖曳模式(預設關;開啟後滾輪不再捲頁而是縮放)
 let CHIPF_IDX={SPY:false,QQQ:false};   // P7-7 現金池變化圖專屬疊加(與上方 K線圖疊加鈕獨立)
 let CHIP_IND='rv';  // 副圖單槽:rv(轉速,預設)/macd/adx/atr/cci/stoch
@@ -1309,6 +1316,7 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipQ" title="CTA+技判+資金 整合:K線上直接標 頂K/減碼/出/抄底/買,滑過字看說明" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #8ab4f8;'+(CHIP_Q?'background:rgba(138,180,248,.15);color:#8ab4f8':'color:var(--muted);opacity:.55')+'">📊量化</span>'
+    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="Astra 的研究用記號 A候/A進/A出(只看已收盤日K);還沒證明有用,不是買賣建議" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
@@ -1320,6 +1328,8 @@ function buildChipIdx(){
   var t8=el.querySelector('.cidxchip8'); if(t8)t8.onclick=function(){CHIP_FIB=!CHIP_FIB;renderChips();};
   var t9=el.querySelector('.cidxchip9'); if(t9)t9.onclick=function(){CHIP_VWAP=!CHIP_VWAP;renderChips();};
   var tQ=el.querySelector('.cidxchipQ'); if(tQ)tQ.onclick=function(){CHIP_Q=!CHIP_Q;renderChips();};
+  var tA=el.querySelector('.cidxchipA'); if(tA){tA.onclick=function(){CHIP_ASTRA=!CHIP_ASTRA;renderChips();};
+    tA.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tA.click();}};}
   var tC=el.querySelector('.cidxchipC'); if(tC)tC.onclick=function(){CHIP_CTA=!CHIP_CTA;renderChips();};
   var tB=el.querySelector('.cidxchipB'); if(tB)tB.onclick=function(){CHIP_BB=!CHIP_BB;renderChips();};
   var tJ=el.querySelector('.cidxchipJ'); if(tJ)tJ.onclick=function(){CHIP_TJ=!CHIP_TJ;renderChips();};
@@ -3233,6 +3243,7 @@ function renderCockpit(){
   const el=document.getElementById('cockpit'); if(!el)return;
   try{dqBanner();}catch(_){}   // 資料品質條:每次渲染都重估(含 sig 快取提前返回前;時間推進會改變 lastDone)
   try{chipKRefresh(CHIP_SYM);if(CHIP_Q&&CHIP_PD==='d'){const _u=TK_UL[CHIP_SYM];if(_u)chipKRefresh(_u);ensureQQQK();}}catch(_){}   // 2026-10-11:日K檔(本檔、槓桿ETF的正股、QQQ)落後已收盤日 → 背景重抓
+  let astraRes=null;try{astraRes=astraPrepare();}catch(e){astraRes=astraFail(e);}   // 🧪 Astra資金(預設關):狀態列在快取早退前更新;關閉時=null、什麼都不做
   const MB=(window.innerWidth||1024)<680;
   el.style.height=MB?'600px':(window.__wsxCkH||'660px');   // 手機=600(富途扁平版,2026-08-05 定案);必須與尾端 _wantH 一致 ——
   // 2026-08-08 校閱修正:此處原為 980(舊五軌高版遺留),完整渲染尾端才改 600;dataset.sig 快取提前返回時
@@ -3271,7 +3282,8 @@ function renderCockpit(){
     +(CHIP_FC?':F1':':F0')+(FCL&&FCL.updated_utc?':f'+FCL.updated_utc:'')
     +(CHIP_Q?':Q1'+(function(){const u=CHIP_PD==='d'?TK_UL[CHIP_SYM]:null;if(!u)return '';   // 📊量化:槓桿ETF看正股 → 正股日K/盤中價變動也要重繪
       try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':q'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':Q0')
-    +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?':k'+qqqSig():'');   // 📊量化「加」要 QQQ 日K:到了、或有新收盤(含當日快照)就重畫(2026-10-11)   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
+    +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?':k'+qqqSig():'')   // 📊量化「加」要 QQQ 日K:到了、或有新收盤(含當日快照)就重畫(2026-10-11)   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
+    +(CHIP_ASTRA?':A1r'+ASTRA_UI.rev:':A0');   // 🧪 Astra:開關 + 計算版次(日K/SPY/截止日/程式版本任一變就換)
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   // x 類別標籤必須唯一(2026-08-08 使用者揪出:週/月K跨年後 'MM-DD' 重複 → category 軸同名互撞、K棒疊格錯亂)
@@ -4305,6 +4317,8 @@ function renderCockpit(){
         text:'⚠ K線止於 '+_lastD.slice(5)+'·盤中即時棒未接(此檔為一次性抓取)— 用上方「＋加入追蹤」升級為持續更新'});
     }
   }catch(e){}
+  // 🧪 Astra資金:記號放在所有既有圖層之後(不改變任何既有 trace 的順序與內容);只在日K畫
+  if(CHIP_ASTRA&&CHIP_PD==='d'&&astraRes){try{traces.push(...astraTraces(astraRes,R,x));}catch(e){try{console.warn('astra traces',e);}catch(_){}}}
   freshPlot('cockpit');   // 清掉「載入中」佔位殘留(訊息→圖轉場)
   // ===== 手機版面(2026-08-04 使用者指定,參照富途 App 比例)=====
   // 問題:五面板共用桌機版 960px 高 + l40/r44 邊距 → 手機繪圖區僅 ~306px 寬、主圖 518px 高
@@ -4559,6 +4573,7 @@ function renderChips(){
       localStorage.setItem('gh_token',t);
       if(st)st.textContent='token 已存(僅此瀏覽器)。再按一次「加入」。';
     };
+    try{stripHide(document.getElementById('astrastrip'));}catch(_){}   // 🧪 Astra:未追蹤標的不畫圖 → 收起狀態列(免得留著上一檔的狀態)
     chartMsg(el,'—');   // chipflow/chipcost 讓位;動作區已置頂在駕駛艙位置
     chartMsg(document.getElementById('chipcost'),'—');
     const st=document.getElementById('chipstock'); if(st)st.innerHTML='';
@@ -5098,6 +5113,139 @@ function chipKRefresh(sym){
       CHIPK[sym]={close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||'',_rt:Date.now()};
       if(DATA&&!DATA._partial){try{renderChips();}catch(e){console.warn(e);}}}})
     .catch(()=>{}).finally(()=>{delete CHIPK[sym+'_rr'];});
+}
+// ===== 🧪 Astra資金 研究層(2026-10-11 接入 Astra v0.1.0;預設關)=====
+// 核心 astra-flow.js、轉接 astra-dashboard-adapter.js 是 Astra 寫的原檔(網站根目錄,逐位元未改);這裡只做接線與顯示,不改它的規則:
+//   ・只用已收盤的日K檔 CHIPK[sym].bars(不含富途當日快照)+ SPY 日K;評估截止 = tjLastDone();一律研究模式
+//   ・與 📊量化 完全獨立:不讀寫 CHIP_Q、不動任何量化記號;週/月/年/全史不標
+//   ・槓桿/反向 ETF(TK_UL / TK_INV 名單,再補資金流分類「槓桿/反向」,例:SH)不適用,也不拿正股代替;債券/現金/商品/加密 不在範圍
+//   ・網站端顯示調整:記號統一粉紅(ASTRA_C),滑過說明縮短(使用者 2026-10-10:說明要短、只要知道要不要動作)
+const ASTRA_WHY={PERSISTENT_PRESSURE_BREAKOUT:'買壓持續、放量突破',DRY_BASE_RECLAIM:'量縮守穩後轉強',
+  CLOSE_BELOW_RISK_LINE:'收盤跌破風險線',TWO_CLOSES_WEAK_WITH_NEGATIVE_PRESSURE:'連兩天收在 20 日線下、買壓轉負',
+  DISTRIBUTION_BELOW_SIGNAL_AVWAP:'跌破進場後均價、又有放量下跌',
+  DRY_BASE_WAIT_CONFIRMATION:'量縮守穩,等轉強',PRESSURE_WAIT_CONFIRMATION:'買壓持續,等其他條件'};
+const ASTRA_GATE={LIQUIDITY:'成交金額夠大、股價 ≥5',VOLATILITY:'波動不要太大',TREND:'趨勢向上',BENCHMARK_DATA:'SPY 資料',
+  MARKET:'大盤(SPY)在 50 日線上',RELATIVE_STRENGTH:'比 SPY 強',PRESSURE:'持續買壓',EXTENSION:'別離 20 日線太遠(不追高)',
+  COOLDOWN:'出場後冷卻 5 天',TRIGGER:'價格轉強(突破)',WARMUP:'60 天以上的歷史'};
+function astraEsc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+const ASTRA_OUT=new Set(['信用債','國債','現金','金','油','銀','Crypto']);   // 資金流分類:債券/現金/商品/加密 → 不是「股票」
+function astraScope(sym){   // Astra v0.1 適用範圍 = 一般美股 + 非槓桿股票 ETF → 'lev' 槓桿/反向、'out' 範圍外、'ok'
+  if(TK_INV.has(sym)||(sym in TK_UL))return 'lev';
+  try{if(DATA&&DATA.leveraged&&Object.prototype.hasOwnProperty.call(DATA.leveraged,sym))return 'lev';}catch(_){}
+  let c='';   // 名單沒列到的(例:SH 在資金流分類是「反向」,但不在 TK_INV)→ 再看網站自己的分類
+  try{const D=chipDaily(),ds=Object.keys(D).sort();
+    for(let i=ds.length-1;i>=Math.max(0,ds.length-10);i--){const e=(D[ds[i]]||{})[sym];if(e&&e.c){c=String(e.c);break;}}}catch(_){}
+  if(c==='槓桿'||c==='反向')return 'lev';
+  if(ASTRA_OUT.has(c))return 'out';
+  return 'ok';
+}
+function astraPrepare(){   // renderCockpit 開頭呼叫(在快取早退之前):時間推進、SPY 到檔、換股都會即時反映
+  const host=document.getElementById('astrastrip');
+  if(!CHIP_ASTRA){stripHide(host);if(host)host._ak='';return null;}
+  const sym=CHIP_SYM, period=CHIP_WIN==='max'?'max':CHIP_PD, asOfDate=tjLastDone();
+  const scope=astraScope(sym), na=scope==='lev';
+  let key,run=null;
+  if(!window.AstraDashboard||!window.AstraFlow)key='missing';
+  else if(scope==='out'){key='out:'+sym;run=()=>({status:'OUT_OF_SCOPE',symbol:sym,events:[]});}
+  else if(period!=='d'||na){key='skip:'+sym+':'+period+':'+(na?1:0);
+    run=()=>AstraDashboard.evaluate({symbol:sym,period:period,meta:{instrumentType:na?'leveraged-or-inverse':'unverified'}});}
+  else{
+    try{ensureChipK('SPY');chipKRefresh('SPY');}catch(_){}   // SPY 用同一套日K快取與「落後就 10 分鐘重抓」
+    const own=CHIPK[sym]||{}, spy=CHIPK.SPY||{};
+    if(CHIPK[sym+'_none'])key='none:'+sym;
+    else if(!own.bars||(!spy.bars&&!CHIPK.SPY_none))key='wait:'+sym;   // 還在載入:先不算,免得先畫半套記號
+    else{
+      const opts={symbol:sym,benchmarkSymbol:'SPY',period:'d',asOfDate:asOfDate,rawBars:own.bars,rawBenchmarkBars:spy.bars||[],researchMode:true,
+        meta:{source:own.src||'unknown',adjustment:'unverified',instrumentType:'unverified',volumeBasisVerified:false,updatedUTC:own.upd||''},
+        benchmarkMeta:{source:spy.src||'unknown',adjustment:'unverified',volumeBasisVerified:false,updatedUTC:spy.upd||''}};
+      key=AstraDashboard.inputKey(opts); run=()=>AstraDashboard.evaluate(opts);}
+  }
+  if(key!==ASTRA_UI.key){
+    const res=key==='missing'?{status:'error',events:[],diagnostics:{message:'Astra 程式檔沒有載入(網路或部署問題)'}}
+      :key.indexOf('none:')===0?{status:'NO_DATA',symbol:sym,events:[]}:run?run():{status:'WAIT',symbol:sym,events:[]};
+    ASTRA_UI={key:key,rev:ASTRA_UI.rev+1,res:res};
+  }
+  astraStrip(ASTRA_UI.res,sym);
+  return ASTRA_UI.res;
+}
+function astraFail(e){   // 外掛出錯:顯示錯誤、清掉舊結果(不能悄悄沿用上一檔的記號)
+  try{console.warn('astra',e);}catch(_){}
+  const m=String((e&&e.message)||e||'未知錯誤');
+  if(ASTRA_UI.key!=='err:'+m)ASTRA_UI={key:'err:'+m,rev:ASTRA_UI.rev+1,res:{status:'error',events:[],diagnostics:{message:m}}};
+  try{astraStrip(ASTRA_UI.res,CHIP_SYM);}catch(_){}
+  return ASTRA_UI.res;
+}
+function astraStrip(res,sym){   // 一行狀態列 + 「ⓘ 詳情」懸浮窗(沿用 stripSet;只有點詳情框才開)
+  const host=document.getElementById('astrastrip'); if(!host)return;
+  const ACC='rgba(244,114,182,.30)',BG='rgba(244,114,182,.05)';
+  const head='<b style="color:'+ASTRA_C+'">🧪 Astra資金</b><span style="color:#898781">研究用</span>';
+  const pill=(t,c,big)=>'<span style="padding:'+(big?'2px 10px':'1px 8px')+';border-radius:6px;font-weight:700;'+(big?'font-size:13px;':'')+'background:'+c+'26;color:'+c+'">'+t+'</span>';
+  const mut=t=>'<span style="color:#898781">'+t+'</span>';
+  const legend='<div class="sphr"></div><div><b style="color:'+ASTRA_C2+'">A候</b> 條件快到了,先觀察(不是買) · <b style="color:'+ASTRA_C+'">A進</b> 規則的進場日 · <b style="color:'+ASTRA_C+'">A出</b> 規則的出場日</div>'
+    +'<div>這是 Astra 的研究規則,<b>還沒證明有用</b>:過去約 5 年 19 檔回放,只有 1 檔贏過一直抱著 → 先別照著買賣。</div>'
+    +'<div class="spmut">只用已收盤的日K(不含盤中);和 📊量化 分開算、互不影響 · 不是投資建議</div>';
+  const st=res&&res.status;
+  let bar,pop='';
+  if(!res||st==='WAIT')bar=head+mut('日K / SPY 載入中…');
+  else if(st==='error'){bar=head+'<span style="color:#f87171">暫停判斷:資料或程式出錯</span>';pop='<div>原因:'+astraEsc((res.diagnostics||{}).message||'未知')+'</div>'+legend;}
+  else if(st==='UNSUPPORTED_INSTRUMENT')bar=head+mut('槓桿/反向 ETF 不適用(不拿正股代替)');
+  else if(st==='OUT_OF_SCOPE')bar=head+mut('債券/商品/加密不在這版的範圍(只做股票)');
+  else if(st==='unsupported-period')bar=head+mut('只看日K(週/月/年/全史不標)');
+  else if(st==='NO_DATA')bar=head+mut('這檔沒有日K');
+  else if(st==='WARMUP')bar=head+mut('日K不到 60 根,先不判斷');
+  else{
+    const ev=res.events||[], D=res.diagnostics||[], n=D.length, L=res.latest||{}, gb=L.blockedBy||[], M=L.metrics||{};
+    const at={};D.forEach((r,i)=>{at[r.date]=i;});
+    const ago=e=>(e&&at[e.date]!=null)?n-1-at[e.date]:1e9;
+    const lastOf=k=>{for(let i=ev.length-1;i>=0;i--)if(ev[i].kind===k)return ev[i];return null;};
+    const lE=lastOf('ENTRY'), lX=lastOf('EXIT'), stale=st==='STALE', noSpy=!res.benchmarkThrough;
+    const f2=v=>(v==null||!isFinite(+v))?'—':(+v).toFixed(2);
+    let p,pc,now='';
+    if(res.modelState==='LONG'&&lE){p='規則持有中(A進 '+lE.date.slice(5)+')';pc=ASTRA_C;
+      now=lE.date.slice(5)+' '+(ASTRA_WHY[lE.reason]||'')+' → A進(收盤 '+f2(lE.price)+')'
+        +(L.referenceRiskLine!=null?';收盤跌破 '+f2(L.referenceRiskLine)+' 會標 A出(明顯轉弱也會出)':'');}
+    else{
+      const watch=!gb.includes('LIQUIDITY')&&!gb.includes('VOLATILITY')&&!gb.includes('TREND')&&(M.pressure||M.base);
+      if(lX&&ago(lX)<=5){p='A出 '+lX.date.slice(5)+':規則已出場';pc=ASTRA_C;}
+      else if(watch){p='A候:先觀察(還不是買點)';pc=ASTRA_C2;}
+      else{p='沒有訊號';pc='#94a3b8';}
+      const miss=gb.map(g=>ASTRA_GATE[g]||g);
+      now=(lX&&ago(lX)<=5?lX.date.slice(5)+' '+(ASTRA_WHY[lX.reason]||'')+';':'')
+        +(noSpy?'SPY 日K沒載入,暫時不會標 A進':(miss.length?'要標 A進 還缺:'+miss.join('、'):''));
+    }
+    const warn=noSpy?'SPY 沒載入':(stale?'日K檔還沒更新':'');   // STALE:只用日K檔(不含富途快照)→ 收盤後到日K檔補上前會先亮這個
+    bar=head+'<span style="color:'+(warn?'#f87171':'#898781')+'">'+(res.dataThrough?res.dataThrough.slice(5):'—')+(warn?' · '+warn:'')+'</span>'+pill(p,pc);
+    pop='<div class="sprow"><b style="color:'+ASTRA_C+';font-size:12.5px">🧪 '+astraEsc(sym)+' Astra資金(研究用)</b><span class="spmut">'+astraEsc(res.dataThrough||'')+' 收盤'
+      +(warn?' · <b style="color:#f87171">'+(noSpy?'SPY 日K沒載入':'日K檔還沒更新到最近收盤日 '+astraEsc(res.asOfDate||''))+'</b>':'')+'</span></div>'
+      +'<div style="margin:5px 0">'+pill(p,pc,true)+'</div>'+(now?'<div>現在:'+now+'</div>':'')+legend;
+  }
+  const html=bar+'\u0001'+pop;
+  if(host._ak===html&&host.style.display!=='none')return;   // 內容沒變就不重建(每分鐘行情更新不閃)
+  host._ak=html;
+  stripSet(host,{bar:bar,pop:pop,acc:ACC,bg:BG});
+}
+function astraTraces(res,R,x){   // 圖上記號:用 Astra 原版 traces(完整日期→畫面位置、錨在K棒高低點、文字跳脫、A候 擠字抑制),再換網站配色與短說明
+  if(!window.AstraDashboard||!res||!Array.isArray(res.events)||!res.events.length)return [];
+  if(res.symbol&&res.symbol!==CHIP_SYM)return [];   // 防呆:結果不是這一檔就不畫
+  const T=AstraDashboard.traces(res,R,x);
+  const di=new Map();R.forEach((r,i)=>di.set(r.d,i));
+  const ACT={ENTRY:'規則的進場日',EXIT:'規則的出場日',WATCH:'條件快到了,先觀察(不是買)'};
+  const tip=e=>'<b>'+astraEsc(e.label)+'</b> '+astraEsc(String(e.date).slice(5))+' · '+(ACT[e.kind]||'')
+    +'<br>收盤 '+(isFinite(+e.price)?(+e.price).toFixed(2):'—')+' · '+astraEsc(ASTRA_WHY[e.reason]||e.reason)
+    +'<br><span style="color:#898781">Astra 研究用,還沒證明有用</span>';
+  const px=((document.getElementById('cockpit')||{}).clientWidth||400)*0.88/Math.max(1,R.length);   // 每根K棒的寬度(像素)
+  T.forEach(t=>{
+    const k=String(t.name||'').replace(/^Astra /,''), c=k==='WATCH'?ASTRA_C2:ASTRA_C;
+    const E=res.events.filter(e=>{if(!e||e.kind!==k||!di.has(e.date))return false;   // 與轉接檔同一套篩選 → 一點對一事件
+      const r=R[di.get(e.date)], y=k==='ENTRY'?r.l:r.h;return typeof y==='number'&&isFinite(y)&&y>0;});
+    if(E.length===t.x.length)t.customdata=E.map(tip);
+    if(k==='WATCH'){t.marker=Object.assign({},t.marker,{size:7});   // A候 = 提醒,記號小一點
+      if(px<5)t.text=t.text.map(()=>'');}   // K棒太密(每根 <5px)時 A候 只留◇不寫字,滑過仍看得到;A進/A出 一律寫字
+    t.marker=Object.assign({},t.marker,{color:c});
+    t.textfont=Object.assign({},t.textfont,{color:c});
+    t.hoverlabel=Object.assign({},t.hoverlabel,{bordercolor:c});
+  });
+  return T;
 }
 let IDX_SHOW={SPY:true,QQQ:true};   // 疊加指數線顯示開關(使用者可切)
 function buildIdxToggle(){

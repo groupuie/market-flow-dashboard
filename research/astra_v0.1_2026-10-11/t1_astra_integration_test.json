@@ -1,0 +1,6633 @@
+{
+ "old": {
+  "NVDA:30": {
+   "sym": "NVDA",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    207.01666666666668,
+    245.28333333333333
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "4541e3c5c190b6c38b39337f7b53cfa6a823e5b8abb7217e3d4a901416d684c3"
+  },
+  "NVDA:100": {
+   "sym": "NVDA",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    184.06063866666665,
+    246.49154533333333
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "07bb111f1bffb3596136646a03a4ce882f5c127d68d8bf2d2129b5a75a0bf38c"
+  },
+  "NVDA:250": {
+   "sym": "NVDA",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    158.36428602050444,
+    249.44256561041576
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "93e063ba64f43b53f90ece7b37a88642b27941890e8f43809939091acf354af8"
+  },
+  "TSM:30": {
+   "sym": "TSM",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    401.4309276227965,
+    507.4923751668658
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "d434f42a44b2f3eb2d6c44598734b8de8ea7ccc69efbaf7c91f189f495ba4a29"
+  },
+  "TSM:100": {
+   "sym": "TSM",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    364.1191955321474,
+    516.1752848891992
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "249e229de2ca13df01c6ff00942f3868b84955524cddb8d689a5da705fded025"
+  },
+  "TSM:250": {
+   "sym": "TSM",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    238.01468604515003,
+    543.6598451421495
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "fb52dacdd5ae47caf927647e2d58be58a83bb8c1e38eb8bde782031c5a64a691"
+  },
+  "MU:30": {
+   "sym": "MU",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    889.0985683740532,
+    1159.12720089299
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "d32f06de1fab1c6d3b2fa914d0ef49c224ca8caf986f33f9643c89a65d816b75"
+  },
+  "MU:100": {
+   "sym": "MU",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    612.52238341603,
+    1404.2747150954287
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "3abcf7bfc216821657596a7b6893a0f68c726662a830251daf127425b08b7445"
+  },
+  "MU:250": {
+   "sym": "MU",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    115.86882900639054,
+    1519.8522488785798
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "5f09f2f09e81426b5104c87152cb2e5a98a30ee3864f171bed00e13fe25e171f"
+  },
+  "AMD:30": {
+   "sym": "AMD",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    428.3877777777778,
+    670.6322222222223
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "ed41c86dfec4ded2a64be4547b674681bff6ad76ea72bac6590e971e7b68d3ea"
+  },
+  "AMD:100": {
+   "sym": "AMD",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    378.6288888888889,
+    673.2511111111111
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "2ac96915888d11d943bcd457462dd3b85564a0af8f0d9dd196f9f38d9dae8aa5"
+  },
+  "AMD:250": {
+   "sym": "AMD",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    124.79796666666665,
+    686.6106333333333
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "a94e8af9711bd1fc96b1478484ce376db7abf7eb7a9cb174e633754e2ab00cc0"
+  },
+  "PLTR:30": {
+   "sym": "PLTR",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    162.00830666666667,
+    212.84217333333336
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "305dda9804ba1d146019cdf854590ea829c46f19154f7d4a00e33d3446dfa12b"
+  },
+  "PLTR:100": {
+   "sym": "PLTR",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    100.5443688888889,
+    217.05699111111113
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "e49c666e16e13b363c30a43ebd6be36a7c7b5f7893bb142a9c24dd8965779f85"
+  },
+  "PLTR:250": {
+   "sym": "PLTR",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    100.5443688888889,
+    217.05699111111113
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "0efc4e7e7df583fb95302f9fb07d4034bba6cee7bf352f18ae83bd60539b56c6"
+  },
+  "AVGO:30": {
+   "sym": "AVGO",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    332.6686666666667,
+    383.3753333333333
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "9fa37c47009fc628533de820ef8281b01e4b51c3160e6a156695aa60d641df5f"
+  },
+  "AVGO:100": {
+   "sym": "AVGO",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    326.41977777777777,
+    502.10422222222223
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "30e371e54e5249b20337ad9bb7058ac4744a5fd3aa36f8f03ac91b7dc7f772b5"
+  },
+  "AVGO:250": {
+   "sym": "AVGO",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    277.6235555555555,
+    504.67244444444447
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "48d7d3247e8ca6744687d5180562d42c4f0113799a0cc0d3fb14d0e8df1cdfa6"
+  },
+  "META:30": {
+   "sym": "META",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    515.8895294472509,
+    802.2044331869868
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "4616125efdc0df1e494e6dbe5fe02b9905b08bbc93a006469f636964f9fa5377"
+  },
+  "META:100": {
+   "sym": "META",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    485.6008864444445,
+    804.9954775555555
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "0e9cd5d35cab0f6a0f00dcf53c5d126d6de8f156debd37162f0656e39464b378"
+  },
+  "META:250": {
+   "sym": "META",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    485.1541495555556,
+    805.1973984444444
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "0096e2978dc0ce20a5d730026b57cccf055bc3d35b1e54f2fc7aee4831b1f678"
+  },
+  "SNDK:30": {
+   "sym": "SNDK",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    1409.2838888888887,
+    1935.8061111111112
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "74f2111f3e4a90793d1cf6b792773e77d667662678b06a714604293594953267"
+  },
+  "SNDK:100": {
+   "sym": "SNDK",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    910.3575084677376,
+    2452.3186881791444
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "8e44edea84ec1c5dc214ca80809c82c25f39de37bd963f29283eb1b8d0be8bba"
+  },
+  "SNDK:250": {
+   "sym": "SNDK",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    409.61935815036577,
+    2557.2321951430495
+   ],
+   "winDates": [
+    "2026-02-17",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "c9c95c700dd42f5058dd60bb0f5e5a4e7d4412e7883ef925f1007705a499e59e"
+  },
+  "SPY:30": {
+   "sym": "SPY",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    745.8308315555556,
+    784.0742004444444
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "58e16594ec9abac6a1fec6cd776fb29f412f3edbd5348a48bd0900ad4051d19a"
+  },
+  "SPY:100": {
+   "sym": "SPY",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    709.2015155555555,
+    786.5568044444444
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "e6e41a7f56eb3544347ed7c1a51f2fe92ad596ed1f0dc20db46bdfc60d97b6d1"
+  },
+  "SPY:250": {
+   "sym": "SPY",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    611.4218500000001,
+    793.19693
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "219fea4a25f5b600229d74e5d8deff7b67819e382d4fd6f6782c4218cc5a5713"
+  },
+  "QQQ:30": {
+   "sym": "QQQ",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    695.7382777777777,
+    766.3927222222222
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "90c3a3eca10920c24041c7aec553fc78b77b6d166b80e10c027494dfa306c58a"
+  },
+  "QQQ:100": {
+   "sym": "QQQ",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    653.0320368888889,
+    768.6404191111111
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "398f56623c844a3aacd85a91819e0b584d4447bcaa048445438da15557fe5d05"
+  },
+  "QQQ:250": {
+   "sym": "QQQ",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    533.7348961467567,
+    797.1944132116238
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "a0d967398ec61264866f67728c13d663a98f4bd3bf37bd028cdadd2c36b81e4e"
+  },
+  "AAPL:30": {
+   "sym": "AAPL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    307.89960888888885,
+    347.9074311111111
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "84193cb7189566bd1a0a017b20f37729917bdc80aea10c947a5b78b98d4dedd5"
+  },
+  "AAPL:100": {
+   "sym": "AAPL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    262.787984,
+    350.894544
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "b73f19c42dd33375331128370bc8e6ad2d90e1479549f445ea05c4a26c98b6a3"
+  },
+  "AAPL:250": {
+   "sym": "AAPL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    236.96887244444443,
+    352.77142355555554
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "14d5497f78c65567a4c334dac06f303b6cff76de6bb18f240293ecc4edaa0e8f"
+  },
+  "MSFT:30": {
+   "sym": "MSFT",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    479.64948,
+    541.1126800000001
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "af831ce403ff1527e442372cd292dec37ea58127044f7cfde15d7232b406d56c"
+  },
+  "MSFT:100": {
+   "sym": "MSFT",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    330.7246,
+    551.26588
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "897a582ca79d5920870af915731a523f5af5505d440181308315f63ece13f0f3"
+  },
+  "MSFT:250": {
+   "sym": "MSFT",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    325.22711022222217,
+    564.3685857777778
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "8240234934e804f49b6833f1ac28ec6d73a069ed40bfb80a81ef06e0b4a8c17e"
+  },
+  "SLB:30": {
+   "sym": "SLB",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    46.955666666666666,
+    60.842333333333336
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "178d2e706b33655ee1c9f536b9593b4eabed4491eb1921da6146f6382542a3dc"
+  },
+  "SLB:100": {
+   "sym": "SLB",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    42.530414666666665,
+    61.07524133333334
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "6185b071aaad2ed3d6f044848b5aa5c70ad61d78e385014843bae781132ac12e"
+  },
+  "SLB:250": {
+   "sym": "SLB",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    29.241966691427805,
+    62.102632862871715
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "c00c7f9933c1c37f87e9593b4397e4357ea3a2021eb89a34e85e0652047f33b7"
+  },
+  "BKNG:30": {
+   "sym": "BKNG",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    150.48433333333335,
+    210.03766666666667
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "1e94eb62b681ab9503d1cfc34c291f952341e159eee94192f01a777d084cc6c0"
+  },
+  "BKNG:100": {
+   "sym": "BKNG",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    145.61557750044975,
+    221.36402749145466
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "6c03c9450b051db7d15bd22c1f819ab55dfc79136a50116798f61c183a338e48"
+  },
+  "BKNG:250": {
+   "sym": "BKNG",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    142.87285111111112,
+    225.8861488888889
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "6b0baf0763a58f5bab6720840eae98d13cf9d46544774fd04498e45a5039b869"
+  },
+  "NVDL:30": {
+   "sym": "NVDL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    30.337777777777777,
+    42.18222222222223
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "09c09c610c5e9f3a7c80f75b97ca5c3765aa9f86b00dceeda2af3021a30a5fb2"
+  },
+  "NVDL:100": {
+   "sym": "NVDL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    25.481268,
+    42.437828
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "fb275ecd5548d2189cc87d2165eb6703c9cb5f2b3aeb45549aead69521c3aad7"
+  },
+  "NVDL:250": {
+   "sym": "NVDL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    19.943026666666665,
+    44.86697333333334
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": false,
+   "astraRev": null,
+   "other_sha256": "90b473de1978610b9ad01f6d073878bbb16a1bb229b35ab71d8724b08bd66200"
+  }
+ },
+ "new_off": {
+  "NVDA:30": {
+   "sym": "NVDA",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    207.01666666666668,
+    245.28333333333333
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 0,
+   "other_sha256": "4541e3c5c190b6c38b39337f7b53cfa6a823e5b8abb7217e3d4a901416d684c3"
+  },
+  "NVDA:100": {
+   "sym": "NVDA",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    184.06063866666665,
+    246.49154533333333
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 2,
+   "other_sha256": "07bb111f1bffb3596136646a03a4ce882f5c127d68d8bf2d2129b5a75a0bf38c"
+  },
+  "NVDA:250": {
+   "sym": "NVDA",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    158.36428602050444,
+    249.44256561041576
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 2,
+   "other_sha256": "93e063ba64f43b53f90ece7b37a88642b27941890e8f43809939091acf354af8"
+  },
+  "TSM:30": {
+   "sym": "TSM",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    401.4309276227965,
+    507.4923751668658
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 2,
+   "other_sha256": "d434f42a44b2f3eb2d6c44598734b8de8ea7ccc69efbaf7c91f189f495ba4a29"
+  },
+  "TSM:100": {
+   "sym": "TSM",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    364.1191955321474,
+    516.1752848891992
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 3,
+   "other_sha256": "249e229de2ca13df01c6ff00942f3868b84955524cddb8d689a5da705fded025"
+  },
+  "TSM:250": {
+   "sym": "TSM",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    238.01468604515003,
+    543.6598451421495
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 3,
+   "other_sha256": "fb52dacdd5ae47caf927647e2d58be58a83bb8c1e38eb8bde782031c5a64a691"
+  },
+  "MU:30": {
+   "sym": "MU",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    889.0985683740532,
+    1159.12720089299
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 3,
+   "other_sha256": "d32f06de1fab1c6d3b2fa914d0ef49c224ca8caf986f33f9643c89a65d816b75"
+  },
+  "MU:100": {
+   "sym": "MU",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    612.52238341603,
+    1404.2747150954287
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 4,
+   "other_sha256": "3abcf7bfc216821657596a7b6893a0f68c726662a830251daf127425b08b7445"
+  },
+  "MU:250": {
+   "sym": "MU",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    115.86882900639054,
+    1519.8522488785798
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 4,
+   "other_sha256": "5f09f2f09e81426b5104c87152cb2e5a98a30ee3864f171bed00e13fe25e171f"
+  },
+  "AMD:30": {
+   "sym": "AMD",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    428.3877777777778,
+    670.6322222222223
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 4,
+   "other_sha256": "ed41c86dfec4ded2a64be4547b674681bff6ad76ea72bac6590e971e7b68d3ea"
+  },
+  "AMD:100": {
+   "sym": "AMD",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    378.6288888888889,
+    673.2511111111111
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 5,
+   "other_sha256": "2ac96915888d11d943bcd457462dd3b85564a0af8f0d9dd196f9f38d9dae8aa5"
+  },
+  "AMD:250": {
+   "sym": "AMD",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    124.79796666666665,
+    686.6106333333333
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 5,
+   "other_sha256": "a94e8af9711bd1fc96b1478484ce376db7abf7eb7a9cb174e633754e2ab00cc0"
+  },
+  "PLTR:30": {
+   "sym": "PLTR",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    162.00830666666667,
+    212.84217333333336
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 5,
+   "other_sha256": "305dda9804ba1d146019cdf854590ea829c46f19154f7d4a00e33d3446dfa12b"
+  },
+  "PLTR:100": {
+   "sym": "PLTR",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    100.5443688888889,
+    217.05699111111113
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 6,
+   "other_sha256": "e49c666e16e13b363c30a43ebd6be36a7c7b5f7893bb142a9c24dd8965779f85"
+  },
+  "PLTR:250": {
+   "sym": "PLTR",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    100.5443688888889,
+    217.05699111111113
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 6,
+   "other_sha256": "0efc4e7e7df583fb95302f9fb07d4034bba6cee7bf352f18ae83bd60539b56c6"
+  },
+  "AVGO:30": {
+   "sym": "AVGO",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    332.6686666666667,
+    383.3753333333333
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 6,
+   "other_sha256": "9fa37c47009fc628533de820ef8281b01e4b51c3160e6a156695aa60d641df5f"
+  },
+  "AVGO:100": {
+   "sym": "AVGO",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    326.41977777777777,
+    502.10422222222223
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 7,
+   "other_sha256": "30e371e54e5249b20337ad9bb7058ac4744a5fd3aa36f8f03ac91b7dc7f772b5"
+  },
+  "AVGO:250": {
+   "sym": "AVGO",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    277.6235555555555,
+    504.67244444444447
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 7,
+   "other_sha256": "48d7d3247e8ca6744687d5180562d42c4f0113799a0cc0d3fb14d0e8df1cdfa6"
+  },
+  "META:30": {
+   "sym": "META",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    515.8895294472509,
+    802.2044331869868
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 7,
+   "other_sha256": "4616125efdc0df1e494e6dbe5fe02b9905b08bbc93a006469f636964f9fa5377"
+  },
+  "META:100": {
+   "sym": "META",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    485.6008864444445,
+    804.9954775555555
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 8,
+   "other_sha256": "0e9cd5d35cab0f6a0f00dcf53c5d126d6de8f156debd37162f0656e39464b378"
+  },
+  "META:250": {
+   "sym": "META",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    485.1541495555556,
+    805.1973984444444
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 8,
+   "other_sha256": "0096e2978dc0ce20a5d730026b57cccf055bc3d35b1e54f2fc7aee4831b1f678"
+  },
+  "SNDK:30": {
+   "sym": "SNDK",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    1409.2838888888887,
+    1935.8061111111112
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 8,
+   "other_sha256": "74f2111f3e4a90793d1cf6b792773e77d667662678b06a714604293594953267"
+  },
+  "SNDK:100": {
+   "sym": "SNDK",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    910.3575084677376,
+    2452.3186881791444
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 9,
+   "other_sha256": "8e44edea84ec1c5dc214ca80809c82c25f39de37bd963f29283eb1b8d0be8bba"
+  },
+  "SNDK:250": {
+   "sym": "SNDK",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    409.61935815036577,
+    2557.2321951430495
+   ],
+   "winDates": [
+    "2026-02-17",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 9,
+   "other_sha256": "c9c95c700dd42f5058dd60bb0f5e5a4e7d4412e7883ef925f1007705a499e59e"
+  },
+  "SPY:30": {
+   "sym": "SPY",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    745.8308315555556,
+    784.0742004444444
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 9,
+   "other_sha256": "58e16594ec9abac6a1fec6cd776fb29f412f3edbd5348a48bd0900ad4051d19a"
+  },
+  "SPY:100": {
+   "sym": "SPY",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    709.2015155555555,
+    786.5568044444444
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 10,
+   "other_sha256": "e6e41a7f56eb3544347ed7c1a51f2fe92ad596ed1f0dc20db46bdfc60d97b6d1"
+  },
+  "SPY:250": {
+   "sym": "SPY",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    611.4218500000001,
+    793.19693
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 10,
+   "other_sha256": "219fea4a25f5b600229d74e5d8deff7b67819e382d4fd6f6782c4218cc5a5713"
+  },
+  "QQQ:30": {
+   "sym": "QQQ",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    695.7382777777777,
+    766.3927222222222
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 10,
+   "other_sha256": "90c3a3eca10920c24041c7aec553fc78b77b6d166b80e10c027494dfa306c58a"
+  },
+  "QQQ:100": {
+   "sym": "QQQ",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    653.0320368888889,
+    768.6404191111111
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 11,
+   "other_sha256": "398f56623c844a3aacd85a91819e0b584d4447bcaa048445438da15557fe5d05"
+  },
+  "QQQ:250": {
+   "sym": "QQQ",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    533.7348961467567,
+    797.1944132116238
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 11,
+   "other_sha256": "a0d967398ec61264866f67728c13d663a98f4bd3bf37bd028cdadd2c36b81e4e"
+  },
+  "AAPL:30": {
+   "sym": "AAPL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 10,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    307.89960888888885,
+    347.9074311111111
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 11,
+   "other_sha256": "84193cb7189566bd1a0a017b20f37729917bdc80aea10c947a5b78b98d4dedd5"
+  },
+  "AAPL:100": {
+   "sym": "AAPL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    262.787984,
+    350.894544
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 12,
+   "other_sha256": "b73f19c42dd33375331128370bc8e6ad2d90e1479549f445ea05c4a26c98b6a3"
+  },
+  "AAPL:250": {
+   "sym": "AAPL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    236.96887244444443,
+    352.77142355555554
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 12,
+   "other_sha256": "14d5497f78c65567a4c334dac06f303b6cff76de6bb18f240293ecc4edaa0e8f"
+  },
+  "MSFT:30": {
+   "sym": "MSFT",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    479.64948,
+    541.1126800000001
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 12,
+   "other_sha256": "af831ce403ff1527e442372cd292dec37ea58127044f7cfde15d7232b406d56c"
+  },
+  "MSFT:100": {
+   "sym": "MSFT",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    330.7246,
+    551.26588
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 13,
+   "other_sha256": "897a582ca79d5920870af915731a523f5af5505d440181308315f63ece13f0f3"
+  },
+  "MSFT:250": {
+   "sym": "MSFT",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    325.22711022222217,
+    564.3685857777778
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 13,
+   "other_sha256": "8240234934e804f49b6833f1ac28ec6d73a069ed40bfb80a81ef06e0b4a8c17e"
+  },
+  "SLB:30": {
+   "sym": "SLB",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    46.955666666666666,
+    60.842333333333336
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 13,
+   "other_sha256": "178d2e706b33655ee1c9f536b9593b4eabed4491eb1921da6146f6382542a3dc"
+  },
+  "SLB:100": {
+   "sym": "SLB",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    42.530414666666665,
+    61.07524133333334
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 14,
+   "other_sha256": "6185b071aaad2ed3d6f044848b5aa5c70ad61d78e385014843bae781132ac12e"
+  },
+  "SLB:250": {
+   "sym": "SLB",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    29.241966691427805,
+    62.102632862871715
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 14,
+   "other_sha256": "c00c7f9933c1c37f87e9593b4397e4357ea3a2021eb89a34e85e0652047f33b7"
+  },
+  "BKNG:30": {
+   "sym": "BKNG",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    150.48433333333335,
+    210.03766666666667
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 14,
+   "other_sha256": "1e94eb62b681ab9503d1cfc34c291f952341e159eee94192f01a777d084cc6c0"
+  },
+  "BKNG:100": {
+   "sym": "BKNG",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    145.61557750044975,
+    221.36402749145466
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 15,
+   "other_sha256": "6c03c9450b051db7d15bd22c1f819ab55dfc79136a50116798f61c183a338e48"
+  },
+  "BKNG:250": {
+   "sym": "BKNG",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    142.87285111111112,
+    225.8861488888889
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 15,
+   "other_sha256": "6b0baf0763a58f5bab6720840eae98d13cf9d46544774fd04498e45a5039b869"
+  },
+  "NVDL:30": {
+   "sym": "NVDL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    30.337777777777777,
+    42.18222222222223
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 15,
+   "other_sha256": "09c09c610c5e9f3a7c80f75b97ca5c3765aa9f86b00dceeda2af3021a30a5fb2"
+  },
+  "NVDL:100": {
+   "sym": "NVDL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    25.481268,
+    42.437828
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 16,
+   "other_sha256": "fb275ecd5548d2189cc87d2165eb6703c9cb5f2b3aeb45549aead69521c3aad7"
+  },
+  "NVDL:250": {
+   "sym": "NVDL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    19.943026666666665,
+    44.86697333333334
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 16,
+   "other_sha256": "90b473de1978610b9ad01f6d073878bbb16a1bb229b35ab71d8724b08bd66200"
+  }
+ },
+ "new_on": {
+  "NVDA:30": {
+   "sym": "NVDA",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-23",
+       "date": "2026-09-23",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-23 · 條件快到了,先觀察(不是買)<br>收盤 225.51 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-30",
+       "date": "2026-09-30",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-30 · 條件快到了,先觀察(不是買)<br>收盤 228.38 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    207.01666666666668,
+    245.28333333333333
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 2,
+   "other_sha256": "4541e3c5c190b6c38b39337f7b53cfa6a823e5b8abb7217e3d4a901416d684c3"
+  },
+  "NVDA:100": {
+   "sym": "NVDA",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "08-05",
+       "date": "2026-08-05",
+       "text": "A進",
+       "tip": "<b>A進</b> 08-05 · 規則的進場日<br>收盤 218.97 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "08-25",
+       "date": "2026-08-25",
+       "text": "A出",
+       "tip": "<b>A出</b> 08-25 · 規則的出場日<br>收盤 212.81 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 211.56 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-22",
+       "date": "2026-07-22",
+       "text": "",
+       "tip": "<b>A候</b> 07-22 · 條件快到了,先觀察(不是買)<br>收盤 211.82 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-03",
+       "date": "2026-08-03",
+       "text": "",
+       "tip": "<b>A候</b> 08-03 · 條件快到了,先觀察(不是買)<br>收盤 206.41 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-23",
+       "date": "2026-09-23",
+       "text": "",
+       "tip": "<b>A候</b> 09-23 · 條件快到了,先觀察(不是買)<br>收盤 225.51 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-30",
+       "date": "2026-09-30",
+       "text": "",
+       "tip": "<b>A候</b> 09-30 · 條件快到了,先觀察(不是買)<br>收盤 228.38 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    184.06063866666665,
+    246.49154533333333
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 2,
+   "other_sha256": "07bb111f1bffb3596136646a03a4ce882f5c127d68d8bf2d2129b5a75a0bf38c"
+  },
+  "NVDA:250": {
+   "sym": "NVDA",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 18,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "08-05",
+       "date": "2026-08-05",
+       "text": "A進",
+       "tip": "<b>A進</b> 08-05 · 規則的進場日<br>收盤 218.97 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "10-16",
+       "date": "2025-10-16",
+       "text": "A出",
+       "tip": "<b>A出</b> 10-16 · 規則的出場日<br>收盤 181.38 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-25",
+       "date": "2026-08-25",
+       "text": "A出",
+       "tip": "<b>A出</b> 08-25 · 規則的出場日<br>收盤 212.81 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-24",
+       "date": "2025-10-24",
+       "text": "",
+       "tip": "<b>A候</b> 10-24 · 條件快到了,先觀察(不是買)<br>收盤 185.81 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-24",
+       "date": "2025-12-24",
+       "text": "",
+       "tip": "<b>A候</b> 12-24 · 條件快到了,先觀察(不是買)<br>收盤 188.17 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "01-06",
+       "date": "2026-01-06",
+       "text": "",
+       "tip": "<b>A候</b> 01-06 · 條件快到了,先觀察(不是買)<br>收盤 186.80 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-17",
+       "date": "2026-04-17",
+       "text": "",
+       "tip": "<b>A候</b> 04-17 · 條件快到了,先觀察(不是買)<br>收盤 201.22 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 211.56 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-22",
+       "date": "2026-07-22",
+       "text": "",
+       "tip": "<b>A候</b> 07-22 · 條件快到了,先觀察(不是買)<br>收盤 211.82 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-03",
+       "date": "2026-08-03",
+       "text": "",
+       "tip": "<b>A候</b> 08-03 · 條件快到了,先觀察(不是買)<br>收盤 206.41 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-23",
+       "date": "2026-09-23",
+       "text": "",
+       "tip": "<b>A候</b> 09-23 · 條件快到了,先觀察(不是買)<br>收盤 225.51 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-30",
+       "date": "2026-09-30",
+       "text": "",
+       "tip": "<b>A候</b> 09-30 · 條件快到了,先觀察(不是買)<br>收盤 228.38 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    158.36428602050444,
+    249.44256561041576
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 2,
+   "other_sha256": "93e063ba64f43b53f90ece7b37a88642b27941890e8f43809939091acf354af8"
+  },
+  "TSM:30": {
+   "sym": "TSM",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-04",
+       "date": "2026-09-04",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-04 · 條件快到了,先觀察(不是買)<br>收盤 427.77 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 445.14 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    401.4309276227965,
+    507.4923751668658
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 3,
+   "other_sha256": "d434f42a44b2f3eb2d6c44598734b8de8ea7ccc69efbaf7c91f189f495ba4a29"
+  },
+  "TSM:100": {
+   "sym": "TSM",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "05-27",
+       "date": "2026-05-27",
+       "text": "A進",
+       "tip": "<b>A進</b> 05-27 · 規則的進場日<br>收盤 420.63 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "06-26",
+       "date": "2026-06-26",
+       "text": "A出",
+       "tip": "<b>A出</b> 06-26 · 規則的出場日<br>收盤 431.19 · 跌破進場後均價、又有放量下跌<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "08-13",
+       "date": "2026-08-13",
+       "text": "",
+       "tip": "<b>A候</b> 08-13 · 條件快到了,先觀察(不是買)<br>收盤 429.34 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-27",
+       "date": "2026-08-27",
+       "text": "",
+       "tip": "<b>A候</b> 08-27 · 條件快到了,先觀察(不是買)<br>收盤 426.17 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-04",
+       "date": "2026-09-04",
+       "text": "",
+       "tip": "<b>A候</b> 09-04 · 條件快到了,先觀察(不是買)<br>收盤 427.77 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 445.14 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    364.1191955321474,
+    516.1752848891992
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 3,
+   "other_sha256": "249e229de2ca13df01c6ff00942f3868b84955524cddb8d689a5da705fded025"
+  },
+  "TSM:250": {
+   "sym": "TSM",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "12-08",
+       "date": "2025-12-08",
+       "text": "A進",
+       "tip": "<b>A進</b> 12-08 · 規則的進場日<br>收盤 298.77 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-24",
+       "date": "2026-02-24",
+       "text": "A進",
+       "tip": "<b>A進</b> 02-24 · 規則的進場日<br>收盤 382.77 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-27",
+       "date": "2026-05-27",
+       "text": "A進",
+       "tip": "<b>A進</b> 05-27 · 規則的進場日<br>收盤 420.63 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "10-23",
+       "date": "2025-10-23",
+       "text": "A出",
+       "tip": "<b>A出</b> 10-23 · 規則的出場日<br>收盤 287.75 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-17",
+       "date": "2025-12-17",
+       "text": "A出",
+       "tip": "<b>A出</b> 12-17 · 規則的出場日<br>收盤 274.82 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-03",
+       "date": "2026-03-03",
+       "text": "A出",
+       "tip": "<b>A出</b> 03-03 · 規則的出場日<br>收盤 350.41 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-26",
+       "date": "2026-06-26",
+       "text": "A出",
+       "tip": "<b>A出</b> 06-26 · 規則的出場日<br>收盤 431.19 · 跌破進場後均價、又有放量下跌<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "12-22",
+       "date": "2025-12-22",
+       "text": "",
+       "tip": "<b>A候</b> 12-22 · 條件快到了,先觀察(不是買)<br>收盤 291.02 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-26",
+       "date": "2025-12-26",
+       "text": "",
+       "tip": "<b>A候</b> 12-26 · 條件快到了,先觀察(不是買)<br>收盤 300.50 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-19",
+       "date": "2026-02-19",
+       "text": "",
+       "tip": "<b>A候</b> 02-19 · 條件快到了,先觀察(不是買)<br>收盤 357.61 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-04",
+       "date": "2026-03-04",
+       "text": "",
+       "tip": "<b>A候</b> 03-04 · 條件快到了,先觀察(不是買)<br>收盤 354.68 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-09",
+       "date": "2026-03-09",
+       "text": "",
+       "tip": "<b>A候</b> 03-09 · 條件快到了,先觀察(不是買)<br>收盤 346.01 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-05",
+       "date": "2026-05-05",
+       "text": "",
+       "tip": "<b>A候</b> 05-05 · 條件快到了,先觀察(不是買)<br>收盤 392.45 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-11",
+       "date": "2026-05-11",
+       "text": "",
+       "tip": "<b>A候</b> 05-11 · 條件快到了,先觀察(不是買)<br>收盤 402.53 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-13",
+       "date": "2026-08-13",
+       "text": "",
+       "tip": "<b>A候</b> 08-13 · 條件快到了,先觀察(不是買)<br>收盤 429.34 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-27",
+       "date": "2026-08-27",
+       "text": "",
+       "tip": "<b>A候</b> 08-27 · 條件快到了,先觀察(不是買)<br>收盤 426.17 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-04",
+       "date": "2026-09-04",
+       "text": "",
+       "tip": "<b>A候</b> 09-04 · 條件快到了,先觀察(不是買)<br>收盤 427.77 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 445.14 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    238.01468604515003,
+    543.6598451421495
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 3,
+   "other_sha256": "fb52dacdd5ae47caf927647e2d58be58a83bb8c1e38eb8bde782031c5a64a691"
+  },
+  "MU:30": {
+   "sym": "MU",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 2,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-21 · 規則的進場日<br>收盤 1043.96 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-02",
+       "date": "2026-09-02",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-02 · 條件快到了,先觀察(不是買)<br>收盤 956.08 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 927.60 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    889.0985683740532,
+    1159.12720089299
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 4,
+   "other_sha256": "d32f06de1fab1c6d3b2fa914d0ef49c224ca8caf986f33f9643c89a65d816b75"
+  },
+  "MU:100": {
+   "sym": "MU",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 19,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "06-18",
+       "date": "2026-06-18",
+       "text": "A進",
+       "tip": "<b>A進</b> 06-18 · 規則的進場日<br>收盤 1133.82 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-21 · 規則的進場日<br>收盤 1043.96 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "07-02",
+       "date": "2026-07-02",
+       "text": "A出",
+       "tip": "<b>A出</b> 07-02 · 規則的出場日<br>收盤 975.41 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "06-12",
+       "date": "2026-06-12",
+       "text": "",
+       "tip": "<b>A候</b> 06-12 · 條件快到了,先觀察(不是買)<br>收盤 981.46 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 1011.75 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-21",
+       "date": "2026-08-21",
+       "text": "",
+       "tip": "<b>A候</b> 08-21 · 條件快到了,先觀察(不是買)<br>收盤 966.78 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-02",
+       "date": "2026-09-02",
+       "text": "",
+       "tip": "<b>A候</b> 09-02 · 條件快到了,先觀察(不是買)<br>收盤 956.08 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 927.60 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    612.52238341603,
+    1404.2747150954287
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 4,
+   "other_sha256": "3abcf7bfc216821657596a7b6893a0f68c726662a830251daf127425b08b7445"
+  },
+  "MU:250": {
+   "sym": "MU",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "06-18",
+       "date": "2026-06-18",
+       "text": "A進",
+       "tip": "<b>A進</b> 06-18 · 規則的進場日<br>收盤 1133.82 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-21 · 規則的進場日<br>收盤 1043.96 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "11-19",
+       "date": "2025-11-19",
+       "text": "A出",
+       "tip": "<b>A出</b> 11-19 · 規則的出場日<br>收盤 225.70 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-02",
+       "date": "2026-07-02",
+       "text": "A出",
+       "tip": "<b>A出</b> 07-02 · 規則的出場日<br>收盤 975.41 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "12-03",
+       "date": "2025-12-03",
+       "text": "",
+       "tip": "<b>A候</b> 12-03 · 條件快到了,先觀察(不是買)<br>收盤 233.93 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "01-21",
+       "date": "2026-01-21",
+       "text": "",
+       "tip": "<b>A候</b> 01-21 · 條件快到了,先觀察(不是買)<br>收盤 388.89 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-05",
+       "date": "2026-02-05",
+       "text": "",
+       "tip": "<b>A候</b> 02-05 · 條件快到了,先觀察(不是買)<br>收盤 382.67 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-11",
+       "date": "2026-03-11",
+       "text": "",
+       "tip": "<b>A候</b> 03-11 · 條件快到了,先觀察(不是買)<br>收盤 418.45 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-13",
+       "date": "2026-03-13",
+       "text": "",
+       "tip": "<b>A候</b> 03-13 · 條件快到了,先觀察(不是買)<br>收盤 425.89 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-14",
+       "date": "2026-04-14",
+       "text": "",
+       "tip": "<b>A候</b> 04-14 · 條件快到了,先觀察(不是買)<br>收盤 465.59 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-12",
+       "date": "2026-06-12",
+       "text": "",
+       "tip": "<b>A候</b> 06-12 · 條件快到了,先觀察(不是買)<br>收盤 981.46 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 1011.75 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-21",
+       "date": "2026-08-21",
+       "text": "",
+       "tip": "<b>A候</b> 08-21 · 條件快到了,先觀察(不是買)<br>收盤 966.78 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-02",
+       "date": "2026-09-02",
+       "text": "",
+       "tip": "<b>A候</b> 09-02 · 條件快到了,先觀察(不是買)<br>收盤 956.08 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 927.60 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出:分批賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    115.86882900639054,
+    1519.8522488785798
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 4,
+   "other_sha256": "5f09f2f09e81426b5104c87152cb2e5a98a30ee3864f171bed00e13fe25e171f"
+  },
+  "AMD:30": {
+   "sym": "AMD",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-10",
+       "date": "2026-09-10",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-10 · 條件快到了,先觀察(不是買)<br>收盤 503.60 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 504.20 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    428.3877777777778,
+    670.6322222222223
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 5,
+   "other_sha256": "ed41c86dfec4ded2a64be4547b674681bff6ad76ea72bac6590e971e7b68d3ea"
+  },
+  "AMD:100": {
+   "sym": "AMD",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "07-24",
+       "date": "2026-07-24",
+       "text": "",
+       "tip": "<b>A候</b> 07-24 · 條件快到了,先觀察(不是買)<br>收盤 521.95 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-10",
+       "date": "2026-09-10",
+       "text": "",
+       "tip": "<b>A候</b> 09-10 · 條件快到了,先觀察(不是買)<br>收盤 503.60 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 504.20 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    378.6288888888889,
+    673.2511111111111
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 5,
+   "other_sha256": "2ac96915888d11d943bcd457462dd3b85564a0af8f0d9dd196f9f38d9dae8aa5"
+  },
+  "AMD:250": {
+   "sym": "AMD",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "11-03",
+       "date": "2025-11-03",
+       "text": "",
+       "tip": "<b>A候</b> 11-03 · 條件快到了,先觀察(不是買)<br>收盤 259.65 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "11-06",
+       "date": "2025-11-06",
+       "text": "",
+       "tip": "<b>A候</b> 11-06 · 條件快到了,先觀察(不是買)<br>收盤 237.70 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-13",
+       "date": "2026-04-13",
+       "text": "",
+       "tip": "<b>A候</b> 04-13 · 條件快到了,先觀察(不是買)<br>收盤 246.83 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-24",
+       "date": "2026-07-24",
+       "text": "",
+       "tip": "<b>A候</b> 07-24 · 條件快到了,先觀察(不是買)<br>收盤 521.95 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-10",
+       "date": "2026-09-10",
+       "text": "",
+       "tip": "<b>A候</b> 09-10 · 條件快到了,先觀察(不是買)<br>收盤 503.60 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 504.20 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    124.79796666666665,
+    686.6106333333333
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 5,
+   "other_sha256": "a94e8af9711bd1fc96b1478484ce376db7abf7eb7a9cb174e633754e2ab00cc0"
+  },
+  "PLTR:30": {
+   "sym": "PLTR",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 2,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "09-23",
+       "date": "2026-09-23",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-23 · 規則的進場日<br>收盤 191.79 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-18",
+       "date": "2026-09-18",
+       "text": "",
+       "tip": "<b>A候</b> 09-18 · 條件快到了,先觀察(不是買)<br>收盤 177.64 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-23) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    162.00830666666667,
+    212.84217333333336
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 6,
+   "other_sha256": "305dda9804ba1d146019cdf854590ea829c46f19154f7d4a00e33d3446dfa12b"
+  },
+  "PLTR:100": {
+   "sym": "PLTR",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 2,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "09-23",
+       "date": "2026-09-23",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-23 · 規則的進場日<br>收盤 191.79 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "06-01",
+       "date": "2026-06-01",
+       "text": "",
+       "tip": "<b>A候</b> 06-01 · 條件快到了,先觀察(不是買)<br>收盤 160.65 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-20",
+       "date": "2026-07-20",
+       "text": "",
+       "tip": "<b>A候</b> 07-20 · 條件快到了,先觀察(不是買)<br>收盤 134.85 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-04",
+       "date": "2026-08-04",
+       "text": "",
+       "tip": "<b>A候</b> 08-04 · 條件快到了,先觀察(不是買)<br>收盤 162.66 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-18",
+       "date": "2026-09-18",
+       "text": "",
+       "tip": "<b>A候</b> 09-18 · 條件快到了,先觀察(不是買)<br>收盤 177.64 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-23) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    100.5443688888889,
+    217.05699111111113
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 6,
+   "other_sha256": "e49c666e16e13b363c30a43ebd6be36a7c7b5f7893bb142a9c24dd8965779f85"
+  },
+  "PLTR:250": {
+   "sym": "PLTR",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "12-19",
+       "date": "2025-12-19",
+       "text": "A進",
+       "tip": "<b>A進</b> 12-19 · 規則的進場日<br>收盤 193.38 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-23",
+       "date": "2026-09-23",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-23 · 規則的進場日<br>收盤 191.79 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "10-17",
+       "date": "2025-10-17",
+       "text": "A出",
+       "tip": "<b>A出</b> 10-17 · 規則的出場日<br>收盤 178.15 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-31",
+       "date": "2025-12-31",
+       "text": "A出",
+       "tip": "<b>A出</b> 12-31 · 規則的出場日<br>收盤 177.75 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-24",
+       "date": "2025-10-24",
+       "text": "",
+       "tip": "<b>A候</b> 10-24 · 條件快到了,先觀察(不是買)<br>收盤 184.63 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "11-05",
+       "date": "2025-11-05",
+       "text": "",
+       "tip": "<b>A候</b> 11-05 · 條件快到了,先觀察(不是買)<br>收盤 187.90 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "11-07",
+       "date": "2025-11-07",
+       "text": "",
+       "tip": "<b>A候</b> 11-07 · 條件快到了,先觀察(不是買)<br>收盤 177.93 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-12",
+       "date": "2025-12-12",
+       "text": "",
+       "tip": "<b>A候</b> 12-12 · 條件快到了,先觀察(不是買)<br>收盤 183.57 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-18",
+       "date": "2025-12-18",
+       "text": "",
+       "tip": "<b>A候</b> 12-18 · 條件快到了,先觀察(不是買)<br>收盤 185.69 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-17",
+       "date": "2026-03-17",
+       "text": "",
+       "tip": "<b>A候</b> 03-17 · 條件快到了,先觀察(不是買)<br>收盤 155.08 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-23",
+       "date": "2026-03-23",
+       "text": "",
+       "tip": "<b>A候</b> 03-23 · 條件快到了,先觀察(不是買)<br>收盤 160.84 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-01",
+       "date": "2026-06-01",
+       "text": "",
+       "tip": "<b>A候</b> 06-01 · 條件快到了,先觀察(不是買)<br>收盤 160.65 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-20",
+       "date": "2026-07-20",
+       "text": "",
+       "tip": "<b>A候</b> 07-20 · 條件快到了,先觀察(不是買)<br>收盤 134.85 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-04",
+       "date": "2026-08-04",
+       "text": "",
+       "tip": "<b>A候</b> 08-04 · 條件快到了,先觀察(不是買)<br>收盤 162.66 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-18",
+       "date": "2026-09-18",
+       "text": "",
+       "tip": "<b>A候</b> 09-18 · 條件快到了,先觀察(不是買)<br>收盤 177.64 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-23) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    100.5443688888889,
+    217.05699111111113
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 6,
+   "other_sha256": "0efc4e7e7df583fb95302f9fb07d4034bba6cee7bf352f18ae83bd60539b56c6"
+  },
+  "AVGO:30": {
+   "sym": "AVGO",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    332.6686666666667,
+    383.3753333333333
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 7,
+   "other_sha256": "9fa37c47009fc628533de820ef8281b01e4b51c3160e6a156695aa60d641df5f"
+  },
+  "AVGO:100": {
+   "sym": "AVGO",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 19,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "05-29",
+       "date": "2026-05-29",
+       "text": "A進",
+       "tip": "<b>A進</b> 05-29 · 規則的進場日<br>收盤 445.25 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "06-04",
+       "date": "2026-06-04",
+       "text": "A出",
+       "tip": "<b>A出</b> 06-04 · 規則的出場日<br>收盤 417.49 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "05-27",
+       "date": "2026-05-27",
+       "text": "",
+       "tip": "<b>A候</b> 05-27 · 條件快到了,先觀察(不是買)<br>收盤 420.43 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-11",
+       "date": "2026-08-11",
+       "text": "",
+       "tip": "<b>A候</b> 08-11 · 條件快到了,先觀察(不是買)<br>收盤 415.32 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    326.41977777777777,
+    502.10422222222223
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 7,
+   "other_sha256": "30e371e54e5249b20337ad9bb7058ac4744a5fd3aa36f8f03ac91b7dc7f772b5"
+  },
+  "AVGO:250": {
+   "sym": "AVGO",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "12-10",
+       "date": "2025-12-10",
+       "text": "A進",
+       "tip": "<b>A進</b> 12-10 · 規則的進場日<br>收盤 409.92 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-29",
+       "date": "2026-05-29",
+       "text": "A進",
+       "tip": "<b>A進</b> 05-29 · 規則的進場日<br>收盤 445.25 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "12-12",
+       "date": "2025-12-12",
+       "text": "A出",
+       "tip": "<b>A出</b> 12-12 · 規則的出場日<br>收盤 357.27 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-04",
+       "date": "2026-06-04",
+       "text": "A出",
+       "tip": "<b>A出</b> 06-04 · 規則的出場日<br>收盤 417.49 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-24",
+       "date": "2025-10-24",
+       "text": "",
+       "tip": "<b>A候</b> 10-24 · 條件快到了,先觀察(不是買)<br>收盤 351.52 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-31",
+       "date": "2025-10-31",
+       "text": "",
+       "tip": "<b>A候</b> 10-31 · 條件快到了,先觀察(不是買)<br>收盤 366.90 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-04",
+       "date": "2025-12-04",
+       "text": "",
+       "tip": "<b>A候</b> 12-04 · 條件快到了,先觀察(不是買)<br>收盤 378.22 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-09",
+       "date": "2026-03-09",
+       "text": "",
+       "tip": "<b>A候</b> 03-09 · 條件快到了,先觀察(不是買)<br>收盤 343.86 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-17",
+       "date": "2026-04-17",
+       "text": "",
+       "tip": "<b>A候</b> 04-17 · 條件快到了,先觀察(不是買)<br>收盤 405.16 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-27",
+       "date": "2026-05-27",
+       "text": "",
+       "tip": "<b>A候</b> 05-27 · 條件快到了,先觀察(不是買)<br>收盤 420.43 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-11",
+       "date": "2026-08-11",
+       "text": "",
+       "tip": "<b>A候</b> 08-11 · 條件快到了,先觀察(不是買)<br>收盤 415.32 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    277.6235555555555,
+    504.67244444444447
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 7,
+   "other_sha256": "48d7d3247e8ca6744687d5180562d42c4f0113799a0cc0d3fb14d0e8df1cdfa6"
+  },
+  "META:30": {
+   "sym": "META",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-06",
+       "date": "2026-10-06",
+       "text": "A候",
+       "tip": "<b>A候</b> 10-06 · 條件快到了,先觀察(不是買)<br>收盤 738.88 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    515.8895294472509,
+    802.2044331869868
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 8,
+   "other_sha256": "4616125efdc0df1e494e6dbe5fe02b9905b08bbc93a006469f636964f9fa5377"
+  },
+  "META:100": {
+   "sym": "META",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "07-23",
+       "date": "2026-07-23",
+       "text": "",
+       "tip": "<b>A候</b> 07-23 · 條件快到了,先觀察(不是買)<br>收盤 605.62 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-06",
+       "date": "2026-10-06",
+       "text": "",
+       "tip": "<b>A候</b> 10-06 · 條件快到了,先觀察(不是買)<br>收盤 738.88 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    485.6008864444445,
+    804.9954775555555
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 8,
+   "other_sha256": "0e9cd5d35cab0f6a0f00dcf53c5d126d6de8f156debd37162f0656e39464b378"
+  },
+  "META:250": {
+   "sym": "META",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-29",
+       "date": "2025-10-29",
+       "text": "",
+       "tip": "<b>A候</b> 10-29 · 條件快到了,先觀察(不是買)<br>收盤 749.13 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-18",
+       "date": "2025-12-18",
+       "text": "",
+       "tip": "<b>A候</b> 12-18 · 條件快到了,先觀察(不是買)<br>收盤 662.74 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-30",
+       "date": "2025-12-30",
+       "text": "",
+       "tip": "<b>A候</b> 12-30 · 條件快到了,先觀察(不是買)<br>收盤 664.24 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-23",
+       "date": "2026-04-23",
+       "text": "",
+       "tip": "<b>A候</b> 04-23 · 條件快到了,先觀察(不是買)<br>收盤 658.02 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-27",
+       "date": "2026-04-27",
+       "text": "",
+       "tip": "<b>A候</b> 04-27 · 條件快到了,先觀察(不是買)<br>收盤 677.46 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-23",
+       "date": "2026-07-23",
+       "text": "",
+       "tip": "<b>A候</b> 07-23 · 條件快到了,先觀察(不是買)<br>收盤 605.62 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-06",
+       "date": "2026-10-06",
+       "text": "",
+       "tip": "<b>A候</b> 10-06 · 條件快到了,先觀察(不是買)<br>收盤 738.88 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出:賣掉大部分 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    485.1541495555556,
+    805.1973984444444
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 8,
+   "other_sha256": "0096e2978dc0ce20a5d730026b57cccf055bc3d35b1e54f2fc7aee4831b1f678"
+  },
+  "SNDK:30": {
+   "sym": "SNDK",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "09-04",
+       "date": "2026-09-04",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-04 · 規則的進場日<br>收盤 1740.00 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "09-16",
+       "date": "2026-09-16",
+       "text": "A出",
+       "tip": "<b>A出</b> 09-16 · 規則的出場日<br>收盤 1519.97 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 1766.64 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-30",
+       "date": "2026-09-30",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-30 · 條件快到了,先觀察(不是買)<br>收盤 1739.89 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-06",
+       "date": "2026-10-06",
+       "text": "A候",
+       "tip": "<b>A候</b> 10-06 · 條件快到了,先觀察(不是買)<br>收盤 1660.46 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    1409.2838888888887,
+    1935.8061111111112
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 9,
+   "other_sha256": "74f2111f3e4a90793d1cf6b792773e77d667662678b06a714604293594953267"
+  },
+  "SNDK:100": {
+   "sym": "SNDK",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "06-11",
+       "date": "2026-06-11",
+       "text": "A進",
+       "tip": "<b>A進</b> 06-11 · 規則的進場日<br>收盤 1881.51 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-04",
+       "date": "2026-09-04",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-04 · 規則的進場日<br>收盤 1740.00 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "07-02",
+       "date": "2026-07-02",
+       "text": "A出",
+       "tip": "<b>A出</b> 07-02 · 規則的出場日<br>收盤 1745.00 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-16",
+       "date": "2026-09-16",
+       "text": "A出",
+       "tip": "<b>A出</b> 09-16 · 規則的出場日<br>收盤 1519.97 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 1786.85 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 1766.64 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-30",
+       "date": "2026-09-30",
+       "text": "",
+       "tip": "<b>A候</b> 09-30 · 條件快到了,先觀察(不是買)<br>收盤 1739.89 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-06",
+       "date": "2026-10-06",
+       "text": "",
+       "tip": "<b>A候</b> 10-06 · 條件快到了,先觀察(不是買)<br>收盤 1660.46 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    910.3575084677376,
+    2452.3186881791444
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 9,
+   "other_sha256": "8e44edea84ec1c5dc214ca80809c82c25f39de37bd963f29283eb1b8d0be8bba"
+  },
+  "SNDK:250": {
+   "sym": "SNDK",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 20,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "06-11",
+       "date": "2026-06-11",
+       "text": "A進",
+       "tip": "<b>A進</b> 06-11 · 規則的進場日<br>收盤 1881.51 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-04",
+       "date": "2026-09-04",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-04 · 規則的進場日<br>收盤 1740.00 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "03-03",
+       "date": "2026-03-03",
+       "text": "A出",
+       "tip": "<b>A出</b> 03-03 · 規則的出場日<br>收盤 565.41 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-02",
+       "date": "2026-07-02",
+       "text": "A出",
+       "tip": "<b>A出</b> 07-02 · 規則的出場日<br>收盤 1745.00 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-16",
+       "date": "2026-09-16",
+       "text": "A出",
+       "tip": "<b>A出</b> 09-16 · 規則的出場日<br>收盤 1519.97 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "03-19",
+       "date": "2026-03-19",
+       "text": "",
+       "tip": "<b>A候</b> 03-19 · 條件快到了,先觀察(不是買)<br>收盤 772.09 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-24",
+       "date": "2026-03-24",
+       "text": "",
+       "tip": "<b>A候</b> 03-24 · 條件快到了,先觀察(不是買)<br>收盤 702.48 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "03-31",
+       "date": "2026-03-31",
+       "text": "",
+       "tip": "<b>A候</b> 03-31 · 條件快到了,先觀察(不是買)<br>收盤 635.34 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 1786.85 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 1766.64 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-30",
+       "date": "2026-09-30",
+       "text": "",
+       "tip": "<b>A候</b> 09-30 · 條件快到了,先觀察(不是買)<br>收盤 1739.89 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-06",
+       "date": "2026-10-06",
+       "text": "",
+       "tip": "<b>A候</b> 10-06 · 條件快到了,先觀察(不是買)<br>收盤 1660.46 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 出(弱):較弱,可先觀察 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    409.61935815036577,
+    2557.2321951430495
+   ],
+   "winDates": [
+    "2026-02-17",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 9,
+   "other_sha256": "c9c95c700dd42f5058dd60bb0f5e5a4e7d4412e7883ef925f1007705a499e59e"
+  },
+  "SPY:30": {
+   "sym": "SPY",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "08-28",
+       "date": "2026-08-28",
+       "text": "A候",
+       "tip": "<b>A候</b> 08-28 · 條件快到了,先觀察(不是買)<br>收盤 767.44 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    745.8308315555556,
+    784.0742004444444
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 10,
+   "other_sha256": "58e16594ec9abac6a1fec6cd776fb29f412f3edbd5348a48bd0900ad4051d19a"
+  },
+  "SPY:100": {
+   "sym": "SPY",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "07-09",
+       "date": "2026-07-09",
+       "text": "",
+       "tip": "<b>A候</b> 07-09 · 條件快到了,先觀察(不是買)<br>收盤 749.85 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 749.97 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-21",
+       "date": "2026-07-21",
+       "text": "",
+       "tip": "<b>A候</b> 07-21 · 條件快到了,先觀察(不是買)<br>收盤 746.43 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-04",
+       "date": "2026-08-04",
+       "text": "",
+       "tip": "<b>A候</b> 08-04 · 條件快到了,先觀察(不是買)<br>收盤 769.42 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 770.76 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-28",
+       "date": "2026-08-28",
+       "text": "",
+       "tip": "<b>A候</b> 08-28 · 條件快到了,先觀察(不是買)<br>收盤 767.44 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    709.2015155555555,
+    786.5568044444444
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 10,
+   "other_sha256": "e6e41a7f56eb3544347ed7c1a51f2fe92ad596ed1f0dc20db46bdfc60d97b6d1"
+  },
+  "SPY:250": {
+   "sym": "SPY",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-13",
+       "date": "2025-10-13",
+       "text": "",
+       "tip": "<b>A候</b> 10-13 · 條件快到了,先觀察(不是買)<br>收盤 655.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-21",
+       "date": "2025-10-21",
+       "text": "",
+       "tip": "<b>A候</b> 10-21 · 條件快到了,先觀察(不是買)<br>收盤 664.13 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "11-11",
+       "date": "2025-11-11",
+       "text": "",
+       "tip": "<b>A候</b> 11-11 · 條件快到了,先觀察(不是買)<br>收盤 675.71 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-03",
+       "date": "2025-12-03",
+       "text": "",
+       "tip": "<b>A候</b> 12-03 · 條件快到了,先觀察(不是買)<br>收盤 676.59 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-09",
+       "date": "2025-12-09",
+       "text": "",
+       "tip": "<b>A候</b> 12-09 · 條件快到了,先觀察(不是買)<br>收盤 675.75 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-23",
+       "date": "2025-12-23",
+       "text": "",
+       "tip": "<b>A候</b> 12-23 · 條件快到了,先觀察(不是買)<br>收盤 682.63 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-30",
+       "date": "2025-12-30",
+       "text": "",
+       "tip": "<b>A候</b> 12-30 · 條件快到了,先觀察(不是買)<br>收盤 681.69 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-03",
+       "date": "2026-02-03",
+       "text": "",
+       "tip": "<b>A候</b> 02-03 · 條件快到了,先觀察(不是買)<br>收盤 684.19 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-20",
+       "date": "2026-04-20",
+       "text": "",
+       "tip": "<b>A候</b> 04-20 · 條件快到了,先觀察(不是買)<br>收盤 705.15 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-09",
+       "date": "2026-07-09",
+       "text": "",
+       "tip": "<b>A候</b> 07-09 · 條件快到了,先觀察(不是買)<br>收盤 749.85 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 749.97 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-21",
+       "date": "2026-07-21",
+       "text": "",
+       "tip": "<b>A候</b> 07-21 · 條件快到了,先觀察(不是買)<br>收盤 746.43 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-04",
+       "date": "2026-08-04",
+       "text": "",
+       "tip": "<b>A候</b> 08-04 · 條件快到了,先觀察(不是買)<br>收盤 769.42 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 770.76 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-28",
+       "date": "2026-08-28",
+       "text": "",
+       "tip": "<b>A候</b> 08-28 · 條件快到了,先觀察(不是買)<br>收盤 767.44 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    611.4218500000001,
+    793.19693
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 10,
+   "other_sha256": "219fea4a25f5b600229d74e5d8deff7b67819e382d4fd6f6782c4218cc5a5713"
+  },
+  "QQQ:30": {
+   "sym": "QQQ",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 11,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 741.47 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    695.7382777777777,
+    766.3927222222222
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 11,
+   "other_sha256": "90c3a3eca10920c24041c7aec553fc78b77b6d166b80e10c027494dfa306c58a"
+  },
+  "QQQ:100": {
+   "sym": "QQQ",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "06-15",
+       "date": "2026-06-15",
+       "text": "",
+       "tip": "<b>A候</b> 06-15 · 條件快到了,先觀察(不是買)<br>收盤 742.41 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-10",
+       "date": "2026-07-10",
+       "text": "",
+       "tip": "<b>A候</b> 07-10 · 條件快到了,先觀察(不是買)<br>收盤 724.75 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 718.94 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-14",
+       "date": "2026-08-14",
+       "text": "",
+       "tip": "<b>A候</b> 08-14 · 條件快到了,先觀察(不是買)<br>收盤 730.31 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 741.47 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    653.0320368888889,
+    768.6404191111111
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 11,
+   "other_sha256": "398f56623c844a3aacd85a91819e0b584d4447bcaa048445438da15557fe5d05"
+  },
+  "QQQ:250": {
+   "sym": "QQQ",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 18,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "10-28",
+       "date": "2025-10-28",
+       "text": "A進",
+       "tip": "<b>A進</b> 10-28 · 規則的進場日<br>收盤 629.96 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "11-06",
+       "date": "2025-11-06",
+       "text": "A出",
+       "tip": "<b>A出</b> 11-06 · 規則的出場日<br>收盤 608.81 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "11-07",
+       "date": "2025-11-07",
+       "text": "",
+       "tip": "<b>A候</b> 11-07 · 條件快到了,先觀察(不是買)<br>收盤 606.89 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-08",
+       "date": "2025-12-08",
+       "text": "",
+       "tip": "<b>A候</b> 12-08 · 條件快到了,先觀察(不是買)<br>收盤 621.36 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-19",
+       "date": "2025-12-19",
+       "text": "",
+       "tip": "<b>A候</b> 12-19 · 條件快到了,先觀察(不是買)<br>收盤 614.16 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-22",
+       "date": "2026-04-22",
+       "text": "",
+       "tip": "<b>A候</b> 04-22 · 條件快到了,先觀察(不是買)<br>收盤 653.71 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-15",
+       "date": "2026-06-15",
+       "text": "",
+       "tip": "<b>A候</b> 06-15 · 條件快到了,先觀察(不是買)<br>收盤 742.41 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-10",
+       "date": "2026-07-10",
+       "text": "",
+       "tip": "<b>A候</b> 07-10 · 條件快到了,先觀察(不是買)<br>收盤 724.75 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 718.94 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-14",
+       "date": "2026-08-14",
+       "text": "",
+       "tip": "<b>A候</b> 08-14 · 條件快到了,先觀察(不是買)<br>收盤 730.31 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-21",
+       "date": "2026-09-21",
+       "text": "",
+       "tip": "<b>A候</b> 09-21 · 條件快到了,先觀察(不是買)<br>收盤 741.47 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    533.7348961467567,
+    797.1944132116238
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 11,
+   "other_sha256": "a0d967398ec61264866f67728c13d663a98f4bd3bf37bd028cdadd2c36b81e4e"
+  },
+  "AAPL:30": {
+   "sym": "AAPL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 2,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "09-11",
+       "date": "2026-09-11",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-11 · 規則的進場日<br>收盤 332.27 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-02",
+       "date": "2026-09-02",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-02 · 條件快到了,先觀察(不是買)<br>收盤 324.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-10",
+       "date": "2026-09-10",
+       "text": "",
+       "tip": "<b>A候</b> 09-10 · 條件快到了,先觀察(不是買)<br>收盤 326.57 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    307.89960888888885,
+    347.9074311111111
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 12,
+   "other_sha256": "84193cb7189566bd1a0a017b20f37729917bdc80aea10c947a5b78b98d4dedd5"
+  },
+  "AAPL:100": {
+   "sym": "AAPL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "09-11",
+       "date": "2026-09-11",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-11 · 規則的進場日<br>收盤 332.27 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "06-09",
+       "date": "2026-06-09",
+       "text": "A出",
+       "tip": "<b>A出</b> 06-09 · 規則的出場日<br>收盤 290.30 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 314.59 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-05",
+       "date": "2026-08-05",
+       "text": "",
+       "tip": "<b>A候</b> 08-05 · 條件快到了,先觀察(不是買)<br>收盤 310.73 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-02",
+       "date": "2026-09-02",
+       "text": "",
+       "tip": "<b>A候</b> 09-02 · 條件快到了,先觀察(不是買)<br>收盤 324.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-10",
+       "date": "2026-09-10",
+       "text": "",
+       "tip": "<b>A候</b> 09-10 · 條件快到了,先觀察(不是買)<br>收盤 326.57 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    262.787984,
+    350.894544
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 12,
+   "other_sha256": "b73f19c42dd33375331128370bc8e6ad2d90e1479549f445ea05c4a26c98b6a3"
+  },
+  "AAPL:250": {
+   "sym": "AAPL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "04-17",
+       "date": "2026-04-17",
+       "text": "A進",
+       "tip": "<b>A進</b> 04-17 · 規則的進場日<br>收盤 269.75 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-11",
+       "date": "2026-09-11",
+       "text": "A進",
+       "tip": "<b>A進</b> 09-11 · 規則的進場日<br>收盤 332.27 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "11-18",
+       "date": "2025-11-18",
+       "text": "A出",
+       "tip": "<b>A出</b> 11-18 · 規則的出場日<br>收盤 266.71 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-09",
+       "date": "2026-06-09",
+       "text": "A出",
+       "tip": "<b>A出</b> 06-09 · 規則的出場日<br>收盤 290.30 · 收盤跌破風險線<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "12-12",
+       "date": "2025-12-12",
+       "text": "",
+       "tip": "<b>A候</b> 12-12 · 條件快到了,先觀察(不是買)<br>收盤 277.52 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-24",
+       "date": "2025-12-24",
+       "text": "",
+       "tip": "<b>A候</b> 12-24 · 條件快到了,先觀察(不是買)<br>收盤 273.07 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-24",
+       "date": "2026-02-24",
+       "text": "",
+       "tip": "<b>A候</b> 02-24 · 條件快到了,先觀察(不是買)<br>收盤 271.65 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-16",
+       "date": "2026-04-16",
+       "text": "",
+       "tip": "<b>A候</b> 04-16 · 條件快到了,先觀察(不是買)<br>收盤 262.93 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-14",
+       "date": "2026-07-14",
+       "text": "",
+       "tip": "<b>A候</b> 07-14 · 條件快到了,先觀察(不是買)<br>收盤 314.59 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-05",
+       "date": "2026-08-05",
+       "text": "",
+       "tip": "<b>A候</b> 08-05 · 條件快到了,先觀察(不是買)<br>收盤 310.73 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-02",
+       "date": "2026-09-02",
+       "text": "",
+       "tip": "<b>A候</b> 09-02 · 條件快到了,先觀察(不是買)<br>收盤 324.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-10",
+       "date": "2026-09-10",
+       "text": "",
+       "tip": "<b>A候</b> 09-10 · 條件快到了,先觀察(不是買)<br>收盤 326.57 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    236.96887244444443,
+    352.77142355555554
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 12,
+   "other_sha256": "14d5497f78c65567a4c334dac06f303b6cff76de6bb18f240293ecc4edaa0e8f"
+  },
+  "MSFT:30": {
+   "sym": "MSFT",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 2,
+   "astra": [
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "09-09",
+       "date": "2026-09-09",
+       "text": "A出",
+       "tip": "<b>A出</b> 09-09 · 規則的出場日<br>收盤 491.65 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 497.12 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-29",
+       "date": "2026-09-29",
+       "text": "A候",
+       "tip": "<b>A候</b> 09-29 · 條件快到了,先觀察(不是買)<br>收盤 508.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    479.64948,
+    541.1126800000001
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 13,
+   "other_sha256": "af831ce403ff1527e442372cd292dec37ea58127044f7cfde15d7232b406d56c"
+  },
+  "MSFT:100": {
+   "sym": "MSFT",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "08-27",
+       "date": "2026-08-27",
+       "text": "A進",
+       "tip": "<b>A進</b> 08-27 · 規則的進場日<br>收盤 505.06 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "09-09",
+       "date": "2026-09-09",
+       "text": "A出",
+       "tip": "<b>A出</b> 09-09 · 規則的出場日<br>收盤 491.65 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "05-29",
+       "date": "2026-05-29",
+       "text": "",
+       "tip": "<b>A候</b> 05-29 · 條件快到了,先觀察(不是買)<br>收盤 449.39 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-20",
+       "date": "2026-07-20",
+       "text": "",
+       "tip": "<b>A候</b> 07-20 · 條件快到了,先觀察(不是買)<br>收盤 401.53 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-03",
+       "date": "2026-08-03",
+       "text": "",
+       "tip": "<b>A候</b> 08-03 · 條件快到了,先觀察(不是買)<br>收盤 486.73 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 479.45 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-25",
+       "date": "2026-08-25",
+       "text": "",
+       "tip": "<b>A候</b> 08-25 · 條件快到了,先觀察(不是買)<br>收盤 491.71 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 497.12 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-29",
+       "date": "2026-09-29",
+       "text": "",
+       "tip": "<b>A候</b> 09-29 · 條件快到了,先觀察(不是買)<br>收盤 508.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    330.7246,
+    551.26588
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 13,
+   "other_sha256": "897a582ca79d5920870af915731a523f5af5505d440181308315f63ece13f0f3"
+  },
+  "MSFT:250": {
+   "sym": "MSFT",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 17,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "10-27",
+       "date": "2025-10-27",
+       "text": "A進",
+       "tip": "<b>A進</b> 10-27 · 規則的進場日<br>收盤 527.18 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-27",
+       "date": "2026-08-27",
+       "text": "A進",
+       "tip": "<b>A進</b> 08-27 · 規則的進場日<br>收盤 505.06 · 量縮守穩後轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "10-31",
+       "date": "2025-10-31",
+       "text": "A出",
+       "tip": "<b>A出</b> 10-31 · 規則的出場日<br>收盤 513.58 · 跌破進場後均價、又有放量下跌<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-09",
+       "date": "2026-09-09",
+       "text": "A出",
+       "tip": "<b>A出</b> 09-09 · 規則的出場日<br>收盤 491.65 · 連兩天收在 20 日線下、買壓轉負<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-13",
+       "date": "2025-10-13",
+       "text": "",
+       "tip": "<b>A候</b> 10-13 · 條件快到了,先觀察(不是買)<br>收盤 509.86 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-17",
+       "date": "2025-10-17",
+       "text": "",
+       "tip": "<b>A候</b> 10-17 · 條件快到了,先觀察(不是買)<br>收盤 509.39 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-24",
+       "date": "2026-04-24",
+       "text": "",
+       "tip": "<b>A候</b> 04-24 · 條件快到了,先觀察(不是買)<br>收盤 422.91 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-29",
+       "date": "2026-05-29",
+       "text": "",
+       "tip": "<b>A候</b> 05-29 · 條件快到了,先觀察(不是買)<br>收盤 449.39 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-20",
+       "date": "2026-07-20",
+       "text": "",
+       "tip": "<b>A候</b> 07-20 · 條件快到了,先觀察(不是買)<br>收盤 401.53 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-03",
+       "date": "2026-08-03",
+       "text": "",
+       "tip": "<b>A候</b> 08-03 · 條件快到了,先觀察(不是買)<br>收盤 486.73 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-17",
+       "date": "2026-08-17",
+       "text": "",
+       "tip": "<b>A候</b> 08-17 · 條件快到了,先觀察(不是買)<br>收盤 479.45 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-25",
+       "date": "2026-08-25",
+       "text": "",
+       "tip": "<b>A候</b> 08-25 · 條件快到了,先觀察(不是買)<br>收盤 491.71 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-15",
+       "date": "2026-09-15",
+       "text": "",
+       "tip": "<b>A候</b> 09-15 · 條件快到了,先觀察(不是買)<br>收盤 497.12 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "09-29",
+       "date": "2026-09-29",
+       "text": "",
+       "tip": "<b>A候</b> 09-29 · 條件快到了,先觀察(不是買)<br>收盤 508.96 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    325.22711022222217,
+    564.3685857777778
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 13,
+   "other_sha256": "8240234934e804f49b6833f1ac28ec6d73a069ed40bfb80a81ef06e0b4a8c17e"
+  },
+  "SLB:30": {
+   "sym": "SLB",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    46.955666666666666,
+    60.842333333333336
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 14,
+   "other_sha256": "178d2e706b33655ee1c9f536b9593b4eabed4491eb1921da6146f6382542a3dc"
+  },
+  "SLB:100": {
+   "sym": "SLB",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 15,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "06-08",
+       "date": "2026-06-08",
+       "text": "",
+       "tip": "<b>A候</b> 06-08 · 條件快到了,先觀察(不是買)<br>收盤 56.26 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-12",
+       "date": "2026-08-12",
+       "text": "",
+       "tip": "<b>A候</b> 08-12 · 條件快到了,先觀察(不是買)<br>收盤 52.34 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    42.530414666666665,
+    61.07524133333334
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 14,
+   "other_sha256": "6185b071aaad2ed3d6f044848b5aa5c70ad61d78e385014843bae781132ac12e"
+  },
+  "SLB:250": {
+   "sym": "SLB",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 18,
+   "nAstra": 3,
+   "astra": [
+    {
+     "name": "Astra ENTRY",
+     "pts": [
+      {
+       "x": "12-04",
+       "date": "2025-12-04",
+       "text": "A進",
+       "tip": "<b>A進</b> 12-04 · 規則的進場日<br>收盤 37.50 · 買壓持續、放量突破<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra EXIT",
+     "pts": [
+      {
+       "x": "12-19",
+       "date": "2025-12-19",
+       "text": "A出",
+       "tip": "<b>A出</b> 12-19 · 規則的出場日<br>收盤 37.47 · 跌破進場後均價、又有放量下跌<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f472b6",
+     "textcolor": "#f472b6"
+    },
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "10-24",
+       "date": "2025-10-24",
+       "text": "",
+       "tip": "<b>A候</b> 10-24 · 條件快到了,先觀察(不是買)<br>收盤 34.98 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "10-31",
+       "date": "2025-10-31",
+       "text": "",
+       "tip": "<b>A候</b> 10-31 · 條件快到了,先觀察(不是買)<br>收盤 35.20 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-03",
+       "date": "2025-12-03",
+       "text": "",
+       "tip": "<b>A候</b> 12-03 · 條件快到了,先觀察(不是買)<br>收盤 36.94 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "12-24",
+       "date": "2025-12-24",
+       "text": "",
+       "tip": "<b>A候</b> 12-24 · 條件快到了,先觀察(不是買)<br>收盤 37.36 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-06",
+       "date": "2026-02-06",
+       "text": "",
+       "tip": "<b>A候</b> 02-06 · 條件快到了,先觀察(不是買)<br>收盤 49.88 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-11",
+       "date": "2026-02-11",
+       "text": "",
+       "tip": "<b>A候</b> 02-11 · 條件快到了,先觀察(不是買)<br>收盤 51.03 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "02-23",
+       "date": "2026-02-23",
+       "text": "",
+       "tip": "<b>A候</b> 02-23 · 條件快到了,先觀察(不是買)<br>收盤 50.71 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-08",
+       "date": "2026-04-08",
+       "text": "",
+       "tip": "<b>A候</b> 04-08 · 條件快到了,先觀察(不是買)<br>收盤 51.34 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-10",
+       "date": "2026-04-10",
+       "text": "",
+       "tip": "<b>A候</b> 04-10 · 條件快到了,先觀察(不是買)<br>收盤 51.38 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-06",
+       "date": "2026-05-06",
+       "text": "",
+       "tip": "<b>A候</b> 05-06 · 條件快到了,先觀察(不是買)<br>收盤 54.59 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "05-15",
+       "date": "2026-05-15",
+       "text": "",
+       "tip": "<b>A候</b> 05-15 · 條件快到了,先觀察(不是買)<br>收盤 54.81 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "06-08",
+       "date": "2026-06-08",
+       "text": "",
+       "tip": "<b>A候</b> 06-08 · 條件快到了,先觀察(不是買)<br>收盤 56.26 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "08-12",
+       "date": "2026-08-12",
+       "text": "",
+       "tip": "<b>A候</b> 08-12 · 條件快到了,先觀察(不是買)<br>收盤 52.34 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    29.241966691427805,
+    62.102632862871715
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 14,
+   "other_sha256": "c00c7f9933c1c37f87e9593b4397e4357ea3a2021eb89a34e85e0652047f33b7"
+  },
+  "BKNG:30": {
+   "sym": "BKNG",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 14,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    150.48433333333335,
+    210.03766666666667
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 15,
+   "other_sha256": "1e94eb62b681ab9503d1cfc34c291f952341e159eee94192f01a777d084cc6c0"
+  },
+  "BKNG:100": {
+   "sym": "BKNG",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "07-16",
+       "date": "2026-07-16",
+       "text": "",
+       "tip": "<b>A候</b> 07-16 · 條件快到了,先觀察(不是買)<br>收盤 184.16 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-30",
+       "date": "2026-07-30",
+       "text": "",
+       "tip": "<b>A候</b> 07-30 · 條件快到了,先觀察(不是買)<br>收盤 192.77 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    145.61557750044975,
+    221.36402749145466
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 15,
+   "other_sha256": "6c03c9450b051db7d15bd22c1f819ab55dfc79136a50116798f61c183a338e48"
+  },
+  "BKNG:250": {
+   "sym": "BKNG",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 1,
+   "astra": [
+    {
+     "name": "Astra WATCH",
+     "pts": [
+      {
+       "x": "12-18",
+       "date": "2025-12-18",
+       "text": "",
+       "tip": "<b>A候</b> 12-18 · 條件快到了,先觀察(不是買)<br>收盤 212.28 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "04-15",
+       "date": "2026-04-15",
+       "text": "",
+       "tip": "<b>A候</b> 04-15 · 條件快到了,先觀察(不是買)<br>收盤 184.78 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-16",
+       "date": "2026-07-16",
+       "text": "",
+       "tip": "<b>A候</b> 07-16 · 條件快到了,先觀察(不是買)<br>收盤 184.16 · 量縮守穩,等轉強<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      },
+      {
+       "x": "07-30",
+       "date": "2026-07-30",
+       "text": "",
+       "tip": "<b>A候</b> 07-30 · 條件快到了,先觀察(不是買)<br>收盤 192.77 · 買壓持續,等其他條件<br><span style=\"color:#898781\">Astra 研究用,還沒證明有用</span>"
+      }
+     ],
+     "color": "#f9a8d4",
+     "textcolor": "#f9a8d4"
+    }
+   ],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    142.87285111111112,
+    225.8861488888889
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 15,
+   "other_sha256": "6b0baf0763a58f5bab6720840eae98d13cf9d46544774fd04498e45a5039b869"
+  },
+  "NVDL:30": {
+   "sym": "NVDL",
+   "win": 30,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 12,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    30.337777777777777,
+    42.18222222222223
+   ],
+   "winDates": [
+    "2026-08-28",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 16,
+   "other_sha256": "09c09c610c5e9f3a7c80f75b97ca5c3765aa9f86b00dceeda2af3021a30a5fb2"
+  },
+  "NVDL:100": {
+   "sym": "NVDL",
+   "win": 100,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 13,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    25.481268,
+    42.437828
+   ],
+   "winDates": [
+    "2026-05-19",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 16,
+   "other_sha256": "fb275ecd5548d2189cc87d2165eb6703c9cb5f2b3aeb45549aead69521c3aad7"
+  },
+  "NVDL:250": {
+   "sym": "NVDL",
+   "win": 250,
+   "pd": "d",
+   "chipQ": true,
+   "nAll": 16,
+   "nAstra": 0,
+   "astra": [],
+   "q": "📊 量化 10-09 沒有訊號:不用動 大盤: 賣出偏強 不宜抄底 資金緊縮 ⓘ 詳情",
+   "a": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "tj": "",
+   "fc": "",
+   "pos": "",
+   "dq": "",
+   "xType": "category",
+   "yRange": [
+    19.943026666666665,
+    44.86697333333334
+   ],
+   "winDates": [
+    "2025-10-13",
+    "2026-10-09"
+   ],
+   "astraLoaded": true,
+   "astraRev": 16,
+   "other_sha256": "90b473de1978610b9ad01f6d073878bbb16a1bb229b35ab71d8724b08bd66200"
+  }
+ },
+ "checks": [
+  {
+   "key": "NVDA:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "NVDA:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 7
+  },
+  {
+   "key": "NVDA:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 12
+  },
+  {
+   "key": "TSM:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "TSM:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 6
+  },
+  {
+   "key": "TSM:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 18
+  },
+  {
+   "key": "MU:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 2,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 3
+  },
+  {
+   "key": "MU:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 8
+  },
+  {
+   "key": "MU:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 15
+  },
+  {
+   "key": "AMD:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "AMD:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 3
+  },
+  {
+   "key": "AMD:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 6
+  },
+  {
+   "key": "PLTR:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 2,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-23) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "PLTR:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 2,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-23) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 5
+  },
+  {
+   "key": "PLTR:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-23) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 15
+  },
+  {
+   "key": "AVGO:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 0,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 0
+  },
+  {
+   "key": "AVGO:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 4
+  },
+  {
+   "key": "AVGO:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 11
+  },
+  {
+   "key": "META:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 1
+  },
+  {
+   "key": "META:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "META:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 7
+  },
+  {
+   "key": "SNDK:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 5
+  },
+  {
+   "key": "SNDK:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 8
+  },
+  {
+   "key": "SNDK:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 12
+  },
+  {
+   "key": "SPY:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 1
+  },
+  {
+   "key": "SPY:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 6
+  },
+  {
+   "key": "SPY:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 15
+  },
+  {
+   "key": "QQQ:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 1
+  },
+  {
+   "key": "QQQ:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 5
+  },
+  {
+   "key": "QQQ:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 11
+  },
+  {
+   "key": "AAPL:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 2,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 3
+  },
+  {
+   "key": "AAPL:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 6
+  },
+  {
+   "key": "AAPL:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-11) ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 12
+  },
+  {
+   "key": "MSFT:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 2,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 3
+  },
+  {
+   "key": "MSFT:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 9
+  },
+  {
+   "key": "MSFT:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 14
+  },
+  {
+   "key": "SLB:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 0,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 0
+  },
+  {
+   "key": "SLB:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "SLB:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 3,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 15
+  },
+  {
+   "key": "BKNG:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 0,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 0
+  },
+  {
+   "key": "BKNG:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 2
+  },
+  {
+   "key": "BKNG:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 1,
+   "astra_strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情",
+   "events_match_node": true,
+   "n_events_on_chart": 4
+  },
+  {
+   "key": "NVDL:30",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 0,
+   "astra_strip": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "events_match_node": true,
+   "n_events_on_chart": 0
+  },
+  {
+   "key": "NVDL:100",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 0,
+   "astra_strip": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "events_match_node": true,
+   "n_events_on_chart": 0
+  },
+  {
+   "key": "NVDL:250",
+   "old_vs_new_off_traces_same": true,
+   "old_vs_new_off_strips_same": true,
+   "on_vs_off_nonastra_same": true,
+   "on_vs_off_qstrip_same": true,
+   "chipQ_unchanged": true,
+   "off_again_no_astra": true,
+   "x_category": true,
+   "astra_traces": 0,
+   "astra_strip": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)",
+   "events_match_node": true,
+   "n_events_on_chart": 0
+  }
+ ],
+ "scenarios": {
+  "period_w": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "period_m": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "period_y": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "max": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 只看日K(週/月/年/全史不標)"
+  },
+  "back_to_daily": {
+   "nAstra": 3,
+   "n_points": 18,
+   "strip": "🧪 Astra資金 研究用 10-09 A候:先觀察(還不是買點) ⓘ 詳情"
+  },
+  "leveraged_NVDL": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)"
+  },
+  "inverse_SQQQ": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)"
+  },
+  "inverse_SH_not_in_TK_INV": {
+   "nAstra": 0,
+   "strip": "🧪 Astra資金 研究用 槓桿/反向 ETF 不適用(不拿正股代替)"
+  },
+  "out_of_scope": {
+   "國債": {
+    "sym": "SHY",
+    "nAstra": 0,
+    "strip": "🧪 Astra資金 研究用 債券/商品/加密不在這版的範圍(只做股票)"
+   },
+   "信用債": {
+    "sym": "HYG",
+    "nAstra": 0,
+    "strip": "🧪 Astra資金 研究用 債券/商品/加密不在這版的範圍(只做股票)"
+   },
+   "現金": {
+    "sym": "SGOV",
+    "nAstra": 0,
+    "strip": ""
+   },
+   "金": {
+    "sym": "GLD",
+    "nAstra": 0,
+    "strip": "🧪 Astra資金 研究用 債券/商品/加密不在這版的範圍(只做股票)"
+   },
+   "油": {
+    "sym": "USO",
+    "nAstra": 0,
+    "strip": "🧪 Astra資金 研究用 債券/商品/加密不在這版的範圍(只做股票)"
+   },
+   "銀": {
+    "sym": "SLV",
+    "nAstra": 0,
+    "strip": "🧪 Astra資金 研究用 債券/商品/加密不在這版的範圍(只做股票)"
+   },
+   "Crypto": {
+    "sym": "IBIT",
+    "nAstra": 0,
+    "strip": "🧪 Astra資金 研究用 債券/商品/加密不在這版的範圍(只做股票)"
+   },
+   "in_scope_板塊ETF": {
+    "sym": "SMH",
+    "nAstra": 1,
+    "strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情"
+   },
+   "in_scope_大盤": {
+    "sym": "SPY",
+    "nAstra": 1,
+    "strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情"
+   },
+   "in_scope_半導體": {
+    "sym": "NVDA",
+    "nAstra": 3,
+    "strip": "🧪 Astra資金 研究用 10-09 沒有訊號 ⓘ 詳情"
+   }
+  },
+  "zoom": {
+   "afterRelayout": "category",
+   "afterXzApply": "category",
+   "astraTraces": 3
+  },
+  "popover": {
+   "afterHoverOrBarClick": false,
+   "afterInfoClick": true,
+   "afterSecondClick": false,
+   "text": "✕ 🧪 MU Astra資金(研究用) 2026-10-09 收盤 規則持有中(A進 09-21) 現在:09-21 買壓持續、放量突破 → A進(收盤 1043.96);收盤跌破 972.13 會標 A出(明顯轉弱也會出) A候 條件快到了,先觀察(不是買) · A進 規則的進場日 · A出 規則的出場日 這是 Astra 的研究規則,還沒證明有用:過去約 5 年 19 檔回放,只有 1 檔贏過一直抱著 → 先別照著買賣。 只用已收盤的日K(不含盤中);和 📊量化 分開算、互不影響 · 不是投資建議"
+  },
+  "intraday_bar_after_cutoff": {
+   "baselineSym": "TSM",
+   "recomputed": true,
+   "eventsSame": true,
+   "dataThrough": "2026-10-09",
+   "fakeDate": "2026-10-12"
+  },
+  "volume_revision_same_close": {
+   "recomputed": true
+  },
+  "stale": {
+   "status": "STALE",
+   "strip": "🧪 Astra資金 研究用 10-09 · 日K檔還沒更新 A候:先觀察(還不是買點) ⓘ 詳情",
+   "astraTracesStillShown": 3,
+   "fakeLastDone": "2026-10-12"
+  },
+  "spy_late": {
+   "whileWaiting": {
+    "status": "WAIT",
+    "strip": "🧪 Astra資金 研究用 日K / SPY 載入中…",
+    "astraTraces": 0
+   },
+   "afterArrive": {
+    "status": "RESEARCH",
+    "astraTraces": 3
+   }
+  },
+  "spy_missing": {
+   "status": "STALE",
+   "entries": 0,
+   "watches": 55,
+   "strip": "🧪 Astra資金 研究用 10-09 · SPY 沒載入 A候:先觀察(還不是買點) ⓘ 詳情"
+  },
+  "script_missing": {
+   "strip": "🧪 Astra資金 研究用 暫停判斷:資料或程式出錯 ⓘ 詳情",
+   "astraTraces": 0,
+   "chartTraces": 14,
+   "afterRestore": 3
+  },
+  "switch_symbol": {
+   "MU": true,
+   "NVDA": true,
+   "TSM": true
+  }
+ },
+ "old_build": "2026-10-11T06:15Z",
+ "old_errors": [],
+ "new_build": "2026-10-11T07:20Z",
+ "default_astra_off": true,
+ "new_errors": [
+  "console.error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "console.error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "console.error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+  "console.error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+ ],
+ "mobile": {
+  "nAstra": 3,
+  "strip": "🧪 Astra資金 研究用 10-09 規則持有中(A進 09-21) ⓘ 詳情",
+  "overflow": false,
+  "stripOneLine": 27,
+  "errors": []
+ }
+}
