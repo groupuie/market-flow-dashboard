@@ -1,0 +1,260 @@
+{
+ "files": {
+  "index.html": {
+   "same": true
+  },
+  "astra-v03-events.json": {
+   "same": true
+  },
+  "astra-flow.js": {
+   "same": true
+  },
+  "astra-dashboard-adapter.js": {
+   "same": true
+  }
+ },
+ "desktop": {
+  "build": "2026-10-11T23:18Z",
+  "default_on": true,
+  "symbols": {
+   "QQQ": {
+    "n": 34,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "不分": 9
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 10
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "SPY": {
+    "n": 43,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "不分": 11
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 15
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MU": {
+    "n": 37,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 6,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 15
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "NVDA": {
+    "n": 33,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 8,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 7
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "NBIS": {
+    "n": 48,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 13,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 13
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MUU": {
+    "n": 37,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 6,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 15
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   }
+  },
+  "SQQQ_none": true,
+  "weekly_none": true,
+  "overflow": false,
+  "errors": []
+ },
+ "mobile": {
+  "build": "2026-10-11T23:18Z",
+  "default_on": true,
+  "symbols": {
+   "QQQ": {
+    "n": 34,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "不分": 9
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 10
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "SPY": {
+    "n": 43,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "不分": 11
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 15
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MU": {
+    "n": 37,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 6,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 15
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "NVDA": {
+    "n": 33,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 8,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 7
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "NBIS": {
+    "n": 48,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 13,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 13
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MUU": {
+    "n": 37,
+    "match_py": true,
+    "grade_ok": true,
+    "grades": {
+     "弱": 6,
+     "強": 1
+    },
+    "legend": true,
+    "top_gray_ok": true,
+    "tops": {
+     "灰": 0,
+     "原": 15
+    },
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   }
+  },
+  "SQQQ_none": true,
+  "weekly_none": true,
+  "overflow": false,
+  "errors": []
+ }
+}
