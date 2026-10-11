@@ -1,0 +1,116 @@
+{
+ "files": {
+  "index.html": {
+   "same": true
+  },
+  "astra-v03-events.json": {
+   "same": true
+  },
+  "astra-flow.js": {
+   "same": true
+  },
+  "astra-dashboard-adapter.js": {
+   "same": true
+  }
+ },
+ "desktop": {
+  "build": "2026-10-11T16:38Z",
+  "default_on": true,
+  "symbols": {
+   "QQQ": {
+    "n": 19,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "SPY": {
+    "n": 26,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MU": {
+    "n": 22,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "NVDA": {
+    "n": 16,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MUU": {
+    "n": 22,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   }
+  },
+  "SQQQ_none": true,
+  "weekly_none": true,
+  "overflow": false,
+  "errors": []
+ },
+ "mobile": {
+  "build": "2026-10-11T16:38Z",
+  "default_on": true,
+  "symbols": {
+   "QQQ": {
+    "n": 19,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "SPY": {
+    "n": 26,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MU": {
+    "n": 22,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "NVDA": {
+    "n": 16,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   },
+   "MUU": {
+    "n": 22,
+    "match_py": true,
+    "off_none": true,
+    "quant_text_same": true,
+    "back_same": true,
+    "xType": "category"
+   }
+  },
+  "SQQQ_none": true,
+  "weekly_none": true,
+  "overflow": false,
+  "errors": []
+ }
+}
