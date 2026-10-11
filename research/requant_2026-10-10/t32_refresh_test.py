@@ -151,9 +151,19 @@ async def astra_on(pg):
 
 
 def trunc(bars, last, n=1250, drop=()):
-    """日K檔照上游的樣子:只到 last、去掉 drop 那幾天、只留最後 n 根(上游固定 1250 根)。"""
-    out = [b for b in bars if b[0] <= last and b[0] not in drop]
-    return out[-n:]
+    """日K檔照上游的樣子:只到 last、去掉 drop 那幾天、固定 n 根(上游 KL_HIST_DAYS = 1250,每天丟最舊一根)。
+    快照只有 2021-10-18 以後的 1250 根 → 截短後不足 n 根時,在最前面補「合成棒」(往前的平日日期,開高低收量 = 第一根真實棒),
+    讓筆數跟上游一樣固定 1250(Codex v0.4 B:同筆數換日期)。合成棒在 2021-10 以前,離畫面上的 100 日視窗 1000 根以上。"""
+    from datetime import date, timedelta
+    out = [b for b in bars if b[0] <= last and b[0] not in drop][-n:]
+    if len(out) < n and out:
+        d = date.fromisoformat(out[0][0]); pad = []
+        while len(pad) + len(out) < n:
+            d -= timedelta(days=1)
+            if d.weekday() < 5:
+                pad.insert(0, [d.isoformat()] + list(out[0][1:]))
+        out = pad + out
+    return out
 
 
 def kfile(src, bars):
@@ -167,11 +177,11 @@ def scenarios(snap, X):
                                     for b in trunc(F["bars"], last)])
     S = {}
     S["S1_QQQ缺中間一天"] = dict(
-        desc=f"QQQ 日K檔停在 {D2}(少 {D1}),{D} 那根只在富途快照;回補檔到 {D}。個股檔一開始就完整。筆數都是 1250(上游固定)。",
+        desc=f"QQQ 日K檔停在 {D2}(少 {D1}),{D} 那根只在富途快照;回補檔到 {D}。個股檔一開始就完整。新舊檔都是 1250 根(同筆數換日期;不足的在最前面補合成棒)。",
         ov={"kline_QQQ.json": {"old": (200, body(kfile(QQ, trunc(QQ['bars'], D2)))), "new": (200, body(full(QQ)))},
             f"kline_{X}.json": {"old": (200, body(full(KX))), "new": (200, body(full(KX)))}}, expect=["kline_QQQ.json"])
     S["S2_個股缺中間一天"] = dict(
-        desc=f"{X} 日K檔停在 {D2}(少 {D1}),{D} 那根只在快照;回補檔到 {D}(固定 1250 根 → 同筆數換日期)。QQQ 一開始就完整。",
+        desc=f"{X} 日K檔停在 {D2}(少 {D1}),{D} 那根只在快照;回補檔到 {D}(新舊檔都是 1250 根 → 同筆數換日期)。QQQ 一開始就完整。",
         ov={f"kline_{X}.json": {"old": (200, body(kfile(KX, trunc(KX['bars'], D2)))), "new": (200, body(full(KX)))}},
         expect=[f"kline_{X}.json"])
     S["S3_同末日補中段"] = dict(
