@@ -1,0 +1,512 @@
+{
+ "total": {
+  "both": 4471,
+  "only_gist": 0,
+  "only_yahoo": 1,
+  "agree_pct": 99.98
+ },
+ "per": {
+  "AAPL": {
+   "both": 138,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "MSFT": {
+   "both": 125,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "NVDA": {
+   "both": 130,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "AMZN": {
+   "both": 156,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "GOOGL": {
+   "both": 144,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "META": {
+   "both": 122,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "TSLA": {
+   "both": 125,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "AVGO": {
+   "both": 158,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "AMD": {
+   "both": 141,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "MU": {
+   "both": 136,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "INTC": {
+   "both": 120,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "QCOM": {
+   "both": 96,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "MRVL": {
+   "both": 134,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "ARM": {
+   "both": 71,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-09-12",
+    "2026-10-09"
+   ]
+  },
+  "TSM": {
+   "both": 155,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "ASML": {
+   "both": 77,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "AMAT": {
+   "both": 72,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "LRCX": {
+   "both": 68,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "KLAC": {
+   "both": 146,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "SNDK": {
+   "both": 30,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2026-02-12",
+    "2026-10-09"
+   ]
+  },
+  "WDC": {
+   "both": 129,
+   "only_gist": 0,
+   "only_yahoo": 1,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "STX": {
+   "both": 75,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo備援",
+   "range": [
+    "2024-07-31",
+    "2026-10-09"
+   ]
+  },
+  "ANET": {
+   "both": 82,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "CSCO": {
+   "both": 78,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "COHR": {
+   "both": 131,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "LITE": {
+   "both": 108,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "CRDO": {
+   "both": 78,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "ALAB": {
+   "both": 51,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2025-03-20",
+    "2026-10-09"
+   ]
+  },
+  "DELL": {
+   "both": 81,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "SMCI": {
+   "both": 63,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "VRT": {
+   "both": 84,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "ORCL": {
+   "both": 146,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "PLTR": {
+   "both": 133,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "NOW": {
+   "both": 58,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "CRM": {
+   "both": 55,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "SNOW": {
+   "both": 65,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "CRWD": {
+   "both": 72,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "PANW": {
+   "both": 68,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "NET": {
+   "both": 73,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "APP": {
+   "both": 67,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "CRWV": {
+   "both": 20,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2026-03-27",
+    "2026-10-09"
+   ]
+  },
+  "NBIS": {
+   "both": 48,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2025-10-21",
+    "2026-10-09"
+   ]
+  },
+  "IREN": {
+   "both": 75,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "yahoo-ext",
+   "range": [
+    "2024-08-01",
+    "2026-10-09"
+   ]
+  },
+  "SPY": {
+   "both": 142,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  },
+  "QQQ": {
+   "both": 145,
+   "only_gist": 0,
+   "only_yahoo": 0,
+   "gist_src": "futu-qfq",
+   "range": [
+    "2022-10-14",
+    "2026-10-09"
+   ]
+  }
+ },
+ "last_diff": {
+  "AAPL": [],
+  "MSFT": [],
+  "NVDA": [],
+  "AMZN": [],
+  "GOOGL": [],
+  "META": [],
+  "TSLA": [],
+  "AVGO": [],
+  "AMD": [],
+  "MU": [],
+  "INTC": [],
+  "QCOM": [],
+  "MRVL": [],
+  "ARM": [],
+  "TSM": [],
+  "ASML": [],
+  "AMAT": [],
+  "LRCX": [],
+  "KLAC": [],
+  "SNDK": [],
+  "WDC": [
+   [
+    "2023-06-20",
+    "頂"
+   ]
+  ],
+  "STX": [],
+  "ANET": [],
+  "CSCO": [],
+  "COHR": [],
+  "LITE": [],
+  "CRDO": [],
+  "ALAB": [],
+  "DELL": [],
+  "SMCI": [],
+  "VRT": [],
+  "ORCL": [],
+  "PLTR": [],
+  "NOW": [],
+  "CRM": [],
+  "SNOW": [],
+  "CRWD": [],
+  "PANW": [],
+  "NET": [],
+  "APP": [],
+  "CRWV": [],
+  "NBIS": [],
+  "IREN": [],
+  "SPY": [],
+  "QQQ": []
+ }
+}

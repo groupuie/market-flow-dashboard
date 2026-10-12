@@ -1,0 +1,60 @@
+name: astra-data
+# 🧪 Astra 擴大範圍(2026-10-12;使用者:至少可以看 S&P 500、Nasdaq-100、每日成交金額前 100,主要鎖定 AI 軟硬體)
+#   scripts/astra_data.py → 只寫 astra-data 分支(每次 force-push 單一 commit,歷史不累積,同 public-collect 的 data 分支做法)
+#   不動 main、不動 data 分支、不動 Mac / gist;零 Claude token、零秘密(全部公開資料:Wikipedia、Nasdaq 篩選器、Yahoo、SqueezeMetrics)
+#   網站(index.html)從 raw.githubusercontent.com/groupuie/market-flow-dashboard/astra-data/ 讀:
+#     k/<SYM>.json(日K)、regime.json(大盤恐慌 = 強、QQQ/SPY 200 日線)、today.json(最近 10 天的 底/回/頂)、uni.json(名單)
+#   2026-10-12 先只開手動(workflow_dispatch)試跑一次,確認資料與網站都正常後才加排程。
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: astra-data
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: market-day gate (schedule only; manual runs always go)
+        id: day
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, datetime
+          from zoneinfo import ZoneInfo
+          run = "1"
+          if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+              try:
+                  d = json.load(urllib.request.urlopen(urllib.request.Request(
+                      "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=5d&interval=1d",
+                      headers={"User-Agent": "Mozilla/5.0"}), timeout=20))
+                  ts = d["chart"]["result"][0]["timestamp"][-1]
+                  last = datetime.datetime.fromtimestamp(ts, ZoneInfo("America/New_York")).date()
+                  today = datetime.datetime.now(ZoneInfo("America/New_York")).date()
+                  run = "1" if last == today else "0"
+                  print("SPY last bar", last, "ET today", today)
+              except Exception as e:
+                  print("market-day check failed → fail-open:", e)
+          open(os.environ["GITHUB_OUTPUT"], "a").write(f"run={run}\n")
+          print("run =", run)
+          PY
+      - name: build (~1 min)
+        if: steps.day.outputs.run == '1'
+        timeout-minutes: 15
+        run: python3 scripts/astra_data.py --out /tmp/astra
+      - name: publish astra-data branch (force-push one commit)
+        if: steps.day.outputs.run == '1'
+        run: |
+          git config user.name "actions-astra"
+          git config user.email "actions@users.noreply.github.com"
+          ASOF=$(python3 -c "import json;print(json.load(open('/tmp/astra/meta.json'))['asof'])")
+          git checkout -q --orphan astratmp
+          git rm -rf -q --cached . >/dev/null 2>&1 || true
+          find . -maxdepth 1 ! -name . ! -name .git -exec rm -rf {} + 2>/dev/null || true
+          cp -r /tmp/astra/. .
+          git add -A
+          git commit -q -m "astra data ${ASOF} (gen $(date -u +%FT%TZ))"
+          git push -f -q origin astratmp:astra-data
+          echo "published astra-data: asof ${ASOF}, $(ls k | wc -l) symbols"
