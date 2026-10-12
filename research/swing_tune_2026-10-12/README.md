@@ -109,3 +109,13 @@ python3 t8_online_check.py <預期 BUILD> out.json
 python3 s8_2x_sim.py && python3 s8b_detail.py && python3 s8c_realcost.py
 ```
 - 真的槓桿 ETF 日K:gist `kline_{NVDL,MUU,TSLL,TQQQ,UPRO}.json`(放 `/home/claude/work/kl*`,不進 repo);利率 FRED DTB3
+
+## 網站:「短線」併進 🧪Astra(2026-10-12 中午)
+- 使用者 10:39:「量化(Claude)= 我的邏輯;Astra(GPT)= 不設限的新識別法 → 新識別法做在 Astra 上,不要另外做『短線』;Astra 不要污染量化的程式」
+- 使用者選:舊 Astra(A候/A進/A出、v0.3 軌道)收起來(`ASTRA_LEGACY=false`,程式與資料留著);Astra 預設關;量化 抄底「還是要看資金氣候,閾值可以放寬」→ 放寬測試沒過(`research/quant_dip_threshold_2026-10-12/`),維持 80%
+- 📊量化:程式回到 10/11 原版(3dc3cca);只留另一個對話 54dbcdb 補的「接下來」兩個分支,改成看資金氣候
+- 🧪Astra:▲底 △回 ▼頂(規則同 swing_ref_v10);位置改成「等別的圖層都排好,再找第一個沒有字的位置」→ 量化的字一個都不動;狀態列一行 + ⓘ 詳情
+- 驗收 `t13_astra_merge_test.py`(V0 = 3dc3cca 原版、V1 = 線上 918d4a3、新版;14 檔 × 100/250 日):28/28 全過
+  - Astra 關:量化的字(含位置)= V0;量化以外的圖層 = V1(短線關)
+  - Astra 開 vs 關:量化一模一樣、其他圖層一樣、版面一樣;Astra 記號 = V1 的短線記號;不壓字(最近 0.85 格)
+  - 舊 Astra 不畫、不抓 v0.3 檔;「短線」按鈕不見;Astra 預設關、點了會開;JS = Python 14/14;MUU 跟 MU;SQQQ、週K 不標;手機無橫向捲動;頁面錯誤 0

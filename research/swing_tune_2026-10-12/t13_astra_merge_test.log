@@ -1,0 +1,24 @@
+V0 2026-10-11T14:23Z / V1 2026-10-12T03:40Z / 新版 2026-10-12T03:40Z / 預設 {'astra': False, 'legacy': False, 'hasSW': False, 'chipW': False, 'chipA': 'Astra', 'pressed': 'false'}
+  off_quant_same_as_V0: 28/28 OK
+  off_nonquant_same_as_V1: 28/28 OK
+  on_quant_same_as_off: 28/28 OK
+  on_nonAstra_same_as_off: 28/28 OK
+  on_ydomain_same: 28/28 OK
+  marks_same_as_V1_shortline: 28/28 OK
+  no_overlap: 28/28 OK
+  no_legacy: 28/28 OK
+  astra_strip_on: 28/28 OK
+  astra_strip_off_hidden: 28/28 OK
+  qstrip_bar_same_as_V0: 28/28 OK
+  qstrip_pop_same_except_next: 28/28 OK
+  qstrip_pop_identical: 28/28 OK
+  x_category: 28/28 OK
+  記號數: {'MU:100': 15, 'MU:250': 37, 'SNDK:100': 20, 'SNDK:250': 30, 'NVDA:100': 13, 'NVDA:250': 33, 'NBIS:100': 22, 'NBIS:250': 48, 'QQQ:100': 13, 'QQQ:250': 34, 'SPY:100': 20, 'SPY:250': 43, 'AAPL:100': 15, 'AAPL:250': 40, 'TSLA:100': 11, 'TSLA:250': 34, 'AVGO:100': 17, 'AVGO:250': 38, 'META:100': 13, 'META:250': 25, 'PLTR:100': 11, 'PLTR:250': 30, 'BKNG:100': 10, 'BKNG:250': 25, 'MUU:100': 15, 'MUU:250': 37, 'SQQQ:100': 0, 'SQQQ:250': 0}
+  最近距離(格): {'MU:100': None, 'MU:250': 0.85, 'SNDK:100': 0.85, 'SNDK:250': 0.85, 'NVDA:100': 0.85, 'NVDA:250': 0.85, 'NBIS:100': 0.85, 'NBIS:250': 0.85, 'QQQ:100': None, 'QQQ:250': None, 'SPY:100': 0.85, 'SPY:250': 0.85, 'AAPL:100': 0.85, 'AAPL:250': 0.85, 'TSLA:100': 0.85, 'TSLA:250': 0.85, 'AVGO:100': 0.85, 'AVGO:250': 0.85, 'META:100': 0.85, 'META:250': 0.85, 'PLTR:100': None, 'PLTR:250': None, 'BKNG:100': 0.85, 'BKNG:250': 0.85, 'MUU:100': None, 'MUU:250': 0.85, 'SQQQ:100': None, 'SQQQ:250': None}
+  狀態列: {'MU:100': '🧪 Astra\n最近\n△回\n10-06\n(3 天前)\n→ 可以先買一小部分\nⓘ 詳情', 'SNDK:100': '🧪 Astra\n最近\n△回\n10-06\n(3 天前)\n→ 可以先買一小部分\nⓘ 詳情', 'NVDA:100': '🧪 Astra\n最近\n△回\n10-09\n(今天)\n→ 可以先買一小部分\nⓘ 詳情', 'NBIS:100': '🧪 Astra\n最近\n△回\n10-08\n(1 天前)\n→ 可以先買一小部分\nⓘ 詳情', 'QQQ:100': '🧪 Astra\n最近\n▼頂\n10-07\n(2 天前)\n→ 減一小部分,不要全賣\nⓘ 詳情', 'SPY:100': '🧪 Astra\n最近\n▼頂\n10-07\n(2 天前)\n→ 減一小部分,不要全賣\nⓘ 詳情', 'AAPL:100': '🧪 Astra\n最近\n△回\n09-29\n(8 天前)\n→ 可以先買一小部分\nⓘ 詳情', 'TSLA:100': '🧪 Astra\n最近\n▼頂\n10-07\n(2 天前)\n→ 減一小部分,不要全賣\nⓘ 詳情', 'AVGO:100': '🧪 Astra\n最近\n▼頂\n10-08\n(1 天前)\n→ 減一小部分,不要全賣\nⓘ 詳情', 'META:100': '🧪 Astra\n最近\n△回\n10-07\n(2 天前)\n→ 可以先買一小部分\nⓘ 詳情', 'PLTR:100': '🧪 Astra\n最近\n▼頂\n09-28\n(9 天前)\n→ 減一小部分,不要全賣\nⓘ 詳情', 'BKNG:100': '🧪 Astra\n最近\n▲底\n10-08\n(1 天前)\n→ 可以買一份\nⓘ 詳情', 'MUU:100': '🧪 Astra\n最近\n△回\n10-06\n(3 天前)\n→ 可以先買一小部分\n· 看正股 MU\nⓘ 詳情', 'SQQQ:100': '🧪 Astra\n反向 ETF 不適用'}
+  詳情差異: {}
+JS=Python: {'MU': (True, True, True, True, True), 'SNDK': (True, True, True, True, True), 'NVDA': (True, True, True, True, True), 'NBIS': (True, True, True, True, True), 'QQQ': (True, True, True, True, True), 'SPY': (True, True, True, True, True), 'AAPL': (True, True, True, True, True), 'TSLA': (True, True, True, True, True), 'AVGO': (True, True, True, True, True), 'META': (True, True, True, True, True), 'PLTR': (True, True, True, True, True), 'BKNG': (True, True, True, True, True), 'MUU': (True, True, True, True, True), 'SQQQ': (True, True, True, True, True)}
+情境: {"MUU_follows_MU": {"subset": true, "MU": 37, "MUU": 37}, "SQQQ": {"n": 0, "strip": "🧪 Astra\n反向 ETF 不適用"}, "weekly": {"n": 0, "strip": "🧪 Astra\n只標日K(週/月/年K不標)"}, "NBIS_strip": {"shown": true, "bar": "🧪 Astra\n最近\n△回\n10-08\n(1 天前)\n→ 可以先買一小部分\nⓘ 詳情", "pop": "<div><b style=\"color:#38bdf8\">▲底</b> 近 3 天跌過頭(RSI2、布林下緣、九轉買 9),今天收盤站上昨天最高 → 買一份</div><div><b style=\"color:#38bdf8\">△回</b> 長期向上(200 日線上)收到 7 天最低 → 先買一小部分</div><div><b style=\"color:#a78bfa\">▼頂</b> 近 3 天漲過頭,今天收盤跌破昨天最低 → 每個頂減一小部分,不要全賣</div><div><b>②③…</b> 破底中的第幾個買點:照你自己的分批上限(例如最多 3 批),超過就不加</div><div class=\"sphr\"></div><div>這檔近 2 年:底 → 下一個頂 19 次有 12 次賺(63%);頂賣 → 下一個底買回 18 次有 7 次買得比較便宜(39%)</div><div class=\"spmut\">Nasdaq-100(2010–2026):底 62.7%、回 64.8%,隨便一天買 59.5%</div><div class=\"sphr\"></div><div class=\"spmut\">兩倍 ETF 整套模擬(最多 3 批、每個頂減 1/4):最大跌幅只比一直抱少 0–6 點 → 擋不住大跌;想少跌要降低槓桿</div><div class=\"spmut\">只用收盤後的日K;和 📊量化 分開算、互不影響 · 歷史統計,不是投資建議</div>"}, "chip_click": {"before": 0, "after_on": 13, "pressed": "true", "after_off": 0}}
+v0.3 檔請求: []
+手機: {'n_astra': 15, 'overflow': False, 'errors': [], 'strip': '🧪 Astra\n最近\n△回\n10-06\n(3 天前)\n→ 可以先買一小部分\nⓘ 詳情'}
+頁面錯誤 V0: []  V1: []  新: []

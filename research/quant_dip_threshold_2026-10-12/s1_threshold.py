@@ -1,4 +1,4 @@
-# 📊量化 抄底:資金氣候門檻放寬(規則:p5_prereg.md,commit 255b11e,跑之前)
+# 📊量化 抄底:資金氣候門檻放寬(規則:p5_prereg.md,commit 82b5129(rebase 前 255b11e),跑之前)
 import os, sys, json, math, time
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, "..", ".."))

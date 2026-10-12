@@ -1,7 +1,7 @@
 # 📊量化 抄底:資金氣候門檻放寬測試(2026-10-12)
 
 - 使用者 10/12 10:5x:「還是要看資金氣候,但是閾值可以放寬」
-- 預先登記:`p5_prereg.md`(commit 255b11e,跑之前);程式 `s1_threshold.py`;結果 `s1_result.json`、`s1_run.log`
+- 預先登記:`p5_prereg.md`(commit 82b5129;rebase 到另一個對話的 918d4a3 之前是 255b11e,跑之前);程式 `s1_threshold.py`;結果 `s1_result.json`、`s1_run.log`
 - 資金氣候:`scripts/flow_climate.py --dump-series`(本機重跑;2020-06 起和 data/flow_climate.json 逐日相同,0 天不同)
 
 ## 判定:不放寬,維持 80%
