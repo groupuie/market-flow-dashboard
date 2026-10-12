@@ -1,0 +1,32 @@
+{
+ "wait": {
+  "et20": true,
+  "et1559": false,
+  "et1600": true,
+  "et2259": true,
+  "et2300": false,
+  "nextday10": false
+ },
+ "normal": {
+  "shown": true,
+  "txt": "ℹ HUBS 不在追蹤清單 → K線用 🧪 Astra 擴大範圍的 Yahoo 日K(每天收盤後更新一次;沒有盤中K棒、沒有 ⑦ 大單) ＋ 加入追蹤(免 token)",
+  "btn": true
+ },
+ "waiting": {
+  "shown": true,
+  "txt": "⏳ HUBS 10-12 收盤的日K還沒進來:🧪 擴大範圍的日K每天收盤後由 GitHub 自動更新(台灣早上 6:45 開始跑,通常 7 點前好),到了會自己補上;圖上先算到 10-09 ＋ 加入追蹤(免 token)",
+  "btn": true
+ },
+ "late": {
+  "shown": true,
+  "txt": "⚠ HUBS 日K資料未更新 — 最後收盤K棒 2026-10-09,落後最近已收盤日(2026-10-12) 1 個交易日。🧪 擴大範圍的日K每天收盤後由 GitHub 自動更新一次(UTC 22:45 開始跑 = 台灣早上 6:45;排程可能晚 10–60 分鐘)。此檔圖上所有指標/技判/訊號都只反映舊資料。",
+  "btn": false
+ },
+ "back": {
+  "shown": true,
+  "txt": "ℹ HUBS 不在追蹤清單 → K線用 🧪 Astra 擴大範圍的 Yahoo 日K(每天收盤後更新一次;沒有盤中K棒、沒有 ⑦ 大單) ＋ 加入追蹤(免 token)",
+  "btn": true
+ },
+ "errors": [],
+ "ok": true
+}

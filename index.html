@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-12T06:22Z">
+<meta name="build" content="2026-10-12T06:48Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -676,7 +676,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-12T06:22Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-12T06:48Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1347,7 +1347,7 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipQ" title="CTA+技判+資金 整合:K線上直接標 頂K/減碼/出/抄底/買,滑過字看說明" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #8ab4f8;'+(CHIP_Q?'background:rgba(138,180,248,.15);color:#8ab4f8':'color:var(--muted);opacity:.55')+'">📊量化</span>'
-    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="Astra 研究用(預設關):▲底/▼頂 = 近 3 天超賣/超買(RSI2、布林、九轉)+ 今天真的轉向;△回檔 = 長期向上(200 日線上)收到 7 天最低。底/回檔買一份、每個頂減一小部分;大盤恐慌時(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)的 底/回 標金色「強」;QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);破底中的第幾個買點標 ②③;滑過看這檔過去的成績 · 不是投資建議" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
+    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="Astra 研究用(預設關):▲底/▼頂 = 近 3 天超賣/超買(RSI2、布林、九轉)+ 今天真的轉向;△回檔 = 長期向上(200 日線上)收到 7 天最低。底/回檔買一小份(大盤恐慌的「強」買多一點)、每個頂減一小部分;大盤恐慌時(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)的 底/回 標金色「強」;QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);破底中的第幾個買點標 ②③;滑過看這檔過去的成績 · 不是投資建議" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
@@ -3227,6 +3227,17 @@ function dqTradLag(a,b){   // (a,b] 之間的交易日數(跳週末+TJ_HOL;上�
     if(s>b)break;const w=d.getUTCDay();if(w===0||w===6||TJ_HOL[s])continue;n++;}
   return n;
 }
+function axDqWait(lastDone,now){   // 🧪 美東 lastDone 當天 16:00 收盤後、23:00 前 = 擴大範圍日K還在等每天的自動更新(正常,不算落後)
+  try{const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit'}).formatToParts(now||new Date()),o={};
+    p.forEach(x=>{o[x.type]=x.value;}); const d=o.year+'-'+o.month+'-'+o.day, h=+(o.hour==='24'?0:o.hour);
+    return d===lastDone&&h>=16&&h<23;}catch(_){return false;}}
+function axDqLine(el,sym,txt){   // 🧪 擴大範圍日K的一行說明(不在追蹤清單 → 加「加入追蹤」鈕);內容沒變就不重畫(保留按鈕旁的送出狀態)
+  const tk=chipSyms().includes(sym), key=sym+'|'+tk+'|'+txt;
+  if(el._ax!==key||el.style.display==='none'){el._ax=key;
+    el.innerHTML='<div style="padding:3px 9px;margin:2px 0 4px;border:1px dashed rgba(56,189,248,.45);border-radius:8px;font-size:10.5px;color:#9db4e0;line-height:1.6">'+txt
+      +(tk?'':' <button id="chipFreeBtn" style="background:#0f3a24;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:1px 9px;font-size:11px;cursor:pointer">＋ 加入追蹤(免 token)</button> <span id="chipFreeStat"></span>')+'</div>';
+    const fb=document.getElementById('chipFreeBtn'); if(fb)fb.onclick=()=>chipFreeAdd(sym);}
+  el.style.display='';}
 function dqBanner(){
   const el=document.getElementById('dqstrip');if(!el)return;
   try{
@@ -3243,23 +3254,21 @@ function dqBanner(){
       // 停更自癒:每 10 分鐘重抓一次此檔(修復檔推上 gist 後,不必手動重新整理頁面)
       // 2026-10-11:改走 chipKRefresh(10 分鐘一次背景重抓;舊圖先留著,抓失敗不清掉、不閃「載入中」/「尚無日K」)。原本是先刪快取再重抓。
       try{chipKRefresh(sym);}catch(_){}
+      if(src==='yahoo-astra'&&lag===1&&axDqWait(lastDone)){   // 🧪 收盤後到每天自動更新之間:灰字說明(不是壞掉)
+        axDqLine(el,sym,'⏳ <b>'+sym+'</b> '+lastDone.slice(5)+' 收盤的日K還沒進來:🧪 擴大範圍的日K每天收盤後由 GitHub 自動更新(台灣早上 6:45 開始跑,通常 7 點前好),到了會自己補上;圖上先算到 '+String(lastClosed||'—').slice(5));
+        return;}
       const why=(src==='yahoo-lookup'||src==='yahoo-ext')
         ?'每日自動補檔尚未跑到(2026-09-22 起:收盤後約 1 小時內補齊,⚡點播檔同樣每日更新;連續多日未補=Mac 採集器待查)'
-        :src==='yahoo-astra'?'🧪 擴大範圍的日K每天收盤後由 GitHub 自動更新一次(美東約 18:45、台灣約早上 6:45;排程可能晚 10–60 分鐘)'
+        :src==='yahoo-astra'?'🧪 擴大範圍的日K每天收盤後由 GitHub 自動更新一次(UTC 22:45 開始跑 = 台灣早上 6:45;排程可能晚 10–60 分鐘)'
         :'日K更新延遲(富途採集待查)';
       el.innerHTML='<div style="padding:5px 9px;margin:2px 0 4px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.45);border-radius:8px;font-size:11.5px;color:#fca5a5;line-height:1.5"><b>⚠ '+sym+' 日K資料未更新</b> — 最後收盤K棒 <b>'+(lastClosed||'—')+'</b>,落後最近已收盤日('+lastDone+')<b> '+(lag>=99?'很多':lag)+' 個交易日</b>。'+why+'。<b>此檔圖上所有指標/技判/訊號都只反映舊資料。</b></div>';
-      el.style.display='';
+      el._ax=''; el.style.display='';
     }else if(!kt&&typeof DATA!=='undefined'&&DATA&&(DATA.session==='rth'||DATA.session==='pre')&&(src==='yahoo-ext'||src==='yahoo-lookup')){
       el.innerHTML='<div style="padding:3px 9px;margin:2px 0 4px;border:1px dashed rgba(137,135,129,.4);border-radius:8px;font-size:10.5px;color:#898781">ℹ '+sym+' 為 Yahoo 日更來源:盤中不畫當日K棒(最後一根 = '+lastClosed+' 收盤),收盤後自動補上;要盤中即時棒請加入自訂追蹤(富途來源)。</div>';
-      el.style.display='';
+      el._ax=''; el.style.display='';
     }else if(src==='yahoo-astra'){   // 🧪 擴大範圍:K線來自 astra-data(不在追蹤清單)→ 一行說明 + 加入追蹤(同搜尋框的「＋加入追蹤」)
-      const tk=chipSyms().includes(sym), key='ax:'+sym+':'+tk;
-      if(el.dataset.ax!==key||el.style.display==='none'){el.dataset.ax=key;
-        el.innerHTML='<div style="padding:3px 9px;margin:2px 0 4px;border:1px dashed rgba(56,189,248,.45);border-radius:8px;font-size:10.5px;color:#9db4e0;line-height:1.6">ℹ <b>'+sym+'</b> '
-          +(tk?'追蹤清單的日K暫時抓不到 → 先用':'不在追蹤清單 → K線用')+' 🧪 Astra 擴大範圍的 Yahoo 日K(每天收盤後更新一次;沒有盤中K棒、沒有 ⑦ 大單)'
-          +(tk?'':' <button id="chipFreeBtn" style="background:#0f3a24;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:1px 9px;font-size:11px;cursor:pointer">＋ 加入追蹤(免 token)</button> <span id="chipFreeStat"></span>')+'</div>';
-        const fb=document.getElementById('chipFreeBtn'); if(fb)fb.onclick=()=>chipFreeAdd(sym);}
-      el.style.display='';
+      const tk=chipSyms().includes(sym);
+      axDqLine(el,sym,'ℹ <b>'+sym+'</b> '+(tk?'追蹤清單的日K暫時抓不到 → 先用':'不在追蹤清單 → K線用')+' 🧪 Astra 擴大範圍的 Yahoo 日K(每天收盤後更新一次;沒有盤中K棒、沒有 ⑦ 大單)');
     }else el.style.display='none';
   }catch(_){try{el.style.display='none';}catch(__){}}
 }
@@ -5434,7 +5443,7 @@ function astra3Lane(R,x,MB,XW){   // 回傳 {traces, n(視窗內輪數), label};
 //   ▼頂 = 近 3 天出現過超買(RSI2 ≥90、收盤 ≥ 布林上緣、九轉賣 9 任一)+ 今天收盤 < 昨天最低;同邊冷卻 5 根
 //   △回檔 = 收盤 > 200 日均線,而且是 7 天最低收盤(Connors「Double 7s」;第 1 輪 D1 通過);冷卻 5 根
 //   ▲底 △回 的強(2026-10-12 第 6 輪 D18;使用者選「加上強」):前一天 GEX<0、站上 50 日線 <40% 且沒比 5 天前多、HYG/IEF 60 日最低,3 個至少 2 個 = 強(金色)
-//     舊的「QQQ CTA 部位 ≤ 0 = 強、其餘灰」停用:第 6 輪重測 2010–2017 有用、2018 年以後沒有(CTA 空手但不恐慌的底,勝率反而比一般低)
+//     舊的「QQQ CTA 部位 ≤ 0 = 強、其餘灰」停用:第 6 輪重測 2010–2017 有用、2018 年以後沒有(CTA 空手但不恐慌的買點,勝率反而比一般低:58.0% vs 60.9%)
 //   200 日線(第 6 輪 D20,沒通過預先登記 → 只當可以選的提示):QQQ(SPY 那檔用 SPY)跌破/站回 200 日線的日子畫虛線、在線下的日子頂端細條
 //   ▼頂:一律原色(v0.9 曾把上升趨勢中的頂標灰;2026-10-12 使用者看 NBIS 後選回原色 — 第 4 輪 s7:大跌的山有 62–83% 山頂附近的頂在上升趨勢,
 //     標灰會把大部分大頂的警告蓋掉);滑過寫「每個頂減一小部分,不要全賣」
@@ -5561,8 +5570,8 @@ function axD200(S,R){   // 第 6 輪 D20:QQQ(SPY 那檔用 SPY)跌破/站回 200
   const li=A.d.length-1;
   return {nm:nm,cross:cross,runs:runs,cur:{up:A[key][li],c:cl[li],m:ma[li],d:A.d[li]}};
 }
-const AX_D200_NOTE='第 6 輪模擬(可以選的保護):2018–2026 最大跌幅中位數 SPY/QQQ 兩倍 61% → 38%、七巨頭兩倍 86% → 61%;'
-  +'但 2010–2017 的多頭常被甩出去、報酬少一半 → 事先定的規則沒過,不是規則';
+const AX_D200_NOTE='第 6 輪模擬(可以選的保護,不是規則):2018–2026 最大跌幅中位數 SPY/QQQ 兩倍 61% → 38%(最後倍數 8.4 → 6.0)、'
+  +'七巨頭兩倍 86% → 61%(13.9 → 13.6 倍);2010–2017 的多頭常被甩出去、報酬少一半以上 → 事先定的規則沒過';
 function axD200Shapes(d2,domY){   // 虛線(跌破=粉、站回=藍)+ 價格區頂端細條(大盤在 200 日線下的日子)
   const out=[], y1=domY[1];
   d2.runs.forEach(r=>out.push({type:'rect',xref:'x',x0:r.x0,x1:r.x1,yref:'paper',y0:y1-0.007,y1:y1,fillcolor:'rgba(244,114,182,.38)',line:{width:0},layer:'below'}));
@@ -5621,7 +5630,7 @@ function swLayer(R,x,o3,MB,TR){   // 🧪 Astra ▲底 △回 ▼頂 → {traces
     P.r.t.push((st==='s'?AX_STRONG_TXT:'')+'回'+cn(W.rep[j]||1));
     P.r.h.push('<b>'+(st==='s'?'強':'')+'回檔</b> '+W.D[j].slice(5)+' · 長期向上中的回檔'+pre+repL(W.rep[j]||1)+stH(W.D[j])
       +'<br>收盤是 7 天最低,但還在 200 日線('+f2(W.m200[j])+')上面'
-      +'<br>還沒轉向:'+(st==='s'?'大盤恐慌 → 可以先買一份':'可以先買一小部分')+',等「底」出現再加'
+      +'<br>還沒轉向:'+(st==='s'?'大盤恐慌 → 可以先買多一點':'先買一小份')+',等「底」出現再加'
       +'<br>到下一個「頂」賣:這檔近 '+yrs+' 年 '+r2_
       +'<br>'+g.n+'(2010–2026)'+g.b2[0]+'%,隨便一天買 '+g.base[0]+'%;中途被套超過 '+trap+':'+g.b2[2]+'%');});
   W.top.forEach(j=>{const i=di.get(W.D[j]);if(i==null)return;P.t.x.push(x[i]);P.t.y.push(slot(i,1));
@@ -5663,15 +5672,15 @@ function astraSwStrip(sw){   // 🧪 Astra 一行狀態列 + 「ⓘ 詳情」(�
   else{
     const st=L.st==='s';
     const act=L.k==='頂'?'減一小部分,不要全賣':L.rep>=4?'破底中的第 '+L.rep+' 個買點,超過你的分批上限就先不加'
-      :L.k==='回'?(st?'大盤恐慌 → 可以先買一份':'可以先買一小部分'):(st?'大盤恐慌 → 可以買多一點':'可以買一小份');
+      :L.k==='回'?(st?'大盤恐慌 → 可以先買多一點':'先買一小份'):(st?'大盤恐慌 → 可以買多一點':'可以買一小份');
     const lab=(L.k==='頂'?'▼頂':(L.k==='回'?'△':'▲')+(st?'<span style="color:'+AX_GOLD+'">強</span>':'')+(L.k==='回'?'回':'底'))+cn(L.rep);
     bar=head+mut('最近')+' <b style="color:'+(L.k==='頂'?SW_C.top:SW_C.bot)+'">'+lab+'</b> '+L.d.slice(5)+mut(L.ago===0?'(今天)':'('+L.ago+' 天前)')+' → '+act+(I.ul?mut(' · 看正股 '+I.ul):'');
   }
   if(rg)bar+=mut(' · 大盤')+(rg.sc>=2?'<b style="color:'+AX_GOLD+'">恐慌 '+rg.sc+'/3</b>':mut('平靜 '+rg.sc+'/3'));
-  if(d2&&d2.cur&&d2.cur.up===0)bar+=mut(' · ')+'<span style="color:#f9a8d4">'+d2.nm+' 在 200 日線下 → 兩倍最多 1/3</span>';
+  if(d2&&d2.cur&&d2.cur.up===0)bar+=mut(' · ')+'<span style="color:#f9a8d4">'+d2.nm+' 在 200 日線下 → 兩倍最多 1/3(可選)</span>';
   const f2=v=>v==null?'—':(+v).toFixed(2);
-  const pop='<div><b style="color:'+SW_C.bot+'">▲底</b> 近 3 天跌過頭(RSI2、布林下緣、九轉買 9),今天收盤站上昨天最高 → 買一份</div>'
-    +'<div><b style="color:'+SW_C.bot+'">△回</b> 長期向上(200 日線上)收到 7 天最低 → 先買一小部分</div>'
+  const pop='<div><b style="color:'+SW_C.bot+'">▲底</b> 近 3 天跌過頭(RSI2、布林下緣、九轉買 9),今天收盤站上昨天最高 → 買一小份(強:買多一點)</div>'
+    +'<div><b style="color:'+SW_C.bot+'">△回</b> 長期向上(200 日線上)收到 7 天最低 → 先買一小份,等「底」再加(強:買多一點)</div>'
     +'<div><b style="color:'+SW_C.top+'">▼頂</b> 近 3 天漲過頭,今天收盤跌破昨天最低 → 每個頂減一小部分,不要全賣</div>'
     +'<div><b style="color:'+AX_GOLD+'">強</b> 大盤恐慌時的 底/回(下面 3 個至少 2 個)→ 可以買多一點;大盤平靜時只買一小份</div>'
     +'<div><b>②③…</b> 破底中的第幾個買點:照你自己的分批上限(例如最多 3 批),超過就不加</div>'
@@ -5749,7 +5758,7 @@ function renderAxList(){
     h+='</table></div>';
   }
   h+='<div class="note" style="margin-top:6px;font-size:10.5px;line-height:1.6">點代號 → 上面的 K 線圖打開這檔(自動開 🧪 Astra)。規則同 K 線圖的 Astra:'
-    +'<b style="color:'+SW_C.bot+'">▲底</b> 買一份、<b style="color:'+SW_C.bot+'">△回</b> 先買一小部分、<b style="color:'+SW_C.top+'">▼頂</b> 減一小部分;'
+    +'<b style="color:'+SW_C.bot+'">▲底</b> 買一小份、<b style="color:'+SW_C.bot+'">△回</b> 先買一小份、<b style="color:'+SW_C.top+'">▼頂</b> 減一小部分;'
     +'<b style="color:'+AX_GOLD+'">強</b> = 大盤恐慌(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)時的 底/回,可以買多一點。'
     +'<br>資料:Yahoo 還原日K,每天收盤後由 GitHub 自動更新(這份 '+String(AXT.gen||'').replace('T',' ').replace('Z',' UTC')+')· 名單是現在的成分股 · 歷史統計,不是投資建議</div></div>';
   el.innerHTML=h;
