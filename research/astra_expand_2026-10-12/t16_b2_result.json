@@ -1,0 +1,118 @@
+{
+ "want": "2026-10-12T12:34Z",
+ "bytes_same": true,
+ "sha": "76d0b97a4de2117aba6781b82be570a214923f1bae8f24659643a6b2be412316",
+ "desktop": {
+  "build": "2026-10-12T12:34Z",
+  "astra_default": false,
+  "checks": [
+   {
+    "sym": "NVDA",
+    "astra_eq_python": true,
+    "n": 24,
+    "strong": 1,
+    "d200_eq_python": true,
+    "n_d200": 2,
+    "strip": "🧪 Astra 最近 △回 10-09 (今天) → 先買一小份 · 大盤 平靜 0/3 ⓘ 詳情"
+   },
+   {
+    "sym": "QQQ",
+    "astra_eq_python": true,
+    "n": 26,
+    "strong": 1,
+    "d200_eq_python": true,
+    "n_d200": 2,
+    "strip": "🧪 Astra 最近 ▼頂 10-07 (2 天前) → 減一小部分,不要全賣 · 大盤 平靜 0/3 ⓘ 詳情"
+   },
+   {
+    "sym": "MUU",
+    "astra_eq_python": true,
+    "n": 33,
+    "strong": 1,
+    "d200_eq_python": true,
+    "n_d200": 2,
+    "strip": "🧪 Astra 最近 △回 10-06 (3 天前) → 先買一小份 · 看正股 MU · 大盤 平靜 0/3 ⓘ 詳情"
+   }
+  ],
+  "fallback": [
+   {
+    "sym": "HUBS",
+    "ax": 1,
+    "n": 1250,
+    "plot": true,
+    "btn": true,
+    "marks": 11
+   },
+   {
+    "sym": "BRK-B",
+    "ax": 1,
+    "n": 1250,
+    "plot": true,
+    "btn": true,
+    "marks": 10
+   }
+  ],
+  "list_eq_today": true,
+  "list_n": 26,
+  "overflow": false,
+  "errors": [],
+  "http_bad": []
+ },
+ "mobile": {
+  "build": "2026-10-12T12:34Z",
+  "astra_default": false,
+  "checks": [
+   {
+    "sym": "NVDA",
+    "astra_eq_python": true,
+    "n": 24,
+    "strong": 1,
+    "d200_eq_python": true,
+    "n_d200": 2,
+    "strip": "🧪 Astra 最近 △回 10-09 (今天) → 先買一小份 · 大盤 平靜 0/3 ⓘ 詳情"
+   },
+   {
+    "sym": "QQQ",
+    "astra_eq_python": true,
+    "n": 26,
+    "strong": 1,
+    "d200_eq_python": true,
+    "n_d200": 2,
+    "strip": "🧪 Astra 最近 ▼頂 10-07 (2 天前) → 減一小部分,不要全賣 · 大盤 平靜 0/3 ⓘ 詳情"
+   },
+   {
+    "sym": "MUU",
+    "astra_eq_python": true,
+    "n": 33,
+    "strong": 1,
+    "d200_eq_python": true,
+    "n_d200": 2,
+    "strip": "🧪 Astra 最近 △回 10-06 (3 天前) → 先買一小份 · 看正股 MU · 大盤 平靜 0/3 ⓘ 詳情"
+   }
+  ],
+  "fallback": [
+   {
+    "sym": "HUBS",
+    "ax": 1,
+    "n": 1250,
+    "plot": true,
+    "btn": true,
+    "marks": 11
+   },
+   {
+    "sym": "BRK-B",
+    "ax": 1,
+    "n": 1250,
+    "plot": true,
+    "btn": true,
+    "marks": 10
+   }
+  ],
+  "list_eq_today": true,
+  "list_n": 26,
+  "overflow": false,
+  "errors": [],
+  "http_bad": []
+ },
+ "ok": true
+}
