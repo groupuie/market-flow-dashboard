@@ -18,7 +18,7 @@ for s in syms:
     W = AD.sw_series(B); PY_OUT[s] = {"bot": W["bot"], "top": W["top"], "b2": W["b2"], "why": {str(k): v for k, v in W["why"].items()}, "rep": {str(k): v for k, v in W["rep"].items()}}
     res["n_sig"] += len(W["bot"]) + len(W["top"]) + len(W["b2"])
     O, H, L, C = (np.array([b[k] for b in B], float) for k in (1, 2, 3, 4))
-    b0, t0, _ = swing(O, H, L, C); cs = pd.Series(C); b2 = cooldown(((cs > cs.rolling(200).mean()) & (cs <= cs.rolling(7).min())).to_numpy())
+    b0, t0, _ = swing(O, H, L, C); cs = pd.Series(C); m50 = cs.rolling(50).mean(); b2 = cooldown(((cs > cs.rolling(200).mean()) & (cs <= cs.rolling(7).min()) & (cs >= m50) & (m50 >= m50.shift(10))).to_numpy())   # 2026-10-12 18:52 起 △回 加上行條件(s9)
     if list(np.flatnonzero(b0)) != W["bot"] or list(np.flatnonzero(t0)) != W["top"] or list(np.flatnonzero(b2)) != W["b2"]:
         res["a_mismatch"].append({"s": s, "bot": [len(W["bot"]), int(b0.sum())], "top": [len(W["top"]), int(t0.sum())], "b2": [len(W["b2"]), int(b2.sum())]})
 # (b) node:從 index.html 取出 swSeriesJS 原始碼

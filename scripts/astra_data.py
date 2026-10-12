@@ -279,14 +279,22 @@ def sw_series(B):
         wb = uniq(os_(i) + os_(i - 1) + os_(i - 2)); wt = uniq(ob_(i) + ob_(i - 1) + ob_(i - 2))
         if wb and C[i] > H[i - 1] and i - lb > COOL: lb = i; bot.append(i); why[i] = "、".join(wb)
         if wt and C[i] < L[i - 1] and i - lt > COOL: lt = i; top.append(i); why[i] = "、".join(wt)
-    b2, m200 = [], {}; l2 = -10 ** 9
+    m50 = [None] * n
+    for i in range(49, n):
+        s = 0.0
+        for k in range(i - 49, i + 1): s += C[k]
+        m50[i] = s / 50
+    b2, m200, m50d = [], {}, {}; l2 = -10 ** 9
+    # 2026-10-12 18:52 使用者:「只標下降通道的真底,上行通道的回可以標」→ △回 多一個條件:收盤 ≥ 50 日線,而且 50 日線比 10 天前高(上行)
+    #   s9_uptrend_b2.py:這個條件不改勝率(留下 61.5% vs 濾掉 62.1%,後段 ALL),被套少 3.6 點,△回 少四成;純粹讓圖乾淨、下行時只剩 ▲底
     for i in range(199, n):
         s = 0.0
         for k in range(i - 199, i + 1): s += C[k]
         m = s / 200; mn = math.inf
         for k in range(i - 6, i + 1):
             if C[k] < mn: mn = C[k]
-        if C[i] > m and C[i] <= mn and i - l2 > COOL: l2 = i; b2.append(i); m200[i] = m
+        up = m50[i] is not None and m50[i - 10] is not None and C[i] >= m50[i] and m50[i] >= m50[i - 10]
+        if C[i] > m and C[i] <= mn and up and i - l2 > COOL: l2 = i; b2.append(i); m200[i] = m; m50d[i] = m50[i]
     buys = sorted(bot + b2); rep = {}
     for t in buys:
         best = 0
@@ -294,7 +302,7 @@ def sw_series(B):
             if s_ < t - 20 or s_ >= t: continue
             if C[t] < L[s_] and rep[s_] > best: best = rep[s_]
         rep[t] = best + 1
-    return {"n": n, "D": D, "C": C, "H": H, "L": L, "bot": bot, "top": top, "b2": b2, "m200": m200, "why": why, "rep": rep}
+    return {"n": n, "D": D, "C": C, "H": H, "L": L, "bot": bot, "top": top, "b2": b2, "m200": m200, "m50": m50d, "why": why, "rep": rep}
 
 
 # ---------------------------------------------------------------- 大盤背景值(= r6_factors.py F15 / F9 / F6;D20 的 200 日線)
