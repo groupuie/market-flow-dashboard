@@ -1,0 +1,262 @@
+{
+ "want": "2026-10-12T03:51Z",
+ "bytes_same": true,
+ "sha": "725192c53d97ed6c40ec636eb616ba156f92be0073ac41ce24687086f108e72d",
+ "desktop": {
+  "build": "2026-10-12T03:51Z",
+  "default": {
+   "astra": false,
+   "legacy": false,
+   "hasSW": false,
+   "chipW": false,
+   "pressed": "false"
+  },
+  "checks": [
+   {
+    "key": "MU:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 15,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "MU:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 37,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NVDA:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 13,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NVDA:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 33,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "QQQ:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 13,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "QQQ:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 34,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NBIS:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 22,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NBIS:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 48,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "BKNG:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 10,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "BKNG:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 25,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "MUU:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 15,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "MUU:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 37,
+    "strip": true,
+    "legacy": 0
+   }
+  ],
+  "click": [
+   0,
+   13,
+   0
+  ],
+  "overflow": false,
+  "errors": [],
+  "http_bad": []
+ },
+ "mobile": {
+  "build": "2026-10-12T03:51Z",
+  "default": {
+   "astra": false,
+   "legacy": false,
+   "hasSW": false,
+   "chipW": false,
+   "pressed": "false"
+  },
+  "checks": [
+   {
+    "key": "MU:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 15,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "MU:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 37,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NVDA:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 13,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NVDA:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 33,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "QQQ:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 13,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "QQQ:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 34,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NBIS:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 22,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "NBIS:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 48,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "BKNG:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 10,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "BKNG:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 25,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "MUU:100",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 15,
+    "strip": true,
+    "legacy": 0
+   },
+   {
+    "key": "MUU:250",
+    "quant_off_same_as_V0": true,
+    "quant_on_same_as_off": true,
+    "astra_marks_eq_python": true,
+    "n": 37,
+    "strip": true,
+    "legacy": 0
+   }
+  ],
+  "click": [
+   0,
+   13,
+   0
+  ],
+  "overflow": false,
+  "errors": [],
+  "http_bad": []
+ },
+ "ONLINE_OK": true
+}

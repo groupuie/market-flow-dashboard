@@ -13,7 +13,7 @@ from playwright.async_api import async_playwright
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 from swing_ref_v10 import sw_py_v10
-V0, V1, NEW, OUT = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+V0 = V1 = NEW = OUT = None   # 由 __main__ 設定(t14 會 import 這個檔的共用函式)
 SYMS = ["MU", "SNDK", "NVDA", "NBIS", "QQQ", "SPY", "AAPL", "TSLA", "AVGO", "META", "PLTR", "BKNG", "MUU", "SQQQ"]
 WINS = [100, 250]
 
@@ -196,4 +196,6 @@ async def main():
     print("v0.3 檔請求:", res["legacy_requests"]); print("手機:", res["mobile"])
     print("頁面錯誤 V0:", res.get("V0_errors"), " V1:", res.get("V1_errors"), " 新:", res.get("new_errors"))
 
-asyncio.run(main())
+if __name__ == "__main__":
+    V0, V1, NEW, OUT = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+    asyncio.run(main())
