@@ -1,0 +1,2504 @@
+{
+ "old_mobile": {
+  "errors": [],
+  "res": {
+   "off": {
+    "SPY": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SPY",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "ab6488d8a009ccb8"
+    },
+    "QQQ": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "QQQ",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "b495a92b8ec62b45"
+    },
+    "TSM": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "TSM",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "f87cb5d1bda9d4ca"
+    },
+    "NVDA": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "MU",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "3ad4de8dc84be8a6"
+    },
+    "AMD": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AMD",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "d92dbb4d7adbb6c4"
+    },
+    "PLTR": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "PLTR",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "71a3b3c8c794b58a"
+    },
+    "AVGO": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AVGO",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "971a83ee5f32db64"
+    },
+    "META": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "META",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "7d6c5a8c5c6103c9"
+    },
+    "SNDK": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SNDK",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "9963baa872f82273"
+    },
+    "NVDL": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDL",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SLB",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "3785a440c2457531"
+    },
+    "BKNG": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "BKNG",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "589015fe35f5212e"
+    }
+   },
+   "on": {
+    "SPY": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SPY",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 746.5",
+       "x": 1.002,
+       "y": 746.5421
+      }
+     ],
+     "NB": null,
+     "tracesSha": "ab6488d8a009ccb8"
+    },
+    "QQQ": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "QQQ",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 714.2",
+       "x": 1.002,
+       "y": 714.2157
+      }
+     ],
+     "NB": null,
+     "tracesSha": "b495a92b8ec62b45"
+    },
+    "TSM": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "TSM",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 415.1",
+       "x": 1.002,
+       "y": 415.1275
+      }
+     ],
+     "NB": null,
+     "tracesSha": "f87cb5d1bda9d4ca"
+    },
+    "NVDA": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 217.8",
+       "x": 1.002,
+       "y": 217.8236
+      }
+     ],
+     "NB": null,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "MU",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 938.4",
+       "x": 1.002,
+       "y": 938.3911
+      }
+     ],
+     "NB": null,
+     "tracesSha": "3ad4de8dc84be8a6"
+    },
+    "AMD": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AMD",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 519.3",
+       "x": 1.002,
+       "y": 519.311
+      }
+     ],
+     "NB": null,
+     "tracesSha": "d92dbb4d7adbb6c4"
+    },
+    "PLTR": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "PLTR",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 134.8",
+       "x": 1.002,
+       "y": 134.7528
+      }
+     ],
+     "NB": null,
+     "tracesSha": "71a3b3c8c794b58a"
+    },
+    "AVGO": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AVGO",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 362.9",
+       "x": 1.002,
+       "y": 362.8743
+      }
+     ],
+     "NB": null,
+     "tracesSha": "971a83ee5f32db64"
+    },
+    "META": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "META",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 594.4",
+       "x": 1.002,
+       "y": 594.4053
+      }
+     ],
+     "NB": null,
+     "tracesSha": "7d6c5a8c5c6103c9"
+    },
+    "SNDK": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SNDK",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 1642",
+       "x": 1.002,
+       "y": 1642.385
+      }
+     ],
+     "NB": null,
+     "tracesSha": "9963baa872f82273"
+    },
+    "NVDL": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDL",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 37.4",
+       "x": 1.002,
+       "y": 37.4216
+      }
+     ],
+     "NB": null,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SLB",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 47.1",
+       "x": 1.002,
+       "y": 47.1229
+      }
+     ],
+     "NB": null,
+     "tracesSha": "3785a440c2457531"
+    },
+    "BKNG": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "BKNG",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 167.9",
+       "x": 1.002,
+       "y": 167.9361
+      }
+     ],
+     "NB": null,
+     "tracesSha": "589015fe35f5212e"
+    }
+   },
+   "zoom": {
+    "before": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 217.8",
+       "x": 1.002,
+       "y": 217.8236
+      }
+     ],
+     "NB": null
+    },
+    "after": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.868
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 217.8",
+       "x": 1.002,
+       "y": 217.8236
+      }
+     ],
+     "NB": null
+    }
+   }
+  }
+ },
+ "old_desktop": {
+  "errors": [],
+  "res": {
+   "off": {
+    "SPY": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SPY",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "ba61ecf8345de966"
+    },
+    "QQQ": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "QQQ",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "da4183566d3c177e"
+    },
+    "TSM": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "TSM",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "78d4d6f8f40d4eb0"
+    },
+    "NVDA": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "MU",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "20651ba9152bb1bc"
+    },
+    "AMD": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AMD",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "5f9312f5e5721198"
+    },
+    "PLTR": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "PLTR",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "b3ad8ec92e4d5dc4"
+    },
+    "AVGO": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AVGO",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "f6dd28b5a437818e"
+    },
+    "META": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "META",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "acd3f27060b4302d"
+    },
+    "SNDK": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SNDK",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "da88aaf6c53c2f2a"
+    },
+    "NVDL": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDL",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SLB",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "7419a649c9457dd8"
+    },
+    "BKNG": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "BKNG",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "7bd8b7e9425e9ec9"
+    }
+   },
+   "on": {
+    "SPY": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SPY",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 746.5",
+       "x": 1.007,
+       "y": 746.5421
+      }
+     ],
+     "NB": null,
+     "tracesSha": "ba61ecf8345de966"
+    },
+    "QQQ": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "QQQ",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 714.2",
+       "x": 1.007,
+       "y": 714.2157
+      }
+     ],
+     "NB": null,
+     "tracesSha": "da4183566d3c177e"
+    },
+    "TSM": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "TSM",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 415.1",
+       "x": 1.007,
+       "y": 415.1275
+      }
+     ],
+     "NB": null,
+     "tracesSha": "78d4d6f8f40d4eb0"
+    },
+    "NVDA": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 217.8",
+       "x": 1.007,
+       "y": 217.8236
+      }
+     ],
+     "NB": null,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "MU",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 938.4",
+       "x": 1.007,
+       "y": 938.3911
+      }
+     ],
+     "NB": null,
+     "tracesSha": "20651ba9152bb1bc"
+    },
+    "AMD": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AMD",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 519.3",
+       "x": 1.007,
+       "y": 519.311
+      }
+     ],
+     "NB": null,
+     "tracesSha": "5f9312f5e5721198"
+    },
+    "PLTR": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "PLTR",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 134.8",
+       "x": 1.007,
+       "y": 134.7528
+      }
+     ],
+     "NB": null,
+     "tracesSha": "b3ad8ec92e4d5dc4"
+    },
+    "AVGO": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "AVGO",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 362.9",
+       "x": 1.007,
+       "y": 362.8743
+      }
+     ],
+     "NB": null,
+     "tracesSha": "f6dd28b5a437818e"
+    },
+    "META": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "META",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 594.4",
+       "x": 1.007,
+       "y": 594.4053
+      }
+     ],
+     "NB": null,
+     "tracesSha": "acd3f27060b4302d"
+    },
+    "SNDK": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SNDK",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 1642",
+       "x": 1.007,
+       "y": 1642.385
+      }
+     ],
+     "NB": null,
+     "tracesSha": "da88aaf6c53c2f2a"
+    },
+    "NVDL": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDL",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 37.4",
+       "x": 1.007,
+       "y": 37.4216
+      }
+     ],
+     "NB": null,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "SLB",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 47.1",
+       "x": 1.007,
+       "y": 47.1229
+      }
+     ],
+     "NB": null,
+     "tracesSha": "7419a649c9457dd8"
+    },
+    "BKNG": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "BKNG",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 167.9",
+       "x": 1.007,
+       "y": 167.9361
+      }
+     ],
+     "NB": null,
+     "tracesSha": "7bd8b7e9425e9ec9"
+    }
+   },
+   "zoom": {
+    "before": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 217.8",
+       "x": 1.007,
+       "y": 217.8236
+      }
+     ],
+     "NB": null
+    },
+    "after": {
+     "build": "2026-10-12T02:45Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      0.845
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [
+      {
+       "text": "POC 217.8",
+       "x": 1.007,
+       "y": 217.8236
+      }
+     ],
+     "NB": null
+    }
+   }
+  }
+ },
+ "new_desktop": {
+  "errors": [],
+  "res": {
+   "off": {
+    "SPY": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SPY",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "ba61ecf8345de966"
+    },
+    "QQQ": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "QQQ",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "da4183566d3c177e"
+    },
+    "TSM": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "TSM",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "78d4d6f8f40d4eb0"
+    },
+    "NVDA": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "MU",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "20651ba9152bb1bc"
+    },
+    "AMD": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AMD",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "5f9312f5e5721198"
+    },
+    "PLTR": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "PLTR",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "b3ad8ec92e4d5dc4"
+    },
+    "AVGO": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AVGO",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "f6dd28b5a437818e"
+    },
+    "META": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "META",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "acd3f27060b4302d"
+    },
+    "SNDK": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SNDK",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "da88aaf6c53c2f2a"
+    },
+    "NVDL": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDL",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SLB",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "7419a649c9457dd8"
+    },
+    "BKNG": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "BKNG",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "7bd8b7e9425e9ec9"
+    }
+   },
+   "on": {
+    "SPY": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SPY",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.8776
+     },
+     "poc": [
+      {
+       "text": "POC 746.2",
+       "x": 0.736,
+       "y": 746.218
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "ba61ecf8345de966"
+    },
+    "QQQ": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "QQQ",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 1.3451
+     },
+     "poc": [
+      {
+       "text": "POC 716.2",
+       "x": 0.736,
+       "y": 716.241
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "da4183566d3c177e"
+    },
+    "TSM": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "TSM",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 1.5203
+     },
+     "poc": [
+      {
+       "text": "POC 417.5",
+       "x": 0.736,
+       "y": 417.5029
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "78d4d6f8f40d4eb0"
+    },
+    "NVDA": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.7064
+     },
+     "poc": [
+      {
+       "text": "POC 210.1",
+       "x": 0.736,
+       "y": 210.0573
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "MU",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 7.916
+     },
+     "poc": [
+      {
+       "text": "POC 926.5",
+       "x": 0.736,
+       "y": 926.4721
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "20651ba9152bb1bc"
+    },
+    "AMD": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AMD",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 3.4827
+     },
+     "poc": [
+      {
+       "text": "POC 510.1",
+       "x": 0.736,
+       "y": 510.1096
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "5f9312f5e5721198"
+    },
+    "PLTR": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "PLTR",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 1.3556
+     },
+     "poc": [
+      {
+       "text": "POC 130.2",
+       "x": 0.736,
+       "y": 130.2469
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "b3ad8ec92e4d5dc4"
+    },
+    "AVGO": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AVGO",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 66,
+      "cols": {
+       "rgba(196,204,216,.20)": 65,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 2.0767
+     },
+     "poc": [
+      {
+       "text": "POC 364.7",
+       "x": 0.736,
+       "y": 364.7033
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "f6dd28b5a437818e"
+    },
+    "META": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "META",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 3.359
+     },
+     "poc": [
+      {
+       "text": "POC 598.5",
+       "x": 0.736,
+       "y": 598.5087
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "acd3f27060b4302d"
+    },
+    "SNDK": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SNDK",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 17.8128
+     },
+     "poc": [
+      {
+       "text": "POC 1575",
+       "x": 0.736,
+       "y": 1575.081
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "da88aaf6c53c2f2a"
+    },
+    "NVDL": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDL",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.1991
+     },
+     "poc": [
+      {
+       "text": "POC 36.7",
+       "x": 0.736,
+       "y": 36.7259
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SLB",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.2074
+     },
+     "poc": [
+      {
+       "text": "POC 47.1",
+       "x": 0.736,
+       "y": 47.0699
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "7419a649c9457dd8"
+    },
+    "BKNG": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "BKNG",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.8852
+     },
+     "poc": [
+      {
+       "text": "POC 167.0",
+       "x": 0.736,
+       "y": 167.0056
+      }
+     ],
+     "NB": 67,
+     "tracesSha": "7bd8b7e9425e9ec9"
+    }
+   },
+   "zoom": {
+    "before": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.7064
+     },
+     "poc": [
+      {
+       "text": "POC 210.1",
+       "x": 0.736,
+       "y": 210.0573
+      }
+     ],
+     "NB": 67
+    },
+    "after": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 67,
+      "cols": {
+       "rgba(196,204,216,.20)": 66,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.26,
+      "minH": 0.4775
+     },
+     "poc": [
+      {
+       "text": "POC 218.7",
+       "x": 0.736,
+       "y": 218.6832
+      }
+     ],
+     "NB": 67
+    }
+   }
+  }
+ },
+ "new_mobile": {
+  "errors": [],
+  "res": {
+   "off": {
+    "SPY": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SPY",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "ab6488d8a009ccb8"
+    },
+    "QQQ": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "QQQ",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "b495a92b8ec62b45"
+    },
+    "TSM": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "TSM",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "f87cb5d1bda9d4ca"
+    },
+    "NVDA": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "MU",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "3ad4de8dc84be8a6"
+    },
+    "AMD": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AMD",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "d92dbb4d7adbb6c4"
+    },
+    "PLTR": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "PLTR",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "71a3b3c8c794b58a"
+    },
+    "AVGO": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AVGO",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "971a83ee5f32db64"
+    },
+    "META": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "META",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "7d6c5a8c5c6103c9"
+    },
+    "SNDK": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SNDK",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "9963baa872f82273"
+    },
+    "NVDL": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDL",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SLB",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "3785a440c2457531"
+    },
+    "BKNG": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "BKNG",
+     "vbpOn": false,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 0,
+      "cols": {},
+      "maxW": 0,
+      "minH": 1000000000
+     },
+     "poc": [],
+     "NB": null,
+     "tracesSha": "589015fe35f5212e"
+    }
+   },
+   "on": {
+    "SPY": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SPY",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 1.1791
+     },
+     "poc": [
+      {
+       "text": "POC 746.9",
+       "x": 0.716,
+       "y": 746.9024
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "ab6488d8a009ccb8"
+    },
+    "QQQ": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "QQQ",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 1.8072
+     },
+     "poc": [
+      {
+       "text": "POC 715.7",
+       "x": 0.716,
+       "y": 715.6715
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "b495a92b8ec62b45"
+    },
+    "TSM": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "TSM",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 2.0426
+     },
+     "poc": [
+      {
+       "text": "POC 418.2",
+       "x": 0.716,
+       "y": 418.2482
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "f87cb5d1bda9d4ca"
+    },
+    "NVDA": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 0.9491
+     },
+     "poc": [
+      {
+       "text": "POC 210.2",
+       "x": 0.716,
+       "y": 210.1517
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "9c45d1fc6235f1fa"
+    },
+    "MU": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "MU",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 10.6358
+     },
+     "poc": [
+      {
+       "text": "POC 929.8",
+       "x": 0.716,
+       "y": 929.8233
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "3ad4de8dc84be8a6"
+    },
+    "AMD": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AMD",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 4.6793
+     },
+     "poc": [
+      {
+       "text": "POC 510.3",
+       "x": 0.716,
+       "y": 510.3424
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "d92dbb4d7adbb6c4"
+    },
+    "PLTR": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "PLTR",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 1.8214
+     },
+     "poc": [
+      {
+       "text": "POC 129.6",
+       "x": 0.716,
+       "y": 129.6428
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "71a3b3c8c794b58a"
+    },
+    "AVGO": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "AVGO",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 50,
+      "cols": {
+       "rgba(196,204,216,.20)": 49,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 2.7903
+     },
+     "poc": [
+      {
+       "text": "POC 364.7",
+       "x": 0.716,
+       "y": 364.657
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "971a83ee5f32db64"
+    },
+    "META": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "META",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 4.5131
+     },
+     "poc": [
+      {
+       "text": "POC 606.8",
+       "x": 0.716,
+       "y": 606.8164
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "7d6c5a8c5c6103c9"
+    },
+    "SNDK": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SNDK",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 23.9329
+     },
+     "poc": [
+      {
+       "text": "POC 1729",
+       "x": 0.716,
+       "y": 1729.4743
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "9963baa872f82273"
+    },
+    "NVDL": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDL",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 0.2675
+     },
+     "poc": [
+      {
+       "text": "POC 36.7",
+       "x": 0.716,
+       "y": 36.6859
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "2247177f0c1a1517"
+    },
+    "SLB": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "SLB",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 0.2786
+     },
+     "poc": [
+      {
+       "text": "POC 47.0",
+       "x": 0.716,
+       "y": 46.9913
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "3785a440c2457531"
+    },
+    "BKNG": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "BKNG",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 1.1893
+     },
+     "poc": [
+      {
+       "text": "POC 167.2",
+       "x": 0.716,
+       "y": 167.2423
+      }
+     ],
+     "NB": 51,
+     "tracesSha": "589015fe35f5212e"
+    }
+   },
+   "zoom": {
+    "before": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 0.9491
+     },
+     "poc": [
+      {
+       "text": "POC 210.2",
+       "x": 0.716,
+       "y": 210.1517
+      }
+     ],
+     "NB": 51
+    },
+    "after": {
+     "build": "2026-10-12T03:40Z",
+     "sym": "NVDA",
+     "vbpOn": true,
+     "xdom": [
+      0,
+      1
+     ],
+     "vbp": {
+      "n": 51,
+      "cols": {
+       "rgba(196,204,216,.20)": 50,
+       "rgba(245,158,11,.72)": 1
+      },
+      "maxW": 0.28,
+      "minH": 0.6415
+     },
+     "poc": [
+      {
+       "text": "POC 218.8",
+       "x": 0.716,
+       "y": 218.7789
+      }
+     ],
+     "NB": 51
+    }
+   }
+  }
+ }
+}

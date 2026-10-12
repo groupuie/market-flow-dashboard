@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-12T02:45Z">
+<meta name="build" content="2026-10-12T03:40Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -673,7 +673,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-12T02:45Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-12T03:40Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -904,7 +904,7 @@ function fmtShares(n){ if(n==null||isNaN(n))return '—';
   return Math.round(n)+'股'; }
 // 佔位訊息:先 purge 既有 Plotly 實例(否則直接覆寫 innerHTML 會殘留 Plotly 狀態,換股後 Plotly.react 失效→卡「載入中」)
 function chartMsg(el,msg,pad){ if(!el)return;
-  try{ if(window.Plotly&&(el._fullLayout||el.data))Plotly.purge(el); }catch(e){}
+  try{ if(window.Plotly&&(el._fullLayout||el.data)){Plotly.purge(el);el._vbpBind=0;el._tdzBind=0;} }catch(e){}   // 2026-10-12:purge 會清掉 plotly_relayout 監聽 → 旗標歸零讓下次渲染重掛(原本換股經過「載入中」後,VbP 縮放重分箱與九轉縮放就失效)
   el.innerHTML='<div class="miss" style="padding:'+(pad||24)+'px">'+msg+'</div>'; }
 // 訊息→圖 轉場前清掉佔位訊息:否則訊息 div 殘留在圖下方,溢出固定高容器、疊到下一個區塊的文字上(手機曾見)
 function freshPlot(id){ const e=document.getElementById(id);
@@ -1314,7 +1314,7 @@ function buildChipIdx(){
   el.innerHTML='<span style="color:var(--muted)">K線疊加</span> '+['SPY','QQQ'].map(function(k){var c=cols[k];
     return '<span class="cidxchip" data-k="'+k+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+c+';'+(CHIP_IDX[k]?('background:'+c+'26;color:'+c):'color:var(--muted);opacity:.55')+'">'+k+'</span>';}).join(' ')
     +' <span class="cidxchip2" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #4ade80;'+(CHIP_TL?'background:rgba(74,222,128,.15);color:#4ade80':'color:var(--muted);opacity:.55')+'">趨勢線</span>'
-    +' <span class="cidxchip3" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #eab308;'+(CHIP_VBP?'background:rgba(234,179,8,.15);color:#eab308':'color:var(--muted);opacity:.55')+'">VbP</span>'
+    +' <span class="cidxchip3" title="量價分佈:右側半透明灰柱 = 這段期間每個價位的成交量(畫在K棒下一層);橘色那一格 = 成交量最多的價位(POC)" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #eab308;'+(CHIP_VBP?'background:rgba(234,179,8,.15);color:#eab308':'color:var(--muted);opacity:.55')+'">VbP</span>'
     +' <span class="cidxchip6" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #a78bfa;'+(CHIP_PAT?'background:rgba(167,139,250,.15);color:#a78bfa':'color:var(--muted);opacity:.55')+'">型態</span>'
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
@@ -1366,7 +1366,7 @@ const CPAL={
   poolUp2:'rgba(74,222,128,.82)', poolDn2:'rgba(248,113,113,.78)',                                  // ⑦當日柱(獨立軌,加深)
   grid:'#1c2027', mut:'#8792a6', ttl:'#e6e9ef', edge:'#0d0d0d', bgc:'rgba(13,13,13,.68)',
   sup:'74,222,128', res:'248,113,113',                                   // 趨勢線 支撐/壓力(rgb 三元組)
-  vbpUp:'rgba(74,222,128,.32)', vbpDn:'rgba(248,113,113,.30)',           // VbP 量價分佈
+  vbp:'rgba(196,204,216,.20)', vbpPoc:'rgba(245,158,11,.72)',           // VbP 量價分佈(半透明灰 / POC 琥珀;2026-10-12 TrendSpider 式)
   arc:'rgba(226,232,240,.62)', edge:'rgba(226,232,240,.66)',            // 型態:頭肩圓弧 / 三角邊線(TrendSpider 式淺色細線)
   halo:'rgba(248,113,113,.16)', haloLine:'rgba(248,113,113,.55)',       // 訊號共振圈(觸線+訊號同日)
   fib:'rgba(250,204,21,.55)', vwapHi:'#38bdf8', vwapLo:'#f0abfc',       // Fib / 錨定VWAP
@@ -2052,24 +2052,28 @@ function candlePatterns(R){
   }
   return out;
 }
-// ===== VbP 成交量分佈(1D):可視區間量價分箱,箱數=clamp(round(N/5),20,50);收盤落箱、依漲跌拆紅綠 =====
-function vbpBins(R,i0,i1){
+// ===== VbP 成交量分佈(2026-10-12 改版,使用者:「做成跟 TrendSpider 一樣」)=====
+//   可視區間分成 NB 個價格箱(箱數由價格窗的像素高決定,每箱約 4–5px → 細橫柱);
+//   每根K的量**平均攤到它最高到最低價蓋住的箱**(不是只落在收盤那一箱),分佈才會像 TrendSpider 那樣連續。
+function vbpBins(R,i0,i1,NB){
   var n=i1-i0+1; if(n<5)return null;
-  var NB=Math.max(20,Math.min(50,Math.round(n/5)));
+  NB=Math.max(24,Math.min(120,NB||60));
   var lo=Infinity,hi=-Infinity;
   for(var k=i0;k<=i1;k++){if(R[k].l<lo)lo=R[k].l; if(R[k].h>hi)hi=R[k].h;}
   if(!(hi>lo))return null;
-  var bs=(hi-lo)/NB, up=new Array(NB).fill(0), dn=new Array(NB).fill(0), ctr=[];
+  var bs=(hi-lo)/NB, v=new Array(NB).fill(0), ctr=[];
   for(var b=0;b<NB;b++)ctr.push(+(lo+(b+0.5)*bs).toFixed(4));
   for(k=i0;k<=i1;k++){
-    var bi=Math.max(0,Math.min(NB-1,Math.floor((R[k].c-lo)/bs)));
-    if(R[k].c>=R[k].o)up[bi]+=R[k].v; else dn[bi]+=R[k].v;
+    var L=R[k].l,H=R[k].h,V=+R[k].v||0; if(!(V>0))continue;
+    if(!(H>L)){v[Math.max(0,Math.min(NB-1,Math.floor((L-lo)/bs)))]+=V;continue;}   // 一字線:全給那一箱
+    var b0=Math.max(0,Math.min(NB-1,Math.floor((L-lo)/bs))), b1=Math.max(0,Math.min(NB-1,Math.floor((H-lo)/bs)));
+    for(b=b0;b<=b1;b++){var a=Math.max(L,lo+b*bs), z=Math.min(H,lo+(b+1)*bs); if(z>a)v[b]+=V*(z-a)/(H-L);}   // 依蓋住的價格比例分攤
   }
-  var mx=1; for(b=0;b<NB;b++)if(up[b]+dn[b]>mx)mx=up[b]+dn[b];
-  return {ctr:ctr,up:up,dn:dn,max:mx,bw:bs};
+  var mx=1,poc=0; for(b=0;b<NB;b++)if(v[b]>mx){mx=v[b];poc=b;}
+  return {ctr:ctr,v:v,max:mx,bw:bs,poc:poc};
 }
-// VbP → paper-x shapes(0 貼右緣、柱向左、佔寬≤15%、layer below 不遮K棒;不用 xaxis2 —
-// overlaying 軸 + 事後 restyle/relayout 會讓 Plotly 2.35 把主類別軸重判成 date,已實測毒性,勿改回)
+// VbP → paper-x shapes(柱貼右緣 x=1、向左長、最寬佔繪圖區約 1/4;layer below = 畫在K棒下一層,不遮K棒;
+// 不用 xaxis2 — overlaying 軸 + 事後 restyle/relayout 會讓 Plotly 2.35 把主類別軸重判成 date,已實測毒性,勿改回)
 // ===== P5A Fibonacci 自動回撤:取可視區間最大 swing(ZigZag 極值,退化時用視窗高低)=====
 function fibLevels(R,piv){
   var N=R.length; if(N<20)return null;
@@ -2237,32 +2241,24 @@ function indStoch(R,n,k1,d1){
   return {k:K.map(function(v){return v==null?null:+v.toFixed(2);}),
           d:D.map(function(v){return v==null?null:+v.toFixed(2);})};
 }
-// VbP 繪製(2026-08-01 改版):**獨立右軌**,不再壓在K棒上。
-//   K線 x 軸 domain 收到 [0, VBP_X0-0.010],VbP 佔 [VBP_X0, 1] → 兩圖零重疊(TrendSpider 式量價側欄)。
-//   柱長仍為「該價位量 ÷ 區間最大量」的等比,最大量那一格(POC)加亮邊+標籤 → 一眼看出主力成本區。
-// 右軌起點(paper x)與柱最大寬;手機螢幕窄 → 右軌收窄,K線區才夠看
-function vbpGeom(){return ((window.innerWidth||1024)<680)?{x0:0.878,w:0.114}:{x0:0.855,w:0.142};}
+// VbP 繪製(2026-10-12 改版,使用者:「不壓縮K線圖;右側成交量圖做成半透明灰色、比較細、在K線圖的下一層;
+//   一眼看出成交量最多的價位」—— 仿 TrendSpider):
+//   K線 x 軸維持全寬;柱從繪圖區右緣(paper x=1)向左長,最長的那箱(POC)佔寬約 1/4,其餘等比;
+//   全部半透明灰、layer below(K棒畫在上面);只有 POC 那一箱換成琥珀色,再加一個價位小標籤。
+function vbpGeom(){return ((window.innerWidth||1024)<680)?{w:0.28,gap:0.10}:{w:0.26,gap:0.12};}   // w=最長柱佔繪圖區寬;gap=箱與箱的留白比例
+function vbpRows(el){   // 箱數:價格窗像素高 ÷ 約 4.5px(桌機 ~80、手機 ~50)→ 柱細、分佈連續
+  var MB=(window.innerWidth||1024)<680, h=((el&&el.clientHeight)||(MB?600:660))*(MB?0.382:0.54);
+  return Math.max(24,Math.min(120,Math.round(h/4.5)));
+}
 function vbpShapes(vb){
-  var out=[], G=vbpGeom(), VBP_X0=G.x0, VBP_W=G.w;
-  out.push({type:'rect',xref:'paper',yref:'paper',x0:VBP_X0+VBP_W+0.003,x1:VBP_X0+VBP_W+0.005,y0:0.46,y1:1,
-    fillcolor:'rgba(148,163,184,.28)',line:{width:0},layer:'below'});   // 分隔細線(置於柱底外側)
-  var poc=-1,pv=-1;
-  for(var b0=0;b0<vb.ctr.length;b0++){var t0=vb.up[b0]+vb.dn[b0]; if(t0>pv){pv=t0;poc=b0;}}
+  var out=[], G=vbpGeom(), W=G.w, hh=vb.bw*(1-G.gap)/2;
   for(var b=0;b<vb.ctr.length;b++){
-    var g=VBP_W*vb.up[b]/vb.max, r=VBP_W*vb.dn[b]/vb.max;
-    if(g<=0&&r<=0)continue;
-    var y0=vb.ctr[b]-vb.bw*0.46, y1=vb.ctr[b]+vb.bw*0.46;
-    // 柱由「右軌最右緣」向左長,朝 K 線圖方向(2026-08-01 使用者指定;同 TrendSpider 量價側欄)
-    var X1=VBP_X0+VBP_W;                     // 柱底(靠右)
-    var isP=(b===poc);
-    if(g>0)out.push({type:'rect',xref:'paper',yref:'y',x0:X1-g,x1:X1,y0:y0,y1:y1,
-      fillcolor:isP?'rgba(74,222,128,.62)':CPAL.vbpUp,line:{width:0},layer:'below'});
-    if(r>0)out.push({type:'rect',xref:'paper',yref:'y',x0:X1-g-r,x1:X1-g,y0:y0,y1:y1,
-      fillcolor:isP?'rgba(248,113,113,.58)':CPAL.vbpDn,line:{width:0},layer:'below'});
-    if(isP)out.push({type:'rect',xref:'paper',yref:'y',x0:X1-g-r,x1:X1,y0:y0,y1:y1,
-      fillcolor:'rgba(0,0,0,0)',line:{width:1.1,color:CPAL.volHot},layer:'below'});   // POC 加亮框
+    var L=W*vb.v[b]/vb.max; if(!(L>0))continue;
+    var isP=(b===vb.poc);
+    out.push({type:'rect',xref:'paper',yref:'y',x0:1-L,x1:1,y0:vb.ctr[b]-hh,y1:vb.ctr[b]+hh,
+      fillcolor:isP?CPAL.vbpPoc:CPAL.vbp,line:{width:0},layer:'below'});
   }
-  out._poc=(poc>=0)?vb.ctr[poc]:null;
+  out._poc=vb.ctr[vb.poc]; out._pocX=1-W;   // POC 價位、POC 柱尖端的 paper x(標籤放尖端左側)
   return out;
 }
 // ===== 趨勢線上下微調(可任意移動疊加線;柱狀圖與現金池累積線固定不動)=====
@@ -3969,10 +3965,11 @@ function renderCockpit(){
   if(CHIP_TL&&R.length>=50){try{_tlRes=autoTrendlines(R);
     var _tlT=tlTraces(R,x,null,_tlRes); _chLv=_tlT._lv||null;
     _tlT.forEach(t=>traces.push(t));}catch(e){}}
-  // VbP 需在 ann 之前算好:XR/XW(右緣標註錨點)與 POC 標籤都依賴它
-  var _vb=null,_vbShapes=[];
+  // VbP 需在 ann 之前算好:POC 標籤依賴它(2026-10-12 起不再壓縮K線區,XR/XW 固定)
+  var _vb=null,_vbShapes=[],_vbNB=0,_vbPocAnn=-1;
   if(CHIP_VBP){try{
-    _vb=vbpBins(R,0,R.length-1);
+    _vbNB=vbpRows(el);
+    _vb=vbpBins(R,0,R.length-1,_vbNB);
     if(_vb)_vbShapes=vbpShapes(_vb);
   }catch(e){_vb=null;_vbShapes=[];}}
   const li=R.length-1;
@@ -3981,9 +3978,8 @@ function renderCockpit(){
   const _ctaVals=CHIP_CTA?[['短',R[li].t50,CPAL.brake1],['中',R[li].t100,CPAL.brake2],['長',R[li].t200,CPAL.brake3],['動',R[li].t63,CPAL.brake4lab]]
     .filter(p=>p[1]!=null&&isFinite(p[1]))
     .map(p=>'<span style="color:'+p[2]+'">'+p[0]+_fvC(p[1])+'</span>').join(' '):'';
-  const VBG=vbpGeom();
-  const XR=_vb?(VBG.x0-0.016):0.998;   // 右緣標註錨點:VbP 開啟時退到右軌左側,避免壓字
-  const XW=_vb?(VBG.x0-0.010):1;       // 橫跨全寬的 paper 色帶同步收邊
+  const XR=0.998;   // 右緣標註錨點(2026-10-12:VbP 改畫在K棒下一層、不再佔右軌 → 不必退讓)
+  const XW=1;       // 橫跨全寬的 paper 色帶
   const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:#2dd4bf">加</span> <span style="color:'+QGRAY+'">熱=過熱提醒</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
   const SWLEG=(_sw&&_sw.n)?'<span style="color:'+SW_C.bot+'">▲底 △回檔</span> <span style="color:'+SW_C.top+'">▼頂</span><span style="color:'+MUT2+'">=短線(灰=較弱)</span>':'';   // 📍短線圖例(放標題列前段,桌機長標題被切也看得到)
   const ann=[
@@ -4014,12 +4010,10 @@ function renderCockpit(){
       ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y',y:y,yanchor:'middle',showarrow:false,
         text:p[0]+' '+(p[1]>=1000?p[1].toFixed(0):p[1].toFixed(1)),font:{size:8.5,color:p[2]},bgcolor:CPAL.bgc});});})();
   // 現在檔位:score 線尾直接標注(綠=前進檔、紅=倒車檔)
-  if(_vb&&_vbShapes.length){   // VbP 右軌:欄頭(桌機才放,手機空間不足會與圖例撞字)+ POC(量最大價位)標籤
-    if(!MB)ann.push({xref:'paper',yref:'paper',x:VBG.x0,y:1.004,xanchor:'left',yanchor:'bottom',showarrow:false,
-      font:{size:8,color:MUT2},text:'量價 VbP'});
-    if(_vbShapes._poc!=null)ann.push({xref:'paper',x:VBG.x0+VBG.w+0.010,xanchor:'left',yref:'y',y:_vbShapes._poc,
+  if(_vb&&_vbShapes.length){   // VbP:只放 POC(量最大價位)標籤,在 POC 柱尖端左側;不另放欄頭(TrendSpider 也沒有;標題列已夠長)
+    if(_vbShapes._poc!=null){_vbPocAnn=ann.length;ann.push({xref:'paper',x:_vbShapes._pocX-0.004,xanchor:'right',yref:'y',y:_vbShapes._poc,
       yanchor:'middle',showarrow:false,text:'POC '+_vbShapes._poc.toFixed(_vbShapes._poc>=1000?0:1),
-      font:{size:8,color:CPAL.volHot},bgcolor:CPAL.bgc});
+      font:{size:8,color:CPAL.volHot},bgcolor:CPAL.bgc});}
   }
   if(R[li].sc!=null)ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y9',y:Math.max(-95,Math.min(95,R[li].sc)),yanchor:'middle',showarrow:false,
     text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?CPAL.up:R[li].sc<0?CPAL.dn:CPAL.sc},bgcolor:CPAL.bgc});
@@ -4130,7 +4124,7 @@ function renderCockpit(){
       marker:{size:csz,color:ccol,line:{width:1.4,color:cline}},
       hovertemplate:'%{customdata}<extra></extra>'});
   }catch(e){}}
-  // VbP 成交量分佈(1D):右緣紅綠橫柱(paper-x shapes;0 貼右緣、柱向左、佔寬≤15%、layer below)
+  // VbP 成交量分佈:見 vbpBins / vbpShapes(2026-10-12 起:半透明灰橫柱貼右緣、畫在K棒下一層,K線區不壓縮)
   // ===== P4 渲染(4D;2026-08-01 視覺精修):頭肩=圓弧、三角楔形=延伸邊線、confirmed 實線/forming 虛線 =====
   // 視覺語彙對標 TrendSpider:頭肩三個 hump 各畫一條淺色圓弧;三角兩條邊線延伸至右緣
   if(CHIP_PAT&&R.length>=50){try{
@@ -4358,6 +4352,9 @@ function renderCockpit(){
               :{y:[0.46+_a3g,1.0],y7:[0.375,0.445],y8:[0.25,0.36],y9:[0.165,0.235],y10:[0,0.15]};
   if(_a3&&_a3.label)ann.push({xref:'x',x:_a3.label.x,xanchor:'center',yref:'paper',y:(DOM.y7[1]+DOM.y[0])/2,yanchor:'middle',showarrow:false,
     text:_a3.label.text,font:{size:MB?7.5:8,color:'rgba(249,168,212,.85)'}});   // 軌道標籤:放在最長的空白段中間(不蓋事件)
+  // 非 VbP 的 shapes(RVPOS 紅帶、現貨標記、資金氣候色帶)先集中成一包:VbP 縮放重分箱時原封不動接回(2026-10-12 修:原本只接回前 2 個)
+  const _baseShapes=(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
+            {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_spot).concat((function(){try{return fcBandShapes(DOM.y,XW);}catch(_){return [];}})());
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     ...(MB?{boxgap:0}:{}),   // 燭身加寬(見上方 K 棒註解;本圖無其他 box 族 trace,無副作用)
     margin:{l:MB?6:10,r:MB?8:50,t:MB?58:34,b:MB?26:30},   // MB t58:三行標頭(標題/圖例/CTA數值列,2026-08-08)
@@ -4367,7 +4364,7 @@ function renderCockpit(){
       // 顯式 [-0.5,n-0.5] = 邊到邊(同復位後視圖、同富途),也再避開 autorange 地雷族。
       range:[-0.5,x.length-0.5+(MB?0.8:0)],   // 手機 boxgap=0 滿槽寬,最右K棒貼繪圖區邊會被切半(2026-08-08 使用者回報)→ 右側留 0.8 槽
 
-      domain:[0,XW]},   // VbP 開啟 → K線退左讓出右軌(兩圖不重疊)
+      domain:[0,1]},   // 2026-10-12:VbP 畫在K棒下一層,K線區恆全寬(不再壓縮)
     yaxis:Object.assign({domain:DOM.y,gridcolor:GRID2,tickfont:{size:MB?8:9,color:MUT2},side:'right'},TLI),
     yaxis7:Object.assign({domain:DOM.y7,gridcolor:GRID2,tickfont:{size:8,color:MUT2},tickformat:'~s',side:'right'},TLI),
     yaxis8:Object.assign({domain:DOM.y8,gridcolor:GRID2,tickfont:{size:8,color:MUT2},side:'right',range:_y8.range},TLI,
@@ -4384,14 +4381,13 @@ function renderCockpit(){
     yaxis11:Object.assign({overlaying:'y10',side:'right',showgrid:false,showticklabels:false,zeroline:false,fixedrange:true},
       _y11r?{range:_y11r}:{}),
     ...(_a3?{yaxis12:{domain:[DOM.y7[1],DOM.y[0]],range:[0,1],fixedrange:true,showgrid:false,zeroline:false,showline:false,showticklabels:false,ticks:''}}:{}),   // 🧪 Astra v0.3 只標日期軌道(固定 0–1,沒有價格)
-    shapes:(_y8shapes?[{type:'rect',xref:'paper',x0:0,x1:XW,yref:'y8',y0:90,y1:104,fillcolor:'rgba(248,113,113,.10)',line:{width:0},layer:'below'},
-            {type:'line',xref:'paper',x0:0,x1:XW,yref:'y8',y0:80,y1:80,line:{color:'rgba(248,113,113,.4)',width:1}}]:[]).concat(_vbShapes).concat(_spot).concat((function(){try{return fcBandShapes(DOM.y,XW);}catch(_){return [];}})()),
+    shapes:_baseShapes.concat(_vbShapes),   // 固定 shapes 在前、VbP 在後(縮放重分箱時只換後段)
     annotations:ann};
   // P7-1 縮放模式時改用專屬 config(scrollZoom 開、雙擊還原);關閉時完全沿用既有 CFG(行為不變)
   Plotly.react('cockpit',traces,_ckLay,
     CHIP_ZOOM?{displayModeBar:false,responsive:true,scrollZoom:false,doubleClick:'reset'}:CFG);   // 滾輪由 bindWheelZoom 自行處理
   // VbP 縮放重算:bindPinch 的 relayout 觸發 plotly_relayout → 依可視範圍重分箱(只換 shapes,不動 traces/軸)
-  el._vbp=_vb?{R:R,base:_ckLay.shapes.slice(0,2)}:null;
+  el._vbp=_vb?{R:R,base:_baseShapes,NB:_vbNB,pocAnn:_vbPocAnn}:null;
   if(!el._vbpBind&&el.on){el._vbpBind=1;
     el.on('plotly_relayout',function(ev){
       if(!el._vbp||!CHIP_VBP||!ev)return;
@@ -4404,8 +4400,10 @@ function renderCockpit(){
         var i0=0,i1=Rv.length-1;
         if(r&&!ev['xaxis.autorange']){i0=Math.max(0,Math.ceil(Math.min(+r[0],+r[1])));i1=Math.min(Rv.length-1,Math.floor(Math.max(+r[0],+r[1])));}
         if(i1-i0<5)return;
-        var V2=vbpBins(Rv,i0,i1); if(!V2)return;
-        try{Plotly.relayout('cockpit',{shapes:vp.base.concat(vbpShapes(V2))});}catch(e){}
+        var V2=vbpBins(Rv,i0,i1,vp.NB); if(!V2)return;
+        var S2=vbpShapes(V2), up={shapes:vp.base.concat(S2)};
+        if(vp.pocAnn>=0&&S2._poc!=null){up['annotations['+vp.pocAnn+'].y']=S2._poc;up['annotations['+vp.pocAnn+'].text']='POC '+S2._poc.toFixed(S2._poc>=1000?0:1);}   // POC 標籤跟著可視範圍重算
+        try{Plotly.relayout('cockpit',up);}catch(e){}
       },160);
     });
   }
