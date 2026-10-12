@@ -1,9 +1,9 @@
 {
- "want": "2026-10-12T06:22Z",
+ "want": "2026-10-12T06:48Z",
  "bytes_same": true,
- "sha": "2915b2130ddb3f9e65928d2b3195b6b37d26b0b89476e750ba0cee6e528a93ee",
+ "sha": "50897a8783ede83c32623102b315496e5fa78f253f64929d317a5191dbb64275",
  "desktop": {
-  "build": "2026-10-12T06:22Z",
+  "build": "2026-10-12T06:48Z",
   "astra_default": false,
   "checks": [
    {
@@ -13,7 +13,7 @@
     "strong": 2,
     "d200_eq_python": true,
     "n_d200": 2,
-    "strip": "🧪 Astra 最近 △回 10-09 (今天) → 可以先買一小部分 · 大盤 平靜 0/3 ⓘ 詳情"
+    "strip": "🧪 Astra 最近 △回 10-09 (今天) → 先買一小份 · 大盤 平靜 0/3 ⓘ 詳情"
    },
    {
     "sym": "QQQ",
@@ -31,7 +31,7 @@
     "strong": 1,
     "d200_eq_python": true,
     "n_d200": 2,
-    "strip": "🧪 Astra 最近 △回 10-06 (3 天前) → 可以先買一小部分 · 看正股 MU · 大盤 平靜 0/3 ⓘ 詳情"
+    "strip": "🧪 Astra 最近 △回 10-06 (3 天前) → 先買一小份 · 看正股 MU · 大盤 平靜 0/3 ⓘ 詳情"
    }
   ],
   "fallback": [
@@ -59,7 +59,7 @@
   "http_bad": []
  },
  "mobile": {
-  "build": "2026-10-12T06:22Z",
+  "build": "2026-10-12T06:48Z",
   "astra_default": false,
   "checks": [
    {
@@ -69,7 +69,7 @@
     "strong": 2,
     "d200_eq_python": true,
     "n_d200": 2,
-    "strip": "🧪 Astra 最近 △回 10-09 (今天) → 可以先買一小部分 · 大盤 平靜 0/3 ⓘ 詳情"
+    "strip": "🧪 Astra 最近 △回 10-09 (今天) → 先買一小份 · 大盤 平靜 0/3 ⓘ 詳情"
    },
    {
     "sym": "QQQ",
@@ -87,7 +87,7 @@
     "strong": 1,
     "d200_eq_python": true,
     "n_d200": 2,
-    "strip": "🧪 Astra 最近 △回 10-06 (3 天前) → 可以先買一小部分 · 看正股 MU · 大盤 平靜 0/3 ⓘ 詳情"
+    "strip": "🧪 Astra 最近 △回 10-06 (3 天前) → 先買一小份 · 看正股 MU · 大盤 平靜 0/3 ⓘ 詳情"
    }
   ],
   "fallback": [
