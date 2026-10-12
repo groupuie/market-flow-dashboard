@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-11T23:18Z">
+<meta name="build" content="2026-10-12T02:45Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -673,7 +673,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-11T23:18Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-12T02:45Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3739,7 +3739,10 @@ function renderCockpit(){
         if(FT&&FT.ext[i9]!=null&&FT.ext[i9]>=th.ext&&s20v!=null&&c9>=s20v){if(!why)why='漲多中';
           next='收盤跌破 '+f2(s20v)+'(20 日線)'+(cl!=null&&cl<=th.trim&&!cool?' → 出':(cl!=null&&cl>th.trim?',但全球資金不緊 → 先不用出':''));}
         else if(FT&&FT.dip[i9]!=null&&FT.dip[i9]<=-0.10&&s20v!=null&&c9<=s20v){if(!why)why='跌深中';
-          next='收盤站回 '+f2(s20v)+'(20 日線)'+(cl!=null&&cl>=th.buy&&FT.dip[i9]<=-th.dip?' → 抄底':',但全球資金不夠寬鬆 → 只算反彈,先不抄底');}}
+          // 2026-10-12 抄底已不看資金氣候(10/12 00:38 起)→ 這一行跟著改(原本還寫「全球資金不夠寬鬆 → 先不抄底」,跟圖上會標的字矛盾):
+          //   跌幅到 15%、前 20 根沒標過 → 站回就標;大盤(QQQ)沒從一年高點回檔 1 成 → 會是灰色(弱)
+          const coolB=(i9+1-FB.lb)<=th.cool, mb0=fcMktOf(B[i9][0]);
+          next='收盤站回 '+f2(s20v)+'(20 日線)'+(FT.dip[i9]<=-th.dip?(coolB?',但前 20 天已經站回過一次(同一段不重複標)':' → 抄底'+((mb0!=null&&(mb0&QM.COR))?'':'(大盤沒回檔 1 成 → 灰色、較弱,先別急著買)')):'(跌幅未到 15%,站回只算反彈,不標抄底)');}}
       if(PV.some(p=>!p.watch))next='';   // 盤中已有暫標 → 「盤中」那行就是接下來要看的
       // ---- CTA(趨勢基金)一句話 ----
       const sma=n=>{if(B.length<n)return null;let s0=0;for(let k=B.length-n;k<B.length;k++)s0+=Cj(k);return s0/n;};
