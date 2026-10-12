@@ -4,9 +4,12 @@ name: astra-data
 #   不動 main、不動 data 分支、不動 Mac / gist;零 Claude token、零秘密(全部公開資料:Wikipedia、Nasdaq 篩選器、Yahoo、SqueezeMetrics)
 #   網站(index.html)從 raw.githubusercontent.com/groupuie/market-flow-dashboard/astra-data/ 讀:
 #     k/<SYM>.json(日K)、regime.json(大盤恐慌 = 強、QQQ/SPY 200 日線)、today.json(最近 10 天的 底/回/頂)、uni.json(名單)
-#   2026-10-12 先不排程:只在「手動」或「這支 workflow / scripts/astra_data.py 有改動推上 main」時跑(沙箱的 REST 代理擋 workflow_dispatch,
-#   改動推上去就會自己跑一次 = 試跑);試跑確認資料與網站都正常後才加排程。
+#   2026-10-12 試跑:push 觸發(沙箱的 REST 代理擋 workflow_dispatch)run 38209469158 / 38212220950 都成功(553 檔、17–27 秒),
+#   網站 v1.5(BUILD 2026-10-12T06:22Z)線上複驗通過(research/astra_expand_2026-10-12/t16)→ 加每日排程。
+#   另外:這支 workflow 或 scripts/astra_data.py 有改動推上 main 也會跑一次(改了規則馬上重算)。
 on:
+  schedule:
+    - cron: "45 22 * * 1-5"   # 22:45 UTC 週一~五 = 台灣 06:45 週二~六;EDT/EST 都在收盤後;排在 nightly-engine(22:30)之後,非交易日由閘門跳過
   workflow_dispatch:
   push:
     branches: [main]

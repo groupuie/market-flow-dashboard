@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(REPO, "research", "swing_tune_2026-10-12")); sys.path.insert(0, os.path.join(REPO, "scripts"))
 import t13_astra_merge_test as T
 import astra_data as AD
-V0, V1, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
+V0 = V1 = OUT = None   # 參數在 __main__ 才讀(t16 會 import 這支)
 AX = "https://raw.githubusercontent.com/groupuie/market-flow-dashboard/astra-data/"
 SYMS = ["MU", "NVDA", "QQQ", "NBIS", "BKNG", "MUU"]; WINS = [100, 250]
 REG = json.loads(urllib.request.urlopen(urllib.request.Request(AX + "regime.json", headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read())
@@ -171,4 +171,5 @@ UNI = json.loads(urllib.request.urlopen(urllib.request.Request(AX + "uni.json", 
 def await_ai(s): return (UNI.get("ai", {}).get(s) or [None])[0]
 
 if __name__ == "__main__":
+    V0, V1, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
     asyncio.run(main())
