@@ -6,7 +6,7 @@ import s8_2x_sim as M
 from s4_lib import HERE
 T0_ = time.time(); OUT = {}
 
-# ---------- 1. NVDL:2024-01 以前是 1.5 倍(每月迴歸斜率 1.46–1.58),2024-02 起 2 倍 → 從 2024-02-01 再比一次 ----------
+# ---------- 1. NVDL:2024-01 以前是 1.5 倍(每月迴歸斜率 1.29–1.58),2024-02 起 2 倍 → 從 2024-02-01 再比一次 ----------
 b = json.load(open(os.path.join(M.KL, "kline_NVDL.json")))["bars"]
 r = pd.DataFrame({"o": [x[1] for x in b], "c": [x[4] for x in b]}, index=pd.to_datetime([x[0] for x in b]))
 d = M.DATA["NVDA"]; di = pd.DatetimeIndex(d.index)

@@ -58,7 +58,7 @@ for pk in M.PER5:
         row["兩倍(S0)贏一倍(S3)的檔數"] = int(sum(RES[(s, pk)]["S0"]["fin"] > RES[(s, pk)]["S3"]["fin"] for s in syms))
         row["S1贏S0的檔數(最後報酬)"] = int(sum(RES[(s, pk)]["S1"]["fin"] > RES[(s, pk)]["S0"]["fin"] for s in syms))
         SUM[f"{g}|{pk}"] = row
-PER = {f"{s}|{pk}": {k: {"倍數": round(RES[(s, pk)][k]["fin"], 2), "最大跌幅": round(100 * RES[(s, pk)][k]["mdd"], 1)} for k in ("S0", "S1", "S5", "S3")}
+PER = {f"{s}|{pk}": {k: {"倍數": round(RES[(s, pk)][k]["fin"], 3), "最大跌幅": round(100 * RES[(s, pk)][k]["mdd"], 1)} for k in ("S0", "S1", "S5", "S3")}
        for s in ["SPY", "QQQ"] + M.G["MAG7"] for pk in M.PER5 if (s, pk) in RES}
 json.dump({"calibration": CAL, "summary": SUM, "per": PER}, open(os.path.join(HERE, "s8c_result.json"), "w"), ensure_ascii=False, indent=1)
 for k, v in SUM.items(): print(k, v)
