@@ -40,7 +40,7 @@ COOL = 5             # 同邊冷卻(根)
 MAG7 = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA"]
 AI_HW = {   # research/regime_factors_2026-10-12/p6_prereg.md §4
     "半導體": "NVDA AMD AVGO QCOM MRVL ARM INTC TXN ADI MCHP NXPI ON MPWR TSM ASML AMAT LRCX KLAC TER ENTG AMKR GFS SWKS QRVO MTSI SNPS CDNS",
-    "記憶體與儲存": "MU WDC STX SNDK PSTG NTAP",
+    "記憶體與儲存": "MU WDC STX SNDK P NTAP",   # Pure Storage 2026 改名 Everpure、代號 PSTG → P(Yahoo 已查不到 PSTG)
     "網通與光通訊": "ANET CSCO CIEN COHR LITE AAOI GLW CRDO ALAB",
     "伺服器": "DELL SMCI HPE",
     "電力與基建": "VRT ETN GEV CEG VST NRG TLN OKLO PWR"}

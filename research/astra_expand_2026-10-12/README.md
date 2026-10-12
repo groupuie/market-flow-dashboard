@@ -1,0 +1,46 @@
+# 🧪 Astra 擴大範圍 + 底/回「強」+ 兩倍 ETF 200 日線(2026-10-12,網站 v1.5)
+
+使用者 12:14 要求(背景值、70%、擴大到 S&P 500 / Nasdaq-100 / 每日成交金額前 100、主要看 AI 軟硬體);
+看完第 6 輪結果(`research/regime_factors_2026-10-12/`)後三題都選做:
+1. Astra 的 ▲底 △回 加上「強」(大盤恐慌:D18 通過的 3 個至少 2 個)
+2. 擴大範圍「開始做」(每天自動更新、搜尋任何一檔都看得到 Astra 記號、今天的訊號清單可只看 AI 硬體/軟體;不動 Mac)
+3. 兩倍 ETF 的 200 日線上限「圖上也標出來」
+
+## 資料:`scripts/astra_data.py` + `.github/workflows/astra-data.yml` → `astra-data` 分支
+
+- 只寫 `astra-data` 分支(每次 force-push 單一 commit);不動 main、不動 `data` 分支(public-collect)、不動 Mac / gist;只用標準函式庫、零秘密
+- 名單:Wikipedia S&P 500(503)+ Nasdaq-100(101)+ Nasdaq 篩選器當日成交金額前 100 + AI 名單(p6 §4;PSTG 改用新代號 P)→ 554 檔
+- 日K:Yahoo 還原(= `s4_lib.load`),每檔發布最近 1,250 根(= gist kline 長度)
+- 輸出:`k/<SYM>.json`(日K)、`regime.json`(大盤恐慌、QQQ/SPY 200 日線,1,400 天)、`today.json`(最近 10 個交易日的 底/回/頂)、`uni.json`、`meta.json`
+- 試跑:本機 34 秒;GitHub Actions(push 觸發,run 38209469158)27 秒、553 檔、成功發布;raw.githubusercontent 有 CORS、快取 5 分鐘
+- 沙箱的 REST 代理擋 workflow_dispatch → workflow 另設「這支 workflow 或 scripts/astra_data.py 有改動推上 main 就跑一次」;試跑確認後才加每日排程
+
+## 檢查
+
+| 檢查 | 結果 |
+|---|---|
+| c1:`sw_series`(Python)vs 網站 `swSeriesJS`(node 跑原始碼),553 檔 | 76,670 個記號、原因、破底計數 **逐位元相同** |
+| c1:vs 研究 `s4_lib`(pandas) | 552/553 相同;FER 不同 = 2022 年 OTC 時期價格完全不動的日子,布林帶寬 0 的浮點差(網站版為準) |
+| c2:追蹤股 45 檔,gist 日K(富途前復權)vs Yahoo 還原 算出的記號 | 99.98% 相同(4,471 vs 1 個不同)→ 清單和K線圖對得上 |
+| 背景值 vs 第 6 輪 `r6_factors.py`(2021-03 ~ 2026-10,1,400 天) | 負 gamma 100%、信用轉弱 100%、寬度 98.7%(寬度用 542 檔、研究 602 檔)、「強」99.8%(3 天不同) |
+| t15 網站(本機,V0 = 改之前、V1 = 改之後) | 見 `t15_result.json` |
+
+t15 內容:
+- 追蹤股 MU NVDA QQQ NBIS BKNG MUU × 100/250 根:Astra 關 → V1 整張圖(所有 trace、shapes、annotations)= V0;Astra 開 → 📊量化不變、其他圖層不變;Astra 記號(日期/種類/強)= Python;200 日線虛線 = regime.json
+- 擴大範圍(不在追蹤清單):BRK-B、HUBS、GTLB、ZTS 畫得出駕駛艙,日K = astra-data 檔,Astra 記號 = Python,資料條有「＋加入追蹤」;BRK.B 寫法也找得到;不在任何名單的代號照舊顯示加入追蹤動作區
+- 🧪 Astra 訊號分頁:列 = today.json、AI 硬體篩選正確、點代號打開那檔並自動開 Astra
+- 桌機 1440 + 手機 390:頁面錯誤 0、意外的 HTTP 錯誤 0(只有本來就會 404 的 gist kline)、沒有橫向捲動;手機沒有分頁列,清單捲到才載入
+
+## 網站改了什麼(只動 Astra 與資料層;📊量化 一行都沒動)
+
+- 搜尋框:gist 沒有這檔 → 改抓 `astra-data/k/<SYM>.json`;已追蹤的照舊用 gist(富途)
+- 🧪 Astra ▲底 △回:大盤恐慌(前一天 GEX<0、站上 50 日線 <40% 且沒比 5 天前多、HYG/IEF 60 日最低,3 個至少 2 個)= 金色「強」+ 大一號;其餘 = 一般(不再變灰)
+  - 舊的「QQQ CTA 部位 ≤ 0 = 強、其餘灰」停用:第 6 輪 F3 只在 2010–2017 有用;2018 年以後「CTA 空手但不恐慌」的底反而比一般低(全部 58.0% vs 60.9%)
+- 200 日線(D20 沒過 → 只當可以選的提示):QQQ(SPY 那檔用 SPY)跌破/站回那天畫虛線 + 標籤,在線下的日子價格區頂端畫粉紅細條;狀態列與詳情寫目前狀態
+- 新分頁「🧪 Astra 訊號」+ 側欄 🧪 捷徑:最近 10 個交易日、全部/AI 硬體/AI 軟體/七巨頭+指數/只看強、底/回/頂 開關、依成交額排序
+
+## 限制
+
+- 名單是現在的成分股(過去的寬度、清單有後見之明)
+- 「強」很少:過去一年 7 天(2026-03);現在(10/09)0/3
+- 擴大範圍的日K一天更新一次(沒有盤中棒、沒有 ⑦ 大單);要完整追蹤請按「＋加入追蹤」
