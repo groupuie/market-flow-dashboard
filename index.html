@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-12T12:34Z">
+<meta name="build" content="2026-10-13T14:28Z">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
@@ -676,7 +676,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-12T12:34Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-13T14:28Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -5455,10 +5455,10 @@ function astra3Lane(R,x,MB,XW){   // 回傳 {traces, n(視窗內輪數), label};
 // 成績(2010-01~2026-07;隔天開盤成交、成本 0(使用者用 Firstrade 免手續費);底/回檔買 → 下一個頂賣,40 根內沒頂就第 40 根賣)= SW_GRP
 //   頂單獨用沒有優勢(10 天後比較低 ≈ 隨便一天),但大跌的「山」前後幾乎都有頂 → 用來分批賣掉前面在底買的,不適合賣光等更低
 // 槓桿 ETF 看正股(TK_UL),反向 ETF 不適用;只標已收盤日K(盤中棒不標)。
-const SW_GRP={   // research/swing_tune_2026-10-12/site_numbers_v09.json(全期 2010-01~2026-07、成本 0;b2 = s9_result.json U1留|全期);b0/b2=[勝率%,平均%,中途套牢%];base=[隨便一天勝率%,平均%]
+const SW_GRP={   // research/swing_tune_2026-10-12/site_numbers_v09.json(全期 2010-01~2026-07、成本 0;b2 = 現行 △回(先過濾上行、再冷卻)= s10_result.json A「網站|全期」);b0/b2=[勝率%,平均%,中途套牢%];base=[隨便一天勝率%,平均%]
   // s10/s10b = 頂之後 10 天比較低的比例 / 隨便一天(s4);mtn = 大跌的山,山頂附近第一個頂躲掉的跌幅中位數
-  idx:{n:'指數 SPY/QQQ',tr:5,b0:[76.4,1.77,21.3],base:[68.7,1.40],b2:[74.1,1.38,22.0],s10:33.5,s10b:36.0,mtn:85},
-  mag:{n:'七巨頭',tr:10,b0:[66.8,3.02,20.6],base:[62.6,2.59],b2:[70.4,3.41,19.9],s10:44.1,s10b:41.6,mtn:78,cta:[72.3,65.2]},
+  idx:{n:'指數 SPY/QQQ',tr:5,b0:[76.4,1.77,21.3],base:[68.7,1.40],b2:[73.9,1.35,22.3],s10:33.5,s10b:36.0,mtn:85},
+  mag:{n:'七巨頭',tr:10,b0:[66.8,3.02,20.6],base:[62.6,2.59],b2:[70.5,3.42,19.8],s10:44.1,s10b:41.6,mtn:78,cta:[72.3,65.2]},
   ndx:{n:'Nasdaq-100',tr:10,b0:[62.7,2.19,21.9],base:[59.5,1.95],b2:[64.3,2.12,20.3],s10:44.4,s10b:43.5,mtn:78,cta:[70.2,60.8]},
   all:{n:'追蹤股',tr:10,b0:[60.8,2.01,24.7],base:[57.9,1.89],b2:[63.0,2.02,22.4],s10:45.4,s10b:44.9,mtn:76,cta:[67.6,59.1]}};
 const SW_MAG=new Set(['AAPL','MSFT','NVDA','AMZN','GOOGL','META','TSLA']);
@@ -5531,10 +5531,10 @@ function swOcc(TR,R,x){   // 已經畫好的字(📊量化、技判、🌐、C/A
 // 3 個至少 2 個:前一天 GEX < 0(造市商負 gamma)、站上 50 日線的股票 < 40% 且沒有比 5 天前多(寬度差)、HYG÷IEF 收在 60 日最低(信用轉弱)
 // 資料 = regime.json(scripts/astra_data.py;與研究 r6_factors.py 同式,2021-03~2026-10 逐日比對:F15/F6 100%、F9 98.7%、強 99.8%)
 const AX_GOLD='#facc15', AX_STRONG_TXT='<b style="color:#facc15">強</b>';
-const AX_STR={   // research/regime_factors_2026-10-12/r6_result.json combo_buy:底+回 的勝率 %([2010–2017, 2018–2026-07];隔天開盤買 → 下一個頂賣、成本 0)
-  idx:{n:'指數 SPY/QQQ',s:[88.0,81.8],o:[74.1,76.2]}, mag:{n:'七巨頭',s:[81.7,76.2],o:[68.4,67.9]},
-  hw:{n:'AI 硬體',s:[72.2,72.6],o:[63.6,63.4]}, sw:{n:'AI 軟體',s:[72.2,71.0],o:[66.5,59.8]},
-  ndx:{n:'Nasdaq-100',s:[73.6,70.4],o:[65.1,61.7]}, all:{n:'全部 600 檔',s:[74.5,68.5],o:[64.6,60.6]}};
+const AX_STR={   // 底+回 的勝率 %([2010–2017, 2018–2026-07];隔天開盤買 → 下一個頂賣、成本 0)。來源 r6_result.json combo_buy;2026-10-13 依現行 △回(上行條件,10/12 18:52)重算 = research/swing_tune_2026-10-12/s10_result.json B「網站|底+回」
+  idx:{n:'指數 SPY/QQQ',s:[88.2,78.4],o:[73.9,75.2]}, mag:{n:'七巨頭',s:[82.8,73.9],o:[67.5,67.4]},
+  hw:{n:'AI 硬體',s:[71.3,72.5],o:[63.0,63.4]}, sw:{n:'AI 軟體',s:[69.7,70.3],o:[65.5,59.3]},
+  ndx:{n:'Nasdaq-100',s:[73.8,70.0],o:[64.9,61.1]}, all:{n:'全部 600 檔',s:[73.9,68.3],o:[64.4,60.2]}};
 const AX_AI_HW=new Set(('NVDA AMD AVGO QCOM MRVL ARM INTC TXN ADI MCHP NXPI ON MPWR TSM ASML AMAT LRCX KLAC TER ENTG AMKR GFS SWKS QRVO MTSI SNPS CDNS '
   +'MU WDC STX SNDK P NTAP ANET CSCO CIEN COHR LITE AAOI GLW CRDO ALAB DELL SMCI HPE VRT ETN GEV CEG VST NRG TLN OKLO PWR').split(' '));   // p6 §4
 const AX_AI_SW=new Set(('MSFT GOOGL AMZN META ORCL PLTR NOW CRM SNOW DDOG MDB CRWD PANW ZS NET APP ADBE INTU WDAY TEAM AI SOUN PATH U IOT GTLB ESTC OKTA S TWLO HUBS '
