@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".github/workflows/astra-data.yml", "scripts/astra_data.py"]
+    paths: [".github/workflows/astra-data.yml", "scripts/astra_data.py", "scripts/astra_gate.py"]
 permissions:
   contents: write
 concurrency:
@@ -25,28 +25,16 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - name: market-day gate (schedule only; manual runs always go)
+      - name: market-day gate (schedule only; manual/push runs always go)
         id: day
+        # 2026-10-13 改:有「新的已收盤交易日」(SPY 最後已收盤日 > 已發布 asof)才跑 → scripts/astra_gate.py
+        #   舊的比「美東今天」:排程延遲到美東半夜之後就會誤跳過(10/13 第一次排程延遲 4 小時 25 分)
         run: |
-          python3 - <<'PY'
-          import json, os, urllib.request, datetime
-          from zoneinfo import ZoneInfo
-          run = "1"
-          if os.environ.get("GITHUB_EVENT_NAME") == "schedule":
-              try:
-                  d = json.load(urllib.request.urlopen(urllib.request.Request(
-                      "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=5d&interval=1d",
-                      headers={"User-Agent": "Mozilla/5.0"}), timeout=20))
-                  ts = d["chart"]["result"][0]["timestamp"][-1]
-                  last = datetime.datetime.fromtimestamp(ts, ZoneInfo("America/New_York")).date()
-                  today = datetime.datetime.now(ZoneInfo("America/New_York")).date()
-                  run = "1" if last == today else "0"
-                  print("SPY last bar", last, "ET today", today)
-              except Exception as e:
-                  print("market-day check failed → fail-open:", e)
-          open(os.environ["GITHUB_OUTPUT"], "a").write(f"run={run}\n")
-          print("run =", run)
-          PY
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+            python3 scripts/astra_gate.py >> "$GITHUB_OUTPUT"
+          else
+            echo "run=1" >> "$GITHUB_OUTPUT"
+          fi
       - name: build (~1 min)
         if: steps.day.outputs.run == '1'
         timeout-minutes: 15
