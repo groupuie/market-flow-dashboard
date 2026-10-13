@@ -1,0 +1,14 @@
+{
+ "note": "Claude 端重建(2026-10-13):Astra 的 freeze.json 在沒附上的 ZIP 裡;這份是用 MD 抽出的程式(SHA-256 與公布值相同)和 git 1dbaddf 的 vendor 檔重建。protocol.md 取自 MD 附錄一,不保證和 Astra 原檔逐位元相同。",
+ "files": {
+  "experiment.py": "4bd3892eaeb7c601857ff8a6060a0379895fcce45a8505a04d56596687973353",
+  "data_tools.py": "dffe0af73719b7acc2eefd704546939d72ac4a0b3e0a7de542ea533a2fd41942",
+  "test_experiment.py": "689d6aa101462c3ac47dc697d34afdcb840dc2bdadcca3aad77cf2e06bedc43d",
+  "test_data_tools.py": "80d999b08aa17781b133b06c9aa28b4645f8b704dff43fbb0c1599cb57409167",
+  "audit_results.py": "6233356baf8c353b2d0fe22bf1ea5167e6dff02c0f42214eafa6dca26e7b4916",
+  "universe_266.txt": "d26a73138dcff3f33180fd0c69fd8435a0d8a54ee04940738bb6fc754349dfb8",
+  "vendor/scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a",
+  "vendor/research/swing_tune_2026-10-12/groups.json": "8ed69d47dc7e3f0893ef3d9bfb7873c266f72f1c48f98d61190e1f76c9ecef09",
+  "protocol.md": "b328e1f83a03325c0e199977426e1c151062cddc375d79fa2e80b41817d8470c"
+ }
+}

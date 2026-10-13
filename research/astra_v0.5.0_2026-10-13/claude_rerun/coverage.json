@@ -1,0 +1,5670 @@
+{
+  "AA": {
+    "signal_candidates": 247,
+    "paired_windows": 246,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AAL": {
+    "signal_candidates": 249,
+    "paired_windows": 247,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5293,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AAOI": {
+    "signal_candidates": 169,
+    "insufficient_warmup": 8,
+    "paired_windows": 160,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3280,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AAPL": {
+    "signal_candidates": 275,
+    "paired_windows": 274,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ABBV": {
+    "signal_candidates": 205,
+    "insufficient_warmup": 8,
+    "paired_windows": 195,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 3465,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ABNB": {
+    "signal_candidates": 89,
+    "insufficient_warmup": 7,
+    "paired_windows": 80,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1465,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ACHR": {
+    "signal_candidates": 69,
+    "insufficient_warmup": 7,
+    "paired_windows": 61,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1459,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ACN": {
+    "signal_candidates": 257,
+    "paired_windows": 257,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ADBE": {
+    "signal_candidates": 271,
+    "paired_windows": 270,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ADI": {
+    "signal_candidates": 277,
+    "paired_windows": 276,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AEHR": {
+    "signal_candidates": 232,
+    "paired_windows": 231,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AFRM": {
+    "signal_candidates": 80,
+    "insufficient_warmup": 9,
+    "paired_windows": 69,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1443,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AI": {
+    "signal_candidates": 67,
+    "insufficient_warmup": 9,
+    "paired_windows": 57,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1466,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AKAM": {
+    "signal_candidates": 254,
+    "paired_windows": 253,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ALAB": {
+    "signal_candidates": 31,
+    "insufficient_warmup": 4,
+    "paired_windows": 25,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 643,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ALLY": {
+    "signal_candidates": 188,
+    "insufficient_warmup": 6,
+    "paired_windows": 180,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 3196,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AMAT": {
+    "signal_candidates": 260,
+    "paired_windows": 257,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AMC": {
+    "signal_candidates": 152,
+    "insufficient_warmup": 6,
+    "paired_windows": 146,
+    "source_bars": 3222,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AMD": {
+    "signal_candidates": 239,
+    "paired_windows": 236,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AMGN": {
+    "signal_candidates": 267,
+    "paired_windows": 266,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AMKR": {
+    "signal_candidates": 242,
+    "paired_windows": 241,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AMZN": {
+    "signal_candidates": 292,
+    "paired_windows": 291,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ANET": {
+    "signal_candidates": 190,
+    "insufficient_warmup": 7,
+    "paired_windows": 180,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 3106,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "APLD": {
+    "signal_candidates": 71,
+    "insufficient_warmup": 13,
+    "paired_windows": 56,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1128,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "APO": {
+    "signal_candidates": 239,
+    "insufficient_warmup": 8,
+    "paired_windows": 231,
+    "source_bars": 3907,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "APP": {
+    "signal_candidates": 84,
+    "insufficient_warmup": 6,
+    "paired_windows": 77,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1380,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ARM": {
+    "signal_candidates": 33,
+    "insufficient_warmup": 3,
+    "paired_windows": 30,
+    "source_bars": 772,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ASML": {
+    "signal_candidates": 294,
+    "paired_windows": 293,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ASTS": {
+    "signal_candidates": 80,
+    "insufficient_warmup": 6,
+    "paired_windows": 74,
+    "source_bars": 1744,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AVAV": {
+    "signal_candidates": 235,
+    "paired_windows": 235,
+    "source_bars": 4962,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AVGO": {
+    "signal_candidates": 284,
+    "insufficient_warmup": 2,
+    "paired_windows": 281,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 4322,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "gap_or_insufficient_200_bar_warmup",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "AXP": {
+    "signal_candidates": 275,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BA": {
+    "signal_candidates": 269,
+    "paired_windows": 269,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BABA": {
+    "signal_candidates": 176,
+    "insufficient_warmup": 11,
+    "paired_windows": 164,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3033,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BAC": {
+    "signal_candidates": 273,
+    "paired_windows": 272,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BBAI": {
+    "signal_candidates": 74,
+    "insufficient_warmup": 6,
+    "paired_windows": 66,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1388,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BE": {
+    "signal_candidates": 128,
+    "insufficient_warmup": 8,
+    "paired_windows": 118,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2065,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BIDU": {
+    "signal_candidates": 252,
+    "paired_windows": 250,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5329,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BILI": {
+    "signal_candidates": 119,
+    "insufficient_warmup": 10,
+    "paired_windows": 108,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2147,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BKNG": {
+    "signal_candidates": 266,
+    "paired_windows": 265,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BKR": {
+    "signal_candidates": 247,
+    "paired_windows": 246,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BLK": {
+    "signal_candidates": 261,
+    "paired_windows": 261,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BMNR": {
+    "signal_candidates": 10,
+    "insufficient_warmup": 6,
+    "paired_windows": 4,
+    "source_bars": 340,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BMY": {
+    "signal_candidates": 259,
+    "paired_windows": 259,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BNTX": {
+    "signal_candidates": 88,
+    "insufficient_warmup": 7,
+    "paired_windows": 79,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1760,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BTBT": {
+    "signal_candidates": 117,
+    "insufficient_warmup": 9,
+    "paired_windows": 106,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2153,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "BX": {
+    "signal_candidates": 275,
+    "paired_windows": 275,
+    "source_bars": 4857,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "C": {
+    "signal_candidates": 290,
+    "paired_windows": 289,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CAT": {
+    "signal_candidates": 265,
+    "paired_windows": 265,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CBRS": {
+    "source_bars": 104,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CCL": {
+    "signal_candidates": 275,
+    "paired_windows": 274,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CDNS": {
+    "signal_candidates": 273,
+    "paired_windows": 272,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CEG": {
+    "signal_candidates": 68,
+    "insufficient_warmup": 7,
+    "paired_windows": 61,
+    "source_bars": 1187,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CI": {
+    "signal_candidates": 260,
+    "paired_windows": 259,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CIEN": {
+    "signal_candidates": 275,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CIFR": {
+    "signal_candidates": 80,
+    "insufficient_warmup": 3,
+    "paired_windows": 75,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1501,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CLF": {
+    "signal_candidates": 224,
+    "paired_windows": 223,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CLSK": {
+    "signal_candidates": 125,
+    "insufficient_warmup": 5,
+    "paired_windows": 119,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2488,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CME": {
+    "signal_candidates": 284,
+    "paired_windows": 283,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CMG": {
+    "signal_candidates": 262,
+    "paired_windows": 261,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5210,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "COF": {
+    "signal_candidates": 270,
+    "paired_windows": 269,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "COHR": {
+    "signal_candidates": 229,
+    "paired_windows": 227,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "COIN": {
+    "signal_candidates": 70,
+    "insufficient_warmup": 11,
+    "paired_windows": 59,
+    "source_bars": 1381,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "COP": {
+    "signal_candidates": 247,
+    "paired_windows": 246,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CORZ": {
+    "signal_candidates": 43,
+    "insufficient_warmup": 11,
+    "paired_windows": 31,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 682,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "COST": {
+    "signal_candidates": 280,
+    "paired_windows": 280,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CRCL": {
+    "signal_candidates": 13,
+    "insufficient_warmup": 9,
+    "paired_windows": 4,
+    "source_bars": 340,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CRDO": {
+    "signal_candidates": 75,
+    "insufficient_warmup": 6,
+    "paired_windows": 67,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1181,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CRM": {
+    "signal_candidates": 278,
+    "paired_windows": 277,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5612,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CRML": {
+    "signal_candidates": 66,
+    "insufficient_warmup": 10,
+    "paired_windows": 55,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1174,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CRWD": {
+    "signal_candidates": 117,
+    "insufficient_warmup": 6,
+    "paired_windows": 110,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1844,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CRWV": {
+    "signal_candidates": 22,
+    "insufficient_warmup": 11,
+    "paired_windows": 9,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 387,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CSCO": {
+    "signal_candidates": 259,
+    "paired_windows": 258,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CVNA": {
+    "signal_candidates": 148,
+    "insufficient_warmup": 10,
+    "paired_windows": 137,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2377,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "gap_or_insufficient_200_bar_warmup",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CVS": {
+    "signal_candidates": 255,
+    "paired_windows": 254,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "CVX": {
+    "signal_candidates": 247,
+    "paired_windows": 246,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DAL": {
+    "signal_candidates": 258,
+    "paired_windows": 255,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 4892,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DASH": {
+    "signal_candidates": 65,
+    "insufficient_warmup": 5,
+    "paired_windows": 59,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1466,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DDOG": {
+    "signal_candidates": 100,
+    "insufficient_warmup": 6,
+    "paired_windows": 92,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1775,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DE": {
+    "signal_candidates": 273,
+    "paired_windows": 271,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DELL": {
+    "signal_candidates": 150,
+    "insufficient_warmup": 2,
+    "paired_windows": 146,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2552,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DHR": {
+    "signal_candidates": 286,
+    "paired_windows": 285,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DIS": {
+    "signal_candidates": 263,
+    "paired_windows": 262,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DJT": {
+    "signal_candidates": 62,
+    "insufficient_warmup": 5,
+    "paired_windows": 56,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1263,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DKNG": {
+    "signal_candidates": 93,
+    "insufficient_warmup": 7,
+    "paired_windows": 85,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1814,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "DVN": {
+    "signal_candidates": 240,
+    "paired_windows": 239,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ENPH": {
+    "signal_candidates": 208,
+    "insufficient_warmup": 11,
+    "paired_windows": 197,
+    "source_bars": 3654,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ENTG": {
+    "signal_candidates": 257,
+    "paired_windows": 257,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ETN": {
+    "signal_candidates": 274,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "F": {
+    "signal_candidates": 256,
+    "paired_windows": 256,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "FCX": {
+    "signal_candidates": 256,
+    "paired_windows": 255,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "FDX": {
+    "signal_candidates": 249,
+    "paired_windows": 249,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "FSLR": {
+    "signal_candidates": 246,
+    "paired_windows": 246,
+    "source_bars": 5004,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "FUTU": {
+    "signal_candidates": 105,
+    "insufficient_warmup": 5,
+    "paired_windows": 100,
+    "source_bars": 1910,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GD": {
+    "signal_candidates": 260,
+    "paired_windows": 260,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GE": {
+    "signal_candidates": 274,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GEV": {
+    "signal_candidates": 35,
+    "insufficient_warmup": 7,
+    "paired_windows": 27,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 638,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GFS": {
+    "signal_candidates": 68,
+    "insufficient_warmup": 8,
+    "paired_windows": 59,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1243,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GILD": {
+    "signal_candidates": 257,
+    "paired_windows": 257,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GLW": {
+    "signal_candidates": 254,
+    "paired_windows": 252,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GLXY": {
+    "signal_candidates": 16,
+    "insufficient_warmup": 9,
+    "paired_windows": 5,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 353,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GM": {
+    "signal_candidates": 267,
+    "insufficient_warmup": 8,
+    "paired_windows": 259,
+    "source_bars": 3997,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GME": {
+    "signal_candidates": 219,
+    "paired_windows": 218,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GOOG": {
+    "signal_candidates": 298,
+    "paired_windows": 296,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5572,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GOOGL": {
+    "signal_candidates": 291,
+    "paired_windows": 289,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5572,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "GS": {
+    "signal_candidates": 266,
+    "paired_windows": 265,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "HAL": {
+    "signal_candidates": 239,
+    "paired_windows": 238,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "HD": {
+    "signal_candidates": 274,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "HIMS": {
+    "signal_candidates": 95,
+    "insufficient_warmup": 9,
+    "paired_windows": 83,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 1779,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "HON": {
+    "signal_candidates": 284,
+    "paired_windows": 284,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "HOOD": {
+    "signal_candidates": 66,
+    "insufficient_warmup": 9,
+    "paired_windows": 56,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1307,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "HUT": {
+    "signal_candidates": 120,
+    "insufficient_warmup": 17,
+    "paired_windows": 102,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2161,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "IBKR": {
+    "signal_candidates": 253,
+    "paired_windows": 250,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 4891,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "IBM": {
+    "signal_candidates": 256,
+    "paired_windows": 255,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ICE": {
+    "signal_candidates": 264,
+    "paired_windows": 264,
+    "source_bars": 5257,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "INTC": {
+    "signal_candidates": 267,
+    "paired_windows": 265,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "INTU": {
+    "signal_candidates": 273,
+    "paired_windows": 273,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "IONQ": {
+    "signal_candidates": 74,
+    "insufficient_warmup": 4,
+    "paired_windows": 69,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1450,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "IREN": {
+    "signal_candidates": 81,
+    "insufficient_warmup": 10,
+    "paired_windows": 69,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1229,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ISRG": {
+    "signal_candidates": 275,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "JD": {
+    "signal_candidates": 193,
+    "insufficient_warmup": 10,
+    "paired_windows": 183,
+    "source_bars": 3116,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "JNJ": {
+    "signal_candidates": 261,
+    "paired_windows": 260,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "JOBY": {
+    "signal_candidates": 68,
+    "insufficient_warmup": 6,
+    "paired_windows": 61,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1487,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "JPM": {
+    "signal_candidates": 263,
+    "paired_windows": 262,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "KKR": {
+    "signal_candidates": 270,
+    "insufficient_warmup": 2,
+    "paired_windows": 268,
+    "source_bars": 4086,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "KLAC": {
+    "signal_candidates": 279,
+    "paired_windows": 278,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "KO": {
+    "signal_candidates": 256,
+    "paired_windows": 254,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "KTOS": {
+    "signal_candidates": 238,
+    "paired_windows": 237,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LCID": {
+    "signal_candidates": 66,
+    "insufficient_warmup": 4,
+    "paired_windows": 61,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1523,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LHX": {
+    "signal_candidates": 243,
+    "paired_windows": 242,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LI": {
+    "signal_candidates": 85,
+    "insufficient_warmup": 7,
+    "paired_windows": 78,
+    "source_bars": 1558,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LITE": {
+    "signal_candidates": 138,
+    "insufficient_warmup": 2,
+    "paired_windows": 135,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2822,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LLY": {
+    "signal_candidates": 274,
+    "paired_windows": 271,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LMT": {
+    "signal_candidates": 248,
+    "paired_windows": 247,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LOW": {
+    "signal_candidates": 277,
+    "paired_windows": 276,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LRCX": {
+    "signal_candidates": 268,
+    "paired_windows": 267,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LULU": {
+    "signal_candidates": 270,
+    "paired_windows": 269,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 4833,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LUNR": {
+    "signal_candidates": 71,
+    "insufficient_warmup": 11,
+    "paired_windows": 59,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1229,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LUV": {
+    "signal_candidates": 244,
+    "paired_windows": 243,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LWLG": {
+    "signal_candidates": 208,
+    "paired_windows": 206,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5134,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "LYFT": {
+    "signal_candidates": 100,
+    "insufficient_warmup": 8,
+    "paired_windows": 91,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1895,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MA": {
+    "signal_candidates": 283,
+    "paired_windows": 282,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5127,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MAR": {
+    "signal_candidates": 261,
+    "paired_windows": 261,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MARA": {
+    "signal_candidates": 182,
+    "insufficient_warmup": 7,
+    "paired_windows": 173,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 3630,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MCD": {
+    "signal_candidates": 256,
+    "paired_windows": 255,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MCHP": {
+    "signal_candidates": 274,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MCO": {
+    "signal_candidates": 274,
+    "paired_windows": 272,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MDB": {
+    "signal_candidates": 121,
+    "insufficient_warmup": 7,
+    "paired_windows": 113,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2256,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "gap_or_insufficient_200_bar_warmup",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MDT": {
+    "signal_candidates": 263,
+    "paired_windows": 262,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "META": {
+    "signal_candidates": 234,
+    "insufficient_warmup": 10,
+    "paired_windows": 222,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 3620,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MMM": {
+    "signal_candidates": 251,
+    "paired_windows": 251,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MPWR": {
+    "signal_candidates": 281,
+    "paired_windows": 280,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5507,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MRK": {
+    "signal_candidates": 253,
+    "paired_windows": 252,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MRNA": {
+    "signal_candidates": 117,
+    "insufficient_warmup": 8,
+    "paired_windows": 108,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1971,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MRVL": {
+    "signal_candidates": 275,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MS": {
+    "signal_candidates": 274,
+    "paired_windows": 271,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MSFT": {
+    "signal_candidates": 274,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MSTR": {
+    "signal_candidates": 228,
+    "paired_windows": 228,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MTSI": {
+    "signal_candidates": 226,
+    "insufficient_warmup": 8,
+    "paired_windows": 217,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3665,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MU": {
+    "signal_candidates": 266,
+    "paired_windows": 265,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "MXL": {
+    "signal_candidates": 228,
+    "insufficient_warmup": 6,
+    "paired_windows": 220,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 4164,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NBIS": {
+    "signal_candidates": 26,
+    "insufficient_warmup": 5,
+    "paired_windows": 20,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 495,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NCLH": {
+    "signal_candidates": 207,
+    "insufficient_warmup": 8,
+    "paired_windows": 198,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3453,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NEM": {
+    "signal_candidates": 250,
+    "paired_windows": 249,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NET": {
+    "signal_candidates": 103,
+    "insufficient_warmup": 3,
+    "paired_windows": 99,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1779,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NFLX": {
+    "signal_candidates": 266,
+    "paired_windows": 265,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NIO": {
+    "signal_candidates": 105,
+    "insufficient_warmup": 10,
+    "paired_windows": 94,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2031,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NKE": {
+    "signal_candidates": 257,
+    "paired_windows": 257,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NOC": {
+    "signal_candidates": 266,
+    "paired_windows": 265,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NOK": {
+    "signal_candidates": 264,
+    "paired_windows": 262,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NOW": {
+    "signal_candidates": 226,
+    "insufficient_warmup": 8,
+    "paired_windows": 217,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3591,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NRG": {
+    "signal_candidates": 241,
+    "paired_windows": 240,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NUE": {
+    "signal_candidates": 255,
+    "paired_windows": 255,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NVDA": {
+    "signal_candidates": 259,
+    "paired_windows": 258,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NVO": {
+    "signal_candidates": 303,
+    "paired_windows": 300,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "NXPI": {
+    "signal_candidates": 264,
+    "insufficient_warmup": 3,
+    "paired_windows": 261,
+    "source_bars": 4070,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "OKLO": {
+    "signal_candidates": 66,
+    "insufficient_warmup": 6,
+    "paired_windows": 58,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1322,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "OKTA": {
+    "signal_candidates": 139,
+    "insufficient_warmup": 9,
+    "paired_windows": 129,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2391,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "gap_or_insufficient_200_bar_warmup",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ON": {
+    "signal_candidates": 261,
+    "paired_windows": 260,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "OPEN": {
+    "signal_candidates": 77,
+    "insufficient_warmup": 7,
+    "paired_windows": 70,
+    "source_bars": 1587,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ORCL": {
+    "signal_candidates": 268,
+    "paired_windows": 268,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "OXY": {
+    "signal_candidates": 236,
+    "paired_windows": 235,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PANW": {
+    "signal_candidates": 222,
+    "insufficient_warmup": 8,
+    "paired_windows": 213,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3577,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PATH": {
+    "signal_candidates": 69,
+    "insufficient_warmup": 8,
+    "paired_windows": 60,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1376,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PDD": {
+    "signal_candidates": 121,
+    "insufficient_warmup": 8,
+    "paired_windows": 113,
+    "source_bars": 2064,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PEP": {
+    "signal_candidates": 262,
+    "paired_windows": 262,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PFE": {
+    "signal_candidates": 250,
+    "paired_windows": 250,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PG": {
+    "signal_candidates": 265,
+    "paired_windows": 263,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PINS": {
+    "signal_candidates": 109,
+    "insufficient_warmup": 9,
+    "paired_windows": 99,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1881,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PL": {
+    "signal_candidates": 59,
+    "insufficient_warmup": 4,
+    "paired_windows": 55,
+    "source_bars": 1373,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PLTR": {
+    "signal_candidates": 89,
+    "insufficient_warmup": 11,
+    "paired_windows": 77,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1515,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PNC": {
+    "signal_candidates": 263,
+    "paired_windows": 262,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "POET": {
+    "signal_candidates": 257,
+    "paired_windows": 256,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 4603,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PTC": {
+    "signal_candidates": 268,
+    "paired_windows": 267,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PWR": {
+    "signal_candidates": 273,
+    "paired_windows": 271,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "PYPL": {
+    "signal_candidates": 163,
+    "insufficient_warmup": 9,
+    "paired_windows": 154,
+    "source_bars": 2835,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "QBTS": {
+    "signal_candidates": 80,
+    "insufficient_warmup": 11,
+    "paired_windows": 68,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1464,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "QCOM": {
+    "signal_candidates": 253,
+    "paired_windows": 253,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "QQQ": {
+    "signal_candidates": 296,
+    "paired_windows": 294,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RBLX": {
+    "signal_candidates": 76,
+    "insufficient_warmup": 10,
+    "paired_windows": 65,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1405,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RCL": {
+    "signal_candidates": 282,
+    "paired_windows": 282,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RDDT": {
+    "signal_candidates": 31,
+    "insufficient_warmup": 5,
+    "paired_windows": 24,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 642,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RDW": {
+    "signal_candidates": 78,
+    "insufficient_warmup": 4,
+    "paired_windows": 72,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1442,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "REGN": {
+    "signal_candidates": 271,
+    "paired_windows": 270,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RGTI": {
+    "signal_candidates": 68,
+    "insufficient_warmup": 8,
+    "paired_windows": 60,
+    "source_bars": 1375,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RIOT": {
+    "signal_candidates": 135,
+    "insufficient_warmup": 5,
+    "paired_windows": 128,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2649,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RIVN": {
+    "signal_candidates": 68,
+    "insufficient_warmup": 8,
+    "paired_windows": 59,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1234,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RKLB": {
+    "signal_candidates": 83,
+    "insufficient_warmup": 5,
+    "paired_windows": 77,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1476,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ROK": {
+    "signal_candidates": 287,
+    "paired_windows": 287,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ROKU": {
+    "signal_candidates": 137,
+    "insufficient_warmup": 6,
+    "paired_windows": 129,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2271,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "gap_or_insufficient_200_bar_warmup",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RTX": {
+    "signal_candidates": 285,
+    "paired_windows": 284,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "RUN": {
+    "signal_candidates": 140,
+    "insufficient_warmup": 8,
+    "paired_windows": 132,
+    "source_bars": 2813,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SBET": {
+    "signal_candidates": 206,
+    "paired_windows": 206,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SBUX": {
+    "signal_candidates": 269,
+    "paired_windows": 268,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SCHW": {
+    "signal_candidates": 265,
+    "paired_windows": 264,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SHOP": {
+    "signal_candidates": 174,
+    "insufficient_warmup": 7,
+    "paired_windows": 166,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2866,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SKHY": {
+    "source_bars": 66,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SLB": {
+    "signal_candidates": 241,
+    "paired_windows": 240,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SMCI": {
+    "signal_candidates": 252,
+    "paired_windows": 250,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 4916,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SMR": {
+    "signal_candidates": 50,
+    "insufficient_warmup": 4,
+    "paired_windows": 45,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1159,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SNAP": {
+    "signal_candidates": 122,
+    "insufficient_warmup": 10,
+    "paired_windows": 111,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2417,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SNDK": {
+    "signal_candidates": 21,
+    "insufficient_warmup": 4,
+    "paired_windows": 15,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 417,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SNOW": {
+    "signal_candidates": 79,
+    "insufficient_warmup": 5,
+    "paired_windows": 73,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1525,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SNPS": {
+    "signal_candidates": 274,
+    "paired_windows": 273,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SOFI": {
+    "signal_candidates": 79,
+    "insufficient_warmup": 9,
+    "paired_windows": 68,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1450,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SOUN": {
+    "signal_candidates": 58,
+    "insufficient_warmup": 6,
+    "paired_windows": 52,
+    "source_bars": 1118,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SPCX": {
+    "source_bars": 84,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SPGI": {
+    "signal_candidates": 252,
+    "paired_windows": 251,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SPOT": {
+    "signal_candidates": 133,
+    "insufficient_warmup": 10,
+    "paired_windows": 123,
+    "source_bars": 2144,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SPY": {
+    "signal_candidates": 292,
+    "paired_windows": 290,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "STX": {
+    "signal_candidates": 242,
+    "paired_windows": 241,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "SWKS": {
+    "signal_candidates": 246,
+    "paired_windows": 246,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "T": {
+    "signal_candidates": 257,
+    "paired_windows": 257,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TEAM": {
+    "signal_candidates": 134,
+    "insufficient_warmup": 4,
+    "paired_windows": 129,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2725,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TER": {
+    "signal_candidates": 260,
+    "paired_windows": 260,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TGT": {
+    "signal_candidates": 254,
+    "paired_windows": 252,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TJX": {
+    "signal_candidates": 271,
+    "paired_windows": 271,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TLN": {
+    "signal_candidates": 46,
+    "insufficient_warmup": 4,
+    "paired_windows": 41,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 843,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TME": {
+    "signal_candidates": 105,
+    "insufficient_warmup": 9,
+    "paired_windows": 96,
+    "source_bars": 1968,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TMO": {
+    "signal_candidates": 248,
+    "paired_windows": 248,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TSLA": {
+    "signal_candidates": 254,
+    "insufficient_warmup": 11,
+    "paired_windows": 242,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 4097,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TSM": {
+    "signal_candidates": 313,
+    "paired_windows": 311,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TTD": {
+    "signal_candidates": 157,
+    "insufficient_warmup": 5,
+    "paired_windows": 151,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2528,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TWLO": {
+    "signal_candidates": 155,
+    "insufficient_warmup": 5,
+    "paired_windows": 148,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2590,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "TXN": {
+    "signal_candidates": 259,
+    "paired_windows": 259,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "U": {
+    "signal_candidates": 83,
+    "insufficient_warmup": 7,
+    "paired_windows": 74,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1523,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "UAL": {
+    "signal_candidates": 258,
+    "paired_windows": 256,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5203,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "UBER": {
+    "signal_candidates": 108,
+    "insufficient_warmup": 7,
+    "paired_windows": 99,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 1866,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "UNH": {
+    "signal_candidates": 271,
+    "paired_windows": 269,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "UNP": {
+    "signal_candidates": 272,
+    "paired_windows": 271,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "UPS": {
+    "signal_candidates": 249,
+    "paired_windows": 248,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "UPST": {
+    "signal_candidates": 72,
+    "insufficient_warmup": 5,
+    "paired_windows": 67,
+    "source_bars": 1461,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "USB": {
+    "signal_candidates": 282,
+    "paired_windows": 281,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "V": {
+    "signal_candidates": 289,
+    "paired_windows": 288,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 4671,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "VRT": {
+    "signal_candidates": 145,
+    "insufficient_warmup": 5,
+    "paired_windows": 138,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 2059,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "VRTX": {
+    "signal_candidates": 257,
+    "paired_windows": 255,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "VST": {
+    "signal_candidates": 144,
+    "insufficient_warmup": 3,
+    "paired_windows": 141,
+    "source_bars": 2518,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "VZ": {
+    "signal_candidates": 257,
+    "paired_windows": 257,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WDAY": {
+    "signal_candidates": 197,
+    "insufficient_warmup": 6,
+    "paired_windows": 190,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 3518,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WDC": {
+    "signal_candidates": 245,
+    "paired_windows": 244,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WFC": {
+    "signal_candidates": 267,
+    "paired_windows": 264,
+    "incomplete_or_gap_window": 3,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WMT": {
+    "signal_candidates": 270,
+    "paired_windows": 269,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WOLF": {
+    "signal_candidates": 8,
+    "insufficient_warmup": 6,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 261,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WTI": {
+    "signal_candidates": 230,
+    "paired_windows": 229,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 5460,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "WULF": {
+    "signal_candidates": 283,
+    "paired_windows": 281,
+    "incomplete_or_gap_window": 2,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "XOM": {
+    "signal_candidates": 229,
+    "paired_windows": 229,
+    "source_bars": 5730,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": true,
+        "reason": "eligible",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "XPEV": {
+    "signal_candidates": 83,
+    "insufficient_warmup": 7,
+    "paired_windows": 75,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 1538,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  },
+  "ZS": {
+    "signal_candidates": 112,
+    "insufficient_warmup": 7,
+    "paired_windows": 104,
+    "incomplete_or_gap_window": 1,
+    "source_bars": 2155,
+    "continuous_segments": 1,
+    "account_eligibility": {
+      "A": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2010-01-04",
+        "end": "2018-04-04"
+      },
+      "B": {
+        "eligible": false,
+        "reason": "missing_period_start",
+        "start": "2018-01-02",
+        "end": "2026-10-12"
+      }
+    }
+  }
+}

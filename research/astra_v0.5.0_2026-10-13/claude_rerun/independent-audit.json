@@ -1,0 +1,784 @@
+{
+  "schemaVersion": "astra-exit-independent-audit/1",
+  "status": "PASS_CONSISTENCY_ONLY",
+  "completedAt": "2026-10-13T15:51:51.521611+00:00",
+  "comparisons": 2383426,
+  "mismatches": 0,
+  "failures": [],
+  "maxAbsoluteNumericDifference": 2.7533531010703882e-14,
+  "tolerance": {
+    "absolute": 2e-10,
+    "relative": 5e-10
+  },
+  "sourceHashes": {
+    "experiment.py": "4bd3892eaeb7c601857ff8a6060a0379895fcce45a8505a04d56596687973353",
+    "protocol.md": "b328e1f83a03325c0e199977426e1c151062cddc375d79fa2e80b41817d8470c",
+    "evidence/results.json": "8198c2350d115404545ca4c80cac86505311ffa0ed00d1bcf7f5101fb2674485",
+    "evidence/episodes.csv.gz": "6d3400f3f81468463ba583d7a2864e14e135d2ce46b0fffe66da9fd571c8c79e",
+    "evidence/paired-dates.csv.gz": "9373b2143aae701e61ada1ae4196c1aa3a7697cf337a5013f54672aef6bdd04a",
+    "evidence/accounts.json": "e31de14e79a735c158dbdb5812356ddaa697373c55d7d60709d2e1b56eb71b03",
+    "/home/claude/work/astra_v050_data/manifest.json": "e8e8e1451ed23f7cb091820c536d16467a6362111020a6b953882176507f2c3f"
+  },
+  "auditCodeSha256": "6233356baf8c353b2d0fe22bf1ea5167e6dff02c0f42214eafa6dca26e7b4916",
+  "episodeRows": 411928,
+  "pairedCohorts": 51491,
+  "sampledCohorts": 1087,
+  "sampledSymbols": 264,
+  "rawPolicyReplays": 8696,
+  "replayedPolicyCosts": "all four policies at cost 0 and 0.001",
+  "selection": "per-symbol first/middle/last plus earliest R1 and E1 branch dates; no performance ranking",
+  "actualNextOpenBranchExamples": {
+    "profit_giveback": 301,
+    "prior10_close_low": 864
+  },
+  "nonzeroOpenGapExamples": {
+    "profit_giveback": 295,
+    "prior10_close_low": 850
+  },
+  "gapExamples": [
+    {
+      "symbol": "AA",
+      "signalDate": "2010-02-01",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2010-04-16",
+      "executionDate": "2010-04-19",
+      "triggerClose": 29.452903747558594,
+      "actualOpen": 29.156465187707692,
+      "gapReturn": -0.01006483307695849
+    },
+    {
+      "symbol": "AA",
+      "signalDate": "2010-12-15",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2011-01-13",
+      "executionDate": "2011-01-14",
+      "triggerClose": 33.591705322265625,
+      "actualOpen": 33.67702230252365,
+      "gapReturn": 0.0025398228354152064
+    },
+    {
+      "symbol": "AA",
+      "signalDate": "2018-05-14",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2018-06-15",
+      "executionDate": "2018-06-18",
+      "triggerClose": 43.0842399597168,
+      "actualOpen": 42.77066975094651,
+      "gapReturn": -0.007278072192139606
+    },
+    {
+      "symbol": "AA",
+      "signalDate": "2026-06-26",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-08-24",
+      "executionDate": "2026-08-25",
+      "triggerClose": 49.38999938964844,
+      "actualOpen": 49.33000183105469,
+      "gapReturn": -0.0012147713977563868
+    },
+    {
+      "symbol": "AAL",
+      "signalDate": "2010-01-22",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2010-03-19",
+      "executionDate": "2010-03-22",
+      "triggerClose": 6.693464279174805,
+      "actualOpen": 6.674608346710025,
+      "gapReturn": -0.0028170662721612727
+    },
+    {
+      "symbol": "AAL",
+      "signalDate": "2010-06-22",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2010-08-04",
+      "executionDate": "2010-08-05",
+      "triggerClose": 9.455698013305664,
+      "actualOpen": 9.436841194448,
+      "gapReturn": -0.001994228118445518
+    },
+    {
+      "symbol": "AAL",
+      "signalDate": "2017-07-28",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2017-10-26",
+      "executionDate": "2017-10-27",
+      "triggerClose": 47.27500915527344,
+      "actualOpen": 47.080499897762444,
+      "gapReturn": -0.004114420303381272
+    },
+    {
+      "symbol": "AAL",
+      "signalDate": "2026-07-09",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-08-14",
+      "executionDate": "2026-08-17",
+      "triggerClose": 14.829999923706055,
+      "actualOpen": 14.770000457763672,
+      "gapReturn": -0.004045817009511454
+    },
+    {
+      "symbol": "AAOI",
+      "signalDate": "2014-07-17",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2014-09-09",
+      "executionDate": "2014-09-10",
+      "triggerClose": 19.100000381469727,
+      "actualOpen": 19.1200008392334,
+      "gapReturn": 0.001047144364618724
+    },
+    {
+      "symbol": "AAOI",
+      "signalDate": "2015-06-04",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2015-07-20",
+      "executionDate": "2015-07-21",
+      "triggerClose": 18.579999923706055,
+      "actualOpen": 18.510000228881836,
+      "gapReturn": -0.0037674755173118246
+    },
+    {
+      "symbol": "AAOI",
+      "signalDate": "2020-11-03",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2020-11-10",
+      "executionDate": "2020-11-11",
+      "triggerClose": 7.400000095367432,
+      "actualOpen": 7.429999828338623,
+      "gapReturn": 0.004054017916833796
+    },
+    {
+      "symbol": "AAOI",
+      "signalDate": "2026-06-29",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-08-19",
+      "executionDate": "2026-08-20",
+      "triggerClose": 122.19000244140625,
+      "actualOpen": 121.91500091552734,
+      "gapReturn": -0.002250605781031645
+    },
+    {
+      "symbol": "AAPL",
+      "signalDate": "2010-02-25",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2010-05-05",
+      "executionDate": "2010-05-06",
+      "triggerClose": 7.656567096710205,
+      "actualOpen": 7.591960381328393,
+      "gapReturn": -0.008438078654018688
+    },
+    {
+      "symbol": "AAPL",
+      "signalDate": "2010-10-28",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2010-11-12",
+      "executionDate": "2010-11-15",
+      "triggerClose": 9.213064193725586,
+      "actualOpen": 9.225922536529186,
+      "gapReturn": 0.0013956640845242951
+    },
+    {
+      "symbol": "AAPL",
+      "signalDate": "2010-10-28",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2011-01-20",
+      "executionDate": "2011-01-21",
+      "triggerClose": 9.950336456298828,
+      "actualOpen": 9.982936259078325,
+      "gapReturn": 0.003276251302925637
+    },
+    {
+      "symbol": "AAPL",
+      "signalDate": "2017-11-29",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2017-12-26",
+      "executionDate": "2017-12-27",
+      "triggerClose": 39.837669372558594,
+      "actualOpen": 39.72789130008167,
+      "gapReturn": -0.0027556349105236633
+    },
+    {
+      "symbol": "AAPL",
+      "signalDate": "2026-06-24",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-07-31",
+      "executionDate": "2026-08-03",
+      "triggerClose": 308.6438293457031,
+      "actualOpen": 309.313234694189,
+      "gapReturn": 0.002168860300576725
+    },
+    {
+      "symbol": "ABBV",
+      "signalDate": "2013-11-05",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2014-01-02",
+      "executionDate": "2014-01-03",
+      "triggerClose": 31.423612594604492,
+      "actualOpen": 31.586846872579116,
+      "gapReturn": 0.005194637551083181
+    },
+    {
+      "symbol": "ABBV",
+      "signalDate": "2015-03-11",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2015-03-24",
+      "executionDate": "2015-03-25",
+      "triggerClose": 37.49198532104492,
+      "actualOpen": 37.77491698156272,
+      "gapReturn": 0.007546457145308327
+    },
+    {
+      "symbol": "ABBV",
+      "signalDate": "2019-12-30",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2020-02-25",
+      "executionDate": "2020-02-26",
+      "triggerClose": 68.8466567993164,
+      "actualOpen": 68.4143387280856,
+      "gapReturn": -0.006279434490057967
+    },
+    {
+      "symbol": "ABBV",
+      "signalDate": "2026-07-09",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-07-31",
+      "executionDate": "2026-08-03",
+      "triggerClose": 250.94000244140625,
+      "actualOpen": 251.4499969482422,
+      "gapReturn": 0.0020323364225478535
+    },
+    {
+      "symbol": "ABNB",
+      "signalDate": "2021-09-29",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2021-11-22",
+      "executionDate": "2021-11-23",
+      "triggerClose": 181.72999572753906,
+      "actualOpen": 181.14300537109375,
+      "gapReturn": -0.0032300135929423934
+    },
+    {
+      "symbol": "ABNB",
+      "signalDate": "2022-03-09",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2022-04-06",
+      "executionDate": "2022-04-07",
+      "triggerClose": 164.66000366210938,
+      "actualOpen": 163.19000244140625,
+      "gapReturn": -0.008927494157716875
+    },
+    {
+      "symbol": "ABNB",
+      "signalDate": "2024-01-18",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2024-04-02",
+      "executionDate": "2024-04-03",
+      "triggerClose": 160.11000061035156,
+      "actualOpen": 158.75,
+      "gapReturn": -0.008494164044513974
+    },
+    {
+      "symbol": "ABNB",
+      "signalDate": "2026-07-08",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2026-08-12",
+      "executionDate": "2026-08-13",
+      "triggerClose": 180.09500122070312,
+      "actualOpen": 180.89999389648438,
+      "gapReturn": 0.004469822428856629
+    },
+    {
+      "symbol": "ABNB",
+      "signalDate": "2026-07-08",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-09-01",
+      "executionDate": "2026-09-02",
+      "triggerClose": 182.5449981689453,
+      "actualOpen": 183.27999877929688,
+      "gapReturn": 0.004026407832173673
+    },
+    {
+      "symbol": "ACHR",
+      "signalDate": "2021-10-21",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2021-12-21",
+      "executionDate": "2021-12-22",
+      "triggerClose": 6.380000114440918,
+      "actualOpen": 6.369999885559082,
+      "gapReturn": -0.0015674339659024206
+    },
+    {
+      "symbol": "ACHR",
+      "signalDate": "2023-06-21",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2023-07-06",
+      "executionDate": "2023-07-07",
+      "triggerClose": 4.309999942779541,
+      "actualOpen": 4.389999866485596,
+      "gapReturn": 0.018561467463607872
+    },
+    {
+      "symbol": "ACHR",
+      "signalDate": "2023-06-21",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2023-09-18",
+      "executionDate": "2023-09-19",
+      "triggerClose": 6.269999980926514,
+      "actualOpen": 6.230000019073486,
+      "gapReturn": -0.006379579262313917
+    },
+    {
+      "symbol": "ACHR",
+      "signalDate": "2026-05-21",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-06-05",
+      "executionDate": "2026-06-08",
+      "triggerClose": 5.539999961853027,
+      "actualOpen": 5.664999961853027,
+      "gapReturn": 0.022563177050670902
+    },
+    {
+      "symbol": "ACN",
+      "signalDate": "2010-01-22",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2010-03-24",
+      "executionDate": "2010-03-25",
+      "triggerClose": 30.650972366333008,
+      "actualOpen": 30.87832539650572,
+      "gapReturn": 0.007417481816088589
+    },
+    {
+      "symbol": "ACN",
+      "signalDate": "2012-09-25",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2012-10-10",
+      "executionDate": "2012-10-11",
+      "triggerClose": 54.21726989746094,
+      "actualOpen": 54.365390090176525,
+      "gapReturn": 0.0027319743874179014
+    },
+    {
+      "symbol": "ACN",
+      "signalDate": "2012-09-25",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2012-10-18",
+      "executionDate": "2012-10-19",
+      "triggerClose": 53.71057891845703,
+      "actualOpen": 53.44552700360722,
+      "gapReturn": -0.0049348176874468574
+    },
+    {
+      "symbol": "ACN",
+      "signalDate": "2017-08-10",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2017-09-29",
+      "executionDate": "2017-10-02",
+      "triggerClose": 116.4765625,
+      "actualOpen": 116.61454898947915,
+      "gapReturn": 0.0011846717186485556
+    },
+    {
+      "symbol": "ACN",
+      "signalDate": "2026-06-23",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-09-08",
+      "executionDate": "2026-09-09",
+      "triggerClose": 179.02999877929688,
+      "actualOpen": 178.61000061035156,
+      "gapReturn": -0.0023459653231806543
+    },
+    {
+      "symbol": "ADBE",
+      "signalDate": "2010-01-05",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2010-03-19",
+      "executionDate": "2010-03-22",
+      "triggerClose": 34.66999816894531,
+      "actualOpen": 34.61000061035156,
+      "gapReturn": -0.00173053249963806
+    },
+    {
+      "symbol": "ADBE",
+      "signalDate": "2010-09-24",
+      "policy": "R1",
+      "reason": "profit_giveback",
+      "triggerDate": "2010-11-18",
+      "executionDate": "2010-11-19",
+      "triggerClose": 28.68000030517578,
+      "actualOpen": 28.65999984741211,
+      "gapReturn": -0.0006973660233909884
+    },
+    {
+      "symbol": "ADBE",
+      "signalDate": "2017-11-29",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2018-02-02",
+      "executionDate": "2018-02-05",
+      "triggerClose": 195.63999938964844,
+      "actualOpen": 194.05999755859375,
+      "gapReturn": -0.008076067450336955
+    },
+    {
+      "symbol": "ADBE",
+      "signalDate": "2026-06-15",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2026-07-22",
+      "executionDate": "2026-07-23",
+      "triggerClose": 218.36000061035156,
+      "actualOpen": 222.17999267578125,
+      "gapReturn": 0.017494010142664385
+    },
+    {
+      "symbol": "ADI",
+      "signalDate": "2010-01-07",
+      "policy": "E1",
+      "reason": "prior10_close_low",
+      "triggerDate": "2010-03-12",
+      "executionDate": "2010-03-15",
+      "triggerClose": 19.995248794555664,
+      "actualOpen": 20.022848683802447,
+      "gapReturn": 0.0013803223720976199
+    }
+  ],
+  "bootstrap": {
+    "ALL|A|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.002107178441851989,
+          0.0025402001057931566
+        ],
+        "return90": [
+          -0.0008888381062836457,
+          -0.00037889323947770215
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.0020999145572929193,
+          0.002580991842897964
+        ],
+        "return90": [
+          -0.0009363993280030031,
+          -0.0003102383319216254
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.002107078526508203,
+          0.0025915528029606723
+        ],
+        "return90": [
+          -0.000992531236123516,
+          -0.00026999798792308303
+        ]
+      }
+    },
+    "ALL|B|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.002657832989003661,
+          0.003283176552555297
+        ],
+        "return90": [
+          -0.0034329367028827066,
+          -0.0010332642184085054
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.0026098692502626486,
+          0.0033008822204327083
+        ],
+        "return90": [
+          -0.0037159739660627624,
+          -0.0009586017728996908
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.0025780351527965838,
+          0.003292111921414911
+        ],
+        "return90": [
+          -0.0037601367493353913,
+          -0.0009859341148721209
+        ]
+      }
+    },
+    "MAG7|A|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.001308298092173442,
+          0.0023834756501399253
+        ],
+        "return90": [
+          -0.0020668435476052316,
+          -0.00046541804137801787
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.0012766549983811261,
+          0.002391657029555813
+        ],
+        "return90": [
+          -0.0020978205778165904,
+          -0.00041449759256722874
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.0013191681181263313,
+          0.002372609872619201
+        ],
+        "return90": [
+          -0.0020458899279197653,
+          -0.0005392996757673021
+        ]
+      }
+    },
+    "MAG7|B|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.0012463073065086638,
+          0.0023278586686012255
+        ],
+        "return90": [
+          -0.00258251372821854,
+          -0.00048503289736377903
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.001334144564319051,
+          0.002248191457746648
+        ],
+        "return90": [
+          -0.002754604669434475,
+          -0.0004015432853885783
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.0013655456293463083,
+          0.0022134982513493592
+        ],
+        "return90": [
+          -0.002888450947221528,
+          -0.00039914821906542796
+        ]
+      }
+    },
+    "NDX|B|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.0022886719773625194,
+          0.003044235427656335
+        ],
+        "return90": [
+          -0.001636196173772476,
+          -0.00036879261782571
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.0022294524281185183,
+          0.0030642890945286726
+        ],
+        "return90": [
+          -0.0017231230218364276,
+          -0.00044716271805860593
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.0022185765985780013,
+          0.0030969038515199503
+        ],
+        "return90": [
+          -0.001681189466791582,
+          -0.0003802567981117161
+        ]
+      }
+    },
+    "NDX|A|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.0018913153620899814,
+          0.002566075832344213
+        ],
+        "return90": [
+          -0.0010624003357461473,
+          -0.00021936485111866935
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.0018608036485852507,
+          0.0025921043258806085
+        ],
+        "return90": [
+          -0.0011473374721272882,
+          -0.00017272651089651249
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.0019029678311380535,
+          0.0026172246231608836
+        ],
+        "return90": [
+          -0.0011870085691254148,
+          -0.0001327744187664606
+        ]
+      }
+    },
+    "IDX|A|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.00045717812315996414,
+          0.0013700694359590703
+        ],
+        "return90": [
+          -0.001869601798779074,
+          -0.00035764623813311087
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.000473951001130421,
+          0.0013457272043014704
+        ],
+        "return90": [
+          -0.0019323141023973559,
+          -0.0003159517218317312
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.000525073712171105,
+          0.0012942292632641813
+        ],
+        "return90": [
+          -0.001981480122898244,
+          -0.00023196818240144707
+        ]
+      }
+    },
+    "IDX|B|0.0|R1": {
+      "20": {
+        "valid": 2000,
+        "dd90": [
+          0.00028863376533929845,
+          0.00115589061111694
+        ],
+        "return90": [
+          -0.001558980727221184,
+          -0.0003216972314304841
+        ]
+      },
+      "60": {
+        "valid": 2000,
+        "dd90": [
+          0.0003122480033565389,
+          0.001128470719926464
+        ],
+        "return90": [
+          -0.001670863576908418,
+          -0.0002555104507796439
+        ]
+      },
+      "126": {
+        "valid": 2000,
+        "dd90": [
+          0.000311844146461532,
+          0.001097932775013041
+        ],
+        "return90": [
+          -0.0017180481411005278,
+          -0.00026999341804209183
+        ]
+      }
+    }
+  },
+  "independentVotes": {
+    "A": 0,
+    "B": 0
+  },
+  "reportedNumericalCriteriaPassed": false,
+  "selfTests": {
+    "status": "PASS",
+    "cases": [
+      "R1_next_open_gap",
+      "actual_value_fees",
+      "baseline_priority",
+      "E1_next_open_after_trim_close",
+      "empty_bootstrap"
+    ]
+  },
+  "scopeLimits": [
+    "No import of experiment.py, data_tools.py or vendor signal code.",
+    "Independent top/ATR and 100-unit pending-order replay checks selected cohorts; all CSV group/daily aggregates checked.",
+    "Account group medians checked; full account financing/time-series ledger is not independently replayed by this script.",
+    "Numerical consistency is not evidence of predictive accuracy, causal benefit, identity accuracy, deployability or a 70% win rate.",
+    "Complete-window selection and current-universe biases remain; no new strategy or market backtest is selected."
+  ]
+}
