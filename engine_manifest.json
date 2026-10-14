@@ -1,0 +1,26 @@
+{
+ "protocol": "v2",
+ "frozen_utc": "2026-10-14T17:28:01Z",
+ "main_commit": "a2239289f7f377f27e6b9a5f39dfb28078656c55",
+ "files": {
+  "scripts/astra_ledger.py": "4e77cb2e8d03b4bbbe7131f0e976a69bee6158a12ad1e857d236534f455baf6e",
+  "scripts/astra_trades.py": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2",
+  "scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
+ },
+ "protocol_sha256": "c35fe31d50ed35e9c9a4de46be9124d4eb48d72712632b6143c1dedaf8c3c8bc",
+ "universe_sha256": "1f424e20c57cfb7c00bb42a50e244731f3f35a45adcae58a1327905c6f83708d",
+ "plan": {
+  "min_marks": 300,
+  "min_agree": 60,
+  "min_disagree": 60,
+  "max_sessions": 120,
+  "horizon_sessions": 41,
+  "unresolved_after": 10,
+  "block_sessions": 5,
+  "boot_draws": 2000,
+  "seed": 20261014,
+  "win_gap_pp": 10.0
+ },
+ "cost_per_side": 0.001,
+ "prompt_sha256": "1bfc25e37db6e87414c0301cad6095d1305387f24d5bf057a67e254ff3eeb0cf"
+}
