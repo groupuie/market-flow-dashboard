@@ -328,6 +328,12 @@ def cmd_prep(A):
     bp = os.path.join(base_dir(A.test, asof), "batches", asof + ".json"); old = L(bp)
     if old and old.get("status") in ("locked", "no_signals"):
         print(json.dumps({"asof": asof, "已完成": old["status"]}, ensure_ascii=False)); return
+    pp0 = os.path.join(base_dir(A.test, asof), "pending", asof + ".json")
+    if old and old.get("status") == "pending_verdict" and os.path.exists(pp0) and fsha(pp0) == old.get("pending_sha256"):
+        P0 = L(pp0)   # 第一次做好的資料包已經推上去了 → 沿用,不重做(資料包以第一次 commit 的為準)
+        print(json.dumps({"asof": asof, "買點": P0["n"], "status": "pending_verdict", "pending": pp0,
+                          "verdicts 要寫到": pp0.replace(os.sep + "pending" + os.sep, os.sep + "verdicts" + os.sep),
+                          "截止(隔天開盤,UTC)": P0["deadline_utc"], "失敗": len(P0.get("fail") or {}), "note": "沿用已推上去的資料包"}, ensure_ascii=False)); return
     if not A.test and any(m.get("date") == asof for m in read_marks()):
         print(json.dumps({"asof": asof, "已完成": "marks.jsonl 已有這天"}, ensure_ascii=False)); return
     U, usha = universe()
