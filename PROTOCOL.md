@@ -29,7 +29,7 @@
 - 只能用資料包裡的資料和一般市場知識;**不上網搜尋、不看 asof 之後的價格,也不看 `summary.md` / `scores.json` / `marks.jsonl`**(排程的提示詞 `prompt_v2.md` 寫死這一點;指紋在 `engine_manifest.json`)
 - 模型:排程設定的模型 ID(判讀檔要寫 `model`;模型別名會隨時間變,每筆都記下,分開報不同模型)
 - `lock` 的嚴格檢查:命令、pending、verdicts 的 asof 一致;id 一對一、不重複、都是那一天;v 只能 agree / disagree;why 不空白;p 在 0–1;pending 指紋和批次紀錄相同。通過才寫進 `marks.jsonl`(每筆含 pending / verdicts / 日 K / 凍結檔的 SHA-256、模型、本機鎖定時間)
-- **截止 = 下一個交易日 09:30 美東**(照交易日曆,不只跳週末)。**是否「晚了」以遠端收件時間為準**:lock 推上 GitHub 後,向 GitHub 事件 API 拿這個 commit 的 PushEvent 時間,寫進 `receipts/<asof>.json`;拿不到就標 `verified: false`、晚不晚用本機時間並標 unverified。晚鎖的筆保留,但不算進主判定
+- **截止 = 下一個交易日 09:30 美東**(照交易日曆,不只跳週末)。**是否「晚了」以遠端收件時間為準**:lock 推上 GitHub 後,GitHub 會為這次 push 自動建立一個 `ledger-receipt` workflow run(分支上的 `.github/workflows/ledger-receipt.yml`,什麼都不做、沒有 secret),它的 `created_at` 就是 GitHub 收到 push 的時間,寫進 `receipts/<asof>.json`(備援:事件 API 的 PushEvent 時間);拿不到就標 `verified: false`、晚不晚用本機時間並標 unverified。晚鎖的筆保留,但不算進主判定
 - `test/` 底下的是試跑,不算
 
 ## 4. 判定(事先寫死,只做一次)
@@ -47,7 +47,7 @@
 ## 5. 限制(先講清楚)
 - 同一天的點彼此有關,連續幾天的點也有關(20 / 40 天持有重疊);所以用「同日同類配對 + 區塊重抽」。區塊長度 5 是事先定的,不會事後改
 - 事後補的大盤恐慌值(判讀時 regime.json 還沒更新到那天)只標 `panic_sc_filled_after`,不當成判讀時看過的資訊
-- Git 的 commit 時間可以自填,所以不當證據;證據是 GitHub 事件 API 的收件時間(第三方)。它不是絕對不可竄改,但能被任何人查
+- Git 的 commit 時間可以自填,所以不當證據;證據是 GitHub 建立 workflow run 的時間(第三方)。它不是絕對不可竄改,但能被任何人在 Actions 頁面查到
 - 這是「這個模型在這個資料包上的判斷」,不是人的盤感;模型版本可能隨時間改變
 
 ## 6. 程式與凍結
