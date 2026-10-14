@@ -1,9 +1,9 @@
 {
  "protocol": "v2",
- "frozen_utc": "2026-10-14T17:28:01Z",
- "main_commit": "a2239289f7f377f27e6b9a5f39dfb28078656c55",
+ "frozen_utc": "2026-10-14T17:29:19Z",
+ "main_commit": "39e730f6755295ed84a6b13d7c7977e731ebd0b0",
  "files": {
-  "scripts/astra_ledger.py": "4e77cb2e8d03b4bbbe7131f0e976a69bee6158a12ad1e857d236534f455baf6e",
+  "scripts/astra_ledger.py": "c9290b0b81687a7ed41243fa94763154a72d99b1dc4fdcb1904ba3f17d7e0c55",
   "scripts/astra_trades.py": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2",
   "scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
  },
