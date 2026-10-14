@@ -1,0 +1,24 @@
+{
+  "candidateSha256": "e8d1ffb6dced3ff34ee0e732f77a368aa197601410fac9ce75bc4c795c84cb4d",
+  "r6LogSha256": "147740ce903ab1b4e29354d2edcfc9f87f12fdc9afe8567c615d4ab9bfa2ffa1",
+  "progressLogTickers": [
+    "SPY",
+    "CAH",
+    "EOG",
+    "IVZ",
+    "NTAP",
+    "SPG",
+    "ZBH"
+  ],
+  "confirmedExecutedOverlap": [
+    "CAH",
+    "EOG",
+    "IVZ",
+    "NTAP",
+    "SPG",
+    "ZBH"
+  ],
+  "confirmedExecutedOverlapCount": 6,
+  "completeExecutedRosterKnown": false,
+  "stockReturnsCalculated": false
+}

@@ -1,0 +1,310 @@
+{
+  "createdAt": "2026-10-14T14:18:05.758026+00:00",
+  "status": "POST_HOC_OLD_UNIVERSE_DESCRIPTIVE_NOT_A_PASS_TEST",
+  "period": [
+    "2021-03-17",
+    "2026-07-31"
+  ],
+  "manifestSha256": "a5cfada0b67deec9de6cf9a467c517e991609ff621ad3169dde5340256a56bf8",
+  "regimeSha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+  "universeN": 266,
+  "calendarN": 1350,
+  "costPerSide": 0.001,
+  "fixedOpenIntervals": 19,
+  "bootstrap": {
+    "block": 126,
+    "draws": 2000,
+    "seed": 20261014,
+    "rng": "numpy.default_rng",
+    "interval": 0.95,
+    "zeroDaysRetained": true,
+    "multipleTestingAdjusted": false
+  },
+  "gapExclusions": [],
+  "identicalTradeAlgebraExampleMaxDifference": 0.0,
+  "identicalTradeCheckScope": "Algebraic identity only, not an independent market replay.",
+  "officialSnapshotComparison": {
+    "strong": {
+      "signal": {
+        "nDifference": 0,
+        "meanDifference": -4.916008336519617e-09
+      },
+      "baseline": {
+        "nDifference": 0,
+        "meanDifference": -1.6262796734278773e-09
+      }
+    },
+    "other": {
+      "signal": {
+        "nDifference": 0,
+        "meanDifference": -4.5079551549975783e-10
+      },
+      "baseline": {
+        "nDifference": 0,
+        "meanDifference": 1.9265986375693878e-10
+      }
+    }
+  },
+  "results": {
+    "strong": {
+      "dates": 106,
+      "contiguousRuns": 34,
+      "byYear": {
+        "2021": 5,
+        "2022": 62,
+        "2023": 17,
+        "2024": 2,
+        "2025": 13,
+        "2026": 7
+      },
+      "legacyGrossSignalB0": {
+        "n": 2193,
+        "mean": 0.05030132355080376,
+        "win": 0.7004103967168263,
+        "meanWin": 0.11203756665135767,
+        "meanLoss": -0.09489846363989665,
+        "payoff": 1.1806046415724638,
+        "median": 0.035965831767169165,
+        "p05": -0.17066590233177867,
+        "expectedShortfall05": -0.2952194201583631
+      },
+      "legacyGrossBaselineFixed19": {
+        "n": 25873,
+        "mean": 0.03469662399591792,
+        "win": 0.5867893170486608,
+        "meanWin": 0.1281763047452438,
+        "meanLoss": -0.09833648273882806,
+        "payoff": 1.3034460982875231,
+        "median": 0.024359817059727007,
+        "p05": -0.20191508376460673,
+        "expectedShortfall05": -0.28994227903858644
+      },
+      "legacyNetSignalB0": {
+        "n": 2193,
+        "mean": 0.048202819407845224,
+        "win": 0.6908344733242134,
+        "meanWin": 0.11135099788828093,
+        "meanLoss": -0.09290262365684517,
+        "payoff": 1.198577537482457,
+        "median": 0.033895969965436645,
+        "p05": -0.17232291351593085,
+        "expectedShortfall05": -0.29662757316503957
+      },
+      "legacyNetBaselineFixed19": {
+        "n": 25873,
+        "mean": 0.03262929807384826,
+        "win": 0.5802187608704055,
+        "meanWin": 0.12735872324890396,
+        "meanLoss": -0.09830506623219504,
+        "payoff": 1.2955458770363333,
+        "median": 0.02231314409856866,
+        "p05": -0.2035096590218202,
+        "expectedShortfall05": -0.291360975783764
+      },
+      "netFixed19Signal": {
+        "n": 2145,
+        "mean": 0.039259493388008784,
+        "win": 0.6046620046620047,
+        "meanWin": 0.12481508193659842,
+        "meanLoss": -0.09159616504067133,
+        "payoff": 1.3626671147332088,
+        "median": 0.030558362141968276,
+        "p05": -0.1789421803450065,
+        "expectedShortfall05": -0.2723257084683278
+      },
+      "pairedDateCount": 103,
+      "excludedPairDates": [
+        "2022-03-04",
+        "2022-06-22",
+        "2022-06-29"
+      ],
+      "meanB0HoldIntervals": 19.51981351981352,
+      "fixed19_same_date_all_date_equal": -0.011268838599609957,
+      "bootstrap": {
+        "legacy_pooled_b0_minus_fixed19_all": {
+          "mean": 0.015573521333996962,
+          "ci95": [
+            -0.007821413208785103,
+            0.041652209712543034
+          ],
+          "validDraws": 2000
+        },
+        "fixed19_same_date_non_signal_date_equal": {
+          "mean": -0.01053513085823718,
+          "ci95": [
+            -0.022566061436655932,
+            0.0020980207508688314
+          ],
+          "validDraws": 2000
+        },
+        "fixed19_same_date_non_signal_signal_weighted": {
+          "mean": 0.008939682478492873,
+          "ci95": [
+            -0.001706644308644952,
+            0.01997017852475891
+          ],
+          "validDraws": 2000
+        },
+        "same_b0_rule_same_date_non_signal_date_equal": {
+          "mean": -0.015161485764303454,
+          "ci95": [
+            -0.04869489318252696,
+            0.006350302998582746
+          ],
+          "validDraws": 2000
+        }
+      }
+    },
+    "other": {
+      "dates": 1244,
+      "contiguousRuns": 35,
+      "byYear": {
+        "2021": 197,
+        "2022": 189,
+        "2023": 233,
+        "2024": 250,
+        "2025": 237,
+        "2026": 138
+      },
+      "legacyGrossSignalB0": {
+        "n": 18624,
+        "mean": 0.01789636381297539,
+        "win": 0.5804338487972509,
+        "meanWin": 0.09834246109052135,
+        "meanLoss": -0.09363358028428048,
+        "payoff": 1.0502905132105838,
+        "median": 0.012876552621424175,
+        "p05": -0.2176241968231048,
+        "expectedShortfall05": -0.3294289129541724
+      },
+      "legacyGrossBaselineFixed19": {
+        "n": 306494,
+        "mean": 0.019416497463506856,
+        "win": 0.5262125849119396,
+        "meanWin": 0.1230565400496012,
+        "meanLoss": -0.0958339956148035,
+        "payoff": 1.284059370165639,
+        "median": 0.006205310693855215,
+        "p05": -0.21222822983894665,
+        "expectedShortfall05": -0.3001684188560513
+      },
+      "legacyNetSignalB0": {
+        "n": 18624,
+        "mean": 0.015862604844318208,
+        "win": 0.5691580756013745,
+        "meanWin": 0.09807201790992019,
+        "meanLoss": -0.09273906246567443,
+        "payoff": 1.0575049531713743,
+        "median": 0.010852823245557364,
+        "p05": -0.2191873852410405,
+        "expectedShortfall05": -0.3307687153258923
+      },
+      "legacyNetBaselineFixed19": {
+        "n": 306494,
+        "mean": 0.01737970126477869,
+        "win": 0.518222216421855,
+        "meanWin": 0.12269054404465438,
+        "meanLoss": -0.09589745724867241,
+        "payoff": 1.2793930888751786,
+        "median": 0.004194910472688829,
+        "p05": -0.21380219940969794,
+        "expectedShortfall05": -0.30156668375344176
+      },
+      "netFixed19Signal": {
+        "n": 18345,
+        "mean": 0.016778065557888522,
+        "win": 0.517361678931589,
+        "meanWin": 0.11851079765298832,
+        "meanLoss": -0.09227381611306158,
+        "payoff": 1.2843383166008762,
+        "median": 0.004005515926621017,
+        "p05": -0.20570232818118533,
+        "expectedShortfall05": -0.29256646641469225
+      },
+      "pairedDateCount": 1217,
+      "excludedPairDates": [
+        "2021-07-27",
+        "2021-10-08",
+        "2021-12-27",
+        "2021-12-28",
+        "2022-02-04",
+        "2022-03-03",
+        "2022-03-21",
+        "2022-03-22",
+        "2022-06-28",
+        "2022-07-08",
+        "2022-07-22",
+        "2022-07-29",
+        "2022-08-15",
+        "2022-10-05",
+        "2022-10-06",
+        "2022-10-19",
+        "2023-04-04",
+        "2023-11-03",
+        "2023-11-06",
+        "2024-03-22",
+        "2024-04-24",
+        "2024-05-16",
+        "2024-08-19",
+        "2025-04-15",
+        "2025-04-16",
+        "2025-05-14",
+        "2025-05-19"
+      ],
+      "meanB0HoldIntervals": 19.117961297356228,
+      "fixed19_same_date_all_date_equal": -0.0003829949206662708,
+      "bootstrap": {
+        "legacy_pooled_b0_minus_fixed19_all": {
+          "mean": -0.0015170964204604398,
+          "ci95": [
+            -0.00683508054888602,
+            0.004262789606198832
+          ],
+          "validDraws": 2000
+        },
+        "fixed19_same_date_non_signal_date_equal": {
+          "mean": -0.00034070258905792756,
+          "ci95": [
+            -0.006079251140121764,
+            0.005652904802708716
+          ],
+          "validDraws": 2000
+        },
+        "fixed19_same_date_non_signal_signal_weighted": {
+          "mean": 0.0007275964864350135,
+          "ci95": [
+            -0.0019707648035217013,
+            0.004152741841858306
+          ],
+          "validDraws": 2000
+        },
+        "same_b0_rule_same_date_non_signal_date_equal": {
+          "mean": 0.0021431014126549737,
+          "ci95": [
+            -0.002996574393493162,
+            0.006625469924826519
+          ],
+          "validDraws": 2000
+        }
+      }
+    }
+  },
+  "tests": {
+    "symmetric_cost": "PASS",
+    "identical_trade": "PASS",
+    "date_weights": "PASS",
+    "calendar_zero_days": "PASS",
+    "daily_leverage": "PASS",
+    "base_example": 0.001000000000000112,
+    "leveraged_example": -0.016000000000000014
+  },
+  "limitations": [
+    "Retrospective current universe and regime.",
+    "Existing 266 names and states already inspected.",
+    "Neither intervals nor positive estimates are evidence of independently confirmed alpha.",
+    "No 345-name performance calculated.",
+    "Date-matched groups are not sector/beta matched.",
+    "B0 same-rule control still permits different holding lengths; it is a descriptive policy comparison.",
+    "Two thousand resamples do not create new independent panic episodes."
+  ]
+}
