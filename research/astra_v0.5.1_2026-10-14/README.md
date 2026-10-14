@@ -14,7 +14,7 @@ repo 是公開的,所以拿掉兩處個人資訊:
 | `v0.5.1_…_複核資料補齊.md` | `f179f7416024705c7eaf0aa2bb2b327d6cfa3abe44a5bfb7e22f6711f82c83c9`(108,006 bytes) | `57e5332300f726194a8cf710f04cc074bfb153dfcb3909e243e6410b822884b8`(107,979 bytes) |
 | `astra/compare_snapshots.py` | `5bd71c8ddd7c9575902df3554e3065adf9556e3cbcaa1369abad8ff8812c35af`(= Astra 公布值) | `ea80e25a…`(3,910 bytes) |
 
-- 2026-10-14 13:07 使用者又轉來一份同名 MD(108,007 bytes,SHA-256 `4ddfe97c19ea5eb5228940409cf96447fbc0181193c6077219e5649cb9f7cac6`):和上面的原檔逐行比對,只差 17 行程式碼框符號(`~~~` 改成 ```)和結尾多一個換行,文字與附錄程式內容完全相同,所以沒有另存。
+- 2026-10-14 13:07 使用者又轉來一份同名 MD(108,007 bytes,SHA-256 `4ddfe97c19ea5eb5228940409cf96447fbc0181193c6077219e5649cb9f7cac6`):和上面的原檔逐行比對,只差 16 行程式碼框符號(`~~~` 改成 ```)和結尾多一個換行,文字與附錄程式內容完全相同,所以沒有另存。
 
 ## `astra/`:從 MD 附錄抽出的 7 個檔(原檔 SHA-256 全部和 Astra 公布值相同)
 `freeze.json`(原件,commit `7d36a68f…`)、`protocol.md`(原件,和 Claude v1.7 重建的那份剛好逐位元相同)、`bars_manifest.py`、`economic-bars.csv`(Astra 268 檔純價量指紋)、`independent_accounts.py`、`compare_snapshots.py`、`recompute_interpretation.py`
