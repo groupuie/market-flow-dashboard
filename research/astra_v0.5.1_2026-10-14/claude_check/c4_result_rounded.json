@@ -1,0 +1,65 @@
+{
+ "rounded": true,
+ "signalsInA": {
+  "bot": 39041,
+  "b2": 26584,
+  "top": 43556
+ },
+ "datesDifferent": {
+  "bot": 2,
+  "b2": 0,
+  "top": 5
+ },
+ "differentDatesWithRawTieOnThatDay": {
+  "bot": 0,
+  "b2": 0,
+  "top": 3
+ },
+ "symbolsWithAnyDifference": 6,
+ "symbols": 268,
+ "perSymbol": {
+  "LLY": {
+   "bot": [
+    "2007-01-11"
+   ],
+   "b2": [],
+   "top": []
+  },
+  "MCD": {
+   "bot": [],
+   "b2": [],
+   "top": [
+    "2014-02-26"
+   ]
+  },
+  "MRK": {
+   "bot": [
+    "2017-03-29"
+   ],
+   "b2": [],
+   "top": []
+  },
+  "QQQ": {
+   "bot": [],
+   "b2": [],
+   "top": [
+    "2020-01-24",
+    "2020-01-27"
+   ]
+  },
+  "TMO": {
+   "bot": [],
+   "b2": [],
+   "top": [
+    "2012-12-13"
+   ]
+  },
+  "TSM": {
+   "bot": [],
+   "b2": [],
+   "top": [
+    "2017-11-01"
+   ]
+  }
+ }
+}

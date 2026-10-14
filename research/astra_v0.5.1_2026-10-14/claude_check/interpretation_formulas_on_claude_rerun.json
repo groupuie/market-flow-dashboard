@@ -1,0 +1,500 @@
+{
+  "createdAtUtc": "2026-10-14T02:35:58.578505+00:00",
+  "scope": "Read-only reaggregation of existing frozen v0.5 episodes, not a new strategy backtest or new-stock test.",
+  "sourceVersion": "0.5.0",
+  "ALLDefinition": "All existing study stocks; SPY and QQQ excluded. No outcome-based symbol filter.",
+  "primaryCostPerFill": 0.0,
+  "units": "Returns and MDD are decimals. Multiply differences by 100 for percentage points. Ratios are dimensionless.",
+  "sourceFiles": {
+    "rec/astra-exits-20261013/evidence/episodes.csv.gz": {
+      "sha256": "6d3400f3f81468463ba583d7a2864e14e135d2ce46b0fffe66da9fd571c8c79e",
+      "bytes": 16043683
+    },
+    "rec/astra-exits-20261013/evidence/results.json": {
+      "sha256": "8198c2350d115404545ca4c80cac86505311ffa0ed00d1bcf7f5101fb2674485",
+      "bytes": 62600
+    },
+    "rec/astra-exits-20261013/experiment.py": {
+      "sha256": "4bd3892eaeb7c601857ff8a6060a0379895fcce45a8505a04d56596687973353",
+      "bytes": 16517
+    },
+    "rec/astra-exits-20261013/protocol.md": {
+      "sha256": "b328e1f83a03325c0e199977426e1c151062cddc375d79fa2e80b41817d8470c",
+      "bytes": 7983
+    }
+  },
+  "csvRowsRead": 411928,
+  "ALLUniqueSymbolsWithEligibleRows": 262,
+  "summaryComparisons": 40,
+  "maxAbsSummaryDifference": 5.551115123125783e-17,
+  "untriggeredEqualityCheck": {
+    "untriggeredPairs": 45148,
+    "maxAbsReturnDifference": 0.0,
+    "maxAbsMddDifference": 0.0
+  },
+  "formulas": {
+    "deltaReturn": "mean(policy_return - B0_return)",
+    "drawdownReduction": "mean(B0_episode_mdd - policy_episode_mdd)",
+    "R1_or_C50_lessDrawdownPerLostReturn": "drawdownReduction / (-deltaReturn), when both are positive",
+    "E1_addedReturnPerAddedDrawdown": "mean(E1_return - B0_return) / mean(E1_episode_mdd - B0_episode_mdd)",
+    "B0_levelRatio": "mean(B0_return) / mean(B0_episode_mdd); not marginal exposure efficiency",
+    "reportedNearFourArithmetic": "E1_addedReturnPerAddedDrawdown / B0_levelRatio; a ratio of unlike descriptive quantities, NOT an exposure counterfactual",
+    "conditionalIdentity": "All-case R1 difference = P(executed R1) * conditional mean difference, because non-executed R1 equals B0",
+    "exposureNav": "V_w(t) = 1 + w * (V_1(t) - 1), idealized financing-free static scaling with fixed initial equity",
+    "exposureDrawdownGivenPeakAndTrough": "DD_w = w*(P-T)/(1+w*(P-1)); generally not w*DD_1",
+    "trueRange": "max(high-low, abs(high-previousClose), abs(low-previousClose))",
+    "wilderAtr14": "First 14 true ranges arithmetic mean; thereafter ATR_t=(13*ATR_(t-1)+TR_t)/14; signal-day ATR frozen for R1"
+  },
+  "periods": {
+    "A": {
+      "all": {
+        "policies": {
+          "B0": {
+            "n": 21190,
+            "wins": 13406,
+            "positiveReturnFraction": 0.6326569136385087,
+            "meanReturn": 0.015532398400624547,
+            "medianReturn": 0.014891934909124216,
+            "meanEpisodeMdd": 0.06375464240669469,
+            "meanExposure": 0.31380705184386165
+          },
+          "R1": {
+            "n": 21190,
+            "wins": 13561,
+            "positiveReturnFraction": 0.6399716847569609,
+            "meanReturn": 0.014886222389088015,
+            "medianReturn": 0.015553792428842694,
+            "meanEpisodeMdd": 0.06143333864791062,
+            "meanExposure": 0.29941295088448955
+          },
+          "E1": {
+            "n": 21190,
+            "wins": 12895,
+            "positiveReturnFraction": 0.6085417649834828,
+            "meanReturn": 0.01891414741472256,
+            "medianReturn": 0.014561122542216753,
+            "meanEpisodeMdd": 0.06914465520923821,
+            "meanExposure": 0.4041572538818004
+          },
+          "C50": {
+            "n": 21190,
+            "wins": 13406,
+            "positiveReturnFraction": 0.6326569136385087,
+            "meanReturn": 0.007766199200312273,
+            "medianReturn": 0.0074459674545620524,
+            "meanEpisodeMdd": 0.032492897162299035,
+            "meanExposure": 0.1564443549932663
+          }
+        },
+        "pairedVsB0": {
+          "R1": {
+            "n": 21190,
+            "deltaMeanReturn": -0.0006461760115365328,
+            "meanDrawdownReduction": 0.0023213037587840697,
+            "lessDrawdownPerLostReturn": 3.5923706812703773,
+            "addedReturnPerAddedDrawdown": null
+          },
+          "E1": {
+            "n": 21190,
+            "deltaMeanReturn": 0.0033817490140980143,
+            "meanDrawdownReduction": -0.005390012802543525,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": 0.627410200677479
+          },
+          "C50": {
+            "n": 21190,
+            "deltaMeanReturn": -0.007766199200312273,
+            "meanDrawdownReduction": 0.03126174524439565,
+            "lessDrawdownPerLostReturn": 4.025359695015116,
+            "addedReturnPerAddedDrawdown": null
+          }
+        },
+        "baselineMeanReturnDividedByMeanMdd": 0.2436277236337151,
+        "e1IncrementalRatioDividedByB0LevelRatio_NOT_EXPOSURE_COUNTERFACTUAL": 2.5752824486459764
+      },
+      "r1_executed": {
+        "policies": {
+          "B0": {
+            "n": 2594,
+            "wins": 2195,
+            "positiveReturnFraction": 0.846183500385505,
+            "meanReturn": 0.07279261198071472,
+            "medianReturn": 0.05720103960625267,
+            "meanEpisodeMdd": 0.07437397844195738,
+            "meanExposure": 0.498445741699404
+          },
+          "R1": {
+            "n": 2594,
+            "wins": 2350,
+            "positiveReturnFraction": 0.9059367771781033,
+            "meanReturn": 0.06751409629665184,
+            "medianReturn": 0.049694600936987965,
+            "meanEpisodeMdd": 0.055411593457904015,
+            "meanExposure": 0.38086247287554326
+          },
+          "E1": {
+            "n": 2594,
+            "wins": 2152,
+            "positiveReturnFraction": 0.8296067848882035,
+            "meanReturn": 0.07531369581788906,
+            "medianReturn": 0.05788118152151911,
+            "meanEpisodeMdd": 0.07655735864039434,
+            "meanExposure": 0.5565486926401729
+          },
+          "C50": {
+            "n": 2594,
+            "wins": 2195,
+            "positiveReturnFraction": 0.846183500385505,
+            "meanReturn": 0.03639630599035736,
+            "medianReturn": 0.02860051980312639,
+            "meanEpisodeMdd": 0.03916682485053795,
+            "meanExposure": 0.2546436802344884
+          }
+        },
+        "pairedVsB0": {
+          "R1": {
+            "n": 2594,
+            "deltaMeanReturn": -0.005278515684062887,
+            "meanDrawdownReduction": 0.01896238498405337,
+            "lessDrawdownPerLostReturn": 3.5923706812703777,
+            "addedReturnPerAddedDrawdown": null
+          },
+          "E1": {
+            "n": 2594,
+            "deltaMeanReturn": 0.00252108383717434,
+            "meanDrawdownReduction": -0.002183380198436957,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": 1.1546701023390884
+          },
+          "C50": {
+            "n": 2594,
+            "deltaMeanReturn": -0.03639630599035736,
+            "meanDrawdownReduction": 0.03520715359141943,
+            "lessDrawdownPerLostReturn": 0.967327662338783,
+            "addedReturnPerAddedDrawdown": null
+          }
+        },
+        "baselineMeanReturnDividedByMeanMdd": 0.9787376378893489,
+        "e1IncrementalRatioDividedByB0LevelRatio_NOT_EXPOSURE_COUNTERFACTUAL": 1.1797544690619424
+      },
+      "r1_not_executed": {
+        "policies": {
+          "B0": {
+            "n": 18596,
+            "wins": 11211,
+            "positiveReturnFraction": 0.6028715852871586,
+            "meanReturn": 0.007545035848099599,
+            "medianReturn": 0.010926763163064845,
+            "meanEpisodeMdd": 0.06227332611956459,
+            "meanExposure": 0.28805136451942215
+          },
+          "R1": {
+            "n": 18596,
+            "wins": 11211,
+            "positiveReturnFraction": 0.6028715852871586,
+            "meanReturn": 0.007545035848099599,
+            "medianReturn": 0.010926763163064845,
+            "meanEpisodeMdd": 0.06227332611956459,
+            "meanExposure": 0.28805136451942215
+          },
+          "E1": {
+            "n": 18596,
+            "wins": 10743,
+            "positiveReturnFraction": 0.5777048827704883,
+            "meanReturn": 0.011046841082295485,
+            "medianReturn": 0.010037805905869224,
+            "meanEpisodeMdd": 0.06811063968437163,
+            "meanExposure": 0.38289981184376976
+          },
+          "C50": {
+            "n": 18596,
+            "wins": 11211,
+            "positiveReturnFraction": 0.6028715852871586,
+            "meanReturn": 0.0037725179240497993,
+            "medianReturn": 0.005463381581532367,
+            "meanEpisodeMdd": 0.03156193521224033,
+            "meanExposure": 0.14274629897714833
+          }
+        },
+        "pairedVsB0": {
+          "R1": {
+            "n": 18596,
+            "deltaMeanReturn": 0.0,
+            "meanDrawdownReduction": 0.0,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": null
+          },
+          "E1": {
+            "n": 18596,
+            "deltaMeanReturn": 0.0035018052341958855,
+            "meanDrawdownReduction": -0.005837313564807047,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": 0.5999001416179085
+          },
+          "C50": {
+            "n": 18596,
+            "deltaMeanReturn": -0.0037725179240497993,
+            "meanDrawdownReduction": 0.030711390907324256,
+            "lessDrawdownPerLostReturn": 8.140820408443696,
+            "addedReturnPerAddedDrawdown": null
+          }
+        },
+        "baselineMeanReturnDividedByMeanMdd": 0.12115999446718413,
+        "e1IncrementalRatioDividedByB0LevelRatio_NOT_EXPOSURE_COUNTERFACTUAL": 4.951305455699653
+      },
+      "r1ExecutedCount": 2594,
+      "allCount": 21190,
+      "r1ExecutedFraction": 0.1224162340726758,
+      "conditionalDeltaIdentity": {
+        "deltaMeanReturn": {
+          "all": -0.0006461760115365328,
+          "triggerFractionTimesConditional": -0.0006461760115365328
+        },
+        "meanDrawdownReduction": {
+          "all": 0.0023213037587840697,
+          "triggerFractionTimesConditional": 0.0023213037587840697
+        }
+      }
+    },
+    "B": {
+      "all": {
+        "policies": {
+          "B0": {
+            "n": 29717,
+            "wins": 18060,
+            "positiveReturnFraction": 0.6077329474711445,
+            "meanReturn": 0.02314401122516285,
+            "medianReturn": 0.01676968537837964,
+            "meanEpisodeMdd": 0.09858458684620948,
+            "meanExposure": 0.30550093981799736
+          },
+          "R1": {
+            "n": 29717,
+            "wins": 18276,
+            "positiveReturnFraction": 0.6150015142847528,
+            "meanReturn": 0.021061647340099618,
+            "medianReturn": 0.0176796302904505,
+            "meanEpisodeMdd": 0.09560511198084094,
+            "meanExposure": 0.2936030441134001
+          },
+          "E1": {
+            "n": 29717,
+            "wins": 17140,
+            "positiveReturnFraction": 0.5767742369687384,
+            "meanReturn": 0.031393845484281646,
+            "medianReturn": 0.013606041499953259,
+            "meanEpisodeMdd": 0.10779103464105756,
+            "meanExposure": 0.39798302703563015
+          },
+          "C50": {
+            "n": 29717,
+            "wins": 18060,
+            "positiveReturnFraction": 0.6077329474711445,
+            "meanReturn": 0.011572005612581425,
+            "medianReturn": 0.00838484268918993,
+            "meanEpisodeMdd": 0.050845125452253025,
+            "meanExposure": 0.1512470228409661
+          }
+        },
+        "pairedVsB0": {
+          "R1": {
+            "n": 29717,
+            "deltaMeanReturn": -0.002082363885063231,
+            "meanDrawdownReduction": 0.0029794748653685435,
+            "lessDrawdownPerLostReturn": 1.4308137433328911,
+            "addedReturnPerAddedDrawdown": null
+          },
+          "E1": {
+            "n": 29717,
+            "deltaMeanReturn": 0.008249834259118797,
+            "meanDrawdownReduction": -0.009206447794848081,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": 0.8960930907288037
+          },
+          "C50": {
+            "n": 29717,
+            "deltaMeanReturn": -0.011572005612581425,
+            "meanDrawdownReduction": 0.047739461393956455,
+            "lessDrawdownPerLostReturn": 4.125426740378756,
+            "addedReturnPerAddedDrawdown": null
+          }
+        },
+        "baselineMeanReturnDividedByMeanMdd": 0.23476297832710066,
+        "e1IncrementalRatioDividedByB0LevelRatio_NOT_EXPOSURE_COUNTERFACTUAL": 3.8170119373773517
+      },
+      "r1_executed": {
+        "policies": {
+          "B0": {
+            "n": 3165,
+            "wins": 2615,
+            "positiveReturnFraction": 0.8262243285939969,
+            "meanReturn": 0.15592053453789237,
+            "medianReturn": 0.08539260470350407,
+            "meanEpisodeMdd": 0.11364619973433443,
+            "meanExposure": 0.477559617843978
+          },
+          "R1": {
+            "n": 3165,
+            "wins": 2831,
+            "positiveReturnFraction": 0.8944707740916271,
+            "meanReturn": 0.1363686838041091,
+            "medianReturn": 0.07505136684416391,
+            "meanEpisodeMdd": 0.08567114299684404,
+            "meanExposure": 0.36584721131838055
+          },
+          "E1": {
+            "n": 3165,
+            "wins": 2567,
+            "positiveReturnFraction": 0.8110584518167456,
+            "meanReturn": 0.16675273851073985,
+            "medianReturn": 0.08547299452780299,
+            "meanEpisodeMdd": 0.11904399752870505,
+            "meanExposure": 0.5457449905664448
+          },
+          "C50": {
+            "n": 3165,
+            "wins": 2615,
+            "positiveReturnFraction": 0.8262243285939969,
+            "meanReturn": 0.07796026726894618,
+            "medianReturn": 0.042696302351751925,
+            "meanEpisodeMdd": 0.06260750028007553,
+            "meanExposure": 0.24712824440986986
+          }
+        },
+        "pairedVsB0": {
+          "R1": {
+            "n": 3165,
+            "deltaMeanReturn": -0.019551850733783262,
+            "meanDrawdownReduction": 0.027975056737490366,
+            "lessDrawdownPerLostReturn": 1.4308137433328911,
+            "addedReturnPerAddedDrawdown": null
+          },
+          "E1": {
+            "n": 3165,
+            "deltaMeanReturn": 0.010832203972847473,
+            "meanDrawdownReduction": -0.005397797794370642,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": 2.006782096236426
+          },
+          "C50": {
+            "n": 3165,
+            "deltaMeanReturn": -0.07796026726894618,
+            "meanDrawdownReduction": 0.0510386994542589,
+            "lessDrawdownPerLostReturn": 0.6546757886063467,
+            "addedReturnPerAddedDrawdown": null
+          }
+        },
+        "baselineMeanReturnDividedByMeanMdd": 1.3719819483834983,
+        "e1IncrementalRatioDividedByB0LevelRatio_NOT_EXPOSURE_COUNTERFACTUAL": 1.4626884111710536
+      },
+      "r1_not_executed": {
+        "policies": {
+          "B0": {
+            "n": 26552,
+            "wins": 15445,
+            "positiveReturnFraction": 0.5816887616752033,
+            "meanReturn": 0.00731704164528981,
+            "medianReturn": 0.012192152416026114,
+            "meanEpisodeMdd": 0.09678924168234554,
+            "meanExposure": 0.28499153502919694
+          },
+          "R1": {
+            "n": 26552,
+            "wins": 15445,
+            "positiveReturnFraction": 0.5816887616752033,
+            "meanReturn": 0.00731704164528981,
+            "medianReturn": 0.012192152416026114,
+            "meanEpisodeMdd": 0.09678924168234554,
+            "meanExposure": 0.28499153502919694
+          },
+          "E1": {
+            "n": 26552,
+            "wins": 14573,
+            "positiveReturnFraction": 0.5488475444410967,
+            "meanReturn": 0.015259057278920837,
+            "medianReturn": 0.007996105276609433,
+            "meanEpisodeMdd": 0.1064496807867564,
+            "meanExposure": 0.38036979207875204
+          },
+          "C50": {
+            "n": 26552,
+            "wins": 15445,
+            "positiveReturnFraction": 0.5816887616752033,
+            "meanReturn": 0.0036585208226449055,
+            "medianReturn": 0.0060960762080131126,
+            "meanEpisodeMdd": 0.04944304966398629,
+            "meanExposure": 0.13981797545223532
+          }
+        },
+        "pairedVsB0": {
+          "R1": {
+            "n": 26552,
+            "deltaMeanReturn": 0.0,
+            "meanDrawdownReduction": 0.0,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": null
+          },
+          "E1": {
+            "n": 26552,
+            "deltaMeanReturn": 0.007942015633631026,
+            "meanDrawdownReduction": -0.009660439104410867,
+            "lessDrawdownPerLostReturn": null,
+            "addedReturnPerAddedDrawdown": 0.8221174573736276
+          },
+          "C50": {
+            "n": 26552,
+            "deltaMeanReturn": -0.003658520822644905,
+            "meanDrawdownReduction": 0.04734619201835924,
+            "lessDrawdownPerLostReturn": 12.941348242520212,
+            "addedReturnPerAddedDrawdown": null
+          }
+        },
+        "baselineMeanReturnDividedByMeanMdd": 0.07559767509392985,
+        "e1IncrementalRatioDividedByB0LevelRatio_NOT_EXPOSURE_COUNTERFACTUAL": 10.874903974919196
+      },
+      "r1ExecutedCount": 3165,
+      "allCount": 29717,
+      "r1ExecutedFraction": 0.10650469428273379,
+      "conditionalDeltaIdentity": {
+        "deltaMeanReturn": {
+          "all": -0.002082363885063231,
+          "triggerFractionTimesConditional": -0.002082363885063231
+        },
+        "meanDrawdownReduction": {
+          "all": 0.0029794748653685435,
+          "triggerFractionTimesConditional": 0.0029794748653685435
+        }
+      }
+    }
+  },
+  "mddNonlinearityCounterexample": {
+    "baselineNav": [
+      1.0,
+      1.2,
+      1.08
+    ],
+    "exposureMultiple": 2.0,
+    "scaledNav": [
+      1.0,
+      1.4,
+      1.1600000000000001
+    ],
+    "baselineMdd": 0.09999999999999987,
+    "actualScaledMdd": 0.17142857142857126,
+    "invalidLinearGuess": 0.19999999999999973
+  },
+  "predeclaredMainResult": {
+    "votes": {
+      "A": 0,
+      "B": 0
+    },
+    "numericalCriteriaPassed": false
+  },
+  "limits": [
+    "Triggered R1 cohort is selected using post-entry outcomes; valid for mechanism description, not an entry-time identifiable sample.",
+    "No confidence intervals for newly described ratios. Correlated overlapping episodes are not independent trials.",
+    "Same-data independent reproduction validates arithmetic/implementation consistency, not a new market edge.",
+    "Episode mean MDD is neither account MDD nor portfolio MDD; mean return / mean episode MDD is not Calmar.",
+    "No actual increased-exposure B0 policy was simulated; financing/margin/position constraints are not modeled here."
+  ]
+}
