@@ -132,26 +132,39 @@ def commit_push(msg, paths):
     raise SystemExit("push 失敗:" + r.stderr[-400:])
 
 
-def remote_receipt(commit, tries=4, wait=20):
-    """GitHub 事件 API 裡這個 commit 的 PushEvent created_at = 遠端收件時間(第三方時間戳;公開 repo 任何人可查)"""
+def _gh_json(path):
+    """GitHub REST(公開 repo;先用 gh,沒有就直接 https)"""
+    try:
+        raw = subprocess.run(["gh", "api", path], capture_output=True, text=True, timeout=60)
+        if raw.returncode == 0:
+            return json.loads(raw.stdout)
+    except Exception:
+        pass
+    return json.loads(AD.http_get("https://api.github.com/" + path, 30, 1, {"User-Agent": "astra-ledger", "Accept": "application/vnd.github+json"}))
+
+
+def remote_receipt(commit, tries=8, wait=15):
+    """GitHub 收到這次 push 的時間(第三方時間戳):
+    1. astra-ledger 分支上的 ledger-receipt workflow run(每次 push GitHub 自己建的;created_at = 收到 push 的時間)
+    2. 備援:事件 API 的 PushEvent created_at(公開 repo 的事件常常延遲幾十分鐘到幾小時,所以只當備援)"""
+    err = ""
     for k in range(tries):
         try:
-            try:
-                raw = subprocess.run(["gh", "api", f"repos/{OWNER_REPO}/events?per_page=50"], capture_output=True, text=True, timeout=60)
-                data = json.loads(raw.stdout) if raw.returncode == 0 else None
-            except Exception:
-                data = None
-            if data is None:
-                data = json.loads(AD.http_get(f"https://api.github.com/repos/{OWNER_REPO}/events?per_page=50", 30, 1,
-                                              {"User-Agent": "astra-ledger", "Accept": "application/vnd.github+json"}))
-            for e in data:
-                if e.get("type") == "PushEvent" and (e.get("payload") or {}).get("head") == commit:
-                    return {"source": "github events api", "event_id": e.get("id"), "remote_received_utc": e.get("created_at"),
-                            "ref": e["payload"].get("ref"), "fetched_utc": ts(utcnow())}
+            runs = _gh_json(f"repos/{OWNER_REPO}/actions/runs?branch={BR}&event=push&per_page=30").get("workflow_runs") or []
+            for r in runs:
+                if r.get("head_sha") == commit:
+                    return {"source": "github actions run (ledger-receipt)", "run_id": r.get("id"), "remote_received_utc": r.get("created_at"),
+                            "run_url": r.get("html_url"), "fetched_utc": ts(utcnow())}
         except Exception as ex:
             err = str(ex)[:120]
         time.sleep(wait)
-    return {"source": "github events api", "remote_received_utc": None, "note": "事件 API 沒找到這個 commit 的 PushEvent", "fetched_utc": ts(utcnow())}
+    try:
+        for e in _gh_json(f"repos/{OWNER_REPO}/events?per_page=100"):
+            if e.get("type") == "PushEvent" and (e.get("payload") or {}).get("head") == commit:
+                return {"source": "github events api", "event_id": e.get("id"), "remote_received_utc": e.get("created_at"), "fetched_utc": ts(utcnow())}
+    except Exception as ex:
+        err = str(ex)[:120]
+    return {"source": "none", "remote_received_utc": None, "note": "workflow run 和事件 API 都沒找到這個 commit" + (";" + err if err else ""), "fetched_utc": ts(utcnow())}
 
 
 # ---------------------------------------------------------------- 小工具
