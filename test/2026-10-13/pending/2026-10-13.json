@@ -1,18 +1,21 @@
 {
  "asof": "2026-10-13",
- "version": "v1",
- "gen_utc": "2026-10-14T16:08:00Z",
+ "protocol": "v2",
+ "gen_utc": "2026-10-14T17:28:25Z",
  "deadline_utc": "2026-10-14T13:30:00Z",
  "universe_sha256": "1f424e20c57cfb7c00bb42a50e244731f3f35a45adcae58a1327905c6f83708d",
  "n_universe": 268,
+ "n_fresh": 268,
  "fail": {},
  "test": true,
+ "engine_manifest_sha256": "458c9f7a4a6d941c58656e583dac7ed7ec90b3a8fd5442d7ac92824b957ff523",
  "n": 8,
  "marks": [
   {
    "sym": "AMD",
    "date": "2026-10-13",
    "kind": "底",
+   "type": "stock",
    "why": "RSI2 5、RSI2 10",
    "close": 605.53,
    "chg1": 1.9,
@@ -76,8 +79,11 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:AMD",
@@ -88,6 +94,7 @@
    "sym": "ANET",
    "date": "2026-10-13",
    "kind": "回",
+   "type": "stock",
    "why": "收盤 7 天最低、在 50/200 日線上(上行中的回檔)",
    "close": 204.52,
    "chg1": -3.02,
@@ -151,8 +158,11 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:ANET",
@@ -163,6 +173,7 @@
    "sym": "BBAI",
    "date": "2026-10-13",
    "kind": "底",
+   "type": "stock",
    "why": "RSI2 0、碰布林下緣、RSI2 1",
    "close": 2.39,
    "chg1": 3.91,
@@ -226,8 +237,11 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:BBAI",
@@ -238,6 +252,7 @@
    "sym": "DE",
    "date": "2026-10-13",
    "kind": "底",
+   "type": "stock",
    "why": "碰布林下緣、RSI2 2",
    "close": 650.0,
    "chg1": 2.75,
@@ -301,18 +316,22 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:DE",
    "style": "b",
-   "bars_sha256": "3e70da138b9d7aebbf801376a809383d9f94e4f732ddd3b0de4b9b056a1a4954"
+   "bars_sha256": "3887b856adfad1f583f54d82a658a8e9bea13ee7ecfe995f3c925a0aa917f591"
   },
   {
    "sym": "PANW",
    "date": "2026-10-13",
    "kind": "回",
+   "type": "stock",
    "why": "收盤 7 天最低、在 50/200 日線上(上行中的回檔)",
    "close": 397.03,
    "chg1": -1.68,
@@ -376,8 +395,11 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:PANW",
@@ -388,6 +410,7 @@
    "sym": "QCOM",
    "date": "2026-10-13",
    "kind": "底",
+   "type": "stock",
    "why": "RSI2 3、RSI2 5",
    "close": 176.86,
    "chg1": 1.39,
@@ -451,18 +474,22 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:QCOM",
    "style": "b",
-   "bars_sha256": "67aebe6807244b12ddba0080197abaf36766b1d8a21cc8fff82ad5da29010526"
+   "bars_sha256": "1fe86e984d3f38908cfbd72bccd253885385fd2a3db407fd3087002c7524e94d"
   },
   {
    "sym": "TXN",
    "date": "2026-10-13",
    "kind": "底",
+   "type": "stock",
    "why": "RSI2 7",
    "close": 287.85,
    "chg1": 2.17,
@@ -526,18 +553,22 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:TXN",
    "style": "b",
-   "bars_sha256": "266bb2c173a3d61c02d5fc4589423a67f3eb5a0fd14267ada0a2d270ebc6f0e0"
+   "bars_sha256": "a3c51e5719adf24d90c6f65dbbe8c33adb5f983605b7a1e7c60097994ecdbe7c"
   },
   {
    "sym": "VZ",
    "date": "2026-10-13",
    "kind": "底",
+   "type": "stock",
    "why": "RSI2 7、碰布林下緣",
    "close": 43.53,
    "chg1": 1.75,
@@ -601,13 +632,16 @@
     },
     "panic": {
      "sc": null,
+     "note": "regime.json 還沒更新到這天(判讀時沒有這個資訊;事後補的值會另標)",
      "src_asof": "2026-10-12",
-     "note": "regime.json 還沒更新到這天"
+     "src_gen": "2026-10-14T01:24Z",
+     "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
+     "fetched_utc": "2026-10-14T17:28:22Z"
     }
    },
    "id": "2026-10-13:VZ",
    "style": "b",
-   "bars_sha256": "7b7ca24ce0649e0874211de22ddada7512f888740e313237b748ebb88fdb986b"
+   "bars_sha256": "c9fb45c65accec25a56d15b4aee0fc1e4633af77fc607b45f36498c43b28cf11"
   }
  ]
 }
