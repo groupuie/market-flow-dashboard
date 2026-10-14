@@ -2,17 +2,21 @@
  "asof": "2026-10-13",
  "protocol": "v2",
  "status": "pending_verdict",
- "updated_utc": "2026-10-14T17:28:25Z",
+ "updated_utc": "2026-10-14T17:28:44Z",
  "test": true,
  "n": 8,
  "n_fresh": 268,
  "n_fail": 0,
- "pending_sha256": "9ae0133bdaf9fc891061c84308dc2d78cd7a3e41b4924f0128f6e35a002f486c",
+ "pending_sha256": "c08af9ba168f2081cc37a81ae0e5c6c0dda0141066c179a82bc40be7913081a6",
  "deadline_utc": "2026-10-14T13:30:00Z",
  "history": [
   {
    "status": "pending_verdict",
    "utc": "2026-10-14T17:28:25Z"
+  },
+  {
+   "status": "pending_verdict",
+   "utc": "2026-10-14T17:28:44Z"
   }
  ]
 }

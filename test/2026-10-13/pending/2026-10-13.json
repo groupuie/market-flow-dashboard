@@ -1,7 +1,7 @@
 {
  "asof": "2026-10-13",
  "protocol": "v2",
- "gen_utc": "2026-10-14T17:28:25Z",
+ "gen_utc": "2026-10-14T17:28:44Z",
  "deadline_utc": "2026-10-14T13:30:00Z",
  "universe_sha256": "1f424e20c57cfb7c00bb42a50e244731f3f35a45adcae58a1327905c6f83708d",
  "n_universe": 268,
@@ -83,7 +83,7 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:AMD",
@@ -162,7 +162,7 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:ANET",
@@ -241,7 +241,7 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:BBAI",
@@ -320,12 +320,12 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:DE",
    "style": "b",
-   "bars_sha256": "3887b856adfad1f583f54d82a658a8e9bea13ee7ecfe995f3c925a0aa917f591"
+   "bars_sha256": "8cc4b1912426b8f89012867b717507460f5ddad2049f8eb232f0d1ceb42990a8"
   },
   {
    "sym": "PANW",
@@ -399,7 +399,7 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:PANW",
@@ -478,12 +478,12 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:QCOM",
    "style": "b",
-   "bars_sha256": "1fe86e984d3f38908cfbd72bccd253885385fd2a3db407fd3087002c7524e94d"
+   "bars_sha256": "eb59ad5b1cdd9ebf399fa0c5bba80e6b76ee78d8969a4ccccd7976e563643e3b"
   },
   {
    "sym": "TXN",
@@ -557,12 +557,12 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:TXN",
    "style": "b",
-   "bars_sha256": "a3c51e5719adf24d90c6f65dbbe8c33adb5f983605b7a1e7c60097994ecdbe7c"
+   "bars_sha256": "477cb4f22e232b7d134075ff0ca5330eb5d13638f8d543dbfe6a2577f2cd3277"
   },
   {
    "sym": "VZ",
@@ -636,12 +636,12 @@
      "src_asof": "2026-10-12",
      "src_gen": "2026-10-14T01:24Z",
      "sha256": "5c61b600aa6a711345e499f30cecbd8e86ecef312aa838d81002137dfec79f6b",
-     "fetched_utc": "2026-10-14T17:28:22Z"
+     "fetched_utc": "2026-10-14T17:28:39Z"
     }
    },
    "id": "2026-10-13:VZ",
    "style": "b",
-   "bars_sha256": "c9fb45c65accec25a56d15b4aee0fc1e4633af77fc607b45f36498c43b28cf11"
+   "bars_sha256": "65f3aff381b53441f62766599962dd8acf94be2e2212f14c4a497a5a9221d0f6"
   }
  ]
 }
