@@ -1,0 +1,27 @@
+# 勝率與盤感(2026-10-14,Claude)
+
+- 起因:使用者希望日 K 只看到「底 買 / 頂 賣」,勝率 80–90%,並認為 AI 的「盤感」可以提高標記正確率
+- 回覆文件:Claude v2.4「盤感與勝率」(專案 claude/ 資料夾)
+- 這裡全部是**描述與示範**,不是候選規則、不是通過判定、不是投資建議;每一項都記在 `research/trials_ledger.md`(CLAUDE-W0 ~ W4)
+
+## 資料
+- W0:Yahoo 日線,2026-10-14 下載,只用到 2026-10-13 收盤(10/14 盤中那根不算);原始檔沒有放進 repo
+- W1–W4:Claude 10/14 重新下載的 Yahoo 快照(Astra v0.5.1 那次),`manifest.json` SHA-256 `10bd1924e07541591a28e7ca07a04346d2126ff879cf2b8277fad9003beeca83`,截止 2026-10-12;網站 266 檔 + SPY、QQQ;還原權值價格(Yahoo adjclose 比例套用到開高低收)
+- 成本:每邊 10 basis point(bp,基點);進出場一律用「訊號後隔天開盤」
+
+## 檔案
+| 程式 | 結果 | 內容 |
+|---|---|---|
+| `w0_score_ai_marks.py` | `w0_ai_marks_score.json` | `data/ai_marks.json` 的 10 筆 Claude 判讀標記前瞻計分(20 / 40 根、對 SPY、是否跌破自己寫的失效價) |
+| `w1_rsi2_classic.py` | `w1_result.json` | 經典「漲勢中跌深買、第一次反彈賣」 |
+| `w2_never_sell.py` | `w2_result.json` | 同一買點,「不賺不賣」(+2% / +5%,最多 250 根);含合成兩倍版 |
+| `w3_exit_sets_winrate.py` | `w3_result.json` | 同一組停利 / 停損下,任何一天買 vs 跌深買點的勝率 |
+| `w4_deep_drop.py` | `w4_result.json` | 指數跌越深才買,固定抱 20 根 |
+
+用法:`python3 -I w0_score_ai_marks.py <Yahoo chart JSON 資料夾> 2026-10-13`;`python3 -I w1_rsi2_classic.py <快照資料夾>`(W2–W4 相同)
+
+## 限制
+- W0 只有 10 筆,而且集中在 2026-08-08 同一天(8 筆),彼此不獨立;不能下結論,只能看出「目前沒有看到盤感優勢」
+- W2 的 266 檔是今天還在的股票(存活者偏差),「不賺不賣」在下市股票上的結果會更差;合成兩倍不含管理費和融資成本
+- W3 的「任何一天」樣本彼此重疊,只比較勝率
+- W4 次數少(6–52 筆),集中在 2008、2020、2022

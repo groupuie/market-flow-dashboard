@@ -1,0 +1,77 @@
+{
+ "QQQ_+2/-8": {
+  "any_day": {
+   "n": 5406,
+   "win": 86.1,
+   "ev": 0.89,
+   "hold": 15.6
+  },
+  "rsi2_signal": {
+   "n": 352,
+   "win": 87.5,
+   "ev": 1.11,
+   "hold": 15.3
+  },
+  "theory_win_no_skill": 80.0
+ },
+ "SPY_+2/-8": {
+  "any_day": {
+   "n": 5406,
+   "win": 87.6,
+   "ev": 0.94,
+   "hold": 21.0
+  },
+  "rsi2_signal": {
+   "n": 317,
+   "win": 87.7,
+   "ev": 0.98,
+   "hold": 19.2
+  },
+  "theory_win_no_skill": 80.0
+ },
+ "QQQ_+5/-5": {
+  "any_day": {
+   "n": 5406,
+   "win": 63.7,
+   "ev": 1.17,
+   "hold": 26.7
+  },
+  "rsi2_signal": {
+   "n": 352,
+   "win": 62.2,
+   "ev": 1.14,
+   "hold": 24.3
+  },
+  "theory_win_no_skill": 50.0
+ },
+ "266_+5/-15": {
+  "any_day": {
+   "n": 1005283,
+   "win": 77.4,
+   "ev": 1.67,
+   "hold": 27.4
+  },
+  "rsi2_signal": {
+   "n": 55862,
+   "win": 78.7,
+   "ev": 1.92,
+   "hold": 29.2
+  },
+  "theory_win_no_skill": 75.0
+ },
+ "266_+10/-10": {
+  "any_day": {
+   "n": 1005229,
+   "win": 59.9,
+   "ev": 2.21,
+   "hold": 36.8
+  },
+  "rsi2_signal": {
+   "n": 55873,
+   "win": 61.4,
+   "ev": 2.53,
+   "hold": 39.6
+  },
+  "theory_win_no_skill": 50.0
+ }
+}
