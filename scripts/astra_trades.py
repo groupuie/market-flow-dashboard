@@ -63,23 +63,28 @@ def trades(W, O, sty):
 
 
 def ret(O, e, x, cost=0.0):
-    """隔天開盤買 → 賣出那天開盤賣;cost = 每邊成本(0.001 = 0.1%)"""
-    if O[e] is None or O[x] is None:
+    """隔天開盤買 → 賣出那天開盤賣;cost = 每邊成本(0.001 = 0.1%)
+    進場價不存在或 ≤ 0(合成槓桿已歸零、不可交易)→ None;賣出價 = 0(持有中歸零)→ −1.0(本金全部損失,留在樣本裡)"""
+    if O[e] is None or not (O[e] > 0) or O[x] is None:
         return None
     return (O[x] * (1 - cost)) / (O[e] * (1 + cost)) - 1
 
 
 def lev_open_close(O, C, L):
-    """每天 L 倍的合成槓桿(不含管理費、融資成本):收盤 = 前收 ×(1 + L × 正股日報酬);開盤用隔夜跳空 × L"""
-    # 單日跌幅 ≥ 1/L(例如 3 倍遇到 −34%)→ 合成價格歸零:之後都當作沒有(None)
-    y = [C[0]]
+    """零下限的每日 L 倍合成(不含管理費、融資、追蹤差;只是假設模型,不是具名 ETF 的真實歷史)
+    收盤 y[i] = y[i−1] × (1 + L × (C[i]/C[i−1] − 1));開盤 yo[i] = y[i−1] × (1 + L × (O[i]/C[i−1] − 1))
+    只用「前一天的合成收盤」和「今天的開盤 / 收盤」各自算:今天的開盤不會因為今天稍後的收盤而改變(Astra v0.7.1 §3.2)
+    淨值 ≤ 0 → 0.0(歸零);之後永遠是 0.0(不可交易)。2026-10-14 第一版把歸零寫成 None、而且開盤看當天收盤 → 已改"""
+    y = [C[0]]; yo = [O[0]]
     for i in range(1, len(C)):
-        v = None if y[-1] is None else y[-1] * (1 + L * (C[i] / C[i - 1] - 1))
-        y.append(v if (v is not None and v > 0) else None)
-    yo = [y[0]]
-    for i in range(1, len(C)):
-        v = None if y[i - 1] is None else y[i - 1] * (1 + L * (O[i] / C[i - 1] - 1))
-        yo.append(v if (v is not None and v > 0 and y[i] is not None) else None)
+        prev = y[i - 1]
+        if not (prev > 0):
+            yo.append(0.0); y.append(0.0); continue
+        o = max(0.0, prev * (1 + L * (O[i] / C[i - 1] - 1)))
+        c = max(0.0, prev * (1 + L * (C[i] / C[i - 1] - 1)))
+        if o <= 0:
+            c = 0.0   # 開盤就歸零 → 當天收盤也是 0
+        yo.append(o); y.append(c)
     return yo, y
 
 
@@ -96,6 +101,15 @@ def _self_test():
     W2 = {"n": 70, "C": [100.0] * 70, "bot": [1], "b2": [], "top": []}
     assert exit_of(W2, [100.0] * 70, 1, STY["c"]) == (41, "到期")
     assert exit_of(W2, [100.0] * 70, 1, STY["b"]) == (21, "到期")
+    # 合成槓桿(Astra v0.7.1 的兩個反例):開盤不看當天收盤;持有中歸零 = −100%,不是消失
+    yo, y = lev_open_close([100, 110], [100, 40], 2)
+    assert abs(yo[1] - 120.0) < 1e-9 and y[1] == 0.0, (yo, y)   # 昨收 100、今開 110 → 2 倍開盤 120;今收 40 → 歸零
+    yo, y = lev_open_close([100, 100, 50], [100, 40, 50], 2)
+    assert yo[1] == 100.0 and y[1] == 0.0 and yo[2] == 0.0 and y[2] == 0.0
+    assert ret(yo, 1, 2) == -1.0                               # 第 1 根開盤買、第 2 根開盤賣:持有中歸零 → −100%
+    assert ret(yo, 2, 2) is None                               # 歸零之後才進場 → 不可交易
+    yo, y = lev_open_close([100, 100, 100], [100, 110, 110], 2)
+    assert yo[1] == 100.0 and abs(y[1] - 120.0) < 1e-9 and abs(yo[2] - 120 * (1 + 2 * (100 / 110 - 1))) < 1e-9
     print("astra_trades self-test ok")
 
 
