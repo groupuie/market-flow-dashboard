@@ -1,0 +1,24 @@
+{
+  "claude-economic-bars.json": {
+    "common": 268,
+    "onlyActual": [],
+    "onlyExpected": [],
+    "equalEconomicHashes": 123,
+    "unequalEconomicHashes": 145,
+    "differentLengthsDates": [],
+    "calendarComparison": "equal",
+    "calendarDatesEqual": true,
+    "warning": "Unequal hashes do not identify the cause or size of price changes."
+  },
+  "claude-redl-1014-economic-bars.json": {
+    "common": 268,
+    "onlyActual": [],
+    "onlyExpected": [],
+    "equalEconomicHashes": 53,
+    "unequalEconomicHashes": 215,
+    "differentLengthsDates": [],
+    "calendarComparison": "equal",
+    "calendarDatesEqual": true,
+    "warning": "Unequal hashes do not identify the cause or size of price changes."
+  }
+}
