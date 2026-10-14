@@ -1,0 +1,24 @@
+{
+ "gen_utc": "2026-10-14T17:31:04Z",
+ "data_asof": "2026-10-13",
+ "protocol": "v2",
+ "status": "COLLECTING",
+ "cohort": {
+  "protocol": "v2",
+  "start": null,
+  "end": null,
+  "end_reason": null
+ },
+ "counts": {
+  "locked": 0,
+  "agree": 0,
+  "disagree": 0,
+  "late": 0,
+  "days": 0,
+  "closed": 0,
+  "open": 0,
+  "no_data": 0,
+  "unresolved": 0
+ },
+ "marks": {}
+}
