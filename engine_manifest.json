@@ -1,13 +1,13 @@
 {
  "protocol": "v2",
- "frozen_utc": "2026-10-14T17:29:19Z",
- "main_commit": "39e730f6755295ed84a6b13d7c7977e731ebd0b0",
+ "frozen_utc": "2026-10-14T17:34:03Z",
+ "main_commit": "1ee593a76cea13ca9c13954b93f40cddad35aace",
  "files": {
-  "scripts/astra_ledger.py": "c9290b0b81687a7ed41243fa94763154a72d99b1dc4fdcb1904ba3f17d7e0c55",
+  "scripts/astra_ledger.py": "3c89150c35fd3c0de17b632d0042d11fd58394a5351d1492195be2c9a0af7c50",
   "scripts/astra_trades.py": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2",
   "scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
  },
- "protocol_sha256": "c35fe31d50ed35e9c9a4de46be9124d4eb48d72712632b6143c1dedaf8c3c8bc",
+ "protocol_sha256": "69fe517545f786d17614d53b96a0b07eeafc5522a120485dedfea7c1c5ec6b71",
  "universe_sha256": "1f424e20c57cfb7c00bb42a50e244731f3f35a45adcae58a1327905c6f83708d",
  "plan": {
   "min_marks": 300,
