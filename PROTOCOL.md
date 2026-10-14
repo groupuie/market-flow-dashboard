@@ -20,10 +20,10 @@
 - 「贏」= 扣成本後報酬 > 0
 
 ## 3. 判讀(Claude)
-- 每天美股收盤後一次(排程:台灣時間週二到週六 08:13),`python3 scripts/astra_ledger.py prep` 產生 `pending/<asof>.json`
+- 每天美股收盤後(排程:台灣時間週二到週六 08:13;同一天 13:13 再跑一次,只在第一次沒成功時才會判讀),`python3 scripts/astra_ledger.py prep` 產生 `pending/<asof>.json`
 - 對每個買點寫 `agree`(同意)或 `disagree`(不同意)+ 一句理由,可選填 `p`(估計會賺的機率 0–1)
   - **同意 = 認為這一筆會賺的機會,比同類買點平常的勝率高**(個股約 55%、指數約 75%);不同意 = 比平常低
-- 只能用資料包裡的資料和一般市場知識;**不上網搜尋、不看 asof 之後的價格**
+- 只能用資料包裡的資料和一般市場知識;**不上網搜尋、不看 asof 之後的價格,也不看 `summary.md` / `scores.json`(不讓過去成績影響判讀)**
 - `python3 scripts/astra_ledger.py lock` 檢查格式(每一點都要有判讀)、加上鎖定時間、模型 ID、資料指紋,寫進 `marks.jsonl`,commit + push
 - **截止 = 下一個交易日 09:30(美東)**;之後才鎖的標 `late`,不算進主判定
 - `test/` 底下的是試跑,不算
