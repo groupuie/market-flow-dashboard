@@ -1,0 +1,14 @@
+# 🧪 Astra 盤感測試:遠端收件回條(PROTOCOL v2 §3)
+# 每次 push 到 astra-ledger,GitHub 自己產生一個 workflow run;它的 created_at 就是 GitHub 收到這次 push 的時間(第三方時間戳)。
+# 什麼都不做、不 checkout、不用任何 secret;只是留下 GitHub 的時間紀錄。scripts/astra_ledger.py lock 之後會查這個 run 寫進 receipts/。
+name: ledger-receipt
+on:
+  push:
+    branches: [astra-ledger]
+permissions: {}
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - run: echo "receipt ${{ github.sha }} $(date -u +%FT%TZ)"
