@@ -18,8 +18,9 @@
 | `w3_exit_sets_winrate.py` | `w3_result.json` | 同一組停利 / 停損下,任何一天買 vs 跌深買點的勝率 |
 | `w4_deep_drop.py` | `w4_result.json` | 指數跌越深才買,固定抱 20 根 |
 | `w5_exit_styles.py` | `w5_result.json` | **網站真正的買點**(▲底 / △回,Claude 10/13 重跑的 51,491 個點)換三種賣法:丙 現狀 B0、甲 勝率優先(+5% / −15% / 60 根)、乙 不套牢(▼頂 / −8% / 20 根;另附 40 根版);個股、SPY/QQQ、合成兩倍;甲另附「任何一天買」基準 |
+| `w6_site_trade_stats.py` | `w6_result.json` | **網站上線用**:2026-10-14 使用者「全做」後的「買 / 賣」(一次一筆;指數 = 丙、其他 = 乙;規則 = `scripts/astra_trades.py` = `index.html` swTradesJS,四檔 202 筆逐筆核對相同);網站四捨五入價格、成本 0 / 0.1%、1–3 倍合成;2021-03 起強 / 一般 → `index.html` 的 `SW_TS` |
 
-用法:`python3 -I w0_score_ai_marks.py <Yahoo chart JSON 資料夾> 2026-10-13`;`python3 -I w1_rsi2_classic.py <快照資料夾>`(W2–W4 相同);`python3 -I w5_exit_styles.py ../astra_v0.5.0_2026-10-13/claude_rerun/episodes.csv.gz <Claude 10/13 快照資料夾>`
+用法:`python3 -I w6_site_trade_stats.py <Claude 10/13 快照資料夾>`;`python3 -I w0_score_ai_marks.py <Yahoo chart JSON 資料夾> 2026-10-13`;`python3 -I w1_rsi2_classic.py <快照資料夾>`(W2–W4 相同);`python3 -I w5_exit_styles.py ../astra_v0.5.0_2026-10-13/claude_rerun/episodes.csv.gz <Claude 10/13 快照資料夾>`
 
 ## 限制
 - W0 只有 10 筆,而且集中在 2026-08-08 同一天(8 筆),彼此不獨立;不能下結論,只能看出「目前沒有看到盤感優勢」
