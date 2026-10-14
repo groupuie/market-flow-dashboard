@@ -1,0 +1,62 @@
+name: av-snapshot
+
+# Alpha Vantage 帶時間戳記的原始快照(2026-10-14 起;說明見 README.md)
+# 晚上(UTC 22:30,美東收盤後):財報行事曆 + 4 檔分析師預估 + EARNINGS 佇列,共 ≤ 19 次查詢
+# 早上(UTC 13:00,週一到週五,美東開盤前):只存財報行事曆,1 次
+# 一天合計 ≤ 20 次,留約 5 次給連接器臨時查詢;沒有設定金鑰時自動略過,不會報錯
+on:
+  schedule:
+    - cron: '30 22 * * *'
+    - cron: '0 13 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'evening(行事曆+預估+EARNINGS)/ morning(只有行事曆)/ selftest(不連網)'
+        required: true
+        default: 'evening'
+        type: choice
+        options: [evening, morning, selftest]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: av-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decide mode
+        id: m
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 13 * * 1-5" ]; then
+            echo "mode=morning" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=evening" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Self-test (always, no network)
+        run: python3 -I scripts/av_snapshot.py --self-test
+
+      - name: Fetch
+        if: steps.m.outputs.mode != 'selftest'
+        env:
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+        run: python3 -I scripts/av_snapshot.py --mode "${{ steps.m.outputs.mode }}"
+
+      - name: Commit
+        if: steps.m.outputs.mode != 'selftest'
+        run: |
+          git config user.name "av-snapshot-bot"
+          git config user.email "av-snapshot-bot@users.noreply.github.com"
+          for p in raw manifest state logs; do if [ -e "$p" ]; then git add -A "$p"; fi; done
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
+          git commit -q -m "snapshot ${{ steps.m.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
