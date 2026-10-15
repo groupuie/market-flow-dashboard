@@ -1348,7 +1348,7 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipQ" title="CTA+技判+資金 整合:K線上直接標 頂K/減碼/出/抄底/買,滑過字看說明" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #8ab4f8;'+(CHIP_Q?'background:rgba(138,180,248,.15);color:#8ab4f8':'color:var(--muted);opacity:.55')+'">📊量化</span>'
-    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="'+(SW_TRADE?'Astra 研究用(預設關):圖上只有「買」和「賣」,一次一筆、每個買一定配一個賣。買 = 跌過頭後轉向,或上行中的回檔(隔天開盤買);賣:指數 SPY/QQQ = 第一個頂,40 天內沒頂就第 40 天;其他 = 頂到了、收盤跌破買價 8%、或第 20 天,先到先賣(隔天開盤賣);金邊 = 那天大盤恐慌條件成立(加碼效果尚未驗證);QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);滑過看過去同樣的點的成績 · 不是投資建議':'Astra 研究用(預設關):▲底/▼頂 = 近 3 天超賣/超買(RSI2、布林、九轉)+ 今天真的轉向;△回檔 = 上行中(50 日線上且向上、200 日線上)收到 7 天最低,下行時只標底。底/回檔買一小份(大盤恐慌的「強」買多一點)、每個頂減一小部分;大盤恐慌時(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)的 底/回 標金色「強」;QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);破底中的第幾個買點標 ②③;滑過看這檔過去的成績 · 不是投資建議')+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
+    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="'+(SW_TRADE?'Astra 研究用(預設關):圖上只有「買」和「賣」,一次一筆、每個買一定配一個賣。買 = 跌過頭後轉向,或上行中的回檔(隔天開盤買);賣:指數 SPY/QQQ = 第一個頂,40 天內沒頂就第 40 天;其他 = 頂到了、收盤跌破買價 8%、或第 20 天,先到先賣(隔天開盤賣);金邊 = 那天大盤恐慌條件成立(加碼效果尚未驗證);灰色賣 = Astra 沒持股時的頂(手上有的話可以減碼);QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);滑過看過去同樣的點的成績 · 不是投資建議':'Astra 研究用(預設關):▲底/▼頂 = 近 3 天超賣/超買(RSI2、布林、九轉)+ 今天真的轉向;△回檔 = 上行中(50 日線上且向上、200 日線上)收到 7 天最低,下行時只標底。底/回檔買一小份(大盤恐慌的「強」買多一點)、每個頂減一小部分;大盤恐慌時(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)的 底/回 標金色「強」;QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);破底中的第幾個買點標 ②③;滑過看這檔過去的成績 · 不是投資建議')+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
@@ -4022,7 +4022,7 @@ function renderCockpit(){
   const XR=0.998;   // 右緣標註錨點(2026-10-12:VbP 改畫在K棒下一層、不再佔右軌 → 不必退讓)
   const XW=1;       // 橫跨全寬的 paper 色帶
   const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:#2dd4bf">加</span> <span style="color:'+QGRAY+'">熱=過熱提醒</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
-  const SWLEG=(_sw&&_sw.n&&_sw.info&&_sw.info.trade)?'<span style="color:'+SW_C.bot+'">買</span> <span style="color:'+SW_C.top+'">賣</span><span style="color:'+MUT2+'">=Astra(<b style="color:'+AX_GOLD+'">金邊</b>=那天大盤恐慌)</span>'
+  const SWLEG=(_sw&&_sw.n&&_sw.info&&_sw.info.trade)?'<span style="color:'+SW_C.bot+'">買</span> <span style="color:'+SW_C.top+'">賣</span><span style="color:'+MUT2+'">=Astra(<b style="color:'+AX_GOLD+'">金邊</b>=那天大盤恐慌;<span style="color:#8b8fa3">灰賣</span>=減碼提醒)</span>'
     :(_sw&&_sw.n)?'<span style="color:'+SW_C.bot+'">▲底 △回檔</span> <span style="color:'+SW_C.top+'">▼頂</span><span style="color:'+MUT2+'">=Astra(<b style="color:'+AX_GOLD+'">強</b>=大盤恐慌)</span>':'';   // 🧪 Astra 圖例(放標題列前段,桌機長標題被切也看得到)
   const ann=[
     MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
@@ -5789,7 +5789,20 @@ function swLayerTrade(R,x,o3,MB,TR){   // 🧪 Astra 買 / 賣 → {traces, n, i
           +' → '+(tom?'明天開盤賣':'隔天 '+md(t.x)+' 開盤賣')+pre
           +'<br>這筆:'+md(t.i)+' 的買(隔天開盤進)→ '+(tom?'明天開盤出':md(t.x)+' 開盤出:'+pc(r))+',抱 '+(t.d-t.e+1)+' 天');}}
   });
+  // 2026-10-15 使用者「都做」(A):Astra 自己沒持股時的 ▼頂 也畫「賣」(灰色)= 減碼提醒;你手上有的話可以減一部分
+  //   (I1 原本只在 Astra 持股時才畫賣,NBIS 9/23 的頂因此被藏起來;使用者的持股不一定跟 Astra 的買同步)
+  const exitTops=new Set(T.filter(t=>t.why==='頂').map(t=>t.d)), gTop=[];
+  const g0=(S==='SPY'||S==='QQQ')?SW_GRP.idx:SW_MAG.has(S)?SW_GRP.mag:SW_NDX.has(S)?SW_GRP.ndx:SW_GRP.all;
+  W.top.forEach(j=>{if(exitTops.has(j))return; gTop.push(j); const ig=di.get(W.D[j]); if(ig==null)return;
+    P.g=P.g||{x:[],y:[],h:[]}; P.g.x.push(x[ig]); P.g.y.push(slot(ig,1));
+    P.g.h.push('<b>賣</b>(減碼提醒)'+md(j)+' · 頂:近 3 天漲過頭('+astraEsc(W.why[j]||'')+'),今天收盤跌破昨天最低 '+f2(W.L[j-1])+pre
+      +'<br>Astra 自己這時候沒有持股;你手上有的話,可以先減一部分(分批,不要一次全賣)'
+      +'<br>頂單獨看不太能預測:之後 10 天比較低的比例 '+g0.s10+'%(隨便一天 '+g0.s10b+'%);但大跌的山頂附近幾乎都有頂('+g0.mtn+'%)');});
   const Tr=[], hl=c=>({bgcolor:'#1d1f24',bordercolor:c,font:{size:11,color:'#e6e9ef'}});
+  const SW_GRAY='#8b8fa3';
+  if(P.g&&P.g.x.length)Tr.push({type:'scatter',mode:'markers+text',x:P.g.x,y:P.g.y,text:P.g.x.map(()=>'賣'),textposition:'top center',
+    marker:{symbol:'triangle-down-open',size:MB?6:7,color:SW_GRAY,line:{width:1.2,color:SW_GRAY}},textfont:{size:MB?9:10,color:SW_GRAY},customdata:P.g.h,
+    hovertemplate:'%{customdata}<extra></extra>',hoverlabel:hl(SW_GRAY),showlegend:false,name:'Astra 賣(減碼提醒)',meta:'swing'});
   if(P.b.x.length)Tr.push({type:'scatter',mode:'markers+text',x:P.b.x,y:P.b.y,text:P.b.x.map(()=>'買'),textposition:'bottom center',
     marker:{symbol:'triangle-up',size:P.b.z,color:SW_C.bot,line:{width:P.b.l,color:P.b.c}},textfont:{size:MB?9:10,color:SW_C.bot},customdata:P.b.h,
     hovertemplate:'%{customdata}<extra></extra>',hoverlabel:hl(SW_C.bot),showlegend:false,name:'Astra 買',meta:'swing'});
@@ -5798,7 +5811,7 @@ function swLayerTrade(R,x,o3,MB,TR){   // 🧪 Astra 買 / 賣 → {traces, n, i
     hovertemplate:'%{customdata}<extra></extra>',hoverlabel:hl(SW_C.top),showlegend:false,name:'Astra 賣',meta:'swing'});
   const pad=(X,Y,s)=>{if(!Y.length)return;let k=0;Y.forEach((v,i2)=>{if(s*v>s*Y[k])k=i2;});
     Tr.push({type:'scatter',mode:'markers',x:[X[k]],y:[Y[k]+s*o3*0.8],marker:{size:1,opacity:0},hoverinfo:'skip',showlegend:false,name:'swpad',meta:'swing'});};
-  pad(P.s.x,P.s.y,1);pad(P.b.x,P.b.y,-1);
+  pad(P.s.x.concat(P.g?P.g.x:[]),P.s.y.concat(P.g?P.g.y:[]),1);pad(P.b.x,P.b.y,-1);
   // 現在的狀態(整段已收盤日K,不只視窗內)
   const L=T.length?T[T.length-1]:null; let state=null;
   if(L){
@@ -5807,10 +5820,12 @@ function swLayerTrade(R,x,o3,MB,TR){   // 🧪 Astra 買 / 賣 → {traces, n, i
     else if(L.x>=n)state={k:'sell',t:L};
     else state={k:'flat',t:L,r:rOf(L)};
   }
+  const lastG=gTop.length?gTop[gTop.length-1]:null;   // 最近一個減碼提醒(Astra 沒持股時的頂)
+  const gInfo=(lastG!=null&&(n-1-lastG)<=20&&(!L||L.d==null||lastG>L.d))?{d:W.D[lastG],ago:n-1-lastG}:null;
   let cn=0,cw=0,cs=0; T.forEach(t=>{const r=rOf(t);if(r==null)return;cn++;if(r>0)cw++;cs+=r;});
   const yrs=Math.max(1,Math.round((Date.parse(W.D[n-1])-Date.parse(W.D[0]))/31557600000));
   let d200=null; try{d200=axD200(S,R);}catch(_){d200=null;}
-  return {traces:Tr,n:P.b.x.length+P.s.x.length,info:{trade:true,state:state,sty:sty,ul:ul,lev:lev,G:G,gs:gs,line:line,D:W.D,
+  return {traces:Tr,n:P.b.x.length+P.s.x.length+(P.g?P.g.x.length:0),info:{trade:true,state:state,gInfo:gInfo,sty:sty,ul:ul,lev:lev,G:G,gs:gs,line:line,D:W.D,
     own:{n:cn,w:cw,avg:cn?cs/cn:null},yrs:yrs,d200:d200,rg:axRegAt(lastDone)}};
 }
 function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + 「ⓘ 詳情」
@@ -5822,13 +5837,14 @@ function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + �
   const BUY='<b style="color:'+SW_C.bot+'">買</b>', SELL='<b style="color:'+SW_C.top+'">賣</b>';
   const WHY={'頂':'頂到了','停損':'跌破停損','到期':'到期'};
   let bar;
-  if(!S0)bar=head+mut('這段日K還沒有買點');
+  if(!S0)bar=head+mut('這段日K還沒有買點')+(I.gInfo?mut(' · ')+'<span style="color:#8b8fa3">'+I.gInfo.d.slice(5)+' 有頂(灰色賣:手上有的話可以減碼)</span>':'');
   else{const t=S0.t;
     if(S0.k==='buy'){const r0=axRegAt(D[t.i]), fresh=r0&&!r0.pv&&r0.d===D[t.i];   // 強只在那天的大盤資料齊全時才寫(Astra v0.7.1 §3.3)
       bar=head+BUY+' '+D[t.i].slice(5)+mut('(今天)')+' → 明天開盤買'+(fresh&&r0.sc>=2?'(<span style="color:'+AX_GOLD+'">強</span>:大盤恐慌條件成立;加碼效果尚未驗證)':(r0&&!fresh?mut('(大盤資料待更新)'):''));}
     else if(S0.k==='hold')bar=head+'持有中('+D[t.i].slice(5)+' 的'+BUY+',第 '+S0.held+' 天)→ '+(t.sp!=null?'收盤跌破 '+f2(t.sp)+(I.ul?'(正股)':'')+' 就賣;沒破就':'')+'等頂,最晚再 '+S0.left+' 天賣';
     else if(S0.k==='sell')bar=head+SELL+' '+D[t.d].slice(5)+mut('(今天,'+(WHY[t.why]||'')+')')+' → 明天開盤賣';
     else bar=head+mut('空手:上一筆 ')+D[t.d].slice(5)+' '+SELL+mut('('+(WHY[t.why]||'')+(S0.r!=null?' '+pc(S0.r):'')+')')+' → 等下一個'+BUY;
+    if(I.gInfo&&(S0.k==='flat'))bar+=mut(' · ')+'<span style="color:#8b8fa3">'+I.gInfo.d.slice(5)+' 有頂(灰色賣:手上有的話可以減碼)</span>';
     if(I.ul)bar+=mut(' · 看正股 '+I.ul);}
   if(rg)bar+=mut(' · 大盤')+(rg.sc>=2?'<b style="color:'+AX_GOLD+'">恐慌 '+rg.sc+'/3</b>':mut('平靜 '+rg.sc+'/3'))+(rg.pv?mut('(資料到 '+rg.d.slice(5)+')'):'');
   if(d2&&d2.cur&&d2.cur.up===0)bar+=mut(' · ')+'<span style="color:#f9a8d4">'+d2.nm+' 在 200 日線下 → 兩倍最多 1/3(可選)</span>';
@@ -5837,6 +5853,7 @@ function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + �
   const pop='<div>'+BUY+' = 跌過頭後轉向,或上行中的回檔 → 隔天開盤買;<b style="color:'+AX_GOLD+'">金邊</b> = 那天大盤恐慌條件成立(3 個至少 2 個);加碼效果尚未驗證,只是市況資訊</div>'
     +'<div>'+SELL+' = '+(sty.stop?'頂到了、收盤跌破買價 8%、或第 20 天,先到先賣(最多 20 天版;停損看收盤、隔天開盤賣,跳空會賠超過 8%)':'第一個頂;40 天內沒頂就第 40 天(指數用的現狀版)')+' → 隔天開盤賣</div>'
     +'<div>一次一筆:賣掉之前不會出新的買;每個買都有預定的賣出規則,還沒賣的顯示「持有中」</div>'
+    +'<div><b style="color:#8b8fa3">灰色賣</b> = Astra 自己沒持股時出現的頂(減碼提醒):你手上有的話可以先減一部分;頂單獨看不太能預測,用途是分批鎖住獲利</div>'
     +'<div class="sphr"></div><div>'+(I.line||'')+'</div>'
     +(gs&&c1?'<div class="spmut">每邊扣 0.1% 成本後(1 倍):勝率 '+(+c1[0]).toFixed(1)+'%、每筆平均 '+((+c1[1])>=0?'+':'')+(+c1[1]).toFixed(2)+'%</div>':'')
     +(I.lev>1&&x1&&gs?'<div class="spmut">正股本身(1 倍):10 次贏 '+Math.round(x1[1]/10)+' 次('+(+x1[1]).toFixed(1)+'%)|贏平均 +'+(+x1[2]).toFixed(1)+'%|輸平均 '+(+x1[3]).toFixed(1)+'%|最慘 '+(+x1[4]).toFixed(1)+'% · 槓桿那行是每天 '+I.lev+' 倍合成的假設模型(不含費用、不是這檔 ETF 的真實歷史)</div>':'')
