@@ -5797,7 +5797,7 @@ function swLayerTrade(R,x,o3,MB,TR){   // 🧪 Astra 買 / 賣 → {traces, n, i
     P.g=P.g||{x:[],y:[],h:[]}; P.g.x.push(x[ig]); P.g.y.push(slot(ig,1));
     P.g.h.push('<b>賣</b>(減碼提醒)'+md(j)+' · 頂:近 3 天漲過頭('+astraEsc(W.why[j]||'')+'),今天收盤跌破昨天最低 '+f2(W.L[j-1])+pre
       +'<br>Astra 自己這時候沒有持股;你手上有的話,可以先減一部分(分批,不要一次全賣)'
-      +'<br>頂單獨看不太能預測:之後 10 天比較低的比例 '+g0.s10+'%(隨便一天 '+g0.s10b+'%);但大跌的山頂附近幾乎都有頂('+g0.mtn+'%)');});
+      +'<br>頂單獨看不太能預測:之後 10 天比較低的比例 '+g0.s10+'%(隨便一天 '+g0.s10b+'%);但遇到大跌(漲 '+(g0===SW_GRP.idx?'15% 又跌 10%':'30% 又跌 20%')+'),山頂附近第一個頂就賣,中位數躲掉 '+g0.mtn+'% 的跌幅');});
   const Tr=[], hl=c=>({bgcolor:'#1d1f24',bordercolor:c,font:{size:11,color:'#e6e9ef'}});
   const SW_GRAY='#8b8fa3';
   if(P.g&&P.g.x.length)Tr.push({type:'scatter',mode:'markers+text',x:P.g.x,y:P.g.y,text:P.g.x.map(()=>'賣'),textposition:'top center',
