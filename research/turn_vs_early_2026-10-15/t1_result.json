@@ -1,0 +1,142 @@
+{
+ "early_oversold|all": {
+  "n": 48048,
+  "win": 54.4,
+  "mean": 1.25,
+  "median": 0.81,
+  "mean_trim1pct": 0.77,
+  "top5_symbols_sum_ret": [
+   [
+    "SBET",
+    2368.0
+   ],
+   [
+    "GME",
+    1910.0
+   ],
+   [
+    "NVDA",
+    794.0
+   ],
+   [
+    "DJT",
+    675.0
+   ],
+   [
+    "KLAC",
+    606.0
+   ]
+  ],
+  "avg_win": 8.3,
+  "avg_loss": -7.1,
+  "p05": -12.5,
+  "stop_rate": 25.7,
+  "mae_median": -3.3,
+  "further_drop_10d_median": -2.7
+ },
+ "early_oversold|sharp": {
+  "n": 2230,
+  "win": 41.1,
+  "mean": 4.18,
+  "median": -6.46,
+  "mean_trim1pct": 1.51,
+  "top5_symbols_sum_ret": [
+   [
+    "GME",
+    2225.0
+   ],
+   [
+    "SBET",
+    1802.0
+   ],
+   [
+    "MARA",
+    498.0
+   ],
+   [
+    "OPEN",
+    395.0
+   ],
+   [
+    "AEHR",
+    271.0
+   ]
+  ],
+  "avg_win": 25.9,
+  "avg_loss": -11.0,
+  "p05": -18.0,
+  "stop_rate": 54.0,
+  "mae_median": -8.3,
+  "further_drop_10d_median": -7.2
+ },
+ "turn_bot|all": {
+  "n": 30613,
+  "win": 53.2,
+  "mean": 0.88,
+  "median": 0.48,
+  "mean_trim1pct": 0.43,
+  "top5_symbols_sum_ret": [
+   [
+    "GME",
+    2330.0
+   ],
+   [
+    "SBET",
+    1388.0
+   ],
+   [
+    "BE",
+    435.0
+   ],
+   [
+    "NVDA",
+    414.0
+   ],
+   [
+    "CRDO",
+    399.0
+   ]
+  ],
+  "avg_win": 7.3,
+  "avg_loss": -6.5,
+  "p05": -12.2,
+  "stop_rate": 22.4,
+  "mae_median": -2.7,
+  "further_drop_10d_median": -2.7
+ },
+ "turn_bot|sharp": {
+  "n": 835,
+  "win": 36.3,
+  "mean": -0.51,
+  "median": -6.16,
+  "mean_trim1pct": -1.19,
+  "top5_symbols_sum_ret": [
+   [
+    "AEHR",
+    137.0
+   ],
+   [
+    "UPST",
+    97.0
+   ],
+   [
+    "RDW",
+    92.0
+   ],
+   [
+    "RUN",
+    88.0
+   ],
+   [
+    "TSLA",
+    87.0
+   ]
+  ],
+  "avg_win": 16.8,
+  "avg_loss": -10.3,
+  "p05": -18.0,
+  "stop_rate": 54.1,
+  "mae_median": -8.3,
+  "further_drop_10d_median": -8.0
+ }
+}
