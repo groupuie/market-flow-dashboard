@@ -1,7 +1,7 @@
 {
- "tests": 68,
+ "tests": 71,
  "all_pass": true,
- "verifier_sha256": "433391aec3d1a8109a0f349e5b8183bd5085397c30f59fa7e94f0b4197ab994f",
+ "verifier_sha256": "67de35793c6e244e91fafb74dbd62304cece9088705212903fae67293ed0dc53",
  "results": [
   {
    "name": "good_friday_2027",
@@ -196,7 +196,7 @@
     "events": 0,
     "rejected_events": 0,
     "no_signals_evidence": {
-     "prep_commit": "1030c987a4fde6973a7db2b358838c641de4e604",
+     "prep_commit": "fd9649736d31bae294e8469dd821b5328c6e5c06",
      "remote_received_utc": "2026-10-16T05:30:00Z"
     }
    }
@@ -291,11 +291,11 @@
    "pass": true,
    "proof": {
     "scripts/astra_data.py": {
-     "loaded_from": "git:c41795f934eb065d75cbebaa5109aa0bf666e03b:scripts/astra_data.py",
+     "loaded_from": "git:a10bccb03cd8ee6bc173669fa36632379cfb0c80:scripts/astra_data.py",
      "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
     },
     "scripts/astra_trades.py": {
-     "loaded_from": "git:c41795f934eb065d75cbebaa5109aa0bf666e03b:scripts/astra_trades.py",
+     "loaded_from": "git:a10bccb03cd8ee6bc173669fa36632379cfb0c80:scripts/astra_trades.py",
      "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
     }
    }
@@ -383,6 +383,11 @@
    "proof": "K 線欄位不合理:2026-10-14"
   },
   {
+   "name": "single_close_change_caught_by_scale_check",
+   "pass": true,
+   "proof": "重疊的 8 個價格找不到共同比例(可行區間 0.99999759 > 0.99785167)→ 不是同一組資料換尺度"
+  },
+  {
    "name": "legacy_draft2_accepted_both_overlap_counterexamples",
    "pass": true,
    "proof": null
@@ -445,7 +450,7 @@
    "name": "missing_agree_uses_minus_100pct",
    "pass": true,
    "proof": {
-    "excl_lb": 0.2000000000000001,
+    "excl_lb": 0.2,
     "minus100_h1": -0.13366666666666657,
     "stress_h1": 0.1993333333333334
    }
@@ -479,7 +484,7 @@
    "pass": true,
    "proof": {
     "h1_pp": 3.0,
-    "h1_lb_pp": 2.9705247832806188,
+    "h1_lb_pp": 2.9696750797693205,
     "win_gap_ad_lb_pp": 100.0
    }
   },
@@ -500,6 +505,40 @@
     50.0,
     50.0
    ]
+  },
+  {
+   "name": "t_quantile_matches_tables",
+   "pass": true,
+   "proof": {
+    "1": 12.706204736174659,
+    "5": 2.570581835636313,
+    "23": 2.0686576104190477,
+    "120": 1.979930405082441
+   }
+  },
+  {
+   "name": "c1_c3_intervals_reported",
+   "pass": true,
+   "proof": {
+    "M1": {
+     "lb_pp": 2.9705247832806188,
+     "ub_pp": 3.028088123139346,
+     "se_pp": null,
+     "df": null
+    },
+    "C1": {
+     "lb_pp": 2.9696750797693205,
+     "ub_pp": 3.0303249202306795,
+     "se_pp": 0.014659226388138925,
+     "df": 23
+    },
+    "C3": {
+     "lb_pp": 2.9814516485148017,
+     "ub_pp": 3.018548351485198,
+     "se_pp": 0.008966370941124896,
+     "df": 23
+    }
+   }
   },
   {
    "name": "undecided_h2_reports_all_modes",
@@ -535,9 +574,9 @@
    "name": "manifest_fixes_id_paths_calendar",
    "pass": true,
    "proof": {
-    "experiment_id": "LV3-20261102-S250-M1-L5-none",
+    "experiment_id": "LV3-20261102-S250-C1-L5-none",
     "end": "2027-10-29",
-    "look_path": "research/ledger_v3/looks/LV3-20261102-S250-M1-L5-none.json"
+    "look_path": "research/ledger_v3/looks/LV3-20261102-S250-C1-L5-none.json"
    }
   },
   {

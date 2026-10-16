@@ -283,6 +283,9 @@ c1 = json.loads(json.dumps(rec)); c1['bars_used'][0][1:5] = [x * 2 for x in c1['
 s1, _, w1 = V.replay(m, c1, SNAP, V.SPEC); ok('inconsistent_overlap_rejected', s1 == 'unreproducible' and '共同比例' in w1, w1)                    # 4.1 反例 1
 c2 = json.loads(json.dumps(rec)); c2['bars_used'][1][4] = V.AD.rp(c2['bars_used'][1][4] * .99)
 s2, _, w2 = V.replay(m, c2, SNAP, V.SPEC); ok('single_close_change_rejected', s2 == 'unreproducible' and ('共同比例' in w2 or '欄位不合理' in w2), w2)                    # 4.1 反例 2
+c3 = json.loads(json.dumps(rec)); hi_, lo_, cl_ = c3['bars_used'][1][2], c3['bars_used'][1][3], c3['bars_used'][1][4]
+c3['bars_used'][1][4] = V.AD.rp(cl_ - 0.4 * (cl_ - lo_)); assert V.valid_bar(c3['bars_used'][1]) and c3['bars_used'][1][4] != cl_                  # 收盤改了但 K 線仍合理
+s3_, _, w3 = V.replay(m, c3, SNAP, V.SPEC); ok('single_close_change_caught_by_scale_check', s3_ == 'unreproducible' and '共同比例' in w3, w3)
 L = legacy(); L.AD, L.AT = V.AD, V.AT
 ok('legacy_draft2_accepted_both_overlap_counterexamples', L.replay(m, c1, SNAP, L.SPEC)[0] == 'closed' and L.replay(m, c2, SNAP, L.SPEC)[0] == 'closed')
 # 4.2:整段 × 0.4 後再四捨五入會把原買點變成不是買點 → 新版不重新選樣
@@ -345,6 +348,13 @@ ok('low_batch_coverage_insufficient', V.decide(strong, [], cal, cfg, coverage=0.
 ok('goog_googl_one_issuer', len({V.issuer(s) for s in ('GOOG', 'GOOGL', 'AAPL')}) == 2)
 e = V.stats(strong, cal, cfg); lhs = e['win_agree_pct'] - e['win_all_pct']; rhs = (1 - e['agree_share']) * (e['win_agree_pct'] - e['win_disagree_pct'])
 ok('h2_identity', abs(lhs - rhs) < 1e-9, (lhs, rhs))
+import math as _m   # 下面 t 分位數的對照值 = scipy 1.18.1 t.ppf(0.975, df)
+ok('t_quantile_matches_tables', all(abs(V.t_quantile(0.975, d) - q) < 1e-8 for d, q in ((1, 12.706204736174694), (5, 2.5705818356363146), (23, 2.0686576104190486), (120, 1.9799304050824402), (10 ** 6, 1.959966356814107))),
+   {d: V.t_quantile(0.975, d) for d in (1, 5, 23, 120)})
+hm = V.stats(strong, cal, dict(V.SPEC))['h1_methods']
+ok('c1_c3_intervals_reported', all(k in hm for k in ('M1', 'M2', 'C1', 'C3')) and hm['C1']['df'] == min(len(cal) // 5, 80) - 1
+   and abs(hm['C1']['lb_pp'] - (V.stats(strong, cal, dict(V.SPEC))['h1_pp'] - hm['C1']['t975'] * hm['C1']['se_pp'])) < 1e-9 and set(hm['C3']['var_components_pp2']) == {'date_blocks', 'issuers', 'intersection'},
+   {m: {k: hm[m].get(k) for k in ('lb_pp', 'ub_pp', 'se_pp', 'df')} for m in ('M1', 'C1', 'C3')})
 ok('undecided_h2_reports_all_modes', V.decide(strong, [], cal, dict(V.SPEC))['decision'] is None and set(V.decide(strong, [], cal, dict(V.SPEC))['decision_by_h2_mode']) == set(V.H2_MODES))
 
 # ---- 8. 唯一一次與正式入口(完整正式流程另見 v3_fullflow.py)
@@ -359,7 +369,7 @@ o3 = run('analyze', '--formal', '--repo', REPO); ok('formal_mode_needs_frozen_ma
 o4 = run('analyze', '--formal', '--repo', REPO, '--today', '2027-12-31'); ok('formal_mode_rejects_overrides', o4.returncode != 0 and '不接受任何覆寫' in (o4.stderr + o4.stdout))
 o5 = run('status', '--repo', REPO); ok('needs_dry_run_or_formal', o5.returncode != 0 and '--dry-run' in (o5.stderr + o5.stdout))
 mf = V.make_manifest('2026-11-02', 250, 'none', '3faf68b7' + '0' * 56, open(os.path.join(HERE, 'v3_verify.py'), 'rb').read(), 1.0)
-ok('manifest_fixes_id_paths_calendar', mf['experiment_id'] == 'LV3-20261102-S250-M1-L5-none' and mf['look_path'].endswith(mf['experiment_id'] + '.json')
+ok('manifest_fixes_id_paths_calendar', mf['experiment_id'] == 'LV3-20261102-S250-C1-L5-none' and mf['look_path'].endswith(mf['experiment_id'] + '.json')
    and mf['end'] == V.add_sessions('2026-11-02', 250) and mf['calendar_sha256'] == V.calendar_fingerprint() and mf['spec']['h2_mode'] == 'none', {k: mf[k] for k in ('experiment_id', 'end', 'look_path')})
 try:
     V.make_manifest('2026-11-02', 180, 'none', 'f' * 64, b'x', 1.0); ok('manifest_rejects_unlisted_choices', False)

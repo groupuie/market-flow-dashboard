@@ -1,0 +1,10 @@
+select syn_random {'M1': (4, 1, -0.001, True), 'M2': (2, 1, -0.002, True), 'C1': (1, 1, -0.001, True), 'C3': (8, 3, -0.001, True)} empSD 0.421 meanSE {'M1': 0.619, 'M2': 0.652, 'C1': 0.619, 'C3': 0.412} 55
+select syn_stock {'M1': (2, 0, -0.001, True), 'M2': (1, 0, -0.003, True), 'C1': (1, 0, -0.001, True), 'C3': (11, 4, -0.001, False)} empSD 0.414 meanSE {'M1': 0.632, 'M2': 0.667, 'C1': 0.632, 'C3': 0.421} 111
+select syn_market {'M1': (0, 2, -0.001, True), 'M2': (0, 1, 0.0, True), 'C1': (0, 1, -0.001, True), 'C3': (9, 9, -0.001, True)} empSD 0.478 meanSE {'M1': 0.648, 'M2': 0.682, 'C1': 0.648, 'C3': 0.454} 169
+select syn_shift_plus1 {'M1': (1, 0, -0.0, True), 'M2': (0, 0, -0.0, True), 'C1': (0, 0, -0.0, True), 'C3': (9, 12, -0.0, False)} empSD 0.44 meanSE {'M1': 0.621, 'M2': 0.654, 'C1': 0.621, 'C3': 0.412} 227
+select syn_shift_minus1 {'M1': (2, 0, -0.002, True), 'M2': (2, 0, -0.002, True), 'C1': (0, 0, -0.002, True), 'C3': (11, 7, -0.002, False)} empSD 0.444 meanSE {'M1': 0.618, 'M2': 0.651, 'C1': 0.618, 'C3': 0.411} 286
+select syn_heavy_random {'M1': (1, 0, 0.001, True), 'M2': (1, 0, 0.001, True), 'C1': (1, 0, 0.001, True), 'C3': (4, 10, 0.001, True)} empSD 0.436 meanSE {'M1': 0.615, 'M2': 0.65, 'C1': 0.615, 'C3': 0.417} 341
+select syn_sparse_random {'M1': (6, 8, -0.002, True), 'M2': (5, 5, -0.002, True), 'C1': (4, 5, -0.002, True), 'C3': (6, 10, -0.002, True)} empSD 0.945 meanSE {'M1': 1.042, 'M2': 1.093, 'C1': 1.042, 'C3': 0.893} 363
+select density_null_alt {'M1': (4, 7, 0.003, True), 'M2': (5, 7, 0.003, True), 'C1': (3, 4, 0.003, True), 'C3': (3, 5, 0.003, True)} empSD 0.395 meanSE {'M1': 0.397, 'M2': 0.398, 'C1': 0.397, 'C3': 0.386} 531
+select density_astra_alt {'M1': (10, 6, -0.003, True), 'M2': (10, 6, -0.003, True), 'C1': (8, 4, -0.003, True), 'C3': (8, 5, -0.003, True)} empSD 0.401 meanSE {'M1': 0.397, 'M2': 0.398, 'C1': 0.397, 'C3': 0.386} 695
+CHOSEN {'method': 'C1', 'date_block': 5}

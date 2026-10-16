@@ -1,0 +1,80 @@
+{
+ "tag": "c345",
+ "scope": "持有 / 觀察窗口的逐日日期序列;不含訊號之前的指標回看期",
+ "common_calendar": {
+  "file": "adjusted/SPY.json",
+  "file_sha256": "dba1d531a9f0d5801c9be2a4f6a249fbbcd4956228c087b501a1dcd9feb20aa0",
+  "manifest_field": "sha256",
+  "matches_manifest": true,
+  "sessions": 5732,
+  "first": "2004-01-02",
+  "last": "2026-10-14",
+  "date_list_sha256": "b958e3adec95ee1427791e9044994e94c26224e6707af17d8c5ea0fa6db19a21",
+  "strictly_increasing_unique": true
+ },
+ "symbol_date_issues": {
+  "FISV": {
+   "calendar_sessions_missing_inside_range": [
+    "2025-11-12"
+   ]
+  }
+ },
+ "P1": {
+  "n_events": 84595,
+  "n_flagged": 1,
+  "events": [
+   {
+    "date": "2025-11-11",
+    "sym": "FISV",
+    "entry": "2025-11-13",
+    "exit": "2025-12-12",
+    "entry_is_next_session": false,
+    "sequence_equal": false,
+    "note": "實際 22 根、日曆 23 天,第一個不同:2025-11-13 vs 2025-11-12",
+    "sharp": false,
+    "ret_net": 0.05771283458253418
+   }
+  ]
+ },
+ "P2_break": {
+  "n_events": 42026,
+  "n_flagged": 0,
+  "events": []
+ },
+ "P2_uptrend": {
+  "n": 830766,
+  "flagged": 0,
+  "by_symbol": {}
+ },
+ "compare_with_s2_endpoint_check": {
+  "P1_events_same_count": true,
+  "P1_flag_sets_equal": true,
+  "P2_break_same_count": true,
+  "P2_break_flag_sets_equal": true,
+  "P2_uptrend_same_count": true,
+  "P2_uptrend_flag_counts_equal": true
+ },
+ "constructed_fixtures": {
+  "complete": {
+   "s2_endpoint_gap": 0,
+   "s2_accepts": true,
+   "sequence_check_accepts": true
+  },
+  "missing_only": {
+   "s2_endpoint_gap": 1,
+   "s2_accepts": false,
+   "sequence_check_accepts": false
+  },
+  "missing_plus_duplicate": {
+   "s2_endpoint_gap": 0,
+   "s2_accepts": true,
+   "sequence_check_accepts": false
+  },
+  "missing_plus_weekend": {
+   "s2_endpoint_gap": 0,
+   "s2_accepts": true,
+   "sequence_check_accepts": false
+  }
+ },
+ "note": "原判定照 PREREG 不變;這裡只檢查,排除後的敏感度沿用 s2(事件集合相同時數字相同)"
+}

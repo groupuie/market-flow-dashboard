@@ -42,7 +42,7 @@ DECISION_KEYS = ('cohort_sessions', 'h2_mode')                      # 使用者�
 ALLOWED = {'cohort_sessions': (120, 250), 'h2_mode': H2_MODES}
 SPEC = {'cohort_sessions': 120, 'horizon_sessions': 41, 'unresolved_after': 10, 'model': 'claude-opus-5-5',
         'min_closed': 300, 'min_agree': 60, 'min_disagree': 60, 'min_paired_dates': 80, 'min_issuers_per_label': 30,
-        'min_batch_coverage': 0.90, 'date_block': 5, 'date_scheme': 'circular', 'issuer_weight': 'exp1', 'h1_method': 'M1',
+        'min_batch_coverage': 0.90, 'date_block': 5, 'date_scheme': 'circular', 'issuer_weight': 'exp1', 'h1_method': 'C1',   # C1 / L=5:sim5 第二輪照事先規則選出
         'draws': 2000, 'seed': 20261016, 'cost': 0.001, 'late_close_sessions': 5, 'tol': 1e-12, 'agree_missing_value': -1.0,
         'h2_mode': None,                      # 待使用者決定(gap_vs_all_10pp / agree_vs_disagree_lb / none);試跑三種都列
         'win_gap_pp': 10.0, 'stress_q': (5, 95)}
