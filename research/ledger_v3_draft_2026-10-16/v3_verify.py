@@ -32,7 +32,7 @@ IDX = ('SPY', 'QQQ')
 ISSUER = {'GOOG': 'GOOGL'}            # 268 檔名單裡同一家公司的兩種股別(只有這一組)
 SPEC = {'cohort_sessions': 120, 'horizon_sessions': 41, 'unresolved_after': 10, 'model': 'claude-opus-5-5',
         'min_closed': 300, 'min_agree': 60, 'min_disagree': 60, 'min_paired_dates': 80, 'min_issuers_per_label': 30,
-        'min_batch_coverage': 0.90, 'date_block': 10, 'draws': 2000, 'seed': 20261016, 'cost': 0.001,
+        'min_batch_coverage': 0.90, 'date_block': 5, 'draws': 2000, 'seed': 20261016, 'cost': 0.001,
         'late_close_sessions': 5, 'tol': 1e-12, 'agree_missing_value': -1.0,
         'h2_mode': 'agree_vs_disagree_lb',      # 待使用者決定:gap_vs_all_10pp(v2 原樣)/ agree_vs_disagree_lb / none
         'win_gap_pp': 10.0, 'stress_q': (5, 95)}

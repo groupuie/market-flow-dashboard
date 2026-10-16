@@ -97,11 +97,11 @@
    "pass": true,
    "proof": {
     "scripts/astra_data.py": {
-     "loaded_from": "git:f2e073e3583f2bcf73a7ba2fff33fe97333ed856:scripts/astra_data.py",
+     "loaded_from": "git:409de22852f1a295d01d01b27b7e485a60257590:scripts/astra_data.py",
      "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
     },
     "scripts/astra_trades.py": {
-     "loaded_from": "git:f2e073e3583f2bcf73a7ba2fff33fe97333ed856:scripts/astra_trades.py",
+     "loaded_from": "git:409de22852f1a295d01d01b27b7e485a60257590:scripts/astra_trades.py",
      "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
     }
    }
@@ -206,7 +206,7 @@
    "pass": true,
    "proof": {
     "h1_pp": 3.0,
-    "h1_lb_pp": 2.953356064383865,
+    "h1_lb_pp": 2.952683612914863,
     "win_gap_ad_lb_pp": 100.0
    }
   },
