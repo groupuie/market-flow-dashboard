@@ -1,0 +1,38 @@
+① Mac 推送空窗 >45 分(10/01 起,台灣時間)
+   10/09 03:17 → 10/09 08:51  停 5.6 小時
+   10/13 07:12 → 10/13 20:10  停 13.0 小時
+   10/14 01:23 → 10/14 07:10  停 5.8 小時
+   10/15 07:15 → 10/16 07:35  停 24.3 小時
+
+② 10/16 早上恢復後的推送(台灣時間;opt=期權時間戳,cached=期權沿用快取)
+   07:35:52 624ae6e market_data.json ts=23:34:20 opt=2026-10-14 22:57:37 cached=None NVDA=221.3
+   07:49:23 91f93b2 market_data.json ts=23:47:55 opt=2026-10-14 22:57:37 cached=None NVDA=221.3
+   07:55:59 a4c7a03 日K 8 檔(kline_AAOI.json…kline_AMZN.json)
+   07:56:03 5185d50 日K 8 檔(kline_ASTS.json…kline_C.json)
+   07:56:07 743401e 日K 8 檔(kline_CAT.json…kline_DIA.json)
+   07:56:12 31e3d26 日K 8 檔(kline_ENTG.json…kline_INTC.json)
+   07:56:15 ad2e97d 日K 8 檔(kline_IWM.json…kline_LITX.json)
+   07:56:19 5b975ef 日K 8 檔(kline_LLY.json…kline_MS.json)
+   07:56:23 07b8912 日K 8 檔(kline_MSFT.json…kline_NEBX.json)
+   08:02:51 aa80e88 market_data.json ts=00:01:27 opt=2026-10-14 22:57:37 cached=None NVDA=221.3
+   08:02:57 c0d54d1 日K 8 檔(kline_NFLX.json…kline_PL.json)
+   08:03:01 8875042 日K 8 檔(kline_PLTR.json…kline_RTX.json)
+   08:03:04 37dc2dc 日K 8 檔(kline_SDOW.json…kline_SPCH.json)
+   08:03:11 e524fc1 日K 8 檔(kline_SPCX.json…kline_STXL.json)
+   08:03:15 4eb364e 日K 8 檔(kline_TER.json…kline_TZA.json)
+   08:03:20 0cd0849 日K 6 檔(kline_UDOW.json…kline_WTI.json)
+   08:05:58 8e31aa6 日K 8 檔(kline_AA.json…kline_SLV.json)
+   08:06:02 4c81ddf 日K 4 檔(kline_USO.json…kline_XLV.json)
+   08:06:08 fca8cc1 daily_flows.json,futu_snapshot.json,market_data.json ts=00:02:53 opt=2026-10-15 23:35:54 cached=True NVDA=221.3
+   08:12:37 7d28277 market_data.json ts=00:11:14 opt=2026-10-15 23:35:54 cached=True NVDA=221.3
+
+③ 美東 10/13 晚上 20:00–22:00(UTC 10/14 00:00–02:00)全量輪的 NVDA 報價(10/13 收 228.52、10/12 收 226.32)
+   2026-10-13 23:40:41 UTC  NVDA 228.52(單日 0.97%)  SPY 778.01
+   2026-10-14 00:05:59 UTC  NVDA 226.32(單日 -1.29%)  SPY 778.1
+   2026-10-14 00:29:20 UTC  NVDA 226.32(單日 -1.29%)  SPY 778.1
+   2026-10-14 00:52:53 UTC  NVDA 226.32(單日 -1.29%)  SPY 778.1
+   2026-10-14 01:17:56 UTC  NVDA 226.32(單日 -1.29%)  SPY 778.1
+   2026-10-14 01:41:03 UTC  NVDA 226.32(單日 -1.29%)  SPY 778.1
+   2026-10-14 02:03:11 UTC  NVDA 228.52(單日 0.97%)  SPY 778.01
+   2026-10-14 02:27:02 UTC  NVDA 228.52(單日 0.97%)  SPY 778.01
+   2026-10-14 02:49:18 UTC  NVDA 228.52(單日 0.97%)  SPY 778.01

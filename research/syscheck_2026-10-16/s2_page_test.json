@@ -1,0 +1,362 @@
+{
+ "A_old": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-15T23:50:07.458Z",
+   "badge": "badge ok | ● 盤後（2 分前更新）",
+   "meta": "採集 美東 10/15 19:47 · 台灣 10/16 07:47 · ⑦資料屬 2026-10-15",
+   "macSlow": null,
+   "macSlowAge": null,
+   "macAge": 2,
+   "pubAge": 49,
+   "session": "after",
+   "nvda": 221.3,
+   "qqq": 728.95,
+   "ktQQQ": "2026-10-15",
+   "pubBlocks": "market:998:{\"SPY\":{\"last\":771.79,\"chg1d\":-1.08,\"chg|stocks:7998:{\"NVDA\":{\"last\":221.3,\"chg1d\":-3.16,\"chg|leveraged:5847:{\"TQQQ\":{\"last\":74.12,\"chg1d\":-5.95,\"chg|options:7133:{\"_SPX\":{\"spot\":7718.94,\"pc_vol\":1.25,\"p|fx:1162:{\"DX-Y.NYB\":{\"last\":102.528,\"chg1d\":0.34|rates:106:{\"Date\":\"10/14/2026\",\"3 Mo\":4.28,\"2 Yr\":|rates_live:636:{\"3M\":{\"y\":4.085,\"chg_bp\":2.8,\"spark\":[3|crypto:958:{\"BTC-USD\":{\"last\":81553.5234,\"chg1d\":-1|commodities:1754:{\"USO\":{\"last\":153.56,\"chg1d\":0.31,\"chg5|darkpool:328:{\"_date\":\"20261014\",\"AMD\":{\"short_ratio\"|dp_daily:4433:{\"20260902\":{\"AMD\":0.528,\"AVGO\":0.444,\"M|cash_pool:715:{\"onrrp\":{\"2026-10-14\":0.201,\"2026-10-13|kline_today:20444:{\"SPY\":[\"2026-10-15\",766.25,772.87,764.4|capital_flow:21349:{\"US.SPY\":{\"main_net\":-319018096,\"retail|session:7:\"after\"|ts_utc:21:\"2026-10-15 23:47:55\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-15"
+    ],
+    "trHash": "656f3ec07a4bbe4c"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-13",
+     "10-14",
+     "10-15"
+    ],
+    "trHash": "b1ddd5db11ea19c2"
+   }
+  },
+  "errors": []
+ },
+ "A_new": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-15T23:50:06.180Z",
+   "badge": "badge stale | ● 盤後（2 分前更新） · 報價改用雲端備援",
+   "meta": "採集 美東 10/15 19:47 · 台灣 10/16 07:47 · ⑦資料屬 2026-10-15 · ⚠ Mac 全量更新卡住:報價/期權停在 24.9 小時前 → 先改用雲端備援(49 分前)",
+   "macSlow": true,
+   "macSlowAge": 1492,
+   "macAge": 2,
+   "pubAge": 49,
+   "session": "after",
+   "nvda": 217.23,
+   "qqq": 728,
+   "ktQQQ": "2026-10-15",
+   "pubBlocks": "market:990:{\"SPY\":{\"last\":771.79,\"chg1d\":0.28,\"chg5|stocks:7977:{\"NVDA\":{\"last\":217.23,\"chg1d\":-1.84,\"ch|leveraged:5820:{\"TQQQ\":{\"last\":73.82,\"chg1d\":-0.4,\"chg5|options:7099:{\"_SPX\":{\"spot\":7744.06,\"pc_vol\":1.151,\"|fx:1158:{\"DX-Y.NYB\":{\"last\":102.004,\"chg1d\":-0.5|rates:108:{\"Date\":\"10/15/2026\",\"3 Mo\":4.28,\"2 Yr\":|rates_live:638:{\"3M\":{\"y\":4.088,\"chg_bp\":0.3,\"spark\":[3|crypto:949:{\"BTC-USD\":{\"last\":82327.6016,\"chg1d\":0.|commodities:1749:{\"USO\":{\"last\":157.31,\"chg1d\":2.44,\"chg5|darkpool:330:{\"_date\":\"20261015\",\"AMD\":{\"short_ratio\"|dp_daily:4432:{\"20260903\":{\"AMD\":0.528,\"AVGO\":0.387,\"M|cash_pool:568:{\"onrrp\":{\"2026-10-15\":1.201,\"2026-10-14|kline_today:20444:{\"SPY\":[\"2026-10-15\",766.25,772.87,764.4|capital_flow:21349:{\"US.SPY\":{\"main_net\":-319018096,\"retail|session:7:\"after\"|ts_utc:21:\"2026-10-15 23:47:55\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "⚠ QQQ 日K少了 1 根(10-14) — 日K檔最後一根是 10-13,後面直接接 10-15 的當日棒,中間那一天的K棒還沒補進來。均線、技判、訊號會少算這一根;採集器補檔後會自動重畫。",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-15"
+    ],
+    "trHash": "656f3ec07a4bbe4c"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-13",
+     "10-14",
+     "10-15"
+    ],
+    "trHash": "b1ddd5db11ea19c2"
+   }
+  },
+  "errors": []
+ },
+ "B_new": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-14T18:53:06.037Z",
+   "badge": "badge ok | ● 盤中（1 分前更新）",
+   "meta": "採集 美東 10/14 14:51 · 台灣 10/15 02:51 · ⑦資料屬 2026-10-14",
+   "macSlow": false,
+   "macSlowAge": 23,
+   "macAge": 1,
+   "pubAge": 233,
+   "session": "rth",
+   "nvda": 220.59,
+   "qqq": 728.35,
+   "ktQQQ": "2026-10-14",
+   "pubBlocks": "market:1001:{\"SPY\":{\"last\":767.82,\"chg1d\":-1.29,\"chg|stocks:8029:{\"NVDA\":{\"last\":220.59,\"chg1d\":-3.47,\"ch|leveraged:5882:{\"TQQQ\":{\"last\":73.9299,\"chg1d\":-6.19,\"c|options:7112:{\"_SPX\":{\"spot\":7709.52,\"pc_vol\":1.263,\"|fx:1159:{\"DX-Y.NYB\":{\"last\":102.589,\"chg1d\":0.4,|rates:105:{\"Date\":\"10/13/2026\",\"3 Mo\":4.26,\"2 Yr\":|rates_live:638:{\"3M\":{\"y\":4.093,\"chg_bp\":3.6,\"spark\":[3|crypto:952:{\"BTC-USD\":{\"last\":81538.4766,\"chg1d\":-1|commodities:1773:{\"USO\":{\"last\":153.5843,\"chg1d\":0.32,\"ch|darkpool:331:{\"_date\":\"20261013\",\"AMD\":{\"short_ratio\"|dp_daily:4435:{\"20260901\":{\"AMD\":0.568,\"AVGO\":0.401,\"M|cash_pool:715:{\"onrrp\":{\"2026-10-14\":0.201,\"2026-10-13|kline_today:20550:{\"SPY\":[\"2026-10-14\",774.89,776.3,766.71|capital_flow:21158:{\"US.SPY\":{\"main_net\":-228673827,\"retail|session:5:\"rth\"|ts_utc:21:\"2026-10-14 18:51:39\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-14"
+    ],
+    "trHash": "08b01ebc16ff59ef"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-14"
+    ],
+    "trHash": "89429cff5eb9f2d1"
+   }
+  },
+  "errors": []
+ },
+ "B_old": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-14T18:53:07.110Z",
+   "badge": "badge ok | ● 盤中（1 分前更新）",
+   "meta": "採集 美東 10/14 14:51 · 台灣 10/15 02:51 · ⑦資料屬 2026-10-14",
+   "macSlow": null,
+   "macSlowAge": null,
+   "macAge": 1,
+   "pubAge": 233,
+   "session": "rth",
+   "nvda": 220.59,
+   "qqq": 728.35,
+   "ktQQQ": "2026-10-14",
+   "pubBlocks": "market:1001:{\"SPY\":{\"last\":767.82,\"chg1d\":-1.29,\"chg|stocks:8029:{\"NVDA\":{\"last\":220.59,\"chg1d\":-3.47,\"ch|leveraged:5882:{\"TQQQ\":{\"last\":73.9299,\"chg1d\":-6.19,\"c|options:7112:{\"_SPX\":{\"spot\":7709.52,\"pc_vol\":1.263,\"|fx:1159:{\"DX-Y.NYB\":{\"last\":102.589,\"chg1d\":0.4,|rates:105:{\"Date\":\"10/13/2026\",\"3 Mo\":4.26,\"2 Yr\":|rates_live:638:{\"3M\":{\"y\":4.093,\"chg_bp\":3.6,\"spark\":[3|crypto:952:{\"BTC-USD\":{\"last\":81538.4766,\"chg1d\":-1|commodities:1773:{\"USO\":{\"last\":153.5843,\"chg1d\":0.32,\"ch|darkpool:331:{\"_date\":\"20261013\",\"AMD\":{\"short_ratio\"|dp_daily:4435:{\"20260901\":{\"AMD\":0.568,\"AVGO\":0.401,\"M|cash_pool:715:{\"onrrp\":{\"2026-10-14\":0.201,\"2026-10-13|kline_today:20550:{\"SPY\":[\"2026-10-14\",774.89,776.3,766.71|capital_flow:21158:{\"US.SPY\":{\"main_net\":-228673827,\"retail|session:5:\"rth\"|ts_utc:21:\"2026-10-14 18:51:39\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-14"
+    ],
+    "trHash": "08b01ebc16ff59ef"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-14"
+    ],
+    "trHash": "89429cff5eb9f2d1"
+   }
+  },
+  "errors": []
+ },
+ "C_new": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-15T19:00:05.711Z",
+   "badge": "badge err | 資料偏舊 128 分（Mac 採集器或 OpenD 可能離線）",
+   "meta": "採集 美東 10/15 12:51 · 台灣 10/16 00:51 · ⑦資料屬 2026-10-14 · ⚠ Mac 離線 19.8 小時;雲端備援上次更新在 2.1 小時前(GitHub 排程實際約每 2–6 小時才跑一次,不是即時) · 1 個來源異常",
+   "macSlow": true,
+   "macSlowAge": 1202,
+   "macAge": 1186,
+   "pubAge": 128,
+   "session": "after",
+   "nvda": 217.23,
+   "qqq": 728,
+   "ktQQQ": "2026-10-15",
+   "pubBlocks": "market:990:{\"SPY\":{\"last\":771.79,\"chg1d\":0.28,\"chg5|stocks:7977:{\"NVDA\":{\"last\":217.23,\"chg1d\":-1.84,\"ch|leveraged:5820:{\"TQQQ\":{\"last\":73.82,\"chg1d\":-0.4,\"chg5|options:7099:{\"_SPX\":{\"spot\":7744.06,\"pc_vol\":1.151,\"|fx:1158:{\"DX-Y.NYB\":{\"last\":102.004,\"chg1d\":-0.5|rates:108:{\"Date\":\"10/15/2026\",\"3 Mo\":4.28,\"2 Yr\":|rates_live:638:{\"3M\":{\"y\":4.088,\"chg_bp\":0.3,\"spark\":[3|crypto:949:{\"BTC-USD\":{\"last\":82327.6016,\"chg1d\":0.|commodities:1749:{\"USO\":{\"last\":157.31,\"chg1d\":2.44,\"chg5|darkpool:330:{\"_date\":\"20261015\",\"AMD\":{\"short_ratio\"|dp_daily:4432:{\"20260903\":{\"AMD\":0.528,\"AVGO\":0.387,\"M|cash_pool:568:{\"onrrp\":{\"2026-10-15\":1.201,\"2026-10-14|kline_today:6150:{\"SPY\":[\"2026-10-15\",766.25,772.87,764.4|capital_flow:21392:{\"US.SPY\":{\"main_net\":422132929,\"retail_|session:7:\"after\"|ts_utc:21:\"2026-10-15 16:51:42\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "⚠ QQQ 日K資料未更新 — 最後收盤K棒 2026-10-13,落後最近已收盤日(2026-10-14) 1 個交易日。日K更新延遲(富途採集待查)。此檔圖上所有指標/技判/訊號都只反映舊資料。",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-15"
+    ],
+    "trHash": "8089c737967034c8"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-13",
+     "10-14",
+     "10-15"
+    ],
+    "trHash": "f246dadcf446b9fd"
+   }
+  },
+  "errors": []
+ },
+ "C_old": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-15T19:00:06.806Z",
+   "badge": "badge err | 資料偏舊 128 分（Mac 採集器或 OpenD 可能離線）",
+   "meta": "採集 美東 10/15 12:51 · 台灣 10/16 00:51 · ⑦資料屬 2026-10-14 · 1 個來源異常",
+   "macSlow": null,
+   "macSlowAge": null,
+   "macAge": 1186,
+   "pubAge": 128,
+   "session": "after",
+   "nvda": 217.23,
+   "qqq": 728,
+   "ktQQQ": "2026-10-15",
+   "pubBlocks": "market:990:{\"SPY\":{\"last\":771.79,\"chg1d\":0.28,\"chg5|stocks:7977:{\"NVDA\":{\"last\":217.23,\"chg1d\":-1.84,\"ch|leveraged:5820:{\"TQQQ\":{\"last\":73.82,\"chg1d\":-0.4,\"chg5|options:7099:{\"_SPX\":{\"spot\":7744.06,\"pc_vol\":1.151,\"|fx:1158:{\"DX-Y.NYB\":{\"last\":102.004,\"chg1d\":-0.5|rates:108:{\"Date\":\"10/15/2026\",\"3 Mo\":4.28,\"2 Yr\":|rates_live:638:{\"3M\":{\"y\":4.088,\"chg_bp\":0.3,\"spark\":[3|crypto:949:{\"BTC-USD\":{\"last\":82327.6016,\"chg1d\":0.|commodities:1749:{\"USO\":{\"last\":157.31,\"chg1d\":2.44,\"chg5|darkpool:330:{\"_date\":\"20261015\",\"AMD\":{\"short_ratio\"|dp_daily:4432:{\"20260903\":{\"AMD\":0.528,\"AVGO\":0.387,\"M|cash_pool:568:{\"onrrp\":{\"2026-10-15\":1.201,\"2026-10-14|kline_today:6150:{\"SPY\":[\"2026-10-15\",766.25,772.87,764.4|capital_flow:21392:{\"US.SPY\":{\"main_net\":422132929,\"retail_|session:7:\"after\"|ts_utc:21:\"2026-10-15 16:51:42\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "⚠ QQQ 日K資料未更新 — 最後收盤K棒 2026-10-13,落後最近已收盤日(2026-10-14) 1 個交易日。日K更新延遲(富途採集待查)。此檔圖上所有指標/技判/訊號都只反映舊資料。",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-15"
+    ],
+    "trHash": "8089c737967034c8"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-13",
+     "10-14",
+     "10-15"
+    ],
+    "trHash": "f246dadcf446b9fd"
+   }
+  },
+  "errors": []
+ },
+ "D_old": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-08T04:10:06.630Z",
+   "badge": "badge stale | 休市中 · 顯示上一交易日 2026-10-07 收盤資料",
+   "meta": "採集 美東 10/08 00:09 · 台灣 10/08 12:09 · ⑦資料屬 2026-10-07",
+   "macSlow": null,
+   "macSlowAge": null,
+   "macAge": 1,
+   "pubAge": 70,
+   "session": "closed",
+   "nvda": 237.47,
+   "qqq": 757.73,
+   "ktQQQ": "2026-10-07",
+   "pubBlocks": "market:1002:{\"SPY\":{\"last\":777.22,\"chg1d\":-0.24,\"chg|stocks:7942:{\"NVDA\":{\"last\":237.47,\"chg1d\":-0.74,\"ch|leveraged:5803:{\"TQQQ\":{\"last\":83.62,\"chg1d\":-0.75,\"chg|options:7064:{\"_SPX\":{\"spot\":7801.77,\"pc_vol\":1.101,\"|fx:1150:{\"DX-Y.NYB\":{\"last\":102.236,\"chg1d\":0,\"c|rates:109:{\"Date\":\"10/07/2026\",\"3 Mo\":4.22,\"2 Yr\":|rates_live:633:{\"3M\":{\"y\":4.037,\"chg_bp\":0,\"spark\":[3.8|crypto:955:{\"BTC-USD\":{\"last\":82686.0781,\"chg1d\":-3|commodities:1753:{\"USO\":{\"last\":143.91,\"chg1d\":-0.69,\"chg|darkpool:332:{\"_date\":\"20261007\",\"AMD\":{\"short_ratio\"|dp_daily:4436:{\"20260813\":{\"AMD\":0.506,\"AVGO\":0.412,\"M|cash_pool:717:{\"onrrp\":{\"2026-10-07\":2.338,\"2026-10-06|kline_today:20476:{\"SPY\":[\"2026-10-07\",775.77,779.1021,773|capital_flow:21289:{\"US.SPY\":{\"main_net\":913349691,\"retail_|session:8:\"closed\"|ts_utc:21:\"2026-10-08 04:09:29\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "",
+    "lastX": [
+     "10-05",
+     "10-06",
+     "10-07"
+    ],
+    "trHash": "ad1b4b316888085a"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-05",
+     "10-06",
+     "10-07"
+    ],
+    "trHash": "f22136dd078c2bbb"
+   }
+  },
+  "errors": []
+ },
+ "D_new": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-08T04:10:05.738Z",
+   "badge": "badge stale | 休市中 · 顯示上一交易日 2026-10-07 收盤資料",
+   "meta": "採集 美東 10/08 00:09 · 台灣 10/08 12:09 · ⑦資料屬 2026-10-07",
+   "macSlow": false,
+   "macSlowAge": null,
+   "macAge": 1,
+   "pubAge": 70,
+   "session": "closed",
+   "nvda": 237.47,
+   "qqq": 757.73,
+   "ktQQQ": "2026-10-07",
+   "pubBlocks": "market:1002:{\"SPY\":{\"last\":777.22,\"chg1d\":-0.24,\"chg|stocks:7942:{\"NVDA\":{\"last\":237.47,\"chg1d\":-0.74,\"ch|leveraged:5803:{\"TQQQ\":{\"last\":83.62,\"chg1d\":-0.75,\"chg|options:7064:{\"_SPX\":{\"spot\":7801.77,\"pc_vol\":1.101,\"|fx:1150:{\"DX-Y.NYB\":{\"last\":102.236,\"chg1d\":0,\"c|rates:109:{\"Date\":\"10/07/2026\",\"3 Mo\":4.22,\"2 Yr\":|rates_live:633:{\"3M\":{\"y\":4.037,\"chg_bp\":0,\"spark\":[3.8|crypto:955:{\"BTC-USD\":{\"last\":82686.0781,\"chg1d\":-3|commodities:1753:{\"USO\":{\"last\":143.91,\"chg1d\":-0.69,\"chg|darkpool:332:{\"_date\":\"20261007\",\"AMD\":{\"short_ratio\"|dp_daily:4436:{\"20260813\":{\"AMD\":0.506,\"AVGO\":0.412,\"M|cash_pool:717:{\"onrrp\":{\"2026-10-07\":2.338,\"2026-10-06|kline_today:20476:{\"SPY\":[\"2026-10-07\",775.77,779.1021,773|capital_flow:21289:{\"US.SPY\":{\"main_net\":913349691,\"retail_|session:8:\"closed\"|ts_utc:21:\"2026-10-08 04:09:29\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "",
+    "lastX": [
+     "10-05",
+     "10-06",
+     "10-07"
+    ],
+    "trHash": "ad1b4b316888085a"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-05",
+     "10-06",
+     "10-07"
+    ],
+    "trHash": "f22136dd078c2bbb"
+   }
+  },
+  "errors": []
+ },
+ "A_new_mobile": {
+  "glob": {
+   "build": "2026-10-13T14:28Z",
+   "now": "2026-10-15T23:50:05.362Z",
+   "badge": "badge stale | ● 盤後（2 分前更新） · 報價改用雲端備援",
+   "meta": "採集 美東 10/15 19:47 · 台灣 10/16 07:47 · ⑦資料屬 2026-10-15 · ⚠ Mac 全量更新卡住:報價/期權停在 24.9 小時前 → 先改用雲端備援(49 分前)",
+   "macSlow": true,
+   "macSlowAge": 1492,
+   "macAge": 2,
+   "pubAge": 49,
+   "session": "after",
+   "nvda": 217.23,
+   "qqq": 728,
+   "ktQQQ": "2026-10-15",
+   "pubBlocks": "market:990:{\"SPY\":{\"last\":771.79,\"chg1d\":0.28,\"chg5|stocks:7977:{\"NVDA\":{\"last\":217.23,\"chg1d\":-1.84,\"ch|leveraged:5820:{\"TQQQ\":{\"last\":73.82,\"chg1d\":-0.4,\"chg5|options:7099:{\"_SPX\":{\"spot\":7744.06,\"pc_vol\":1.151,\"|fx:1158:{\"DX-Y.NYB\":{\"last\":102.004,\"chg1d\":-0.5|rates:108:{\"Date\":\"10/15/2026\",\"3 Mo\":4.28,\"2 Yr\":|rates_live:638:{\"3M\":{\"y\":4.088,\"chg_bp\":0.3,\"spark\":[3|crypto:949:{\"BTC-USD\":{\"last\":82327.6016,\"chg1d\":0.|commodities:1749:{\"USO\":{\"last\":157.31,\"chg1d\":2.44,\"chg5|darkpool:330:{\"_date\":\"20261015\",\"AMD\":{\"short_ratio\"|dp_daily:4432:{\"20260903\":{\"AMD\":0.528,\"AVGO\":0.387,\"M|cash_pool:568:{\"onrrp\":{\"2026-10-15\":1.201,\"2026-10-14|kline_today:20444:{\"SPY\":[\"2026-10-15\",766.25,772.87,764.4|capital_flow:21349:{\"US.SPY\":{\"main_net\":-319018096,\"retail|session:7:\"after\"|ts_utc:21:\"2026-10-15 23:47:55\""
+  },
+  "syms": {
+   "QQQ": {
+    "sym": "QQQ",
+    "dq": "⚠ QQQ 日K少了 1 根(10-14) — 日K檔最後一根是 10-13,後面直接接 10-15 的當日棒,中間那一天的K棒還沒補進來。均線、技判、訊號會少算這一根;採集器補檔後會自動重畫。",
+    "lastX": [
+     "10-12",
+     "10-13",
+     "10-15"
+    ],
+    "trHash": "e3652c2391e76c38"
+   },
+   "NVDA": {
+    "sym": "NVDA",
+    "dq": "",
+    "lastX": [
+     "10-13",
+     "10-14",
+     "10-15"
+    ],
+    "trHash": "b1ddd5db11ea19c2"
+   }
+  },
+  "errors": []
+ }
+}
