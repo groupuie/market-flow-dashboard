@@ -1,0 +1,19 @@
+{
+ "fetched_utc": "2026-10-16T10:56:42Z",
+ "source": "GET repos/groupuie/market-flow-dashboard/actions/runs/38685772793",
+ "api": {
+  "id": 38685772793,
+  "name": "ledger-receipt",
+  "path": ".github/workflows/ledger-receipt.yml",
+  "event": "push",
+  "head_branch": "astra-ledger",
+  "head_sha": "cc5dd7bc3ab5657b2b1ce48c30f3e99aae4cacfb",
+  "created_at": "2026-10-15T05:15:06Z",
+  "run_started_at": "2026-10-15T05:15:06Z",
+  "status": "completed",
+  "conclusion": "success",
+  "html_url": "https://github.com/groupuie/market-flow-dashboard/actions/runs/38685772793",
+  "repository": "groupuie/market-flow-dashboard"
+ },
+ "api_subset_sha256": "f911b59734598cb8e6f722266cbcaa263997f9bd7161294789f4e3d16fe13389"
+}

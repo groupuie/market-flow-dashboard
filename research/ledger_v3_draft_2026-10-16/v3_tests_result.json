@@ -1,11 +1,11 @@
 {
- "tests": 22,
+ "tests": 38,
  "all_pass": true,
  "results": [
   {
    "name": "good_friday_2027",
    "pass": true,
-   "proof": "2027-03-29T13:30:00+00:00"
+   "proof": null
   },
   {
    "name": "christmas_2026",
@@ -35,76 +35,94 @@
   {
    "name": "cohort_end_by_calendar",
    "pass": true,
-   "proof": "2027-04-12"
+   "proof": null
   },
   {
-   "name": "eligible_when_everything_matches",
-   "pass": true,
-   "proof": []
-  },
-  {
-   "name": "prompt_change_rejected",
+   "name": "clean_batch_accepted",
    "pass": true,
    "proof": [
-    "prompt_sha"
+    [],
+    {
+     "2026-10-14:ADI": []
+    }
    ]
   },
   {
-   "name": "unverified_receipt_rejected",
+   "name": "receipt_for_other_commit_rejected",
    "pass": true,
-   "proof": null
+   "proof": [
+    "receipt_head_sha"
+   ]
   },
   {
-   "name": "late_remote_receipt_rejected",
+   "name": "mark_not_in_pending_rejected",
    "pass": true,
-   "proof": null
+   "proof": [
+    "id_sets_differ",
+    "counts_differ"
+   ]
   },
   {
-   "name": "other_model_rejected",
-   "pass": true,
-   "proof": null
-  },
-  {
-   "name": "verdict_hash_mismatch_rejected",
-   "pass": true,
-   "proof": null
-  },
-  {
-   "name": "one_paired_date_is_insufficient",
+   "name": "field_changes_rejected",
    "pass": true,
    "proof": {
-    "closed": true,
-    "agree": true,
-    "disagree": true,
-    "paired_dates": false,
-    "missing_frac": true
+    "2026-10-14:ADI": [
+     "field_kind",
+     "field_type",
+     "field_style",
+     "type_style_rule",
+     "verdict_p"
+    ]
    }
   },
   {
-   "name": "strong_effect_passes",
+   "name": "duplicate_rows_rejected",
+   "pass": true,
+   "proof": [
+    "duplicate_id_in_locked",
+    "counts_differ"
+   ]
+  },
+  {
+   "name": "verdict_text_mismatch_rejected",
    "pass": true,
    "proof": {
-    "h1_pp": 3.0,
-    "h1_lb_min_pp": 2.97461368103478,
-    "paired_dates": 100
+    "2026-10-14:ADI": [
+     "verdict_fields"
+    ]
    }
   },
   {
-   "name": "missing_over_3pct_is_insufficient",
-   "pass": true,
-   "proof": 13
-  },
-  {
-   "name": "worst_case_missing_blocks_pass",
+   "name": "engine_loaded_from_git_not_local",
    "pass": true,
    "proof": {
-    "excl_lb": 1.4999999999999998,
-    "worst_lb": -1.9293503134796237,
-    "missing_frac_ok": true
+    "scripts/astra_data.py": {
+     "loaded_from": "git:f2e073e3583f2bcf73a7ba2fff33fe97333ed856:scripts/astra_data.py",
+     "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
+    },
+    "scripts/astra_trades.py": {
+     "loaded_from": "git:f2e073e3583f2bcf73a7ba2fff33fe97333ed856:scripts/astra_trades.py",
+     "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
+    }
    }
   },
   {
-   "name": "replay_reproduces_recorded_exit",
+   "name": "engine_hash_mismatch_stops",
+   "pass": true,
+   "proof": "引擎指紋和凍結的不同:scripts/astra_trades.py → 停"
+  },
+  {
+   "name": "history_query_failure_stops",
+   "pass": true,
+   "proof": "git 失敗 → 停:git rev-parse --verify no-such-ref^{commit}\nfatal"
+  },
+  {
+   "name": "no_engine_change_after_freeze",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "replay_reproduces_within_tolerance",
    "pass": true,
    "proof": [
     "closed",
@@ -113,14 +131,34 @@
    ]
   },
   {
-   "name": "replay_mismatch_is_unreproducible",
+   "name": "replay_wrong_return_unreproducible",
    "pass": true,
-   "proof": "重播 2026-10-19 停損 -0.11177822177822161 ≠ 帳上 2026-10-19 頂 -0.11177822177822161"
+   "proof": null
   },
   {
-   "name": "missing_bars_is_unreproducible",
+   "name": "replay_wrong_reason_unreproducible",
    "pass": true,
-   "proof": "bars_used 不夠重播出場"
+   "proof": null
+  },
+  {
+   "name": "missing_bars_unreproducible",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "weekend_bars_rejected",
+   "pass": true,
+   "proof": "之後的 K 線不是官方交易日或有缺日:2026-10-17(應為 2026-10-15)"
+  },
+  {
+   "name": "gap_in_window_rejected",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "recorded_before_available_rejected",
+   "pass": true,
+   "proof": "記錄時間早於出場那根 K 線收盤(不可能當時就有)"
   },
   {
    "name": "late_close_flagged",
@@ -128,9 +166,87 @@
    "proof": null
   },
   {
-   "name": "look_once_only",
+   "name": "rescaled_snapshot_reconciled",
    "pass": true,
-   "proof": "已經做過唯一一次判定 → 不再做: /tmp/tmpera6iauj/v3_look.json"
+   "proof": [
+    "closed",
+    "rescaled"
+   ]
+  },
+  {
+   "name": "missing_agree_uses_minus_100pct",
+   "pass": true,
+   "proof": {
+    "excl_lb": 0.2,
+    "minus100_h1": -0.13366666666666657,
+    "stress_h1": 0.1993333333333334
+   }
+  },
+  {
+   "name": "missing_disagree_is_insufficient",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "h1_without_win_gap_fails_h2",
+   "pass": true,
+   "proof": {
+    "h1_pp": 1.9999999999999998,
+    "win_a": 100.0,
+    "win_d": 100.0
+   }
+  },
+  {
+   "name": "one_paired_date_insufficient",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "strong_effect_passes",
+   "pass": true,
+   "proof": {
+    "h1_pp": 3.0,
+    "h1_lb_pp": 2.953356064383865,
+    "win_gap_ad_lb_pp": 100.0
+   }
+  },
+  {
+   "name": "low_batch_coverage_insufficient",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "goog_googl_one_issuer",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "h2_identity",
+   "pass": true,
+   "proof": [
+    50.0,
+    50.0
+   ]
+  },
+  {
+   "name": "look_registry_blocks_even_if_file_deleted",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "formal_analyze_refuses_after_look",
+   "pass": true,
+   "proof": "這個實驗已經做過唯一一次判定 → 不再做"
+  },
+  {
+   "name": "dry_run_cannot_write_registry",
+   "pass": true,
+   "proof": "試跑要 --out,而且不能寫進正式 looks 位置"
+  },
+  {
+   "name": "formal_mode_needs_frozen_manifest",
+   "pass": true,
+   "proof": null
   }
  ]
 }
