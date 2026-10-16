@@ -1,4 +1,5 @@
-# s2:2026-10-16 總檢查的網頁修正驗收(舊版 0679caa vs 新版;本機伺服器 + 固定回應 + 撥時鐘)
+# s2:2026-10-16 總檢查的網頁修正驗收(舊版 = 第一個參數,新版 = 第二個參數;本機伺服器 + 固定回應 + 撥時鐘)
+#   10/16 先用 0679caa 當舊版跑一次,main 更新後改用 94fa702 再跑,兩次結果相同;輸出 JSON 的 _files 記錄兩個檔的 sha256
 #   三個快照(都是 gist 真實歷史檔;備援檔用 10/15 23:01Z 那份,只改時間戳模擬當時的新舊):
 #   A「Mac 剛恢復、全量輪沒跑完」:gist 91f93b2(10/16 07:49 台灣 推的 market_data:ts 很新,報價/期權停在 10/14)+ 備援 23:01Z;時鐘 10/15 23:50Z
 #      預期:新版報價改用備援(NVDA 217.23,舊版 221.3)、徽章轉黃、說明列講「全量更新卡住」;QQQ 日K檔停在 10/13 + 快照 10/15 → 新版黃條「少了 10-14」
@@ -74,7 +75,9 @@ async def main(old_file, new_file, root):
             port += 2
         await run(b, new_file, port, os.path.join(root, "snapA"), CASES["A"], "A_new_mobile", out, mobile=True)
         await b.close()
+    out["_files"] = {k: {"path": f, "sha256": hashlib.sha256(open(f, "rb").read()).hexdigest()} for k, f in (("old", old_file), ("new", new_file))}
     json.dump(out, open(os.path.join(HERE, "s2_page_test.json"), "w"), ensure_ascii=False, indent=1)
+    print("舊版", out["_files"]["old"]["path"], out["_files"]["old"]["sha256"][:16], "| 新版", out["_files"]["new"]["path"], out["_files"]["new"]["sha256"][:16])
     for case in CASES:
         O, N = out[case + "_old"], out[case + "_new"]
         print(f"=== {case}(時鐘 {CASES[case]})錯誤 舊 {O['errors']} 新 {N['errors']}")
