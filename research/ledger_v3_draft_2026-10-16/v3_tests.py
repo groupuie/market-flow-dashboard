@@ -133,6 +133,7 @@ miss1 = [(cal[3], 'stock', 'S5', 'agree')]
 a = V.decide(base, miss1, cal, cfg)
 ok('missing_agree_uses_minus_100pct', a['decision'] == 'NO_PASS' and a['excluded_missing']['H1'] and not a['agree_missing_at_minus_100pct']['H1'] and a['stress_q05_q95']['H1'],
    {'excl_lb': a['excluded_missing']['h1_lb_pp'], 'minus100_h1': a['agree_missing_at_minus_100pct']['h1_pp'], 'stress_h1': a['stress_q05_q95']['h1_pp']})
+fp = a['flip_points']['agree']; ok('flip_point_reported', fp is not None and abs(V.h1_point(base + [miss1[0] + (fp,)])) < 1e-9 and -1 < fp < 0, fp)
 b = V.decide(base, [(cal[3], 'stock', 'S6', 'disagree')], cal, cfg)
 ok('missing_disagree_is_insufficient', b['decision'] == 'INSUFFICIENT' and not b['gates']['no_missing_disagree'])
 # b. 平均差 +2 點但兩邊都全贏 → 勝率差 0(Astra 例)

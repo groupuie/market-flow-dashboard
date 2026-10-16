@@ -314,6 +314,27 @@ def stats(rows, cal, cfg, salt=0):
     return out
 
 
+def h1_point(rows):
+    """H1 點估計(不重抽):同日同類格子內同意 − 不同意,再對格子等權平均"""
+    cells = {}
+    for r in rows: cells.setdefault((r[0], r[1]), {'agree': [], 'disagree': []})[r[3]].append(r[4])
+    d = [np.mean(c['agree']) - np.mean(c['disagree']) for c in cells.values() if c['agree'] and c['disagree']]
+    return float(np.mean(d)) if d else None
+
+
+def flip_value(closed, missing, side):
+    """把缺的 side(agree / disagree)都填同一個值 x,H1 點估計剛好變 0 的 x(在 −100% ~ +500% 之間找;找不到 = None)"""
+    other = [m + (0.0,) for m in missing if m[3] != side]
+    f = lambda x: h1_point(closed + other + [m + (x,) for m in missing if m[3] == side])
+    lo, hi = -1.0, 5.0; flo, fhi = f(lo), f(hi)
+    if flo is None or fhi is None or flo * fhi > 0: return None
+    for _ in range(60):
+        mid = (lo + hi) / 2; fm = f(mid)
+        if (fm > 0) == (flo > 0): lo, flo = mid, fm
+        else: hi = mid
+    return (lo + hi) / 2
+
+
 def decide(closed, missing, cal, cfg, coverage=1.0):
     """closed: (date,type,sym,v,ret);missing: (date,type,sym,v)。正式規則:缺的不同意沒有有限上界 → 資訊不足;缺的同意 = −100%"""
     n = len(closed) + len(missing); na = sum(r[3] == 'agree' for r in closed); nd = len(closed) - na
@@ -334,6 +355,7 @@ def decide(closed, missing, cal, cfg, coverage=1.0):
         q = np.percentile([r[4] for r in closed], cfg['stress_q'])
         st = stats(closed + [m + (float(q[0] if m[3] == 'agree' else q[1]),) for m in missing], cal, cfg)
         res['stress_q05_q95'] = {k: st[k] for k in ('h1_pp', 'h1_lb_pp', 'H1', 'H2')}
+        res['flip_points'] = {s_: flip_value(closed, missing, s_) for s_ in ('agree', 'disagree') if any(m[3] == s_ for m in missing)}   # 缺漏值到多少 H1 點估計才翻(另一邊的缺漏先填 0)
     return res
 
 

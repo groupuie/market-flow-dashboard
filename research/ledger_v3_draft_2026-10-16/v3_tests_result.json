@@ -1,5 +1,5 @@
 {
- "tests": 38,
+ "tests": 39,
  "all_pass": true,
  "results": [
   {
@@ -97,11 +97,11 @@
    "pass": true,
    "proof": {
     "scripts/astra_data.py": {
-     "loaded_from": "git:409de22852f1a295d01d01b27b7e485a60257590:scripts/astra_data.py",
+     "loaded_from": "git:842b31bfa2487c5a082c534886e77871686c4467:scripts/astra_data.py",
      "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
     },
     "scripts/astra_trades.py": {
-     "loaded_from": "git:409de22852f1a295d01d01b27b7e485a60257590:scripts/astra_trades.py",
+     "loaded_from": "git:842b31bfa2487c5a082c534886e77871686c4467:scripts/astra_trades.py",
      "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
     }
    }
@@ -181,6 +181,11 @@
     "minus100_h1": -0.13366666666666657,
     "stress_h1": 0.1993333333333334
    }
+  },
+  {
+   "name": "flip_point_reported",
+   "pass": true,
+   "proof": -0.5990000000000002
   },
   {
    "name": "missing_disagree_is_insufficient",
