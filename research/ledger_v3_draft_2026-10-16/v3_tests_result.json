@@ -1,0 +1,136 @@
+{
+ "tests": 22,
+ "all_pass": true,
+ "results": [
+  {
+   "name": "good_friday_2027",
+   "pass": true,
+   "proof": "2027-03-29T13:30:00+00:00"
+  },
+  {
+   "name": "christmas_2026",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "christmas_observed_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "juneteenth_observed_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "independence_observed_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "calendar_out_of_range_stops",
+   "pass": true,
+   "proof": "日曆只到 2028-12-29:2029-01-02 超出範圍 → 先補官方休市表(新版本)"
+  },
+  {
+   "name": "cohort_end_by_calendar",
+   "pass": true,
+   "proof": "2027-04-12"
+  },
+  {
+   "name": "eligible_when_everything_matches",
+   "pass": true,
+   "proof": []
+  },
+  {
+   "name": "prompt_change_rejected",
+   "pass": true,
+   "proof": [
+    "prompt_sha"
+   ]
+  },
+  {
+   "name": "unverified_receipt_rejected",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "late_remote_receipt_rejected",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "other_model_rejected",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "verdict_hash_mismatch_rejected",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "one_paired_date_is_insufficient",
+   "pass": true,
+   "proof": {
+    "closed": true,
+    "agree": true,
+    "disagree": true,
+    "paired_dates": false,
+    "missing_frac": true
+   }
+  },
+  {
+   "name": "strong_effect_passes",
+   "pass": true,
+   "proof": {
+    "h1_pp": 3.0,
+    "h1_lb_min_pp": 2.97461368103478,
+    "paired_dates": 100
+   }
+  },
+  {
+   "name": "missing_over_3pct_is_insufficient",
+   "pass": true,
+   "proof": 13
+  },
+  {
+   "name": "worst_case_missing_blocks_pass",
+   "pass": true,
+   "proof": {
+    "excl_lb": 1.4999999999999998,
+    "worst_lb": -1.9293503134796237,
+    "missing_frac_ok": true
+   }
+  },
+  {
+   "name": "replay_reproduces_recorded_exit",
+   "pass": true,
+   "proof": [
+    "closed",
+    -0.11177822177822161,
+    ""
+   ]
+  },
+  {
+   "name": "replay_mismatch_is_unreproducible",
+   "pass": true,
+   "proof": "重播 2026-10-19 停損 -0.11177822177822161 ≠ 帳上 2026-10-19 頂 -0.11177822177822161"
+  },
+  {
+   "name": "missing_bars_is_unreproducible",
+   "pass": true,
+   "proof": "bars_used 不夠重播出場"
+  },
+  {
+   "name": "late_close_flagged",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "look_once_only",
+   "pass": true,
+   "proof": "已經做過唯一一次判定 → 不再做: /tmp/tmpera6iauj/v3_look.json"
+  }
+ ]
+}
