@@ -1,0 +1,2430 @@
+{
+ "created_utc": "2026-10-15T05:30:28Z",
+ "last": "2026-10-14",
+ "source": "Yahoo chart v8, adjclose/close \u6bd4\u4f8b\u5957\u7528\u5230\u958b\u9ad8\u4f4e\u6536(scripts/astra_data.py yahoo())",
+ "symbols": {
+  "A": {
+   "adjustedFile": "adjusted/A.json",
+   "sha256": "1693f5ffe9afb9fca511200d61ec0bf866bb5cafec3ffa4d9ca4140f3416a992",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ABT": {
+   "adjustedFile": "adjusted/ABT.json",
+   "sha256": "01402412db6390f5214dcfa71f9bb419843b8340745301c8ce50565d18b86ab3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ACGL": {
+   "adjustedFile": "adjusted/ACGL.json",
+   "sha256": "4a8644a219bb2ac3abff19f1cf32afca2442c21b06517c525f0fe62ac0d92288",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ADM": {
+   "adjustedFile": "adjusted/ADM.json",
+   "sha256": "e377ea76038469ebd052bbbef2a7398225aafd358b58ac6347e05005827d14e9",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ADP": {
+   "adjustedFile": "adjusted/ADP.json",
+   "sha256": "7b1c7b683d496006fbf397f8d809edadc4cc4072c6cd917370792db5c87737db",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ADSK": {
+   "adjustedFile": "adjusted/ADSK.json",
+   "sha256": "5a80f7d04cd3d505fa9a1d35c448abdab156337e4dae292e64ee676f556c3482",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AEE": {
+   "adjustedFile": "adjusted/AEE.json",
+   "sha256": "ebeaf0845f04c79475da082a84d2c3725b4aa1185509f861b0a01862438fde3b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AEP": {
+   "adjustedFile": "adjusted/AEP.json",
+   "sha256": "7f710e5ee81bfd4282f9fe1f09e2ca7f5fba8972e4a307e4bbccbf05aa792710",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AES": {
+   "adjustedFile": "adjusted/AES.json",
+   "sha256": "e9447f2a277e41f0d22cf890b6a1dfb9ad47ddb4461d637f32fbba15ea9ca0b5",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AFL": {
+   "adjustedFile": "adjusted/AFL.json",
+   "sha256": "5ba844c37c7d000d9b3b2d30231c9128fdd00d756599c2237f149494a9a4922c",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AIG": {
+   "adjustedFile": "adjusted/AIG.json",
+   "sha256": "f409e82bbeb800449b53c569c452a003f4639939d5849a1e0d241fbf546ba900",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AIZ": {
+   "adjustedFile": "adjusted/AIZ.json",
+   "sha256": "a541e2a0e4c421ef63962b74912e7879528ff3b7bb0db2112fc401ba6f947ad5",
+   "first": "2004-02-05",
+   "last": "2026-10-14",
+   "n": 5709
+  },
+  "AJG": {
+   "adjustedFile": "adjusted/AJG.json",
+   "sha256": "cc63739f254c6a953bd6eb0f0b44732f546929cba00f00430340ced7eb2d2943",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ALB": {
+   "adjustedFile": "adjusted/ALB.json",
+   "sha256": "0a46ed9670de459690419d944178fbf3e6b5daa6e6436bed9cc85b2d67f7beb3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ALGN": {
+   "adjustedFile": "adjusted/ALGN.json",
+   "sha256": "767461583d9cf4748ac5c911e727e14fc325ea83fb3037163c7954dba7d5fbb4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ALL": {
+   "adjustedFile": "adjusted/ALL.json",
+   "sha256": "990c6743e3e3fed4bdfa8ae9dc697d3fa3eeb004f11d793e9d1d5ba902463b87",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ALLE": {
+   "adjustedFile": "adjusted/ALLE.json",
+   "sha256": "42f534c7ad08fd67edbdae778bc92034ef07df9281cbc6f2c5227eea8ae78f40",
+   "first": "2013-11-18",
+   "last": "2026-10-14",
+   "n": 3245
+  },
+  "ALNY": {
+   "adjustedFile": "adjusted/ALNY.json",
+   "sha256": "ac09178ffdcc10c6d3c710ce77add5b58421a4955bab9aae3b2d3ef935a1434c",
+   "first": "2004-06-01",
+   "last": "2026-10-14",
+   "n": 5629
+  },
+  "AMCR": {
+   "adjustedFile": "adjusted/AMCR.json",
+   "sha256": "83e3a4ac5e4d9ce35d811bbec40aab3e72a1f1f389299c226ebc4f13163b8884",
+   "first": "2012-05-15",
+   "last": "2026-10-14",
+   "n": 3625
+  },
+  "AME": {
+   "adjustedFile": "adjusted/AME.json",
+   "sha256": "f9c7b94eb9a4b562c099e43855408d42cba02917cde8a3538af96e536b2cabcb",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AMP": {
+   "adjustedFile": "adjusted/AMP.json",
+   "sha256": "c1ce1f71224966473f08d37ae5cb07536065fd9a2a0acb9ea737ee791c44c738",
+   "first": "2005-09-15",
+   "last": "2026-10-14",
+   "n": 5303
+  },
+  "AMT": {
+   "adjustedFile": "adjusted/AMT.json",
+   "sha256": "eb37707d5b27b69d737952b56bce13819282750a9a8a93bb5a41dd8593c06f9a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AON": {
+   "adjustedFile": "adjusted/AON.json",
+   "sha256": "4483d96a2bd1af3f8d76721dc039a0497ba81e517a7d7e4368aa13603d3869c8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AOS": {
+   "adjustedFile": "adjusted/AOS.json",
+   "sha256": "3fdc7de32ab7b84e79b58d2c4d4b9aaaed0096eea9aed9f2e46d01ab2bc2e3cc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "APA": {
+   "adjustedFile": "adjusted/APA.json",
+   "sha256": "d4bc757475b391180077cb5f7206fd9ba8a19f6bf3e6fb5aa72a21cfb301ed7a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "APD": {
+   "adjustedFile": "adjusted/APD.json",
+   "sha256": "9197f76cf87d70d55a2c5d0add925f41dd10813f9c38d0870e0b1d6af21915f3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "APH": {
+   "adjustedFile": "adjusted/APH.json",
+   "sha256": "53598966322408b8cce3b86353583057224e52c3f364aac24f4772022e836679",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "APTV": {
+   "adjustedFile": "adjusted/APTV.json",
+   "sha256": "a2ffdba94c3e509ab59124d62517ab78c303120aa9e431207cd7443f49198952",
+   "first": "2011-11-17",
+   "last": "2026-10-14",
+   "n": 3747
+  },
+  "ARE": {
+   "adjustedFile": "adjusted/ARE.json",
+   "sha256": "a032e92963eb8aefb84d9c8c4bf6f8add16d5c55f97ec619b3879f92fa8794ab",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ARES": {
+   "adjustedFile": "adjusted/ARES.json",
+   "sha256": "09ddf3a22440583e8944610885ca833f383bee27fd49e082f372f93518714752",
+   "first": "2014-05-02",
+   "last": "2026-10-14",
+   "n": 3132
+  },
+  "ATO": {
+   "adjustedFile": "adjusted/ATO.json",
+   "sha256": "dd7f82a4136e4f454ff5e198a8fe2bab002b487b52009a7990f77a0cb4aa5206",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AVY": {
+   "adjustedFile": "adjusted/AVY.json",
+   "sha256": "aa1078f12cd7e991bbe363559a14363fe26081926c3a9996abe093d9764b5706",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AWK": {
+   "adjustedFile": "adjusted/AWK.json",
+   "sha256": "ac42f958a46de263f769225d03aeb6fa767a161f62ea1de43a7005e4af1af43f",
+   "first": "2008-04-23",
+   "last": "2026-10-14",
+   "n": 4649
+  },
+  "AXON": {
+   "adjustedFile": "adjusted/AXON.json",
+   "sha256": "57c626107226b3d606bed8011bcabb2d5518ea9e008dfc86557ce6b37040eb45",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "AZO": {
+   "adjustedFile": "adjusted/AZO.json",
+   "sha256": "499f4c2150bd09bb38aaf4a717518e449c619f70d9d739b5c7dca613a9ea1645",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BALL": {
+   "adjustedFile": "adjusted/BALL.json",
+   "sha256": "af2a45b4279af7b838f5065ca6b0535dd2c72ee34ada66e76955c458f9f67d55",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BAX": {
+   "adjustedFile": "adjusted/BAX.json",
+   "sha256": "36e13406fe39b6b8eeee09e09bdd3d5bd157c353056ff1b813ae9dbdad53cb16",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BBY": {
+   "adjustedFile": "adjusted/BBY.json",
+   "sha256": "5726f825370fa75ae9029a869ce0ca4aa11b249dd3c3b3ec786b18a4f35db184",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BDX": {
+   "adjustedFile": "adjusted/BDX.json",
+   "sha256": "fe366d9d3cbfc1c964084ff4bc9f09730efdc8af9fc65ff4a606980a0da31b14",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BEN": {
+   "adjustedFile": "adjusted/BEN.json",
+   "sha256": "2998e771601ca23f2580a6582a722b7eba0e77347594232b278fc98a2f523bc2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BF-B": {
+   "adjustedFile": "adjusted/BF-B.json",
+   "sha256": "8cdf8141fb9adf9c70985bbbabe9df3975a47e4ef045f261219046468c1fc29f",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BG": {
+   "adjustedFile": "adjusted/BG.json",
+   "sha256": "de716d02eb221ca5573e3cb6c641918b819d212f2e40706dbd1054fbf82b2e14",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BIIB": {
+   "adjustedFile": "adjusted/BIIB.json",
+   "sha256": "6d5828b82e0ddeaf414d1e0986564541942e015db9e2834fe035a9ac8c5789f2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BNY": {
+   "adjustedFile": "adjusted/BNY.json",
+   "sha256": "297c251b6d72964456647bf8f1a45f3100d0b56a6f35dda5d10b8bccf5ba3c3b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BR": {
+   "adjustedFile": "adjusted/BR.json",
+   "sha256": "5122c931446079942338219103bb253ef5b4d5a38657aeddc23632bbb5e27c84",
+   "first": "2007-03-22",
+   "last": "2026-10-14",
+   "n": 4923
+  },
+  "BRK-B": {
+   "adjustedFile": "adjusted/BRK-B.json",
+   "sha256": "92a5b3b8144a0a60896604373d147697a5fd6319e74fb84f73c4009b5a86ea81",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BRO": {
+   "adjustedFile": "adjusted/BRO.json",
+   "sha256": "383e338106bb00a070454b0ac03a7caace870e05d48ef4e749c7c45b0ba14c69",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BSX": {
+   "adjustedFile": "adjusted/BSX.json",
+   "sha256": "7b54b2ec04d1a09f3ba3be9f2c1ac832214c385d0c542fa223cfc4a028ca255a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "BXP": {
+   "adjustedFile": "adjusted/BXP.json",
+   "sha256": "5106892137222d48015751007577a7558cdeaec8dda18f2d6c45a6e616128aca",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CAH": {
+   "adjustedFile": "adjusted/CAH.json",
+   "sha256": "d745caac12925c10484722e5fb28e6190af5e5989a9161e806ba506b1a477751",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CARR": {
+   "adjustedFile": "adjusted/CARR.json",
+   "sha256": "d450a300e9b035a3bdc0c0bc777dd5b9c977c57984e8bc4abaa3018e60c39b33",
+   "first": "2020-03-19",
+   "last": "2026-10-14",
+   "n": 1652
+  },
+  "CASY": {
+   "adjustedFile": "adjusted/CASY.json",
+   "sha256": "58279f89fad40e598a93d2d82412938cddfee0a2bd5cdb251a3bbb82a67b2876",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CB": {
+   "adjustedFile": "adjusted/CB.json",
+   "sha256": "c319a5ee2d503c46d1c169d6d639ea3d776acf75bfc91bab0977950047b19d70",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CBOE": {
+   "adjustedFile": "adjusted/CBOE.json",
+   "sha256": "f0b5e0bcdd288c82ecbf473f803e1b8ebc477b93be8eea9672db464d7156bf9c",
+   "first": "2010-06-15",
+   "last": "2026-10-14",
+   "n": 4109
+  },
+  "CBRE": {
+   "adjustedFile": "adjusted/CBRE.json",
+   "sha256": "ada1e37bcdba7444a797876ebcebf3c2db64f1acf8b02d509733604bd17145e9",
+   "first": "2004-06-10",
+   "last": "2026-10-14",
+   "n": 5622
+  },
+  "CCEP": {
+   "adjustedFile": "adjusted/CCEP.json",
+   "sha256": "2aea468123facdf02abf5a2cb2ca981ae0ac396097f4f9ce06cec6063f2ac1f3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CCI": {
+   "adjustedFile": "adjusted/CCI.json",
+   "sha256": "c60a36bf38b93cf9cfaedf7f257725745ad15669a66bcae9cd0fd5a9f4b6458b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CDW": {
+   "adjustedFile": "adjusted/CDW.json",
+   "sha256": "4a966560e768cfe4e8bda7cdf6ec657e27d698daa6d38053b069c8ea142b1692",
+   "first": "2013-06-27",
+   "last": "2026-10-14",
+   "n": 3345
+  },
+  "CF": {
+   "adjustedFile": "adjusted/CF.json",
+   "sha256": "ae86783ef2d2d93a30e4eff0959cf01a645b042a3ccf697d1852ccf39dd2d600",
+   "first": "2005-08-11",
+   "last": "2026-10-14",
+   "n": 5327
+  },
+  "CFG": {
+   "adjustedFile": "adjusted/CFG.json",
+   "sha256": "120b5eb70c6051d4571f4d81ccfef6163b5ce07136375d628bc68cddf64248d7",
+   "first": "2014-09-24",
+   "last": "2026-10-14",
+   "n": 3032
+  },
+  "CHD": {
+   "adjustedFile": "adjusted/CHD.json",
+   "sha256": "2d5b20d4fe0d3e9bcb26ce42c123c84b95091b753654d72af84824f0bb017463",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CHRW": {
+   "adjustedFile": "adjusted/CHRW.json",
+   "sha256": "a2fe30cfde6981e2dde51710cc53449360223112923fe495566d3dad4301b496",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CHTR": {
+   "adjustedFile": "adjusted/CHTR.json",
+   "sha256": "5917d0ef1f4b0ee1cd2eaf2e7568cbd9c9c2a2692ca2d5d41f2ca1bc2cf59853",
+   "first": "2010-01-05",
+   "last": "2026-10-14",
+   "n": 4220
+  },
+  "CINF": {
+   "adjustedFile": "adjusted/CINF.json",
+   "sha256": "c54ef317000fee639e7a9b5394e5ab2b58f898e4f7b5cce45a9133fabbbf32bc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CL": {
+   "adjustedFile": "adjusted/CL.json",
+   "sha256": "78892ca58e3ff95e1ec5ff3fb214916fdc86498d7c36297a913d1a271bb6c37b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CLX": {
+   "adjustedFile": "adjusted/CLX.json",
+   "sha256": "4c8bd10853552dab68bab90546acf643839abc5e33a1dfafe1181442908f20c2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CMCSA": {
+   "adjustedFile": "adjusted/CMCSA.json",
+   "sha256": "071ddab3232c9deef610e6995007463712f2400cf65a6ab4f15339da57bbf223",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CMI": {
+   "adjustedFile": "adjusted/CMI.json",
+   "sha256": "88255200553864e555db5c195fdaeb685bcd1af2cd83cd8c01072a66b43c338d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CMS": {
+   "adjustedFile": "adjusted/CMS.json",
+   "sha256": "48ce7a24963a05af90011d687edaa68213a438a3f9303f457c2f38507a16bb7d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CNC": {
+   "adjustedFile": "adjusted/CNC.json",
+   "sha256": "2354d404004c4966056f1f1eb037131eba03e0f5f03a4ece85de5466bd7fe098",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CNP": {
+   "adjustedFile": "adjusted/CNP.json",
+   "sha256": "ce9ea66a309440e2f3fba82535ab7fa8dd45d8dd6822a5785deb2fad30a46dc9",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "COO": {
+   "adjustedFile": "adjusted/COO.json",
+   "sha256": "2f57a9578f2e34155e6be99b30428506f2b41508ea85c5f3daf35d8adc91fc51",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "COR": {
+   "adjustedFile": "adjusted/COR.json",
+   "sha256": "4e89739e1f17dea580e8273183d8f835a0ecef2d49f83809331b4e33b3c94d44",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CPAY": {
+   "adjustedFile": "adjusted/CPAY.json",
+   "sha256": "5905c850f8c1515a7e6890e15959857014355871d610e955ae8f783f29c25e56",
+   "first": "2010-12-15",
+   "last": "2026-10-14",
+   "n": 3981
+  },
+  "CPRT": {
+   "adjustedFile": "adjusted/CPRT.json",
+   "sha256": "f18ae504eb528774cf39c2f06d60c341ad4a710831704cc68f2473746bf4ab7b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CPT": {
+   "adjustedFile": "adjusted/CPT.json",
+   "sha256": "b067dbe8b75eac9e914ef4b70d712bb6a94f448785a5677876e794b09a323997",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CRH": {
+   "adjustedFile": "adjusted/CRH.json",
+   "sha256": "792131aab1d94a51a063e014253123f1cfbe79da46cc57b4201feffd0c38e7d2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CRL": {
+   "adjustedFile": "adjusted/CRL.json",
+   "sha256": "aa404d1a49cac2d9c473a870790a95accc40d335e37a64776a9dc84b6b67ae4d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CSGP": {
+   "adjustedFile": "adjusted/CSGP.json",
+   "sha256": "febc4cc8d33e472be922d0ffea5322d95bbb6e4e181f344a361de2cd46811d5a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CSX": {
+   "adjustedFile": "adjusted/CSX.json",
+   "sha256": "c7c27a8a33d37336c10246081b510942a49fd7b00441230e04526287e472cddb",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CTAS": {
+   "adjustedFile": "adjusted/CTAS.json",
+   "sha256": "646a2133c8a6f05c16d6d3db014b2f35d10dcedc78e78efc07a3fbc1fc6d9eb3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "CTSH": {
+   "adjustedFile": "adjusted/CTSH.json",
+   "sha256": "799979d477e36b985dc9f690f51807ec6d92db2604443023855ce8799e8f721a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "D": {
+   "adjustedFile": "adjusted/D.json",
+   "sha256": "71c03b36acd90b99de3ee8e0bbe84d644ab3acecfd53d3cfcd40f7096f71bab6",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DD": {
+   "adjustedFile": "adjusted/DD.json",
+   "sha256": "712fc614b55d547f626f61ade1c599a51850fec2146308eb3b81d3757f954ec7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DECK": {
+   "adjustedFile": "adjusted/DECK.json",
+   "sha256": "eb55f3948f898312960201b3b598160f56578d5f02cf4ccaf86542df9cd6fa60",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DG": {
+   "adjustedFile": "adjusted/DG.json",
+   "sha256": "0a497d099cebf57091a58e26a60aad4173bc46d6a0612f03d357700cf94d9eee",
+   "first": "2009-11-13",
+   "last": "2026-10-14",
+   "n": 4254
+  },
+  "DGX": {
+   "adjustedFile": "adjusted/DGX.json",
+   "sha256": "3c40970544cc31c01d5464dfbed0c251366435bf53853ea101b880c8e1f11b4e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DHI": {
+   "adjustedFile": "adjusted/DHI.json",
+   "sha256": "6807c5136497a35609a23bbd0219c44ef4a6c73ce1ac82e53afa89cfd04fc2fe",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DLR": {
+   "adjustedFile": "adjusted/DLR.json",
+   "sha256": "4eebf940fd47e6f1787a1c87afa21d557478e36a73c7f25e81de5dba955f63bf",
+   "first": "2004-10-29",
+   "last": "2026-10-14",
+   "n": 5524
+  },
+  "DLTR": {
+   "adjustedFile": "adjusted/DLTR.json",
+   "sha256": "dd5e5beaa8600b05b26476ced16964714f3d8c6e80a8907a08769cd9cae224ce",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DOC": {
+   "adjustedFile": "adjusted/DOC.json",
+   "sha256": "7dc7a76b40b9a2e45f601f6f564e3467b5487bd74cfa7d9940cb077991d7e430",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DOV": {
+   "adjustedFile": "adjusted/DOV.json",
+   "sha256": "2da747bb3d4cec6284f4bfbc731c7d47bf00425e5b8404c74af2226805a009aa",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DOW": {
+   "adjustedFile": "adjusted/DOW.json",
+   "sha256": "0d4cd440499f95572b8fb8a1d55eeb70562a79079d279641141970aefc68135c",
+   "first": "2019-03-20",
+   "last": "2026-10-14",
+   "n": 1904
+  },
+  "DPZ": {
+   "adjustedFile": "adjusted/DPZ.json",
+   "sha256": "a18ca600087dfe71fafd6d350749369a82a7c2c009e7823df9fbdce5290c1df6",
+   "first": "2004-07-13",
+   "last": "2026-10-14",
+   "n": 5601
+  },
+  "DRI": {
+   "adjustedFile": "adjusted/DRI.json",
+   "sha256": "c3dd1c8ab0266ae956cbc34694df7bf3e1b7d131576deaae7408f733c46fc5e4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DTE": {
+   "adjustedFile": "adjusted/DTE.json",
+   "sha256": "f3f2aa8da95fdd4ec225bd5344c10fb7063c0552243aacc23d59fb3a2937d599",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DUK": {
+   "adjustedFile": "adjusted/DUK.json",
+   "sha256": "fd8200e57ac6cb26428eb52bf27cd5d0461db9cbd61e9f686e8f881a3ce2b46a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DVA": {
+   "adjustedFile": "adjusted/DVA.json",
+   "sha256": "63e763393373f8011e2781b65efadbde594f4be9be8a95e9ec0c008057d4e349",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "DXCM": {
+   "adjustedFile": "adjusted/DXCM.json",
+   "sha256": "3b4fce989dcda54da7ed8e63c19ec3a542bb58ef52d0804ab2a89e2956147354",
+   "first": "2005-04-14",
+   "last": "2026-10-14",
+   "n": 5410
+  },
+  "EBAY": {
+   "adjustedFile": "adjusted/EBAY.json",
+   "sha256": "fa1cecfbb22004ad894d807dd830ab62c4d292c62480348cd03919897db533e1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ECHO": {
+   "adjustedFile": "adjusted/ECHO.json",
+   "sha256": "752ac5e9df5b8357c3425dbb7235e165eef935f77f579306713328168761c08b",
+   "first": "2008-01-02",
+   "last": "2026-10-14",
+   "n": 4726
+  },
+  "ECL": {
+   "adjustedFile": "adjusted/ECL.json",
+   "sha256": "a7268411d90eb3a8712e22f041d70cbe598f032212b582f0055a219d640818c1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ED": {
+   "adjustedFile": "adjusted/ED.json",
+   "sha256": "d5af23b9fca73bc95b029d48d24997b6f82730fa2f7f282cccf6d5cb0c29a15f",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EFX": {
+   "adjustedFile": "adjusted/EFX.json",
+   "sha256": "1384129e8b6db36492d3abf09d2588b0aa75d49129888256b92801c8383218f2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EG": {
+   "adjustedFile": "adjusted/EG.json",
+   "sha256": "f1e83771d2fdded4ea3dc07dbcc592fa12fa05f9e2b592da051ff97e124a0eca",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EIX": {
+   "adjustedFile": "adjusted/EIX.json",
+   "sha256": "65b3fe0b3a43219634e4255b1c55e46a76c7c8f1969f75b5eb06d840ea06ffaf",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EL": {
+   "adjustedFile": "adjusted/EL.json",
+   "sha256": "fe26147f2367e876bed8d1585c1bd0f6bb8f8207c4ed564a3bc2696f2a12b2e3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ELV": {
+   "adjustedFile": "adjusted/ELV.json",
+   "sha256": "819e0dae6f48140b9dd94b5bde652d2e9c66f346df32970b9ec7f4399f3d9bdc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EME": {
+   "adjustedFile": "adjusted/EME.json",
+   "sha256": "ad0fc93a84e2589bf6d7320f88e9a58694bd6dc223ca9358d3cf3a5cb4e12d1f",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EMR": {
+   "adjustedFile": "adjusted/EMR.json",
+   "sha256": "11703a7693ffef9ae4c3f3fc67601c7f7807a56ed7fb9d91c29c73499ecb05b3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EOG": {
+   "adjustedFile": "adjusted/EOG.json",
+   "sha256": "ccc450e45d834b3e3dbb658ceb2b9338da314fc532c8c26d7477c1d0391de037",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EQIX": {
+   "adjustedFile": "adjusted/EQIX.json",
+   "sha256": "c7ab5a2c0d99eb62457811cfd3bb5021b721287a63bfc55647c4ff4ba9f296fd",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EQT": {
+   "adjustedFile": "adjusted/EQT.json",
+   "sha256": "d2b3d4705d37532e853ae37074d58a4f027813b67b74ed311e1e2eda67732a8c",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ERIE": {
+   "adjustedFile": "adjusted/ERIE.json",
+   "sha256": "c5325add63786954ba8aa4a0668401f3cb58fbdcdd9d46cdb42789aed346bf08",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ES": {
+   "adjustedFile": "adjusted/ES.json",
+   "sha256": "0affc62e766eed03a905d2456c7a3d289f2c00c9059fbb7f3c36bc763d5010d6",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ESS": {
+   "adjustedFile": "adjusted/ESS.json",
+   "sha256": "5c30f535cef954313da1eec3518fe426a386d73a0fea8d5bdbc312259a380a6b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ETR": {
+   "adjustedFile": "adjusted/ETR.json",
+   "sha256": "336159432424a7750563c77c68d87095d0b6ddd80db5b8fce47fa684234adefb",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EVRG": {
+   "adjustedFile": "adjusted/EVRG.json",
+   "sha256": "7980fcb1fb15800968942f2665a5d440305b9b14a0378f79f53ec3411b952350",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EW": {
+   "adjustedFile": "adjusted/EW.json",
+   "sha256": "0033f9b5fbf0acd528579f02186814a94e0924f4653ce177284a738d7b6d79e0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EXC": {
+   "adjustedFile": "adjusted/EXC.json",
+   "sha256": "aeb82e974d5fd15039f5985fc82dbf6bf15e4943b5d90abbd5ebffac170a69e6",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EXE": {
+   "adjustedFile": "adjusted/EXE.json",
+   "sha256": "c2a171e6a9d055cf85c0be4404141dfb27bd1654cc3928d6255c98a5e38023c9",
+   "first": "2021-02-10",
+   "last": "2026-10-14",
+   "n": 1426
+  },
+  "EXPD": {
+   "adjustedFile": "adjusted/EXPD.json",
+   "sha256": "fc6bef93be8d3f36df935b89e908ba6235f4529d6107df20546d1429c9ec4e52",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "EXPE": {
+   "adjustedFile": "adjusted/EXPE.json",
+   "sha256": "b91292ef0abe115f48099a20bff51f2f3d7d0dc354923a2d8594cca51e3f35fd",
+   "first": "2005-07-21",
+   "last": "2026-10-14",
+   "n": 5342
+  },
+  "EXR": {
+   "adjustedFile": "adjusted/EXR.json",
+   "sha256": "ead1db0b851808cf8201bb8a93064e296c14ee119d5192bc2e73ed3977d3ca5c",
+   "first": "2004-08-16",
+   "last": "2026-10-14",
+   "n": 5577
+  },
+  "FANG": {
+   "adjustedFile": "adjusted/FANG.json",
+   "sha256": "d23c85257baa9d7a509dad9579a519e3e3c1b08a0844a93fb6e335f9f5074b60",
+   "first": "2012-10-12",
+   "last": "2026-10-14",
+   "n": 3520
+  },
+  "FAST": {
+   "adjustedFile": "adjusted/FAST.json",
+   "sha256": "52b344a6eac43f535c4c46ae874a0af36cc4483ba28808a1ec1d971d07923c8a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FDS": {
+   "adjustedFile": "adjusted/FDS.json",
+   "sha256": "cf51b2255869cbdd8cbad2863373d55b6c0e2edfda269066b11cf1c01aadf283",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FDXF": {
+   "adjustedFile": "adjusted/FDXF.json",
+   "sha256": "c6c0c4c98b4276727bce072b7574742a8ef4e75b18c9e6ad1cc4ffffafb472f5",
+   "first": "2026-05-27",
+   "last": "2026-10-14",
+   "n": 98
+  },
+  "FE": {
+   "adjustedFile": "adjusted/FE.json",
+   "sha256": "acb03690321462631f003656f0fc6bc969618d4289893504d4d6a38e3ec6170f",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FER": {
+   "adjustedFile": "adjusted/FER.json",
+   "sha256": "0b8f861ee2869cc17cea75bb86bb2d29112426c691252b09df18562226b90fea",
+   "first": "2012-08-13",
+   "last": "2026-10-14",
+   "n": 3563
+  },
+  "FERG": {
+   "adjustedFile": "adjusted/FERG.json",
+   "sha256": "6dbe43d7cdfd3b0daa69e89a4aefd8f7c0d0a391f156ee50f4cbffa5dede4278",
+   "first": "2010-01-05",
+   "last": "2026-10-14",
+   "n": 4220
+  },
+  "FFIV": {
+   "adjustedFile": "adjusted/FFIV.json",
+   "sha256": "4258fe9234684289e1f1ec54d92a86588398008441053a5eb098b1c48442e726",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FICO": {
+   "adjustedFile": "adjusted/FICO.json",
+   "sha256": "0cc179a032b3301957e3db0d6e9b9ee0e7da1bb4d7448836f81642494cf0b178",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FIS": {
+   "adjustedFile": "adjusted/FIS.json",
+   "sha256": "54b0984ca087423891b3fda913d2c941da128a9f1475ee40abc82fba6686b271",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FISV": {
+   "adjustedFile": "adjusted/FISV.json",
+   "sha256": "71c767f6d831c0205032419c60fa25fe955b9f962d10cf6d3ec4ede458972942",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5731
+  },
+  "FITB": {
+   "adjustedFile": "adjusted/FITB.json",
+   "sha256": "544a19b7b7a65589270777f22f9ca6e040bbdd8001a7f3048c117f4b8c46858d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FIX": {
+   "adjustedFile": "adjusted/FIX.json",
+   "sha256": "818ed71223426126a6ad8b6774c682f6f3ba5011302e1e8b2f3e6e6e4d7865a3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FLEX": {
+   "adjustedFile": "adjusted/FLEX.json",
+   "sha256": "8712c4dcdf16658c2d33db690b3d81e9ee0ed899727e1cb8244bfc565972caf6",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FOX": {
+   "adjustedFile": "adjusted/FOX.json",
+   "sha256": "78c4863778faf8ee8709ac0d4bbfcc5552190e7a619990296b2f9b0db96c3e8e",
+   "first": "2019-03-13",
+   "last": "2026-10-14",
+   "n": 1909
+  },
+  "FOXA": {
+   "adjustedFile": "adjusted/FOXA.json",
+   "sha256": "c286680381cf796014b05b9abde775bcc446133d4b3bbd0dc1eb5a9c51dcb0a1",
+   "first": "2019-03-12",
+   "last": "2026-10-14",
+   "n": 1910
+  },
+  "FRT": {
+   "adjustedFile": "adjusted/FRT.json",
+   "sha256": "e0227303e2a351896642af78c721dc179213f9460174248c6d50065a1f811ed7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "FTNT": {
+   "adjustedFile": "adjusted/FTNT.json",
+   "sha256": "edb32b8186b0636ae3a9ece6c2930729b165634aaae5553992707dbbae1a3c9a",
+   "first": "2009-11-18",
+   "last": "2026-10-14",
+   "n": 4251
+  },
+  "FTV": {
+   "adjustedFile": "adjusted/FTV.json",
+   "sha256": "6c3ee4f5cdb790832fb6c36778a5e707f50510efd8a13b48688d0af8ff189d3d",
+   "first": "2016-07-05",
+   "last": "2026-10-14",
+   "n": 2585
+  },
+  "GDDY": {
+   "adjustedFile": "adjusted/GDDY.json",
+   "sha256": "fceb348c47fb1afb2f6f115374b10fde3f073ffb47aa317cebf4fdaa0c9fda54",
+   "first": "2015-03-31",
+   "last": "2026-10-14",
+   "n": 2903
+  },
+  "GEHC": {
+   "adjustedFile": "adjusted/GEHC.json",
+   "sha256": "55ede6523be9f91cc76c0ae9d33382d0823e21e027992960153e86b1d0542066",
+   "first": "2022-12-15",
+   "last": "2026-10-14",
+   "n": 960
+  },
+  "GEN": {
+   "adjustedFile": "adjusted/GEN.json",
+   "sha256": "d4947f179883a826a19ddaf2c0f7bca0dbc37d031268b218480b21016a5d1765",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "GIS": {
+   "adjustedFile": "adjusted/GIS.json",
+   "sha256": "325021d693544b59d72f42eafbc3311b343864e2025b6537a1d1a48f2f5293b5",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "GL": {
+   "adjustedFile": "adjusted/GL.json",
+   "sha256": "27b950b834ea940686e13166b7f5baafc7f7eb471d3d83f183d168c9ce9a5dc2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "GNRC": {
+   "adjustedFile": "adjusted/GNRC.json",
+   "sha256": "f5ca88aae4044ee37a86257767eafac75425e62ced14e9355227275c3edda265",
+   "first": "2010-02-11",
+   "last": "2026-10-14",
+   "n": 4194
+  },
+  "GPC": {
+   "adjustedFile": "adjusted/GPC.json",
+   "sha256": "e299f76821997b7d5fb407094a8f38b2be7b492195c785880f16101d2fd5c01e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "GPN": {
+   "adjustedFile": "adjusted/GPN.json",
+   "sha256": "d7852e995170fa48a9751db95d348cf01b4991e34d4bae72c4d0694e68d60cb8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "GRMN": {
+   "adjustedFile": "adjusted/GRMN.json",
+   "sha256": "1bcee3ffff17833b670ea128b679ced44f8f43cfe6a86977dbb9ce1a371b3290",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "GWW": {
+   "adjustedFile": "adjusted/GWW.json",
+   "sha256": "165c0f84fa0c0cf298f0227545df19026f5baaeeb56322c93f2f1b19e6e59883",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HAS": {
+   "adjustedFile": "adjusted/HAS.json",
+   "sha256": "5806962f0c64983dfe0b62d544f3221941832d21d9671ca56c4cff75c42b8751",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HBAN": {
+   "adjustedFile": "adjusted/HBAN.json",
+   "sha256": "1458b5acf7b026511360e493b1ad0f311385255af6dbde9c8df880d50a167554",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HCA": {
+   "adjustedFile": "adjusted/HCA.json",
+   "sha256": "e235f60e4e3320d7aedbf9795488b1a90fda5cec6bca9e27d88ac23166880893",
+   "first": "2011-03-10",
+   "last": "2026-10-14",
+   "n": 3923
+  },
+  "HIG": {
+   "adjustedFile": "adjusted/HIG.json",
+   "sha256": "b68b5da2598b8f41188f23720adcb240a07b4633c27c0a5110cb182f758aaa96",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HII": {
+   "adjustedFile": "adjusted/HII.json",
+   "sha256": "88a831922ba59c2fba6cd205faa6d8312011515c28398098519d6ad206e8be12",
+   "first": "2011-03-22",
+   "last": "2026-10-14",
+   "n": 3915
+  },
+  "HLT": {
+   "adjustedFile": "adjusted/HLT.json",
+   "sha256": "d27d3227a85c1d784a04c4fd7470f60b804485d77c4c1bd877e4e37e368efd84",
+   "first": "2013-12-12",
+   "last": "2026-10-14",
+   "n": 3228
+  },
+  "HONA": {
+   "adjustedFile": "adjusted/HONA.json",
+   "sha256": "601f66f0ef108f59f6d79ee2d9da117a2248c535097a77534f6cc8e3406f482f",
+   "first": "2026-06-15",
+   "last": "2026-10-14",
+   "n": 85
+  },
+  "HPE": {
+   "adjustedFile": "adjusted/HPE.json",
+   "sha256": "41fd3e3145b3eabfa3afae729d062783ebbad53d22f01079dea6408b436d2511",
+   "first": "2015-10-19",
+   "last": "2026-10-14",
+   "n": 2763
+  },
+  "HPQ": {
+   "adjustedFile": "adjusted/HPQ.json",
+   "sha256": "d7f5ebacc9cb2318a369c7c3e26a042f99c20cdbd7baefa40533a0201e97cbd4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HRL": {
+   "adjustedFile": "adjusted/HRL.json",
+   "sha256": "de5fd533e47e826f8ffadbd0746aa38eb23983b1b827b5a0c988e1efe59327fc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HSIC": {
+   "adjustedFile": "adjusted/HSIC.json",
+   "sha256": "21a9aaceb36fd57a1b90bf5bb30a7c55d3732e51b497ba76d991ff90d5d9e435",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HST": {
+   "adjustedFile": "adjusted/HST.json",
+   "sha256": "1d0b9b61598b5e99de22ce01c7c6e977af43fb5c6f75b3f1fc46fe7e0e194b7a",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HSY": {
+   "adjustedFile": "adjusted/HSY.json",
+   "sha256": "454b87a897bcf3283b4f2769b99a6b27e952d75ff56bb36a5cdfdaabfa3dccdc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HUBB": {
+   "adjustedFile": "adjusted/HUBB.json",
+   "sha256": "9aa55095d17e94664798d5ecfb96ea86e038b0cddd3ab6a7409514de8ccb0e02",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HUM": {
+   "adjustedFile": "adjusted/HUM.json",
+   "sha256": "7444f394ba2420bf545d45d9a19ef87e029149fbbd135bebbc0948c0635b010e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "HWM": {
+   "adjustedFile": "adjusted/HWM.json",
+   "sha256": "4cc6d9f2c0ead3e38eafdba98e59ec6b3a33a76ed43219bc66efa6399d5fd4ef",
+   "first": "2016-11-01",
+   "last": "2026-10-14",
+   "n": 2501
+  },
+  "IDXX": {
+   "adjustedFile": "adjusted/IDXX.json",
+   "sha256": "79fb11a3817d752c42b4816ee2751911517a52b01e80723b71749d1c74367fa0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "IEX": {
+   "adjustedFile": "adjusted/IEX.json",
+   "sha256": "e32aa91a01b9729c317683dc53ba3cc9594ea46b71b4b0f151122d66c0d208d3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "IFF": {
+   "adjustedFile": "adjusted/IFF.json",
+   "sha256": "5b8d47e86f1b116de869d58df1f39cf52414fd1660b305762c055ce175d1ec00",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ILMN": {
+   "adjustedFile": "adjusted/ILMN.json",
+   "sha256": "4567d7add811631a46fce700dcd6584b69122a90f174d60c7a127b42d4007edc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "INCY": {
+   "adjustedFile": "adjusted/INCY.json",
+   "sha256": "a56ccba3ef6e82207fdc6140e02697aedb4da945ae562c075f01810762b2ae33",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "INVH": {
+   "adjustedFile": "adjusted/INVH.json",
+   "sha256": "1da45c4a5c56fc80275bc39dca9ea918072a4a01bc479f04762cb482b4a85d24",
+   "first": "2017-02-01",
+   "last": "2026-10-14",
+   "n": 2439
+  },
+  "IP": {
+   "adjustedFile": "adjusted/IP.json",
+   "sha256": "6dab77ca3b87c0b278f2360b65e884e0d735b8e31f816e30e18acb5c47967ab4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "IQV": {
+   "adjustedFile": "adjusted/IQV.json",
+   "sha256": "0b5ba5db513173f1f409b470ce81311c90702935e7cfe22400a0766f44ddd004",
+   "first": "2013-05-09",
+   "last": "2026-10-14",
+   "n": 3379
+  },
+  "IR": {
+   "adjustedFile": "adjusted/IR.json",
+   "sha256": "2107d3a22f36031db268159a5afb1b49af12f312d18c04083a2b7aff7b46a488",
+   "first": "2017-05-12",
+   "last": "2026-10-14",
+   "n": 2369
+  },
+  "IRM": {
+   "adjustedFile": "adjusted/IRM.json",
+   "sha256": "9df4b22b450d1e5a3607bc1adbcb9bdddbfb4ed5f01af9becbc197aeb9e264ab",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "IT": {
+   "adjustedFile": "adjusted/IT.json",
+   "sha256": "c07f8bd424517d333c96475dd60ab2ac82ab5d6355fe8a4c87ebc546b4252b24",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ITW": {
+   "adjustedFile": "adjusted/ITW.json",
+   "sha256": "e9430f8bc0c04adeb40a9a4c50805ea457f080d6f5697a2ca2c90b602034b3c7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "IVZ": {
+   "adjustedFile": "adjusted/IVZ.json",
+   "sha256": "7c04d12639598169561af827bf3c65d49724e1eb5024415877a2762645948968",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "J": {
+   "adjustedFile": "adjusted/J.json",
+   "sha256": "b0695d687750b89595ef7bedd1930253f88f8831088de2642fe052aa855b5732",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "JBHT": {
+   "adjustedFile": "adjusted/JBHT.json",
+   "sha256": "e60fe9da44213d8acfac84b8eaf5d99b67ab26e91df81b0aae01fd235e06d720",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "JBL": {
+   "adjustedFile": "adjusted/JBL.json",
+   "sha256": "8270b1e2e391038a847de9d1ef9400c59e028b8db7bc4f882564a018de69f6a0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "JCI": {
+   "adjustedFile": "adjusted/JCI.json",
+   "sha256": "febbbb7b2b8d3d6f8fe3c94e2241d2fc0857e36f2e3606cc20ce13e7f14b9c22",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "JKHY": {
+   "adjustedFile": "adjusted/JKHY.json",
+   "sha256": "92303e66c4bdc4b4bb43def2d9b891e4f342b71a8fdc726ea67407e4363fcc42",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "KDP": {
+   "adjustedFile": "adjusted/KDP.json",
+   "sha256": "e0d07c1ec420b5683095b3db386c7fb6a995ace4bdc63f3b591aa48b38dec32c",
+   "first": "2008-05-07",
+   "last": "2026-10-14",
+   "n": 4639
+  },
+  "KEY": {
+   "adjustedFile": "adjusted/KEY.json",
+   "sha256": "e94c8b4e862075ec5318f8a31c0404910a75735f339c3be9f4ed7c81c3c513ab",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "KEYS": {
+   "adjustedFile": "adjusted/KEYS.json",
+   "sha256": "4968b082a807d1c16ccb755f77e58da9bf43cfad541719d6944e225241e361d2",
+   "first": "2014-10-20",
+   "last": "2026-10-14",
+   "n": 3014
+  },
+  "KHC": {
+   "adjustedFile": "adjusted/KHC.json",
+   "sha256": "0bb3afd2d448666fb2c11bdc71d3e26f4be8872c547babc7c960096b322214f3",
+   "first": "2015-07-06",
+   "last": "2026-10-14",
+   "n": 2837
+  },
+  "KIM": {
+   "adjustedFile": "adjusted/KIM.json",
+   "sha256": "c6bb53b86634d23111ccd57ac7dcd247f7455c381cb703934a7235e093fba4a0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "KMB": {
+   "adjustedFile": "adjusted/KMB.json",
+   "sha256": "ba983b026819fff2cac5effec88792ae09156bbc99a1e3121b4f153f7820c6b4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "KMI": {
+   "adjustedFile": "adjusted/KMI.json",
+   "sha256": "b2d276ab77faaf7b079844f1da282571ad51c584683ab69f0b2d152bfde43058",
+   "first": "2011-02-11",
+   "last": "2026-10-14",
+   "n": 3941
+  },
+  "KR": {
+   "adjustedFile": "adjusted/KR.json",
+   "sha256": "861bb925049787d4abe92383669082c7057a606e4f8411524ff790ca2a649a96",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "KVUE": {
+   "adjustedFile": "adjusted/KVUE.json",
+   "sha256": "cabd65351622ec48ef371ebbf88c3b7a84212641b063e625c5335e5f8c044c18",
+   "first": "2023-05-04",
+   "last": "2026-10-14",
+   "n": 865
+  },
+  "L": {
+   "adjustedFile": "adjusted/L.json",
+   "sha256": "8085fc3224bb735d5eb17b85353daaba4c2313dc9038aab292b55bffb126263c",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "LDOS": {
+   "adjustedFile": "adjusted/LDOS.json",
+   "sha256": "d7181a55f85fa6dba015626ac073635d33c6271aaab0fe327a1dcc34cc2c027b",
+   "first": "2006-10-17",
+   "last": "2026-10-14",
+   "n": 5029
+  },
+  "LEN": {
+   "adjustedFile": "adjusted/LEN.json",
+   "sha256": "8a3998cb008d6e13c4cf2fb8d76987e216d482e427c6425658916adbb6925b9d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "LH": {
+   "adjustedFile": "adjusted/LH.json",
+   "sha256": "c07ccad1e37634c642834fbc1bfce380cf6917c8aa5af0104bcfdc1c59210efe",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "LII": {
+   "adjustedFile": "adjusted/LII.json",
+   "sha256": "8bfa671073afc1b8f6e31a7e717fa856ff60ca25b5385a581fe33ab8f65656e8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "LIN": {
+   "adjustedFile": "adjusted/LIN.json",
+   "sha256": "d25f18d71b4da46b648f3da1eb62abec51dba64454c3b172bddce86218100197",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "LNT": {
+   "adjustedFile": "adjusted/LNT.json",
+   "sha256": "c43902ae21dd1c8a9eca271871c1d25d1aa1118bdea77105cbb1a956dfa8430b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "LVS": {
+   "adjustedFile": "adjusted/LVS.json",
+   "sha256": "41fb6671e2a5ce13c74e9e7d73002e59d004ddd6c07cb83fe31554712fc17909",
+   "first": "2004-12-15",
+   "last": "2026-10-14",
+   "n": 5492
+  },
+  "LYB": {
+   "adjustedFile": "adjusted/LYB.json",
+   "sha256": "1dd0a2d9f3e23c5d6dee0910a8de5f503f07d28218d0b0b20b1482f2f0a1056f",
+   "first": "2010-04-28",
+   "last": "2026-10-14",
+   "n": 4142
+  },
+  "LYV": {
+   "adjustedFile": "adjusted/LYV.json",
+   "sha256": "23cefd1ee845c22973a072766e4e31de79088257c3d2f0ab90afbfd2e2568361",
+   "first": "2005-12-21",
+   "last": "2026-10-14",
+   "n": 5235
+  },
+  "MAA": {
+   "adjustedFile": "adjusted/MAA.json",
+   "sha256": "6db8b95573ac78632f7fef69946fe610d0fcc15080e036baf4c2274bcbb7aff7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MAS": {
+   "adjustedFile": "adjusted/MAS.json",
+   "sha256": "6ff84683ae8f8336c80c5fe4d943cc0b832f51c7450f298c79e348abf98f456e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MCK": {
+   "adjustedFile": "adjusted/MCK.json",
+   "sha256": "fd164e1ee2d8784e01690b0443988bb1269c839dbe12d057d793b55a578f5acc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MDLZ": {
+   "adjustedFile": "adjusted/MDLZ.json",
+   "sha256": "1fffd7462ccf1d4b8dc8256686894d65e2c37d5c6c2d98943ab0ab0280e47292",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MELI": {
+   "adjustedFile": "adjusted/MELI.json",
+   "sha256": "b33aa3c5042ac6a3f847c5c722f17c90b1d20c9f22fc769ef414c0fa062c7c11",
+   "first": "2007-08-10",
+   "last": "2026-10-14",
+   "n": 4825
+  },
+  "MET": {
+   "adjustedFile": "adjusted/MET.json",
+   "sha256": "52aa653842d1b2ade5d2cd7a442150f100dc1101fb011ee5b03b5d1a8891c247",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MGM": {
+   "adjustedFile": "adjusted/MGM.json",
+   "sha256": "245a2be83133fa55490c19964935ecf61a0419ff0fef2f4c0d1a74fe06338906",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MKC": {
+   "adjustedFile": "adjusted/MKC.json",
+   "sha256": "e7ce5ff8d51923de077091d43dc19c548b97ae0ccf443466544e19ec58c719dc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MLM": {
+   "adjustedFile": "adjusted/MLM.json",
+   "sha256": "a28b7e6382a1ac21fdc26fd46357f34b248b3b97affd6aa27d3f0ceaf7b62be3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MNST": {
+   "adjustedFile": "adjusted/MNST.json",
+   "sha256": "3a1593e061eda8b3afacdfb912a138a9092ac020bb27e9f93469b172ba2a60c5",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MO": {
+   "adjustedFile": "adjusted/MO.json",
+   "sha256": "4d6edc894e371df63243f84fb8fdddf62a1419c5743f4ba18352d5a5814205a1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MOS": {
+   "adjustedFile": "adjusted/MOS.json",
+   "sha256": "3ae18bdf5151a50acd23062484dd9395e3fff54436bcb7187c0fb811bea9fedd",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MPC": {
+   "adjustedFile": "adjusted/MPC.json",
+   "sha256": "a742518f4ab4e7fe157e0c210d421d3fcececceab9e9cb37ec570937767e9a6e",
+   "first": "2011-06-24",
+   "last": "2026-10-14",
+   "n": 3849
+  },
+  "MRSH": {
+   "adjustedFile": "adjusted/MRSH.json",
+   "sha256": "0185b1165a2db53c9c8dc88fe25aadf3c89c580e1bdcf9e09aefce3a292a17c0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MSCI": {
+   "adjustedFile": "adjusted/MSCI.json",
+   "sha256": "95da5ef5acb174f0a8a42a9c249398d1515d1f21f4be16da415328ccf62c31d9",
+   "first": "2007-11-15",
+   "last": "2026-10-14",
+   "n": 4757
+  },
+  "MSI": {
+   "adjustedFile": "adjusted/MSI.json",
+   "sha256": "b9ab9384d8776a46fc8510c52cfc82f2c24078a3973da708f710ba176b25bb95",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MTB": {
+   "adjustedFile": "adjusted/MTB.json",
+   "sha256": "a7e396ce10c39c2d7165afcd3668377b207a43cf07cbe095db3f501a8cee061e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "MTD": {
+   "adjustedFile": "adjusted/MTD.json",
+   "sha256": "3d836a30d49d00cae5dfdee5de1b7866ffe07eb012ca49cbb80d287d84f9873f",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NDAQ": {
+   "adjustedFile": "adjusted/NDAQ.json",
+   "sha256": "6eecb3240a3ce29a56f12582d2deef98599374cefade18fdbd377f8c558871d7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NDSN": {
+   "adjustedFile": "adjusted/NDSN.json",
+   "sha256": "2c4a036531c4e33ff7e29c25c5afb0c9a5172db440c5d04822a0662462e864bf",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NEE": {
+   "adjustedFile": "adjusted/NEE.json",
+   "sha256": "69cdfa1b060f2754dd5dc9490e7aa56bd8406e1bcec01f2b90be7fe96c51bcd8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NI": {
+   "adjustedFile": "adjusted/NI.json",
+   "sha256": "c1db9cbe84e4df05a092c298f20934c11ac7e05d5ef9bdc09cacc9157c1919da",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NSC": {
+   "adjustedFile": "adjusted/NSC.json",
+   "sha256": "839960f972b75d46c3738d2f7027076c8384746151efb9d6490c44e4455fa719",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NTAP": {
+   "adjustedFile": "adjusted/NTAP.json",
+   "sha256": "a9af4ac9cd41495765ff840db39776f78f85d52153e1da592b812083408578fe",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NTRS": {
+   "adjustedFile": "adjusted/NTRS.json",
+   "sha256": "c3559125187e214ce19e659346f2859587b4cca4e88fea6899ca1a763d176810",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NU": {
+   "adjustedFile": "adjusted/NU.json",
+   "sha256": "865b69be4d498a4972271f8699ca08866ed0cfe04f6f1d2f395346438d72d9a7",
+   "first": "2021-12-09",
+   "last": "2026-10-14",
+   "n": 1216
+  },
+  "NVR": {
+   "adjustedFile": "adjusted/NVR.json",
+   "sha256": "260f931fada2943554c1ad70a52c044c9f4206b8214f6ccbf92009d61422ec70",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "NWS": {
+   "adjustedFile": "adjusted/NWS.json",
+   "sha256": "253e7ea07d0af62e4cf73bae8f3496a21d8350c7ae982da21d030cd286f0c824",
+   "first": "2013-06-19",
+   "last": "2026-10-14",
+   "n": 3351
+  },
+  "NWSA": {
+   "adjustedFile": "adjusted/NWSA.json",
+   "sha256": "265fe4752a38d228419dc4975c2d18886cd7abd35de26ad9a751cc7cbe706bef",
+   "first": "2013-06-19",
+   "last": "2026-10-14",
+   "n": 3351
+  },
+  "O": {
+   "adjustedFile": "adjusted/O.json",
+   "sha256": "8380dade1e2e7e151b08d5ecea62871bb5eaa124d3317d549627a036306ce194",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ODFL": {
+   "adjustedFile": "adjusted/ODFL.json",
+   "sha256": "d55a835a34893fa13b7769d6d9944feefa03ec4d98ceace1633c63b3e3c7dcdb",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "OKE": {
+   "adjustedFile": "adjusted/OKE.json",
+   "sha256": "2939070fd40be8cabdaafd1fce42f0cc2858ff28dd6341cc5cfdca3d80ae6679",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "OMC": {
+   "adjustedFile": "adjusted/OMC.json",
+   "sha256": "55ac7ff611b5e1d450a5244cf84c6236231460a31642df2d9625c5c3bb7c3509",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ORLY": {
+   "adjustedFile": "adjusted/ORLY.json",
+   "sha256": "2bd3209a4b1c830104c127520d2634b291db9e6c9303d71666a150f1918b41b1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "OTIS": {
+   "adjustedFile": "adjusted/OTIS.json",
+   "sha256": "5e3e3dc2c1344351550c194ada4033d32ca4c3b560e0abdc25bbc1a1290cf062",
+   "first": "2020-03-19",
+   "last": "2026-10-14",
+   "n": 1652
+  },
+  "P": {
+   "adjustedFile": "adjusted/P.json",
+   "sha256": "81e22dea0d175e95aacf84f5d7c1ac4ce9f93a2153500ee1d04b8def5abd20ed",
+   "first": "2015-10-06",
+   "last": "2026-10-14",
+   "n": 2772
+  },
+  "PAYX": {
+   "adjustedFile": "adjusted/PAYX.json",
+   "sha256": "cb69a46ed387d44411bed5734c4447bed57824d277243f1a232b7c5f4955035d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PCAR": {
+   "adjustedFile": "adjusted/PCAR.json",
+   "sha256": "c5dfa701c9451ae723414616754a41b2de779eaa911ba1e7d3111ec66de0aeb9",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PCG": {
+   "adjustedFile": "adjusted/PCG.json",
+   "sha256": "862e6781655add09ba98a5d5e3592f1074354a51af525d065689d144da5adfcc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PEG": {
+   "adjustedFile": "adjusted/PEG.json",
+   "sha256": "301434d5660f241937150367a6ab402301577dcdf83c28e61d0c5699a244f6bf",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PFG": {
+   "adjustedFile": "adjusted/PFG.json",
+   "sha256": "75a504c308461ab3cf1fa4ded69b21b5e0d3401f294b400ecb1d41ee1547ba66",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PGR": {
+   "adjustedFile": "adjusted/PGR.json",
+   "sha256": "418fce5a27eba1b86ba49b2586284583b360d32b78602bdaac6a8a7e2c968e85",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PH": {
+   "adjustedFile": "adjusted/PH.json",
+   "sha256": "9011e4513dcf170f181302ccbe1a8765476a0cb6d158f8547265924614d79570",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PHM": {
+   "adjustedFile": "adjusted/PHM.json",
+   "sha256": "1890a4a6a20231e0f4ac6c9fe8689562af9cb3a9a7c0a8d7918be111933b8fc4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PKG": {
+   "adjustedFile": "adjusted/PKG.json",
+   "sha256": "cf7882ef4a82ffc255efaece2c160c75db7d0ba20c97829403168bc92f553ac0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PLD": {
+   "adjustedFile": "adjusted/PLD.json",
+   "sha256": "7fbe7ddb7fe8b50ba2760ad6c385af734e8027d0e5dc084a8a09e2685d3e3bf8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PM": {
+   "adjustedFile": "adjusted/PM.json",
+   "sha256": "5b2b76d878ff3c909d81f38aa8020fd2318337f4515dde70ffbdd3cef95dae13",
+   "first": "2008-03-17",
+   "last": "2026-10-14",
+   "n": 4675
+  },
+  "PNR": {
+   "adjustedFile": "adjusted/PNR.json",
+   "sha256": "169d2949a39c225677b1b73abbbc72654a2eeb60921a37d425d16a9df61556f0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PNW": {
+   "adjustedFile": "adjusted/PNW.json",
+   "sha256": "352a070a228af3768f78cc354c2c9bed09d218d63004f5bec9c17ed02c9b8987",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PODD": {
+   "adjustedFile": "adjusted/PODD.json",
+   "sha256": "749989113bf2bce857ee1be65d019b933396eee2588130fcf9168874a288b6b0",
+   "first": "2007-05-15",
+   "last": "2026-10-14",
+   "n": 4886
+  },
+  "PPG": {
+   "adjustedFile": "adjusted/PPG.json",
+   "sha256": "7e52a8fb9928e674ed55e5cc7c56a03da1d3fb41c06ffc89b3a6d0e0afb8b8b6",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PPL": {
+   "adjustedFile": "adjusted/PPL.json",
+   "sha256": "7de7200db8ab37aae7048cf55dbf64fe1220e2c103a00772d34f41afcd1bc088",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PRU": {
+   "adjustedFile": "adjusted/PRU.json",
+   "sha256": "4b4e40d7ab18cd7caece3402ff310f6cb4cc3040769112936b33a91a73e83791",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PSA": {
+   "adjustedFile": "adjusted/PSA.json",
+   "sha256": "c40434f9c2359fbfee109b9904b9ec68834c29c50cd22bc817c9f6a1ad6eab72",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "PSX": {
+   "adjustedFile": "adjusted/PSX.json",
+   "sha256": "0a6a2af5824628e7f869ad9d381b037c3193125925b8cccad63a96af9f63bb20",
+   "first": "2012-04-12",
+   "last": "2026-10-14",
+   "n": 3648
+  },
+  "Q": {
+   "adjustedFile": "adjusted/Q.json",
+   "sha256": "e2ab92a13d91f079037a98d291135d364426ed18000260b14aae94a0b07b2137",
+   "first": "2025-10-27",
+   "last": "2026-10-14",
+   "n": 243
+  },
+  "REG": {
+   "adjustedFile": "adjusted/REG.json",
+   "sha256": "d6ace1367522c9a79479e8479b6593db8f43599c05261e5d132d75f3f5ccd776",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "RF": {
+   "adjustedFile": "adjusted/RF.json",
+   "sha256": "5d585d49246bfa7823f07a0a04a8e860fff43456d2df355f7108d76316538041",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "RJF": {
+   "adjustedFile": "adjusted/RJF.json",
+   "sha256": "c78eeabe08dae6ed0e50cd43b1bfc767fe189c7bd4311d13c2c2c5920a44230b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "RL": {
+   "adjustedFile": "adjusted/RL.json",
+   "sha256": "ada85e4c4f01c5be1bf70ae8c32fe0caa11c39c9618b5fcf003b077f26890cbb",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "RMD": {
+   "adjustedFile": "adjusted/RMD.json",
+   "sha256": "59d4c1e32382311f375635be3eb1b09a56f10f2293a1c154495ee60cba749fab",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ROL": {
+   "adjustedFile": "adjusted/ROL.json",
+   "sha256": "da85c1d0a20162aee1090a40da6fccb3d61d67e13308fb763f4c85eca95956f7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ROP": {
+   "adjustedFile": "adjusted/ROP.json",
+   "sha256": "5834e38f4c897e50662db462f251bde380751c9c5b04c535bdb46c34cc248054",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ROST": {
+   "adjustedFile": "adjusted/ROST.json",
+   "sha256": "21309e285bfa49b270411999c1705146019f9d6d7c6e03c1817b48580df420a2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "RSG": {
+   "adjustedFile": "adjusted/RSG.json",
+   "sha256": "e3bd43f7f4252ff6c7b620c27195f657833e08d9f7d10e4de3a1e8d34744b5e3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "RVTY": {
+   "adjustedFile": "adjusted/RVTY.json",
+   "sha256": "8dd5050da39b792dbda020100659b0775135cb2d17f7fccc1b056bba45791e69",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SBAC": {
+   "adjustedFile": "adjusted/SBAC.json",
+   "sha256": "17ab3b0c88bec8d47aa4624422e4233e6cb249f4e8aea8bdde0b0357403c9430",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SHW": {
+   "adjustedFile": "adjusted/SHW.json",
+   "sha256": "d8d7a8a9f6c3a1ad0b0c6a47cf6c0fdb9ac65d9fbdea45fee315d7819aa35d5b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SJM": {
+   "adjustedFile": "adjusted/SJM.json",
+   "sha256": "e7fbe81aa8a9e6921686dc39e9eaa130d32690a44cdad83a71df85943eed75c3",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SKYD": {
+   "adjustedFile": "adjusted/SKYD.json",
+   "sha256": "ca97a314b2f9121b0af12b0409aff070261926e3d2b7b8a2b8e872dc9b11507e",
+   "first": "2005-12-05",
+   "last": "2026-10-14",
+   "n": 5247
+  },
+  "SMTC": {
+   "adjustedFile": "adjusted/SMTC.json",
+   "sha256": "1a2bc49a6f6e56bd468700cf40ee419e694185aaa5f7a3ce14422bbe79c5084b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SNA": {
+   "adjustedFile": "adjusted/SNA.json",
+   "sha256": "2c0a23c6d546a6e23bdc2e5f108cc9705130acafbdd921552d84f6de37b96c45",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SO": {
+   "adjustedFile": "adjusted/SO.json",
+   "sha256": "50901918e994d7ab42059ccaad8344f85dc47f34fc7aad9d0e32305696295771",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SOLV": {
+   "adjustedFile": "adjusted/SOLV.json",
+   "sha256": "3bcc2ba2762ee840f8901ff51ba9b8b42253577d20f1675ea161519dbb552c31",
+   "first": "2024-03-26",
+   "last": "2026-10-14",
+   "n": 641
+  },
+  "SPG": {
+   "adjustedFile": "adjusted/SPG.json",
+   "sha256": "76274b93d0d706eac69fbef48bdb348e88ca65a42f29040c7f3731e528b7f064",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SRE": {
+   "adjustedFile": "adjusted/SRE.json",
+   "sha256": "6293d1ffcd920d8a8e1e79b0f17494832baec821817dbb4425a9d954aca3be21",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "STE": {
+   "adjustedFile": "adjusted/STE.json",
+   "sha256": "5f5259a47700a1898f489903ba5e09a23ba62d2839b0ef8eed8c2567457bd5a8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "STLD": {
+   "adjustedFile": "adjusted/STLD.json",
+   "sha256": "cad579956d0ee278afb1ccaa4d9bcd60d42daa06fb59a49a140e416946ff86a2",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "STT": {
+   "adjustedFile": "adjusted/STT.json",
+   "sha256": "4c80b99e7877f6f9709e053852e127bad5a9ba003d4d75d413b1bb1950c4be4e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "STZ": {
+   "adjustedFile": "adjusted/STZ.json",
+   "sha256": "f726dc7f5eab31c17f78e02353fdeffc37e1ee68a0884914635db8ec44d70cd1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SW": {
+   "adjustedFile": "adjusted/SW.json",
+   "sha256": "cd01f6087086f4a3b2218410f9dee93d8ce41006bec8b2bd90b3afb74b8f105e",
+   "first": "2008-06-17",
+   "last": "2026-10-14",
+   "n": 4611
+  },
+  "SWK": {
+   "adjustedFile": "adjusted/SWK.json",
+   "sha256": "a09b633d2068ae7ac691cee301c25c4dcca538eba8aa2cc09f24f61cac314645",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SYF": {
+   "adjustedFile": "adjusted/SYF.json",
+   "sha256": "06aa6d55bc0d7f65cc12f1cf06bf0751b5d8cd509f86102905f95cccb5d54ff9",
+   "first": "2014-07-31",
+   "last": "2026-10-14",
+   "n": 3070
+  },
+  "SYK": {
+   "adjustedFile": "adjusted/SYK.json",
+   "sha256": "6ef20ecc114db06f455dcb1335d79df9a1ed2d6d4436c47d77dbf2d497d4738c",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "SYY": {
+   "adjustedFile": "adjusted/SYY.json",
+   "sha256": "c7db94c16b4c215401def4a9c81aeac871e3714534d9010050257328367ed498",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TDG": {
+   "adjustedFile": "adjusted/TDG.json",
+   "sha256": "056c9ec70d9df8a225e3c1bf4e41cdb90489e5edffdbf337aa46f6f9706ee330",
+   "first": "2006-03-15",
+   "last": "2026-10-14",
+   "n": 5179
+  },
+  "TDY": {
+   "adjustedFile": "adjusted/TDY.json",
+   "sha256": "1dffd0c0b889eefed230dc371cfa0a81dc9e969a5389c9d711a63838bd07fd77",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TECH": {
+   "adjustedFile": "adjusted/TECH.json",
+   "sha256": "179fa495768c277af886b762f1eba9ba0b2c3d552e24db786652f89bfb379e6e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TEL": {
+   "adjustedFile": "adjusted/TEL.json",
+   "sha256": "a9f9cdd5a7c701243fa2c1f46c604f3dda7df5520e5f6851c11fe101e6eca385",
+   "first": "2007-06-14",
+   "last": "2026-10-14",
+   "n": 4865
+  },
+  "TFC": {
+   "adjustedFile": "adjusted/TFC.json",
+   "sha256": "2c8ab6eaf0504cdde68ffcb369ffd90ba50bf9a08b3ca3db05223523b7ebf688",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TKO": {
+   "adjustedFile": "adjusted/TKO.json",
+   "sha256": "5c80f1e793ad0901f7d73d8dad95d46d91423e28f01f664f9545c96175c5e92d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TMUS": {
+   "adjustedFile": "adjusted/TMUS.json",
+   "sha256": "cf1cfa60964dfe8934eac2314569951fd15a8f7e9a0f036e0e58f60cae36b22e",
+   "first": "2007-04-19",
+   "last": "2026-10-14",
+   "n": 4904
+  },
+  "TPL": {
+   "adjustedFile": "adjusted/TPL.json",
+   "sha256": "cb34a63cc5a52524d2c1402b3bf3259c4d1872f3fe60b4375e702ecde613c0bc",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TPR": {
+   "adjustedFile": "adjusted/TPR.json",
+   "sha256": "3a25daa5e85a6e7cc61d9420c84024ded492237256a06b288063a516addea7fa",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TRGP": {
+   "adjustedFile": "adjusted/TRGP.json",
+   "sha256": "ae9ba58b539a670a5d8818658e793c3c5527545ea306b104de8168adb96fd3f5",
+   "first": "2010-12-07",
+   "last": "2026-10-14",
+   "n": 3987
+  },
+  "TRI": {
+   "adjustedFile": "adjusted/TRI.json",
+   "sha256": "675f8c8ed4d6ee4b61e28256c738e5b763d13f14c67c1886ab0673942c779070",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TRMB": {
+   "adjustedFile": "adjusted/TRMB.json",
+   "sha256": "423657e277726972cb6856ed33e9af0c50f0b54f0420ccc3e9fbcce99ce055a0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TROW": {
+   "adjustedFile": "adjusted/TROW.json",
+   "sha256": "20ca9d72b13e77b3162173958ef019dd5ab6315168170c4172d59bffdd91a71e",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TRV": {
+   "adjustedFile": "adjusted/TRV.json",
+   "sha256": "cc5de100eeee3f98aa904838427cfe8da6546697f20b797e0080314332f55da8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TSCO": {
+   "adjustedFile": "adjusted/TSCO.json",
+   "sha256": "268ffb95a75b9f72c35d5c3fde157c2319eac80be975aff9903500888fd8c8a9",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TSN": {
+   "adjustedFile": "adjusted/TSN.json",
+   "sha256": "6e6ca9a6bc9f12e6897e21520c6b0ccc6e478a8a8621032ed319ff9f2a026470",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TT": {
+   "adjustedFile": "adjusted/TT.json",
+   "sha256": "0c453f6c7af4966701c40c5aeb428bd0028b1652303d6f909e9db2a2f915b766",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TTWO": {
+   "adjustedFile": "adjusted/TTWO.json",
+   "sha256": "1f004c4f7461249d4daa64ce6e439a762c56f0c3e59168f6a1c190948ca83e99",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TXT": {
+   "adjustedFile": "adjusted/TXT.json",
+   "sha256": "71790cbee7eacce9a1f8e128ac50d23fef1535f454c80ef1b3e093c297aa35af",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "TYL": {
+   "adjustedFile": "adjusted/TYL.json",
+   "sha256": "ea197acf5d5e915f7768778949c82c1c1718c9925e9279eca67ca780e7f579e9",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "UDR": {
+   "adjustedFile": "adjusted/UDR.json",
+   "sha256": "24bcc2191ebf7a1c8ed4f7316dfd5d0cdf9aa8e88deea982d67b83c0a497c524",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "UHS": {
+   "adjustedFile": "adjusted/UHS.json",
+   "sha256": "81e9153506c4242cfbde0f855fe43e6a9c540b9834a5f4853d151e12f9fefcc9",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ULTA": {
+   "adjustedFile": "adjusted/ULTA.json",
+   "sha256": "bc54099e44480277a3cad8f8095f94391b1e987100f3686436f7ca6d5c43e889",
+   "first": "2007-10-25",
+   "last": "2026-10-14",
+   "n": 4772
+  },
+  "URI": {
+   "adjustedFile": "adjusted/URI.json",
+   "sha256": "2d0ea41a7d821dae5e62d43d41fa59ddc0e55d7c0d5a19da7ae110f931102fb4",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VEEV": {
+   "adjustedFile": "adjusted/VEEV.json",
+   "sha256": "373b852682f7d9c86206ddbf523903c608444762219d76671a3bcd4b3c04532e",
+   "first": "2013-10-16",
+   "last": "2026-10-14",
+   "n": 3268
+  },
+  "VICI": {
+   "adjustedFile": "adjusted/VICI.json",
+   "sha256": "e28ca7cc26908f5ae95726e8e450665749d4e8b0553b4c2a5d3426093f4493d6",
+   "first": "2018-01-02",
+   "last": "2026-10-14",
+   "n": 2208
+  },
+  "VLO": {
+   "adjustedFile": "adjusted/VLO.json",
+   "sha256": "331346eff232e16beb74bf856aa8a2d64115df84d1afee61c9ebe74b83db0c18",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VLTO": {
+   "adjustedFile": "adjusted/VLTO.json",
+   "sha256": "08eb9eb81c83d362dac7ec62dd5384e242a956e3aed81c9901c8b9d8094cb37d",
+   "first": "2023-10-04",
+   "last": "2026-10-14",
+   "n": 760
+  },
+  "VMC": {
+   "adjustedFile": "adjusted/VMC.json",
+   "sha256": "cf0b9660162ececddbc64329b9f9fc1f2f0f30657b71a8ea92757363dca49956",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VMRK": {
+   "adjustedFile": "adjusted/VMRK.json",
+   "sha256": "295332c99dbd8862799c16fa7dd6aeee787ac42fb63137702e8b4132797445e8",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VRSK": {
+   "adjustedFile": "adjusted/VRSK.json",
+   "sha256": "ed4e219b159f163381a5dada9afde756421e6de7ebfda370fd23064617c3021f",
+   "first": "2009-10-07",
+   "last": "2026-10-14",
+   "n": 4281
+  },
+  "VRSN": {
+   "adjustedFile": "adjusted/VRSN.json",
+   "sha256": "427d887cbf731564fd7b4a98a48c7ebdd4d11d7ca66771dbe293af645f93f301",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VTR": {
+   "adjustedFile": "adjusted/VTR.json",
+   "sha256": "90eb74e92d8c915e01845a3a8344adfcc312c1a905d27526d541399d491aed5c",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VTRS": {
+   "adjustedFile": "adjusted/VTRS.json",
+   "sha256": "88ff35d333d151c790c2767eee091c1a2b7b3d9fe4084deb6010e104b0753ad7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "VYLR": {
+   "adjustedFile": "adjusted/VYLR.json",
+   "sha256": "cd70ad180ed5aea7da30fe1da5ce0f0eec30a8e1a1cf5bee137905ed5690fae5",
+   "first": "2026-10-01",
+   "last": "2026-10-14",
+   "n": 10
+  },
+  "WAB": {
+   "adjustedFile": "adjusted/WAB.json",
+   "sha256": "88c53906be9108920d71740e55e03c469fbc72772e989d9e162d5e4589381385",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WAT": {
+   "adjustedFile": "adjusted/WAT.json",
+   "sha256": "f4255434a7d8e37a3496b9a6d1b37dcdab906d026edb22da9b9f625366c11904",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WEC": {
+   "adjustedFile": "adjusted/WEC.json",
+   "sha256": "61648e6fc324f83b570def5b74b4dcf605e66ba5e244ccd7236fe9f6cd1fd09f",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WELL": {
+   "adjustedFile": "adjusted/WELL.json",
+   "sha256": "4e30af8a380be821f65ef8195ab1817e5437b5d53ca6b63a3a68ff67d3f958cd",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WM": {
+   "adjustedFile": "adjusted/WM.json",
+   "sha256": "91d520ba53a54280f91ef284353a5de4f708985ee13745108ccbc36d55ea8d3d",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WMB": {
+   "adjustedFile": "adjusted/WMB.json",
+   "sha256": "628c94cacb92042a69df5312cf528d7b5189db29e67a798dba33f400ac9d1923",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WRB": {
+   "adjustedFile": "adjusted/WRB.json",
+   "sha256": "55221f2cc3d2be68d3284c7dfe690ac54bffb24671470e17d355ab226f8e493c",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WSM": {
+   "adjustedFile": "adjusted/WSM.json",
+   "sha256": "abb61db78dcd5c8d32baf87bc24903d16240ac2c5d03ff689ffdad1bd5598de1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WST": {
+   "adjustedFile": "adjusted/WST.json",
+   "sha256": "66393fbb512a5f9fddcd39ba9196e16c0eb54cd54a1ee0c896c104c8602d3cd7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WTW": {
+   "adjustedFile": "adjusted/WTW.json",
+   "sha256": "843e31058c3c277bd9934aa82e1e84c67689c482450986bef73a83959d3ebb7b",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WY": {
+   "adjustedFile": "adjusted/WY.json",
+   "sha256": "c621fcb540898bc8b96e5e9260a086f5a95573ff0b24797c06a46a75d0c876d1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "WYNN": {
+   "adjustedFile": "adjusted/WYNN.json",
+   "sha256": "6830655da78f1709aa3771ceb7bc03cfa33f5de6402471d32822c25a8e2ddcd7",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "XEL": {
+   "adjustedFile": "adjusted/XEL.json",
+   "sha256": "5f8bdecb6b3edeed96b8ef45315fa3032f2a2de48f169909897420d1a4dfcfc1",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "XYL": {
+   "adjustedFile": "adjusted/XYL.json",
+   "sha256": "dcf65942bc5ffa485b20157370a021db53713af813c9fb44de58f9da182ee125",
+   "first": "2011-10-13",
+   "last": "2026-10-14",
+   "n": 3772
+  },
+  "XYZ": {
+   "adjustedFile": "adjusted/XYZ.json",
+   "sha256": "880101fe549a5eff84e5619351c0fe01e22f3c98bde93d7b8a1fe9499111fa71",
+   "first": "2015-11-19",
+   "last": "2026-10-14",
+   "n": 2740
+  },
+  "YUM": {
+   "adjustedFile": "adjusted/YUM.json",
+   "sha256": "ccc9c807b09186d78a199ba555a17561419cf6f68e96da6009def34c75d7d925",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ZBH": {
+   "adjustedFile": "adjusted/ZBH.json",
+   "sha256": "cadb4956666b907c6068bda94b553ad5462cfc2a6bf7c5878ebc21092eab7a83",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ZBRA": {
+   "adjustedFile": "adjusted/ZBRA.json",
+   "sha256": "0591f8a8ecccb5123f3ea48b2b46d625da775965283ecd9e66fb4a7617397187",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  },
+  "ZTS": {
+   "adjustedFile": "adjusted/ZTS.json",
+   "sha256": "0c97d6a720fcf8f7e2199bd3918ec98a0d5f4505e12522f12983ad0dc78c7d57",
+   "first": "2013-02-01",
+   "last": "2026-10-14",
+   "n": 3446
+  },
+  "SPY": {
+   "adjustedFile": "adjusted/SPY.json",
+   "sha256": "dba1d531a9f0d5801c9be2a4f6a249fbbcd4956228c087b501a1dcd9feb20aa0",
+   "first": "2004-01-02",
+   "last": "2026-10-14",
+   "n": 5732
+  }
+ },
+ "fail": {}
+}
