@@ -5,14 +5,14 @@
 用「真的凍結收集程式」(scripts/astra_ledger.py 等三支,git 1ee593a 的原位元組)在暫存環境跑完整一輪,再用 v3 正式模式做唯一一次判定:
   - 暫存 GitHub:本機 bare repo 當 origin;push 到 astra-ledger 時由 post-receive hook 記一筆「ledger-receipt run」(時間 = 假時鐘);
     假的 gh 指令照 GitHub API 的格式回答(收集程式的 remote_receipt 與驗證程式的回條查詢都走它)
-  - 假的 Yahoo:60 檔(58 檔股票含 GOOG / GOOGL + SPY / QQQ)真實日K(2019-06 起 480 個交易日)重新標成 2024-12 ~ 2026-10 的日期;
+  - 假的 Yahoo:101 檔(99 檔股票含 GOOG / GOOGL + SPY / QQQ)真實日K(2019-06 起 480 個交易日)重新標成 2024-12 ~ 2026-10 的日期;
     收案期 2026-02-02 起 120 個交易日(收集程式與官方日曆在 2026 年一致)
   - 刻意放進去的狀況:早上第一次跑 SPY 還沒更新(下午補鎖成功)/ 整天失敗 / 晚鎖(過了截止)/ 真的零訊號日 /
     三檔配息(之後抓的資料把除息日以前 × 0.99)/ 一檔 1 拆 2(× 0.5)/ 一檔下市(之後沒有資料;它的判讀都是同意 → 缺的同意填 −100%)
   - 判讀:用 id 的雜湊決定同意 / 不同意(沒有判斷力);model = claude-opus-5-5
   - 凍結:main 上 research/ledger_v3/v3_manifest.json(make_manifest)+ 驗證程式;astra-ledger 上的凍結錨點在起日前 push
   - 正式判定:V.formal_run(時鐘換成成熟之後);結果要和 dry-run + decide 一樣;第二次要拒絕;git 歷史有就拒絕;
-    再做 8 種竄改 / 時序反例,每一種都要「停、不寫判定」
+    連同還沒成熟、API 掛、程式被改、第二次等,共 12 種停止反例,每一種都要「停、不寫判定」
 用法:python3 -I v3_fullflow.py <真實 repo> <astra_v050_data 資料夾> <輸出 json>
 """
 import datetime as dt, gzip, hashlib, importlib.util, json, math, os, shutil, subprocess, sys, tempfile, time, types
