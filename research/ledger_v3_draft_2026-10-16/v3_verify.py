@@ -451,6 +451,36 @@ def replay(m, rec, snap, cfg):
 
 
 # ---------------------------------------------------------------- 統計(正式估計量;模擬也呼叫這裡)
+def _betacf(a, b, x):
+    """不完全 Beta 的連分式(Lentz)"""
+    tiny = 1e-300; qab, qap, qam = a + b, a + 1, a - 1; c, d = 1.0, 1 - qab * x / qap
+    d = 1 / (d if abs(d) > tiny else tiny); h = d
+    for m in range(1, 400):
+        m2 = 2 * m; aa = m * (b - m) * x / ((qam + m2) * (a + m2))
+        d = 1 + aa * d; d = 1 / (d if abs(d) > tiny else tiny); c = 1 + aa / c; c = c if abs(c) > tiny else tiny; h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1 + aa * d; d = 1 / (d if abs(d) > tiny else tiny); c = 1 + aa / c; c = c if abs(c) > tiny else tiny; de = d * c; h *= de
+        if abs(de - 1) < 1e-15: break
+    return h
+
+
+def t_cdf(t, df):
+    x = df / (df + t * t); a, b = df / 2.0, 0.5
+    lbt = math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b) + a * math.log(x) + b * math.log1p(-x)
+    ib = math.exp(lbt) * _betacf(a, b, x) / a if x < (a + 1) / (a + b + 2) else 1 - math.exp(lbt) * _betacf(b, a, 1 - x) / b
+    return 1 - 0.5 * ib if t > 0 else 0.5 * ib
+
+
+def t_quantile(p, df):
+    """Student-t 的 p 分位數(p > 0.5;二分法,誤差 < 1e-12)"""
+    lo, hi = 0.0, 100.0
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        if t_cdf(mid, df) < p: lo = mid
+        else: hi = mid
+    return (lo + hi) / 2
+
+
 def issuer(s):
     return ISSUER.get(s, s)
 
@@ -504,7 +534,31 @@ def stats(rows, cal, cfg, salt=0):
         if not enough(v): return {'lb_pp': None, 'ub_pp': None, 'median_pp': None, 'mean_pp': None, 'sd_pp': None, 'valid_draws': int(w.size)}
         return {'lb_pp': 100 * pct(v, 2.5), 'ub_pp': 100 * pct(v, 97.5), 'median_pp': 100 * float(np.median(w)), 'mean_pp': 100 * float(w.mean()),
                 'sd_pp': 100 * float(w.std(ddof=1)), 'valid_draws': int(w.size)}
-    meth = {'M1': summ(h1_m1), 'M2': summ(h1_m2)}; use = meth[cfg['h1_method']]
+    meth = {'M1': summ(h1_m1), 'M2': summ(h1_m2)}
+    # C1 / C3(草案 3 第二輪候選):區間 = 點估計 ± t(0.975, df) × 標準誤;df = min(日期區塊數, 發行人數) − 1(有效獨立單位不多時的小樣本修正)
+    #   C1 的標準誤 = M1 重抽的標準差;C3 = 兩向群集變異數(日期區塊 + 發行人 − 區塊×發行人交集;Cameron, Gelbach & Miller 2011、Thompson 2011),
+    #   把「每筆自己的雜訊」只算一次(M1 的乘積權重會算到約三次 → 偏寬)
+    T = len(cal); Lb = max(1, min(int(cfg['date_block']), T)); df = max(1, min(max(1, T // Lb), len(ui)) - 1); tq = t_quantile(0.975, df)
+    with np.errstate(invalid='ignore', divide='ignore'):
+        h1_date = np.where(den > 0, (mk * dc[pr][None, :]).sum(1) / den, np.nan)
+        h1_iss = (SA / NA - SD / ND).mean(1) if K else np.full(cfg['draws'], np.nan)
+        cl = (di // Lb) * len(ui) + si; _, cli = np.unique(cl, return_inverse=True)
+        Vw = np.random.default_rng(cfg['seed'] + salt + 7919).exponential(1.0, size=(cfg['draws'], int(cli.max()) + 1 if n else 1))[:, cli]
+        h1_int = (np.add.reduceat(Vw * (ret * a), starts, axis=1)[:, pr] / np.add.reduceat(Vw * a, starts, axis=1)[:, pr]
+                  - np.add.reduceat(Vw * (ret * (1 - a)), starts, axis=1)[:, pr] / np.add.reduceat(Vw * (1 - a), starts, axis=1)[:, pr]).mean(1) if K else np.full(cfg['draws'], np.nan)
+    def nvar(v):
+        w = v[~np.isnan(v)]; return float(w.var(ddof=1)) if w.size > 1 else float('nan')
+    vd, vi, vx = nvar(h1_date), nvar(h1_iss), nvar(h1_int); vc = vd + vi - vx; fb = not (vc > 0)
+    se3 = math.sqrt(max(vd, vi) if fb else vc) if K and not math.isnan(vd) else None
+    se1 = (meth['M1']['sd_pp'] / 100) if meth['M1']['sd_pp'] is not None else None
+    h1v = float(dc[pr].mean()) if K else None
+    for name, se in (('C1', se1), ('C3', se3)):
+        ok_ = h1v is not None and se is not None and enough(h1_m1)
+        meth[name] = {'lb_pp': 100 * (h1v - tq * se) if ok_ else None, 'ub_pp': 100 * (h1v + tq * se) if ok_ else None, 'se_pp': 100 * se if ok_ else None,
+                      'median_pp': meth['M1']['median_pp'], 'mean_pp': meth['M1']['mean_pp'], 'sd_pp': meth['M1']['sd_pp'],
+                      'valid_draws': meth['M1']['valid_draws'], 'df': df, 't975': tq}
+    meth['C3'].update(var_components_pp2={'date_blocks': 1e4 * vd, 'issuers': 1e4 * vi, 'intersection': 1e4 * vx}, negative_two_way_fallback=bool(fb))
+    use = meth[cfg['h1_method']]
     cnt = Counter(iss); g_ad = pct(win_a - win_d, 2.5); g_ma = pct(mean_a, 2.5)
     out = {'h1_pp': 100 * float(dc[pr].mean()) if K else None, 'h1_lb_pp': use['lb_pp'], 'h1_ub_pp': use['ub_pp'], 'h1_method': cfg['h1_method'],
            'h1_methods': meth, 'paired_dates': int(len(set(cdate[pr].tolist()))), 'cells_paired': K, 'draws_effective': use['valid_draws'],
@@ -758,7 +812,7 @@ def main():
     ap.add_argument('--start'); ap.add_argument('--today'); ap.add_argument('--now'); ap.add_argument('--manifest-sha')
     ap.add_argument('--evidence'); ap.add_argument('--offline', action='store_true'); ap.add_argument('--pins'); ap.add_argument('--out')
     ap.add_argument('--h2-mode', dest='h2_mode', choices=list(H2_MODES)); ap.add_argument('--date-block', dest='date_block', type=int)
-    ap.add_argument('--cohort-sessions', dest='cohort_sessions', type=int); ap.add_argument('--h1-method', dest='h1_method', choices=['M1', 'M2'])
+    ap.add_argument('--cohort-sessions', dest='cohort_sessions', type=int); ap.add_argument('--h1-method', dest='h1_method', choices=['M1', 'M2', 'C1', 'C3'])
     ap.add_argument('--v2-manifest-sha'); ap.add_argument('--min-effect-pp', type=float); ap.add_argument('--note', default='')
     A = ap.parse_args()
     if A.cmd == 'pin':
