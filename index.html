@@ -2,10 +2,12 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-16T00:15Z">
+<meta name="build" content="2026-10-17T12:50Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
+<!-- v17 精簡版面(2026-10-17):在畫面出來前就決定要不要隱藏其他欄位,避免先閃出完整版面再收起。預設精簡;本機 localStorage mfd_focus='0' = 完整版面 -->
+<script>try{if(localStorage.getItem('mfd_focus')!=='0')document.documentElement.classList.add('wsxFocus');}catch(_){document.documentElement.classList.add('wsxFocus');}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
 <!-- 🧪 Astra資金 研究層(Astra v0.1.0 原檔,逐位元未改;?v= 防 Service Worker 用到舊版)。先核心、後轉接,順序不能反 -->
 <script src="astra-flow.js?v=0.1.0"></script>
@@ -390,6 +392,23 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 #stripPop .sprow{display:flex;gap:5px 9px;flex-wrap:wrap;align-items:center;margin:3px 0}
 #stripPop .sphr{border-top:1px dashed rgba(255,255,255,.13);margin:6px 0}
 #stripPop .spmut{color:#898781}
+
+/* ===== v17:精簡版面(2026-10-17 使用者:「這些欄位我都想隱藏…我會看的只有K線還有現金池」)=====
+   html.wsxFocus(預設開)→ 只留「現金池欄」(時間視窗 + 離開股票之後錢去了哪/中央現金池/池水位線)與「K線」;
+   隱藏:頂部標題列、頁尾說明、K線下方三卡(分析師/期權定位/財報)、Claude 判讀·邊緣案例·追蹤清單欄、全市場掃描等分頁欄、右側捷徑列。
+   只用 display:none,什麼都沒刪;K線上方「⊞ 完整版面」一鍵切回(記在本機)。具名 id 選擇器,無 universal selector(地雷25)。 */
+html.wsxFocus header,html.wsxFocus .wrap>.note,
+html.wsxFocus #wsxA,html.wsxFocus #wsxB,html.wsxFocus #wsxRail,html.wsxFocus #wsxInfoRow,
+html.wsxFocus .wsxSplit[data-ws="A"],html.wsxFocus .wsxSplit[data-ws="A2"],html.wsxFocus .wsxSplit[data-ws="B"]{display:none!important}
+@media (min-width:1360px){
+  html.wsxFocus body.wsxFit #wsxGrid{grid-template-columns:var(--wsxL,415px) 7px minmax(430px,1fr)}
+}
+#wsxFocusBtn{cursor:pointer;user-select:none}
+#wsxFocusBtn:hover{color:#f2f1ea;border-color:rgba(138,180,248,.6)}
+#wsxWarn{cursor:pointer;user-select:none}
+#wsxWarn.err{border-color:rgba(248,113,113,.6);color:#fca5a5;background:rgba(248,113,113,.1)}
+#wsxWarn.warn{border-color:rgba(251,191,36,.55);color:#fcd34d;background:rgba(251,191,36,.08)}
+html:not(.wsxFocus) #wsxWarn{display:none!important}   /* 完整版面時頂部標題列本來就有,不重複 */
 </style>
 </head>
 <body>
@@ -581,6 +600,8 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
   <span class="wsxBrand">個股籌碼<b>工作區</b></span>
   <span id="wsxQuick"></span>
   <span id="wsxPills"></span>
+  <span id="wsxWarn" class="wsxPill" style="display:none"></span>
+  <span id="wsxFocusBtn" class="wsxPill">⊞ 完整版面</span>
 </div>
 <div id="wsxGrid">
 <aside id="wsxLeft" class="wsxCol">
@@ -677,7 +698,7 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-16T00:15Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-17T12:50Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -860,6 +881,18 @@ function markStatus(){
   const errs=(DATA.errors||[]).length;
   if(errs) meta+=' · '+errs+' 個來源異常';
   document.getElementById('updated').textContent=meta;
+  // v17 精簡版面(2026-10-17):頂部標題列藏起來了 → 資料出狀況時,K線上方多一顆警示鈕(滑過/點一下看完整說明);正常時不出現
+  try{const w=document.getElementById('wsxWarn');if(w){
+    const mw=meta.split(' · ').filter(x=>/^⚠/.test(x)&&!/OPEX/.test(x));
+    let lbl='',c='';
+    if(/\berr\b/.test(s.className)){lbl='⚠ '+s.textContent.replace(/（.*$/,'').trim();c='err';}
+    else if(mw.length&&sess!=='closed'){   // 休市時(週末/夜裡)Mac 睡著不影響收盤資料 → 不出警示鈕
+      lbl=/卡住/.test(mw[0])?(DATA._macSlow?'⚠ 報價暫用雲端備援':'⚠ 報價停更'):(/離線|休眠/.test(mw[0])?'⚠ Mac 離線中':'⚠ 資料提醒');c='warn';}
+    const full=s.textContent+(mw.length?'\n'+mw.join('\n'):'');
+    w.className='wsxPill '+c; w.title=lbl?full:''; w.style.display=lbl?'':'none';
+    w.textContent=(lbl&&w.dataset.x==='1')?full.replace(/\n/g,' · '):lbl;
+    if(!w._bound){w._bound=1;w.addEventListener('click',()=>{w.dataset.x=w.dataset.x==='1'?'0':'1';try{markStatus();}catch(_){}});}
+  }}catch(_){}
 }
 
 // ===== 排序表 =====
@@ -6583,7 +6616,8 @@ async function checkVersion(){
     const b=document.createElement('span'); b.className='badge';
     b.style.cssText='background:rgba(56,189,248,.2);color:#38bdf8;cursor:pointer;margin-left:6px';
     b.textContent='🔄 新版就緒·點此更新'; b.onclick=()=>location.reload();
-    st.parentNode.insertBefore(b, st.nextSibling);
+    const wt=document.getElementById('wsxTop');   // v17:精簡版面時頂部標題列是藏起來的 → 新版提示改放K線上方那一列
+    if(document.documentElement.classList.contains('wsxFocus')&&wt)wt.appendChild(b); else st.parentNode.insertBefore(b, st.nextSibling);
   }catch(e){}
 }
 setInterval(checkVersion,150000);
@@ -7249,6 +7283,32 @@ document.addEventListener('click',function(e){
   try{el.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(_){el.scrollIntoView();}
   el.classList.add('wsxFlash');setTimeout(function(){el.classList.remove('wsxFlash');},1300);
 });
+})();
+
+/* ===== v17 精簡版面切換(2026-10-17 使用者:「我會看的只有K線還有現金池」)=====
+ * html.wsxFocus 由 <head> 的小段程式在畫面出來前決定(預設開;本機 localStorage mfd_focus='0' = 完整版面)。
+ * 這裡只負責 K線上方「⊞ 完整版面 / ◧ 只看K線＋現金池」那顆鈕:切換 → 記住 → 重算駕駛艙高度、圖寬(沿用 wsx3/wsx6 的 rsz/fill)。 */
+(function(){
+"use strict";
+var KEY='mfd_focus';
+function on(){return document.documentElement.classList.contains('wsxFocus');}
+function label(){
+  var b=document.getElementById('wsxFocusBtn'); if(!b)return;
+  b.textContent=on()?'⊞ 完整版面':'◧ 只看K線＋現金池';
+  b.title=on()?'顯示全部欄位(Claude 判讀、追蹤清單、全市場掃描、分析師、期權、財報…)':'只留K線和現金池,其他欄位收起來';
+}
+function relayout(){
+  setTimeout(function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}try{if(window.__wsxFill)window.__wsxFill();}catch(_){}},60);
+  setTimeout(function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}},450);
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#wsxFocusBtn'); if(!b)return;
+  var nv=!on(); document.documentElement.classList.toggle('wsxFocus',nv);
+  try{localStorage.setItem(KEY,nv?'1':'0');}catch(_){}
+  label(); relayout();
+  try{if(typeof markStatus==='function'&&typeof DATA!=='undefined'&&DATA)markStatus();}catch(_){}
+});
+label();
 })();
 
 </script>

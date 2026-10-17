@@ -1,0 +1,1791 @@
+{
+ "d1920": {
+  "old": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 1900,
+     "h": 39
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 59,
+     "w": 415,
+     "h": 973
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 59,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 219,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 59,
+     "w": 837,
+     "h": 973
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 59,
+     "w": 833,
+     "h": 738
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 237,
+     "w": 831,
+     "h": 559
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 434,
+     "y": 805,
+     "w": 833,
+     "h": 227
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 1276,
+     "y": 59,
+     "w": 248,
+     "h": 973
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 1531,
+     "y": 59,
+     "w": 330,
+     "h": 973
+    },
+    "wsxRail": {
+     "vis": true,
+     "x": 1868,
+     "y": 59,
+     "w": 42,
+     "h": 973
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 60,
+     "w": 831,
+     "h": 28
+    },
+    "wsxFocusBtn": null,
+    "wsxWarn": null,
+    "footnote": {
+     "vis": true,
+     "x": 10,
+     "y": 1040,
+     "w": 1900,
+     "h": 35
+    }
+   },
+   "focus": false,
+   "btn": null,
+   "warn": null,
+   "ckH": 558.703125,
+   "ckW": 831,
+   "dest": true,
+   "docH": 1080,
+   "docW": 1920,
+   "ls": null,
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "old_errors": [],
+  "new": {
+   "vis": {
+    "header": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 415,
+     "h": 1070
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 4,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 164,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 4,
+     "w": 1478,
+     "h": 1070
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 4,
+     "w": 1474,
+     "h": 1070
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 123,
+     "w": 1472,
+     "h": 950
+    },
+    "wsxInfoRow": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxA": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxB": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 5,
+     "w": 1472,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1829,
+     "y": 6,
+     "w": 76,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": true,
+   "btn": "⊞ 完整版面",
+   "warn": null,
+   "ckH": 950,
+   "ckW": 1472,
+   "dest": true,
+   "docH": 1080,
+   "docW": 1920,
+   "ls": null,
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_full": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 1900,
+     "h": 39
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 59,
+     "w": 415,
+     "h": 973
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 59,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 219,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 59,
+     "w": 837,
+     "h": 973
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 59,
+     "w": 833,
+     "h": 738
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 237,
+     "w": 831,
+     "h": 559
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 434,
+     "y": 805,
+     "w": 833,
+     "h": 227
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 1276,
+     "y": 59,
+     "w": 248,
+     "h": 973
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 1531,
+     "y": 59,
+     "w": 330,
+     "h": 973
+    },
+    "wsxRail": {
+     "vis": true,
+     "x": 1868,
+     "y": 59,
+     "w": 42,
+     "h": 973
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 60,
+     "w": 831,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1198,
+     "y": 61,
+     "w": 118,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": true,
+     "x": 10,
+     "y": 1040,
+     "w": 1900,
+     "h": 35
+    }
+   },
+   "focus": false,
+   "btn": "◧ 只看K線＋現金池",
+   "warn": null,
+   "ckH": 558.703125,
+   "ckW": 831,
+   "dest": true,
+   "docH": 1080,
+   "docW": 1920,
+   "ls": "0",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_full_reload": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 1900,
+     "h": 39
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 59,
+     "w": 415,
+     "h": 973
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 59,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 219,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 59,
+     "w": 837,
+     "h": 973
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 59,
+     "w": 833,
+     "h": 738
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 237,
+     "w": 831,
+     "h": 559
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 434,
+     "y": 805,
+     "w": 833,
+     "h": 227
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 1276,
+     "y": 59,
+     "w": 248,
+     "h": 973
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 1531,
+     "y": 59,
+     "w": 330,
+     "h": 973
+    },
+    "wsxRail": {
+     "vis": true,
+     "x": 1868,
+     "y": 59,
+     "w": 42,
+     "h": 973
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 60,
+     "w": 831,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1197,
+     "y": 61,
+     "w": 118,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": true,
+     "x": 10,
+     "y": 1040,
+     "w": 1900,
+     "h": 35
+    }
+   },
+   "focus": false,
+   "btn": "◧ 只看K線＋現金池",
+   "warn": null,
+   "ckH": 558.703125,
+   "ckW": 831,
+   "dest": true,
+   "docH": 1080,
+   "docW": 1920,
+   "ls": "0",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_back": {
+   "vis": {
+    "header": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 415,
+     "h": 1070
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 4,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 164,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 4,
+     "w": 1478,
+     "h": 1070
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 4,
+     "w": 1474,
+     "h": 1070
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 123,
+     "w": 1472,
+     "h": 950
+    },
+    "wsxInfoRow": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxA": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxB": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 5,
+     "w": 1472,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1829,
+     "y": 6,
+     "w": 76,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": true,
+   "btn": "⊞ 完整版面",
+   "warn": null,
+   "ckH": 950,
+   "ckW": 1472,
+   "dest": true,
+   "docH": 1080,
+   "docW": 1920,
+   "ls": "1",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_errors": []
+ },
+ "d1440": {
+  "old": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 1420,
+     "h": 66
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 86,
+     "w": 415,
+     "h": 766
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 86,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 246,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 86,
+     "w": 430,
+     "h": 766
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 86,
+     "w": 426,
+     "h": 569
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 322,
+     "w": 424,
+     "h": 332
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 434,
+     "y": 663,
+     "w": 426,
+     "h": 189
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 869,
+     "y": 86,
+     "w": 248,
+     "h": 766
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 1124,
+     "y": 86,
+     "w": 330,
+     "h": 766
+    },
+    "wsxRail": {
+     "vis": true,
+     "x": 1461,
+     "y": 86,
+     "w": 42,
+     "h": 766
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 87,
+     "w": 424,
+     "h": 28
+    },
+    "wsxFocusBtn": null,
+    "wsxWarn": null,
+    "footnote": {
+     "vis": true,
+     "x": 10,
+     "y": 860,
+     "w": 1420,
+     "h": 35
+    }
+   },
+   "focus": false,
+   "btn": null,
+   "warn": null,
+   "ckH": 331.5,
+   "ckW": 424,
+   "dest": true,
+   "docH": 900,
+   "docW": 1440,
+   "ls": null,
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "old_errors": [],
+  "new": {
+   "vis": {
+    "header": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 415,
+     "h": 890
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 4,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 164,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 4,
+     "w": 998,
+     "h": 890
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 4,
+     "w": 994,
+     "h": 890
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 151,
+     "w": 992,
+     "h": 742
+    },
+    "wsxInfoRow": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxA": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxB": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 5,
+     "w": 992,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1349,
+     "y": 6,
+     "w": 76,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": true,
+   "btn": "⊞ 完整版面",
+   "warn": null,
+   "ckH": 742,
+   "ckW": 992,
+   "dest": true,
+   "docH": 900,
+   "docW": 1440,
+   "ls": null,
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_full": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 1420,
+     "h": 66
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 86,
+     "w": 415,
+     "h": 766
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 86,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 246,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 86,
+     "w": 430,
+     "h": 766
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 86,
+     "w": 426,
+     "h": 569
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 322,
+     "w": 424,
+     "h": 332
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 434,
+     "y": 663,
+     "w": 426,
+     "h": 189
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 869,
+     "y": 86,
+     "w": 248,
+     "h": 766
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 1124,
+     "y": 86,
+     "w": 330,
+     "h": 766
+    },
+    "wsxRail": {
+     "vis": true,
+     "x": 1461,
+     "y": 86,
+     "w": 42,
+     "h": 766
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 87,
+     "w": 424,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1197,
+     "y": 88,
+     "w": 118,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": true,
+     "x": 10,
+     "y": 860,
+     "w": 1420,
+     "h": 35
+    }
+   },
+   "focus": false,
+   "btn": "◧ 只看K線＋現金池",
+   "warn": null,
+   "ckH": 331.5,
+   "ckW": 424,
+   "dest": true,
+   "docH": 900,
+   "docW": 1440,
+   "ls": "0",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_full_reload": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 1420,
+     "h": 66
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 86,
+     "w": 415,
+     "h": 766
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 86,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 246,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 86,
+     "w": 430,
+     "h": 766
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 86,
+     "w": 426,
+     "h": 569
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 322,
+     "w": 424,
+     "h": 332
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 434,
+     "y": 663,
+     "w": 426,
+     "h": 189
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 869,
+     "y": 86,
+     "w": 248,
+     "h": 766
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 1124,
+     "y": 86,
+     "w": 330,
+     "h": 766
+    },
+    "wsxRail": {
+     "vis": true,
+     "x": 1461,
+     "y": 86,
+     "w": 42,
+     "h": 766
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 87,
+     "w": 424,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1197,
+     "y": 88,
+     "w": 118,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": true,
+     "x": 10,
+     "y": 860,
+     "w": 1420,
+     "h": 35
+    }
+   },
+   "focus": false,
+   "btn": "◧ 只看K線＋現金池",
+   "warn": null,
+   "ckH": 331.5,
+   "ckW": 424,
+   "dest": true,
+   "docH": 900,
+   "docW": 1440,
+   "ls": "0",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_back": {
+   "vis": {
+    "header": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 10,
+     "y": 4,
+     "w": 415,
+     "h": 890
+    },
+    "winCard": {
+     "vis": true,
+     "x": 11,
+     "y": 4,
+     "w": 411,
+     "h": 152
+    },
+    "destCard": {
+     "vis": true,
+     "x": 11,
+     "y": 164,
+     "w": 411,
+     "h": 916
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 432,
+     "y": 4,
+     "w": 998,
+     "h": 890
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 434,
+     "y": 4,
+     "w": 994,
+     "h": 890
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 435,
+     "y": 151,
+     "w": 992,
+     "h": 742
+    },
+    "wsxInfoRow": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxA": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxB": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 435,
+     "y": 5,
+     "w": 992,
+     "h": 28
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 1349,
+     "y": 6,
+     "w": 76,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": true,
+   "btn": "⊞ 完整版面",
+   "warn": null,
+   "ckH": 742,
+   "ckW": 992,
+   "dest": true,
+   "docH": 900,
+   "docW": 1440,
+   "ls": "1",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_errors": []
+ },
+ "m390": {
+  "old": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 4,
+     "y": 12,
+     "w": 382,
+     "h": 183
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 4,
+     "y": 1925,
+     "w": 382,
+     "h": 1081
+    },
+    "winCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1925,
+     "w": 382,
+     "h": 147
+    },
+    "destCard": {
+     "vis": true,
+     "x": 4,
+     "y": 2086,
+     "w": 382,
+     "h": 910
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 4,
+     "y": 335,
+     "w": 382,
+     "h": 1580
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 4,
+     "y": 335,
+     "w": 382,
+     "h": 853
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 5,
+     "y": 587,
+     "w": 380,
+     "h": 600
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 4,
+     "y": 1198,
+     "w": 382,
+     "h": 717
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 4,
+     "y": 3016,
+     "w": 382,
+     "h": 1224
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 4,
+     "y": 4249,
+     "w": 382,
+     "h": 2320
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 4,
+     "y": 211,
+     "w": 382,
+     "h": 124
+    },
+    "wsxFocusBtn": null,
+    "wsxWarn": null,
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": false,
+   "btn": null,
+   "warn": null,
+   "ckH": 600,
+   "ckW": 380,
+   "dest": true,
+   "docH": 6581,
+   "docW": 390,
+   "ls": null,
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "old_errors": [],
+  "new": {
+   "vis": {
+    "header": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 4,
+     "y": 1009,
+     "w": 382,
+     "h": 1081
+    },
+    "winCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1009,
+     "w": 382,
+     "h": 147
+    },
+    "destCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1170,
+     "w": 382,
+     "h": 910
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 4,
+     "y": 136,
+     "w": 382,
+     "h": 863
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 4,
+     "y": 136,
+     "w": 382,
+     "h": 853
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 5,
+     "y": 388,
+     "w": 380,
+     "h": 600
+    },
+    "wsxInfoRow": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxA": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxB": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 4,
+     "y": 12,
+     "w": 382,
+     "h": 124
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 308,
+     "y": 105,
+     "w": 76,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": true,
+   "btn": "⊞ 完整版面",
+   "warn": null,
+   "ckH": 600,
+   "ckW": 380,
+   "dest": true,
+   "docH": 2102,
+   "docW": 390,
+   "ls": null,
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_full": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 4,
+     "y": 12,
+     "w": 382,
+     "h": 183
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 4,
+     "y": 1925,
+     "w": 382,
+     "h": 1081
+    },
+    "winCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1925,
+     "w": 382,
+     "h": 147
+    },
+    "destCard": {
+     "vis": true,
+     "x": 4,
+     "y": 2086,
+     "w": 382,
+     "h": 910
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 4,
+     "y": 335,
+     "w": 382,
+     "h": 1580
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 4,
+     "y": 335,
+     "w": 382,
+     "h": 853
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 5,
+     "y": 587,
+     "w": 380,
+     "h": 600
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 4,
+     "y": 1198,
+     "w": 382,
+     "h": 717
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 4,
+     "y": 3016,
+     "w": 382,
+     "h": 1224
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 4,
+     "y": 4249,
+     "w": 382,
+     "h": 2320
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 4,
+     "y": 211,
+     "w": 382,
+     "h": 124
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 266,
+     "y": 304,
+     "w": 118,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": false,
+   "btn": "◧ 只看K線＋現金池",
+   "warn": null,
+   "ckH": 600,
+   "ckW": 380,
+   "dest": true,
+   "docH": 6581,
+   "docW": 390,
+   "ls": "0",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_full_reload": {
+   "vis": {
+    "header": {
+     "vis": true,
+     "x": 4,
+     "y": 12,
+     "w": 382,
+     "h": 183
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 4,
+     "y": 1925,
+     "w": 382,
+     "h": 1081
+    },
+    "winCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1925,
+     "w": 382,
+     "h": 147
+    },
+    "destCard": {
+     "vis": true,
+     "x": 4,
+     "y": 2086,
+     "w": 382,
+     "h": 910
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 4,
+     "y": 335,
+     "w": 382,
+     "h": 1580
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 4,
+     "y": 335,
+     "w": 382,
+     "h": 853
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 5,
+     "y": 587,
+     "w": 380,
+     "h": 600
+    },
+    "wsxInfoRow": {
+     "vis": true,
+     "x": 4,
+     "y": 1198,
+     "w": 382,
+     "h": 717
+    },
+    "wsxA": {
+     "vis": true,
+     "x": 4,
+     "y": 3016,
+     "w": 382,
+     "h": 1224
+    },
+    "wsxB": {
+     "vis": true,
+     "x": 4,
+     "y": 4249,
+     "w": 382,
+     "h": 2320
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 4,
+     "y": 211,
+     "w": 382,
+     "h": 124
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 266,
+     "y": 304,
+     "w": 118,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": false,
+   "btn": "◧ 只看K線＋現金池",
+   "warn": null,
+   "ckH": 600,
+   "ckW": 380,
+   "dest": true,
+   "docH": 6581,
+   "docW": 390,
+   "ls": "0",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_back": {
+   "vis": {
+    "header": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxLeft": {
+     "vis": true,
+     "x": 4,
+     "y": 1009,
+     "w": 382,
+     "h": 1081
+    },
+    "winCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1009,
+     "w": 382,
+     "h": 147
+    },
+    "destCard": {
+     "vis": true,
+     "x": 4,
+     "y": 1170,
+     "w": 382,
+     "h": 910
+    },
+    "wsxCenter": {
+     "vis": true,
+     "x": 4,
+     "y": 136,
+     "w": 382,
+     "h": 863
+    },
+    "wsxChartP": {
+     "vis": true,
+     "x": 4,
+     "y": 136,
+     "w": 382,
+     "h": 853
+    },
+    "cockpit": {
+     "vis": true,
+     "x": 5,
+     "y": 388,
+     "w": 380,
+     "h": 600
+    },
+    "wsxInfoRow": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxA": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxB": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxRail": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "wsxTop": {
+     "vis": true,
+     "x": 4,
+     "y": 12,
+     "w": 382,
+     "h": 124
+    },
+    "wsxFocusBtn": {
+     "vis": true,
+     "x": 308,
+     "y": 105,
+     "w": 76,
+     "h": 23
+    },
+    "wsxWarn": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    },
+    "footnote": {
+     "vis": false,
+     "x": 0,
+     "y": 0,
+     "w": 0,
+     "h": 0
+    }
+   },
+   "focus": true,
+   "btn": "⊞ 完整版面",
+   "warn": null,
+   "ckH": 600,
+   "ckW": 380,
+   "dest": true,
+   "docH": 2102,
+   "docW": 390,
+   "ls": "1",
+   "tr_sha": "4c6477be84b0d843"
+  },
+  "new_errors": []
+ },
+ "warn_A": {
+  "warn": {
+   "txt": "⚠ 報價暫用雲端備援",
+   "cls": "wsxPill warn",
+   "title": "● 盤後（2 分前更新） · 報價改用雲端備援\n⚠ Mac 全量更新卡住:報價/期權停在 24.9 小時前 → 先改用雲端備援(49 分前)"
+  },
+  "expanded": "● 盤後（2 分前更新） · 報價改用雲端備援 · ⚠ Mac 全量更新卡住:報價/期權停在 24.9 小時前 → 先改用雲端備援(49 分前)",
+  "errors": []
+ },
+ "warn_C": {
+  "warn": {
+   "txt": "⚠ 資料偏舊 128 分",
+   "cls": "wsxPill err",
+   "title": "資料偏舊 128 分（Mac 採集器或 OpenD 可能離線）\n⚠ Mac 離線 19.8 小時;雲端備援上次更新在 2.1 小時前(GitHub 排程實際約每 2–6 小時才跑一次,不是即時)"
+  },
+  "expanded": "資料偏舊 128 分（Mac 採集器或 OpenD 可能離線） · ⚠ Mac 離線 19.8 小時;雲端備援上次更新在 2.1 小時前(GitHub 排程實際約每 2–6 小時才跑一次,不是即時)",
+  "errors": []
+ },
+ "_files": {
+  "old": {
+   "path": "/tmp/claude-0/-home-claude/d0a676e0-fcd7-5eae-bc26-2609f6d7a033/scratchpad/layout/index_old.html",
+   "sha256": "7f8f545e86d8ffa3b55f19daa5364bb9fc1e66aca8c216bb13923a0d38536054"
+  },
+  "new": {
+   "path": "/home/claude/tracker/index.html",
+   "sha256": "4b49c8160cd72621e176ba38b3d40f34e673ab436cabc423214f16ad49f5afa7"
+  }
+ }
+}
