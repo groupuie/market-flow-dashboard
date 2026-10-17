@@ -2,12 +2,14 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-17T12:50Z">
+<meta name="build" content="2026-10-17T14:33Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
-<!-- v17 精簡版面(2026-10-17):在畫面出來前就決定要不要隱藏其他欄位,避免先閃出完整版面再收起。預設精簡;本機 localStorage mfd_focus='0' = 完整版面 -->
-<script>try{if(localStorage.getItem('mfd_focus')!=='0')document.documentElement.classList.add('wsxFocus');}catch(_){document.documentElement.classList.add('wsxFocus');}</script>
+<!-- v18 自選 | K線 | 現金池(2026-10-17 使用者:「預設網頁點開就進入完整版面」):每次打開都是完整版面 = 左 自選清單、中 K線、右 現金池 三欄全開。
+     html.wsxFocus = 其他分析欄位(Claude 判讀、追蹤清單、全市場掃描分頁、右側捷徑列、頂部標題列)收起來;在畫面出來前加上,避免先閃出全部欄位。
+     其他欄位要看時按K線上方「⋯ 其他欄位」(不記憶,下次打開仍是完整版面)。v17 的 mfd_focus 記憶已停用。 -->
+<script>document.documentElement.classList.add('wsxFocus');</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
 <!-- 🧪 Astra資金 研究層(Astra v0.1.0 原檔,逐位元未改;?v= 防 Service Worker 用到舊版)。先核心、後轉接,順序不能反 -->
 <script src="astra-flow.js?v=0.1.0"></script>
@@ -400,15 +402,130 @@ body:not(.wsxFit) .wsxTab[data-wt="optsec"],body:not(.wsxFit) .wsxTab[data-wt="f
 html.wsxFocus header,html.wsxFocus .wrap>.note,
 html.wsxFocus #wsxA,html.wsxFocus #wsxB,html.wsxFocus #wsxRail,html.wsxFocus #wsxInfoRow,
 html.wsxFocus .wsxSplit[data-ws="A"],html.wsxFocus .wsxSplit[data-ws="A2"],html.wsxFocus .wsxSplit[data-ws="B"]{display:none!important}
-@media (min-width:1360px){
-  html.wsxFocus body.wsxFit #wsxGrid{grid-template-columns:var(--wsxL,415px) 7px minmax(430px,1fr)}
-}
-#wsxFocusBtn{cursor:pointer;user-select:none}
-#wsxFocusBtn:hover{color:#f2f1ea;border-color:rgba(138,180,248,.6)}
+/* (v17 的兩欄格線已由下方 v18 三欄格線取代) */
+#wsxFocusBtn,#wsxMoreBtn{cursor:pointer;user-select:none}
+#wsxFocusBtn:hover,#wsxMoreBtn:hover{color:#f2f1ea;border-color:rgba(138,180,248,.6)}
 #wsxWarn{cursor:pointer;user-select:none}
 #wsxWarn.err{border-color:rgba(248,113,113,.6);color:#fca5a5;background:rgba(248,113,113,.1)}
 #wsxWarn.warn{border-color:rgba(251,191,36,.55);color:#fcd34d;background:rgba(251,191,36,.08)}
-html:not(.wsxFocus) #wsxWarn{display:none!important}   /* 完整版面時頂部標題列本來就有,不重複 */
+html:not(.wsxFocus) #wsxWarn{display:none!important}   /* 「其他欄位」打開時頂部標題列本來就有,不重複 */
+
+/* ===== v18:自選清單 | K線 | 現金池(2026-10-17 使用者)=====
+   「模仿富途牛牛,加入自選的清單欄位,擺在畫面左邊」「現金池的畫面,移動到畫面的最右邊」
+   「清單 | K線圖 | 現金池 這樣擺,清單 | 現金池 設計可以縮放,如果縮放後就是只剩K線圖」
+   桌機(≥1360,body.wsxFit):grid-template-areas 指定每欄位置(與 DOM 順序無關);html.wlOff / html.cpOff = 自選 / 現金池收起成細條。
+   手機:單欄 K線 → 自選 → 現金池。具名 id/class 選擇器,無 universal selector(地雷25)。 */
+#wsxWL{order:2}#wsxLeft{order:3}#wsxA{order:4}#wsxB{order:5}
+html.wsxFocus .wsxBrand{display:none}
+.wsxQL{font-size:10.5px;color:#898781;flex:0 0 auto;align-self:center;margin-right:1px;cursor:help}
+/* 富途牛牛式自選清單(暗色;名稱金色在上、US 標+代號在下;價/漲跌額上色;漲跌幅實心色塊) */
+.wlPane{display:flex;flex-direction:column;background:#141517;border:1px solid var(--line);border-radius:10px;overflow:visible;margin-bottom:10px;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue","Segoe UI","Microsoft JhengHei",Arial,sans-serif}
+.wsxPanHead{display:flex;align-items:center;gap:6px;height:30px;flex:0 0 auto;padding:0 5px 0 10px;font-size:13px;font-weight:600;color:#e8e8e8;user-select:none}
+.wsxPanHead .s{font-size:11px;color:#7d7f86;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wsxPanBtns{margin-left:auto;display:inline-flex;gap:2px;flex:0 0 auto}
+.wsxPanBtn{cursor:pointer;color:#8b8d94;min-width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-size:13px;font-weight:600}
+.wsxPanBtn:hover{background:rgba(255,255,255,.08);color:#fff}
+.wsxPanBtn.on{background:rgba(57,135,229,.28);color:#d6e6ff}
+.wsxPanBtn i{font-style:normal;display:inline-block;transition:transform .15s ease}
+.wsxPanBtn .dk{display:none}
+html.wlOff [data-pan="w"] .mb,html.cpOff [data-pan="l"] .mb{transform:rotate(-90deg)}
+#wsxCpHead{background:#141517;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.wlAdd{position:relative;flex:0 0 auto;padding:0 8px 7px}
+#wlIn{width:100%;height:28px;background:#1d1f23;border:1px solid #2c2e33;border-radius:6px;color:#e8e8e8;padding:0 9px;font-size:12px;outline:none}
+#wlIn::placeholder{color:#6f7177}
+#wlIn:focus{border-color:#3987e5}
+.wlSug{position:absolute;left:8px;right:8px;top:32px;z-index:60;background:#1d1f23;border:1px solid #34363c;border-radius:6px;box-shadow:0 10px 26px rgba(0,0,0,.6);display:none;max-height:320px;overflow:auto}
+.wlSug .it{display:flex;align-items:center;gap:8px;padding:6px 9px;font-size:12px;cursor:pointer;color:#dcdcdc}
+.wlSug .it.on,.wlSug .it:hover{background:rgba(57,135,229,.24)}
+.wlSug .it b{min-width:52px;color:#fff;font-weight:600}
+.wlSug .it .nm{color:#9a9ca3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1 1 auto;min-width:0}
+.wlSug .it .in{color:#6f7177;font-size:10.5px;flex:0 0 auto}
+.wlSug .no{padding:7px 9px;font-size:11.5px;color:#9a9ca3;line-height:1.5}
+.wlHdr,.wlRow{display:grid;grid-template-columns:minmax(0,1fr) 68px 60px 64px;align-items:center;column-gap:4px;padding:0 10px 0 12px}
+.wlPane.ed .wlHdr,.wlPane.ed .wlRow{grid-template-columns:minmax(0,1fr) 68px 60px 64px 46px}
+.wlHdr{flex:0 0 auto;height:26px;font-size:11.5px;color:#7d7f86;border-bottom:1px solid #24262b;user-select:none}
+.wlHdr span{text-align:right;white-space:nowrap;cursor:pointer}
+.wlHdr span:hover{color:#c9cbd1}
+.wlHdr span.nm{text-align:left;cursor:default}
+.wlHdr span.nm:hover{color:#7d7f86}
+.wlHdr span.s1::after{content:" ▼";font-size:8px;color:#3987e5}
+.wlHdr span.s2::after{content:" ▲";font-size:8px;color:#3987e5}
+.wlBody{flex:1 1 auto;min-height:0;overflow:auto;outline:none;overscroll-behavior:contain}
+.wlRow{height:50px;border-bottom:1px solid #1e2024;cursor:pointer;font-variant-numeric:tabular-nums;position:relative;-webkit-tap-highlight-color:transparent}
+.wlRow:hover{background:#1b1d21}
+.wlRow.on{background:#232832}
+.wlRow.on::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:0 2px 2px 0;background:#3987e5}
+.wlRow.drag{opacity:.4}
+.wlRow.dropB{box-shadow:inset 0 2px 0 #3987e5}
+.wlRow.dropA{box-shadow:inset 0 -2px 0 #3987e5}
+.wlNm{min-width:0}
+.wlNm .n{font-size:13.5px;color:#f0c35a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.wlNm .c{font-size:11.5px;color:#e4e4e4;display:flex;align-items:center;gap:4px;margin-top:2px;line-height:1.2;white-space:nowrap;overflow:hidden}
+.wlNm .mk{font-size:9px;line-height:12px;padding:0 3px;border-radius:2px;background:#2d6be0;color:#fff;font-weight:700;flex:0 0 auto}
+.wlNm .mk.cc{background:#8a5cf6}
+.wlPx,.wlCh{text-align:right;font-size:13px;white-space:nowrap;line-height:1.25}
+.wlPx .tg{font-size:10px;color:#7d7f86;margin-top:2px}
+.wlPc{text-align:right}
+.wlPc .pill{display:inline-block;min-width:62px;text-align:center;padding:4px 2px;border-radius:3px;font-size:12.5px;font-weight:600;color:#ddd;background:#34363c}
+.wlRow .up{color:#4ade80}.wlRow .dn{color:#f87171}.wlRow .fl{color:#c9cbd1}.wlRow .na{color:#6f7177}
+.wlPc .pill.up{background:#16a34a;color:#fff}.wlPc .pill.dn{background:#dc3c45;color:#fff}.wlPc .pill.fl{background:#3a3c42;color:#e4e4e4}.wlPc .pill.na{background:#26282d;color:#6f7177}
+.wlEd{display:flex;gap:2px;justify-content:flex-end}
+.wlEd span{width:21px;height:24px;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;color:#9a9ca3;cursor:pointer;font-size:13px}
+.wlEd span:hover{background:rgba(255,255,255,.08);color:#fff}
+.wlEd span[data-wldel]:hover{background:rgba(220,60,69,.3);color:#fff}
+.wlEmpty{padding:18px 12px;font-size:12px;color:#7d7f86;line-height:1.6;text-align:center}
+.wlFoot{flex:0 0 auto;padding:5px 12px 6px;font-size:10.5px;color:#6f7177;border-top:1px solid #1e2024;display:flex;gap:8px;align-items:center}
+.wlFoot span:last-child{margin-left:auto}
+#wlMenu{position:fixed;z-index:10000;display:none;background:#1d1f23;border:1px solid #34363c;border-radius:7px;box-shadow:0 10px 26px rgba(0,0,0,.6);padding:4px 0;min-width:132px;font-size:12.5px}
+#wlMenu div{padding:6px 14px;cursor:pointer;color:#e6e6e6;white-space:nowrap}
+#wlMenu div:hover{background:rgba(57,135,229,.26)}
+#wlMenu div.dl:hover{background:rgba(220,60,69,.32)}
+.wsxStrip{display:none}
+/* 收起(手機):只留標題列 */
+html.wlOff #wsxWL .wlAdd,html.wlOff #wsxWL .wlHdr,html.wlOff #wsxWL .wlBody,html.wlOff #wsxWL .wlFoot{display:none}
+html.cpOff #wsxWinSlot,html.cpOff #wsxDestSlot{display:none}
+@media (min-width:1360px){
+  /* 側欄寬 = minmax(下限, 你拉的寬度):螢幕夠寬時照你拉的;不夠寬時側欄先縮、K線保留最小寬度 → 右邊不會被擠出畫面 */
+  body.wsxFit #wsxGrid{--gW:var(--wsxW,340px);--gWn:200px;--gSW:7px;--gL:var(--wsxL,415px);--gLn:220px;--gSL:7px;
+    grid-template-areas:"w sw c sa a sa2 b sl l sr r";
+    grid-template-columns:minmax(var(--gWn),var(--gW)) var(--gSW) minmax(380px,1fr) 7px minmax(180px,var(--wsxA,248px)) 7px minmax(200px,var(--wsxB,330px)) var(--gSL) minmax(var(--gLn),var(--gL)) 7px 42px}
+  html.wsxFocus body.wsxFit #wsxGrid{grid-template-areas:"w sw c sl l";grid-template-columns:minmax(var(--gWn),var(--gW)) var(--gSW) minmax(430px,1fr) var(--gSL) minmax(var(--gLn),var(--gL))}
+  html.wlOff body.wsxFit #wsxGrid{--gW:26px;--gWn:26px;--gSW:5px}
+  html.cpOff body.wsxFit #wsxGrid{--gL:26px;--gLn:26px;--gSL:5px}
+  body.wsxFit #wsxWL{grid-area:w;order:0;height:100%;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:0 1px}
+  body.wsxFit #wsxWL .wlPane{flex:1 1 auto;min-height:0;margin:0}
+  body.wsxFit #wsxGrid>.wsxSplit[data-ws="W"]{grid-area:sw}
+  body.wsxFit #wsxCenter{grid-area:c}
+  body.wsxFit #wsxGrid>.wsxSplit[data-ws="A"]{grid-area:sa}
+  body.wsxFit #wsxA{grid-area:a}
+  body.wsxFit #wsxGrid>.wsxSplit[data-ws="A2"]{grid-area:sa2}
+  body.wsxFit #wsxB{grid-area:b}
+  body.wsxFit #wsxGrid>.wsxSplit[data-ws="L"]{grid-area:sl}
+  body.wsxFit #wsxLeft{grid-area:l}
+  body.wsxFit #wsxGrid>.wsxSplit[data-ws="B"]{display:none}
+  body.wsxFit #wsxRail{grid-area:r}
+  body.wsxFit #wsxCpHead{position:sticky;top:0;z-index:4}
+  body.wsxFit .wsxPanBtn .dk{display:inline-block}
+  body.wsxFit .wsxPanBtn .mb{display:none}
+  html.wlOff body.wsxFit #wsxGrid>.wsxSplit[data-ws="W"],html.cpOff body.wsxFit #wsxGrid>.wsxSplit[data-ws="L"]{display:none}
+  html.wlOff body.wsxFit #wsxWL .wlPane{display:none}
+  html.cpOff body.wsxFit #wsxCpHead,html.cpOff body.wsxFit #wsxWinSlot,html.cpOff body.wsxFit #wsxDestSlot{display:none}
+  html.cpOff body.wsxFit #wsxLeft{overflow:hidden;padding:0 1px}
+  html.wlOff body.wsxFit #wsxWL .wsxStrip,html.cpOff body.wsxFit #wsxLeft .wsxStrip{display:flex}
+  .wsxStrip{flex-direction:column;align-items:center;gap:10px;height:100%;width:100%;padding:12px 0;box-sizing:border-box;cursor:pointer;
+    background:#141517;border:1px solid var(--line);border-radius:8px;color:#c3c5cc;font-size:13px;user-select:none}
+  .wsxStrip:hover{color:#fff;border-color:rgba(138,180,248,.55);background:#1a1c20}
+  .wsxStrip span{font-size:14px;color:#8ab4f8}
+  .wsxStrip b{writing-mode:vertical-rl;letter-spacing:.3em;font-weight:600}
+  /* K線上方「常看」優先:一行放不下時,大盤/行情狀態和兩顆版面鈕換到第二行(駕駛艙高度由 wsx3 calcH 依實際列高重算),常看一顆都不藏 */
+  body.wsxFit #wsxTopSlot #wsxTop{flex-wrap:wrap;row-gap:4px;overflow:hidden}
+  body.wsxFit #wsxTopSlot #wsxQuick{display:flex;flex-wrap:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;align-items:center;gap:5px}
+  body.wsxFit #wsxTopSlot #wsxPills{margin-left:auto;flex:0 0 auto}
+  body.wsxFit #wsxTopSlot #wsxWarn,body.wsxFit #wsxTopSlot #wsxFocusBtn,body.wsxFit #wsxTopSlot #wsxMoreBtn{flex:0 0 auto}
+  body.wsxFit #wsxTopSlot .wsxChip{padding:3px 10px;flex:0 0 auto}
+}
+@media (max-width:1359px){.wsxStrip{display:none!important}}
 </style>
 </head>
 <body>
@@ -601,10 +718,28 @@ html:not(.wsxFocus) #wsxWarn{display:none!important}   /* 完整版面時頂部�
   <span id="wsxQuick"></span>
   <span id="wsxPills"></span>
   <span id="wsxWarn" class="wsxPill" style="display:none"></span>
-  <span id="wsxFocusBtn" class="wsxPill">⊞ 完整版面</span>
+  <span id="wsxFocusBtn" class="wsxPill">◧ 只看K線</span>
+  <span id="wsxMoreBtn" class="wsxPill">⋯ 其他欄位</span>
 </div>
 <div id="wsxGrid">
+<!-- v18 左欄:富途牛牛式自選清單(內容由 v18 自選模組產生;清單存在本機 localStorage mfd_wl) -->
+<aside id="wsxWL" class="wsxCol">
+  <div class="wsxStrip" data-pan="w" title="展開自選股"><span>»</span><b>自選股</b></div>
+  <div class="wlPane" id="wlPane">
+    <div class="wsxPanHead"><span class="t">自選股</span><span class="s" id="wlCount"></span>
+      <span class="wsxPanBtns"><span class="wsxPanBtn" id="wlEditBtn" title="編輯:刪除、置頂(電腦也可以直接拖曳排序、按右鍵)">✎</span><span class="wsxPanBtn" data-pan="w" title="收起自選股"><i class="dk">«</i><i class="mb">▾</i></span></span></div>
+    <div class="wlAdd"><input id="wlIn" type="text" placeholder="＋ 加入自選:輸入代號或名稱" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" maxlength="24"><div class="wlSug" id="wlSug"></div></div>
+    <div class="wlHdr" id="wlHdr"><span class="nm">名稱代碼</span><span data-wlsort="px">最新價</span><span data-wlsort="ch">漲跌額</span><span data-wlsort="pc">漲跌幅</span></div>
+    <div class="wlBody" id="wlBody" tabindex="0"></div>
+    <div class="wlFoot" id="wlFoot"></div>
+  </div>
+</aside>
+<div class="wsxSplit" data-ws="W"></div>
+<!-- v18:現金池欄(id 沿用 wsxLeft;桌機排到最右邊,見 v18 CSS 的 grid-area) -->
 <aside id="wsxLeft" class="wsxCol">
+  <div class="wsxStrip" data-pan="l" title="展開現金池"><span>«</span><b>現金池</b></div>
+  <div class="wsxPanHead" id="wsxCpHead"><span class="t">現金池</span><span class="s">離開股票的錢去了哪</span>
+    <span class="wsxPanBtns"><span class="wsxPanBtn" data-pan="l" title="收起現金池"><i class="dk">»</i><i class="mb">▾</i></span></span></div>
   <div id="wsxWinSlot"></div>
   <div id="wsxDestSlot"></div>
 </aside>
@@ -615,6 +750,7 @@ html:not(.wsxFocus) #wsxWarn{display:none!important}   /* 完整版面時頂部�
     <div id="wsxTools"><span class="sub">標的</span><select id="chipSym" style="background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select>
       <input id="chipInput" list="chipDL" placeholder="輸入任何代號 ↵" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" style="width:130px;background:#12141a;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px;text-transform:uppercase">
       <datalist id="chipDL"></datalist>
+      <span id="wlStar" class="tab" style="display:none" title="把目前這檔加入左邊自選股">☆ 加自選</span>
       <span id="chipRecent" style="display:none;gap:4px;flex-wrap:wrap;align-items:center"></span>
       <span id="chipRange" style="display:inline-flex;gap:6px;flex-wrap:wrap"></span>
       <span id="chipidx" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;margin-left:4px"></span></div>
@@ -698,7 +834,7 @@ html:not(.wsxFocus) #wsxWarn{display:none!important}   /* 完整版面時頂部�
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-17T12:50Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-17T14:33Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -6681,7 +6817,10 @@ var SESS={rth:"盤中",pre:"盤前",after:"盤後",closed:"休市",pause:"暫停
 function renderTopbar(){
   var q=document.getElementById('wsxQuick'),p=document.getElementById('wsxPills');
   var sym=(typeof CHIP_SYM!=="undefined"&&CHIP_SYM)||"";
-  if(q)q.innerHTML=QUICK.map(function(s){return '<span class="wsxChip'+(s===sym?' on':'')+'" data-wsxsym="'+s+'">'+s+'</span>';}).join("");
+  /* v18:常看 = 這台裝置自己的紀錄(v18 自選模組提供 __mfdFreqList;模組沒載入時退回原本固定 8 檔) */
+  var QL=QUICK; try{if(window.__mfdFreqList){var f=window.__mfdFreqList();if(f)QL=f;}}catch(_){}
+  if(q)q.innerHTML='<span class="wsxQL" title="你在這台裝置最常看的股票(自動記錄,每台裝置/瀏覽器各自一份;在股票上按右鍵可移除)">常看</span>'+
+    QL.map(function(s){return '<span class="wsxChip'+(s===sym?' on':'')+'" data-wsxsym="'+esc(s)+'">'+esc(s)+'</span>';}).join("");
   if(p){
     var lg=(typeof SIG!=="undefined")&&SIG&&SIG.market&&SIG.market.regime_light,L=LIGHT[lg]||["—","#898781"];
     var sess=(typeof DATA!=="undefined")&&DATA&&SESS[DATA.session]||"—";
@@ -7162,6 +7301,8 @@ function tick(){
 /* 生產版:不自動跳分頁 */
 setInterval(tick,1500);
 setTimeout(tick,700);
+/* v18:給自選清單模組用(報價口徑與本工作區一致;換股走同一條路) */
+window.__wsxQuote=quote; window.__wsxGo=wsxGo; window.__wsxTopbar=function(){try{renderTopbar();}catch(_){}};
 })();
 
 /* ===== v11:工作區寬度判定(含遲滯 + 斷路器)=====
@@ -7199,12 +7340,12 @@ var DESK=function(){return window.__wsxWide?window.__wsxWide():(window.innerWidt
 var grid=document.getElementById('wsxGrid');
 if(!grid)return;
 /* ── 欄寬狀態 ── */
-var COLS={L:415,A:248,B:330};
-try{var sv=JSON.parse(localStorage.getItem('wsxCols')||"null");if(sv&&sv.L)COLS=sv;}catch(_){}
-var LIM={L:[240,600],A:[200,360],B:[240,560]};
+var COLS={W:340,L:415,A:248,B:330};   /* v18:W = 左邊自選清單;L = 現金池(已移到最右邊) */
+try{var sv=JSON.parse(localStorage.getItem('wsxCols')||"null");if(sv&&sv.L){COLS=sv;if(!(COLS.W>0))COLS.W=340;}}catch(_){}
+var LIM={W:[240,520],L:[240,600],A:[200,360],B:[240,560]};
 function applyCols(){
   var tg=[document.documentElement,grid];
-  for(var i2=0;i2<tg.length;i2++){tg[i2].style.setProperty('--wsxL',COLS.L+'px');tg[i2].style.setProperty('--wsxA',COLS.A+'px');tg[i2].style.setProperty('--wsxB',COLS.B+'px');}
+  for(var i2=0;i2<tg.length;i2++){tg[i2].style.setProperty('--wsxW',COLS.W+'px');tg[i2].style.setProperty('--wsxL',COLS.L+'px');tg[i2].style.setProperty('--wsxA',COLS.A+'px');tg[i2].style.setProperty('--wsxB',COLS.B+'px');}
 }
 applyCols();
 /* ── 駕駛艙高度單一真值 ── */
@@ -7250,16 +7391,18 @@ var drag=null;
 document.addEventListener('mousedown',function(e){
   var s=e.target.closest&&e.target.closest('.wsxSplit');
   if(!s||!DESK())return;
-  var k=s.getAttribute('data-ws'),key=(k==='A2')?'A':k;
-  drag={k:k,key:key,x:e.clientX,v:COLS[key],el:s};
+  /* v18 欄位順序:自選 W |W| K線 |A| A欄 |A2| B欄 |L| 現金池 | rail(B 分隔線已不用)。
+     K線左邊的欄(W):往右拉=變寬;K線右邊的欄(A、B、現金池):分隔線在它左側,往左拉=變寬 → 分隔線都跟著滑鼠走 */
+  var k=s.getAttribute('data-ws'),key=(k==='A2')?'B':k;
+  if(!COLS[key])return;
+  drag={k:k,key:key,x:e.clientX,v:COLS[key],el:s,sg:(k==='W')?1:-1};
   s.classList.add('on');document.body.style.userSelect='none';document.body.style.cursor='col-resize';
   e.preventDefault();
 });
 document.addEventListener('mousemove',function(e){
   if(!drag)return;
   var dx=e.clientX-drag.x;
-  /* s1(L|中):+dx=左欄變寬;s2(中|A):+dx=中欄變寬→A 變窄;s3(A|B):+dx=A 變寬;s4(B|rail):+dx=B 變寬 */
-  var nv=(drag.k==='A')?drag.v-dx:drag.v+dx;
+  var nv=drag.v+drag.sg*dx;
   var lim=LIM[drag.key];nv=Math.max(lim[0],Math.min(lim[1],nv));
   COLS[drag.key]=Math.round(nv);applyCols();
 });
@@ -7285,30 +7428,61 @@ document.addEventListener('click',function(e){
 });
 })();
 
-/* ===== v17 精簡版面切換(2026-10-17 使用者:「我會看的只有K線還有現金池」)=====
- * html.wsxFocus 由 <head> 的小段程式在畫面出來前決定(預設開;本機 localStorage mfd_focus='0' = 完整版面)。
- * 這裡只負責 K線上方「⊞ 完整版面 / ◧ 只看K線＋現金池」那顆鈕:切換 → 記住 → 重算駕駛艙高度、圖寬(沿用 wsx3/wsx6 的 rsz/fill)。 */
+/* ===== v18 版面切換(2026-10-17 使用者:「清單 | K線圖 | 現金池 這樣擺,清單 | 現金池 設計可以縮放,如果縮放後就是只剩K線圖」
+ *        「預設網頁點開就進入完整版面」)=====
+ * ・完整版面 = 自選 | K線 | 現金池 三欄全開;每次打開網頁都是這樣(收起狀態不記憶,欄寬照舊記在 wsxCols)
+ * ・html.wlOff / html.cpOff = 自選 / 現金池收起(桌機剩一條細條,點一下展開;手機剩標題列)
+ * ・K線上方「◧ 只看K線」= 兩邊一起收起;再按「⊞ 完整版面」= 兩邊一起展開
+ * ・「⋯ 其他欄位」= 原本收起來的 Claude 判讀、追蹤清單、全市場掃描分頁、捷徑列、頂部標題列(html.wsxFocus 拿掉);
+ *   螢幕不夠寬放不下時先自動收起自選、再收起現金池,關掉「其他欄位」時恢復原狀。不記憶。 */
 (function(){
 "use strict";
-var KEY='mfd_focus';
-function on(){return document.documentElement.classList.contains('wsxFocus');}
+var H=document.documentElement;
+try{localStorage.removeItem('mfd_focus');}catch(_){}   /* v17 的記憶已停用 */
+function off(p){return H.classList.contains(p==='w'?'wlOff':'cpOff');}
+function setOff(p,v){H.classList.toggle(p==='w'?'wlOff':'cpOff',!!v);}
+function others(){return !H.classList.contains('wsxFocus');}
 function label(){
-  var b=document.getElementById('wsxFocusBtn'); if(!b)return;
-  b.textContent=on()?'⊞ 完整版面':'◧ 只看K線＋現金池';
-  b.title=on()?'顯示全部欄位(Claude 判讀、追蹤清單、全市場掃描、分析師、期權、財報…)':'只留K線和現金池,其他欄位收起來';
+  var b=document.getElementById('wsxFocusBtn');
+  if(b){var full=!off('w')&&!off('l');
+    b.textContent=full?'◧ 只看K線':'⊞ 完整版面';
+    b.title=full?'把左邊自選股和右邊現金池收起來,只留K線':'展開 自選股 | K線 | 現金池 三欄';}
+  var m=document.getElementById('wsxMoreBtn');
+  if(m){m.textContent=others()?'✕ 收起其他欄位':'⋯ 其他欄位';
+    m.title=others()?'收起 Claude 判讀、追蹤清單、全市場掃描等欄位':'顯示 Claude 判讀、追蹤清單、全市場掃描、分析師、期權、財報等欄位';}
+  var t=[['w','自選股'],['l','現金池']];
+  for(var i=0;i<t.length;i++){var bs=document.querySelectorAll('.wsxPanBtn[data-pan="'+t[i][0]+'"]');
+    for(var j=0;j<bs.length;j++)bs[j].title=(off(t[i][0])?'展開':'收起')+t[i][1];}
 }
 function relayout(){
-  setTimeout(function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}try{if(window.__wsxFill)window.__wsxFill();}catch(_){}},60);
-  setTimeout(function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}},450);
+  var f=function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}try{if(window.__wsxFlush)window.__wsxFlush();}catch(_){}try{if(window.__wsxFill)window.__wsxFill();}catch(_){}};
+  setTimeout(f,60); setTimeout(f,450);
+}
+var PRE=null;   /* 開「其他欄位」前的收起狀態(關掉時恢復) */
+function fitOthers(){
+  try{
+    if(!document.body.classList.contains('wsxFit'))return;
+    var cs=getComputedStyle(H),px=function(n,d){var v=parseFloat(cs.getPropertyValue(n));return isNaN(v)?d:v;};
+    var need=function(){return (off('w')?31:px('--wsxW',340)+7)+(off('l')?31:px('--wsxL',415)+7)+px('--wsxA',248)+px('--wsxB',330)+42+21+24+380;};
+    if(window.innerWidth<need())setOff('w',true);
+    if(window.innerWidth<need())setOff('l',true);
+  }catch(_){}
 }
 document.addEventListener('click',function(e){
-  var b=e.target.closest&&e.target.closest('#wsxFocusBtn'); if(!b)return;
-  var nv=!on(); document.documentElement.classList.toggle('wsxFocus',nv);
-  try{localStorage.setItem(KEY,nv?'1':'0');}catch(_){}
-  label(); relayout();
-  try{if(typeof markStatus==='function'&&typeof DATA!=='undefined'&&DATA)markStatus();}catch(_){}
+  var t=e.target; if(!t||!t.closest)return;
+  if(t.closest('#wsxFocusBtn')){var full=!off('w')&&!off('l');setOff('w',full);setOff('l',full);PRE=null;label();relayout();return;}
+  if(t.closest('#wsxMoreBtn')){
+    var on=!others(); H.classList.toggle('wsxFocus',!on);
+    if(on){PRE={w:off('w'),l:off('l')};fitOthers();}
+    else if(PRE){setOff('w',PRE.w);setOff('l',PRE.l);PRE=null;}
+    label(); relayout();
+    try{if(typeof markStatus==='function'&&typeof DATA!=='undefined'&&DATA)markStatus();}catch(_){}
+    return;}
+  var p=t.closest('[data-pan]');
+  if(p){var k=p.getAttribute('data-pan');setOff(k,!off(k));PRE=null;label();relayout();}
 });
 label();
+window.__wsxPanLabel=label;
 })();
 
 </script>
@@ -7599,7 +7773,8 @@ if(typeof r0==='function'){
 var SEL=['.wsxCol','.wsxTB','.wsxTBr','.wsxB','.wsxP','#wsxCenter','#wsxRC','#wsxRChartP',
          '#wsxTabsP','#wsxRTabsP','#wsxRail','#wsxTop','#wsxGrid','#wsxRGrid',
          '#sec-chips [style*="overflow"]','#sec-chips table','#sec-chips .card',
-         '#wsxLeft','#wsxA','#wsxB','#wsxInfoRow','#scanpanel','#accumpanel','#wsxMWatch','#wsxFlow'].join(',');
+         '#wsxLeft','#wsxA','#wsxB','#wsxInfoRow','#scanpanel','#accumpanel','#wsxMWatch','#wsxFlow',
+         '#wsxWL','#wlBody','#wlSug'].join(',');   /* v18:自選清單 */
 function tag(){
   try{
     var els=document.querySelectorAll(SEL);
@@ -7616,6 +7791,537 @@ document.addEventListener('click',function(e){
   if(e.target&&e.target.closest&&(e.target.closest('.wsxTab')||e.target.closest('#wsxRail [data-go]')))setTimeout(tag,120);
 });
 setTimeout(tag,1500);setTimeout(tag,4000);
+})();
+
+</script>
+<script>
+
+/* ===== v18 自選清單(富途牛牛式)+ 常看(每台裝置自己的紀錄)— 2026-10-17 =====
+ * 使用者:「模仿富途牛牛,加入自選的清單欄位,擺在畫面左邊,就沿用一樣的設計,字型,佈局都一樣,
+ *          可以讓使用者自己將股票加入清單,點擊之後可以連動到K線圖」
+ *        「常看的股票應該要直接留在上面,不同使用者會有自己的紀錄」
+ * ・自選清單:localStorage mfd_wl(這台裝置的這個瀏覽器自己一份;沒有帳號同步)。第一次打開先放原本K線上方那 8 檔。
+ *   加入=上方輸入框(代號或名稱,有建議清單)或K線工具列「☆ 加自選」;新加的放最上面(同富途)。
+ *   刪除/置頂=✎ 編輯、或在列上按右鍵;電腦可直接拖曳排序;點欄位標題排序(第一下由大到小、第二下由小到大、第三下回自訂順序)。
+ *   點一列=K線換成那檔(和K線上方切換股票走同一條路 __wsxGo);清單有焦點時 ↑↓ 換上一檔/下一檔(按住不放不連跳)。
+ * ・報價 = 跟K線圖同一份資料(不造數字):
+ *   最新價 = 當日K快照 kline_today(富途,約每分鐘;開高低收任一 ≤0 不用;日期不超過 snapDate(),同 chipBars 的防護)
+ *   昨收   = 前一個交易日(TJ_HOL 休市表)的收盤,依序取:① 已載入的日K檔 CHIPK ② 本機日K尾巴快取 mfd_wlk(每檔只存最後 3 根)
+ *            ③ data/scan.json(夜間引擎,本來就會載入)那天剛好是前一交易日時的收盤 ④ 追蹤清單 20 日走勢最後一根=快照收盤時的倒數第二根
+ *            ⑤ 都沒有才去抓該檔日K(一次最多 2 檔、等主K線先到)
+ *            ——日K缺了前一交易日就不算漲跌(顯示「—」),不拿更早的收盤硬算
+ *   沒有當日K快照的:加密幣用網站同一份報價(走勢最後一根=最新價時,昨收=倒數第二根);只有日K的(🧪 擴大範圍)= 最近一天收盤,
+ *   價格下方標「收盤 MM-DD」。
+ *   (2026-10-17 複核:原本用 stocks/market 的 last + chg1d,但 Mac 快輪只更新 SPY 的 last、chg1d/走勢要等全量輪 → 漲跌會算錯,已改)
+ *   抓日K時照 ensureChipK 的規矩設 CHIPK[s+'_r'/'_t'],成功放進 CHIPK、失敗標 _none;正好是K線那檔時一樣叫 renderChips。
+ * ・常看:K線每換一檔就記一次(localStorage mfd_freq,14 天半衰的分數),K線上方依分數顯示前 10 名;
+ *   使用中只補位、不重排(不會跳來跳去),重新整理才依分數重排;在常看的股票上按右鍵可移除。還沒有紀錄時先放原本的 8 檔。
+ * ・名稱:常見股票用富途繁中慣用的中文名(NM),其餘用 🧪 名單 uni.json 的英文名,都沒有就只顯示代號。
+ * ・漲跌顏色沿用本網站K線(綠漲紅跌)。
+ * 全部 fail-open:這裡出錯不影響K線/現金池。 */
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var pane=$('wlPane'),body=$('wlBody');
+if(!pane||!body)return;
+var SEED=["NVDA","MU","SNDK","WDC","AVGO","SMH","SPY","QQQ"];
+var OKS=/^[A-Z0-9][A-Z0-9.\-]{0,11}$/;
+var WK='mfd_wl',SK='mfd_wl_sort',FK='mfd_freq',TK='mfd_wlk';
+var COARSE=false;
+try{COARSE=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)||((navigator.maxTouchPoints||0)>0&&!(window.matchMedia&&window.matchMedia('(hover:hover)').matches));}catch(_){}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function lsGet(k){try{var v=localStorage.getItem(k);return v==null?null:JSON.parse(v);}catch(_){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(_){return false;}}
+function cs(){try{return (typeof CHIP_SYM!=='undefined'&&CHIP_SYM)||'';}catch(_){return '';}}
+function DT(){try{return (typeof DATA!=='undefined'&&DATA&&!DATA._partial)?DATA:null;}catch(_){return null;}}
+function CK(){try{return (typeof CHIPK!=='undefined')?CHIPK:{};}catch(_){return {};}}
+function AU(){try{return (typeof AXU!=='undefined'&&AXU)||null;}catch(_){return null;}}
+function fit(){return document.body.classList.contains('wsxFit');}
+function norm(s){return String(s||'').trim().toUpperCase().replace(/\s+/g,'');}
+
+/* ── 名稱(富途繁中慣用;沒有的用英文名) ── */
+var NM={NVDA:"英偉達",MSFT:"微軟",AAPL:"蘋果",AMZN:"亞馬遜",META:"Meta Platforms",AVGO:"博通",GOOGL:"谷歌-A",GOOG:"谷歌-C",TSLA:"特斯拉",
+JPM:"摩根大通",LLY:"禮來",MU:"美光科技",SNDK:"閃迪",WDC:"西部數據",MRVL:"邁威爾科技",LITE:"Lumentum",COHR:"Coherent",AAOI:"應用光電",
+SMH:"半導體ETF-VanEck",SOXX:"半導體ETF-iShares",AMD:"美國超微公司",PLTR:"Palantir",COIN:"Coinbase",MSTR:"Strategy",NFLX:"奈飛",
+INTC:"英特爾",ORCL:"甲骨文",TSM:"台積電",SPY:"標普500ETF-SPDR",QQQ:"納指100ETF-Invesco",DIA:"道指ETF-SPDR",IWM:"羅素2000ETF-iShares",
+VOO:"標普500ETF-Vanguard",VTI:"全美股市ETF-Vanguard",
+TQQQ:"三倍做多納指ETF",SQQQ:"三倍做空納指ETF",SOXL:"三倍做多半導體ETF",SOXS:"三倍做空半導體ETF",NVDL:"兩倍做多英偉達ETF",NVDS:"1.5倍做空英偉達ETF",
+TSLL:"兩倍做多特斯拉ETF",TSLZ:"兩倍做空特斯拉ETF",FNGU:"三倍做多FANG+",FNGD:"三倍做空FANG+",SPXL:"三倍做多標普500ETF",SPXS:"三倍做空標普500ETF",
+UPRO:"三倍做多標普500ETF",SPXU:"三倍做空標普500ETF",TNA:"三倍做多羅素2000ETF",TZA:"三倍做空羅素2000ETF",UDOW:"三倍做多道指ETF",SDOW:"三倍做空道指ETF",
+MUU:"兩倍做多美光ETF",SNXX:"兩倍做多閃迪ETF",MVLL:"兩倍做多邁威爾ETF",GGLL:"兩倍做多谷歌ETF",
+"BTC-USD":"比特幣","ETH-USD":"以太坊","SOL-USD":"Solana",
+QCOM:"高通",TXN:"德州儀器",AMAT:"應用材料",LRCX:"泛林集團",KLAC:"科磊",ASML:"阿斯麥",ARM:"ARM Holdings",SMCI:"超微電腦",DELL:"戴爾科技",HPE:"慧與科技",
+CSCO:"思科",IBM:"IBM",CRM:"Salesforce",ADBE:"Adobe",NOW:"ServiceNow",SNOW:"Snowflake",CRWD:"CrowdStrike",PANW:"Palo Alto Networks",
+NET:"Cloudflare",DDOG:"Datadog",MDB:"MongoDB",APP:"AppLovin",SHOP:"Shopify",UBER:"優步",ABNB:"愛彼迎",LYFT:"Lyft",DASH:"DoorDash",
+BABA:"阿里巴巴",BIDU:"百度",JD:"京東",PDD:"拼多多",BILI:"嗶哩嗶哩",NIO:"蔚來",XPEV:"小鵬汽車",LI:"理想汽車",NTES:"網易",TME:"騰訊音樂",FUTU:"富途控股",
+BA:"波音",DIS:"迪士尼",KO:"可口可樂",PEP:"百事",MCD:"麥當勞",WMT:"沃爾瑪",COST:"好市多",HD:"家得寶",NKE:"耐克",SBUX:"星巴克",TGT:"塔吉特",LOW:"勞氏",
+V:"Visa",MA:"萬事達",PYPL:"PayPal",AXP:"美國運通",BAC:"美國銀行",WFC:"富國銀行",GS:"高盛",MS:"摩根士丹利",C:"花旗",SCHW:"嘉信理財",BLK:"貝萊德",
+XOM:"埃克森美孚",CVX:"雪佛龍",COP:"康菲石油",OXY:"西方石油",SLB:"斯倫貝謝",UNH:"聯合健康",JNJ:"強生",PFE:"輝瑞",MRK:"默沙東",ABBV:"艾伯維",
+NVO:"諾和諾德",AMGN:"安進",GILD:"吉利德科學",MRNA:"Moderna",BNTX:"BioNTech",TMO:"賽默飛世爾",ISRG:"直覺外科",HIMS:"Hims & Hers",
+"BRK.B":"伯克希爾-B","BRK-B":"伯克希爾-B",CAT:"卡特彼勒",DE:"迪爾",GE:"通用電氣",HON:"霍尼韋爾",MMM:"3M",UPS:"聯合包裹",FDX:"聯邦快遞",
+LMT:"洛克希德馬丁",RTX:"雷神技術",NOC:"諾斯羅普格魯曼",GD:"通用動力",LHX:"L3哈里斯",KTOS:"Kratos",AVAV:"AeroVironment",
+RKLB:"Rocket Lab",ASTS:"AST SpaceMobile",LUNR:"Intuitive Machines",RDW:"Redwire",PL:"Planet Labs",JOBY:"Joby Aviation",ACHR:"Archer Aviation",
+HOOD:"Robinhood",SOFI:"SoFi",AFRM:"Affirm",UPST:"Upstart",IBKR:"盈透證券",RIVN:"Rivian",LCID:"Lucid",F:"福特汽車",GM:"通用汽車",
+STX:"希捷科技",NTAP:"NetApp",ANET:"Arista Networks",CIEN:"Ciena",GLW:"康寧",CRDO:"Credo",ALAB:"Astera Labs",MTSI:"MACOM",MXL:"MaxLinear",
+VRT:"Vertiv",ETN:"伊頓",GEV:"GE Vernova",CEG:"Constellation Energy",VST:"Vistra",NRG:"NRG Energy",TLN:"Talen Energy",OKLO:"Oklo",SMR:"NuScale Power",
+CRWV:"CoreWeave",NBIS:"Nebius",IREN:"IREN",CIFR:"Cipher Mining",APLD:"Applied Digital",CORZ:"Core Scientific",WULF:"TeraWulf",
+MARA:"MARA Holdings",RIOT:"Riot Platforms",CLSK:"CleanSpark",HUT:"Hut 8",BTBT:"Bit Digital",BMNR:"BitMine",GLXY:"Galaxy Digital",CRCL:"Circle",
+ON:"安森美",NXPI:"恩智浦",ADI:"亞德諾",MCHP:"微芯科技",MPWR:"芯源系統",TER:"泰瑞達",ENTG:"英特格",AMKR:"安靠技術",GFS:"格芯",SWKS:"思佳訊",
+SNPS:"新思科技",CDNS:"鏗騰電子",INTU:"Intuit",WDAY:"Workday",TEAM:"Atlassian",ZS:"Zscaler",OKTA:"Okta",TWLO:"Twilio",U:"Unity",
+AI:"C3.ai",SOUN:"SoundHound",PATH:"UiPath",BBAI:"BigBear.ai",IONQ:"IonQ",RGTI:"Rigetti",QBTS:"D-Wave Quantum",
+RBLX:"Roblox",SPOT:"Spotify",SNAP:"Snap",PINS:"Pinterest",RDDT:"Reddit",ROKU:"Roku",TTD:"The Trade Desk",DKNG:"DraftKings",
+GME:"遊戲驛站",AMC:"AMC院線",DJT:"Trump Media",OPEN:"Opendoor",AA:"美國鋁業",AAL:"美國航空",DAL:"達美航空",UAL:"聯合航空",LUV:"西南航空",
+CCL:"嘉年華郵輪",RCL:"皇家加勒比郵輪",NCLH:"挪威郵輪",NOK:"諾基亞",ENPH:"Enphase Energy",FSLR:"First Solar",RUN:"Sunrun",WOLF:"Wolfspeed",
+CLF:"克里夫蘭克里夫斯",FCX:"自由港麥克莫蘭",NEM:"紐蒙特",NUE:"紐柯鋼鐵",
+ARKK:"ARK創新ETF",GLD:"黃金ETF-SPDR",SLV:"白銀ETF-iShares",GDX:"金礦股ETF-VanEck",USO:"美國原油基金",URA:"鈾礦ETF-Global X",LIT:"鋰電池ETF-Global X",
+TLT:"20年以上美債ETF-iShares",IEF:"7-10年美債ETF-iShares",SHY:"1-3年美債ETF-iShares",HYG:"高收益債ETF-iShares",LQD:"投資級公司債ETF-iShares",
+SGOV:"0-3月美債ETF-iShares",BIL:"1-3月美債ETF-SPDR",IBIT:"比特幣ETF-iShares",ETHA:"以太坊ETF-iShares",
+XLK:"科技ETF-SPDR",XLF:"金融ETF-SPDR",XLE:"能源ETF-SPDR",XLV:"醫療ETF-SPDR",XLI:"工業ETF-SPDR",XLY:"非必需消費ETF-SPDR",XLP:"必需消費ETF-SPDR",
+XLU:"公用事業ETF-SPDR",XLB:"原物料ETF-SPDR",XLC:"通訊服務ETF-SPDR",XBI:"生技ETF-SPDR",IBB:"生技ETF-iShares",KRE:"區域銀行ETF-SPDR",
+XME:"金屬礦業ETF-SPDR",XOP:"油氣開採ETF-SPDR",OIH:"油服ETF-VanEck",VNQ:"房地產ETF-Vanguard",
+EEM:"新興市場ETF-iShares",EFA:"已開發市場ETF-iShares",EWJ:"日本ETF-iShares",EWT:"台灣ETF-iShares",FXI:"中國大型股ETF-iShares",
+KWEB:"中概互聯網ETF-KraneShares",INDA:"印度ETF-iShares",SH:"做空標普500ETF"};
+function nameOf(s){
+  if(NM[s])return NM[s];
+  var a=AU(),n=a&&a.names&&(a.names[s]||a.names[s.replace(/\./g,'-')]);
+  return n?String(n):'';
+}
+function badge(s){var d=DT();return ((d&&d.crypto&&d.crypto[s])||/-USD$/.test(s))?'<span class="mk cc">幣</span>':'<span class="mk">US</span>';}
+
+/* ── 自選清單儲存(記憶體一份:瀏覽器不給存時,這次開著的期間照樣能用) ── */
+var WLM=null;
+function wlGet(){
+  if(WLM)return WLM.slice();
+  var a=lsGet(WK),o=[];
+  if(!Array.isArray(a))o=SEED.slice();
+  else{var seen={};for(var i=0;i<a.length;i++){var x=norm(a[i]);if(OKS.test(x)&&!seen[x]){seen[x]=1;o.push(x);}}}
+  WLM=o; return o.slice();
+}
+function wlPut(a){WLM=a.slice(0,200);lsSet(WK,WLM);}
+var SORT=(function(){var s=lsGet(SK);return (s&&/^(px|ch|pc)$/.test(s.k)&&(s.d===1||s.d===-1))?{k:s.k,d:s.d}:{k:null,d:-1};})();
+var ED=false;
+
+/* ── 交易日 ── */
+function sd(){try{return (typeof snapDate==='function')?snapDate():null;}catch(_){return null;}}
+function prevTD(D){   /* D 的前一個交易日(週末 + TJ_HOL 休市表) */
+  try{var t=Date.parse(D+'T12:00:00Z');if(!isFinite(t))return null;
+    for(var i=0;i<12;i++){t-=864e5;var x=new Date(t),ds=x.toISOString().slice(0,10),wd=x.getUTCDay();
+      if(wd!==0&&wd!==6&&!(typeof TJ_HOL!=='undefined'&&TJ_HOL[ds]))return ds;}}catch(_){}
+  return null;
+}
+/* ── 日K尾巴快取(每檔最後 3 根的日期+收盤;只用來算昨收) ── */
+var TC=(function(){var o=lsGet(TK);return (o&&typeof o==='object'&&!Array.isArray(o))?o:{};})(),TCdirty=false;
+function tcPut(s,a,u){
+  var e=TC[s];
+  if(e&&e.b&&e.b.length===a.length&&e.b[a.length-1][0]===a[a.length-1][0]&&e.b[a.length-1][1]===a[a.length-1][1]&&e.b[0][1]===a[0][1])return;
+  TC[s]={b:a,u:u||'',t:Date.now()}; TCdirty=true;
+}
+function tcSave(){
+  if(!TCdirty)return; TCdirty=false;
+  var ks=Object.keys(TC); if(ks.length>120){ks.sort(function(a,b){return (TC[b].t||0)-(TC[a].t||0);});ks.slice(120).forEach(function(k){delete TC[k];});}
+  lsSet(TK,TC);
+}
+function tail(s){
+  var K=CK()[s];
+  if(K&&K.bars&&K.bars.length){
+    var n=K.bars.length,a=[];
+    for(var i=Math.max(0,n-3);i<n;i++){var c=+K.bars[i][4];if(c>0)a.push([String(K.bars[i][0]),c]);}
+    if(a.length){tcPut(s,a,K.upd);return a;}
+  }
+  var e=TC[s]; return (e&&Array.isArray(e.b)&&e.b.length)?e.b:null;
+}
+function closeBefore(a,D,P){   /* D 之前最後一根的收盤;那根早於前一交易日(日K缺天)→ 不算 */
+  if(!a||!D)return null;
+  for(var i=a.length-1;i>=0;i--){if(a[i][0]<D)return (P&&a[i][0]<P)?null:+a[i][1];}
+  return null;
+}
+var SCR=null,SCM={};
+function scanRow(s){try{if(typeof SCAN==='undefined'||!SCAN||!SCAN.rows)return null;if(SCR!==SCAN){SCR=SCAN;SCM={};SCAN.rows.forEach(function(r){if(r&&r.sym)SCM[r.sym]=r;});}return SCM[s]||null;}catch(_){return null;}}
+function ktOf(s){   /* 當日K快照(同 chipBars:開高低收任一 ≤0 不用;日期不超過 snapDate) */
+  var d=DT(),kt=d&&d.kline_today&&d.kline_today[s];
+  if(!kt||kt.length<5)return null;
+  if(!(+kt[1]>0&&+kt[2]>0&&+kt[3]>0&&+kt[4]>0))return null;
+  var D=sd(),kd=String(kt[0]); if(D&&kd>D)kd=D;
+  return {d:kd,c:+kt[4]};
+}
+function prevOf(s,D,kc){
+  var P=prevTD(D),v=closeBefore(tail(s),D,P);
+  if(v==null){var r=scanRow(s);if(r&&P&&r.d===P&&+r.px>0)v=+r.px;}
+  if(v==null&&kc>0){   /* 追蹤清單的 20 日走勢:最後一根=這根快照的收盤(收盤後/盤前)時,倒數第二根就是前一交易日 */
+    var q=window.__wsxQuote?window.__wsxQuote(s):null,sp=q&&q.spark;
+    if(sp&&sp.length>=2&&Math.abs(+sp[sp.length-1]-kc)<=kc*1e-4&&+sp[sp.length-2]>0)v=+sp[sp.length-2];}
+  return v;
+}
+
+/* ── 報價(跟K線圖同一份) ── */
+function fin(o){if(o.last!=null&&isFinite(o.last)&&o.prev!=null&&isFinite(o.prev)&&o.prev>0){o.chg=o.last-o.prev;o.pct=(o.last/o.prev-1)*100;}return o;}
+function qt(s){
+  var o={last:null,prev:null,d:null,live:false,chg:null,pct:null};
+  try{
+    var k=ktOf(s);
+    if(k){o.last=k.c;o.d=k.d;o.live=true;o.prev=prevOf(s,k.d,k.c);if(o.prev==null)needK(s);return fin(o);}
+    var q=window.__wsxQuote?window.__wsxQuote(s):null;   /* 沒有當日K快照的(加密幣):走勢最後一根=最新價時才算漲跌 */
+    if(q&&q.last!=null&&isFinite(+q.last)&&q.spark&&q.spark.length>=2&&Math.abs(+q.spark[q.spark.length-1]-(+q.last))<=Math.max(1e-6,Math.abs(+q.last)*1e-6)){
+      o.last=+q.last;o.prev=+q.spark[q.spark.length-2];o.live=true;return fin(o);}
+    var a=tail(s);
+    if(a&&a.length){var L=a[a.length-1];o.last=+L[1];o.d=L[0];o.prev=closeBefore(a,L[0],prevTD(L[0]));return fin(o);}
+    var r=scanRow(s);
+    if(r&&+r.px>0){o.last=+r.px;o.d=String(r.d||'');needK(s);return o;}
+    if(q&&q.last!=null&&isFinite(+q.last)){o.last=+q.last;o.live=true;}
+    needK(s);
+  }catch(_){}
+  return o;
+}
+/* 需要時才抓該檔日K(來源順序同 ensureChipK:gist 富途日K → 🧪 擴大範圍日K;旗標也照它的規矩) */
+var KQ=[],KB=0,KST={};
+function stillNeed(s){
+  var C=CK(); if(C[s]||C[s+'_r'])return false;
+  var k=ktOf(s); if(k)return prevOf(s,k.d,k.c)==null;
+  var q=window.__wsxQuote?window.__wsxQuote(s):null; if(q&&q.spark&&q.spark.length>=2)return false;
+  var a=tail(s); return !(a&&a.length>=2);
+}
+function needK(s){
+  if(!OKS.test(s)||!DT())return;               /* 主資料還沒到:先不抓(到了再判斷,免得白抓) */
+  var C=CK();
+  if(C[s+'_none']&&Date.now()-(C[s+'_t']||0)>600e3){delete C[s+'_none'];delete C[s+'_r'];}   /* 同 ensureChipK:抓不到的 10 分鐘後可再試 */
+  if(C[s]||C[s+'_r'])return;
+  var st=KST[s]; if(st&&(st.busy||st.q||Date.now()-st.t<600e3))return;   /* 抓不到的 10 分鐘後再試 */
+  KST[s]={q:1,t:Date.now()}; KQ.push(s); pump();
+}
+function pump(){
+  while(KB<2&&KQ.length){
+    var s=KQ.shift();
+    if(!stillNeed(s)){KST[s]={t:Date.now()};continue;}
+    KB++; KST[s]={busy:1,t:Date.now()};
+    (function(s){
+      var gate=(typeof heavyGate==='function')?heavyGate():Promise.resolve();
+      gate.then(function(){
+        var C=CK(); if(C[s]||C[s+'_r'])return true;      /* 等閘門期間主程式已在抓 */
+        C[s+'_r']=true; C[s+'_t']=Date.now();
+        return fetchK(s);
+      }).then(function(ok){KST[s]={t:Date.now(),none:!ok};},function(){KST[s]={t:Date.now(),none:true};})
+        .then(function(){KB--;LAST='';pump();});
+    })(s);
+  }
+}
+function afterK(s){   /* 同 ensureChipK 抓完的動作:正好是K線那檔就叫駕駛艙重畫 */
+  if(s!==cs())return;
+  try{if(typeof heavyRelease==='function')heavyRelease();}catch(_){}
+  try{var D0=DT();if(D0&&typeof renderChips==='function')renderChips();}catch(_){}
+}
+function fetchK(s){
+  var C=CK();
+  var put=function(d,ax){
+    if(!d||!d.bars||!d.bars.length)return false;
+    if(!C[s]){var m={};d.bars.forEach(function(b){m[b[0]]=b[4];});
+      C[s]=ax?{close:m,bars:d.bars,src:d.src||'yahoo-astra',upd:d.updated_utc||'',ax:1}:{close:m,bars:d.bars,src:d.src||'',upd:d.updated_utc||''};}
+    delete C[s+'_none'];
+    try{tail(s);tcSave();}catch(_){}
+    afterK(s); return true;
+  };
+  var fail=function(){C[s+'_none']=true;afterK(s);return false;};
+  var j=function(u){return fetch(u,{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});};
+  return j(DATA_URL.replace('market_data.json','kline_'+s+'.json')).then(function(d){
+    if(put(d,false))return true;
+    var A=AU(); if(A&&typeof axHas==='function'&&!axHas(s))return fail();
+    if(typeof axKUrl!=='function')return fail();
+    return j(axKUrl(s)).then(function(d2){return put(d2,true)||fail();});
+  });
+}
+
+/* ── 格式 ── */
+function dp(v){var a=Math.abs(v);return a>=1?2:(a>=0.1?3:4);}
+function fNum(v,n){return Math.abs(v)>=1000?Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):Math.abs(v).toFixed(n);}
+function fPx(v){return (v==null||!isFinite(v))?'—':(v<0?'-':'')+fNum(v,dp(v));}
+function fCh(v,ref){if(v==null||!isFinite(v))return '—';var n=dp(ref!=null&&isFinite(ref)?ref:v),t=fNum(v,n);return (+t.replace(/,/g,'')===0?'':(v>0?'+':'-'))+t;}
+function fPc(v){if(v==null||!isFinite(v))return '—';var t=Math.abs(v).toFixed(2);return (+t===0?'':(v>0?'+':'-'))+t+'%';}
+function dir(o){if(o.last==null)return 'na';if(o.pct==null)return 'fl';var t=+o.pct.toFixed(2);return t>0?'up':t<0?'dn':'fl';}
+
+/* ── 畫清單 ── */
+var LAST='',ORD=[],DRAG=null,PD=false;
+function canDrag(){return !SORT.k&&!COARSE&&!ED;}
+function sorted(list,Q){
+  if(!SORT.k)return list.slice();
+  var key={px:'last',ch:'chg',pc:'pct'}[SORT.k];
+  var arr=list.map(function(s,i){return {s:s,i:i,v:Q[s][key]};});
+  arr.sort(function(a,b){var an=(a.v==null||!isFinite(a.v)),bn=(b.v==null||!isFinite(b.v));
+    if(an&&bn)return a.i-b.i;if(an)return 1;if(bn)return -1;return (SORT.d*(a.v-b.v))||(a.i-b.i);});
+  return arr.map(function(x){return x.s;});
+}
+function row(s,o,on){
+  var c=dir(o),nm=nameOf(s)||s,tip='',none=(KST[s]&&KST[s].none)||!!CK()[s+'_none'];
+  var tg=(!o.live&&o.last!=null&&o.d)?'<div class="tg">收盤 '+esc(o.d.slice(5))+'</div>':'';
+  if(o.last==null)tip=none?'找不到 '+s+' 的報價或日K(代號可能打錯,或還不在資料範圍;可在K線那邊按「點播」)':'報價載入中…';
+  else if(!o.live)tip='沒有即時報價,顯示最近一天收盤('+o.d+')';
+  else if(o.pct==null)tip=none?'找不到前一個交易日的收盤,漲跌先不算':'昨收載入中…';
+  return '<div class="wlRow'+(on?' on':'')+'" data-wl="'+esc(s)+'"'+(canDrag()?' draggable="true"':'')+(tip?' title="'+esc(tip)+'"':'')+'>'+
+    '<div class="wlNm"><div class="n">'+esc(nm)+'</div><div class="c">'+badge(s)+esc(s)+'</div></div>'+
+    '<div class="wlPx '+c+'">'+fPx(o.last)+tg+'</div>'+
+    '<div class="wlCh '+c+'">'+fCh(o.chg,o.last)+'</div>'+
+    '<div class="wlPc"><span class="pill '+c+'">'+fPc(o.pct)+'</span></div>'+
+    (ED?'<div class="wlEd"><span data-wltop="'+esc(s)+'" title="置頂">⤒</span><span data-wldel="'+esc(s)+'" title="從自選刪除">✕</span></div>':'')+
+  '</div>';
+}
+var SLAB={px:'最新價',ch:'漲跌額',pc:'漲跌幅'};
+function render(force){
+  try{
+    if(DRAG)return;
+    if(PD&&!force)return;                       /* 正按著滑鼠/手指:先不重畫,免得點擊落空 */
+    var list=wlGet(),cur=cs(),Q={};
+    for(var i=0;i<list.length;i++)Q[list[i]]=qt(list[i]);
+    tcSave();
+    var ord=sorted(list,Q);
+    var sig=[ord.join(','),cur,SORT.k||'',SORT.d,ED?1:0,COARSE?1:0,AU()?1:0,
+      list.map(function(s){var o=Q[s];return [o.last,o.prev,o.d,o.live?1:0,((KST[s]&&KST[s].none)||CK()[s+'_none'])?1:0].join(':');}).join('|')].join('#');
+    star(list,cur);
+    if(!force&&sig===LAST)return;
+    LAST=sig; ORD=ord;
+    pane.classList.toggle('ed',ED);
+    var eb=$('wlEditBtn'); if(eb){eb.classList.toggle('on',ED);eb.textContent=ED?'完成':'✎';eb.title=ED?'結束編輯':'編輯:刪除、置頂(電腦也可以直接拖曳排序、按右鍵)';}
+    var hs=document.querySelectorAll('#wlHdr [data-wlsort]');
+    for(var h=0;h<hs.length;h++){var k=hs[h].getAttribute('data-wlsort');
+      hs[h].classList.toggle('s1',SORT.k===k&&SORT.d===-1);hs[h].classList.toggle('s2',SORT.k===k&&SORT.d===1);
+      hs[h].title=(SORT.k!==k)?'依'+SLAB[k]+'由大到小排序':(SORT.d===-1?'改成由小到大':'回到自訂順序');}
+    var wc=$('wlCount'); if(wc)wc.textContent=list.length?list.length+' 檔':'';
+    if(!list.length)body.innerHTML='<div class="wlEmpty">還沒有自選股<br>在上面輸入代號(例如 NVDA)按 Enter 加入<br>或在K線上方按「☆ 加自選」</div>';
+    else body.innerHTML=ord.map(function(s){return row(s,Q[s],s===cur);}).join('');
+    var ft=$('wlFoot');
+    if(ft)ft.innerHTML='<span>清單存在這台裝置的瀏覽器</span><span>'+(SORT.k?'依'+SLAB[SORT.k]+(SORT.d===-1?'↓':'↑')+'排序':(COARSE?'✎ 可刪除/置頂':'可拖曳排序 · 右鍵選單'))+'</span>';
+  }catch(_){}
+}
+function star(list,cur){
+  var b=$('wlStar'); if(!b)return;
+  if(!cur||!OKS.test(cur)){if(b.style.display!=='none')b.style.display='none';return;}
+  var inl=list.indexOf(cur)>=0,t=inl?'★ 已在自選':'☆ 加自選';
+  if(b.textContent!==t)b.textContent=t;
+  b.classList.toggle('active',inl);
+  b.title=inl?cur+' 已在左邊自選股(再按一下移除)':'把 '+cur+' 加入左邊自選股';
+  if(b.style.display==='none')b.style.display='';
+}
+
+/* ── 動作 ── */
+function go(s){
+  try{if(window.__wsxGo)window.__wsxGo(s);}catch(_){}
+  render(true);
+  if(!fit()){   /* 手機:K線在清單上面 → 直接跳到K線;K線重畫後高度會變,再對齊一次 */
+    var p=$('wsxChartP'),up=function(){try{if(p&&Math.abs(p.getBoundingClientRect().top)>4)p.scrollIntoView({block:'start'});}catch(_){}};
+    up(); setTimeout(up,700); setTimeout(up,1600);}
+}
+function addSym(s,flash){
+  s=norm(s); if(!OKS.test(s))return false;
+  var a=wlGet(),i=a.indexOf(s);
+  if(i<0){a.unshift(s);wlPut(a);}
+  render(true);
+  if(flash){var r=body.querySelector('[data-wl="'+s+'"]');
+    if(r){try{r.scrollIntoView({block:'nearest'});}catch(_){}r.classList.add('dropB');setTimeout(function(){r.classList.remove('dropB');},900);}}
+  return true;
+}
+function delSym(s){var a=wlGet(),i=a.indexOf(s);if(i>=0){a.splice(i,1);wlPut(a);}render(true);}
+function topSym(s){var a=wlGet(),i=a.indexOf(s);if(i>0){a.splice(i,1);a.unshift(s);wlPut(a);}if(SORT.k){SORT={k:null,d:-1};lsSet(SK,SORT);}render(true);}
+
+body.addEventListener('pointerdown',function(){PD=true;});
+window.addEventListener('pointerup',function(){setTimeout(function(){PD=false;},0);},true);
+window.addEventListener('pointercancel',function(){PD=false;},true);
+pane.addEventListener('click',function(e){
+  var t=e.target; if(!t||!t.closest)return;
+  var x=t.closest('[data-wldel]'); if(x){e.stopPropagation();delSym(x.getAttribute('data-wldel'));return;}
+  x=t.closest('[data-wltop]'); if(x){e.stopPropagation();topSym(x.getAttribute('data-wltop'));return;}
+  if(t.closest('#wlEditBtn')){ED=!ED;render(true);return;}
+  x=t.closest('[data-wlsort]');
+  if(x){var k=x.getAttribute('data-wlsort');
+    if(SORT.k!==k)SORT={k:k,d:-1};else if(SORT.d===-1)SORT={k:k,d:1};else SORT={k:null,d:-1};
+    lsSet(SK,SORT);render(true);return;}
+  var r=t.closest('[data-wl]');
+  if(r){if(ED)return;go(r.getAttribute('data-wl'));if(!COARSE){try{body.focus({preventScroll:true});}catch(_){}}}
+});
+/* 清單有焦點時 ↑↓ = 上一檔/下一檔(按住不放不連跳:每跳一檔都要抓一份日K) */
+body.addEventListener('keydown',function(e){
+  if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;
+  e.preventDefault();
+  if(e.repeat||!ORD.length)return;
+  var i=ORD.indexOf(cs()),j=(e.key==='ArrowDown')?(i<0?0:Math.min(ORD.length-1,i+1)):(i<0?0:Math.max(0,i-1));
+  if(ORD[j]&&ORD[j]!==cs())go(ORD[j]);
+  var r=body.querySelector('[data-wl="'+ORD[j]+'"]'); if(r){try{r.scrollIntoView({block:'nearest'});}catch(_){}}
+});
+/* 拖曳排序(電腦;依欄位排序時不能拖) */
+function clearDrop(){var a=body.querySelectorAll('.dropB,.dropA');for(var i=0;i<a.length;i++){a[i].classList.remove('dropB');a[i].classList.remove('dropA');}}
+function endDrag(){DRAG=null;PD=false;clearDrop();render(true);}
+body.addEventListener('dragstart',function(e){
+  var r=e.target.closest&&e.target.closest('[data-wl]'); if(!r||!canDrag()){e.preventDefault();return;}
+  DRAG=r.getAttribute('data-wl'); r.classList.add('drag');
+  try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',DRAG);}catch(_){}
+});
+body.addEventListener('dragover',function(e){
+  if(!DRAG)return; e.preventDefault(); clearDrop();
+  var r=e.target.closest&&e.target.closest('[data-wl]'); if(!r||r.getAttribute('data-wl')===DRAG)return;
+  var b=r.getBoundingClientRect(); r.classList.add(e.clientY<b.top+b.height/2?'dropB':'dropA');
+});
+body.addEventListener('drop',function(e){
+  if(!DRAG)return; e.preventDefault();
+  var r=e.target.closest&&e.target.closest('[data-wl]'),a=wlGet().filter(function(x){return x!==DRAG;});
+  if(r){var t=r.getAttribute('data-wl');
+    if(t!==DRAG){var b=r.getBoundingClientRect(),after=e.clientY>=b.top+b.height/2,i=a.indexOf(t);a.splice(after?i+1:i,0,DRAG);wlPut(a);}}
+  else{a.push(DRAG);wlPut(a);}
+  endDrag();
+});
+body.addEventListener('dragend',function(){if(DRAG)endDrag();});
+
+/* ── 加入:輸入框 + 建議清單 ── */
+var inp=$('wlIn'),sug=$('wlSug'),SL=[],SI=-1,UC=null,UT=0;
+function univ(){
+  if(UC&&Date.now()-UT<30000)return UC;
+  var set={},d=DT(),add=function(s){s=norm(s);if(OKS.test(s))set[s]=1;};
+  if(d){['stocks','market','leveraged','crypto'].forEach(function(k){Object.keys(d[k]||{}).forEach(add);});
+    Object.keys(d.kline_today||{}).forEach(add);(d.ext_universe||[]).forEach(add);(d.custom_symbols||[]).forEach(add);}
+  var a=AU(); if(a&&a.k)a.k.forEach(add);
+  UC=Object.keys(set); UT=Date.now(); return UC;
+}
+function sugHide(){if(sug){sug.style.display='none';sug.innerHTML='';}SL=[];SI=-1;}
+function sugPaint(){
+  if(!sug)return;
+  var have={};wlGet().forEach(function(s){have[s]=1;});
+  var Q=norm(inp.value),exact=false;
+  var h=SL.map(function(x,i){if(x.s===Q)exact=true;
+    return '<div class="it'+(i===SI?' on':'')+'" data-sg="'+esc(x.s)+'"><b>'+esc(x.s)+'</b><span class="nm">'+esc(x.nm||'')+'</span>'+(have[x.s]?'<span class="in">已在自選</span>':'')+'</div>';}).join('');
+  if(!exact&&OKS.test(Q))h+='<div class="it'+(SI===SL.length?' on':'')+'" data-sg="'+esc(Q)+'"><b>'+esc(Q)+'</b><span class="nm">直接加入(目前資料範圍裡沒有,可能沒有報價)</span></div>';
+  if(!h)h='<div class="no">找不到符合的股票</div>';
+  sug.innerHTML=h; sug.style.display='block';
+}
+function sugFind(){
+  var raw=String(inp.value||'').trim(); if(!raw){sugHide();return;}
+  var Q=raw.toUpperCase(),U=univ(),res=[];
+  for(var i=0;i<U.length;i++){var s=U[i],nm=nameOf(s),nu=nm.toUpperCase(),sc=-1;
+    if(s===Q)sc=0;else if(s.indexOf(Q)===0)sc=1;else if(nu&&nu.indexOf(Q)===0)sc=2;else if(nu&&nu.indexOf(Q)>0)sc=3;else if(s.indexOf(Q)>0)sc=4;
+    if(sc>=0)res.push({s:s,nm:nm,sc:sc});}
+  res.sort(function(a,b){return (a.sc-b.sc)||(a.s.length-b.s.length)||(a.s<b.s?-1:1);});
+  SL=res.slice(0,8); SI=0; sugPaint();
+}
+function sugPick(s){if(addSym(s,true)){inp.value='';sugHide();}}
+if(inp){
+  inp.addEventListener('input',sugFind);
+  inp.addEventListener('focus',function(){if(inp.value)sugFind();});
+  inp.addEventListener('blur',function(){setTimeout(sugHide,180);});
+  inp.addEventListener('keydown',function(e){
+    var n=SL.length+((OKS.test(norm(inp.value))&&!SL.some(function(x){return x.s===norm(inp.value);}))?1:0);
+    if(e.key==='ArrowDown'){if(n){e.preventDefault();SI=(SI+1)%n;sugPaint();}return;}
+    if(e.key==='ArrowUp'){if(n){e.preventDefault();SI=(SI-1+n)%n;sugPaint();}return;}
+    if(e.key==='Escape'){sugHide();inp.blur();return;}
+    if(e.key==='Enter'){e.preventDefault();
+      var pick=(SI>=0&&SI<SL.length)?SL[SI].s:norm(inp.value);
+      if(pick)sugPick(pick);}
+  });
+}
+if(sug)sug.addEventListener('mousedown',function(e){   /* mousedown:在輸入框失焦前接住 */
+  var it=e.target.closest&&e.target.closest('[data-sg]'); if(!it)return;
+  e.preventDefault(); sugPick(it.getAttribute('data-sg'));
+});
+var stb=$('wlStar');
+if(stb)stb.addEventListener('click',function(){
+  var s=cs(); if(!s||!OKS.test(s))return;
+  if(wlGet().indexOf(s)>=0)delSym(s); else addSym(s,true);
+  if(document.documentElement.classList.contains('wlOff')&&wlGet().indexOf(s)>=0){
+    document.documentElement.classList.remove('wlOff');
+    try{if(window.__wsxPanLabel)window.__wsxPanLabel();}catch(_){}
+    setTimeout(function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}try{if(window.__wsxFill)window.__wsxFill();}catch(_){}},60);
+  }
+});
+
+/* ── 常看(K線上方;這台裝置自己的紀錄) ── */
+var HL=14*864e5,NQ=10,QORD=null;
+function fLoad(){
+  var o=lsGet(FK),s={},h={};
+  if(o&&typeof o==='object'){
+    if(o.s&&typeof o.s==='object')Object.keys(o.s).forEach(function(k){var v=o.s[k];if(OKS.test(k)&&Array.isArray(v)&&v.length>=2&&isFinite(+v[0])&&isFinite(+v[1]))s[k]=[+v[0],+v[1]];});
+    if(o.h&&typeof o.h==='object')Object.keys(o.h).forEach(function(k){if(OKS.test(k)&&isFinite(+o.h[k]))h[k]=+o.h[k];});
+  }
+  return {v:1,s:s,h:h};
+}
+function fCur(e,now){return e[0]*Math.pow(.5,(now-e[1])/HL);}
+function fBuild(){
+  var o=fLoad(),now=Date.now();
+  var r=Object.keys(o.s).filter(function(k){return !o.h[k];})
+    .map(function(k){return [k,fCur(o.s[k],now)];}).filter(function(x){return x[1]>=0.05;})
+    .sort(function(a,b){return b[1]-a[1];}).map(function(x){return x[0];}).slice(0,NQ);
+  for(var i=0;i<SEED.length&&r.length<SEED.length;i++){if(r.indexOf(SEED[i])<0&&!o.h[SEED[i]])r.push(SEED[i]);}
+  QORD=r;
+}
+function fTrim(m,keep,score){var ks=Object.keys(m);if(ks.length<=keep)return;ks.sort(function(a,b){return score(b)-score(a);});ks.slice(keep).forEach(function(k){delete m[k];});}
+function fBump(s){
+  if(!OKS.test(s))return;
+  var o=fLoad(),now=Date.now(),e=o.s[s];
+  o.s[s]=[+((e?fCur(e,now):0)+1).toFixed(4),now]; delete o.h[s];
+  fTrim(o.s,80,function(k){return fCur(o.s[k],now);});
+  fTrim(o.h,80,function(k){return o.h[k];});
+  lsSet(FK,o);
+  if(!QORD)fBuild();
+  if(QORD.indexOf(s)<0){   /* 使用中只補位:滿了就換掉分數最低的那顆(位置不動),不整排重排 */
+    if(QORD.length<NQ)QORD.push(s);
+    else{var mi=0,mv=Infinity;for(var i=0;i<QORD.length;i++){var ee=o.s[QORD[i]],v=ee?fCur(ee,now):0;if(v<mv){mv=v;mi=i;}}QORD[mi]=s;}
+  }
+  try{if(window.__wsxTopbar)window.__wsxTopbar();}catch(_){}
+}
+function fHide(s){
+  var o=fLoad(); o.h[s]=Date.now(); delete o.s[s]; lsSet(FK,o);
+  if(!QORD)fBuild();
+  var i=QORD.indexOf(s); if(i>=0)QORD.splice(i,1);
+  try{if(window.__wsxTopbar)window.__wsxTopbar();}catch(_){}
+}
+window.__mfdFreqList=function(){try{if(!QORD)fBuild();return QORD.slice();}catch(_){return null;}};
+try{if(window.__wsxTopbar)window.__wsxTopbar();}catch(_){}
+/* K線換股就記一次(不管是從哪裡換的:自選、常看、下拉、輸入框、掃描表…);打開網頁時預設的那檔不算 */
+var SEEN=null;
+setInterval(function(){
+  try{
+    var s=cs(); if(!s)return;
+    if(SEEN===null){SEEN=s;return;}
+    if(s!==SEEN){SEEN=s;fBump(s);render(false);}
+  }catch(_){}
+},600);
+
+/* ── 右鍵選單(自選列、常看) ── */
+var menu=null;
+function menuHide(){if(menu&&menu.style.display!=='none')menu.style.display='none';}
+function menuShow(x,y,html,s){
+  if(!menu){menu=document.createElement('div');menu.id='wlMenu';document.body.appendChild(menu);
+    menu.addEventListener('click',function(e){var it=e.target.closest&&e.target.closest('[data-m]');if(!it)return;
+      var m=it.getAttribute('data-m'),sy=menu.getAttribute('data-s');menuHide();
+      if(m==='go')go(sy);else if(m==='top')topSym(sy);else if(m==='del')delSym(sy);else if(m==='add')addSym(sy,true);else if(m==='qhide')fHide(sy);});}
+  menu.innerHTML=html; menu.setAttribute('data-s',s); menu.style.display='block';
+  var w=menu.offsetWidth,h=menu.offsetHeight;
+  menu.style.left=Math.max(4,Math.min(x,window.innerWidth-w-6))+'px'; menu.style.top=Math.max(4,Math.min(y,window.innerHeight-h-6))+'px';
+}
+pane.addEventListener('contextmenu',function(e){
+  var r=e.target.closest&&e.target.closest('[data-wl]'); if(!r)return;
+  e.preventDefault(); var s=r.getAttribute('data-wl');
+  menuShow(e.clientX,e.clientY,'<div data-m="go">看 '+esc(s)+' K線</div><div data-m="top">置頂</div><div class="dl" data-m="del">從自選刪除</div>',s);
+});
+var qk=$('wsxQuick');
+if(qk)qk.addEventListener('contextmenu',function(e){
+  var c=e.target.closest&&e.target.closest('[data-wsxsym]'); if(!c)return;
+  e.preventDefault(); var s=c.getAttribute('data-wsxsym'),inl=wlGet().indexOf(s)>=0;
+  menuShow(e.clientX,e.clientY,(inl?'':'<div data-m="add">＋ 加入自選</div>')+'<div class="dl" data-m="qhide">從常看移除</div>',s);
+});
+document.addEventListener('mousedown',function(e){if(menu&&menu.style.display==='block'&&!(e.target.closest&&e.target.closest('#wlMenu')))menuHide();},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')menuHide();});
+window.addEventListener('resize',menuHide); window.addEventListener('blur',menuHide);
+document.addEventListener('scroll',menuHide,true);
+
+/* 別的分頁改了清單 → 這裡跟著更新 */
+window.addEventListener('storage',function(e){
+  if(e.key===WK){WLM=null;LAST='';render(true);}
+  if(e.key===FK){QORD=null;try{if(window.__wsxTopbar)window.__wsxTopbar();}catch(_){}}
+});
+/* K線上方那一列高度變了(常看多一顆 → 狀態鈕換到第二行)→ 重算駕駛艙高度,K線底部不被切掉 */
+try{
+  var tpEl=$('wsxTop');
+  if(tpEl&&typeof ResizeObserver!=='undefined'){var tpH=0;
+    new ResizeObserver(function(es){var h=Math.round(es[0].contentRect.height);
+      if(tpH&&h&&h!==tpH)setTimeout(function(){try{if(window.__wsxRsz)window.__wsxRsz();}catch(_){}},60);
+      if(h)tpH=h;}).observe(tpEl);}
+}catch(_){}
+render(true);
+setInterval(function(){if(!document.hidden)render(false);},1000);
+window.__wlRender=function(){render(true);};
 })();
 
 </script>
