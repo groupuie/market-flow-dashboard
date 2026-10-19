@@ -1,0 +1,62 @@
+{
+ "tag": "d266",
+ "scope": "持有 / 觀察窗口的逐日日期序列;不含訊號之前的指標回看期",
+ "common_calendar": {
+  "file": "adjusted/SPY.json",
+  "file_sha256": "0889fbd5d9234ddcf714116284e90d3bcfc8b810ea73c5c27d9a2da9bfd66774",
+  "manifest_field": "adjustedSha256",
+  "matches_manifest": true,
+  "sessions": 5730,
+  "first": "2004-01-02",
+  "last": "2026-10-12",
+  "date_list_sha256": "991e0357055d488cbaa4b65e738838ecce9d09db3c99920a895bdb1dfb319206",
+  "strictly_increasing_unique": true
+ },
+ "symbol_date_issues": {},
+ "P1": {
+  "n_events": 51867,
+  "n_flagged": 0,
+  "events": []
+ },
+ "P2_break": {
+  "n_events": 24167,
+  "n_flagged": 0,
+  "events": []
+ },
+ "P2_uptrend": {
+  "n": 487134,
+  "flagged": 0,
+  "by_symbol": {}
+ },
+ "compare_with_s2_endpoint_check": {
+  "P1_events_same_count": true,
+  "P1_flag_sets_equal": true,
+  "P2_break_same_count": true,
+  "P2_break_flag_sets_equal": true,
+  "P2_uptrend_same_count": true,
+  "P2_uptrend_flag_counts_equal": true
+ },
+ "constructed_fixtures": {
+  "complete": {
+   "s2_endpoint_gap": 0,
+   "s2_accepts": true,
+   "sequence_check_accepts": true
+  },
+  "missing_only": {
+   "s2_endpoint_gap": 1,
+   "s2_accepts": false,
+   "sequence_check_accepts": false
+  },
+  "missing_plus_duplicate": {
+   "s2_endpoint_gap": 0,
+   "s2_accepts": true,
+   "sequence_check_accepts": false
+  },
+  "missing_plus_weekend": {
+   "s2_endpoint_gap": 0,
+   "s2_accepts": true,
+   "sequence_check_accepts": false
+  }
+ },
+ "note": "原判定照 PREREG 不變;這裡只檢查,排除後的敏感度沿用 s2(事件集合相同時數字相同)"
+}

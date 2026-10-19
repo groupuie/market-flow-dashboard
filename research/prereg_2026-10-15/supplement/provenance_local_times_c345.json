@@ -1,0 +1,17 @@
+{
+ "what": "c345 下載的本機檔案系統時間(不是第三方證據;回應 Astra v0.7.2 §2.1)",
+ "github_signature_verified_at_prereg_98c59ba": "2026-10-15T05:30:03Z",
+ "github_pages_run_created_at_prereg_98c59ba": "2026-10-15T05:30:04Z",
+ "local_output_folder_birth_time_utc": "2026-10-15T05:30:07Z (stat %W 秒;同一資料夾 %w = 2026-10-15 13:30:07.418 +0800 = 05:30:07.418Z)",
+ "first_stock_file_mtime_utc": "2026-10-15T05:30:08.045914Z",
+ "first_stock_file": "A.json",
+ "last_stock_file_mtime_utc": "2026-10-15T05:30:28.144008Z",
+ "last_stock_file": "SPY.json",
+ "manifest_mtime_utc": "2026-10-15T05:30:28.146310Z",
+ "n_files": 346,
+ "limits": [
+  "本機檔案系統時間,不是第三方收件;資料夾建立時間由系統寫入、一般工具改不了,但仍不是外部證明",
+  "只能說「這個資料夾」是在 GitHub 收到登記之後約 3 秒才建立;不能證明沒有在別的地方先下載或看過",
+  "依 Astra 建議不重新下載補證明;下一次改成:先取得凍結 SHA 的伺服器回條,再由乾淨環境下載並記開始 / 每檔 / 結束時間"
+ ]
+}

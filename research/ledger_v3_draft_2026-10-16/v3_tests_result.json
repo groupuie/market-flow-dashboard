@@ -1,0 +1,588 @@
+{
+ "tests": 71,
+ "all_pass": true,
+ "verifier_sha256": "67de35793c6e244e91fafb74dbd62304cece9088705212903fae67293ed0dc53",
+ "results": [
+  {
+   "name": "good_friday_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "christmas_2026",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "christmas_observed_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "juneteenth_observed_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "independence_observed_2027",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "calendar_out_of_range_stops",
+   "pass": true,
+   "proof": "日曆只到 2028-12-29:2029-01-02 超出範圍 → 先補官方休市表(新版本)"
+  },
+  {
+   "name": "cohort_end_by_calendar",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "clean_batch_accepted",
+   "pass": true,
+   "proof": [
+    [],
+    {
+     "2026-10-14:ADI": []
+    }
+   ]
+  },
+  {
+   "name": "receipt_for_other_commit_rejected",
+   "pass": true,
+   "proof": [
+    "receipt_head_sha"
+   ]
+  },
+  {
+   "name": "mark_not_in_pending_rejected",
+   "pass": true,
+   "proof": [
+    "id_sets_differ",
+    "counts_differ"
+   ]
+  },
+  {
+   "name": "field_changes_rejected",
+   "pass": true,
+   "proof": {
+    "2026-10-14:ADI": [
+     "field_kind",
+     "field_type",
+     "field_style",
+     "type_style_rule",
+     "verdict_p",
+     "snapshot_not_this_buy_point"
+    ]
+   }
+  },
+  {
+   "name": "duplicate_rows_rejected",
+   "pass": true,
+   "proof": [
+    "duplicate_id_in_locked",
+    "counts_differ"
+   ]
+  },
+  {
+   "name": "verdict_text_mismatch_rejected",
+   "pass": true,
+   "proof": {
+    "2026-10-14:ADI": [
+     "verdict_fields"
+    ]
+   }
+  },
+  {
+   "name": "snapshot_not_buy_point_rejected",
+   "pass": true,
+   "proof": {
+    "2026-10-14:ADI": [
+     "snapshot_not_this_buy_point"
+    ]
+   }
+  },
+  {
+   "name": "row_error_rejects_whole_batch",
+   "pass": true,
+   "proof": {
+    "coverage": {
+     "ok": 0,
+     "seen": 1,
+     "rate": 0.0,
+     "by_date": {
+      "2026-10-14": {
+       "status": "locked",
+       "accepted": false,
+       "reasons": [
+        "field_style",
+        "field_type",
+        "type_style_rule"
+       ],
+       "events": 1,
+       "rejected_events": 1
+      }
+     }
+    },
+    "counts": {
+     "marks_in_window": 1,
+     "eligible": 0,
+     "rejected": 1,
+     "closed_reproducible": 0,
+     "missing_or_unreproducible": 0,
+     "pending": 0,
+     "not_eligible_reasons": {
+      "field_style": 1,
+      "field_type": 1,
+      "type_style_rule": 1
+     },
+     "agree_eligible": 0
+    }
+   }
+  },
+  {
+   "name": "no_signals_cannot_hide_locked_mark",
+   "pass": true,
+   "proof": {
+    "before": {
+     "marks_in_window": 1,
+     "eligible": 1,
+     "rejected": 0,
+     "closed_reproducible": 0,
+     "missing_or_unreproducible": 0,
+     "pending": 1,
+     "not_eligible_reasons": {},
+     "agree_eligible": 1
+    },
+    "after": {
+     "marks_in_window": 1,
+     "eligible": 0,
+     "rejected": 1,
+     "closed_reproducible": 0,
+     "missing_or_unreproducible": 0,
+     "pending": 0,
+     "not_eligible_reasons": {
+      "no_signals_QQQ_no_snapshot": 1,
+      "no_signals_SPY_no_snapshot": 1,
+      "no_signals_but_marks_exist": 1,
+      "no_signals_has_verdicts": 1,
+      "no_signals_marks_at_prep": 1,
+      "no_signals_pending_not_empty": 1,
+      "no_signals_pending_sha": 1,
+      "no_signals_receipt_evidence_missing": 1
+     },
+     "agree_eligible": 0
+    },
+    "reasons": [
+     "no_signals_QQQ_no_snapshot",
+     "no_signals_SPY_no_snapshot",
+     "no_signals_but_marks_exist",
+     "no_signals_has_verdicts",
+     "no_signals_marks_at_prep",
+     "no_signals_pending_not_empty",
+     "no_signals_pending_sha",
+     "no_signals_receipt_evidence_missing"
+    ]
+   }
+  },
+  {
+   "name": "genuine_no_signals_accepted",
+   "pass": true,
+   "proof": {
+    "status": "no_signals",
+    "accepted": true,
+    "reasons": [],
+    "events": 0,
+    "rejected_events": 0,
+    "no_signals_evidence": {
+     "prep_commit": "fd9649736d31bae294e8469dd821b5328c6e5c06",
+     "remote_received_utc": "2026-10-16T05:30:00Z"
+    }
+   }
+  },
+  {
+   "name": "no_signals_without_receipt_rejected",
+   "pass": true,
+   "proof": [
+    "no_signals_receipt_evidence_missing"
+   ]
+  },
+  {
+   "name": "no_signals_late_receipt_rejected",
+   "pass": true,
+   "proof": [
+    "no_signals_late_remote"
+   ]
+  },
+  {
+   "name": "no_signals_nonempty_pending_rejected",
+   "pass": true,
+   "proof": [
+    "no_signals_pending_not_empty"
+   ]
+  },
+  {
+   "name": "no_signals_but_spy_buy_point_rejected",
+   "pass": true,
+   "proof": [
+    "no_signals_but_SPY_buy_point"
+   ]
+  },
+  {
+   "name": "no_signals_pending_changed_rejected",
+   "pass": true,
+   "proof": [
+    "no_signals_pending_changed"
+   ]
+  },
+  {
+   "name": "online_matches_cache_accepted",
+   "pass": true,
+   "proof": []
+  },
+  {
+   "name": "online_rejects_modified_cache",
+   "pass": true,
+   "proof": [
+    "receipt_evidence_cache_corrupt"
+   ]
+  },
+  {
+   "name": "online_rejects_self_consistent_forged_cache",
+   "pass": true,
+   "proof": [
+    "receipt_evidence_cache_differs_from_api"
+   ]
+  },
+  {
+   "name": "offline_unpinned_rejected",
+   "pass": true,
+   "proof": [
+    "receipt_evidence_not_pinned"
+   ]
+  },
+  {
+   "name": "offline_pinned_accepted",
+   "pass": true,
+   "proof": []
+  },
+  {
+   "name": "offline_pin_mismatch_rejected",
+   "pass": true,
+   "proof": [
+    "receipt_evidence_pin_mismatch"
+   ]
+  },
+  {
+   "name": "online_api_failure_rejects_in_dry_run",
+   "pass": true,
+   "proof": [
+    "receipt_api_error"
+   ]
+  },
+  {
+   "name": "formal_api_failure_stops",
+   "pass": true,
+   "proof": "GitHub API 查詢失敗(run-777.json)→ 停,不寫判定;之後再跑:404"
+  },
+  {
+   "name": "engine_loaded_from_git_not_local",
+   "pass": true,
+   "proof": {
+    "scripts/astra_data.py": {
+     "loaded_from": "git:a10bccb03cd8ee6bc173669fa36632379cfb0c80:scripts/astra_data.py",
+     "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
+    },
+    "scripts/astra_trades.py": {
+     "loaded_from": "git:a10bccb03cd8ee6bc173669fa36632379cfb0c80:scripts/astra_trades.py",
+     "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
+    }
+   }
+  },
+  {
+   "name": "engine_hash_mismatch_stops",
+   "pass": true,
+   "proof": "引擎指紋和凍結的不同:scripts/astra_trades.py → 停"
+  },
+  {
+   "name": "history_query_failure_stops",
+   "pass": true,
+   "proof": "git 失敗 → 停:git rev-parse --verify no-such-ref^{commit}\nfatal"
+  },
+  {
+   "name": "no_engine_change_after_freeze",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "replay_reproduces_within_tolerance",
+   "pass": true,
+   "proof": [
+    "closed",
+    -0.11177822177822161,
+    ""
+   ]
+  },
+  {
+   "name": "replay_wrong_return_unreproducible",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "replay_wrong_reason_unreproducible",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "missing_bars_unreproducible",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "weekend_bars_rejected",
+   "pass": true,
+   "proof": "之後的 K 線不是官方交易日或有缺日:2026-10-17(應為 2026-10-15)"
+  },
+  {
+   "name": "gap_in_window_rejected",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "recorded_before_available_rejected",
+   "pass": true,
+   "proof": "記錄時間早於出場那根 K 線收盤(不可能當時就有)"
+  },
+  {
+   "name": "late_close_flagged",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "entry_open_mismatch_unreproducible",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "consistent_rescale_reconciled",
+   "pass": true,
+   "proof": [
+    "closed",
+    "rescaled f=0.98999982(可行區間 0.98999782–0.99000172,8 個重疊價格)"
+   ]
+  },
+  {
+   "name": "inconsistent_overlap_rejected",
+   "pass": true,
+   "proof": "重疊的 8 個價格找不到共同比例(可行區間 1.99999639 > 1.00000244)→ 不是同一組資料換尺度"
+  },
+  {
+   "name": "single_close_change_rejected",
+   "pass": true,
+   "proof": "K 線欄位不合理:2026-10-14"
+  },
+  {
+   "name": "single_close_change_caught_by_scale_check",
+   "pass": true,
+   "proof": "重疊的 8 個價格找不到共同比例(可行區間 0.99999759 > 0.99785167)→ 不是同一組資料換尺度"
+  },
+  {
+   "name": "legacy_draft2_accepted_both_overlap_counterexamples",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "frozen_buy_point_not_reselected_after_rescale",
+   "pass": true,
+   "proof": {
+    "new": [
+     "closed",
+     -0.11177822177822183,
+     "rescaled f=0.40000220(可行區間 0.39998698–0.40003019,8 個重疊價格)"
+    ],
+    "draft2": [
+     "unreproducible",
+     "快照重算不是買點"
+    ]
+   }
+  },
+  {
+   "name": "draft2_counterexample_reproduced",
+   "pass": true,
+   "proof": {
+    "h1_pp": -0.09999999999999981,
+    "h1_lb_pp": 0.18419780506924485
+   }
+  },
+  {
+   "name": "counterexample_now_no_pass_all_modes",
+   "pass": true,
+   "proof": {
+    "h1_pp": -0.09999999999999981,
+    "M1": {
+     "lb_pp": -0.19166666666666665,
+     "ub_pp": -0.02666666666666658,
+     "median_pp": -0.10000000000000002,
+     "mean_pp": -0.1003575,
+     "sd_pp": 0.04414116274190608,
+     "valid_draws": 2000
+    },
+    "M2_lb": -0.1916666666666666,
+    "decision": {
+     "gap_vs_all_10pp": "NO_PASS",
+     "agree_vs_disagree_lb": "NO_PASS",
+     "none": "NO_PASS"
+    }
+   }
+  },
+  {
+   "name": "weights_positive_and_dates_unbiased",
+   "pass": true,
+   "proof": {
+    "U_min": 7.220506778409999e-06,
+    "date_mean_max_dev": 0.057499999999999996,
+    "edge_mean": 1.0115,
+    "middle_mean": 1.00385
+   }
+  },
+  {
+   "name": "missing_agree_uses_minus_100pct",
+   "pass": true,
+   "proof": {
+    "excl_lb": 0.2,
+    "minus100_h1": -0.13366666666666657,
+    "stress_h1": 0.1993333333333334
+   }
+  },
+  {
+   "name": "flip_point_reported",
+   "pass": true,
+   "proof": -0.5990000000000002
+  },
+  {
+   "name": "missing_disagree_is_insufficient",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "h1_without_win_gap_fails_h2",
+   "pass": true,
+   "proof": {
+    "h1_pp": 1.9999999999999998,
+    "win_a": 100.0,
+    "win_d": 100.0
+   }
+  },
+  {
+   "name": "one_paired_date_insufficient",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "strong_effect_passes",
+   "pass": true,
+   "proof": {
+    "h1_pp": 3.0,
+    "h1_lb_pp": 2.9696750797693205,
+    "win_gap_ad_lb_pp": 100.0
+   }
+  },
+  {
+   "name": "low_batch_coverage_insufficient",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "goog_googl_one_issuer",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "h2_identity",
+   "pass": true,
+   "proof": [
+    50.0,
+    50.0
+   ]
+  },
+  {
+   "name": "t_quantile_matches_tables",
+   "pass": true,
+   "proof": {
+    "1": 12.706204736174659,
+    "5": 2.570581835636313,
+    "23": 2.0686576104190477,
+    "120": 1.979930405082441
+   }
+  },
+  {
+   "name": "c1_c3_intervals_reported",
+   "pass": true,
+   "proof": {
+    "M1": {
+     "lb_pp": 2.9705247832806188,
+     "ub_pp": 3.028088123139346,
+     "se_pp": null,
+     "df": null
+    },
+    "C1": {
+     "lb_pp": 2.9696750797693205,
+     "ub_pp": 3.0303249202306795,
+     "se_pp": 0.014659226388138925,
+     "df": 23
+    },
+    "C3": {
+     "lb_pp": 2.9814516485148017,
+     "ub_pp": 3.018548351485198,
+     "se_pp": 0.008966370941124896,
+     "df": 23
+    }
+   }
+  },
+  {
+   "name": "undecided_h2_reports_all_modes",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "look_registry_blocks_even_if_file_deleted",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "dry_run_cannot_write_registry",
+   "pass": true,
+   "proof": "試跑要 --out,而且不能寫進正式 looks 位置"
+  },
+  {
+   "name": "formal_mode_needs_frozen_manifest",
+   "pass": true,
+   "proof": "還沒有凍結的 research/ledger_v3/v3_manifest.json → 正式模式不能跑;試跑請加 --dry-run"
+  },
+  {
+   "name": "formal_mode_rejects_overrides",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "needs_dry_run_or_formal",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "manifest_fixes_id_paths_calendar",
+   "pass": true,
+   "proof": {
+    "experiment_id": "LV3-20261102-S250-C1-L5-none",
+    "end": "2027-10-29",
+    "look_path": "research/ledger_v3/looks/LV3-20261102-S250-C1-L5-none.json"
+   }
+  },
+  {
+   "name": "manifest_rejects_unlisted_choices",
+   "pass": true,
+   "proof": null
+  }
+ ]
+}

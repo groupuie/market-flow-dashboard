@@ -1,0 +1,20 @@
+=== d1920:錯誤 舊 [] 新 []
+  新版預設(精簡):看得到 = ['wsxLeft', 'winCard', 'destCard', 'wsxCenter', 'wsxChartP', 'cockpit', 'wsxTop', 'wsxFocusBtn'] | 看不到 = ['header', 'wsxInfoRow', 'wsxA', 'wsxB', 'wsxRail', 'wsxWarn', 'footnote']
+  K線 寬×高 舊 831×559 → 新 1472×950;現金池圖 舊 True 新 True;按鈕「⊞ 完整版面」;focus=True
+  按「完整版面」後與舊版不同的欄位 = 無(完全相同) | 按鈕「◧ 只看K線＋現金池」 localStorage=0
+  重新整理後記住完整版面 = True | 再按回精簡 = True localStorage=1
+  K線資料 traces 新舊相同 = True | 完整版面時也相同 = True
+=== d1440:錯誤 舊 [] 新 []
+  新版預設(精簡):看得到 = ['wsxLeft', 'winCard', 'destCard', 'wsxCenter', 'wsxChartP', 'cockpit', 'wsxTop', 'wsxFocusBtn'] | 看不到 = ['header', 'wsxInfoRow', 'wsxA', 'wsxB', 'wsxRail', 'wsxWarn', 'footnote']
+  K線 寬×高 舊 424×332 → 新 992×742;現金池圖 舊 True 新 True;按鈕「⊞ 完整版面」;focus=True
+  按「完整版面」後與舊版不同的欄位 = 無(完全相同) | 按鈕「◧ 只看K線＋現金池」 localStorage=0
+  重新整理後記住完整版面 = True | 再按回精簡 = True localStorage=1
+  K線資料 traces 新舊相同 = True | 完整版面時也相同 = True
+=== m390:錯誤 舊 [] 新 []
+  新版預設(精簡):看得到 = ['wsxLeft', 'winCard', 'destCard', 'wsxCenter', 'wsxChartP', 'cockpit', 'wsxTop', 'wsxFocusBtn'] | 看不到 = ['header', 'wsxInfoRow', 'wsxA', 'wsxB', 'wsxRail', 'wsxWarn', 'footnote']
+  K線 寬×高 舊 380×600 → 新 380×600;現金池圖 舊 True 新 True;按鈕「⊞ 完整版面」;focus=True
+  按「完整版面」後與舊版不同的欄位 = 無(完全相同) | 按鈕「◧ 只看K線＋現金池」 localStorage=0
+  重新整理後記住完整版面 = True | 再按回精簡 = True localStorage=1
+  K線資料 traces 新舊相同 = True | 完整版面時也相同 = True
+warn_A {'warn': {'txt': '⚠ 報價暫用雲端備援', 'cls': 'wsxPill warn', 'title': '● 盤後（2 分前更新） · 報價改用雲端備援\n⚠ Mac 全量更新卡住:報價/期權停在 24.9 小時前 → 先改用雲端備援(49 分前)'}, 'expanded': '● 盤後（2 分前更新） · 報價改用雲端備援 · ⚠ Mac 全量更新卡住:報價/期權停在 24.9 小時前 → 先改用雲端備援(49 分前)', 'errors': []}
+warn_C {'warn': {'txt': '⚠ 資料偏舊 128 分', 'cls': 'wsxPill err', 'title': '資料偏舊 128 分（Mac 採集器或 OpenD 可能離線）\n⚠ Mac 離線 19.8 小時;雲端備援上次更新在 2.1 小時前(GitHub 排程實際約每 2–6 小時才跑一次,不是即時)'}, 'expanded': '資料偏舊 128 分（Mac 採集器或 OpenD 可能離線） · ⚠ Mac 離線 19.8 小時;雲端備援上次更新在 2.1 小時前(GitHub 排程實際約每 2–6 小時才跑一次,不是即時)', 'errors': []}

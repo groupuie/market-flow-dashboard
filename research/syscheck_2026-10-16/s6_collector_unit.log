@@ -1,0 +1,9 @@
+實抓:最後一根 2026-10-15 close None | meta.regularMarketPrice 217.23
+① null 窗:最後收盤 217.23 量 126396690 → 應 = regularMarketPrice、量 = 當天量
+② 正常:新舊收盤序列相同 = True
+③ 盤前那根:跳過 = True 最後收盤 221.3
+④ meta 缺價:跳過 = True
+⑤a 沒裝處理器:剩餘 alarm = 0 (應 0,不動)
+⑤b 裝了處理器、原本剩 30 秒:重設後剩 420 (應 420)
+⑤c 程式碼內確實是同一段: True
+全部通過

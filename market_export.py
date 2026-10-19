@@ -218,12 +218,25 @@ def yahoo_hist(sym, rng="3mo"):
     q = urllib.parse.quote(sym)
     d = http_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{q}?range={rng}&interval=1d", 12)
     r = d["chart"]["result"][0]; ind = r["indicators"]["quote"][0]; ts = r.get("timestamp",[]) or []
+    meta = r.get("meta",{}) or {}
+    cl = list(ind.get("close") or [])
+    # 2026-10-16:Yahoo 收盤後約美東 20:00–22:00 把「當天」日棒的 close 暫時清成 null(開高低量還在,定案處理中)。
+    #   原本跳過 null → 報價/漲跌/走勢整組退回前一天(台灣早上 8–10 點:10/13 美東晚上 NVDA 顯示 10/12 的 226.32、-1.29%,
+    #   10/15 晚上顯示 10/14 的 221.3)。最後一根 close 是 null、且 meta.regularMarketTime 落在同一個美東日 →
+    #   用 meta.regularMarketPrice(= 當天收盤價)補上;盤前那根(regularMarketTime 還是前一天)照舊跳過。
+    try:
+        if ts and len(cl) == len(ts) and cl[-1] is None and meta.get("regularMarketPrice") and meta.get("regularMarketTime"):
+            off = meta.get("gmtoffset", -14400) or 0
+            if (datetime.fromtimestamp(ts[-1] + off, timezone.utc).date()
+                    == datetime.fromtimestamp(meta["regularMarketTime"] + off, timezone.utc).date()):
+                cl[-1] = float(meta["regularMarketPrice"])
+    except Exception: pass
     closes, vols = [], []
     for i in range(len(ts)):
-        c = (ind.get("close") or [None])[i] if i < len(ind.get("close",[])) else None
+        c = cl[i] if i < len(cl) else None
         if c is None: continue
         closes.append(c); vols.append((ind.get("volume") or [0]*len(ts))[i] or 0)
-    return closes, vols, r.get("meta",{})
+    return closes, vols, meta
 
 def pct(s,n): return round(100*(s[-1]/s[-1-n]-1),2) if len(s)>n and s[-1-n] else None
 def sma(s,n): return sum(s[-n:])/n if len(s)>=n else None
@@ -644,6 +657,14 @@ def refresh_klines(cfg, args, kl_syms):
         _base = set(WL["market"] + WL["stocks"] + WL["leveraged"])
         todo.sort(key=lambda x: 0 if (x in SEC_KL or x not in _base) else 1)
     if not todo: return
+    if daily_due:
+        # 2026-10-16:日更整批 ~100 檔富途日K(每檔 ~1–2 秒)+分批推送,疊在全量輪前段後常超過 420 秒看門狗 → 被砍在半路、
+        #   標記沒寫、下一輪整批重來(10/14 收盤後那輪 6 分 40 秒擦邊過;10/16 Mac 離線 24 小時恢復後連 2 輪被砍,第 3 輪才補齊,
+        #   期間網頁的報價卡在前一天)。日更這一段重新起算一次 420 秒(看門狗仍在;日更只在盤後/休市,不影響盤中快輪)。
+        try:
+            import signal as _sg
+            if callable(_sg.getsignal(_sg.SIGALRM)): _sg.alarm(420)
+        except Exception: pass
     from datetime import timedelta
     end = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     start5 = (datetime.now(timezone.utc) - timedelta(days=int(KL_HIST_DAYS*1.55))).strftime("%Y-%m-%d")
@@ -965,7 +986,7 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 #       掃描標記」(.klscan)的快取檔入列(判讀核心優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
 #       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
 KLQ_BATCH = 8
-KLQ_VER = "2026-09-23a"
+KLQ_VER = "2026-10-16a"   # 也當採集器版本戳:gist market_data.meta.klq.ver 看得到 Mac 是否已自動套用 repo 最新版(10-16a = Yahoo 晚間 null 補價 + 日更看門狗重設)
 def klq_pushed_load(args):
     try: return json.load(open(args.config + ".klpushedmt.json"))
     except Exception: return {}

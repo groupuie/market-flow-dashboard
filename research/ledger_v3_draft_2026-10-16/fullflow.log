@@ -1,0 +1,971 @@
+已推到 origin/astra-ledger 861aae851d
+已推到 origin/astra-ledger 777379c47d
+{
+ "protocol": "v2",
+ "frozen_utc": "2026-01-20T12:00:00Z",
+ "main_commit": "1dca089f4d33a2d9b0b0b5126a0fbaadd1a3acdc",
+ "files": {
+  "scripts/astra_ledger.py": "3c89150c35fd3c0de17b632d0042d11fd58394a5351d1492195be2c9a0af7c50",
+  "scripts/astra_trades.py": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2",
+  "scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
+ },
+ "protocol_sha256": "69fe517545f786d17614d53b96a0b07eeafc5522a120485dedfea7c1c5ec6b71",
+ "universe_sha256": "df7fa030dd5437aec4c4c52ced7bc397c69e8983f535860c60dd4391eca5aeeb",
+ "plan": {
+  "min_marks": 300,
+  "min_agree": 60,
+  "min_disagree": 60,
+  "max_sessions": 120,
+  "horizon_sessions": 41,
+  "unresolved_after": 10,
+  "block_sessions": 5,
+  "boot_draws": 2000,
+  "seed": 20261014,
+  "win_gap_pp": 10.0
+ },
+ "cost_per_side": 0.001,
+ "prompt_sha256": "1bfc25e37db6e87414c0301cad6095d1305387f24d5bf057a67e254ff3eeb0cf"
+}
+v2 freeze 3aeb56577082 universe 101 [5s]
+已推到 origin/astra-ledger de95153e48
+v3 frozen LV3-20260202-S120-C1-L5-none F 820acf0967 anchor de95153e48 [5s]
+已推到 origin/astra-ledger 0f27274d81
+{"asof": "2026-02-02", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-02.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-02.json", "截止(隔天開盤,UTC)": "2026-02-03T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 50aef0689a
+已推到 origin/astra-ledger 5324a5d208
+{"asof": "2026-02-02", "鎖定": 9, "同意": 5, "本機晚了": false, "遠端收件": "2026-02-03T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger ae90251de6
+{"status": "COLLECTING", "locked": 9, "agree": 5, "disagree": 4, "late": 0, "days": 1, "closed": 0, "open": 9, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a06b26d047
+{"asof": "2026-02-03", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-03.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-03.json", "截止(隔天開盤,UTC)": "2026-02-04T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 827fdf9756
+已推到 origin/astra-ledger ba782950d1
+{"asof": "2026-02-03", "鎖定": 7, "同意": 2, "本機晚了": false, "遠端收件": "2026-02-04T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 00b3b5d06b
+{"status": "COLLECTING", "locked": 16, "agree": 7, "disagree": 9, "late": 0, "days": 2, "closed": 0, "open": 16, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 790a940e62
+{"asof": "2026-02-04", "買點": 12, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-04.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-04.json", "截止(隔天開盤,UTC)": "2026-02-05T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 546df28e80
+已推到 origin/astra-ledger 3770e66e58
+{"asof": "2026-02-04", "鎖定": 12, "同意": 7, "本機晚了": false, "遠端收件": "2026-02-05T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 121effcbe1
+{"status": "COLLECTING", "locked": 28, "agree": 14, "disagree": 14, "late": 0, "days": 3, "closed": 0, "open": 28, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 7438ef0764
+{"asof": "2026-02-05", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-05.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-05.json", "截止(隔天開盤,UTC)": "2026-02-06T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger f52ad252d6
+已推到 origin/astra-ledger 3d3c336435
+{"asof": "2026-02-05", "鎖定": 7, "同意": 1, "本機晚了": false, "遠端收件": "2026-02-06T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 4e18e9f152
+{"status": "COLLECTING", "locked": 35, "agree": 15, "disagree": 20, "late": 0, "days": 4, "closed": 0, "open": 35, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5aac1f6003
+{"asof": "2026-02-06", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-06.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-06.json", "截止(隔天開盤,UTC)": "2026-02-09T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 9f4a7b59cf
+已推到 origin/astra-ledger 934701b4ca
+{"asof": "2026-02-06", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-02-07T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 24d4162b11
+{"status": "COLLECTING", "locked": 37, "agree": 16, "disagree": 21, "late": 0, "days": 5, "closed": 0, "open": 37, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger f84c522f9a
+{"asof": "2026-02-09", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-09.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-09.json", "截止(隔天開盤,UTC)": "2026-02-10T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 57fcf3db5f
+{"status": "COLLECTING", "locked": 37, "agree": 16, "disagree": 21, "late": 0, "days": 5, "closed": 0, "open": 37, "no_data": 0, "unresolved": 0}
+SPY/QQQ 還沒有 2026-02-10 → 等 5 分鐘
+SPY/QQQ 還沒有 2026-02-10 → 等 5 分鐘
+已推到 origin/astra-ledger bb4374a9cb
+prep stop 2026-02-10 SPY/QQQ 日K還沒有 2026-02-10 → 這次不判讀(已記失敗批次;下一次排程會再試) [13s]
+已推到 origin/astra-ledger 77c02bf63d
+{"asof": "2026-02-10", "買點": 3, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-10.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-10.json", "截止(隔天開盤,UTC)": "2026-02-11T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger f2990f0757
+已推到 origin/astra-ledger 66fe1303b1
+{"asof": "2026-02-10", "鎖定": 3, "同意": 0, "本機晚了": false, "遠端收件": "2026-02-11T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 6bc7ea59f5
+{"status": "COLLECTING", "locked": 40, "agree": 16, "disagree": 24, "late": 0, "days": 6, "closed": 1, "open": 39, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 96ad1ab6a7
+{"asof": "2026-02-11", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-11.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-11.json", "截止(隔天開盤,UTC)": "2026-02-12T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 325631aadd
+已推到 origin/astra-ledger 630d8aaace
+{"asof": "2026-02-11", "鎖定": 4, "同意": 3, "本機晚了": false, "遠端收件": "2026-02-12T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger b8e31e0776
+{"status": "COLLECTING", "locked": 44, "agree": 19, "disagree": 25, "late": 0, "days": 7, "closed": 2, "open": 42, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 8606bf94e3
+{"asof": "2026-02-12", "買點": 10, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-12.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-12.json", "截止(隔天開盤,UTC)": "2026-02-13T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger b1a667f625
+已推到 origin/astra-ledger 5f9eb6ad9c
+{"asof": "2026-02-12", "鎖定": 10, "同意": 5, "本機晚了": false, "遠端收件": "2026-02-13T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 723d1f79c6
+{"status": "COLLECTING", "locked": 54, "agree": 24, "disagree": 30, "late": 0, "days": 8, "closed": 2, "open": 52, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 02c2d90cbd
+{"asof": "2026-02-13", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-13.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-13.json", "截止(隔天開盤,UTC)": "2026-02-17T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger a643937b32
+已推到 origin/astra-ledger 13168d1f91
+{"asof": "2026-02-13", "鎖定": 6, "同意": 1, "本機晚了": false, "遠端收件": "2026-02-14T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 1361ef836e
+{"status": "COLLECTING", "locked": 60, "agree": 25, "disagree": 35, "late": 0, "days": 9, "closed": 5, "open": 55, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 54aa881c32
+{"asof": "2026-02-17", "買點": 19, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-17.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-17.json", "截止(隔天開盤,UTC)": "2026-02-18T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 39a3ccc848
+已推到 origin/astra-ledger ef123a72da
+{"asof": "2026-02-17", "鎖定": 19, "同意": 7, "本機晚了": false, "遠端收件": "2026-02-18T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger f9c9039066
+{"status": "COLLECTING", "locked": 79, "agree": 32, "disagree": 47, "late": 0, "days": 10, "closed": 9, "open": 70, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger cdefdd898f
+{"asof": "2026-02-18", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-18.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-18.json", "截止(隔天開盤,UTC)": "2026-02-19T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 4986bf988c
+已推到 origin/astra-ledger d96d0339ce
+{"asof": "2026-02-18", "鎖定": 2, "同意": 2, "本機晚了": false, "遠端收件": "2026-02-19T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 7ead966a82
+{"status": "COLLECTING", "locked": 81, "agree": 34, "disagree": 47, "late": 0, "days": 11, "closed": 14, "open": 67, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 13478eb5b7
+{"asof": "2026-02-19", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-19.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-19.json", "截止(隔天開盤,UTC)": "2026-02-20T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 47398f9cbe
+已推到 origin/astra-ledger 12a9206eaa
+{"asof": "2026-02-19", "鎖定": 6, "同意": 4, "本機晚了": false, "遠端收件": "2026-02-20T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 79b7a1f094
+{"status": "COLLECTING", "locked": 87, "agree": 38, "disagree": 49, "late": 0, "days": 12, "closed": 15, "open": 72, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger c102ffbb4c
+{"asof": "2026-02-20", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-20.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-20.json", "截止(隔天開盤,UTC)": "2026-02-23T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7d0436af24
+已推到 origin/astra-ledger 07d49b9939
+{"asof": "2026-02-20", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-02-21T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 6cd1475068
+{"status": "COLLECTING", "locked": 88, "agree": 38, "disagree": 50, "late": 0, "days": 13, "closed": 15, "open": 73, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger edcbfef3a7
+{"asof": "2026-02-23", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-23.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-23.json", "截止(隔天開盤,UTC)": "2026-02-24T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger ee01a436c8
+已推到 origin/astra-ledger a66e59528a
+{"asof": "2026-02-23", "鎖定": 2, "同意": 0, "本機晚了": false, "遠端收件": "2026-02-24T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger e024739877
+{"status": "COLLECTING", "locked": 90, "agree": 38, "disagree": 52, "late": 0, "days": 14, "closed": 29, "open": 61, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger d377f620ce
+{"asof": "2026-02-24", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-24.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-24.json", "截止(隔天開盤,UTC)": "2026-02-25T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 828dc71914
+已推到 origin/astra-ledger d80b5cc647
+{"asof": "2026-02-24", "鎖定": 4, "同意": 2, "本機晚了": false, "遠端收件": "2026-02-25T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger bcd7fc2af3
+{"status": "COLLECTING", "locked": 94, "agree": 40, "disagree": 54, "late": 0, "days": 15, "closed": 29, "open": 65, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4a0d96261d
+{"asof": "2026-02-25", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-25.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-25.json", "截止(隔天開盤,UTC)": "2026-02-26T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 28fb913474
+已推到 origin/astra-ledger a01620f8a1
+{"asof": "2026-02-25", "鎖定": 5, "同意": 2, "本機晚了": false, "遠端收件": "2026-02-26T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger aebf5f4ded
+{"status": "COLLECTING", "locked": 99, "agree": 42, "disagree": 57, "late": 0, "days": 16, "closed": 32, "open": 67, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 521d3f4303
+{"asof": "2026-02-26", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-26.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-26.json", "截止(隔天開盤,UTC)": "2026-02-27T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 8132b51bca
+已推到 origin/astra-ledger e58dcc26ad
+{"asof": "2026-02-26", "鎖定": 2, "同意": 0, "本機晚了": false, "遠端收件": "2026-02-27T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger f1070fb7b5
+{"status": "COLLECTING", "locked": 101, "agree": 42, "disagree": 59, "late": 0, "days": 17, "closed": 37, "open": 64, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4ce88b9045
+{"asof": "2026-02-27", "買點": 24, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-02-27.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-02-27.json", "截止(隔天開盤,UTC)": "2026-03-02T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7a3c7eaa39
+已推到 origin/astra-ledger 42e92f31d9
+{"asof": "2026-02-27", "鎖定": 24, "同意": 11, "本機晚了": false, "遠端收件": "2026-02-28T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger b8f89b503c
+{"status": "COLLECTING", "locked": 125, "agree": 53, "disagree": 72, "late": 0, "days": 18, "closed": 38, "open": 87, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger d7a8d9a34c
+{"asof": "2026-03-02", "買點": 8, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-02.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-02.json", "截止(隔天開盤,UTC)": "2026-03-03T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 4844d75caa
+已推到 origin/astra-ledger a9b4031521
+{"asof": "2026-03-02", "鎖定": 8, "同意": 1, "本機晚了": false, "遠端收件": "2026-03-03T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger ddd8998369
+{"status": "COLLECTING", "locked": 133, "agree": 54, "disagree": 79, "late": 0, "days": 19, "closed": 61, "open": 72, "no_data": 0, "unresolved": 0}
+SPY/QQQ 還沒有 2026-03-03 → 等 5 分鐘
+SPY/QQQ 還沒有 2026-03-03 → 等 5 分鐘
+已推到 origin/astra-ledger 515636573e
+prep stop 2026-03-03 SPY/QQQ 日K還沒有 2026-03-03 → 這次不判讀(已記失敗批次;下一次排程會再試) [33s]
+SPY/QQQ 還沒有 2026-03-03 → 等 5 分鐘
+SPY/QQQ 還沒有 2026-03-03 → 等 5 分鐘
+已推到 origin/astra-ledger 17333dc2a8
+prep stop 2026-03-03 SPY/QQQ 日K還沒有 2026-03-03 → 這次不判讀(已記失敗批次;下一次排程會再試) [33s]
+已推到 origin/astra-ledger a2bce37984
+{"status": "COLLECTING", "locked": 133, "agree": 54, "disagree": 79, "late": 0, "days": 19, "closed": 69, "open": 64, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b8ad720c2f
+{"asof": "2026-03-04", "買點": 18, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-04.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-04.json", "截止(隔天開盤,UTC)": "2026-03-05T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 367d53c730
+已推到 origin/astra-ledger 7ae7c6aaf1
+{"asof": "2026-03-04", "鎖定": 18, "同意": 7, "本機晚了": false, "遠端收件": "2026-03-05T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 4d953771d0
+{"status": "COLLECTING", "locked": 151, "agree": 61, "disagree": 90, "late": 0, "days": 20, "closed": 80, "open": 71, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 89f780a520
+{"asof": "2026-03-05", "買點": 3, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-05.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-05.json", "截止(隔天開盤,UTC)": "2026-03-06T14:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger a7c7851938
+已推到 origin/astra-ledger 0df54f41bd
+{"asof": "2026-03-05", "鎖定": 3, "同意": 1, "本機晚了": false, "遠端收件": "2026-03-06T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger fcd6cec4a0
+{"status": "COLLECTING", "locked": 154, "agree": 62, "disagree": 92, "late": 0, "days": 21, "closed": 81, "open": 73, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5b1917304a
+{"asof": "2026-03-06", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-06.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-06.json", "截止(隔天開盤,UTC)": "2026-03-09T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 45f6b276c1
+已推到 origin/astra-ledger 97dec6b5d9
+{"asof": "2026-03-06", "鎖定": 1, "同意": 1, "本機晚了": false, "遠端收件": "2026-03-07T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 57294f7999
+{"status": "COLLECTING", "locked": 155, "agree": 63, "disagree": 92, "late": 0, "days": 22, "closed": 88, "open": 67, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 21270eb5dc
+{"asof": "2026-03-09", "買點": 16, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-09.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-09.json", "截止(隔天開盤,UTC)": "2026-03-10T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7802031766
+已推到 origin/astra-ledger d019497bdc
+{"asof": "2026-03-09", "鎖定": 16, "同意": 10, "本機晚了": false, "遠端收件": "2026-03-10T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger a64df0cd37
+{"status": "COLLECTING", "locked": 171, "agree": 73, "disagree": 98, "late": 0, "days": 23, "closed": 89, "open": 82, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 6614c58325
+{"asof": "2026-03-10", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-10.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-10.json", "截止(隔天開盤,UTC)": "2026-03-11T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 292dc129ff
+已推到 origin/astra-ledger 36878329e1
+{"asof": "2026-03-10", "鎖定": 6, "同意": 3, "本機晚了": false, "遠端收件": "2026-03-11T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 1121bcd46b
+{"status": "COLLECTING", "locked": 177, "agree": 76, "disagree": 101, "late": 0, "days": 24, "closed": 90, "open": 87, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 213497369e
+{"asof": "2026-03-11", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-11.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-11.json", "截止(隔天開盤,UTC)": "2026-03-12T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger f89ce590be
+已推到 origin/astra-ledger 1ac4d19a64
+{"asof": "2026-03-11", "鎖定": 2, "同意": 0, "本機晚了": false, "遠端收件": "2026-03-12T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 5c584c0f60
+{"status": "COLLECTING", "locked": 179, "agree": 76, "disagree": 103, "late": 0, "days": 25, "closed": 90, "open": 89, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b9240b44c4
+{"asof": "2026-03-12", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-12.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-12.json", "截止(隔天開盤,UTC)": "2026-03-13T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger bf9086fca6
+已推到 origin/astra-ledger 12ad56f022
+{"asof": "2026-03-12", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-03-13T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger e915cc02b1
+{"status": "COLLECTING", "locked": 180, "agree": 76, "disagree": 104, "late": 0, "days": 26, "closed": 93, "open": 87, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 58cdde4227
+{"asof": "2026-03-13", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-13.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-13.json", "截止(隔天開盤,UTC)": "2026-03-16T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 21a6d04b3b
+已推到 origin/astra-ledger 2686888f92
+{"asof": "2026-03-13", "鎖定": 4, "同意": 1, "本機晚了": false, "遠端收件": "2026-03-14T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger d392228fbd
+{"status": "COLLECTING", "locked": 184, "agree": 77, "disagree": 107, "late": 0, "days": 27, "closed": 105, "open": 79, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 861074bbc6
+{"asof": "2026-03-16", "買點": 11, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-16.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-16.json", "截止(隔天開盤,UTC)": "2026-03-17T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger c98eb0e2e4
+已推到 origin/astra-ledger 53ef1a05a9
+{"asof": "2026-03-16", "鎖定": 11, "同意": 6, "本機晚了": false, "遠端收件": "2026-03-17T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 3d018020b3
+{"status": "COLLECTING", "locked": 195, "agree": 83, "disagree": 112, "late": 0, "days": 28, "closed": 110, "open": 85, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5b19a54c62
+{"asof": "2026-03-17", "買點": 19, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-17.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-17.json", "截止(隔天開盤,UTC)": "2026-03-18T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7c710e9e56
+已推到 origin/astra-ledger 2a3e5851d2
+{"asof": "2026-03-17", "鎖定": 19, "同意": 8, "本機晚了": false, "遠端收件": "2026-03-18T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 870de1b568
+{"status": "COLLECTING", "locked": 214, "agree": 91, "disagree": 123, "late": 0, "days": 29, "closed": 120, "open": 94, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger cd8191ffc9
+{"asof": "2026-03-18", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-18.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-18.json", "截止(隔天開盤,UTC)": "2026-03-19T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 8ec8bebf26
+已推到 origin/astra-ledger 6cde85fa9e
+{"asof": "2026-03-18", "鎖定": 5, "同意": 2, "本機晚了": false, "遠端收件": "2026-03-19T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 1e1b7067bb
+{"status": "COLLECTING", "locked": 219, "agree": 93, "disagree": 126, "late": 0, "days": 30, "closed": 123, "open": 96, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a986847e7d
+{"asof": "2026-03-19", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-19.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-19.json", "截止(隔天開盤,UTC)": "2026-03-20T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 221b4547fc
+已推到 origin/astra-ledger 091fe38c5b
+{"asof": "2026-03-19", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-03-20T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 3ee8219e62
+{"status": "COLLECTING", "locked": 221, "agree": 94, "disagree": 127, "late": 0, "days": 31, "closed": 130, "open": 91, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a9a459db1f
+{"asof": "2026-03-20", "買點": 12, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-20.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-20.json", "截止(隔天開盤,UTC)": "2026-03-23T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 29bb5ade88
+已推到 origin/astra-ledger 1916cd970c
+{"asof": "2026-03-20", "鎖定": 12, "同意": 5, "本機晚了": false, "遠端收件": "2026-03-21T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 14da7b6542
+{"status": "COLLECTING", "locked": 233, "agree": 99, "disagree": 134, "late": 0, "days": 32, "closed": 137, "open": 96, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 84e95a860d
+{"asof": "2026-03-23", "買點": 15, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-23.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-23.json", "截止(隔天開盤,UTC)": "2026-03-24T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger eed4933bac
+已推到 origin/astra-ledger 7093b5c51a
+{"asof": "2026-03-23", "鎖定": 15, "同意": 7, "本機晚了": false, "遠端收件": "2026-03-24T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger e07dd67985
+{"status": "COLLECTING", "locked": 248, "agree": 106, "disagree": 142, "late": 0, "days": 33, "closed": 137, "open": 111, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b7f0163a7c
+{"asof": "2026-03-24", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-24.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-24.json", "截止(隔天開盤,UTC)": "2026-03-25T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 8a886be869
+{"status": "COLLECTING", "locked": 248, "agree": 106, "disagree": 142, "late": 0, "days": 33, "closed": 137, "open": 111, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger e639e229dc
+{"asof": "2026-03-25", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-25.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-25.json", "截止(隔天開盤,UTC)": "2026-03-26T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger fe387e3282
+{"status": "COLLECTING", "locked": 248, "agree": 106, "disagree": 142, "late": 0, "days": 33, "closed": 138, "open": 110, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 037cb5ca9b
+{"asof": "2026-03-26", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-26.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-26.json", "截止(隔天開盤,UTC)": "2026-03-27T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 21cfafed44
+已推到 origin/astra-ledger 3f4dd9384b
+{"asof": "2026-03-26", "鎖定": 1, "同意": 1, "本機晚了": false, "遠端收件": "2026-03-27T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger bde7e72415
+{"status": "COLLECTING", "locked": 249, "agree": 107, "disagree": 142, "late": 0, "days": 34, "closed": 140, "open": 109, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 2146d60bb1
+{"asof": "2026-03-27", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-27.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-27.json", "截止(隔天開盤,UTC)": "2026-03-30T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 4f462395f4
+{"status": "COLLECTING", "locked": 249, "agree": 107, "disagree": 142, "late": 0, "days": 34, "closed": 141, "open": 108, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 2928601a97
+{"asof": "2026-03-30", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-30.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-30.json", "截止(隔天開盤,UTC)": "2026-03-31T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger ad10933bca
+已推到 origin/astra-ledger b3c44bc7b5
+{"asof": "2026-03-30", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-03-31T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 6118403abd
+{"status": "COLLECTING", "locked": 250, "agree": 107, "disagree": 143, "late": 0, "days": 35, "closed": 181, "open": 69, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger ef2d26da08
+{"asof": "2026-03-31", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-03-31.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-03-31.json", "截止(隔天開盤,UTC)": "2026-04-01T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 8a62288ba6
+已推到 origin/astra-ledger 4c2514ca7d
+{"asof": "2026-03-31", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-04-01T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger dd35955bae
+{"status": "COLLECTING", "locked": 252, "agree": 108, "disagree": 144, "late": 0, "days": 36, "closed": 183, "open": 69, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger d70b7df0e0
+{"asof": "2026-04-01", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-01.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-01.json", "截止(隔天開盤,UTC)": "2026-04-02T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 0b5b411bc1
+已推到 origin/astra-ledger f59727f0e9
+{"asof": "2026-04-01", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-04-02T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger fb609c90df
+{"status": "COLLECTING", "locked": 254, "agree": 109, "disagree": 145, "late": 0, "days": 37, "closed": 198, "open": 56, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 48dd10998b
+{"asof": "2026-04-02", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-02.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-02.json", "截止(隔天開盤,UTC)": "2026-04-06T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7d086e5a0d
+已推到 origin/astra-ledger 24bb25c76d
+{"asof": "2026-04-02", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-04-03T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 3180a529e2
+{"status": "COLLECTING", "locked": 256, "agree": 110, "disagree": 146, "late": 0, "days": 38, "closed": 201, "open": 55, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger f838e6c045
+{"asof": "2026-04-06", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-06.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-06.json", "截止(隔天開盤,UTC)": "2026-04-07T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 97bc88a3c6
+已推到 origin/astra-ledger 8af9a59e85
+{"asof": "2026-04-06", "鎖定": 1, "同意": 1, "本機晚了": false, "遠端收件": "2026-04-07T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 7e7f065f55
+{"status": "COLLECTING", "locked": 257, "agree": 111, "disagree": 146, "late": 0, "days": 39, "closed": 204, "open": 53, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3a073b9902
+{"asof": "2026-04-07", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-07.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-07.json", "截止(隔天開盤,UTC)": "2026-04-08T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 301e63eb1a
+{"status": "COLLECTING", "locked": 257, "agree": 111, "disagree": 146, "late": 0, "days": 39, "closed": 206, "open": 51, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger daf5f18ce3
+{"asof": "2026-04-08", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-08.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-08.json", "截止(隔天開盤,UTC)": "2026-04-09T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 9f0fc0b7b7
+{"status": "COLLECTING", "locked": 257, "agree": 111, "disagree": 146, "late": 0, "days": 39, "closed": 213, "open": 44, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger c51ef23a5a
+{"asof": "2026-04-09", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-09.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-09.json", "截止(隔天開盤,UTC)": "2026-04-10T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 130bbec8a0
+{"status": "COLLECTING", "locked": 257, "agree": 111, "disagree": 146, "late": 0, "days": 39, "closed": 218, "open": 39, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 20eedf63ae
+{"asof": "2026-04-10", "買點": 3, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-10.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-10.json", "截止(隔天開盤,UTC)": "2026-04-13T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger d61af547f8
+已推到 origin/astra-ledger c5ebb4de45
+{"asof": "2026-04-10", "鎖定": 3, "同意": 0, "本機晚了": true, "遠端收件": "2026-04-13T14:00:00Z", "遠端判定晚了": true}
+已推到 origin/astra-ledger 0e3e80883b
+{"status": "COLLECTING", "locked": 260, "agree": 111, "disagree": 149, "late": 3, "days": 40, "closed": 226, "open": 34, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 65c28e6b1c
+{"asof": "2026-04-13", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-13.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-13.json", "截止(隔天開盤,UTC)": "2026-04-14T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 602bb5a35c
+已推到 origin/astra-ledger 9630705490
+{"asof": "2026-04-13", "鎖定": 9, "同意": 3, "本機晚了": false, "遠端收件": "2026-04-14T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger f83ce13a77
+{"status": "COLLECTING", "locked": 269, "agree": 114, "disagree": 155, "late": 3, "days": 41, "closed": 233, "open": 36, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5d9600538e
+{"asof": "2026-04-14", "買點": 14, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-14.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-14.json", "截止(隔天開盤,UTC)": "2026-04-15T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 8dafc06713
+已推到 origin/astra-ledger 9cd64d3fc7
+{"asof": "2026-04-14", "鎖定": 14, "同意": 5, "本機晚了": false, "遠端收件": "2026-04-15T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger efa1940c88
+{"status": "COLLECTING", "locked": 283, "agree": 119, "disagree": 164, "late": 3, "days": 42, "closed": 233, "open": 50, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b23ab7d05e
+{"asof": "2026-04-15", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-15.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-15.json", "截止(隔天開盤,UTC)": "2026-04-16T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 1e297f3177
+{"status": "COLLECTING", "locked": 283, "agree": 119, "disagree": 164, "late": 3, "days": 42, "closed": 239, "open": 44, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger d9af1c3de9
+{"asof": "2026-04-16", "買點": 12, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-16.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-16.json", "截止(隔天開盤,UTC)": "2026-04-17T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 9fdebf1ef1
+已推到 origin/astra-ledger 62e199e617
+{"asof": "2026-04-16", "鎖定": 12, "同意": 6, "本機晚了": false, "遠端收件": "2026-04-17T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger e5bb9c8bdd
+{"status": "COLLECTING", "locked": 295, "agree": 125, "disagree": 170, "late": 3, "days": 43, "closed": 242, "open": 53, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a43f5ac7f5
+{"asof": "2026-04-17", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-17.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-17.json", "截止(隔天開盤,UTC)": "2026-04-20T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger e232d22d39
+已推到 origin/astra-ledger 8635ee2e03
+{"asof": "2026-04-17", "鎖定": 6, "同意": 2, "本機晚了": false, "遠端收件": "2026-04-18T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 22f1ba1697
+{"status": "COLLECTING", "locked": 301, "agree": 127, "disagree": 174, "late": 3, "days": 44, "closed": 248, "open": 53, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 36015483ef
+{"asof": "2026-04-20", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-20.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-20.json", "截止(隔天開盤,UTC)": "2026-04-21T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 42264fede7
+已推到 origin/astra-ledger e2f31c7488
+{"asof": "2026-04-20", "鎖定": 7, "同意": 4, "本機晚了": false, "遠端收件": "2026-04-21T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 38d8f3afcc
+{"status": "MATURING", "locked": 308, "agree": 131, "disagree": 177, "late": 3, "days": 45, "closed": 250, "open": 58, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 9db21ee48c
+{"asof": "2026-04-21", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-21.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-21.json", "截止(隔天開盤,UTC)": "2026-04-22T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger dca932145d
+已推到 origin/astra-ledger 761fbd6dc8
+{"asof": "2026-04-21", "鎖定": 5, "同意": 4, "本機晚了": false, "遠端收件": "2026-04-22T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger d29771005f
+{"status": "MATURING", "locked": 313, "agree": 135, "disagree": 178, "late": 3, "days": 46, "closed": 253, "open": 60, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger f860a04907
+{"asof": "2026-04-22", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-22.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-22.json", "截止(隔天開盤,UTC)": "2026-04-23T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 3a76230236
+已推到 origin/astra-ledger 11f2d8afd2
+{"asof": "2026-04-22", "鎖定": 6, "同意": 4, "本機晚了": false, "遠端收件": "2026-04-23T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger f4646d6f87
+{"status": "MATURING", "locked": 319, "agree": 139, "disagree": 180, "late": 3, "days": 47, "closed": 264, "open": 55, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 6f944cfb06
+{"asof": "2026-04-23", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-23.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-23.json", "截止(隔天開盤,UTC)": "2026-04-24T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 2c55a77662
+已推到 origin/astra-ledger 3387ae2cce
+{"asof": "2026-04-23", "鎖定": 7, "同意": 1, "本機晚了": false, "遠端收件": "2026-04-24T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 76cbbcf7d8
+{"status": "MATURING", "locked": 326, "agree": 140, "disagree": 186, "late": 3, "days": 48, "closed": 266, "open": 60, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger db46323a92
+{"asof": "2026-04-24", "買點": 12, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-24.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-24.json", "截止(隔天開盤,UTC)": "2026-04-27T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger a3bb5ca248
+已推到 origin/astra-ledger 14fc4f670a
+{"asof": "2026-04-24", "鎖定": 12, "同意": 4, "本機晚了": false, "遠端收件": "2026-04-25T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 122fe44238
+{"status": "MATURING", "locked": 338, "agree": 144, "disagree": 194, "late": 3, "days": 49, "closed": 275, "open": 63, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 8eebf7c945
+{"asof": "2026-04-27", "買點": 14, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-27.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-27.json", "截止(隔天開盤,UTC)": "2026-04-28T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7bd1c5e5d2
+已推到 origin/astra-ledger f7cd828c08
+{"asof": "2026-04-27", "鎖定": 14, "同意": 4, "本機晚了": false, "遠端收件": "2026-04-28T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 4d090a22a1
+{"status": "MATURING", "locked": 352, "agree": 148, "disagree": 204, "late": 3, "days": 50, "closed": 277, "open": 75, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 04ebf514c6
+{"asof": "2026-04-28", "買點": 13, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-28.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-28.json", "截止(隔天開盤,UTC)": "2026-04-29T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 0a234f8fc6
+已推到 origin/astra-ledger 501aa78f1c
+{"asof": "2026-04-28", "鎖定": 13, "同意": 10, "本機晚了": false, "遠端收件": "2026-04-29T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger e0528e805a
+{"status": "MATURING", "locked": 365, "agree": 158, "disagree": 207, "late": 3, "days": 51, "closed": 281, "open": 84, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger c0afde1eb0
+{"asof": "2026-04-29", "買點": 15, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-29.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-29.json", "截止(隔天開盤,UTC)": "2026-04-30T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 0f736b3987
+已推到 origin/astra-ledger ddcca6f57f
+{"asof": "2026-04-29", "鎖定": 15, "同意": 5, "本機晚了": false, "遠端收件": "2026-04-30T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger fbdf9d9ba8
+{"status": "MATURING", "locked": 380, "agree": 163, "disagree": 217, "late": 3, "days": 52, "closed": 283, "open": 97, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger ed15716951
+{"asof": "2026-04-30", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-04-30.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-04-30.json", "截止(隔天開盤,UTC)": "2026-05-01T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 7a72eba9e3
+已推到 origin/astra-ledger c38b6c6ddd
+{"asof": "2026-04-30", "鎖定": 7, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-01T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 72493a1195
+{"status": "MATURING", "locked": 387, "agree": 165, "disagree": 222, "late": 3, "days": 53, "closed": 284, "open": 103, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 63ea341326
+{"asof": "2026-05-01", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-01.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-01.json", "截止(隔天開盤,UTC)": "2026-05-04T13:30:00Z", "失敗": 0}
+已推到 origin/astra-ledger 6af3ed2fd8
+已推到 origin/astra-ledger ae678f2472
+{"asof": "2026-05-01", "鎖定": 1, "同意": 1, "本機晚了": false, "遠端收件": "2026-05-02T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 7475e13a5b
+{"status": "MATURING", "locked": 388, "agree": 166, "disagree": 222, "late": 3, "days": 54, "closed": 294, "open": 94, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 8b2495241e
+{"asof": "2026-05-04", "買點": 0, "status": "no_signals", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-04.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-04.json", "截止(隔天開盤,UTC)": "2026-05-05T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 3d5b844107
+{"status": "MATURING", "locked": 388, "agree": 166, "disagree": 222, "late": 3, "days": 54, "closed": 295, "open": 93, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 6d1c1bc981
+{"asof": "2026-05-05", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-05.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-05.json", "截止(隔天開盤,UTC)": "2026-05-06T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger a9cc83d4e2
+已推到 origin/astra-ledger 784c974f69
+{"asof": "2026-05-05", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-05-06T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger bfe43a7275
+{"status": "MATURING", "locked": 389, "agree": 166, "disagree": 223, "late": 3, "days": 55, "closed": 306, "open": 83, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger fa9c226a8e
+{"asof": "2026-05-06", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-06.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-06.json", "截止(隔天開盤,UTC)": "2026-05-07T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 290dc44478
+已推到 origin/astra-ledger 26499a0203
+{"asof": "2026-05-06", "鎖定": 4, "同意": 4, "本機晚了": false, "遠端收件": "2026-05-07T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 84c6f020fc
+{"status": "MATURING", "locked": 393, "agree": 170, "disagree": 223, "late": 3, "days": 56, "closed": 332, "open": 61, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 15423aa648
+{"asof": "2026-05-07", "買點": 3, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-07.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-07.json", "截止(隔天開盤,UTC)": "2026-05-08T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger dcc96bb2ea
+已推到 origin/astra-ledger 49d176db13
+{"asof": "2026-05-07", "鎖定": 3, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-08T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 1084945c16
+{"status": "MATURING", "locked": 396, "agree": 172, "disagree": 224, "late": 3, "days": 57, "closed": 347, "open": 49, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 246185b85f
+{"asof": "2026-05-08", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-08.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-08.json", "截止(隔天開盤,UTC)": "2026-05-11T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 99e6a9bc83
+已推到 origin/astra-ledger a37514ddfb
+{"asof": "2026-05-08", "鎖定": 2, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-09T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 196e3c066e
+{"status": "MATURING", "locked": 398, "agree": 174, "disagree": 224, "late": 3, "days": 58, "closed": 351, "open": 47, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 57c3cdc53d
+{"asof": "2026-05-11", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-11.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-11.json", "截止(隔天開盤,UTC)": "2026-05-12T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger fb1e5bcd63
+已推到 origin/astra-ledger 1b0a4c23d3
+{"asof": "2026-05-11", "鎖定": 2, "同意": 0, "本機晚了": false, "遠端收件": "2026-05-12T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 6947a3450f
+{"status": "MATURING", "locked": 400, "agree": 174, "disagree": 226, "late": 3, "days": 59, "closed": 365, "open": 35, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger dedf71b179
+{"asof": "2026-05-12", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-12.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-12.json", "截止(隔天開盤,UTC)": "2026-05-13T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 052ca9b2c1
+已推到 origin/astra-ledger bc53c22d5f
+{"asof": "2026-05-12", "鎖定": 1, "同意": 1, "本機晚了": false, "遠端收件": "2026-05-13T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 6e734d40ad
+{"status": "MATURING", "locked": 401, "agree": 175, "disagree": 226, "late": 3, "days": 60, "closed": 365, "open": 36, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4f3ddd7e8f
+{"asof": "2026-05-13", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-13.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-13.json", "截止(隔天開盤,UTC)": "2026-05-14T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger b56d49ac3d
+已推到 origin/astra-ledger ab24293253
+{"asof": "2026-05-13", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-05-14T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 71105cba43
+{"status": "MATURING", "locked": 402, "agree": 175, "disagree": 227, "late": 3, "days": 61, "closed": 366, "open": 36, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 93ac710741
+{"asof": "2026-05-14", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-14.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-14.json", "截止(隔天開盤,UTC)": "2026-05-15T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 2f6bb130f4
+已推到 origin/astra-ledger e3aca6081f
+{"asof": "2026-05-14", "鎖定": 6, "同意": 1, "本機晚了": false, "遠端收件": "2026-05-15T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 979c120dbb
+{"status": "MATURING", "locked": 408, "agree": 176, "disagree": 232, "late": 3, "days": 62, "closed": 368, "open": 40, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5077719d14
+{"asof": "2026-05-15", "買點": 3, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-15.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-15.json", "截止(隔天開盤,UTC)": "2026-05-18T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 0e85275c04
+已推到 origin/astra-ledger 10fc8a7067
+{"asof": "2026-05-15", "鎖定": 3, "同意": 0, "本機晚了": false, "遠端收件": "2026-05-16T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger dd27e3a837
+{"status": "MATURING", "locked": 411, "agree": 176, "disagree": 235, "late": 3, "days": 63, "closed": 369, "open": 42, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3a1f163735
+{"asof": "2026-05-18", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-18.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-18.json", "截止(隔天開盤,UTC)": "2026-05-19T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 43eec57ee4
+已推到 origin/astra-ledger c3a25ce088
+{"asof": "2026-05-18", "鎖定": 6, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-19T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger cb1e75dea6
+{"status": "MATURING", "locked": 417, "agree": 178, "disagree": 239, "late": 3, "days": 64, "closed": 373, "open": 44, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b8dbb688f1
+{"asof": "2026-05-19", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-19.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-19.json", "截止(隔天開盤,UTC)": "2026-05-20T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 1f096bf5ee
+已推到 origin/astra-ledger 4ea66031c2
+{"asof": "2026-05-19", "鎖定": 7, "同意": 1, "本機晚了": false, "遠端收件": "2026-05-20T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 6069a13dca
+{"status": "MATURING", "locked": 424, "agree": 179, "disagree": 245, "late": 3, "days": 65, "closed": 375, "open": 49, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5e87a928de
+{"asof": "2026-05-20", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-20.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-20.json", "截止(隔天開盤,UTC)": "2026-05-21T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger b837d708e9
+已推到 origin/astra-ledger 00d67cdc79
+{"asof": "2026-05-20", "鎖定": 6, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-21T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger aaeb547400
+{"status": "MATURING", "locked": 430, "agree": 181, "disagree": 249, "late": 3, "days": 66, "closed": 376, "open": 54, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger d41bcf053a
+{"asof": "2026-05-21", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-21.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-21.json", "截止(隔天開盤,UTC)": "2026-05-22T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 6650a6e516
+已推到 origin/astra-ledger 6c4f0c5a46
+{"asof": "2026-05-21", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-05-22T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 5ba7c50cea
+{"status": "MATURING", "locked": 431, "agree": 181, "disagree": 250, "late": 3, "days": 67, "closed": 380, "open": 51, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1a39e9dc17
+{"asof": "2026-05-22", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-22.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-22.json", "截止(隔天開盤,UTC)": "2026-05-26T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger d3351b7f08
+已推到 origin/astra-ledger 207ea0e5b0
+{"asof": "2026-05-22", "鎖定": 2, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-23T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger ed6cedf4c8
+{"status": "MATURING", "locked": 433, "agree": 183, "disagree": 250, "late": 3, "days": 68, "closed": 382, "open": 51, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 2df9e93456
+{"asof": "2026-05-26", "買點": 3, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-26.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-26.json", "截止(隔天開盤,UTC)": "2026-05-27T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 49154b012f
+已推到 origin/astra-ledger 5ea0237a7a
+{"asof": "2026-05-26", "鎖定": 3, "同意": 2, "本機晚了": false, "遠端收件": "2026-05-27T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 803fabb1f8
+{"status": "MATURING", "locked": 436, "agree": 185, "disagree": 251, "late": 3, "days": 69, "closed": 387, "open": 49, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 0228ddc5f6
+{"asof": "2026-05-27", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-27.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-27.json", "截止(隔天開盤,UTC)": "2026-05-28T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger b2ff17747b
+已推到 origin/astra-ledger f78d8eb736
+{"asof": "2026-05-27", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-05-28T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 5a6bac9faf
+{"status": "MATURING", "locked": 438, "agree": 186, "disagree": 252, "late": 3, "days": 70, "closed": 394, "open": 44, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 7947b6f97b
+{"asof": "2026-05-28", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-28.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-28.json", "截止(隔天開盤,UTC)": "2026-05-29T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger fdfb2e0f01
+已推到 origin/astra-ledger 6547c4ea0a
+{"asof": "2026-05-28", "鎖定": 2, "同意": 1, "本機晚了": false, "遠端收件": "2026-05-29T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 77e227ad2c
+{"status": "MATURING", "locked": 440, "agree": 187, "disagree": 253, "late": 3, "days": 71, "closed": 398, "open": 42, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 57cef1f090
+{"asof": "2026-05-29", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-05-29.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-05-29.json", "截止(隔天開盤,UTC)": "2026-06-01T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger e6e611afac
+已推到 origin/astra-ledger 6b1f0bc7fb
+{"asof": "2026-05-29", "鎖定": 9, "同意": 5, "本機晚了": false, "遠端收件": "2026-05-30T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 4740a3080a
+{"status": "MATURING", "locked": 449, "agree": 192, "disagree": 257, "late": 3, "days": 72, "closed": 402, "open": 47, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a2db1b44c4
+{"asof": "2026-06-01", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-01.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-01.json", "截止(隔天開盤,UTC)": "2026-06-02T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 86775d3652
+已推到 origin/astra-ledger 92f331eacc
+{"asof": "2026-06-01", "鎖定": 2, "同意": 2, "本機晚了": false, "遠端收件": "2026-06-02T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 1c622a7384
+{"status": "MATURING", "locked": 451, "agree": 194, "disagree": 257, "late": 3, "days": 73, "closed": 402, "open": 49, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger cf9672932d
+{"asof": "2026-06-02", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-02.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-02.json", "截止(隔天開盤,UTC)": "2026-06-03T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger d8b8ba50f8
+已推到 origin/astra-ledger 0f4befb4d3
+{"asof": "2026-06-02", "鎖定": 1, "同意": 0, "本機晚了": false, "遠端收件": "2026-06-03T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 8fbde54c69
+{"status": "MATURING", "locked": 452, "agree": 194, "disagree": 258, "late": 3, "days": 74, "closed": 403, "open": 49, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 80ae084bbb
+{"asof": "2026-06-03", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-03.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-03.json", "截止(隔天開盤,UTC)": "2026-06-04T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger c5f832c6c3
+已推到 origin/astra-ledger ed56f14812
+{"asof": "2026-06-03", "鎖定": 5, "同意": 1, "本機晚了": false, "遠端收件": "2026-06-04T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 024e5228a3
+{"status": "MATURING", "locked": 457, "agree": 195, "disagree": 262, "late": 3, "days": 75, "closed": 406, "open": 51, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger bb30ab271e
+{"asof": "2026-06-04", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-04.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-04.json", "截止(隔天開盤,UTC)": "2026-06-05T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 0db5f4b625
+已推到 origin/astra-ledger 5756096826
+{"asof": "2026-06-04", "鎖定": 9, "同意": 6, "本機晚了": false, "遠端收件": "2026-06-05T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger c5a81061a1
+{"status": "MATURING", "locked": 466, "agree": 201, "disagree": 265, "late": 3, "days": 76, "closed": 407, "open": 59, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3be7b31ef7
+{"asof": "2026-06-05", "買點": 10, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-05.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-05.json", "截止(隔天開盤,UTC)": "2026-06-08T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger ee373ba73e
+已推到 origin/astra-ledger aa3c76174d
+{"asof": "2026-06-05", "鎖定": 10, "同意": 4, "本機晚了": false, "遠端收件": "2026-06-06T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger baa4f35ffe
+{"status": "MATURING", "locked": 476, "agree": 205, "disagree": 271, "late": 3, "days": 77, "closed": 412, "open": 64, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b5ae72358c
+{"asof": "2026-06-08", "買點": 11, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-08.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-08.json", "截止(隔天開盤,UTC)": "2026-06-09T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 7e2e9c4552
+已推到 origin/astra-ledger 033b650e45
+{"asof": "2026-06-08", "鎖定": 11, "同意": 3, "本機晚了": false, "遠端收件": "2026-06-09T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 4724870b17
+{"status": "MATURING", "locked": 487, "agree": 208, "disagree": 279, "late": 3, "days": 78, "closed": 418, "open": 69, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 29c366a5e4
+{"asof": "2026-06-09", "買點": 25, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-09.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-09.json", "截止(隔天開盤,UTC)": "2026-06-10T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 31c849756c
+已推到 origin/astra-ledger 51680ba974
+{"asof": "2026-06-09", "鎖定": 25, "同意": 10, "本機晚了": false, "遠端收件": "2026-06-10T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger ae9dea9a3f
+{"status": "MATURING", "locked": 512, "agree": 218, "disagree": 294, "late": 3, "days": 79, "closed": 420, "open": 92, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1cef717d01
+{"asof": "2026-06-10", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-10.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-10.json", "截止(隔天開盤,UTC)": "2026-06-11T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 25c8569984
+已推到 origin/astra-ledger 64c7e2d0e6
+{"asof": "2026-06-10", "鎖定": 9, "同意": 6, "本機晚了": false, "遠端收件": "2026-06-11T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger fd46e795f6
+{"status": "MATURING", "locked": 521, "agree": 224, "disagree": 297, "late": 3, "days": 80, "closed": 420, "open": 101, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 7399fe6b43
+{"asof": "2026-06-11", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-11.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-11.json", "截止(隔天開盤,UTC)": "2026-06-12T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger fd9f3447fb
+已推到 origin/astra-ledger 07e307d7e8
+{"asof": "2026-06-11", "鎖定": 6, "同意": 3, "本機晚了": false, "遠端收件": "2026-06-12T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger cad6d55391
+{"status": "MATURING", "locked": 527, "agree": 227, "disagree": 300, "late": 3, "days": 81, "closed": 420, "open": 107, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3a97009cb2
+{"asof": "2026-06-12", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-12.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-12.json", "截止(隔天開盤,UTC)": "2026-06-15T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 962dbe8cd6
+已推到 origin/astra-ledger fdc354b0fd
+{"asof": "2026-06-12", "鎖定": 4, "同意": 2, "本機晚了": false, "遠端收件": "2026-06-13T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 0ca56bec40
+{"status": "MATURING", "locked": 531, "agree": 229, "disagree": 302, "late": 3, "days": 82, "closed": 423, "open": 108, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger f0774ca500
+{"asof": "2026-06-15", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-15.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-15.json", "截止(隔天開盤,UTC)": "2026-06-16T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 9057a494c2
+已推到 origin/astra-ledger 16abe3c7a9
+{"asof": "2026-06-15", "鎖定": 4, "同意": 3, "本機晚了": false, "遠端收件": "2026-06-16T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 59db192012
+{"status": "MATURING", "locked": 535, "agree": 232, "disagree": 303, "late": 3, "days": 83, "closed": 427, "open": 108, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger fc16216f4a
+{"asof": "2026-06-16", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-16.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-16.json", "截止(隔天開盤,UTC)": "2026-06-17T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 54248820ad
+已推到 origin/astra-ledger 3035434497
+{"asof": "2026-06-16", "鎖定": 9, "同意": 3, "本機晚了": false, "遠端收件": "2026-06-17T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger b248e28aa3
+{"status": "MATURING", "locked": 544, "agree": 235, "disagree": 309, "late": 3, "days": 84, "closed": 433, "open": 111, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger d517e189bd
+{"asof": "2026-06-17", "買點": 10, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-17.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-17.json", "截止(隔天開盤,UTC)": "2026-06-18T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 4d783c6445
+已推到 origin/astra-ledger bcc46383d3
+{"asof": "2026-06-17", "鎖定": 10, "同意": 2, "本機晚了": false, "遠端收件": "2026-06-18T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 2d211ba139
+{"status": "FINAL", "locked": 554, "agree": 237, "disagree": 317, "late": 3, "days": 85, "closed": 440, "open": 114, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger cf0ac94b84
+{"asof": "2026-06-18", "買點": 13, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-18.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-18.json", "截止(隔天開盤,UTC)": "2026-06-22T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 416b32b0de
+已推到 origin/astra-ledger 3faa119fc3
+{"asof": "2026-06-18", "鎖定": 13, "同意": 5, "本機晚了": false, "遠端收件": "2026-06-19T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 04b5a0c36d
+{"status": "FINAL", "locked": 567, "agree": 242, "disagree": 325, "late": 3, "days": 86, "closed": 448, "open": 119, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 21b603068d
+{"asof": "2026-06-22", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-22.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-22.json", "截止(隔天開盤,UTC)": "2026-06-23T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 2a26c36422
+已推到 origin/astra-ledger 5951694a1e
+{"asof": "2026-06-22", "鎖定": 5, "同意": 3, "本機晚了": false, "遠端收件": "2026-06-23T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 200dd2f815
+{"status": "FINAL", "locked": 572, "agree": 245, "disagree": 327, "late": 3, "days": 87, "closed": 451, "open": 121, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 78195a3e56
+{"asof": "2026-06-23", "買點": 10, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-23.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-23.json", "截止(隔天開盤,UTC)": "2026-06-24T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger b6c99f7562
+已推到 origin/astra-ledger bdea70be5e
+{"asof": "2026-06-23", "鎖定": 10, "同意": 4, "本機晚了": false, "遠端收件": "2026-06-24T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 9562a4f678
+{"status": "FINAL", "locked": 582, "agree": 249, "disagree": 333, "late": 3, "days": 88, "closed": 456, "open": 126, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger c9d70df3fa
+{"asof": "2026-06-24", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-24.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-24.json", "截止(隔天開盤,UTC)": "2026-06-25T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 78aedd7378
+已推到 origin/astra-ledger 9b2f684655
+{"asof": "2026-06-24", "鎖定": 7, "同意": 2, "本機晚了": false, "遠端收件": "2026-06-25T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 733b206538
+{"status": "FINAL", "locked": 589, "agree": 251, "disagree": 338, "late": 3, "days": 89, "closed": 460, "open": 129, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5cf77bf33d
+{"asof": "2026-06-25", "買點": 2, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-25.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-25.json", "截止(隔天開盤,UTC)": "2026-06-26T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 4c8dd5142b
+已推到 origin/astra-ledger 56e3c38bb6
+{"asof": "2026-06-25", "鎖定": 2, "同意": 0, "本機晚了": false, "遠端收件": "2026-06-26T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 71cb3ae050
+{"status": "FINAL", "locked": 591, "agree": 251, "disagree": 340, "late": 3, "days": 90, "closed": 467, "open": 124, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 8e332b59d0
+{"asof": "2026-06-26", "買點": 6, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-26.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-26.json", "截止(隔天開盤,UTC)": "2026-06-29T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 017b582b3c
+已推到 origin/astra-ledger 47739f9c4b
+{"asof": "2026-06-26", "鎖定": 6, "同意": 4, "本機晚了": false, "遠端收件": "2026-06-27T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 9e6d3d5a08
+{"status": "FINAL", "locked": 597, "agree": 255, "disagree": 342, "late": 3, "days": 91, "closed": 475, "open": 122, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 0440109ace
+{"asof": "2026-06-29", "買點": 15, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-29.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-29.json", "截止(隔天開盤,UTC)": "2026-06-30T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger fef10af623
+已推到 origin/astra-ledger b8f3ced3a7
+{"asof": "2026-06-29", "鎖定": 15, "同意": 5, "本機晚了": false, "遠端收件": "2026-06-30T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger d110f41796
+{"status": "FINAL", "locked": 612, "agree": 260, "disagree": 352, "late": 3, "days": 92, "closed": 477, "open": 135, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger df8685584e
+{"asof": "2026-06-30", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-06-30.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-06-30.json", "截止(隔天開盤,UTC)": "2026-07-01T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 1a65a4cd7d
+已推到 origin/astra-ledger d6f334da00
+{"asof": "2026-06-30", "鎖定": 5, "同意": 1, "本機晚了": false, "遠端收件": "2026-07-01T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 635f2a6af9
+{"status": "FINAL", "locked": 617, "agree": 261, "disagree": 356, "late": 3, "days": 93, "closed": 498, "open": 119, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b0db3993e1
+{"asof": "2026-07-01", "買點": 13, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-01.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-01.json", "截止(隔天開盤,UTC)": "2026-07-02T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger fcfb69edcf
+已推到 origin/astra-ledger c60c1be569
+{"asof": "2026-07-01", "鎖定": 13, "同意": 7, "本機晚了": false, "遠端收件": "2026-07-02T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 58126bef3f
+{"status": "FINAL", "locked": 630, "agree": 268, "disagree": 362, "late": 3, "days": 94, "closed": 500, "open": 130, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 05a5a05c84
+{"asof": "2026-07-02", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-02.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-02.json", "截止(隔天開盤,UTC)": "2026-07-06T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 3a5f145cdd
+已推到 origin/astra-ledger 29c8513571
+{"asof": "2026-07-02", "鎖定": 5, "同意": 0, "本機晚了": false, "遠端收件": "2026-07-03T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 99e04f2c76
+{"status": "FINAL", "locked": 635, "agree": 268, "disagree": 367, "late": 3, "days": 95, "closed": 507, "open": 128, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 267aa015fc
+{"asof": "2026-07-06", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-06.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-06.json", "截止(隔天開盤,UTC)": "2026-07-07T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 1f436e80ea
+已推到 origin/astra-ledger c41b00b947
+{"asof": "2026-07-06", "鎖定": 4, "同意": 1, "本機晚了": false, "遠端收件": "2026-07-07T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 66fd68959f
+{"status": "FINAL", "locked": 639, "agree": 269, "disagree": 370, "late": 3, "days": 96, "closed": 510, "open": 129, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger e47686d94c
+{"asof": "2026-07-07", "買點": 1, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-07.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-07.json", "截止(隔天開盤,UTC)": "2026-07-08T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 9dbf615436
+已推到 origin/astra-ledger 050e10574d
+{"asof": "2026-07-07", "鎖定": 1, "同意": 1, "本機晚了": false, "遠端收件": "2026-07-08T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger a8729981a9
+{"status": "FINAL", "locked": 640, "agree": 270, "disagree": 370, "late": 3, "days": 97, "closed": 516, "open": 124, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger e21abc1b12
+{"asof": "2026-07-08", "買點": 4, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-08.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-08.json", "截止(隔天開盤,UTC)": "2026-07-09T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 2eaf3cb308
+已推到 origin/astra-ledger 900ba0663b
+{"asof": "2026-07-08", "鎖定": 4, "同意": 3, "本機晚了": false, "遠端收件": "2026-07-09T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger a4bc05ba54
+{"status": "FINAL", "locked": 644, "agree": 273, "disagree": 371, "late": 3, "days": 98, "closed": 526, "open": 118, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 18a4232ab0
+{"asof": "2026-07-09", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-09.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-09.json", "截止(隔天開盤,UTC)": "2026-07-10T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 63086f30d9
+已推到 origin/astra-ledger 7874156503
+{"asof": "2026-07-09", "鎖定": 5, "同意": 1, "本機晚了": false, "遠端收件": "2026-07-10T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 46aa78da3b
+{"status": "FINAL", "locked": 649, "agree": 274, "disagree": 375, "late": 3, "days": 99, "closed": 532, "open": 117, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 369e7c2e53
+{"asof": "2026-07-10", "買點": 8, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-10.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-10.json", "截止(隔天開盤,UTC)": "2026-07-13T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 5f766a24ea
+已推到 origin/astra-ledger 9230df2086
+{"asof": "2026-07-10", "鎖定": 8, "同意": 3, "本機晚了": false, "遠端收件": "2026-07-11T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 11e7940b93
+{"status": "FINAL", "locked": 657, "agree": 277, "disagree": 380, "late": 3, "days": 100, "closed": 555, "open": 102, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 50fbb69c23
+{"asof": "2026-07-13", "買點": 11, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-13.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-13.json", "截止(隔天開盤,UTC)": "2026-07-14T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger f7e4c3468e
+已推到 origin/astra-ledger d5ca50f536
+{"asof": "2026-07-13", "鎖定": 11, "同意": 4, "本機晚了": false, "遠端收件": "2026-07-14T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 0d97b30586
+{"status": "FINAL", "locked": 668, "agree": 281, "disagree": 387, "late": 3, "days": 101, "closed": 565, "open": 103, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger ed7d2f726e
+{"asof": "2026-07-14", "買點": 10, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-14.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-14.json", "截止(隔天開盤,UTC)": "2026-07-15T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 546d056d9d
+已推到 origin/astra-ledger ee7aa16502
+{"asof": "2026-07-14", "鎖定": 10, "同意": 7, "本機晚了": false, "遠端收件": "2026-07-15T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 047ef21981
+{"status": "FINAL", "locked": 678, "agree": 288, "disagree": 390, "late": 3, "days": 102, "closed": 585, "open": 93, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b79e3aabf3
+{"asof": "2026-07-15", "買點": 9, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-15.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-15.json", "截止(隔天開盤,UTC)": "2026-07-16T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger cb6fc763d3
+已推到 origin/astra-ledger 1d37bdec54
+{"asof": "2026-07-15", "鎖定": 9, "同意": 5, "本機晚了": false, "遠端收件": "2026-07-16T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 27b95b5d19
+{"status": "FINAL", "locked": 687, "agree": 293, "disagree": 394, "late": 3, "days": 103, "closed": 588, "open": 99, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3ca9841b28
+{"asof": "2026-07-16", "買點": 11, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-16.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-16.json", "截止(隔天開盤,UTC)": "2026-07-17T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger f1948d0311
+已推到 origin/astra-ledger a363b666e5
+{"asof": "2026-07-16", "鎖定": 11, "同意": 4, "本機晚了": false, "遠端收件": "2026-07-17T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 013e4c7315
+{"status": "FINAL", "locked": 698, "agree": 297, "disagree": 401, "late": 3, "days": 104, "closed": 592, "open": 106, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3e97a6acf0
+{"asof": "2026-07-17", "買點": 5, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-17.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-17.json", "截止(隔天開盤,UTC)": "2026-07-20T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 55f1349106
+已推到 origin/astra-ledger ce15279dab
+{"asof": "2026-07-17", "鎖定": 5, "同意": 4, "本機晚了": false, "遠端收件": "2026-07-18T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 8be5002621
+{"status": "FINAL", "locked": 703, "agree": 301, "disagree": 402, "late": 3, "days": 105, "closed": 603, "open": 100, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 7fe25862de
+{"asof": "2026-07-20", "買點": 7, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-20.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-20.json", "截止(隔天開盤,UTC)": "2026-07-21T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 6a30dee0ef
+已推到 origin/astra-ledger 2f432b47fd
+{"asof": "2026-07-20", "鎖定": 7, "同意": 3, "本機晚了": false, "遠端收件": "2026-07-21T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 8c88325b1d
+{"status": "FINAL", "locked": 710, "agree": 304, "disagree": 406, "late": 3, "days": 106, "closed": 619, "open": 91, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 53e30f7c4f
+{"asof": "2026-07-21", "買點": 14, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-21.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-21.json", "截止(隔天開盤,UTC)": "2026-07-22T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 08341c28f0
+已推到 origin/astra-ledger 1a95314efd
+{"asof": "2026-07-21", "鎖定": 14, "同意": 5, "本機晚了": false, "遠端收件": "2026-07-22T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 036b22820a
+{"status": "FINAL", "locked": 724, "agree": 309, "disagree": 415, "late": 3, "days": 107, "closed": 626, "open": 98, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1986c5b751
+{"asof": "2026-07-22", "買點": 17, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-22.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-22.json", "截止(隔天開盤,UTC)": "2026-07-23T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 11924ab14a
+已推到 origin/astra-ledger e25df12ba1
+{"asof": "2026-07-22", "鎖定": 17, "同意": 7, "本機晚了": false, "遠端收件": "2026-07-23T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 3bec2e648d
+{"status": "FINAL", "locked": 741, "agree": 316, "disagree": 425, "late": 3, "days": 108, "closed": 629, "open": 112, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 423e181d6f
+{"asof": "2026-07-23", "買點": 25, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-23.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-23.json", "截止(隔天開盤,UTC)": "2026-07-24T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 40baed882e
+已推到 origin/astra-ledger 374dd1edf5
+{"asof": "2026-07-23", "鎖定": 25, "同意": 8, "本機晚了": false, "遠端收件": "2026-07-24T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger a94819398c
+{"status": "FINAL", "locked": 766, "agree": 324, "disagree": 442, "late": 3, "days": 109, "closed": 651, "open": 115, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4e0a6d9849
+{"asof": "2026-07-24", "買點": 11, "status": "pending_verdict", "pending": "/tmp/v3full_81ofrqcd/ledger-wt/pending/2026-07-24.json", "verdicts 要寫到": "/tmp/v3full_81ofrqcd/ledger-wt/verdicts/2026-07-24.json", "截止(隔天開盤,UTC)": "2026-07-27T13:30:00Z", "失敗": 1}
+已推到 origin/astra-ledger 3259c7f5e7
+已推到 origin/astra-ledger a1d3c91539
+{"asof": "2026-07-24", "鎖定": 11, "同意": 7, "本機晚了": false, "遠端收件": "2026-07-25T05:15:00Z", "遠端判定晚了": false}
+已推到 origin/astra-ledger 93a2afea03
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 655, "open": 122, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 11e3995639
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 658, "open": 119, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 96ef5a7200
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 659, "open": 118, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 20ddf6e8a9
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 667, "open": 110, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 337d2ed2ed
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 671, "open": 106, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 081c9bf98d
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 676, "open": 101, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3e62bebfc6
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 677, "open": 100, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1d0889dc72
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 681, "open": 96, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 8746f567d9
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 691, "open": 86, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger e86c001e2c
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 702, "open": 75, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 8b3c66a1f8
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 707, "open": 70, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1e1244aea7
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 713, "open": 64, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b074644f46
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 718, "open": 59, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a760aec4e4
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 733, "open": 44, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger dd7db3d6c4
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 741, "open": 36, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1a81b77b11
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 745, "open": 32, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4e032f347c
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 750, "open": 27, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5ca806d4a0
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 751, "open": 26, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 07d9f6ccc6
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 754, "open": 23, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3db69ccb15
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 761, "open": 16, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 38d8d1a289
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 771, "open": 6, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 820b37d4c5
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger ae717ff643
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger f3b74586d6
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 05214c56a5
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 9966728389
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3afee20f82
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 47ac142e5e
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 37b68b3de4
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 1dd21245c1
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger c165571737
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 3ef38ac701
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 774, "open": 3, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4efbd11689
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a6ede33600
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 7ad6cad812
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 430d44387b
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger a64d261c49
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger dde44ccc1e
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 045d0f2753
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 775, "open": 2, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 9272afaed3
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b5db452fdf
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 4f920f3b23
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 62afa41b57
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 9d3a6da90b
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger f243e9fd17
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 49a7d5696e
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 51357e86d6
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 54c726dc12
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger b194e25aa0
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 5a3d3be884
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger cde825b4a6
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger fba83ab596
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+已推到 origin/astra-ledger 93f5def326
+{"status": "FINAL", "locked": 777, "agree": 331, "disagree": 446, "late": 3, "days": 110, "closed": 776, "open": 1, "no_data": 0, "unresolved": 0}
+collector done {'locked': 109, 'no_signals': 9, 'failed': 1, 'late': 1, 'marks': 777} last 2026-10-07 scores {'locked': 777, 'agree': 331, 'disagree': 446, 'late': 3, 'days': 110, 'closed': 776, 'open': 1, 'no_data': 0, 'unresolved': 0} [251s]
+stop ok not_mature_yet | 狀態是 MATURING,還不能判定(沒有寫任何判定) [266s]
+stop ok github_api_down_no_look | GitHub API 查詢失敗(runs-for-de95153e4853483206f6f4bf079824b20f0803fb.json [266s]
+stop ok modified_verifier | 正在執行的程式不是凍結的驗證程式(指紋不同)→ 停 [266s]
+FORMAL NO_PASS go_live False coverage 118 / 120 counts {'marks_in_window': 777, 'eligible': 774, 'rejected': 3, 'closed_reproducible': 773, 'missing_or_unreproducible': 1, 'pending': 0, 'not_eligible_reasons': {'late_remote': 3}, 'agree_eligible': 331} [283s]
+stop ok second_formal_run_refused | 這個實驗已經做過唯一一次判定 → 不再做 [300s]
+stop ok refused_after_delete_git_history | 這個實驗已經做過唯一一次判定 → 不再做 [300s]
+stop ok manifest_edited_after_freeze | manifest 被 2 個 commit 改過(凍結後不能改)→ 停 [300s]
+stop ok verifier_edited_after_freeze | 正在執行的程式不是凍結的驗證程式(指紋不同)→ 停 [300s]
+stop ok fixed_spec_changed | manifest 的固定規格和程式不同 → 停 [300s]
+stop ok calendar_changed | 官方日曆和凍結時不同 → 停 [301s]
+stop ok no_anchor | 凍結錨點的內容和 manifest / 凍結 commit 對不上 → 停 [301s]
+已推到 origin/astra-ledger 92714f3f3f
+stop ok anchor_after_start | 凍結錨點 GitHub 收件 2026-02-03T22:00:00Z 不早於起日 2026-02-03 收盤 → 停 [301s]
+stop ok h2_not_allowed | manifest 的 h2_mode 不在允許的選項裡 → 停 [301s]
+{"decision": "NO_PASS", "decision_by_h2_mode": {"gap_vs_all_10pp": "NO_PASS", "agree_vs_disagree_lb": "NO_PASS", "none": "NO_PASS"}, "coverage": {"ok": 118, "seen": 120, "rate": 0.9833333333333333}, "n_closed": 773, "n_missing": 1, "h1_pp": -0.5575471403350516, "h1_lb_pp": -3.7486233842273182}

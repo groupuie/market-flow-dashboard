@@ -1,0 +1,278 @@
+{
+ "d1920": {
+  "build": "2026-10-17T14:33Z",
+  "cls": "wsxFocus wsxFit",
+  "el": {
+   "wsxWL": {
+    "vis": true,
+    "x": 10,
+    "y": 4,
+    "w": 340,
+    "h": 1070
+   },
+   "wsxCenter": {
+    "vis": true,
+    "x": 357,
+    "y": 4,
+    "w": 1131,
+    "h": 1070
+   },
+   "cockpit": {
+    "vis": true,
+    "x": 360,
+    "y": 150,
+    "w": 1125,
+    "h": 923
+   },
+   "wsxLeft": {
+    "vis": true,
+    "x": 1495,
+    "y": 4,
+    "w": 415,
+    "h": 1070
+   },
+   "destCard": {
+    "vis": true,
+    "x": 1496,
+    "y": 202,
+    "w": 411,
+    "h": 916
+   },
+   "wsxA": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "wsxB": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "wsxRail": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "header": false
+  },
+  "rows": [
+   "英偉達 US NVDA 214.13 -3.10 -1.43%",
+   "美光科技 US MU 878.84 -52.40 -5.63%",
+   "閃迪 US SNDK 1,299.30 -95.53 -6.85%",
+   "西部數據 US WDC 332.00 -24.45 -6.86%",
+   "博通 US AVGO 328.75 -15.58 -4.52%",
+   "半導體ETF-VanEck US SMH 539.79 -19.05 -3.41%",
+   "標普500ETF-SPDR US SPY 763.25 -8.54 -1.11%",
+   "納指100ETF-Invesco US QQQ 709.80 -18.20 -2.50%"
+  ],
+  "chips": [
+   "NVDA",
+   "MU",
+   "SNDK",
+   "WDC",
+   "AVGO",
+   "SMH",
+   "SPY",
+   "QQQ"
+  ],
+  "grid": "340px 7px 1131px 7px 415px",
+  "btn": "◧ 只看K線",
+  "more": "⋯ 其他欄位",
+  "star": "★ 已在自選",
+  "pills": "大盤 留意 休市 行情 4分前",
+  "session": "closed",
+  "ts": "2026-10-17 14:30:37",
+  "errors": [],
+  "bad": []
+ },
+ "d1440": {
+  "build": "2026-10-17T14:33Z",
+  "cls": "wsxFocus wsxFit",
+  "el": {
+   "wsxWL": {
+    "vis": true,
+    "x": 10,
+    "y": 4,
+    "w": 340,
+    "h": 890
+   },
+   "wsxCenter": {
+    "vis": true,
+    "x": 357,
+    "y": 4,
+    "w": 651,
+    "h": 890
+   },
+   "cockpit": {
+    "vis": true,
+    "x": 360,
+    "y": 231,
+    "w": 645,
+    "h": 662
+   },
+   "wsxLeft": {
+    "vis": true,
+    "x": 1015,
+    "y": 4,
+    "w": 415,
+    "h": 890
+   },
+   "destCard": {
+    "vis": true,
+    "x": 1016,
+    "y": 202,
+    "w": 411,
+    "h": 916
+   },
+   "wsxA": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "wsxB": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "wsxRail": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "header": false
+  },
+  "rows": [
+   "英偉達 US NVDA 214.13 -3.10 -1.43%",
+   "美光科技 US MU 878.84 -52.40 -5.63%",
+   "閃迪 US SNDK 1,299.30 -95.53 -6.85%",
+   "西部數據 US WDC 332.00 -24.45 -6.86%",
+   "博通 US AVGO 328.75 -15.58 -4.52%",
+   "半導體ETF-VanEck US SMH 539.79 -19.05 -3.41%",
+   "標普500ETF-SPDR US SPY 763.25 -8.54 -1.11%",
+   "納指100ETF-Invesco US QQQ 709.80 -18.20 -2.50%"
+  ],
+  "chips": [
+   "NVDA",
+   "MU",
+   "SNDK",
+   "WDC",
+   "AVGO",
+   "SMH",
+   "SPY",
+   "QQQ"
+  ],
+  "grid": "340px 7px 651px 7px 415px",
+  "btn": "◧ 只看K線",
+  "more": "⋯ 其他欄位",
+  "star": "★ 已在自選",
+  "pills": "大盤 留意 休市 行情 5分前",
+  "session": "closed",
+  "ts": "2026-10-17 14:30:37",
+  "errors": [],
+  "bad": []
+ },
+ "m390": {
+  "build": "2026-10-17T14:33Z",
+  "cls": "wsxFocus",
+  "el": {
+   "wsxWL": {
+    "vis": true,
+    "x": 4,
+    "y": 1054,
+    "w": 382,
+    "h": 529
+   },
+   "wsxCenter": {
+    "vis": true,
+    "x": 4,
+    "y": 141,
+    "w": 382,
+    "h": 903
+   },
+   "cockpit": {
+    "vis": true,
+    "x": 5,
+    "y": 433,
+    "w": 380,
+    "h": 600
+   },
+   "wsxLeft": {
+    "vis": true,
+    "x": 4,
+    "y": 1593,
+    "w": 382,
+    "h": 1119
+   },
+   "destCard": {
+    "vis": true,
+    "x": 4,
+    "y": 1792,
+    "w": 382,
+    "h": 910
+   },
+   "wsxA": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "wsxB": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "wsxRail": {
+    "vis": false,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0
+   },
+   "header": false
+  },
+  "rows": [
+   "英偉達 US NVDA 214.13 -3.10 -1.43%",
+   "美光科技 US MU 878.84 -52.40 -5.63%",
+   "閃迪 US SNDK 1,299.30 -95.53 -6.85%",
+   "西部數據 US WDC 332.00 -24.45 -6.86%",
+   "博通 US AVGO 328.75 -15.58 -4.52%",
+   "半導體ETF-VanEck US SMH 539.79 -19.05 -3.41%",
+   "標普500ETF-SPDR US SPY 763.25 -8.54 -1.11%",
+   "納指100ETF-Invesco US QQQ 709.80 -18.20 -2.50%"
+  ],
+  "chips": [
+   "NVDA",
+   "MU",
+   "SNDK",
+   "WDC",
+   "AVGO",
+   "SMH",
+   "SPY",
+   "QQQ"
+  ],
+  "grid": "382px",
+  "btn": "◧ 只看K線",
+  "more": "⋯ 其他欄位",
+  "star": "★ 已在自選",
+  "pills": "大盤 留意 休市 行情 5分前",
+  "session": "closed",
+  "ts": "2026-10-17 14:30:37",
+  "errors": [],
+  "bad": []
+ }
+}

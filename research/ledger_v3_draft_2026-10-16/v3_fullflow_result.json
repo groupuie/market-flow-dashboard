@@ -1,0 +1,310 @@
+{
+ "fixture": {
+  "universe": [
+   "AA",
+   "AAOI",
+   "ABBV",
+   "ADBE",
+   "AEHR",
+   "ALLY",
+   "AMC",
+   "AMGN",
+   "AMZN",
+   "APO",
+   "AVAV",
+   "AXP",
+   "BABA",
+   "BE",
+   "BILI",
+   "BKR",
+   "BMY",
+   "BX",
+   "CAT",
+   "CDNS",
+   "CIEN",
+   "CLSK",
+   "CMG",
+   "COHR",
+   "COST",
+   "CSCO",
+   "CVS",
+   "DAL",
+   "DELL",
+   "DIS",
+   "ENPH",
+   "ETN",
+   "FCX",
+   "FSLR",
+   "GD",
+   "GILD",
+   "GM",
+   "GOOG",
+   "GOOGL",
+   "GS",
+   "HD",
+   "HUT",
+   "IBM",
+   "INTC",
+   "ISRG",
+   "JNJ",
+   "KKR",
+   "KO",
+   "LHX",
+   "LLY",
+   "LOW",
+   "LULU",
+   "LWLG",
+   "MA",
+   "MARA",
+   "MCHP",
+   "MDB",
+   "META",
+   "MPWR",
+   "MRNA",
+   "MS",
+   "MSTR",
+   "MU",
+   "NCLH",
+   "NFLX",
+   "NKE",
+   "NOK",
+   "NRG",
+   "NVDA",
+   "NXPI",
+   "ON",
+   "OXY",
+   "PDD",
+   "PFE",
+   "PINS",
+   "POET",
+   "PWR",
+   "QCOM",
+   "REGN",
+   "ROK",
+   "RTX",
+   "SBET",
+   "SCHW",
+   "SLB",
+   "SNAP",
+   "SPGI",
+   "STX",
+   "T",
+   "TER",
+   "TJX",
+   "TMO",
+   "TSM",
+   "TWLO",
+   "UAL",
+   "UNH",
+   "UPS",
+   "V",
+   "VRTX",
+   "VZ",
+   "SPY",
+   "QQQ"
+  ],
+  "start": "2026-02-02",
+  "end": "2026-07-24",
+  "special_days": {
+   "idx_late_morning_then_ok": "2026-02-10",
+   "failed_all_day": "2026-03-03",
+   "late_lock": "2026-04-10",
+   "no_signals": "2026-04-15"
+  },
+  "delisted": [
+   "AMC",
+   "2026-05-01"
+  ],
+  "events": {
+   "ADBE": [
+    [
+     "2026-03-04",
+     0.99,
+     "div"
+    ]
+   ],
+   "AXP": [
+    [
+     "2026-03-26",
+     0.99,
+     "div"
+    ]
+   ],
+   "CDNS": [
+    [
+     "2026-04-20",
+     0.99,
+     "div"
+    ]
+   ],
+   "DAL": [
+    [
+     "2026-06-11",
+     0.5,
+     "split"
+    ]
+   ]
+  },
+  "collector_status_counts": {
+   "locked": 109,
+   "no_signals": 9,
+   "failed": 1,
+   "late": 1,
+   "marks": 777
+  },
+  "collector_scores_counts": {
+   "locked": 777,
+   "agree": 331,
+   "disagree": 446,
+   "late": 3,
+   "days": 110,
+   "closed": 776,
+   "open": 1,
+   "no_data": 0,
+   "unresolved": 0
+  },
+  "frozen_engine_sha256": {
+   "scripts/astra_ledger.py": "3c89150c35fd3c0de17b632d0042d11fd58394a5351d1492195be2c9a0af7c50",
+   "scripts/astra_trades.py": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2",
+   "scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
+  },
+  "experiment_id": "LV3-20260202-S120-C1-L5-none",
+  "manifest_sha256": "34b88a0a7b3dd3eed4b84ec2ee1ecb4bad3372ccd27d9bfe62107c15ff15f637"
+ },
+ "stops": {
+  "not_mature_yet": "狀態是 MATURING,還不能判定(沒有寫任何判定)",
+  "github_api_down_no_look": "GitHub API 查詢失敗(runs-for-de95153e4853483206f6f4bf079824b20f0803fb.json)→ 停,不寫判定;之後再跑:HTTP 502",
+  "modified_verifier": "正在執行的程式不是凍結的驗證程式(指紋不同)→ 停",
+  "second_formal_run_refused": "這個實驗已經做過唯一一次判定 → 不再做",
+  "refused_after_delete_git_history": "這個實驗已經做過唯一一次判定 → 不再做",
+  "manifest_edited_after_freeze": "manifest 被 2 個 commit 改過(凍結後不能改)→ 停",
+  "verifier_edited_after_freeze": "正在執行的程式不是凍結的驗證程式(指紋不同)→ 停",
+  "fixed_spec_changed": "manifest 的固定規格和程式不同 → 停",
+  "calendar_changed": "官方日曆和凍結時不同 → 停",
+  "no_anchor": "凍結錨點的內容和 manifest / 凍結 commit 對不上 → 停",
+  "anchor_after_start": "凍結錨點 GitHub 收件 2026-02-03T22:00:00Z 不早於起日 2026-02-03 收盤 → 停",
+  "h2_not_allowed": "manifest 的 h2_mode 不在允許的選項裡 → 停"
+ },
+ "formal": {
+  "decision": "NO_PASS",
+  "decision_by_h2_mode": {
+   "gap_vs_all_10pp": "NO_PASS",
+   "agree_vs_disagree_lb": "NO_PASS",
+   "none": "NO_PASS"
+  },
+  "go_live_candidate": false,
+  "gates": {
+   "closed": true,
+   "agree": true,
+   "disagree": true,
+   "paired_dates": true,
+   "issuers": true,
+   "batch_coverage": true,
+   "no_missing_disagree": true,
+   "draws_effective": true
+  },
+  "n_closed": 773,
+  "n_missing": 1,
+  "agree": 330,
+  "disagree": 443,
+  "h1_pp": -0.5575471403350516,
+  "h1_lb_pp": -3.7486233842273182,
+  "h1_ub_pp": 2.6335291035572146,
+  "paired_dates": 83,
+  "issuers": [
+   99,
+   99
+  ],
+  "coverage": {
+   "ok": 118,
+   "seen": 120,
+   "rate": 0.9833333333333333
+  },
+  "rejected_days": {
+   "2026-03-03": {
+    "status": "failed",
+    "accepted": false,
+    "reasons": [
+     "batch_status_failed"
+    ],
+    "events": 0,
+    "rejected_events": 0
+   },
+   "2026-04-10": {
+    "status": "locked",
+    "accepted": false,
+    "reasons": [
+     "late_remote"
+    ],
+    "events": 3,
+    "rejected_events": 3
+   }
+  },
+  "no_signals_day": {
+   "status": "no_signals",
+   "accepted": true,
+   "reasons": [],
+   "events": 0,
+   "rejected_events": 0,
+   "no_signals_evidence": {
+    "prep_commit": "b23ab7d05ed5ffe76a771722167049555ec8c2c5",
+    "remote_received_utc": "2026-04-16T05:14:00Z"
+   }
+  },
+  "idx_late_morning_day": {
+   "status": "locked",
+   "accepted": true,
+   "reasons": [],
+   "events": 3,
+   "rejected_events": 0
+  },
+  "counts": {
+   "marks_in_window": 777,
+   "eligible": 774,
+   "rejected": 3,
+   "closed_reproducible": 773,
+   "missing_or_unreproducible": 1,
+   "pending": 0,
+   "not_eligible_reasons": {
+    "late_remote": 3
+   },
+   "agree_eligible": 331
+  },
+  "rescaled_marks": {
+   "2026-02-02:ADBE": "rescaled f=0.98999975(可行區間 0.98999846–0.99000151,8 個重疊價格)",
+   "2026-02-27:ADBE": "rescaled f=0.99000031(可行區間 0.98999908–0.99000148,8 個重疊價格)",
+   "2026-03-23:AXP": "rescaled f=0.98999917(可行區間 0.98999460–0.99000151,8 個重疊價格)",
+   "2026-04-16:CDNS": "rescaled f=0.98999857(可行區間 0.98999375–0.99000522,8 個重疊價格)",
+   "2026-06-08:DAL": "rescaled f=0.49999845(可行區間 0.49999392–0.50000606,8 個重疊價格)"
+  },
+  "unreproducible": {},
+  "look_sha256": null,
+  "same_as_dry_run_decide": true,
+  "evidence_files_used": 120
+ },
+ "meta": {
+  "seconds": 301,
+  "verifier_sha256": "67de35793c6e244e91fafb74dbd62304cece9088705212903fae67293ed0dc53",
+  "log": [
+   "v2 freeze 3aeb56577082 universe 101",
+   "v3 frozen LV3-20260202-S120-C1-L5-none F 820acf0967 anchor de95153e48",
+   "prep stop 2026-02-10 SPY/QQQ 日K還沒有 2026-02-10 → 這次不判讀(已記失敗批次;下一次排程會再試)",
+   "prep stop 2026-03-03 SPY/QQQ 日K還沒有 2026-03-03 → 這次不判讀(已記失敗批次;下一次排程會再試)",
+   "prep stop 2026-03-03 SPY/QQQ 日K還沒有 2026-03-03 → 這次不判讀(已記失敗批次;下一次排程會再試)",
+   "collector done {'locked': 109, 'no_signals': 9, 'failed': 1, 'late': 1, 'marks': 777} last 2026-10-07 scores {'locked': 777, 'agree': 331, 'disagree': 446, 'late': 3, 'days': 110, 'closed': 776, 'open': 1, 'no_data': 0, 'unresolved': 0}",
+   "stop ok not_mature_yet | 狀態是 MATURING,還不能判定(沒有寫任何判定)",
+   "stop ok github_api_down_no_look | GitHub API 查詢失敗(runs-for-de95153e4853483206f6f4bf079824b20f0803fb.json",
+   "stop ok modified_verifier | 正在執行的程式不是凍結的驗證程式(指紋不同)→ 停",
+   "FORMAL NO_PASS go_live False coverage 118 / 120 counts {'marks_in_window': 777, 'eligible': 774, 'rejected': 3, 'closed_reproducible': 773, 'missing_or_unreproducible': 1, 'pending': 0, 'not_eligible_reasons': {'late_remote': 3}, 'agree_eligible': 331}",
+   "stop ok second_formal_run_refused | 這個實驗已經做過唯一一次判定 → 不再做",
+   "stop ok refused_after_delete_git_history | 這個實驗已經做過唯一一次判定 → 不再做",
+   "stop ok manifest_edited_after_freeze | manifest 被 2 個 commit 改過(凍結後不能改)→ 停",
+   "stop ok verifier_edited_after_freeze | 正在執行的程式不是凍結的驗證程式(指紋不同)→ 停",
+   "stop ok fixed_spec_changed | manifest 的固定規格和程式不同 → 停",
+   "stop ok calendar_changed | 官方日曆和凍結時不同 → 停",
+   "stop ok no_anchor | 凍結錨點的內容和 manifest / 凍結 commit 對不上 → 停",
+   "stop ok anchor_after_start | 凍結錨點 GitHub 收件 2026-02-03T22:00:00Z 不早於起日 2026-02-03 收盤 → 停",
+   "stop ok h2_not_allowed | manifest 的 h2_mode 不在允許的選項裡 → 停"
+  ]
+ }
+}

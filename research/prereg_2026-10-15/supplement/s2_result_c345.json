@@ -1,0 +1,83 @@
+{
+ "tag": "c345",
+ "original_result_reproduced": {
+  "P1": true,
+  "P2": true
+ },
+ "per_file_sha256": {
+  "checked": 346,
+  "mismatch": [],
+  "field": "sha256",
+  "all_match": true
+ },
+ "manifest_last_dates": [
+  "2026-10-14"
+ ],
+ "common_calendar": {
+  "source": "SPY.json",
+  "first": "2004-01-02",
+  "last": "2026-10-14",
+  "sessions": 5732
+ },
+ "P1_window_issues": {
+  "n_events": 84595,
+  "n_flagged": 1,
+  "events": [
+   {
+    "date": "2025-11-11",
+    "sym": "FISV",
+    "sharp": false,
+    "entry": "2025-11-13",
+    "spy_next_session": "2025-11-12",
+    "exit": "2025-12-12",
+    "missing_sessions_in_window": 1,
+    "ret_net": 0.05771283458253418,
+    "exit_reason": "到期"
+   }
+  ]
+ },
+ "P2_window_issues": {
+  "n_break": 42026,
+  "n_break_flagged": 0,
+  "break_events": [],
+  "n_uptrend": 830766,
+  "n_uptrend_flagged": 0,
+  "uptrend_flagged_by_symbol": {}
+ },
+ "sensitivity_excluding_window_issues_descriptive_only": {
+  "P1": {
+   "diff_mean_pp": -0.7079036382127081,
+   "ci97_5": {
+    "lo": -3.3256638040127973,
+    "hi": 3.1429368293251274,
+    "draws": 2000
+   }
+  },
+  "P1_n_other": 84264,
+  "P1_n_sharp": 330,
+  "P2": {
+   "diff_mean_pp": 0.1179508890775598,
+   "ci97_5": {
+    "lo": -0.14949560204379245,
+    "hi": 0.34028624712364447,
+    "draws": 2000
+   }
+  },
+  "P2_n_break": 42026,
+  "P2_n_uptrend": 830766
+ },
+ "P2_issuer_dedup_drop_FOX_NWS": {
+  "diff_mean_pp": 0.11820933653344419,
+  "ci97_5": {
+   "lo": -0.14831450493420287,
+   "hi": 0.3394129403852642,
+   "draws": 2000
+  },
+  "n_break": 41879,
+  "n_uptrend": 827983,
+  "daily_file": "p2_daily_dedup_c345.csv.gz"
+ },
+ "cost_note": "P2 是未扣成本;兩組每筆都減同一個固定報酬成本時差值不變;若照 P1 的方式(進價 ×1.001、出價 ×0.999)則差值乘上 0.999/1.001",
+ "P2_diff_if_multiplicative_cost_pp": 0.11771522296551674,
+ "note": "原判定照 PREREG 不變;這裡的排除與去重都只是描述"
+}

@@ -1,0 +1,22 @@
+select L 5 syn_random {'M1': (4, 1, -0.001, True), 'M2': (2, 1, -0.002, True)} 0 65
+select L 5 syn_stock {'M1': (2, 0, 0.001, True), 'M2': (1, 0, 0.003, True)} 0 131
+select L 5 syn_market {'M1': (1, 3, -0.002, True), 'M2': (0, 1, -0.003, True)} 0 202
+select L 5 syn_shift_plus1 {'M1': (2, 0, 0.002, True), 'M2': (1, 0, 0.001, True)} 1 271
+select L 5 syn_shift_minus1 {'M1': (0, 0, -0.002, True), 'M2': (0, 0, -0.001, True)} 0 340
+select L 5 density_null_alt {'M1': (11, 6, -0.001, False), 'M2': (11, 6, -0.002, False)} 19 536
+select L 5 density_astra_alt {'M1': (8, 7, 0.002, True), 'M2': (8, 7, 0.002, True)} 28 731
+select L 10 syn_random {'M1': (3, 2, -0.001, True), 'M2': (2, 1, -0.0, True)} 0 764
+select L 10 syn_stock {'M1': (2, 1, 0.0, True), 'M2': (2, 0, 0.0, True)} 0 796
+select L 10 syn_market {'M1': (2, 1, -0.0, True), 'M2': (1, 1, -0.001, True)} 0 828
+select L 10 syn_shift_plus1 {'M1': (2, 1, -0.002, True), 'M2': (1, 0, -0.001, True)} 1 861
+select L 10 syn_shift_minus1 {'M1': (0, 0, -0.003, True), 'M2': (0, 0, -0.001, True)} 0 894
+select L 10 density_null_alt {'M1': (12, 10, -0.001, False), 'M2': (11, 10, -0.001, False)} 19 993
+select L 10 density_astra_alt {'M1': (9, 9, 0.0, True), 'M2': (8, 9, -0.001, True)} 28 1097
+select L 20 syn_random {'M1': (4, 2, -0.001, True), 'M2': (2, 1, -0.001, True)} 0 1131
+select L 20 syn_stock {'M1': (3, 2, 0.003, True), 'M2': (3, 1, 0.002, True)} 0 1166
+select L 20 syn_market {'M1': (1, 2, -0.003, True), 'M2': (0, 2, -0.003, True)} 0 1200
+select L 20 syn_shift_plus1 {'M1': (4, 1, -0.001, True), 'M2': (4, 1, -0.0, True)} 1 1237
+select L 20 syn_shift_minus1 {'M1': (1, 0, -0.001, True), 'M2': (1, 0, -0.0, True)} 0 1273
+select L 20 density_null_alt {'M1': (16, 11, -0.001, False), 'M2': (15, 11, -0.002, False)} 19 1388
+select L 20 density_astra_alt {'M1': (11, 10, 0.001, False), 'M2': (11, 10, 0.002, False)} 28 1496
+CHOSEN None

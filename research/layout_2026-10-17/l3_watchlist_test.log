@@ -1,0 +1,36 @@
+=== 桌機 1920 ===  頁面錯誤 [] | HTTP≥400 ['404 content.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_A.json', '404 ent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/kline_ZZZZQ.json']
+① 預設: html class = wsxFocus wsxFit | 欄寬 340px 7px 1131px 7px 415px
+   看得到: ['wsxWL', 'wlPane', 'wsxCenter', 'cockpit', 'wsxLeft', 'wsxCpHead', 'winCard', 'destCard', 'wsxTop', 'wsxQuick', 'wsxFocusBtn', 'wsxMoreBtn', 'wlStar', 'wsxChartP']
+   看不到: ['wsxA', 'wsxB', 'wsxRail', 'wsxInfoRow', 'header', 'stripW', 'stripL']
+④ 左→右 x: 自選 10 < K線 357 < 現金池 1495 = True | K線 1472×950(v17)→ 1125×923 | 現金池圖 True 寬 377
+   K線資料新舊相同(NVDA 預設) = True | 點自選 MU 與舊版輸入 MU 相同 = True sym MU
+③ 預設清單: [('NVDA', '英偉達', '214.13', '-3.10', '-1.43%'), ('MU', '美光科技', '878.84', '-52.40', '-5.63%'), ('SNDK', '閃迪', '1,299.30', '-95.53', '-6.85%'), ('WDC', '西部數據', '332.00', '-24.45', '-6.86%'), ('AVGO', '博通', '328.75', '-15.58', '-4.52%'), ('SMH', '半導體ETF-VanEck', '539.79', '-19.05', '-3.41%'), ('SPY', '標普500ETF-SPDR', '763.25', '-8.54', '-1.11%'), ('QQQ', '納指100ETF-Invesco', '709.80', '-18.20', '-2.50%')]
+   逐檔對帳(加入後): 不符 = 無
+   加入後: [('AMD', '美國超微公司', '528.75', '', '-33.48', '-5.95%', ''), ('ZZZZQ', 'ZZZZQ', '—', '', '—', '—', '找不到 ZZZZQ 的報價或日K(代號可能打錯,或還不在資料'), ('A', 'Agilent Technologies', '175.55', '收盤 10-15', '+1.55', '+0.89%', '沒有即時報價,顯示最近一天收盤(2026-10-15)'), ('ALAB', 'Astera Labs', '285.82', '', '-16.16', '-5.35%', ''), ('NVDA', '英偉達', '214.13', '', '-3.10', '-1.43%', ''), ('MU', '美光科技', '878.84', '', '-52.40', '-5.63%', ''), ('SNDK', '閃迪', '1,299.30', '', '-95.53', '-6.85%', ''), ('WDC', '西部數據', '332.00', '', '-24.45', '-6.86%', ''), ('AVGO', '博通', '328.75', '', '-15.58', '-4.52%', ''), ('SMH', '半導體ETF-VanEck', '539.79', '', '-19.05', '-3.41%', ''), ('SPY', '標普500ETF-SPDR', '763.25', '', '-8.54', '-1.11%', ''), ('QQQ', '納指100ETF-Invesco', '709.80', '', '-18.20', '-2.50%', '')]
+   中文搜尋「美國超微」建議 = ['AMD美國超微公司']
+   點 ALAB → K線 ALAB ALAB | ↓ 鍵 → NVDA
+⑤ wl_off     class=wsxFocus wsxFit wlOff      欄=26px 5px 1447px 7px 415px          K線寬 1441 自選條 True 現金池條 False 鈕「⊞ 完整版面」
+⑤ wl_on      class=wsxFocus wsxFit            欄=340px 7px 1131px 7px 415px         K線寬 1125 自選條 False 現金池條 False 鈕「◧ 只看K線」
+⑤ cp_off     class=wsxFocus wsxFit cpOff      欄=340px 7px 1522px 5px 26px          K線寬 1516 自選條 False 現金池條 True 鈕「⊞ 完整版面」
+⑤ cp_on      class=wsxFocus wsxFit            欄=340px 7px 1131px 7px 415px         K線寬 1125 自選條 False 現金池條 False 鈕「◧ 只看K線」
+⑤ k_only     class=wsxFocus wsxFit wlOff cpOff 欄=26px 5px 1838px 5px 26px           K線寬 1832 自選條 True 現金池條 True 鈕「⊞ 完整版面」
+⑤ full_again class=wsxFocus wsxFit            欄=340px 7px 1131px 7px 415px         K線寬 1125 自選條 False 現金池條 False 鈕「◧ 只看K線」
+   排序 sort1: 標題 ['名稱代碼', '最新價', '漲跌額', '漲跌幅▼'] 順序 ['A +0.89%', 'SPY -1.11%', 'NVDA -1.43%', 'QQQ -2.50%', 'SMH -3.41%', 'AVGO -4.52%', 'ALAB -5.35%', 'MU -5.63%', 'AMD -5.95%', 'SNDK -6.85%', 'WDC -6.86%', 'ZZZZQ —']
+   排序 sort2: 標題 ['名稱代碼', '最新價', '漲跌額', '漲跌幅▲'] 順序 ['WDC -6.86%', 'SNDK -6.85%', 'AMD -5.95%', 'MU -5.63%', 'ALAB -5.35%', 'AVGO -4.52%', 'SMH -3.41%', 'QQQ -2.50%', 'NVDA -1.43%', 'SPY -1.11%', 'A +0.89%', 'ZZZZQ —']
+   排序 sort0: 標題 ['名稱代碼', '最新價', '漲跌額', '漲跌幅'] 順序 ['AMD -5.95%', 'ZZZZQ —', 'A +0.89%', 'ALAB -5.35%', 'NVDA -1.43%', 'MU -5.63%', 'SNDK -6.85%', 'WDC -6.86%', 'AVGO -4.52%', 'SMH -3.41%', 'SPY -1.11%', 'QQQ -2.50%']
+   拖曳 QQQ 到最上 → ['QQQ', 'AMD', 'ZZZZQ', 'A'] | 編輯欄 ['名稱代碼', '最新價', '漲跌額', '漲跌幅'] | 刪 ZZZZQ + 置頂 WDC → ['WDC', 'QQQ', 'AMD', 'A', 'ALAB', 'NVDA', 'MU', 'SNDK', 'AVGO', 'SMH', 'SPY']
+   右鍵(自選列) = '看 SNDK K線\n置頂\n從自選刪除' | 右鍵(常看) = '從常看移除' | 移除 SMH 後常看 = ['NVDA', 'MU', 'SNDK', 'WDC', 'AVGO', 'SPY', 'QQQ', 'ALAB']
+   ☆:INTC 按之前「 ☆ 加自選 」→ 之後「 ★ 已在自選 」清單第一個 = INTC
+   分隔線拖曳後 wsxCols = {"W":400,"L":465,"A":248,"B":330} | 欄寬 400px 7px 1021px 7px 465px
+   其他欄位(1920):class wsxFit wlOff | 欄 26px 5px 756px 7px 248px 7px 330px 7px 465px 7px 42px | 看得到 header/A/B/rail = [True, True, True, True] | 鈕 ✕ 收起其他欄位 | docW 1920
+   關掉其他欄位 → class wsxFit wsxFocus 欄 400px 7px 1021px 7px 465px
+① 收起後重新整理 → class wsxFocus wsxFit | 欄 400px 7px 1021px 7px 465px | 鈕 ◧ 只看K線 | mfd_focus = None
+② 重新整理後常看 = ['INTC', 'NVDA', 'ALAB', 'MU', 'SNDK', 'WDC', 'AVGO', 'SPY'] | 清單 = ['INTC', 'WDC', 'QQQ', 'AMD', 'A', 'ALAB', 'NVDA', 'MU', 'SNDK', 'AVGO', 'SMH', 'SPY']
+   mfd_freq = {"v":1,"s":{"MU":[1,1792247519840],"ALAB":[1,1792247534941],"NVDA":[1,1792247537840],"INTC":[1,1792247553440]},"h":{"SMH":1792247552736}}
+=== 桌機 1440 === 錯誤 [] | HTTP≥400 []
+   預設:欄 340px 7px 651px 7px 415px | K線 992×742(v17)→ 645×662 | 常看放得下 8 / 8 | K線資料新舊相同 = True
+   其他欄位:class wsxFit wlOff cpOff 欄 26px 5px 717px 7px 248px 7px 330px 5px 26px 7px 42px docW 1440 → 關掉: wsxFit wsxFocus 340px 7px 651px 7px 415px
+=== 手機 390 === 錯誤 [] | HTTP≥400 []
+   上→下 y:K線 141 < 自選 1054 < 現金池 1593 = True | 整頁高 2102(v17)→ 2724 | docW 390 | K線資料新舊相同 = True
+   點 AVGO → K線 AVGO | 捲到K線(scrollY) 141 ≈ K線 y 141
+   收起自選(標題列留著):列數 8 清單本體看得到 32 → 展開 列 8 | 編輯模式欄 ['名稱代碼', '最新價', '漲跌額', '漲跌幅']

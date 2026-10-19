@@ -1,0 +1,17 @@
+syn_random_a43|T120 known PASS none 0 INSUFF 0 37
+syn_market|T120 known PASS none 0 INSUFF 0 74
+density_null_alt|T120 known PASS none 4 INSUFF 0 186
+syn_missing_agree_only|T120 missing PASS none 0 INSUFF 0 292
+hist_stock|T120 stress PASS none 0 INSUFF 0 339
+power_delta1.0|T120 power PASS none 14 INSUFF 0 393
+power_delta3.0|T120 power PASS none 169 INSUFF 0 447
+syn_stock|T250 known PASS none 0 INSUFF 0 545
+syn_heavy_random|T250 known PASS none 1 INSUFF 0 648
+syn_missing_mixed|T250 missing PASS none 0 INSUFF 200 979
+hist_random|T250 stress PASS none 2 INSUFF 0 1150
+hist_market|T250 stress PASS none 0 INSUFF 0 1335
+power_delta2.0|T250 power PASS none 154 INSUFF 0 1533
+syn_random_a25|T120 known PASS none 0 INSUFF 0 1590
+syn_sparse_random|T120 known PASS none 0 INSUFF 137 1612
+density_random_mix|T120 known PASS none 6 INSUFF 0 1772
+syn_shift_minus1|T120 known PASS none 0 INSUFF 0 1830

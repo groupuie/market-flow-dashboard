@@ -61,7 +61,17 @@ def yahoo(sym, start=START):
     ts = r.get("timestamp") or []
     q = r["indicators"]["quote"][0]
     adj = ((r["indicators"].get("adjclose") or [{}])[0] or {}).get("adjclose")
-    cl = adj if adj else q["close"]
+    cl = list(adj if adj else q["close"])
+    # 2026-10-16 總檢查:Yahoo 收盤後約美東 20:00–22:00 把當天日棒的 close/adjclose 暫時清成 null,盤後引擎常被 GitHub 延到這段才跑
+    #   (10/14、10/16 兩次 now.date 落後一天:QQQ/HYG/IEF 缺最後一天)→ 最後一根 null 且 meta.regularMarketTime 同一個交易所日 →
+    #   用 meta.regularMarketPrice(= 當天收盤;最新一根的還原價 = 原始價)補上;其他情況照舊跳過。
+    try:
+        m = r.get("meta") or {}
+        if ts and len(cl) == len(ts) and cl[-1] is None and m.get("regularMarketPrice") and m.get("regularMarketTime"):
+            if (datetime.datetime.fromtimestamp(ts[-1], tz).date()
+                    == datetime.datetime.fromtimestamp(m["regularMarketTime"], tz).date()):
+                cl[-1] = float(m["regularMarketPrice"])
+    except Exception: pass
     out = {}
     for t, c in zip(ts, cl):
         if c is None: continue
