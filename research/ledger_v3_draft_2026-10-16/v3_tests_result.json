@@ -1,7 +1,7 @@
 {
- "tests": 71,
+ "tests": 102,
  "all_pass": true,
- "verifier_sha256": "67de35793c6e244e91fafb74dbd62304cece9088705212903fae67293ed0dc53",
+ "verifier_sha256": "2f69e017969709fc0b5d143ee142a3a1e2910a552e6c22a408b8757b7564f405",
  "results": [
   {
    "name": "good_friday_2027",
@@ -35,6 +35,37 @@
   },
   {
    "name": "cohort_end_by_calendar",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "early_close_official_1300",
+   "pass": true,
+   "proof": {
+    "2026-11-27": "2026-11-27T18:00:00Z",
+    "2026-12-24": "2026-12-24T18:00:00Z",
+    "2027-11-26": "2027-11-26T18:00:00Z",
+    "2028-07-03": "2028-07-03T17:00:00Z",
+    "2028-11-24": "2028-11-24T18:00:00Z"
+   }
+  },
+  {
+   "name": "normal_and_dst_closes_unchanged",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "holiday_has_no_close_time",
+   "pass": true,
+   "proof": "2026-11-26 不是官方交易日 → 沒有開收盤時間 → 停"
+  },
+  {
+   "name": "calendar_fingerprint_covers_early_closes",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "draft3_used_1600_on_early_close",
    "pass": true,
    "proof": null
   },
@@ -196,7 +227,7 @@
     "events": 0,
     "rejected_events": 0,
     "no_signals_evidence": {
-     "prep_commit": "fd9649736d31bae294e8469dd821b5328c6e5c06",
+     "prep_commit": "7c24da093e6cfa22a95704480478fca2945bf1e6",
      "remote_received_utc": "2026-10-16T05:30:00Z"
     }
    }
@@ -287,15 +318,56 @@
    "proof": "GitHub API 查詢失敗(run-777.json)→ 停,不寫判定;之後再跑:404"
   },
   {
+   "name": "formal_corrupt_cache_stops",
+   "pass": true,
+   "proof": "本機收件快取 run-777.json 有問題(evidence_cache_corrupt),GitHub 這次查得到原件 → 這是本機檔案故障、不是研究資料 → 停,不寫登記、"
+  },
+  {
+   "name": "dry_run_corrupt_cache_still_listed",
+   "pass": true,
+   "proof": [
+    "receipt_evidence_cache_corrupt"
+   ]
+  },
+  {
+   "name": "formal_cache_differs_stops",
+   "pass": true,
+   "proof": "本機收件快取 run-777.json 有問題(evidence_cache_differs_from_api),GitHub 這次查得到原件 → 這是本機檔案故障、不是研究資料 "
+  },
+  {
+   "name": "repair_quarantines_rebuilds_and_logs",
+   "pass": true,
+   "proof": {
+    "reason": "evidence_cache_differs_from_api",
+    "quarantined_as": "quarantine/run-777.json.20261020T165703Z.bad",
+    "new_sha256": "c3ba7fb2d55aee127cbbfcf5b201e8adb15b4babe89f4f7b9875272de3004068"
+   }
+  },
+  {
+   "name": "repair_noop_when_cache_ok",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "repair_refuses_without_api",
+   "pass": true,
+   "proof": "GitHub API 查詢失敗 → 不修(之後再試):404"
+  },
+  {
+   "name": "empty_run_list_not_cached",
+   "pass": true,
+   "proof": null
+  },
+  {
    "name": "engine_loaded_from_git_not_local",
    "pass": true,
    "proof": {
     "scripts/astra_data.py": {
-     "loaded_from": "git:a10bccb03cd8ee6bc173669fa36632379cfb0c80:scripts/astra_data.py",
+     "loaded_from": "git:6997f38de54e478ca5fe1d18095322d33f37ed5a:scripts/astra_data.py",
      "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
     },
     "scripts/astra_trades.py": {
-     "loaded_from": "git:a10bccb03cd8ee6bc173669fa36632379cfb0c80:scripts/astra_trades.py",
+     "loaded_from": "git:6997f38de54e478ca5fe1d18095322d33f37ed5a:scripts/astra_trades.py",
      "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
     }
    }
@@ -358,6 +430,22 @@
    "name": "late_close_flagged",
    "pass": true,
    "proof": null
+  },
+  {
+   "name": "early_close_exit_recorded_after_1300_accepted",
+   "pass": true,
+   "proof": {
+    "new_14:00": [
+     "closed"
+    ],
+    "new_12:59": [
+     "unreproducible"
+    ],
+    "draft3_14:00": [
+     "unreproducible",
+     "記錄時間早於出場那根 K 線收盤(不可能當時就有)"
+    ]
+   }
   },
   {
    "name": "entry_open_mismatch_unreproducible",
@@ -583,6 +671,158 @@
    "name": "manifest_rejects_unlisted_choices",
    "pass": true,
    "proof": null
+  },
+  {
+   "name": "manifest_records_resolve_by",
+   "pass": true,
+   "proof": null
+  },
+  {
+   "name": "manifest_rejects_start_beyond_calendar",
+   "pass": true,
+   "proof": "日曆只到 2028-12-29:2028-12-30 超出範圍 → 先補官方休市表(新版本)"
+  },
+  {
+   "name": "anchor_deadline_uses_early_close",
+   "pass": true,
+   "proof": {
+    "2026-11-27T17:59:00Z": "accepted",
+    "2026-11-27T18:00:00Z": "凍結錨點 GitHub 收件 2026-11-27T18:00:00Z 不早於起日 2026-11-27 收盤 → 停",
+    "2026-11-27T19:00:00Z": "凍結錨點 GitHub 收件 2026-11-27T19:00:00Z 不早於起日 2026-11-27 收盤 → 停"
+   }
+  },
+  {
+   "name": "anchor_deadline_normal_day",
+   "pass": true,
+   "proof": {
+    "2026-11-30T20:59:00Z": "accepted",
+    "2026-11-30T21:00:00Z": "凍結錨點 GitHub 收件 2026-11-30T21:00:00Z 不早於起日 2026-11-30 收盤 → 停"
+   }
+  },
+  {
+   "name": "anchor_deadline_dst_day",
+   "pass": true,
+   "proof": {
+    "2026-10-30T19:59:00Z": "accepted",
+    "2026-10-30T20:00:00Z": "凍結錨點 GitHub 收件 2026-10-30T20:00:00Z 不早於起日 2026-10-30 收盤 → 停"
+   }
+  },
+  {
+   "name": "result_after_cutoff_counts_as_missing",
+   "pass": true,
+   "proof": {
+    "cut": "2027-06-21T20:00:00Z",
+    "flag": "closed_after_cutoff:2027-07-30T00:00:00Z > 2027-06-21 收盤"
+   }
+  },
+  {
+   "name": "result_later_than_now_not_yet_closed",
+   "pass": true,
+   "proof": {
+    "2026-10-14:ADI": "closed_after_now:2026-10-20T00:30:00Z(這個時點還沒有這筆結果)"
+   }
+  },
+  {
+   "name": "formal_corrupt_cache_stops_before_registration",
+   "pass": true,
+   "proof": {
+    "stop": "本機收件快取 run-777.json 有問題(evidence_cache_corrupt),GitHub 這次查得到原件 → 這是本機檔",
+    "state": {
+     "main": "fb4b92d5b8284b3e8fbfe8bad4aed3c5b96244bf",
+     "ledger": "66ffe012cbb2de944ab8a24f408faf492a1b073a",
+     "registration": [],
+     "look": []
+    }
+   }
+  },
+  {
+   "name": "repaired_cache_then_one_persisted_look",
+   "pass": true,
+   "proof": {
+    "info": {
+     "status": "PERSISTED",
+     "look_commit": "04a706fed49f087582c10d8d5028b22437b934db",
+     "remote_main": "04a706fed49f087582c10d8d5028b22437b934db",
+     "mode": "FIRST",
+     "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
+     "registration_commit": "35c13281ece4a1be1a09e54a0c26186456e82657",
+     "look_sha256": "b558090e6ce4de9982e1151d4c9264915874c651e2103e8c44bd32180392e42c"
+    },
+    "eligible": 1,
+    "decision": "INSUFFICIENT"
+   }
+  },
+  {
+   "name": "rerun_after_deleting_local_files_replays_identical",
+   "pass": true,
+   "proof": {
+    "status": "ALREADY_PERSISTED_IDENTICAL",
+    "look_commit": "04a706fed49f087582c10d8d5028b22437b934db",
+    "remote_main": "04a706fed49f087582c10d8d5028b22437b934db",
+    "mode": "REPLAY",
+    "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
+    "registration_commit": "35c13281ece4a1be1a09e54a0c26186456e82657",
+    "look_sha256": "b558090e6ce4de9982e1151d4c9264915874c651e2103e8c44bd32180392e42c"
+   }
+  },
+  {
+   "name": "other_checkout_replays_identical",
+   "pass": true,
+   "proof": {
+    "status": "ALREADY_PERSISTED_IDENTICAL",
+    "look_commit": "04a706fed49f087582c10d8d5028b22437b934db",
+    "remote_main": "04a706fed49f087582c10d8d5028b22437b934db",
+    "mode": "REPLAY",
+    "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
+    "registration_commit": "35c13281ece4a1be1a09e54a0c26186456e82657",
+    "look_sha256": "b558090e6ce4de9982e1151d4c9264915874c651e2103e8c44bd32180392e42c"
+   }
+  },
+  {
+   "name": "new_ledger_data_after_registration_ignored",
+   "pass": true,
+   "proof": {
+    "L0": "66ffe012cb",
+    "head": "7d29d5baaf"
+   }
+  },
+  {
+   "name": "tampered_remote_look_stops",
+   "pass": true,
+   "proof": "遠端 main 已經有這個實驗的判定檔,但和照登記重播的結果不同(或被改過)→ 停,要查原因;沒有寫任何東西"
+  },
+  {
+   "name": "ledger_push_rejected_no_registration",
+   "pass": true,
+   "proof": "開跑登記沒有送到遠端(沒有做任何判定)→ 停;直接重跑即可:remote: rejected by test hook\nTo /tmp/tm"
+  },
+  {
+   "name": "registration_without_receipt_stops_no_look",
+   "pass": true,
+   "proof": "開跑登記 efcb80547e 已送到 GitHub,但還查不到 ledger-receipt 收件紀錄(online)→ 停,沒有寫判定。"
+  },
+  {
+   "name": "look_push_rejected_not_persisted",
+   "pass": true,
+   "proof": "判定已算出,但 push 到遠端 main 一直失敗 → 狀態:未持久完成(不算已保存)。重跑會照同一份登記重播、得到同一份結果,再試一次保"
+  },
+  {
+   "name": "replay_after_failed_save_persists",
+   "pass": true,
+   "proof": {
+    "status": "PERSISTED",
+    "look_commit": "266604487eb48a4272300860358036882e3186ab",
+    "remote_main": "266604487eb48a4272300860358036882e3186ab",
+    "mode": "REPLAY",
+    "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
+    "registration_commit": "efcb80547effe7359e3256c917316ac3da537d21",
+    "look_sha256": "8b170fb6273d203814d1272926a6f65e35e583c2c98f0a25a50180f4fef09610"
+   }
+  },
+  {
+   "name": "tampered_registration_stops",
+   "pass": true,
+   "proof": "開跑登記被改過(不只一個 commit 碰過)→ 停"
   }
  ]
 }
