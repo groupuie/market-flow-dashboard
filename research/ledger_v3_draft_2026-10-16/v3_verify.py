@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""🧪 盤感測試 v3 草案 3(2026-10-17,Claude;**未凍結、還沒開始**)— 回應 Astra v0.7.4
+"""🧪 盤感測試 v3 草案 4(2026-10-21,Claude;**未凍結、還沒開始**)— 回應 Astra v0.7.5
+草案 3(git 4bfe44d)→ 草案 4(統計方法 C1、正權重、成本公式、逐日序列驗收都不變):
+  - 官方交易時段表:逐交易日的開盤 / 收盤(含 NYSE 13:00 提早收盤:2026-11-27、2026-12-24、2027-11-26、2028-07-03、2028-11-24)
+    併進日曆指紋;凍結錨點的截止(起日收盤)、出場紀錄的「不早於那根 K 線收盤」都用同一張表(Astra v0.7.5 §3.1)
+  - 正式模式遇到本機收件快取壞掉 / 和 GitHub 不同 → 停、不寫登記也不寫判定(不是研究資料缺漏);修復走 repair-evidence:
+    壞檔移到 quarantine/、用重新查到的原件重建、記進 REPAIRS.jsonl,修好再跑(§3.2)
+  - 唯一一次 = 「開跑登記 + 決定性重播」(§3.3):先把這次正式判定要用的輸入(ledger commit、main commit、程式指紋、環境)
+    寫成 astra-ledger 上的 v3_freeze/<實驗 ID>.start.json 並 push、拿到 GitHub 收件,才開始算;判定只用登記的輸入、
+    時間用登記的 GitHub 收件時間 → 重跑只會得到一模一樣的結果;判定檔 commit + push 到 main 並從遠端讀回核對,才叫「已保存」
+  - 結案截止:收案期最後一天之後第 51 個交易日收盤前沒有結果紀錄的,一律算缺漏(之後才補的結果也是)→ 判定和「哪一天跑」無關
+  - 線上證據的「使用紀錄」改記內容指紋(和抓取時間無關);空的 run 清單不存快取(GitHub 還沒建 run 時可以再查)
 草案 2(git a654145)→ 草案 3:
   統計(Astra v0.7.4 §3.1、附錄三)
   - H1 重抽保住「固定的格子目標」:發行人權重從 Poisson(1)(有 37% 是 0,稀疏格子會整格消失、分母跟著變)改成 Exp(1)
@@ -21,18 +31,19 @@
 用法:
   python3 -I v3_verify.py status  --dry-run --start YYYY-MM-DD --manifest-sha <v2 manifest SHA> [--repo R] [--evidence DIR] [--offline --pins REF:PATH]
   python3 -I v3_verify.py analyze --dry-run ... --out <試跑資料夾>
-  python3 -I v3_verify.py analyze --formal [--repo R]                      (凍結之後才能用)
+  python3 -I v3_verify.py analyze --formal [--repo R]                      (凍結之後才能用;會 push 開跑登記與判定檔)
+  python3 -I v3_verify.py repair-evidence --evidence DIR --name run-<id>.json  (正式模式說快取壞掉時才用)
   python3 -I v3_verify.py pin --evidence DIR                               (把證據檔的指紋寫成 PINS.json,之後 commit)
   python3 -I v3_verify.py make-manifest --start ... --cohort-sessions ... --h2-mode ... --v2-manifest-sha ... --min-effect-pp ...
 """
-import argparse, datetime as dt, gzip, hashlib, json, math, os, re, subprocess, sys, tempfile
+import argparse, datetime as dt, gzip, hashlib, json, math, os, re, shutil, subprocess, sys, tempfile, time
 from collections import Counter
 from zoneinfo import ZoneInfo
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO0 = os.path.abspath(os.path.join(HERE, '..', '..'))
 ET = ZoneInfo('America/New_York')
-VERSION = 'v3-draft3'
+VERSION = 'v3-draft4'
 OWNER_REPO = 'groupuie/market-flow-dashboard'; LEDGER_BRANCH = 'astra-ledger'; RECEIPT_WF = '.github/workflows/ledger-receipt.yml'
 ENGINE_FILES = ('scripts/astra_ledger.py', 'scripts/astra_trades.py', 'scripts/astra_data.py')
 IDX = ('SPY', 'QQQ')
@@ -49,7 +60,10 @@ SPEC = {'cohort_sessions': 120, 'horizon_sessions': 41, 'unresolved_after': 10, 
 HOLIDAYS = {'2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03', '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07', '2026-11-26', '2026-12-25',
             '2027-01-01', '2027-01-18', '2027-02-15', '2027-03-26', '2027-05-31', '2027-06-18', '2027-07-05', '2027-09-06', '2027-11-25', '2027-12-24',
             '2028-01-17', '2028-02-21', '2028-04-14', '2028-05-29', '2028-06-19', '2028-07-04', '2028-09-04', '2028-11-23', '2028-12-25'}
-CAL_END = '2028-12-29'
+CAL_START, CAL_END = '2026-01-02', '2028-12-29'
+# NYSE 官方提早收盤(美東 13:00;ICE / NYSE Group 2025-12-23「2026, 2027 and 2028 Holiday and Early Closings Calendar」)
+EARLY_CLOSE = {'2026-11-27': '13:00', '2026-12-24': '13:00', '2027-11-26': '13:00', '2028-07-03': '13:00', '2028-11-24': '13:00'}
+SESSION_OPEN, SESSION_CLOSE = '09:30', '16:00'
 MANIFEST_PATH = 'research/ledger_v3/v3_manifest.json'; VERIFIER_PATH = 'research/ledger_v3/v3_verify.py'; LOOK_DIR = 'research/ledger_v3/looks'
 ANCHOR_DIR = 'v3_freeze'              # astra-ledger 分支上的凍結錨點(它的 ledger-receipt run = GitHub 收到凍結內容的時間)
 IMMUTABLE_RUN_KEYS = ('id', 'name', 'path', 'event', 'head_branch', 'head_sha', 'created_at', 'repository')
@@ -79,14 +93,29 @@ def next_session(d):
     return d
 
 
-def deadline_utc(asof):
-    n = next_session(asof)
-    return dt.datetime(n.year, n.month, n.day, 9, 30, tzinfo=ET).astimezone(dt.timezone.utc)
+def _et(d, hhmm):
+    d = dt.date.fromisoformat(d) if isinstance(d, str) else d; h, m = (int(x) for x in hhmm.split(':'))
+    return dt.datetime(d.year, d.month, d.day, h, m, tzinfo=ET).astimezone(dt.timezone.utc)
+
+
+def session_hours(d):
+    """官方交易日的開盤 / 收盤(美東時間);不是官方交易日 → 停"""
+    ds = d if isinstance(d, str) else d.isoformat()
+    if not is_session(ds): raise SystemExit(f'{ds} 不是官方交易日 → 沒有開收盤時間 → 停')
+    return SESSION_OPEN, EARLY_CLOSE.get(ds, SESSION_CLOSE)
+
+
+def open_utc(d):
+    return _et(d, session_hours(d)[0])
 
 
 def close_utc(d):
-    d = dt.date.fromisoformat(d)
-    return dt.datetime(d.year, d.month, d.day, 16, 0, tzinfo=ET).astimezone(dt.timezone.utc)
+    """官方收盤(UTC):一般日 16:00 美東、提早收盤日 13:00 美東;夏令時間由時區資料庫換算"""
+    return _et(d, session_hours(d)[1])
+
+
+def deadline_utc(asof):
+    return open_utc(next_session(asof))
 
 
 def sessions(a, b):
@@ -104,8 +133,18 @@ def add_sessions(a, k):
     return d.isoformat()
 
 
+def session_table():
+    """CAL_START ~ CAL_END 每一個官方交易日的 [日期, 開盤 UTC, 收盤 UTC]"""
+    return [[d, ts(open_utc(d)), ts(close_utc(d))] for d in sessions(CAL_START, CAL_END)]
+
+
 def calendar_fingerprint():
-    return sha(json.dumps({'holidays': sorted(HOLIDAYS), 'cal_end': CAL_END}, sort_keys=True).encode())
+    """休市日 + 提早收盤表 + 逐日開收盤(UTC,含夏令時間換算)→ 任何一項改了,指紋就不同"""
+    return sha(json.dumps({'schema': 'nyse-sessions-2', 'holidays': sorted(HOLIDAYS), 'early_close_et': dict(sorted(EARLY_CLOSE.items())),
+                           'cal_start': CAL_START, 'cal_end': CAL_END, 'sessions_utc': session_table()}, sort_keys=True).encode())
+
+
+assert all(is_session(d) and EARLY_CLOSE[d] < SESSION_CLOSE for d in EARLY_CLOSE), '提早收盤表裡有不是交易日的日期'
 
 
 def P(x):
@@ -167,7 +206,10 @@ def gh_api(path):
     except Exception as e:
         raise APIError(str(e)[:200])
     if r.returncode != 0: raise APIError(r.stderr[:200])
-    return json.loads(r.stdout)
+    try:
+        return json.loads(r.stdout)
+    except ValueError as e:                     # 回應不是 JSON 也是查詢失敗(基礎設施),不是證據不合格
+        raise APIError(f'GitHub 回應不是 JSON:{e}')
 
 
 def run_subset(a):
@@ -180,18 +222,36 @@ def canon(x):
     return x
 
 
+def api_sha(api):
+    return sha(json.dumps(api, sort_keys=True).encode())
+
+
+def evidence_record(source, api):
+    return {'schema': 'v3-evidence-2', 'fetched_utc': ts(clock()), 'source': source, 'api': api, 'api_subset_sha256': api_sha(api)}
+
+
+def cache_fault(b, source, fresh):
+    """本機快取(位元組)對照 GitHub 新查到的原件:None = 沒問題;否則回傳原因"""
+    try: rec = json.loads(b)
+    except Exception: return 'evidence_cache_corrupt'
+    if not Evidence._intact(rec, source): return 'evidence_cache_corrupt'
+    if canon(rec['api']) != canon(fresh): return 'evidence_cache_differs_from_api'
+    return None
+
+
 class Evidence:
-    """online:一定重新問 GitHub;已存的檔要完整(內部雜湊對、來源字串對)而且和 API 一樣,否則不收;沒有就存一份
+    """online:一定重新問 GitHub;已存的檔要完整(內部雜湊對、來源字串對)而且和 API 一樣;沒有就存一份(空的 run 清單不存)
     pinned(離線):只用已存的檔,檔案位元組的 SHA-256 要等於釘選表(從 git 物件讀,--pins REF:PATH);沒釘住 → 不收
-    strict(正式模式):API 查詢失敗 → 停(不把基礎設施失敗當成證據不合格)"""
+    strict(正式模式):API 查詢失敗、或本機快取壞掉 / 和 API 不同 → 停(這些是基礎設施故障,不是研究資料;不寫登記、不寫判定)
+    非 strict(試跑):快取有問題 → 這一批標「證據不合格」並列出原因(只是診斷,不用掉任何東西)"""
     def __init__(self, evdir, online, pins=None, pins_src=None, strict=False):
         self.dir, self.online, self.pins, self.pins_src, self.strict, self.used = evdir, online, pins or {}, pins_src, strict, {}
 
     @staticmethod
     def _intact(rec, source):
-        return isinstance(rec, dict) and rec.get('source') == source and rec.get('api_subset_sha256') == sha(json.dumps(rec.get('api'), sort_keys=True).encode())
+        return isinstance(rec, dict) and rec.get('source') == source and rec.get('api_subset_sha256') == api_sha(rec.get('api'))
 
-    def get(self, name, source, fetch):
+    def get(self, name, source, fetch, cache_empty=True):
         p = os.path.join(self.dir, name)
         if self.online:
             try:
@@ -200,16 +260,17 @@ class Evidence:
                 if self.strict: raise SystemExit(f'GitHub API 查詢失敗({name})→ 停,不寫判定;之後再跑:{e}')
                 return None, 'api_error'
             if os.path.exists(p):
-                try: rec = json.load(open(p, encoding='utf-8'))
-                except Exception: return None, 'evidence_cache_corrupt'
-                if not self._intact(rec, source): return None, 'evidence_cache_corrupt'
-                if canon(rec['api']) != canon(fresh): return None, 'evidence_cache_differs_from_api'
-            else:
-                rec = {'schema': 'v3-evidence-2', 'fetched_utc': ts(clock()), 'source': source, 'api': fresh,
-                       'api_subset_sha256': sha(json.dumps(fresh, sort_keys=True).encode())}
+                fault = cache_fault(open(p, 'rb').read(), source, fresh)
+                if fault:
+                    if self.strict:
+                        raise SystemExit(f'本機收件快取 {name} 有問題({fault}),GitHub 這次查得到原件 → 這是本機檔案故障、不是研究資料 → 停,不寫登記、不寫判定。'
+                                         f'修復:python3 -I v3_verify.py repair-evidence --evidence {self.dir} --name {name}'
+                                         f'(壞檔移到 quarantine/、用重新查到的原件重建、記進 REPAIRS.jsonl),修好再跑')
+                    return None, fault
+            elif fresh or cache_empty:
                 os.makedirs(self.dir, exist_ok=True)
-                with open(p, 'w', encoding='utf-8') as fh: json.dump(rec, fh, indent=1, sort_keys=True)
-            self.used[name] = sha(open(p, 'rb').read())
+                with open(p, 'w', encoding='utf-8') as fh: json.dump(evidence_record(source, fresh), fh, indent=1, sort_keys=True)
+            self.used[name] = api_sha(fresh)        # 內容指紋(和抓取時間無關 → 重播時一樣)
             return fresh, 'online'
         if not os.path.exists(p): return None, 'evidence_missing'
         b = open(p, 'rb').read()
@@ -221,16 +282,57 @@ class Evidence:
         return rec['api'], 'pinned'
 
 
+def evidence_query(name):
+    """證據檔名 → (來源字串, 查詢函式, 空結果要不要存);只有兩種:單一 run、某個 commit 的 run 清單"""
+    m = re.fullmatch(r'run-(\d+)\.json', name)
+    if m:
+        path = f'repos/{OWNER_REPO}/actions/runs/{int(m.group(1))}'
+        return 'GET ' + path, (lambda: run_subset(gh_api(path))), True
+    m = re.fullmatch(r'runs-for-([0-9a-f]{40})\.json', name)
+    if m:
+        path = f'repos/{OWNER_REPO}/actions/runs?branch={LEDGER_BRANCH}&event=push&head_sha={m.group(1)}&per_page=100'
+        return 'GET ' + path, (lambda: sorted((run_subset(r) for r in (gh_api(path).get('workflow_runs') or [])), key=lambda x: x['id'])), False
+    raise SystemExit(f'不認得的證據檔名:{name}')
+
+
 def get_run(store, run_id):
-    path = f'repos/{OWNER_REPO}/actions/runs/{int(run_id)}'
-    return store.get(f'run-{int(run_id)}.json', 'GET ' + path, lambda: run_subset(gh_api(path)))
+    name = f'run-{int(run_id)}.json'; src, fetch, ce = evidence_query(name)
+    return store.get(name, src, fetch, cache_empty=ce)
 
 
 def runs_for_commit(store, commit):
     if not re.fullmatch(r'[0-9a-f]{40}', str(commit)): return None, 'bad_commit_id'
-    path = f'repos/{OWNER_REPO}/actions/runs?branch={LEDGER_BRANCH}&event=push&head_sha={commit}&per_page=100'
-    return store.get(f'runs-for-{commit}.json', 'GET ' + path,
-                     lambda: sorted((run_subset(r) for r in (gh_api(path).get('workflow_runs') or [])), key=lambda x: x['id']))
+    name = f'runs-for-{commit}.json'; src, fetch, ce = evidence_query(name)
+    return store.get(name, src, fetch, cache_empty=ce)
+
+
+def repairs_log(evdir):
+    p = os.path.join(evdir, 'REPAIRS.jsonl')
+    return [json.loads(l) for l in open(p, encoding='utf-8')] if os.path.exists(p) else []
+
+
+def repair_evidence(evdir, name):
+    """正式模式說「本機快取壞了 / 和 GitHub 不同」時的復原:重新問 GitHub → 壞檔原封移到 quarantine/ → 用新查到的原件重建 → 記一行 REPAIRS.jsonl
+    快取本來就沒問題 → 什麼都不做;GitHub 查不到 → 停(不修)"""
+    src, fetch, ce = evidence_query(name)
+    try:
+        fresh = fetch()
+    except APIError as e:
+        raise SystemExit(f'GitHub API 查詢失敗 → 不修(之後再試):{e}')
+    p = os.path.join(evdir, name); old = open(p, 'rb').read() if os.path.exists(p) else None
+    reason = 'missing' if old is None else cache_fault(old, src, fresh)
+    if reason is None: return {'name': name, 'status': 'no_repair_needed'}
+    if not fresh and not ce: raise SystemExit('GitHub 查到的是空清單 → 不建快取(之後再試)')
+    now = clock(); stamp = now.strftime('%Y%m%dT%H%M%SZ'); q = None
+    if old is not None:
+        q = os.path.join('quarantine', f'{name}.{stamp}.bad'); os.makedirs(os.path.join(evdir, 'quarantine'), exist_ok=True)
+        os.replace(p, os.path.join(evdir, q))
+    os.makedirs(evdir, exist_ok=True)
+    with open(p, 'w', encoding='utf-8') as fh: json.dump(evidence_record(src, fresh), fh, indent=1, sort_keys=True)
+    log = {'schema': 'v3-evidence-repair-1', 'name': name, 'repaired_utc': ts(now), 'reason': reason, 'old_sha256': sha(old) if old is not None else None,
+           'quarantined_as': q, 'new_sha256': sha(open(p, 'rb').read()), 'api_subset_sha256': api_sha(fresh), 'source': src}
+    with open(os.path.join(evdir, 'REPAIRS.jsonl'), 'a', encoding='utf-8') as fh: fh.write(json.dumps(log, ensure_ascii=False, sort_keys=True) + '\n')
+    return dict(log, status='repaired')
 
 
 def good_receipts(runs, commit):
@@ -647,6 +749,7 @@ def collect(g, lref, mref, cfg, today, now, store):
         batches[b.get('asof')] = b; bbytes[b.get('asof')] = bb
     sc = json.loads(g.show(lref, 'scores.json') or b'{"marks":{}}')
     end = add_sessions(cfg['start'], cfg['cohort_sessions']); cal = sessions(cfg['start'], end)
+    cut = add_sessions(end, cfg['horizon_sessions'] + cfg['unresolved_after'] + 1); cut_t = close_utc(cut)   # 收案期最後一天之後第 51 個交易日收盤
     seen = [d for d in cal if d <= min(today, end) and (deadline_utc(d) < now or (batches.get(d) or {}).get('status') in ('locked', 'no_signals'))]
     reasons, rows, cov_ok, snaps_all, by_date = Counter(), [], 0, {}, {}
     for d in seen:
@@ -682,15 +785,21 @@ def collect(g, lref, mref, cfg, today, now, store):
     n_after = len(sessions(end, today)) - 1 if today >= end else -1
     closed, missing, flags = [], [], {}
     for m, _ in elig:
-        stt, r, note = replay(m, (sc.get('marks') or {}).get(m['id']), snaps_all[m['id']], cfg)
+        rec = (sc.get('marks') or {}).get(m['id'])
+        stt, r, note = replay(m, rec, snaps_all[m['id']], cfg)
+        if stt == 'closed' and P(rec['closed_utc']) > now:           # 以「現在」為準還沒發生的結果(例如指定過去時點重播)→ 當作還沒結束
+            stt, r, note = 'open', None, f'closed_after_now:{rec["closed_utc"]}(這個時點還沒有這筆結果)'
+        elif stt == 'closed' and P(rec['closed_utc']) > cut_t:      # 截止之後才有的結果一律算缺漏 → 判定和「哪一天跑」無關
+            stt, r, note = 'closed_after_cutoff', None, f'closed_after_cutoff:{rec["closed_utc"]} > {cut} 收盤'
         if note: flags[m['id']] = note
         key = (m['date'], m['type'], m['sym'], m['v'])
         if stt == 'closed': closed.append(key + (r,))
-        elif stt == 'unreproducible' or n_after >= cfg['horizon_sessions'] + cfg['unresolved_after']: missing.append(key)
+        elif stt in ('unreproducible', 'closed_after_cutoff') or n_after >= cfg['horizon_sessions'] + cfg['unresolved_after']: missing.append(key)
         if stt == 'unreproducible': flags[m['id']] = 'unreproducible: ' + note
     pending = len(elig) - len(closed) - len(missing)
     status = 'COLLECTING' if today <= end else ('MATURING' if (n_after < cfg['horizon_sessions'] or pending) else 'READY')
-    pub = {'version': VERSION, 'cohort': {'start': cfg['start'], 'end': end, 'sessions': len(cal), 'today': today, 'sessions_seen': len(seen)},
+    pub = {'version': VERSION, 'cohort': {'start': cfg['start'], 'end': end, 'sessions': len(cal), 'today': today, 'sessions_seen': len(seen),
+                                          'resolve_by': cut, 'resolve_by_close_utc': ts(cut_t)},
            'status': status, 'batch_coverage': {'ok': cov_ok, 'seen': len(seen), 'rate': cov_ok / max(1, len(seen)), 'by_date': by_date},
            'counts': {'marks_in_window': len(rows), 'eligible': len(elig), 'rejected': len(rows) - len(elig), 'closed_reproducible': len(closed),
                       'missing_or_unreproducible': len(missing), 'pending': pending, 'not_eligible_reasons': dict(reasons),
@@ -715,9 +824,10 @@ def make_manifest(start, cohort_sessions, h2_mode, v2_manifest_sha, verifier_byt
     if h2_mode not in ALLOWED['h2_mode'] or cohort_sessions not in ALLOWED['cohort_sessions']: raise SystemExit('H2 / 收案長度不在允許的選項裡')
     if not re.fullmatch(r'[0-9a-f]{64}', v2_manifest_sha): raise SystemExit('v2 manifest SHA 格式不對')
     cfg = dict(SPEC, cohort_sessions=cohort_sessions, h2_mode=h2_mode); end = add_sessions(start, cohort_sessions); exp = experiment_id(start, cfg)
+    cut = add_sessions(end, cfg['horizon_sessions'] + cfg['unresolved_after'] + 1)      # 超出官方日曆 → 停(不能做這個起日)
     return {'schema': 'ledger-v3-manifest-1', 'experiment_id': exp, 'owner_repo': OWNER_REPO, 'ledger_branch': LEDGER_BRANCH,
             'verifier_path': VERIFIER_PATH, 'verifier_sha256': sha(verifier_bytes), 'verifier_version': VERSION, 'spec': spec_json(cfg),
-            'start': start, 'end': end, 'calendar_sha256': calendar_fingerprint(), 'cohort_sessions_sha256': sha('\n'.join(sessions(start, end)).encode()),
+            'start': start, 'end': end, 'resolve_by': cut, 'calendar_sha256': calendar_fingerprint(), 'cohort_sessions_sha256': sha('\n'.join(sessions(start, end)).encode()),
             'v2_engine_manifest_sha256': v2_manifest_sha, 'min_effect_pp': min_effect_pp, 'look_path': f'{LOOK_DIR}/{exp}.json',
             'anchor_path': f'{ANCHOR_DIR}/{exp}.json', 'note': note}
 
@@ -727,12 +837,122 @@ def anchor_json(manifest_bytes, freeze_commit):
     return {'schema': 'ledger-v3-anchor-1', 'experiment_id': m['experiment_id'], 'manifest_sha256': sha(manifest_bytes), 'main_freeze_commit': freeze_commit}
 
 
+REG_SCHEMA, LOOK_SCHEMA = 'ledger-v3-start-1', 'ledger-v3-look-2'
+REG_KEYS = {'schema', 'experiment_id', 'manifest_sha256', 'freeze_commit', 'verifier_sha256', 'ledger_input_commit', 'main_input_commit',
+            'registered_local_utc', 'environment', 'evidence_repairs'}
+
+
+def registration_path(exp):
+    return f'{ANCHOR_DIR}/{exp}.start.json'
+
+
+def env_info():
+    """決定性重播要用同一個計算環境(Python 主次版本 + NumPy 版本;亂數與浮點運算都在這裡)"""
+    return {'python': '.'.join(sys.version.split()[0].split('.')[:2]), 'numpy': np.__version__}
+
+
+def canon_bytes(obj):
+    return (json.dumps(obj, ensure_ascii=False, indent=1, sort_keys=True, default=str) + '\n').encode()
+
+
 def look_exists(repo, path):
     if os.path.exists(path): return True
     rel = os.path.relpath(path, repo)
     r = subprocess.run(['git', '-C', repo, 'log', '--all', '--format=%H', '--', rel], capture_output=True, text=True)
     if r.returncode != 0: raise SystemExit('查不到 look 登記的 git 歷史 → 停')
     return bool(r.stdout.strip())
+
+
+def fetch_remote(g, remote):
+    """正式模式一律以遠端為準:抓 main 與 astra-ledger,回傳兩個遠端最新 commit"""
+    g.run('fetch', '-q', remote, f'+refs/heads/main:refs/remotes/{remote}/main', f'+refs/heads/{LEDGER_BRANCH}:refs/remotes/{remote}/{LEDGER_BRANCH}')
+    return g.verify(f'{remote}/main'), g.verify(f'{remote}/{LEDGER_BRANCH}')
+
+
+def push_new_file(g, remote, branch, base, rel, body, msg):
+    """以 base 為底,在暫存 worktree 新增一個檔(不存在才建立)→ commit → push 到遠端 branch(只能快轉;不碰工作區)
+    回傳 (commit, '');push 被拒 → (None, 錯誤訊息)"""
+    root = tempfile.mkdtemp(prefix='v3push_'); wt = os.path.join(root, 'wt')
+    who = [] if subprocess.run(['git', '-C', g.repo, 'config', 'user.email'], capture_output=True, text=True).stdout.strip() else \
+          ['-c', 'user.name=ledger-v3-formal', '-c', 'user.email=ledger-v3-formal@users.noreply.github.com']
+    try:
+        g.run('worktree', 'add', '-q', '--detach', wt, base)
+        fp = os.path.join(wt, rel); os.makedirs(os.path.dirname(fp), exist_ok=True)
+        with open(fp, 'xb') as fh: fh.write(body)
+        for a in (['add', '--', rel], [*who, 'commit', '-q', '-m', msg]):
+            r = subprocess.run(['git', '-C', wt, *a], capture_output=True, text=True)
+            if r.returncode != 0: raise SystemExit(f'git {" ".join(a[-3:])} 失敗 → 停:{r.stderr[:300]}')
+        c = subprocess.run(['git', '-C', wt, 'rev-parse', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
+        r = subprocess.run(['git', '-C', wt, 'push', '-q', remote, f'HEAD:refs/heads/{branch}'], capture_output=True, text=True)
+        return (c, '') if r.returncode == 0 else (None, r.stderr.strip()[-300:])
+    finally:
+        subprocess.run(['git', '-C', g.repo, 'worktree', 'remove', '--force', wt], capture_output=True)
+        shutil.rmtree(root, ignore_errors=True)
+
+
+def wait_receipt(store, commit, timeout_s):
+    """等 GitHub 為這個 commit 建 ledger-receipt run(收件時間 = 第三方時間戳);等不到 → 停"""
+    t_end = time.time() + timeout_s
+    while True:
+        runs, src = runs_for_commit(store, commit)
+        good = good_receipts(runs, commit) if runs is not None else []
+        if good: return min(r['created_at'] for r in good)
+        if time.time() >= t_end:
+            raise SystemExit(f'開跑登記 {commit[:10]} 已送到 GitHub,但還查不到 ledger-receipt 收件紀錄({src})→ 停,沒有寫判定。'
+                             '稍後重跑:會讀到這份登記,照登記的輸入重播')
+        time.sleep(min(10.0, max(0.5, t_end - time.time())))
+
+
+def check_registration(g, R, man, mb, F, me, rmain, store):
+    """已經有開跑登記 → 核對它,回傳 (登記內容, GitHub 收件時間);任何一項不符 → 停"""
+    rp = registration_path(man['experiment_id']); body = g.show(R, rp) or b''
+    try: reg = json.loads(body)
+    except Exception: raise SystemExit('開跑登記讀不出來 → 停')
+    if not isinstance(reg, dict) or set(reg) != REG_KEYS or reg['schema'] != REG_SCHEMA or reg['experiment_id'] != man['experiment_id'] \
+            or reg['manifest_sha256'] != sha(mb) or reg['freeze_commit'] != F or body != canon_bytes(reg):
+        raise SystemExit('開跑登記的格式、manifest 或凍結 commit 對不上 → 停')
+    if reg['verifier_sha256'] != sha(me): raise SystemExit('開跑登記時用的驗證程式和現在執行的不同 → 停')
+    parents = g.run('rev-list', '--parents', '-n', '1', R).decode().split()[1:]
+    changed = [x for x in g.run('diff-tree', '--no-commit-id', '--name-only', '-r', R).decode().split('\n') if x]
+    if parents != [reg['ledger_input_commit']] or changed != [rp]: raise SystemExit('開跑登記的 commit 不是「在登記的 ledger 輸入上只加這一個檔」→ 停')
+    M0 = str(reg['main_input_commit'])
+    if not (re.fullmatch(r'[0-9a-f]{40}', M0) and g.is_ancestor(F, M0) and g.is_ancestor(M0, rmain)): raise SystemExit('開跑登記的 main 輸入不在遠端 main 上 → 停')
+    if reg['environment'] != env_info():
+        raise SystemExit(f'重播要用和登記時一樣的計算環境:登記 {reg["environment"]},現在 {env_info()} → 停(換成同一版再跑)')
+    runs, src = runs_for_commit(store, R); good = good_receipts(runs, R) if runs is not None else []
+    if not good: raise SystemExit(f'開跑登記沒有 GitHub 收件紀錄({src})→ 停')
+    return reg, min(r['created_at'] for r in good)
+
+
+def compute_look(g, man, mb, F, anchor, cfg, me, reg, R, t_reg, store):
+    """只用登記的輸入(ledger / main commit)與登記的 GitHub 收件時間計算 → 同樣的登記,重跑一定得到同樣的位元組"""
+    now = P(t_reg); today = now.astimezone(ET).date().isoformat()
+    pub, closed, missing, cal, cov = collect(g, reg['ledger_input_commit'], reg['main_input_commit'], cfg, today, now, store)
+    if pub['status'] != 'READY': raise SystemExit(f'照登記的輸入重算,狀態是 {pub["status"]}(不是 READY)→ 停,沒有寫判定')
+    res = decide(closed, missing, cal, cfg, cov)
+    look = {'schema': LOOK_SCHEMA, 'mode': 'FORMAL', 'experiment_id': man['experiment_id'], 'decision': res['decision'], 'go_live_candidate': res['go_live_candidate'],
+            'result': res, 'status': pub, 'manifest_sha256': sha(mb), 'freeze_commit': F, 'freeze_anchor': anchor,
+            'registration': {'path': registration_path(man['experiment_id']), 'commit': R, 'remote_received_utc': t_reg, 'record': reg},
+            'verifier_sha256': sha(me), 'inputs_sha256': sha(json.dumps([closed, missing], sort_keys=True).encode()), 'analysis_time_utc': t_reg}
+    return look, canon_bytes(look)
+
+
+def persist_look(g, remote, rel, body, exp, attempts=5):
+    """判定檔 commit + push 到遠端 main,再從遠端讀回、逐位元組核對 → PERSISTED;遠端早就有一模一樣的 → ALREADY_PERSISTED_IDENTICAL
+    遠端有但不一樣 → 停;push 一直失敗 → 停(狀態 = 未持久完成,重跑會重播同一份結果再存)"""
+    pushed, err = None, ''
+    for k in range(attempts + 1):
+        rmain, _ = fetch_remote(g, remote); have = g.touching(rmain, rel)
+        if have:
+            if len(have) == 1 and g.show(rmain, rel) == body:
+                return {'status': 'PERSISTED' if pushed else 'ALREADY_PERSISTED_IDENTICAL', 'look_commit': have[0], 'remote_main': rmain}
+            raise SystemExit('遠端 main 已經有這個實驗的判定檔,但和照登記重播的結果不同(或被改過)→ 停,要查原因;沒有寫任何東西')
+        if pushed: raise SystemExit('判定檔 push 了,但從遠端讀不回來 → 狀態:未持久完成;重跑會照同一份登記重播,再核對一次')
+        if k == attempts: break
+        c, err = push_new_file(g, remote, 'main', rmain, rel, body, f'v3 正式判定 {exp}(只用開跑登記的輸入;重跑結果相同)')
+        if c: pushed = c
+        else: time.sleep(3)
+    raise SystemExit(f'判定已算出,但 push 到遠端 main 一直失敗 → 狀態:未持久完成(不算已保存)。重跑會照同一份登記重播、得到同一份結果,再試一次保存:{err}')
 
 
 def formal_checks(g, mref, lref, store, me_bytes):
@@ -757,6 +977,7 @@ def formal_checks(g, mref, lref, store, me_bytes):
     if man.get('calendar_sha256') != calendar_fingerprint(): raise SystemExit('官方日曆和凍結時不同 → 停')
     end = add_sessions(man['start'], cfg['cohort_sessions'])
     if end != man.get('end') or sha('\n'.join(sessions(man['start'], end)).encode()) != man.get('cohort_sessions_sha256'): raise SystemExit('收案日曆和凍結時不同 → 停')
+    if man.get('resolve_by') != add_sessions(end, cfg['horizon_sessions'] + cfg['unresolved_after'] + 1): raise SystemExit('結案截止日和凍結時不同 → 停')
     exp = experiment_id(man['start'], cfg)
     if man.get('experiment_id') != exp or man.get('look_path') != f'{LOOK_DIR}/{exp}.json' or man.get('anchor_path') != f'{ANCHOR_DIR}/{exp}.json': raise SystemExit('實驗 ID / 固定位置不對 → 停')
     ap = man['anchor_path']; at_ = g.touching(lref, ap)
@@ -772,28 +993,44 @@ def formal_checks(g, mref, lref, store, me_bytes):
     return man, mb, F, {'anchor_commit': A, 'remote_received_utc': t}, cfg
 
 
-def formal_run(repo, ledger_ref='origin/astra-ledger', main_ref='origin/main', evdir=None, me_path=None):
-    g = Git(repo); mref = g.verify(main_ref); lref = g.verify(ledger_ref)
+def formal_run(repo, ledger_ref=None, main_ref=None, evdir=None, me_path=None, remote='origin', wait_receipt_s=180):
+    """正式判定(一個實驗只有一份結果):
+    1. 抓遠端 → 核對凍結(manifest、程式指紋、固定規格、日曆、錨點)
+    2. astra-ledger 已經有開跑登記 → 核對登記 → 照登記的輸入重播(REPLAY)
+       沒有 → 先確認 READY(只看筆數、不算結果)→ 把輸入寫成開跑登記 → push → 拿到 GitHub 收件 → 才開始算(FIRST)
+    3. 只用登記的 ledger / main commit 與登記的收件時間計算 → 判定檔 push 到遠端 main → 讀回逐位元組核對
+    任何基礎設施故障(API、本機快取、push)都在寫判定之前停下;回傳 (判定, 保存資訊)"""
+    g = Git(repo); rmain, rledger = fetch_remote(g, remote)
+    mref = g.verify(main_ref) if main_ref else rmain; lref = g.verify(ledger_ref) if ledger_ref else rledger
     me = open(me_path or os.path.abspath(__file__), 'rb').read()
     store = Evidence(evdir or os.path.join(repo, 'research', 'ledger_v3', 'evidence'), online=True, strict=True)
     man, mb, F, anchor, cfg = formal_checks(g, mref, lref, store, me)
-    lp = os.path.join(repo, man['look_path'])
-    if look_exists(repo, lp): raise SystemExit('這個實驗已經做過唯一一次判定 → 不再做')
-    now = clock(); today = now.astimezone(ET).date().isoformat()
-    pub, closed, missing, cal, cov = collect(g, lref, mref, cfg, today, now, store)
-    if pub['status'] != 'READY': raise SystemExit(f'狀態是 {pub["status"]},還不能判定(沒有寫任何判定)')
-    res = decide(closed, missing, cal, cfg, cov)
-    look = {'schema': 'ledger-v3-look-1', 'mode': 'FORMAL', 'experiment_id': man['experiment_id'], 'decision': res['decision'],
-            'go_live_candidate': res['go_live_candidate'], 'result': res, 'status': pub, 'manifest_sha256': sha(mb), 'freeze_commit': F,
-            'freeze_anchor': anchor, 'verifier_sha256': sha(me), 'inputs_sha256': sha(json.dumps([closed, missing], sort_keys=True).encode()),
-            'performed_utc': ts(now)}
-    os.makedirs(os.path.dirname(lp), exist_ok=True)
-    try:
-        fd = os.open(lp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)       # 已經有檔 → 失敗,不覆蓋
-    except FileExistsError:
-        raise SystemExit('looks 檔已經存在 → 不覆蓋、不再做')
-    with os.fdopen(fd, 'w', encoding='utf-8') as fh: json.dump(look, fh, ensure_ascii=False, indent=1, sort_keys=True, default=str)
-    return look, lp
+    exp = man['experiment_id']; rp = registration_path(exp)
+    if not (g.is_ancestor(mref, rmain) and g.is_ancestor(lref, rledger)): raise SystemExit('正式模式只能用遠端的 main / astra-ledger(本機自己的分支不行)→ 停')
+    regs = g.touching(rledger, rp)
+    if len(regs) > 1: raise SystemExit('開跑登記被改過(不只一個 commit 碰過)→ 停')
+    if regs:
+        R = regs[0]; reg, t_reg = check_registration(g, R, man, mb, F, me, rmain, store); mode = 'REPLAY'
+    else:
+        if g.touching(rmain, man['look_path']) or look_exists(repo, os.path.join(repo, man['look_path'])):
+            raise SystemExit('這個實驗已經有判定檔,卻沒有開跑登記 → 停(要查原因)')
+        if lref != rledger: raise SystemExit('開跑登記要接在遠端最新的 astra-ledger 上 → 停')
+        now = clock(); today = now.astimezone(ET).date().isoformat()
+        pub0 = collect(g, lref, mref, cfg, today, now, store)[0]
+        if pub0['status'] != 'READY': raise SystemExit(f'狀態是 {pub0["status"]},還不能判定(沒有寫任何登記或判定)')
+        reg = {'schema': REG_SCHEMA, 'experiment_id': exp, 'manifest_sha256': sha(mb), 'freeze_commit': F, 'verifier_sha256': sha(me),
+               'ledger_input_commit': lref, 'main_input_commit': mref, 'registered_local_utc': ts(now), 'environment': env_info(),
+               'evidence_repairs': repairs_log(store.dir)}
+        body = canon_bytes(reg)
+        R, err = push_new_file(g, remote, LEDGER_BRANCH, lref, rp, body, f'v3 正式判定開跑登記 {exp}')
+        if R is None: raise SystemExit(f'開跑登記沒有送到遠端(沒有做任何判定)→ 停;直接重跑即可:{err}')
+        _, rledger2 = fetch_remote(g, remote)
+        if g.touching(rledger2, rp) != [R] or g.show(rledger2, rp) != body: raise SystemExit('遠端讀不回剛送出的開跑登記 → 停')
+        t_reg = wait_receipt(store, R, wait_receipt_s); mode = 'FIRST'
+    look, body = compute_look(g, man, mb, F, anchor, cfg, me, reg, R, t_reg, store)
+    info = persist_look(g, remote, man['look_path'], body, exp)
+    info.update(mode=mode, look_path=man['look_path'], registration_commit=R, look_sha256=sha(body))
+    return look, info
 
 
 # ---------------------------------------------------------------- 命令列
@@ -806,8 +1043,8 @@ def dry_cfg(A):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('cmd', choices=['status', 'analyze', 'pin', 'make-manifest'])
-    ap.add_argument('--repo', default=REPO0); ap.add_argument('--ledger-ref', default='origin/astra-ledger'); ap.add_argument('--main-ref', default='origin/main')
+    ap = argparse.ArgumentParser(); ap.add_argument('cmd', choices=['status', 'analyze', 'pin', 'make-manifest', 'repair-evidence'])
+    ap.add_argument('--repo', default=REPO0); ap.add_argument('--ledger-ref'); ap.add_argument('--main-ref'); ap.add_argument('--name')
     ap.add_argument('--dry-run', action='store_true'); ap.add_argument('--formal', action='store_true')
     ap.add_argument('--start'); ap.add_argument('--today'); ap.add_argument('--now'); ap.add_argument('--manifest-sha')
     ap.add_argument('--evidence'); ap.add_argument('--offline', action='store_true'); ap.add_argument('--pins'); ap.add_argument('--out')
@@ -822,16 +1059,19 @@ def main():
     if A.cmd == 'make-manifest':
         vb = open(os.path.abspath(__file__), 'rb').read()
         print(json.dumps(make_manifest(A.start, A.cohort_sessions, A.h2_mode, A.v2_manifest_sha, vb, A.min_effect_pp, A.note), ensure_ascii=False, indent=1)); return
+    if A.cmd == 'repair-evidence':
+        if not (A.evidence and A.name): raise SystemExit('repair-evidence 要給 --evidence DIR --name 檔名(正式模式停下時訊息裡有)')
+        print(json.dumps(repair_evidence(A.evidence, A.name), ensure_ascii=False, indent=1)); return
     if A.formal:
-        if A.dry_run or A.offline or A.today or A.now or A.start or A.h2_mode or A.date_block or A.cohort_sessions or A.h1_method or A.out:
-            raise SystemExit('正式模式不接受任何覆寫參數(時間、規格、離線、輸出位置都由凍結的 manifest 決定)')
+        if A.dry_run or A.offline or A.today or A.now or A.start or A.h2_mode or A.date_block or A.cohort_sessions or A.h1_method or A.out or A.ledger_ref or A.main_ref:
+            raise SystemExit('正式模式不接受任何覆寫參數(時間、規格、離線、輸出位置、分支都由凍結的 manifest 與遠端決定)')
         if A.cmd != 'analyze': raise SystemExit('正式模式只有 analyze')
-        look, lp = formal_run(A.repo, A.ledger_ref, A.main_ref, A.evidence)
-        print(look['decision'], lp, '\n→ 請把這個檔 commit + push(git 歷史裡有了就不能再做)'); return
+        look, info = formal_run(A.repo, evdir=A.evidence)
+        print(json.dumps({'decision': look['decision'], **info}, ensure_ascii=False, indent=1)); return
     if not A.dry_run: raise SystemExit('沒有 --formal 就要 --dry-run(試跑)')
     if A.cmd == 'analyze' and (not A.out or os.path.abspath(A.out).startswith(os.path.join(os.path.abspath(A.repo), 'research', 'ledger_v3', 'looks'))):
         raise SystemExit('試跑要 --out,而且不能寫進正式 looks 位置')
-    cfg = dry_cfg(A); g = Git(A.repo); lref = g.verify(A.ledger_ref); mref = g.verify(A.main_ref)
+    cfg = dry_cfg(A); g = Git(A.repo); lref = g.verify(A.ledger_ref or 'origin/astra-ledger'); mref = g.verify(A.main_ref or 'origin/main')
     pins, psrc = load_pins(g, A.pins) if A.offline else ({}, None)
     store = Evidence(A.evidence or os.path.join(HERE, 'evidence'), online=not A.offline, pins=pins, pins_src=psrc)
     now = P(A.now) if A.now else clock(); today = A.today or now.astimezone(ET).date().isoformat()

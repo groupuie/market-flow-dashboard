@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""盤感測試 v3 草案 3:**完整正式流程驗收**(Claude 2026-10-17;回應 Astra v0.7.4 §5.2「用實際凍結來源及構造成熟批次跑完整驗收」)
+"""盤感測試 v3 草案 4:**完整正式流程驗收**(Claude 2026-10-17 建、2026-10-21 改;回應 Astra v0.7.4 §5.2、v0.7.5 §3)
+草案 4 的正式判定 = 開跑登記(push 到 astra-ledger、拿到 GitHub 收件)→ 只用登記的輸入計算 → 判定檔 push 到 main、讀回核對;
+這裡依序驗:登記前的 5 種停止(還沒成熟、API 掛、程式被改、本機快取壞 → 修復、登記被拒收)、登記後判定存不進去 → 停(未持久完成)、
+登記後 ledger 又有新 commit → 重跑照登記重播並保存、再跑一次 / 另一個 checkout → 一模一樣不寫東西、竄改遠端判定 / 登記 → 停,
+加上原本凍結相關的 7 種停止(共 15 種)
 
 用「真的凍結收集程式」(scripts/astra_ledger.py 等三支,git 1ee593a 的原位元組)在暫存環境跑完整一輪,再用 v3 正式模式做唯一一次判定:
   - 暫存 GitHub:本機 bare repo 當 origin;push 到 astra-ledger 時由 post-receive hook 記一筆「ledger-receipt run」(時間 = 假時鐘);
@@ -40,7 +44,7 @@ NOW = [dt.datetime(2026, 1, 20, 12, 0, tzinfo=dt.timezone.utc)]
 def set_clock(t):
     NOW[0] = t; open(CLOCK, 'w').write(V.ts(t))
 set_clock(NOW[0])
-subprocess.run(['git', 'init', '-q', '--bare', ORIGIN], check=True)
+subprocess.run(['git', 'init', '-q', '--bare', '-b', 'main', ORIGIN], check=True)
 hook = os.path.join(ORIGIN, 'hooks', 'post-receive')
 open(hook, 'w').write(f'''#!/usr/bin/env python3
 import json, sys
@@ -227,30 +231,62 @@ def expect_stop(name, fn, want):
         fn(); RES.setdefault('stops', {})[name] = 'DID NOT STOP'; raise AssertionError(name)
     except SystemExit as e:
         assert want in str(e), (name, str(e)); RES.setdefault('stops', {})[name] = str(e)[:160]; log('stop ok', name, '|', str(e)[:70])
-lp = os.path.join(MAIN, MAN['look_path'])
+REJ = os.path.join(TD, 'reject_')               # pre-receive hook:有 reject_<分支> 這個檔就拒收那個分支的 push(模擬網路 / 權限失敗)
+pre = os.path.join(ORIGIN, 'hooks', 'pre-receive')
+open(pre, 'w').write(f'#!/usr/bin/env python3\nimport os, sys\nfor line in sys.stdin:\n    old, new, ref = line.split()\n'
+                     f'    if os.path.exists({REJ!r} + ref.split("/")[-1]): sys.stderr.write("rejected by fixture"); sys.exit(1)\n')
+os.chmod(pre, 0o755)
+VP = os.path.join(MAIN, V.VERIFIER_PATH)
+FR = lambda repo=MAIN, evdir=EVD: V.formal_run(repo, evdir=evdir, me_path=VP)
+def remote_state():
+    g_ = V.Git(MAIN); rm, rl = V.fetch_remote(g_, 'origin')
+    return {'main': rm, 'ledger': rl, 'registration': g_.touching(rl, V.registration_path(MAN['experiment_id'])), 'look': g_.touching(rm, MAN['look_path'])}
+def nothing_written():
+    s = remote_state(); assert s['registration'] == [] and s['look'] == [], s
 now_set(dt.datetime.fromisoformat(V.add_sessions(END, 20) + 'T20:30:00+00:00'))
-expect_stop('not_mature_yet', lambda: V.formal_run(MAIN, evdir=EVD, me_path=os.path.join(MAIN, V.VERIFIER_PATH)), '還不能判定')
-assert not os.path.exists(lp)
+expect_stop('not_mature_yet', FR, '還不能判定'); nothing_written()
 open(GH_BROKEN, 'w').write('x'); now_set(mature)
-expect_stop('github_api_down_no_look', lambda: V.formal_run(MAIN, evdir=EVD + '_down', me_path=os.path.join(MAIN, V.VERIFIER_PATH)), '不寫判定'); os.remove(GH_BROKEN)
-assert not os.path.exists(lp)
+expect_stop('github_api_down_no_look', lambda: FR(evdir=EVD + '_down'), '不寫判定'); os.remove(GH_BROKEN); nothing_written()
 bad = os.path.join(TD, 'v3_verify_modified.py'); open(bad, 'wb').write(VB + b'\n# changed\n')
-expect_stop('modified_verifier', lambda: V.formal_run(MAIN, evdir=EVD, me_path=bad), '不是凍結的驗證程式')
-look, lp2 = V.formal_run(MAIN, evdir=EVD, me_path=os.path.join(MAIN, V.VERIFIER_PATH)); assert lp2 == lp and os.path.exists(lp)
+expect_stop('modified_verifier', lambda: V.formal_run(MAIN, evdir=EVD, me_path=bad), '不是凍結的驗證程式'); nothing_written()
+CF = sorted(f for f in os.listdir(EVD) if f.startswith('run-'))[0]; open(os.path.join(EVD, CF), 'w').write('{local cache damaged')   # GitHub 正常、只有本機快取壞
+expect_stop('local_cache_damaged_no_registration', FR, 'repair-evidence'); nothing_written()
+REPAIR = V.repair_evidence(EVD, CF); assert REPAIR['status'] == 'repaired', REPAIR
+open(REJ + 'astra-ledger', 'w').close(); expect_stop('registration_push_rejected', FR, '開跑登記沒有送到遠端'); os.remove(REJ + 'astra-ledger'); nothing_written()
+open(REJ + 'main', 'w').close(); expect_stop('look_push_rejected_after_registration', FR, '未持久完成'); os.remove(REJ + 'main')
+S1 = remote_state(); assert len(S1['registration']) == 1 and S1['look'] == [], S1
+# 登記之後收集程式照常 push 新 commit → 重跑只用登記的輸入
+set_clock(NOW[0] + dt.timedelta(hours=1)); AL.worktree(); open(os.path.join(WT, 'notes_after_registration.txt'), 'w').write('collector kept going\n')
+AL.commit_push('after v3 registration', ['notes_after_registration.txt'])
+look, info = FR(); S2 = remote_state(); REG = look['registration']['record']
+assert info['mode'] == 'REPLAY' and info['status'] == 'PERSISTED' and len(S2['look']) == 1, info
+assert look['status']['refs']['ledger'] == REG['ledger_input_commit'] and S2['ledger'] != REG['ledger_input_commit']
 log('FORMAL', look['decision'], 'go_live', look['go_live_candidate'], 'coverage', look['status']['batch_coverage']['ok'], '/', look['status']['batch_coverage']['seen'],
-    'counts', look['status']['counts'])
-# 同一份資料用試跑重算一次 → 判定與數字要一樣
+    'counts', look['status']['counts'], '| registration', info['registration_commit'][:10], 'look', info['look_commit'][:10])
+# 同一份資料用試跑重算一次(同一個時點 = 登記的 GitHub 收件時間)→ 判定與數字要一樣
 cfg = dict(V.SPEC, cohort_sessions=120, h2_mode='none', start=START, v2_manifest_sha256=V2SHA)
-g = V.Git(MAIN); store = V.Evidence(EVD, online=True)
-pub, closed, missing, cal, cov = V.collect(g, g.verify('origin/astra-ledger'), g.verify('origin/main'), cfg, mature.astimezone(V.ET).date().isoformat(), mature, store)
+g = V.Git(MAIN); store = V.Evidence(EVD + '_dry', online=True); tA = V.P(look['analysis_time_utc'])
+pub, closed, missing, cal, cov = V.collect(g, g.verify('origin/astra-ledger'), g.verify('origin/main'), cfg, tA.astimezone(V.ET).date().isoformat(), tA, store)
 dres = V.decide(closed, missing, cal, cfg, cov)
 same = (dres['decision'] == look['decision'] and dres['decision_by_h2_mode'] == look['result']['decision_by_h2_mode']
         and json.dumps(dres['excluded_missing'], sort_keys=True) == json.dumps(look['result']['excluded_missing'], sort_keys=True))
 assert same
-expect_stop('second_formal_run_refused', lambda: V.formal_run(MAIN, evdir=EVD, me_path=os.path.join(MAIN, V.VERIFIER_PATH)), '已經做過')
-git(MAIN, 'add', MAN['look_path']); git(MAIN, '-c', 'user.name=fixture', '-c', 'user.email=f@f', 'commit', '-qm', 'look'); os.remove(lp)
-expect_stop('refused_after_delete_git_history', lambda: V.formal_run(MAIN, evdir=EVD, me_path=os.path.join(MAIN, V.VERIFIER_PATH)), '已經做過')
-git(MAIN, 'reset', '-q', '--hard', 'HEAD~1')
+look2, info2 = FR(); S3 = remote_state()
+assert info2['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info2['look_sha256'] == info['look_sha256'] and (S3['main'], S3['ledger']) == (S2['main'], S2['ledger']), info2
+CL = os.path.join(TD, 'other-checkout'); subprocess.run(['git', 'clone', '-q', ORIGIN, CL], check=True)
+look3, info3 = FR(repo=CL, evdir=os.path.join(TD, 'evidence_other'))
+assert info3['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info3['look_sha256'] == info['look_sha256'], info3
+REPLAYS = {'after_failed_save': {k: info[k] for k in ('mode', 'status', 'look_sha256')}, 'second_run': {k: info2[k] for k in ('mode', 'status', 'look_sha256')},
+           'other_checkout': {k: info3[k] for k in ('mode', 'status', 'look_sha256')}, 'ledger_input_commit': REG['ledger_input_commit'], 'ledger_head_now': S2['ledger']}
+def tamper(branch, path, edit, name, want, restore_to):
+    c = os.path.join(TD, 'tamper-' + name); subprocess.run(['git', 'clone', '-q', '-b', branch, ORIGIN, c], check=True)
+    p_ = os.path.join(c, path); open(p_, 'wb').write(edit(open(p_, 'rb').read()))
+    git(c, 'add', '-A'); git(c, '-c', 'user.name=fixture', '-c', 'user.email=f@f', 'commit', '-qm', 'tamper ' + name); git(c, 'push', '-q', 'origin', branch)
+    expect_stop(name, FR, want)
+    git(MAIN, 'push', '-q', '-f', 'origin', f'{restore_to}:refs/heads/{branch}'); git(MAIN, 'fetch', '-q', 'origin')
+tamper('main', MAN['look_path'], lambda b: b.replace(b'"decision": "NO_PASS"', b'"decision": "PASS"', 1), 'remote_look_tampered', '不同', S2['main'])
+tamper(V.LEDGER_BRANCH, V.registration_path(MAN['experiment_id']), lambda b: b.replace(b'"schema"', b'"note": "edited", "schema"', 1), 'registration_tampered', '開跑登記被改過', S2['ledger'])
+assert FR()[1]['status'] == 'ALREADY_PERSISTED_IDENTICAL'
 # 竄改 / 時序反例:各自在分支上做,main_ref / ledger_ref 指向它
 def branch_case(name, setup, want, ledger=None):
     git(MAIN, 'checkout', '-q', '-B', 'case-' + name, 'origin/main'); setup(); git(MAIN, 'add', '-A')
@@ -289,8 +325,11 @@ RES['formal'] = {'decision': look['decision'], 'decision_by_h2_mode': res['decis
                  'issuers': [ex['issuers_agree'], ex['issuers_disagree']], 'coverage': {k: st['batch_coverage'][k] for k in ('ok', 'seen', 'rate')},
                  'rejected_days': {d: v for d, v in st['batch_coverage']['by_date'].items() if not v['accepted']},
                  'no_signals_day': st['batch_coverage']['by_date'][X4], 'idx_late_morning_day': st['batch_coverage']['by_date'][X1],
-                 'counts': st['counts'], 'rescaled_marks': resc, 'unreproducible': unrep, 'look_sha256': H(open(os.path.join(MAIN, MAN['look_path']), 'rb').read()) if os.path.exists(os.path.join(MAIN, MAN['look_path'])) else None,
-                 'same_as_dry_run_decide': same, 'evidence_files_used': len(st['evidence_used'])}
+                 'counts': st['counts'], 'rescaled_marks': resc, 'unreproducible': unrep, 'look_sha256': info['look_sha256'],
+                 'same_as_dry_run_decide': same, 'evidence_files_used': len(st['evidence_used']),
+                 'registration': {'commit': info['registration_commit'], 'remote_received_utc': look['registration']['remote_received_utc'], 'record': REG},
+                 'persistence': {k: info[k] for k in ('mode', 'status', 'look_commit', 'look_path')}, 'replays': REPLAYS, 'cache_repair': REPAIR,
+                 'analysis_time_utc': look['analysis_time_utc'], 'resolve_by': st['cohort']['resolve_by']}
 assert RES['formal']['coverage']['ok'] == RES['formal']['coverage']['seen'] - 2 and set(RES['formal']['rejected_days']) == {X2, X3}
 assert RES['formal']['no_signals_day']['accepted'] and RES['formal']['idx_late_morning_day']['accepted'] and len(resc) > 0
 RES['meta'] = {'seconds': round(time.time() - T0), 'verifier_sha256': H(VB), 'log': LOG}

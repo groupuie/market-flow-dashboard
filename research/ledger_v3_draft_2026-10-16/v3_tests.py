@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""v3 草案 3 的離線測試(Claude 2026-10-17)
-   草案 2 的 39 項(行為改了的照新規則改寫)+ Astra v0.7.4 的反例:統計反例(原樣重現草案 2 的 PASS,新版要 NO_PASS)、
+"""v3 草案 4 的離線測試(Claude 2026-10-21;草案 3 的 71 項 + Astra v0.7.5 的反例)
+   草案 3:草案 2 的 39 項(行為改了的照新規則改寫)+ Astra v0.7.4 的反例:統計反例(原樣重現草案 2 的 PASS,新版要 NO_PASS)、
    零訊號蓋掉鎖定事件、單列錯誤整批照收、改過的回條快取、重疊行情不一致、只改訊號日收盤、整段縮放後再捨入取消原買點
-   暫存 git repo:main(凍結的三支引擎)+ astra-ledger(freeze → 批次);GitHub 用假的 gh(本機 JSON)或釘選的證據檔(不連網)
-   用法:python3 -I v3_tests.py <真實 repo(要有 origin/astra-ledger 與 a654145)>"""
+   草案 4(Astra v0.7.5):半日市(13:00 收盤)的凍結錨點與出場紀錄時間、正式模式遇到本機快取壞掉要停(不寫登記與判定)+ 修復、
+   開跑登記 + 決定性重播(刪掉本機檔、另一個 checkout、登記之後的新資料、保存失敗後重跑、竄改遠端判定或登記)、結案截止
+   暫存 git repo:main(凍結的三支引擎)+ astra-ledger(freeze → 批次);GitHub 用假的 gh(本機 JSON)或釘選的證據檔(不連網);
+   要 push 的正式流程用本機 bare repo 當 origin,hook 模擬 ledger-receipt run 與 push 被拒
+   用法:python3 -I v3_tests.py <真實 repo(要有 origin/astra-ledger、a654145、4bfe44d)>"""
 import datetime as dt, gzip, hashlib, importlib.util, json, os, shutil, stat, subprocess, sys, tempfile
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import numpy as np
@@ -44,6 +47,24 @@ try:
     V.is_session('2029-01-02'); ok('calendar_out_of_range_stops', False)
 except SystemExit as e: ok('calendar_out_of_range_stops', True, str(e))
 ok('cohort_end_by_calendar', V.add_sessions('2026-10-19', 120) == V.sessions('2026-10-19', '2027-12-31')[119])
+# 半日市(Astra v0.7.5 §3.1;NYSE 官方 13:00 提早收盤)— 草案 3 一律當 16:00
+EC = {d: V.ts(V.close_utc(d)) for d in ('2026-11-27', '2026-12-24', '2027-11-26', '2028-07-03', '2028-11-24')}
+ok('early_close_official_1300', EC == {'2026-11-27': '2026-11-27T18:00:00Z', '2026-12-24': '2026-12-24T18:00:00Z', '2027-11-26': '2027-11-26T18:00:00Z',
+                                       '2028-07-03': '2028-07-03T17:00:00Z', '2028-11-24': '2028-11-24T18:00:00Z'}, EC)
+ok('normal_and_dst_closes_unchanged', [V.ts(V.close_utc(d)) for d in ('2026-11-30', '2026-10-30', '2026-03-06', '2026-03-09')]
+   == ['2026-11-30T21:00:00Z', '2026-10-30T20:00:00Z', '2026-03-06T21:00:00Z', '2026-03-09T20:00:00Z']
+   and V.ts(V.deadline_utc('2026-11-25')) == '2026-11-27T14:30:00Z')
+try:
+    V.close_utc('2026-11-26'); ok('holiday_has_no_close_time', False)
+except SystemExit as e: ok('holiday_has_no_close_time', True, str(e))
+fp0 = V.calendar_fingerprint(); _ec = dict(V.EARLY_CLOSE); V.EARLY_CLOSE.pop('2026-12-24'); fp1 = V.calendar_fingerprint(); V.EARLY_CLOSE.clear(); V.EARLY_CLOSE.update(_ec)
+ok('calendar_fingerprint_covers_early_closes', fp0 != fp1 and V.calendar_fingerprint() == fp0 and len(V.session_table()) == len(V.sessions(V.CAL_START, V.CAL_END)))
+def draft3():
+    b = real_show('4bfe44d', 'research/ledger_v3_draft_2026-10-16/v3_verify.py'); assert H(b) == '67de35793c6e244e91fafb74dbd62304cece9088705212903fae67293ed0dc53'
+    p = os.path.join(tempfile.mkdtemp(prefix='v3d3_'), 'v3_verify_draft3.py'); open(p, 'wb').write(b)
+    spec = importlib.util.spec_from_file_location('v3_verify_draft3', p); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+D3 = draft3()
+ok('draft3_used_1600_on_early_close', V.ts(D3.close_utc('2026-11-27')) == '2026-11-27T21:00:00Z')
 
 
 # ---- 2. 暫存 repo
@@ -240,6 +261,30 @@ with tempfile.TemporaryDirectory() as td:
     try:
         V.check_receipt(rc, '2026-10-14', V.Evidence(X.ev, online=True, strict=True)); ok('formal_api_failure_stops', False)
     except SystemExit as e: ok('formal_api_failure_stops', '不寫判定' in str(e), str(e)[:80])
+# Astra v0.7.5 §3.2:API 好好的、只有本機快取壞 → 正式模式要停(不是「證據不合格」);試跑照舊列原因;修復 = 隔離 + 用新查到的原件重建 + 記錄
+with tempfile.TemporaryDirectory() as td:
+    X = Fx(td); lc, rc = X.lock('2026-10-14', [('ADI', SNAP, 'agree')]); api = run_api(rc['run_id'], lc, rc['remote_received_utc']); fake_db(api)
+    name = f"run-{rc['run_id']}.json"; cp = os.path.join(X.ev, name); d0 = json.load(open(cp)); open(cp, 'w').write('{local cache damaged')
+    try:
+        V.check_receipt(rc, '2026-10-14', V.Evidence(X.ev, online=True, strict=True)); ok('formal_corrupt_cache_stops', False)
+    except SystemExit as e: ok('formal_corrupt_cache_stops', 'repair-evidence' in str(e) and '不寫判定' in str(e) and 'evidence_cache_corrupt' in str(e), str(e)[:90])
+    w, _ = V.check_receipt(rc, '2026-10-14', V.Evidence(X.ev, online=True)); ok('dry_run_corrupt_cache_still_listed', w == ['receipt_evidence_cache_corrupt'], w)
+    forged = dict(d0, api=dict(d0['api'], created_at='2026-10-15T01:00:00Z')); forged['api_subset_sha256'] = H(json.dumps(forged['api'], sort_keys=True).encode()); json.dump(forged, open(cp, 'w'))
+    try:
+        V.check_receipt(rc, '2026-10-14', V.Evidence(X.ev, online=True, strict=True)); ok('formal_cache_differs_stops', False)
+    except SystemExit as e: ok('formal_cache_differs_stops', 'evidence_cache_differs_from_api' in str(e), str(e)[:90])
+    bad_b = open(cp, 'rb').read(); rep = V.repair_evidence(X.ev, name)
+    qf = os.path.join(X.ev, rep['quarantined_as']); logl = V.repairs_log(X.ev)
+    w, _ = V.check_receipt(rc, '2026-10-14', V.Evidence(X.ev, online=True, strict=True))
+    ok('repair_quarantines_rebuilds_and_logs', rep['status'] == 'repaired' and rep['reason'] == 'evidence_cache_differs_from_api' and open(qf, 'rb').read() == bad_b
+       and len(logl) == 1 and logl[0]['old_sha256'] == H(bad_b) and json.load(open(cp))['api'] == api and w == [], {k: rep[k] for k in ('reason', 'quarantined_as', 'new_sha256')})
+    ok('repair_noop_when_cache_ok', V.repair_evidence(X.ev, name)['status'] == 'no_repair_needed' and len(V.repairs_log(X.ev)) == 1)
+    fake_db()
+    try:
+        V.repair_evidence(X.ev, name); ok('repair_refuses_without_api', False)
+    except SystemExit as e: ok('repair_refuses_without_api', '不修' in str(e), str(e)[:60])
+    st_ = V.Evidence(os.path.join(td, 'ev_empty'), online=True); runs, src = V.runs_for_commit(st_, 'b' * 40)
+    ok('empty_run_list_not_cached', runs == [] and src == 'online' and not os.path.exists(os.path.join(td, 'ev_empty', f"runs-for-{'b' * 40}.json")))
 
 # ---- 5. 引擎從 git 物件載入
 with tempfile.TemporaryDirectory() as td, tempfile.TemporaryDirectory() as fake:
@@ -274,6 +319,19 @@ st6, _, n6 = V.replay(m, dict(rec, bars_used=SNAP[i - 1:] + wk, entry='2026-10-1
 ok('gap_in_window_rejected', V.replay(m, dict(rec, bars_used=SNAP[i - 1:] + [fwd[0], fwd[2]]), SNAP, V.SPEC)[0] == 'unreproducible')
 st7, _, n7 = V.replay(m, dict(rec, closed_utc='2026-10-14T21:00:00Z'), SNAP, V.SPEC); ok('recorded_before_available_rejected', st7 == 'unreproducible', n7)
 ok('late_close_flagged', V.replay(m, dict(rec, closed_utc='2026-11-05T00:00:00Z'), SNAP, V.SPEC)[2] == 'late_close')
+# 半日市的出場紀錄(Astra v0.7.5 附錄四的構造:11-25 進場、收盤跌破停損 → 11-27 開盤出場;11-27 13:00 收盤,14:00 記錄)
+snapE = [list(b) for b in SNAP]; dE = dt.date(2026, 11, 24); dsE = []
+while len(dsE) < len(snapE):
+    if dE.weekday() < 5: dsE.append(dE.isoformat())
+    dE -= dt.timedelta(days=1)
+for b_, d_ in zip(snapE, reversed(dsE)): b_[0] = d_
+oE = snapE[-1][4]; BE = snapE + [['2026-11-25', oE, oE, oE * .88, oE * .90, 1], ['2026-11-27', oE * .89, oE * .90, oE * .87, oE * .88, 1]]; iE = len(snapE) - 1
+recE = dict(status='closed', entry='2026-11-25', exit='2026-11-27', exit_why='停損', ret=V.AT.ret([b_[1] for b_ in BE], iE + 1, iE + 2, .001), bars_used=BE[iE - 1:], closed_utc='2026-11-27T19:00:00Z')
+mE = {'date': snapE[-1][0], 'style': 'b'}
+D3.AD, D3.AT = V.AD, V.AT
+eA, eB, eC = V.replay(mE, recE, snapE, V.SPEC), V.replay(mE, dict(recE, closed_utc='2026-11-27T17:59:00Z'), snapE, V.SPEC), D3.replay(mE, recE, snapE, D3.SPEC)
+ok('early_close_exit_recorded_after_1300_accepted', eA[0] == 'closed' and eB[0] == 'unreproducible' and '記錄時間早於' in eB[2] and eC[0] == 'unreproducible',
+   {'new_14:00': eA[:1], 'new_12:59': eB[:1], 'draft3_14:00': eC[:1] + eC[2:]})
 ok('entry_open_mismatch_unreproducible', V.replay(m, dict(rec, entry_open=O[i + 1] + 0.01), SNAP, V.SPEC)[0] == 'unreproducible')
 # 尺度(Astra v0.7.4 附錄四 §4)
 sc = [[b[0]] + [V.AD.rp(x * 0.99) for x in b[1:5]] + [b[5]] for b in SNAP[i - 1:]] + fwd
@@ -365,7 +423,11 @@ with tempfile.TemporaryDirectory() as td:
     out2 = subprocess.run([sys.executable, '-I', os.path.join(HERE, 'v3_verify.py'), 'analyze', '--repo', td, '--dry-run', '--out', os.path.dirname(lp)], capture_output=True, text=True)
     ok('dry_run_cannot_write_registry', out2.returncode != 0 and '不能寫進正式' in (out2.stderr + out2.stdout), (out2.stderr + out2.stdout).strip()[-60:])
 run = lambda *a: subprocess.run([sys.executable, '-I', os.path.join(HERE, 'v3_verify.py'), *a], capture_output=True, text=True)
-o3 = run('analyze', '--formal', '--repo', REPO); ok('formal_mode_needs_frozen_manifest', o3.returncode != 0 and 'v3_manifest' in (o3.stderr + o3.stdout), (o3.stderr + o3.stdout).strip()[-80:])
+with tempfile.TemporaryDirectory() as td:                       # 沒有凍結 manifest 的 repo(有本機 bare origin;正式模式一開始就以遠端為準)
+    w0 = os.path.join(td, 'w'); org0 = os.path.join(td, 'o.git'); subprocess.run(['git', 'init', '-q', '--bare', org0], check=True); subprocess.run(['git', 'init', '-q', '-b', 'main', w0], check=True)
+    WR(w0, 'README', b'x'); COMMIT(w0, 'm'); GIT(w0, 'checkout', '-q', '-b', 'astra-ledger'); WR(w0, 'L', b'x'); COMMIT(w0, 'l')
+    GIT(w0, 'remote', 'add', 'origin', org0); GIT(w0, 'push', '-q', 'origin', 'main', 'astra-ledger')
+    o3 = run('analyze', '--formal', '--repo', w0); ok('formal_mode_needs_frozen_manifest', o3.returncode != 0 and 'v3_manifest' in (o3.stderr + o3.stdout), (o3.stderr + o3.stdout).strip()[-80:])
 o4 = run('analyze', '--formal', '--repo', REPO, '--today', '2027-12-31'); ok('formal_mode_rejects_overrides', o4.returncode != 0 and '不接受任何覆寫' in (o4.stderr + o4.stdout))
 o5 = run('status', '--repo', REPO); ok('needs_dry_run_or_formal', o5.returncode != 0 and '--dry-run' in (o5.stderr + o5.stdout))
 mf = V.make_manifest('2026-11-02', 250, 'none', '3faf68b7' + '0' * 56, open(os.path.join(HERE, 'v3_verify.py'), 'rb').read(), 1.0)
@@ -374,6 +436,118 @@ ok('manifest_fixes_id_paths_calendar', mf['experiment_id'] == 'LV3-20261102-S250
 try:
     V.make_manifest('2026-11-02', 180, 'none', 'f' * 64, b'x', 1.0); ok('manifest_rejects_unlisted_choices', False)
 except SystemExit: ok('manifest_rejects_unlisted_choices', True)
+ok('manifest_records_resolve_by', mf['resolve_by'] == V.add_sessions(mf['end'], 52))
+try:
+    V.make_manifest('2028-06-01', 250, 'none', 'f' * 64, b'x', 1.0); ok('manifest_rejects_start_beyond_calendar', False)
+except SystemExit as e: ok('manifest_rejects_start_beyond_calendar', '日曆只到' in str(e), str(e)[:60])
+
+# ---- 9. 半日市的凍結錨點(Astra v0.7.5 §3.1:起日 2026-11-27 13:00 收盤,錨點 14:00 才收到 → 草案 3 照收)
+VB = open(os.path.join(HERE, 'v3_verify.py'), 'rb').read(); VPATH = os.path.join(HERE, 'v3_verify.py')
+def freeze_fx(td, start):
+    X = Fx(td); GIT(td, 'checkout', '-q', 'main')
+    man = V.make_manifest(start, 120, 'none', X.msha, VB, 1.0, 'session-close probe'); mb = (json.dumps(man, ensure_ascii=False, indent=1) + '\n').encode()
+    WR(td, V.MANIFEST_PATH, mb); WR(td, V.VERIFIER_PATH, VB); F = COMMIT(td, 'freeze')
+    GIT(td, 'checkout', '-q', 'astra-ledger'); WR(td, man['anchor_path'], json.dumps(V.anchor_json(mb, F)).encode()); A = COMMIT(td, 'anchor')
+    def check(t):
+        X.put_runs_for(A, [run_api(999, A, t)])
+        try: V.formal_checks(X.g, 'main', 'astra-ledger', X.store(), VB); return 'accepted'
+        except SystemExit as e: return str(e)[:60]
+    return check
+for name, start, good, bad in (('anchor_deadline_uses_early_close', '2026-11-27', ['2026-11-27T17:59:00Z'], ['2026-11-27T18:00:00Z', '2026-11-27T19:00:00Z']),
+                               ('anchor_deadline_normal_day', '2026-11-30', ['2026-11-30T20:59:00Z'], ['2026-11-30T21:00:00Z']),
+                               ('anchor_deadline_dst_day', '2026-10-30', ['2026-10-30T19:59:00Z'], ['2026-10-30T20:00:00Z'])):
+    with tempfile.TemporaryDirectory() as td:
+        chk = freeze_fx(td, start); r = {t: chk(t) for t in good + bad}
+        ok(name, all(r[t] == 'accepted' for t in good) and all('不早於起日' in r[t] for t in bad), r)
+
+# ---- 10. 結案截止(收案期最後一天之後第 51 個交易日收盤)— 判定和「哪一天跑」無關
+with tempfile.TemporaryDirectory() as td:
+    X = Fx(td); X.lock('2026-10-14', [('ADI', SNAP, REAL['v'])])
+    def with_rec(closed_utc, now):
+        WR(td, 'scores.json', json.dumps({'marks': {REAL['id']: dict(rec, closed_utc=closed_utc)}}).encode()); COMMIT(td, 'scores ' + closed_utc)
+        return X.collect(start='2026-10-14', today=V.P(now).astimezone(V.ET).date().isoformat(), now=now)
+    p1, c1, m1, *_ = with_rec('2026-10-20T00:30:00Z', '2027-08-02T22:00:00Z')
+    p2, c2, m2, *_ = with_rec('2027-07-30T00:00:00Z', '2027-08-02T22:00:00Z')
+    p3, c3, m3, *_ = with_rec('2026-10-20T00:30:00Z', '2026-10-19T12:00:00Z')
+    ok('result_after_cutoff_counts_as_missing', len(c1) == 1 and not m1 and not c2 and len(m2) == 1 and 'closed_after_cutoff' in p2['flags'][REAL['id']]
+       and p2['cohort']['resolve_by'] == V.add_sessions(p2['cohort']['end'], 52), {'cut': p2['cohort']['resolve_by_close_utc'], 'flag': p2['flags'].get(REAL['id'])})
+    ok('result_later_than_now_not_yet_closed', not c3 and not m3 and p3['counts']['pending'] == 1, p3['flags'])
+
+# ---- 11. 開跑登記 + 決定性重播(Astra v0.7.5 §3.2、§3.3;本機 bare repo 當 origin,hook = 假的 ledger-receipt 與 push 被拒)
+HK = tempfile.mkdtemp(prefix='v3hook_'); CLK = os.path.join(HK, 'clock'); NOREC = os.path.join(HK, 'no_receipt'); REJ = os.path.join(HK, 'reject_')
+POST = (f'#!/usr/bin/env python3\nimport json, os, sys\nif os.path.exists({NOREC!r}): sys.exit(0)\ndb = json.load(open({DB!r})); now = open({CLK!r}).read().strip()\n'
+        f'for line in sys.stdin:\n    old, new, ref = line.split()\n    if ref == "refs/heads/astra-ledger" and set(new) != {{"0"}}:\n        rid = 950000000 + len(db["runs"])\n'
+        f'        db["runs"][str(rid)] = {{"id": rid, "name": "ledger-receipt", "path": {V.RECEIPT_WF!r}, "event": "push", "head_branch": "astra-ledger", "head_sha": new,'
+        f' "created_at": now, "repository": {{"full_name": {V.OWNER_REPO!r}}}, "status": "completed", "conclusion": "success"}}\njson.dump(db, open({DB!r}, "w"))\n')
+PRE = (f'#!/usr/bin/env python3\nimport os, sys\nfor line in sys.stdin:\n    old, new, ref = line.split()\n'
+       f'    if os.path.exists({REJ!r} + ref.split("/")[-1]): sys.stderr.write("rejected by test hook"); sys.exit(1)\n')
+def remote_fx(td):
+    X = Fx(os.path.join(td, 'w')); w = X.td; start = '2026-10-14'
+    GIT(w, 'checkout', '-q', 'main'); man = V.make_manifest(start, 120, 'none', X.msha, VB, 1.0, 'remote fixture'); mb = (json.dumps(man, ensure_ascii=False, indent=1) + '\n').encode()
+    WR(w, V.MANIFEST_PATH, mb); WR(w, V.VERIFIER_PATH, VB); F = COMMIT(w, 'freeze')
+    GIT(w, 'checkout', '-q', 'astra-ledger'); WR(w, man['anchor_path'], json.dumps(V.anchor_json(mb, F)).encode()); A = COMMIT(w, 'anchor')
+    lc, rc = X.lock(start, [('ADI', SNAP, 'agree')])
+    fake_db(run_api(rc['run_id'], lc, rc['remote_received_utc']), run_api(999, A, '2026-10-13T12:00:00Z'))
+    org = os.path.join(td, 'origin.git'); subprocess.run(['git', 'init', '-q', '--bare', '-b', 'main', org], check=True)
+    for n_, s_ in (('post-receive', POST), ('pre-receive', PRE)):
+        p_ = os.path.join(org, 'hooks', n_); open(p_, 'w').write(s_); os.chmod(p_, 0o755)
+    open(CLK, 'w').write('2027-08-02T22:05:00Z'); GIT(w, 'remote', 'add', 'origin', org); GIT(w, 'push', '-q', 'origin', 'main', 'astra-ledger')
+    return X, man, rc, org
+def remote_state(repo, exp, look_path):
+    g = V.Git(repo); rm, rl = V.fetch_remote(g, 'origin')
+    return {'main': rm, 'ledger': rl, 'registration': g.touching(rl, V.registration_path(exp)), 'look': g.touching(rm, look_path)}
+def must_stop(fn, want):
+    try:
+        fn(); return 'DID NOT STOP'
+    except SystemExit as e:
+        return str(e) if want in str(e) else 'WRONG STOP: ' + str(e)[:120]
+def push_edit(org, td, branch, path, edit):
+    c = os.path.join(td, 'edit-' + branch); shutil.rmtree(c, ignore_errors=True); subprocess.run(['git', 'clone', '-q', '-b', branch, org, c], check=True)
+    p_ = os.path.join(c, path); open(p_, 'wb').write(edit(open(p_, 'rb').read())); COMMIT(c, 'edit ' + path); GIT(c, 'push', '-q', 'origin', branch)
+old_clock, old_sleep = V.clock, V.time.sleep
+V.clock = lambda: V.P('2027-08-02T22:00:00Z')
+try:
+    with tempfile.TemporaryDirectory() as td:          # A:API 正常、本機快取壞 → 停(沒有登記、沒有判定)→ 修復 → 一份判定;之後怎麼重跑都是同一份
+        X, man, rc, org = remote_fx(td); exp, lpath = man['experiment_id'], man['look_path']; ev = os.path.join(td, 'ev'); os.makedirs(ev)
+        name = f"run-{rc['run_id']}.json"; open(os.path.join(ev, name), 'w').write('{local cache damaged')
+        msg = must_stop(lambda: V.formal_run(X.td, evdir=ev, me_path=VPATH), 'repair-evidence'); s0 = remote_state(X.td, exp, lpath)
+        ok('formal_corrupt_cache_stops_before_registration', not msg.startswith(('DID', 'WRONG')) and s0['registration'] == [] and s0['look'] == [], {'stop': msg[:70], 'state': s0})
+        rep = V.repair_evidence(ev, name)
+        look, info = V.formal_run(X.td, evdir=ev, me_path=VPATH); s1 = remote_state(X.td, exp, lpath)
+        ok('repaired_cache_then_one_persisted_look', rep['status'] == 'repaired' and info['mode'] == 'FIRST' and info['status'] == 'PERSISTED' and look['status']['counts']['eligible'] == 1
+           and look['status']['batch_coverage']['by_date']['2026-10-14']['accepted'] and look['decision'] == 'INSUFFICIENT' and len(s1['registration']) == 1 and len(s1['look']) == 1
+           and look['registration']['record']['evidence_repairs'][0]['name'] == name and look['analysis_time_utc'] == '2027-08-02T22:05:00Z',
+           {'info': info, 'eligible': look['status']['counts']['eligible'], 'decision': look['decision']})
+        shutil.rmtree(ev); look2, info2 = V.formal_run(X.td, evdir=os.path.join(td, 'ev2'), me_path=VPATH); s2 = remote_state(X.td, exp, lpath)
+        ok('rerun_after_deleting_local_files_replays_identical', info2['mode'] == 'REPLAY' and info2['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info2['look_sha256'] == info['look_sha256']
+           and (s2['main'], s2['ledger']) == (s1['main'], s1['ledger']), info2)
+        cl = os.path.join(td, 'clone'); subprocess.run(['git', 'clone', '-q', org, cl], check=True)
+        look3, info3 = V.formal_run(cl, evdir=os.path.join(td, 'ev3'), me_path=VPATH)
+        ok('other_checkout_replays_identical', info3['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info3['look_sha256'] == info['look_sha256'], info3)
+        push_edit(org, td, 'astra-ledger', 'scores.json', lambda b: b.replace(b'{"marks":{}}', b'{"marks":{},"note":"after registration"}'))
+        look4, info4 = V.formal_run(X.td, evdir=os.path.join(td, 'ev2'), me_path=VPATH); s4 = remote_state(X.td, exp, lpath)
+        L0 = look['registration']['record']['ledger_input_commit']
+        ok('new_ledger_data_after_registration_ignored', info4['look_sha256'] == info['look_sha256'] and look4['status']['refs']['ledger'] == L0 and s4['ledger'] != L0, {'L0': L0[:10], 'head': s4['ledger'][:10]})
+        push_edit(org, td, 'main', lpath, lambda b: b.replace(b'"decision": "INSUFFICIENT"', b'"decision": "PASS"', 1))
+        msg = must_stop(lambda: V.formal_run(X.td, evdir=os.path.join(td, 'ev2'), me_path=VPATH), '不同')
+        ok('tampered_remote_look_stops', not msg.startswith(('DID', 'WRONG')), msg[:80])
+    V.time.sleep = lambda s: None
+    with tempfile.TemporaryDirectory() as td:          # B:登記沒送出 / 送出但還沒收件 / 判定存不進去 → 停;之後重跑 = 照登記重播 → 保存
+        X, man, rc, org = remote_fx(td); exp, lpath = man['experiment_id'], man['look_path']; ev = os.path.join(td, 'ev')
+        open(REJ + 'astra-ledger', 'w').close(); msg = must_stop(lambda: V.formal_run(X.td, evdir=ev, me_path=VPATH), '開跑登記沒有送到遠端'); os.remove(REJ + 'astra-ledger')
+        s0 = remote_state(X.td, exp, lpath); ok('ledger_push_rejected_no_registration', not msg.startswith(('DID', 'WRONG')) and s0['registration'] == [] and s0['look'] == [], msg[:70])
+        open(NOREC, 'w').close(); msg = must_stop(lambda: V.formal_run(X.td, evdir=ev, me_path=VPATH, wait_receipt_s=0.2), '還查不到'); os.remove(NOREC)
+        s1 = remote_state(X.td, exp, lpath); ok('registration_without_receipt_stops_no_look', not msg.startswith(('DID', 'WRONG')) and len(s1['registration']) == 1 and s1['look'] == [], msg[:70])
+        db = json.load(open(DB)); R_reg = s1['registration'][0]
+        db['runs']['960000000'] = dict(run_api(960000000, R_reg, '2027-08-02T22:06:00Z'), repository={'full_name': V.OWNER_REPO}); json.dump(db, open(DB, 'w'))
+        open(REJ + 'main', 'w').close(); msg = must_stop(lambda: V.formal_run(X.td, evdir=ev, me_path=VPATH), '未持久完成'); os.remove(REJ + 'main')
+        s2 = remote_state(X.td, exp, lpath); ok('look_push_rejected_not_persisted', not msg.startswith(('DID', 'WRONG')) and s2['registration'] == [R_reg] and s2['look'] == [], msg[:70])
+        look, info = V.formal_run(X.td, evdir=ev, me_path=VPATH); s3 = remote_state(X.td, exp, lpath)
+        ok('replay_after_failed_save_persists', info['mode'] == 'REPLAY' and info['status'] == 'PERSISTED' and len(s3['look']) == 1 and look['registration']['remote_received_utc'] == '2027-08-02T22:06:00Z', info)
+        push_edit(org, td, 'astra-ledger', V.registration_path(exp), lambda b: b.replace(b'"schema"', b'"note": "edited", "schema"', 1))
+        msg = must_stop(lambda: V.formal_run(X.td, evdir=ev, me_path=VPATH), '開跑登記被改過'); ok('tampered_registration_stops', not msg.startswith(('DID', 'WRONG')), msg[:60])
+finally:
+    V.clock, V.time.sleep = old_clock, old_sleep
 
 json.dump({'tests': len(R), 'all_pass': True, 'verifier_sha256': H(open(os.path.join(HERE, 'v3_verify.py'), 'rb').read()), 'results': R},
           open(os.path.join(HERE, 'v3_tests_result.json'), 'w'), ensure_ascii=False, indent=1, default=str)
