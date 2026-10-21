@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-17T14:33Z">
+<meta name="build" content="2026-10-21T14:55Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
@@ -834,7 +834,7 @@ html.cpOff #wsxWinSlot,html.cpOff #wsxDestSlot{display:none}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-17T14:33Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-21T14:55Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -3649,7 +3649,8 @@ function renderCockpit(){
         const h='AI'+(m.k==='抄底'?'▲':'▼')+' 模型判讀·'+m.k+'(信心'+(m.conf||'中')+')·'+m.d+' @'+m.px
           +'<br>'+String(m.why||'').replace(/</g,'&lt;')
           +(m.invalid?'<br>失效條件:'+m.invalid:'')
-          +'<br>⚠ 模型主觀判讀·非機械規則·發訊日起前瞻評分·非買賣建議';
+          +'<br>⚠ 模型主觀判讀·非機械規則·發訊日起前瞻評分·非買賣建議'
+          +'<br>⚠ 10/21 研究:Claude 看 K 線判漲跌,2,000 張圖沒有比亂猜好 → 只當參考';
         if(m.k==='抄底'){yb[i]=R[i].l-o3*2.8;hb[i]=h;anyB=true;}
         else{yt2[i]=R[i].h+o3*2.8;ht[i]=h;anyT=true;}});
       const out=[];
@@ -6026,6 +6027,35 @@ function swLayerTrade(R,x,o3,MB,TR){   // 🧪 Astra 買 / 賣 → {traces, n, i
   return {traces:Tr,n:P.b.x.length+P.s.x.length+(P.g?P.g.x.length:0),info:{trade:true,state:state,gInfo:gInfo,gG:gG,sty:sty,ul:ul,lev:lev,G:G,gs:gs,line:line,D:W.D,
     own:{n:cn,w:cw,avg:cn?cs/cn:null},yrs:yrs,d200:d200,rg:axRegAt(lastDone)}};
 }
+// ===== 🧪 研究結論(2026-10-21;和 Astra 討論累積到這裡的結果 → 寫給使用者:短、先講怎麼做)=====
+// 只用已收盤的日K(cockpitRows 同一份;和 📊量化 分開算、互不影響)。條件照研究原檔的定義:
+//   波動高 = RVPOS(近 20 天實現波動在自己近 2 年的百分位)≥ 80;5 天急跌 = 5 天報酬 ≤ −2 ×(ATR20 ÷ 收盤)× √5(walk7 R8);RSI14 < 30(walk7 R4)
+const AX_RES_DATE='2026-10-21';
+function axResearch(sym){
+  let R=null; try{R=cockpitRows(sym);}catch(_){R=null;}
+  if(!R||R.length<22)return null;
+  const n=R.length, L=R[n-1]; let tr=0;
+  for(let i=n-20;i<n;i++){const p=R[i-1].c; tr+=Math.max(R[i].h,p)-Math.min(R[i].l,p);}
+  const a=L.c>0?tr/20/L.c:null, r5=(L.c5>0)?L.c/L.c5-1:null, z5=(a&&r5!=null)?r5/(a*Math.sqrt(5)):null;
+  return {d:L.d, rv:L.rv, rsi:L.rsi, r5:r5, z5:z5, hiVol:L.rv!=null&&L.rv>=80, loVol:L.rv!=null&&L.rv<=20, drop:z5!=null&&z5<=-2, os:L.rsi!=null&&L.rsi<30};
+}
+function axResearchPop(RS){
+  let now='';
+  if(RS){
+    const vol=RS.rv==null?'波動:歷史太短,先不判斷'
+      :RS.hiVol?'波動<b style="color:#fbbf24">高</b>(比自己近 2 年 '+RS.rv+'% 的日子都大)→ 接下來 20 天大動(上或下)的機會高:<b>部位小一點、停損放寬</b>'
+      :RS.loVol?'波動低(近 2 年只有 '+RS.rv+'% 的日子比現在小)→ 大動的機會較低;方向一樣看不出來'
+      :'波動普通(第 '+RS.rv+' 百分位)→ 部位照常';
+    now='<div>· '+vol+'</div>'
+      +(RS.drop?'<div>· <b>5 天急跌</b>('+(RS.r5*100).toFixed(1)+'%):歷史上之後短線反彈的機會比平常高一些(平均現象,不保證)</div>':'')
+      +(RS.os?'<div>· <b>RSI14 &lt; 30</b>('+RS.rsi.toFixed(0)+'):歷史上短線偏反彈一點點(平均現象,很小)</div>':'');
+  }
+  return '<div><b>研究結論</b><span class="spmut">('+AX_RES_DATE+' 和 Astra 討論到這裡)</span></div>'
+    +(now?'<div style="margin:2px 0 1px">這檔現在('+String(RS.d||'').slice(5)+' 收盤):</div>'+now:'')
+    +'<div class="spmut">圖上的買/賣是規則,不是 AI 預測。Claude 看 K 線判漲跌:2,000 張圖沒有比亂猜好;再加財報、公告、內部人、空單,方向還是看不出來。學得到的只有「會不會大動」→ 用來決定買多少、停損放多寬</div>'
+    +'<div class="spmut">Claude 每天替新買點判「同意/不同意」:只當紀錄,還沒證明有用;正式考試還沒開始(要先有不會過期的收件郵戳:10/21 試驗成功,等 Astra 複核)</div>'
+    +'<div class="sphr"></div>';
+}
 function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + 「ⓘ 詳情」
   const host=document.getElementById('astrastrip'); if(!host)return;
   const ACC='rgba(244,114,182,.30)',BG='rgba(244,114,182,.05)';
@@ -6046,9 +6076,11 @@ function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + �
     if(I.ul)bar+=mut(' · 看正股 '+I.ul);}
   if(rg)bar+=mut(' · 大盤')+(rg.sc>=2?'<b style="color:'+AX_GOLD+'">恐慌 '+rg.sc+'/3</b>':mut('平靜 '+rg.sc+'/3'))+(rg.pv?mut('(資料到 '+rg.d.slice(5)+')'):'');
   if(d2&&d2.cur&&d2.cur.up===0)bar+=mut(' · ')+'<span style="color:#f9a8d4">'+d2.nm+' 在 200 日線下 → 兩倍最多 1/3(可選)</span>';
+  let RS=null; try{RS=axResearch(CHIP_SYM);}catch(_){RS=null;}   // 🧪 研究結論(10/21):波動高才在一行狀態列加一句;其餘在 ⓘ 詳情
+  if(RS&&RS.hiVol)bar+=mut(' · ')+'<span style="color:#fbbf24">波動高 → 部位小、停損寬</span>';
   const why=G&&G.why?Object.keys(G.why).sort((a,b)=>G.why[b]-G.why[a]).map(k=>k+' '+Math.round(G.why[k])+'%').join('、'):'';
   const st=G&&G.st, x1=G&&G.x1, c1=G&&G.c1;
-  const pop='<div>'+BUY+' = 跌過頭後轉向,或上行中的回檔 → 隔天開盤買;<b style="color:'+AX_GOLD+'">金邊</b> = 那天大盤恐慌條件成立(3 個至少 2 個);加碼效果尚未驗證,只是市況資訊</div>'
+  const pop=axResearchPop(RS)+'<div>'+BUY+' = 跌過頭後轉向,或上行中的回檔 → 隔天開盤買;<b style="color:'+AX_GOLD+'">金邊</b> = 那天大盤恐慌條件成立(3 個至少 2 個);加碼效果尚未驗證,只是市況資訊</div>'
     +'<div>'+SELL+' = '+(sty.stop?'頂到了、收盤跌破買價 8%、或第 20 天,先到先賣(最多 20 天版;停損看收盤、隔天開盤賣,跳空會賠超過 8%)':'第一個頂;40 天內沒頂就第 40 天(指數用的現狀版)')+' → 隔天開盤賣</div>'
     +'<div>一次一筆:賣掉之前不會出新的買;每個買都有預定的賣出規則,還沒賣的顯示「持有中」</div>'
     +'<div><b style="color:#8b8fa3">灰色賣</b> = Astra 策略空手時出現的頂(轉弱提醒)。照它減碼能不能改善報酬或回撤,<b>還沒有驗證</b></div>'
