@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""盤感測試 v3 草案 4:**完整正式流程驗收**(Claude 2026-10-17 建、2026-10-21 改;回應 Astra v0.7.4 §5.2、v0.7.5 §3)
+"""盤感測試 v3 草案 5:**完整正式流程驗收**(Claude 2026-10-17 建、2026-10-21 改;回應 Astra v0.7.4 §5.2、v0.7.5 §3、v0.7.6 §3)
+草案 5:正式判定在結案截止 + 24 小時後,只用截止前 GitHub 已收到的 ledger 狀態(截止視圖);試跑對照走 dry_collect(同一個視圖);
+       另和舊規則(最新 ledger + 本機結案時間)逐事件比,列出分類改變的事件與截止後才到 GitHub 的 commit
 草案 4 的正式判定 = 開跑登記(push 到 astra-ledger、拿到 GitHub 收件)→ 只用登記的輸入計算 → 判定檔 push 到 main、讀回核對;
 這裡依序驗:登記前的 5 種停止(還沒成熟、API 掛、程式被改、本機快取壞 → 修復、登記被拒收)、登記後判定存不進去 → 停(未持久完成)、
 登記後 ledger 又有新 commit → 重跑照登記重播並保存、再跑一次 / 另一個 checkout → 一模一樣不寫東西、竄改遠端判定 / 登記 → 停,
@@ -225,7 +227,7 @@ RES = {'fixture': {'universe': UNI, 'start': START, 'end': END, 'special_days': 
                    'delisted': [DELIST, DELIST_AFTER], 'events': EVENTS, 'collector_status_counts': STAT, 'collector_scores_counts': sc['counts'],
                    'frozen_engine_sha256': FROZEN, 'experiment_id': MAN['experiment_id'], 'manifest_sha256': H(MB)}}
 def now_set(t): V.clock = lambda: t
-mature = dt.datetime.fromisoformat(V.add_sessions(END, 52) + 'T20:30:00+00:00')
+CUT = V.close_utc(MAN['resolve_by']); mature = CUT + dt.timedelta(hours=25)        # 草案 5:結案截止 + 24 小時之後才能正式登記
 def expect_stop(name, fn, want):
     try:
         fn(); RES.setdefault('stops', {})[name] = 'DID NOT STOP'; raise AssertionError(name)
@@ -249,7 +251,8 @@ open(GH_BROKEN, 'w').write('x'); now_set(mature)
 expect_stop('github_api_down_no_look', lambda: FR(evdir=EVD + '_down'), '不寫判定'); os.remove(GH_BROKEN); nothing_written()
 bad = os.path.join(TD, 'v3_verify_modified.py'); open(bad, 'wb').write(VB + b'\n# changed\n')
 expect_stop('modified_verifier', lambda: V.formal_run(MAIN, evdir=EVD, me_path=bad), '不是凍結的驗證程式'); nothing_written()
-CF = sorted(f for f in os.listdir(EVD) if f.startswith('run-'))[0]; open(os.path.join(EVD, CF), 'w').write('{local cache damaged')   # GitHub 正常、只有本機快取壞
+CF = sorted(f for f in os.listdir(EVD) if f.startswith(('run-', 'runs-for-')))[0]; open(os.path.join(EVD, CF), 'w').write('{local cache damaged')   # GitHub 正常、只有本機快取壞
+# (草案 5:「還沒成熟」在讀批次收件之前就停 → 這時資料夾裡只有凍結錨點的 run 清單 runs-for-<錨點>.json;壞的是它)
 expect_stop('local_cache_damaged_no_registration', FR, 'repair-evidence'); nothing_written()
 REPAIR = V.repair_evidence(EVD, CF); assert REPAIR['status'] == 'repaired', REPAIR
 open(REJ + 'astra-ledger', 'w').close(); expect_stop('registration_push_rejected', FR, '開跑登記沒有送到遠端'); os.remove(REJ + 'astra-ledger'); nothing_written()
@@ -260,13 +263,26 @@ set_clock(NOW[0] + dt.timedelta(hours=1)); AL.worktree(); open(os.path.join(WT, 
 AL.commit_push('after v3 registration', ['notes_after_registration.txt'])
 look, info = FR(); S2 = remote_state(); REG = look['registration']['record']
 assert info['mode'] == 'REPLAY' and info['status'] == 'PERSISTED' and len(S2['look']) == 1, info
-assert look['status']['refs']['ledger'] == REG['ledger_input_commit'] and S2['ledger'] != REG['ledger_input_commit']
+assert look['status']['refs']['ledger'] == REG['ledger_view_commit'] and S2['ledger'] != REG['ledger_view_commit'] and look['analysis_time_utc'] == V.ts(CUT)
 log('FORMAL', look['decision'], 'go_live', look['go_live_candidate'], 'coverage', look['status']['batch_coverage']['ok'], '/', look['status']['batch_coverage']['seen'],
     'counts', look['status']['counts'], '| registration', info['registration_commit'][:10], 'look', info['look_commit'][:10])
-# 同一份資料用試跑重算一次(同一個時點 = 登記的 GitHub 收件時間)→ 判定與數字要一樣
+# 同一份資料用試跑重算一次(試跑和正式同一個截止語義:截止 + 24 小時之後只用截止視圖、分析時點 = 截止收盤)→ 判定與數字要一樣
 cfg = dict(V.SPEC, cohort_sessions=120, h2_mode='none', start=START, v2_manifest_sha256=V2SHA)
-g = V.Git(MAIN); store = V.Evidence(EVD + '_dry', online=True); tA = V.P(look['analysis_time_utc'])
-pub, closed, missing, cal, cov = V.collect(g, g.verify('origin/astra-ledger'), g.verify('origin/main'), cfg, tA.astimezone(V.ET).date().isoformat(), tA, store)
+g = V.Git(MAIN); store = V.Evidence(EVD + '_dry', online=True); HEAD_L = g.verify('origin/astra-ledger')
+pub, closed, missing, cal, cov = V.dry_collect(g, HEAD_L, g.verify('origin/main'), cfg, mature.astimezone(V.ET).date().isoformat(), mature, store, analyze=True)
+VIEW = pub['cutoff_view']; VC, VT = VIEW['commit'], VIEW['received_utc']
+assert (VC, VT, VIEW['receipt_run_id']) == (REG['ledger_view_commit'], REG['ledger_view_received_utc'], REG['ledger_view_receipt_run_id'])   # 從更晚的 head 選出同一個視圖
+# 和舊規則(最新 ledger + 本機結案時間 = 草案 4 的語義)逐事件比:哪些事件的分類因為截止視圖而改變
+pub_o, closed_o, missing_o, *_ = V.collect(g, HEAD_L, g.verify('origin/main'), cfg, mature.astimezone(V.ET).date().isoformat(), mature, V.Evidence(EVD + '_old', online=True))
+kc, ko, mc_, mo = {c[:4] for c in closed}, {c[:4] for c in closed_o}, set(missing), set(missing_o)
+CHG = {'closed_view_only': sorted(kc - ko), 'closed_local_rule_only': sorted(ko - kc), 'missing_view_only': sorted(mc_ - mo), 'missing_local_rule_only': sorted(mo - mc_),
+       'counts_view_closed_missing': [len(closed), len(missing)], 'counts_local_rule_closed_missing': [len(closed_o), len(missing_o)],
+       'closed_after_cutoff_flags_local_rule': sorted(k for k, v in pub_o['flags'].items() if v.startswith('closed_after_cutoff')), 'missing_keys_view': sorted(mc_)}
+after = g.run('rev-list', '--first-parent', '--reverse', f'{VC}..{HEAD_L}').decode().split(); RUNS_ = json.load(open(RUNS))   # 截止之後才到 GitHub 的 ledger commit
+AFTER_VIEW = [{'commit': c[:10], 'receipts_utc': sorted(r['created_at'] for r in RUNS_ if r['head_sha'] == c),
+               'files': [x for x in g.run('diff-tree', '--no-commit-id', '--name-only', '-r', c).decode().split('\n') if x][:6]} for c in after]
+log('cutoff view', VC[:10], VT, 'run', VIEW['receipt_run_id'], '| commits after view', len(after), '| changes vs local-time rule',
+    {k: len(v) for k, v in CHG.items() if k.endswith('_only')}, CHG['counts_view_closed_missing'], CHG['counts_local_rule_closed_missing'])
 dres = V.decide(closed, missing, cal, cfg, cov)
 same = (dres['decision'] == look['decision'] and dres['decision_by_h2_mode'] == look['result']['decision_by_h2_mode']
         and json.dumps(dres['excluded_missing'], sort_keys=True) == json.dumps(look['result']['excluded_missing'], sort_keys=True))
@@ -277,7 +293,8 @@ CL = os.path.join(TD, 'other-checkout'); subprocess.run(['git', 'clone', '-q', O
 look3, info3 = FR(repo=CL, evdir=os.path.join(TD, 'evidence_other'))
 assert info3['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info3['look_sha256'] == info['look_sha256'], info3
 REPLAYS = {'after_failed_save': {k: info[k] for k in ('mode', 'status', 'look_sha256')}, 'second_run': {k: info2[k] for k in ('mode', 'status', 'look_sha256')},
-           'other_checkout': {k: info3[k] for k in ('mode', 'status', 'look_sha256')}, 'ledger_input_commit': REG['ledger_input_commit'], 'ledger_head_now': S2['ledger']}
+           'other_checkout': {k: info3[k] for k in ('mode', 'status', 'look_sha256')}, 'ledger_input_commit': REG['ledger_input_commit'],
+           'ledger_view_commit': REG['ledger_view_commit'], 'ledger_view_received_utc': REG['ledger_view_received_utc'], 'ledger_head_now': S2['ledger']}
 def tamper(branch, path, edit, name, want, restore_to):
     c = os.path.join(TD, 'tamper-' + name); subprocess.run(['git', 'clone', '-q', '-b', branch, ORIGIN, c], check=True)
     p_ = os.path.join(c, path); open(p_, 'wb').write(edit(open(p_, 'rb').read()))
@@ -329,7 +346,8 @@ RES['formal'] = {'decision': look['decision'], 'decision_by_h2_mode': res['decis
                  'same_as_dry_run_decide': same, 'evidence_files_used': len(st['evidence_used']),
                  'registration': {'commit': info['registration_commit'], 'remote_received_utc': look['registration']['remote_received_utc'], 'record': REG},
                  'persistence': {k: info[k] for k in ('mode', 'status', 'look_commit', 'look_path')}, 'replays': REPLAYS, 'cache_repair': REPAIR,
-                 'analysis_time_utc': look['analysis_time_utc'], 'resolve_by': st['cohort']['resolve_by']}
+                 'analysis_time_utc': look['analysis_time_utc'], 'resolve_by': st['cohort']['resolve_by'], 'formal_earliest_utc': st['cohort']['formal_earliest_utc'],
+                 'cutoff_view': VIEW, 'classification_vs_local_time_rule': CHG, 'ledger_commits_after_view': AFTER_VIEW}
 assert RES['formal']['coverage']['ok'] == RES['formal']['coverage']['seen'] - 2 and set(RES['formal']['rejected_days']) == {X2, X3}
 assert RES['formal']['no_signals_day']['accepted'] and RES['formal']['idx_late_morning_day']['accepted'] and len(resc) > 0
 RES['meta'] = {'seconds': round(time.time() - T0), 'verifier_sha256': H(VB), 'log': LOG}

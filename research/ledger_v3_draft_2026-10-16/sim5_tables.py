@@ -55,7 +55,7 @@ for k, v in sorted(SHARDS.items()):
     print(f"| {NAME.get(v['name'], v['name'])} | {v['T']} | {n} | {min(r['truth'] for r in rs):+.3f} ~ {max(r['truth'] for r in rs):+.3f} | {len(pos)} | "
           f"{pc(rs, 'none')}({pc(pos, 'none')} / {pc(non, 'none')}) | {pc(rs, 'agree_vs_disagree_lb')}({pc(pos, 'agree_vs_disagree_lb')} / {pc(non, 'agree_vs_disagree_lb')}) | "
           f"{cov}/{n} | {la}/{n}(Wilson {lo_:.1f}–{hi_:.1f}%)| {ub}/{n} |")
-print('\n真值 ≤ 0 的子集是看過結果才分的,只用來說明欄名;主要判讀用「下界 > 真值」這種逐視窗涵蓋失敗(和真值正負無關)。')
+print('\n「真值 > 0」以 1e−12 點當浮點零(和 Astra v0.7.5 相同)。真值 ≤ 0 的子集是看過結果才分的,只用來說明欄名;主要判讀用「下界 > 真值」這種逐視窗涵蓋失敗(和真值正負無關)。')
 print('\n### C2. 歷史固定庫的壓力測試(真值未知 → 不叫誤判)\n')
 print('| 貼法 | 天 | PASS 甲 | PASS 乙 | PASS 丙 | 資訊不足 |')
 print('|---|---:|---:|---:|---:|---:|')

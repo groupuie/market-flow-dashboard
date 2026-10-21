@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""🧪 盤感測試 v3 草案 4(2026-10-21,Claude;**未凍結、還沒開始**)— 回應 Astra v0.7.5
+"""🧪 盤感測試 v3 草案 5(2026-10-21,Claude;**未凍結、還沒開始**)— 回應 Astra v0.7.6
+草案 4(git c72f2f7)→ 草案 5(統計方法、半日市、快取、登記保存都不變):
+  - 結案截止落實成「截止時的遠端資料視圖」(cutoff_view):正式判定只用 GitHub 在第 51 個交易日官方收盤前已收到
+    (自己的 ledger-receipt run 時間 ≤ 截止)的最後一個 astra-ledger commit;之後才上傳、補寫、修改的一律不算
+    → 第一次登記早晚不影響採用哪些結果(Astra v0.7.6 §3.2 的「截止前算好、截止後才上傳」反例)
+  - 未結案轉缺漏用完整時間(現在 ≥ 截止收盤),不再只看日期(§3.1 的「截止日早上就判缺漏」反例)
+  - 正式判定最早在截止後 seal_settle_hours(24 小時,收件紀錄已定案)才能登記;分析時點固定 = 截止收盤(不是登記時間)
+  - 開跑登記多記截止視圖 commit、它的收件時間與收件 run ID;重播時從登記的 ledger 輸入重新選一次,三項都要一樣
+  - 試跑(dry-run)用同一個截止語義:截止 + 24 小時之後只用截止視圖、分析時點 = 截止收盤;截止後 24 小時內只給計數不判;
+    截止前就全部有結果的 READY 標成「提早資訊」(正式判定不會在截止前做)
+  - main 引擎檢查維持嚴格政策(凍結 commit 到登記時的 main);已知代價寫進 PROTOCOL
 草案 3(git 4bfe44d)→ 草案 4(統計方法 C1、正權重、成本公式、逐日序列驗收都不變):
   - 官方交易時段表:逐交易日的開盤 / 收盤(含 NYSE 13:00 提早收盤:2026-11-27、2026-12-24、2027-11-26、2028-07-03、2028-11-24)
     併進日曆指紋;凍結錨點的截止(起日收盤)、出場紀錄的「不早於那根 K 線收盤」都用同一張表(Astra v0.7.5 §3.1)
@@ -8,7 +18,8 @@
     壞檔移到 quarantine/、用重新查到的原件重建、記進 REPAIRS.jsonl,修好再跑(§3.2)
   - 唯一一次 = 「開跑登記 + 決定性重播」(§3.3):先把這次正式判定要用的輸入(ledger commit、main commit、程式指紋、環境)
     寫成 astra-ledger 上的 v3_freeze/<實驗 ID>.start.json 並 push、拿到 GitHub 收件,才開始算;判定只用登記的輸入、
-    時間用登記的 GitHub 收件時間 → 重跑只會得到一模一樣的結果;判定檔 commit + push 到 main 並從遠端讀回核對,才叫「已保存」
+    時間用登記的 GitHub 收件時間 → 同一個計算環境(同版 NumPy、同 Python 主次版本)重跑只會得到一模一樣的結果,不同就停;
+    判定檔 commit + push 到 main 並從遠端讀回核對,才叫「已保存」
   - 結案截止:收案期最後一天之後第 51 個交易日收盤前沒有結果紀錄的,一律算缺漏(之後才補的結果也是)→ 判定和「哪一天跑」無關
   - 線上證據的「使用紀錄」改記內容指紋(和抓取時間無關);空的 run 清單不存快取(GitHub 還沒建 run 時可以再查)
 草案 2(git a654145)→ 草案 3:
@@ -43,7 +54,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO0 = os.path.abspath(os.path.join(HERE, '..', '..'))
 ET = ZoneInfo('America/New_York')
-VERSION = 'v3-draft4'
+VERSION = 'v3-draft5'
 OWNER_REPO = 'groupuie/market-flow-dashboard'; LEDGER_BRANCH = 'astra-ledger'; RECEIPT_WF = '.github/workflows/ledger-receipt.yml'
 ENGINE_FILES = ('scripts/astra_ledger.py', 'scripts/astra_trades.py', 'scripts/astra_data.py')
 IDX = ('SPY', 'QQQ')
@@ -56,7 +67,7 @@ SPEC = {'cohort_sessions': 120, 'horizon_sessions': 41, 'unresolved_after': 10, 
         'min_batch_coverage': 0.90, 'date_block': 5, 'date_scheme': 'circular', 'issuer_weight': 'exp1', 'h1_method': 'C1',   # C1 / L=5:sim5 第二輪照事先規則選出
         'draws': 2000, 'seed': 20261016, 'cost': 0.001, 'late_close_sessions': 5, 'tol': 1e-12, 'agree_missing_value': -1.0,
         'h2_mode': None,                      # 待使用者決定(gap_vs_all_10pp / agree_vs_disagree_lb / none);試跑三種都列
-        'win_gap_pp': 10.0, 'stress_q': (5, 95)}
+        'win_gap_pp': 10.0, 'stress_q': (5, 95), 'seal_settle_hours': 24}   # 結案截止後幾小時才能正式登記(收件紀錄定案)
 HOLIDAYS = {'2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03', '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07', '2026-11-26', '2026-12-25',
             '2027-01-01', '2027-01-18', '2027-02-15', '2027-03-26', '2027-05-31', '2027-06-18', '2027-07-05', '2027-09-06', '2027-11-25', '2027-12-24',
             '2028-01-17', '2028-02-21', '2028-04-14', '2028-05-29', '2028-06-19', '2028-07-04', '2028-09-04', '2028-11-23', '2028-12-25'}
@@ -300,10 +311,32 @@ def get_run(store, run_id):
     return store.get(name, src, fetch, cache_empty=ce)
 
 
-def runs_for_commit(store, commit):
+def runs_for_commit(store, commit, cache_empty=None):
     if not re.fullmatch(r'[0-9a-f]{40}', str(commit)): return None, 'bad_commit_id'
     name = f'runs-for-{commit}.json'; src, fetch, ce = evidence_query(name)
-    return store.get(name, src, fetch, cache_empty=ce)
+    return store.get(name, src, fetch, cache_empty=ce if cache_empty is None else cache_empty)
+
+
+def cutoff_view(g, head, cut_t, store):
+    """截止時的遠端資料視圖(草案 5;Astra v0.7.6 §3.3):沿 head 的第一父鏈往回,第一個「自己的 ledger-receipt run 時間 ≤ 截止」的 commit
+    = GitHub 在截止前最後收到的 astra-ledger 狀態(一起 push 的中間 commit 沒有自己的 run → 跳過)。回傳 (commit, 收件時間)
+    只在截止 + seal_settle_hours 之後用 → run 清單已定案,空清單也存快取(離線重播一樣);查不到 → 停(流程故障,不是研究缺漏)"""
+    for c in g.run('rev-list', '--first-parent', head).decode().split():
+        runs, src = runs_for_commit(store, c, cache_empty=True)
+        if runs is None: raise SystemExit(f'截止視圖:{c[:10]} 的收件紀錄查不到({src})→ 停,不寫判定')
+        good = good_receipts(runs, c)
+        if good:
+            t = min(r['created_at'] for r in good)
+            if P(t) <= cut_t: return c, t
+    raise SystemExit('截止前 GitHub 沒有收過任何 astra-ledger commit → 停')
+
+
+def view_receipt(store, c, t):
+    """截止視圖用的那一筆 GitHub 收件 → run ID(同一時間有兩筆就取小的);和 cutoff_view 看同一份證據,查不到 → 停"""
+    runs, src = runs_for_commit(store, c, cache_empty=True)
+    ids = sorted(r['id'] for r in good_receipts(runs, c) if r['created_at'] == t) if runs is not None else []
+    if not ids: raise SystemExit(f'截止視圖 {c[:10]} 的收件 run 查不到({src})→ 停,不寫判定')
+    return ids[0]
 
 
 def repairs_log(evdir):
@@ -787,19 +820,20 @@ def collect(g, lref, mref, cfg, today, now, store):
     for m, _ in elig:
         rec = (sc.get('marks') or {}).get(m['id'])
         stt, r, note = replay(m, rec, snaps_all[m['id']], cfg)
-        if stt == 'closed' and P(rec['closed_utc']) > now:           # 以「現在」為準還沒發生的結果(例如指定過去時點重播)→ 當作還沒結束
-            stt, r, note = 'open', None, f'closed_after_now:{rec["closed_utc"]}(這個時點還沒有這筆結果)'
-        elif stt == 'closed' and P(rec['closed_utc']) > cut_t:      # 截止之後才有的結果一律算缺漏 → 判定和「哪一天跑」無關
+        if stt == 'closed' and P(rec['closed_utc']) > cut_t and now >= cut_t:   # 截止之後才有的結果一律算缺漏
             stt, r, note = 'closed_after_cutoff', None, f'closed_after_cutoff:{rec["closed_utc"]} > {cut} 收盤'
+        elif stt == 'closed' and P(rec['closed_utc']) > now:        # 以「現在」為準還沒發生的結果(例如指定過去時點重播)→ 當作還沒結束
+            stt, r, note = 'open', None, f'closed_after_now:{rec["closed_utc"]}(這個時點還沒有這筆結果)'
         if note: flags[m['id']] = note
         key = (m['date'], m['type'], m['sym'], m['v'])
         if stt == 'closed': closed.append(key + (r,))
-        elif stt in ('unreproducible', 'closed_after_cutoff') or n_after >= cfg['horizon_sessions'] + cfg['unresolved_after']: missing.append(key)
+        elif stt in ('unreproducible', 'closed_after_cutoff') or now >= cut_t: missing.append(key)   # 未結案:到截止收盤(完整時間)才轉缺漏
         if stt == 'unreproducible': flags[m['id']] = 'unreproducible: ' + note
     pending = len(elig) - len(closed) - len(missing)
     status = 'COLLECTING' if today <= end else ('MATURING' if (n_after < cfg['horizon_sessions'] or pending) else 'READY')
+    settle = cut_t + dt.timedelta(hours=cfg['seal_settle_hours'])
     pub = {'version': VERSION, 'cohort': {'start': cfg['start'], 'end': end, 'sessions': len(cal), 'today': today, 'sessions_seen': len(seen),
-                                          'resolve_by': cut, 'resolve_by_close_utc': ts(cut_t)},
+                                          'resolve_by': cut, 'resolve_by_close_utc': ts(cut_t), 'formal_earliest_utc': ts(settle)},
            'status': status, 'batch_coverage': {'ok': cov_ok, 'seen': len(seen), 'rate': cov_ok / max(1, len(seen)), 'by_date': by_date},
            'counts': {'marks_in_window': len(rows), 'eligible': len(elig), 'rejected': len(rows) - len(elig), 'closed_reproducible': len(closed),
                       'missing_or_unreproducible': len(missing), 'pending': pending, 'not_eligible_reasons': dict(reasons),
@@ -808,6 +842,8 @@ def collect(g, lref, mref, cfg, today, now, store):
            'refs': {'ledger': lref, 'main': mref}, 'evidence_used': dict(sorted(store.used.items())),
            'evidence_mode': 'online' if store.online else {'pinned': store.pins_src},
            'spec': {k: (list(v) if isinstance(v, tuple) else v) for k, v in sorted(cfg.items())}}
+    if status == 'READY' and now < cut_t:        # 截止前就全部有結果:只是提早資訊(正式判定只在截止 + 24 小時之後、只用截止視圖)
+        pub['note'] = f'截止前全部已有結果:這只是提早資訊,不是正式判定;正式判定最早 {ts(settle)} 才能做,而且只用截止前 GitHub 已收到的資料'
     return pub, closed, missing, cal, cov_ok / max(1, len(seen))
 
 
@@ -828,7 +864,9 @@ def make_manifest(start, cohort_sessions, h2_mode, v2_manifest_sha, verifier_byt
     return {'schema': 'ledger-v3-manifest-1', 'experiment_id': exp, 'owner_repo': OWNER_REPO, 'ledger_branch': LEDGER_BRANCH,
             'verifier_path': VERIFIER_PATH, 'verifier_sha256': sha(verifier_bytes), 'verifier_version': VERSION, 'spec': spec_json(cfg),
             'start': start, 'end': end, 'resolve_by': cut, 'calendar_sha256': calendar_fingerprint(), 'cohort_sessions_sha256': sha('\n'.join(sessions(start, end)).encode()),
-            'v2_engine_manifest_sha256': v2_manifest_sha, 'min_effect_pp': min_effect_pp, 'look_path': f'{LOOK_DIR}/{exp}.json',
+            'v2_engine_manifest_sha256': v2_manifest_sha,
+            'min_effect_pp': min_effect_pp,     # 只記錄「最小值得採用差距」(收案量 / 功效規劃用);H1 通過條件仍是下界 > 0,這個欄位不參與判定
+            'look_path': f'{LOOK_DIR}/{exp}.json',
             'anchor_path': f'{ANCHOR_DIR}/{exp}.json', 'note': note}
 
 
@@ -839,6 +877,7 @@ def anchor_json(manifest_bytes, freeze_commit):
 
 REG_SCHEMA, LOOK_SCHEMA = 'ledger-v3-start-1', 'ledger-v3-look-2'
 REG_KEYS = {'schema', 'experiment_id', 'manifest_sha256', 'freeze_commit', 'verifier_sha256', 'ledger_input_commit', 'main_input_commit',
+            'ledger_view_commit', 'ledger_view_received_utc', 'ledger_view_receipt_run_id',
             'registered_local_utc', 'environment', 'evidence_repairs'}
 
 
@@ -903,7 +942,7 @@ def wait_receipt(store, commit, timeout_s):
         time.sleep(min(10.0, max(0.5, t_end - time.time())))
 
 
-def check_registration(g, R, man, mb, F, me, rmain, store):
+def check_registration(g, R, man, mb, F, me, rmain, store, cut_t):
     """已經有開跑登記 → 核對它,回傳 (登記內容, GitHub 收件時間);任何一項不符 → 停"""
     rp = registration_path(man['experiment_id']); body = g.show(R, rp) or b''
     try: reg = json.loads(body)
@@ -919,21 +958,23 @@ def check_registration(g, R, man, mb, F, me, rmain, store):
     if not (re.fullmatch(r'[0-9a-f]{40}', M0) and g.is_ancestor(F, M0) and g.is_ancestor(M0, rmain)): raise SystemExit('開跑登記的 main 輸入不在遠端 main 上 → 停')
     if reg['environment'] != env_info():
         raise SystemExit(f'重播要用和登記時一樣的計算環境:登記 {reg["environment"]},現在 {env_info()} → 停(換成同一版再跑)')
+    vc, vt = cutoff_view(g, reg['ledger_input_commit'], cut_t, store)
+    if (vc, vt, view_receipt(store, vc, vt)) != (reg['ledger_view_commit'], reg['ledger_view_received_utc'], reg['ledger_view_receipt_run_id']):
+        raise SystemExit('開跑登記記的截止視圖(commit / 收件時間 / 收件 run)和重新選出來的不同 → 停')
     runs, src = runs_for_commit(store, R); good = good_receipts(runs, R) if runs is not None else []
     if not good: raise SystemExit(f'開跑登記沒有 GitHub 收件紀錄({src})→ 停')
     return reg, min(r['created_at'] for r in good)
 
 
-def compute_look(g, man, mb, F, anchor, cfg, me, reg, R, t_reg, store):
-    """只用登記的輸入(ledger / main commit)與登記的 GitHub 收件時間計算 → 同樣的登記,重跑一定得到同樣的位元組"""
-    now = P(t_reg); today = now.astimezone(ET).date().isoformat()
-    pub, closed, missing, cal, cov = collect(g, reg['ledger_input_commit'], reg['main_input_commit'], cfg, today, now, store)
+def compute_look(g, man, mb, F, anchor, cfg, me, reg, R, t_reg, store, cut_t):
+    """只用登記的截止視圖(ledger)與 main 輸入,分析時點固定 = 截止收盤 → 同一份登記、同一計算環境,重跑得到同樣的位元組"""
+    pub, closed, missing, cal, cov = collect(g, reg['ledger_view_commit'], reg['main_input_commit'], cfg, cut_t.astimezone(ET).date().isoformat(), cut_t, store)
     if pub['status'] != 'READY': raise SystemExit(f'照登記的輸入重算,狀態是 {pub["status"]}(不是 READY)→ 停,沒有寫判定')
     res = decide(closed, missing, cal, cfg, cov)
     look = {'schema': LOOK_SCHEMA, 'mode': 'FORMAL', 'experiment_id': man['experiment_id'], 'decision': res['decision'], 'go_live_candidate': res['go_live_candidate'],
             'result': res, 'status': pub, 'manifest_sha256': sha(mb), 'freeze_commit': F, 'freeze_anchor': anchor,
             'registration': {'path': registration_path(man['experiment_id']), 'commit': R, 'remote_received_utc': t_reg, 'record': reg},
-            'verifier_sha256': sha(me), 'inputs_sha256': sha(json.dumps([closed, missing], sort_keys=True).encode()), 'analysis_time_utc': t_reg}
+            'verifier_sha256': sha(me), 'inputs_sha256': sha(json.dumps([closed, missing], sort_keys=True).encode()), 'analysis_time_utc': ts(cut_t)}
     return look, canon_bytes(look)
 
 
@@ -997,29 +1038,33 @@ def formal_run(repo, ledger_ref=None, main_ref=None, evdir=None, me_path=None, r
     """正式判定(一個實驗只有一份結果):
     1. 抓遠端 → 核對凍結(manifest、程式指紋、固定規格、日曆、錨點)
     2. astra-ledger 已經有開跑登記 → 核對登記 → 照登記的輸入重播(REPLAY)
-       沒有 → 先確認 READY(只看筆數、不算結果)→ 把輸入寫成開跑登記 → push → 拿到 GitHub 收件 → 才開始算(FIRST)
-    3. 只用登記的 ledger / main commit 與登記的收件時間計算 → 判定檔 push 到遠端 main → 讀回逐位元組核對
+       沒有 → 截止 + 24 小時之前不能登記 → 選截止視圖、確認 READY(只看筆數、不算結果)→ 寫開跑登記 → push → 拿到 GitHub 收件 → 才開始算(FIRST)
+    3. 只用登記的截止視圖與 main commit、分析時點 = 截止收盤 → 判定檔 push 到遠端 main → 讀回逐位元組核對
     任何基礎設施故障(API、本機快取、push)都在寫判定之前停下;回傳 (判定, 保存資訊)"""
     g = Git(repo); rmain, rledger = fetch_remote(g, remote)
     mref = g.verify(main_ref) if main_ref else rmain; lref = g.verify(ledger_ref) if ledger_ref else rledger
     me = open(me_path or os.path.abspath(__file__), 'rb').read()
     store = Evidence(evdir or os.path.join(repo, 'research', 'ledger_v3', 'evidence'), online=True, strict=True)
     man, mb, F, anchor, cfg = formal_checks(g, mref, lref, store, me)
-    exp = man['experiment_id']; rp = registration_path(exp)
+    exp = man['experiment_id']; rp = registration_path(exp); cut_t = close_utc(man['resolve_by'])
     if not (g.is_ancestor(mref, rmain) and g.is_ancestor(lref, rledger)): raise SystemExit('正式模式只能用遠端的 main / astra-ledger(本機自己的分支不行)→ 停')
     regs = g.touching(rledger, rp)
     if len(regs) > 1: raise SystemExit('開跑登記被改過(不只一個 commit 碰過)→ 停')
     if regs:
-        R = regs[0]; reg, t_reg = check_registration(g, R, man, mb, F, me, rmain, store); mode = 'REPLAY'
+        R = regs[0]; reg, t_reg = check_registration(g, R, man, mb, F, me, rmain, store, cut_t); mode = 'REPLAY'
     else:
         if g.touching(rmain, man['look_path']) or look_exists(repo, os.path.join(repo, man['look_path'])):
             raise SystemExit('這個實驗已經有判定檔,卻沒有開跑登記 → 停(要查原因)')
         if lref != rledger: raise SystemExit('開跑登記要接在遠端最新的 astra-ledger 上 → 停')
-        now = clock(); today = now.astimezone(ET).date().isoformat()
-        pub0 = collect(g, lref, mref, cfg, today, now, store)[0]
-        if pub0['status'] != 'READY': raise SystemExit(f'狀態是 {pub0["status"]},還不能判定(沒有寫任何登記或判定)')
+        now = clock()
+        if now < cut_t + dt.timedelta(hours=cfg['seal_settle_hours']):
+            raise SystemExit(f'還沒過結案截止({ts(cut_t)})+ {cfg["seal_settle_hours"]} 小時 → 還不能判定(沒有寫任何登記或判定)')
+        vc, vt = cutoff_view(g, lref, cut_t, store); vr = view_receipt(store, vc, vt)
+        pub0 = collect(g, vc, mref, cfg, cut_t.astimezone(ET).date().isoformat(), cut_t, store)[0]
+        if pub0['status'] != 'READY': raise SystemExit(f'截止視圖的狀態是 {pub0["status"]},還不能判定(沒有寫任何登記或判定)')
         reg = {'schema': REG_SCHEMA, 'experiment_id': exp, 'manifest_sha256': sha(mb), 'freeze_commit': F, 'verifier_sha256': sha(me),
-               'ledger_input_commit': lref, 'main_input_commit': mref, 'registered_local_utc': ts(now), 'environment': env_info(),
+               'ledger_input_commit': lref, 'ledger_view_commit': vc, 'ledger_view_received_utc': vt, 'ledger_view_receipt_run_id': vr, 'main_input_commit': mref,
+               'registered_local_utc': ts(now), 'environment': env_info(),
                'evidence_repairs': repairs_log(store.dir)}
         body = canon_bytes(reg)
         R, err = push_new_file(g, remote, LEDGER_BRANCH, lref, rp, body, f'v3 正式判定開跑登記 {exp}')
@@ -1027,10 +1072,29 @@ def formal_run(repo, ledger_ref=None, main_ref=None, evdir=None, me_path=None, r
         _, rledger2 = fetch_remote(g, remote)
         if g.touching(rledger2, rp) != [R] or g.show(rledger2, rp) != body: raise SystemExit('遠端讀不回剛送出的開跑登記 → 停')
         t_reg = wait_receipt(store, R, wait_receipt_s); mode = 'FIRST'
-    look, body = compute_look(g, man, mb, F, anchor, cfg, me, reg, R, t_reg, store)
+    look, body = compute_look(g, man, mb, F, anchor, cfg, me, reg, R, t_reg, store, cut_t)
     info = persist_look(g, remote, man['look_path'], body, exp)
     info.update(mode=mode, look_path=man['look_path'], registration_commit=R, look_sha256=sha(body))
     return look, info
+
+
+# ---------------------------------------------------------------- 試跑(和正式同一個截止語義)
+def dry_collect(g, lref, mref, cfg, today, now, store, analyze=False):
+    """試跑(不是正式結果)。截止 + seal_settle_hours 之後 → 和正式一樣只用截止視圖、分析時點 = 截止收盤;
+    截止後 24 小時內 → 收件紀錄還沒定案:status 只給計數(附註),analyze 不判;截止前 → 照現在的 ledger(READY 只是提早資訊)"""
+    end = add_sessions(cfg['start'], cfg['cohort_sessions']); cut_t = close_utc(add_sessions(end, cfg['horizon_sessions'] + cfg['unresolved_after'] + 1))
+    settle = cut_t + dt.timedelta(hours=cfg['seal_settle_hours']); view = None
+    if now >= settle:
+        vc, vt = cutoff_view(g, lref, cut_t, store); view = {'commit': vc, 'received_utc': vt, 'receipt_run_id': view_receipt(store, vc, vt)}
+        lref, now, today = vc, cut_t, cut_t.astimezone(ET).date().isoformat()
+    elif now >= cut_t and analyze:
+        raise SystemExit(f'結案截止({ts(cut_t)})後 {cfg["seal_settle_hours"]} 小時內收件紀錄還沒定案 → 試跑也先不判(最早 {ts(settle)})')
+    pub, closed, missing, cal, cov = collect(g, lref, mref, cfg, today, now, store)
+    pub['mode'] = 'DRY_RUN(試跑,不是正式結果)'
+    if view: pub['cutoff_view'] = view
+    elif now >= cut_t:
+        pub['note'] = f'結案截止後 {cfg["seal_settle_hours"]} 小時內:收件紀錄還沒定案,這份計數用最新 ledger 與本機時間、只供參考;正式判定(最早 {ts(settle)})改用截止視圖'
+    return pub, closed, missing, cal, cov
 
 
 # ---------------------------------------------------------------- 命令列
@@ -1075,8 +1139,7 @@ def main():
     pins, psrc = load_pins(g, A.pins) if A.offline else ({}, None)
     store = Evidence(A.evidence or os.path.join(HERE, 'evidence'), online=not A.offline, pins=pins, pins_src=psrc)
     now = P(A.now) if A.now else clock(); today = A.today or now.astimezone(ET).date().isoformat()
-    pub, closed, missing, cal, cov = collect(g, lref, mref, cfg, today, now, store)
-    pub['mode'] = 'DRY_RUN(試跑,不是正式結果)'
+    pub, closed, missing, cal, cov = dry_collect(g, lref, mref, cfg, today, now, store, analyze=(A.cmd == 'analyze'))
     if A.cmd == 'status':
         print(json.dumps(pub, ensure_ascii=False, indent=1)); return     # 判定前只有筆數與原因,不顯示勝率
     if pub['status'] != 'READY': raise SystemExit(f'狀態是 {pub["status"]},還不能判定')
