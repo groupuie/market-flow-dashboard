@@ -1,0 +1,97 @@
+# 盤感測試 v3:收件證據 PoC(Sigstore / GitHub artifact attestation)— 隔離測試分支,不是正式流程
+# 每次 push 到 attest-poc:對這次 push 的確切 commit 做收件清單(manifest),用 GitHub OIDC + Sigstore 簽章;
+# manifest 原位元組、完整 bundle、信任根快照存進 attest-poc-evidence(每筆接在上一筆後面,manifest 記上一個證據 commit)
+name: attest-poc
+on:
+  push:
+    branches: [attest-poc]
+permissions:
+  contents: write        # 寫 attest-poc-evidence
+  id-token: write        # GitHub OIDC → Sigstore 短期憑證
+  attestations: write    # GitHub 也存一份 attestation
+concurrency:
+  group: attest-poc-evidence
+  cancel-in-progress: false
+jobs:
+  attest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: checkout pushed commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          path: src
+          persist-credentials: false
+      - name: checkout evidence branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          ref: attest-poc-evidence
+          path: ev
+      - name: build manifest
+        id: m
+        env:
+          HEAD_SHA: ${{ github.sha }}
+          BEFORE_SHA: ${{ github.event.before }}
+          REF: ${{ github.ref }}
+          EVENT: ${{ github.event_name }}
+          REPO: ${{ github.repository }}
+          REPO_ID: ${{ github.repository_id }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, subprocess
+          def git(d, *a):
+              return subprocess.run(['git', '-C', d, *a], capture_output=True, text=True, check=True).stdout.strip()
+          head = os.environ['HEAD_SHA']
+          if git('src', 'rev-parse', 'HEAD') != head: raise SystemExit('checkout 不是這次 push 的 commit')
+          files = {}
+          for root, dirs, fs in os.walk('src'):
+              dirs[:] = [d for d in dirs if d != '.git']
+              for f in fs:
+                  p = os.path.join(root, f)
+                  files[os.path.relpath(p, 'src')] = hashlib.sha256(open(p, 'rb').read()).hexdigest()
+          att = os.path.join('ev', 'att')
+          seq = len([f for f in os.listdir(att) if f.endswith('.manifest.json')]) + 1 if os.path.isdir(att) else 1
+          m = {'schema': 'ledger-attest-manifest-1', 'research': 'LV3-attest-poc', 'version': 'poc-1', 'seq': seq,
+               'repository': os.environ['REPO'], 'repository_id': os.environ['REPO_ID'], 'ref': os.environ['REF'],
+               'event': os.environ['EVENT'], 'head_sha': head, 'before_sha': os.environ['BEFORE_SHA'],
+               'tree_sha': git('src', 'rev-parse', 'HEAD^{tree}'), 'files_sha256': dict(sorted(files.items())),
+               'evidence_parent': git('ev', 'rev-parse', 'HEAD'), 'run_id': os.environ['RUN_ID'],
+               'run_attempt': os.environ['RUN_ATTEMPT'], 'workflow_ref': os.environ['WORKFLOW_REF']}
+          name = f'{seq:06d}_{head}.manifest.json'
+          os.makedirs('out', exist_ok=True)
+          with open(os.path.join('out', name), 'w') as fh: fh.write(json.dumps(m, sort_keys=True, separators=(',', ':')) + '\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh: fh.write(f'name={name}\n')
+          PY
+      - name: attest (GitHub OIDC + Sigstore)
+        id: att
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6  # v4.2.2
+        with:
+          subject-path: out/${{ steps.m.outputs.name }}
+          predicate-type: https://github.com/groupuie/market-flow-dashboard/attest-poc/receipt/v1
+          predicate-path: out/${{ steps.m.outputs.name }}
+          show-summary: false
+      - name: archive into evidence branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NAME: ${{ steps.m.outputs.name }}
+          BUNDLE: ${{ steps.att.outputs.bundle-path }}
+          HEAD_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          mkdir -p ev/att ev/trust
+          cp "out/$NAME" "ev/att/$NAME"
+          cp "$BUNDLE" "ev/att/${NAME%.manifest.json}.bundle.json"
+          gh attestation trusted-root > tr.jsonl
+          H=$(sha256sum tr.jsonl | cut -c1-16)
+          if ! ls ev/trust/*_"$H".jsonl >/dev/null 2>&1; then cp tr.jsonl "ev/trust/$(date -u +%Y%m%dT%H%M%SZ)_$H.jsonl"; fi
+          cd ev
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -q -m "attest $HEAD_SHA run $RUN_ID/$RUN_ATTEMPT ($(gh --version | head -1))"
+          git push -q origin HEAD:attest-poc-evidence

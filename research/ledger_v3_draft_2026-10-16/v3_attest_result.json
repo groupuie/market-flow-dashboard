@@ -1,0 +1,235 @@
+{
+ "tests": 26,
+ "all_pass": true,
+ "attest_module_sha256": "b93c600c66b481f3d24967d25d874419b8fcc42a408e0eec0097e361cb470998",
+ "gitbundle_sha256": "7f79e5209760da6eec32ec531483031c36568bfec844b0d37844f2ba0abded00",
+ "gh": "gh version 2.89.0 (2026-03-26)",
+ "results": [
+  {
+   "name": "offline_chain_verifies_all_three",
+   "pass": true,
+   "proof": {
+    "records": [
+     {
+      "seq": 1,
+      "head": "22f3069ed6",
+      "t": "2026-10-21T13:16:25Z",
+      "run": "39606521033/1",
+      "time": [
+       {
+        "type": "Tlog",
+        "uri": "https://rekor.sigstore.dev",
+        "utc": "2026-10-21T13:16:25Z"
+       }
+      ]
+     },
+     {
+      "seq": 2,
+      "head": "876b9a8395",
+      "t": "2026-10-21T13:17:36Z",
+      "run": "39606696527/1",
+      "time": [
+       {
+        "type": "Tlog",
+        "uri": "https://rekor.sigstore.dev",
+        "utc": "2026-10-21T13:17:36Z"
+       }
+      ]
+     },
+     {
+      "seq": 3,
+      "head": "1cc76d9404",
+      "t": "2026-10-21T13:18:18Z",
+      "run": "39606798876/1",
+      "time": [
+       {
+        "type": "Tlog",
+        "uri": "https://rekor.sigstore.dev",
+        "utc": "2026-10-21T13:18:18Z"
+       }
+      ]
+     }
+    ],
+    "setup": "從 git bundle 重新 clone;gh 新的設定與快取資料夾、假 token;unshare -rn(沒有網路);不用 GitHub API"
+   }
+  },
+  {
+   "name": "sandbox_has_no_network",
+   "pass": true,
+   "proof": "OSError: [Errno 101] Network is unreachable"
+  },
+  {
+   "name": "original_record_verifies",
+   "pass": true,
+   "proof": "2026-10-21T13:16:25Z"
+  },
+  {
+   "name": "wrong_repo_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "憑證身分欄位不符:['sourceRepositoryURI', 'buildSignerURI', 'runInvocationURI']",
+    "gh": "Sigstore 核驗不通過:Error: verifying with issuer \"sigstore.dev\""
+   }
+  },
+  {
+   "name": "wrong_workflow_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "憑證身分欄位不符:['buildSignerURI']",
+    "gh": "Sigstore 核驗不通過:Error: verifying with issuer \"sigstore.dev\""
+   }
+  },
+  {
+   "name": "wrong_branch_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "憑證身分欄位不符:['sourceRepositoryRef', 'buildSignerURI']",
+    "gh": "Sigstore 核驗不通過:Error: expected SourceRepositoryRef to be refs/heads/astra-ledger, got refs/heads/attest-poc"
+   }
+  },
+  {
+   "name": "wrong_predicate_type_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "predicate 類型不是釘住的",
+    "gh": "Sigstore 核驗不通過:Error: no attestations found with predicate type: https://example.com/other/v1"
+   }
+  },
+  {
+   "name": "wrong_commit_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "manifest 和簽住的 subject(檔名 / 指紋)不同 → 改過或不是這一份",
+    "gh": "Sigstore 核驗不通過:Error: expected BuildSignerDigest to be 8c8e2b31bb26cafd80b07e015b38b08d10e227ee, got 22f3069ed6817e5c9177ac45936d8d958bc35acf"
+   }
+  },
+  {
+   "name": "manifest_one_byte_changed_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "manifest 和簽住的 subject(檔名 / 指紋)不同 → 改過或不是這一份",
+    "gh": "Sigstore 核驗不通過:Error: verifying with issuer \"sigstore.dev\""
+   }
+  },
+  {
+   "name": "missing_time_evidence_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "bundle 沒有時間證據(透明紀錄 / 時間戳記)",
+    "gh": "Sigstore 核驗不通過:Error: verifying with issuer \"sigstore.dev\""
+   }
+  },
+  {
+   "name": "wrong_repo_id_rejected",
+   "pass": true,
+   "proof": {
+    "ours": "憑證身分欄位不符:['sourceRepositoryIdentifier']",
+    "gh": "gh 沒有數字 repo ID 的選項 → 只有我們這層會擋(憑證欄位 1.3.6.1.4.1.57264.1.15)"
+   }
+  },
+  {
+   "name": "unpinned_workflow_bytes_rejected",
+   "pass": true,
+   "proof": "簽章的 workflow 不是釘住的版本"
+  },
+  {
+   "name": "bundle_signature_one_byte_changed_rejected",
+   "pass": true,
+   "proof": {
+    "msg": "Sigstore 核驗不通過:Error: verifying with issuer \"sigstore.dev\"",
+    "note": "簽章只有密碼學那層能驗;同樣設定的原檔通過(original_record_verifies),差別只在這 1 個字元"
+   }
+  },
+  {
+   "name": "wrong_trust_root_rejected",
+   "pass": true,
+   "proof": {
+    "msg": "Sigstore 核驗不通過:Error: verifying with issuer \"sigstore.dev\"",
+    "note": "信任根拿掉 rekor.sigstore.dev 的金鑰 → 透明紀錄驗不過"
+   }
+  },
+  {
+   "name": "runner_trust_snapshot_checked_against_pinned_root",
+   "pass": true,
+   "proof": "workflow 存的信任根快照和釘住的 sigstore 信任根不一致 → 來源矛盾"
+  },
+  {
+   "name": "view_boundary_one_second",
+   "pass": true,
+   "proof": {
+    "C=T1": "P1 收",
+    "C=T1-1s": "停(截止前沒有收件證據)"
+   }
+  },
+  {
+   "name": "deadline_boundary_one_second",
+   "pass": true,
+   "proof": {
+    "deadline=T1+1s": "準時",
+    "deadline=T1": "晚了(簽證時間不早於截止)"
+   }
+  },
+  {
+   "name": "intermediate_commit_covered_by_push_head",
+   "pass": true,
+   "proof": {
+    "P2(中間 commit)": "由第 2 筆(head 876b9a8395)證明,2026-10-21T13:17:36Z"
+   }
+  },
+  {
+   "name": "signed_after_cutoff_not_backfilled",
+   "pass": true,
+   "proof": {
+    "C=T2-1s": "截止視圖退回 P1;P3 的內容不算準時(簽證晚於截止,不回填)"
+   }
+  },
+  {
+   "name": "seal_fixed_by_first_record_after_D",
+   "pass": true,
+   "proof": {
+    "D 在第 1、2 筆之間": "封定 [1],封存證明 = 第 2 筆",
+    "D 在第 2、3 筆之間": "封定 [1, 2],封存證明 = 第 3 筆",
+    "D ≥ 第 3 筆": "停"
+   }
+  },
+  {
+   "name": "five_places_same_evidence",
+   "pass": true,
+   "proof": {
+    "anchor(P1,截止 T1+60s)": true,
+    "lock(P3,截止 T2+60s)": true,
+    "no_signals_prep(P2,截止 T2+60s,一起 push)": true,
+    "cutoff_view(C)": true,
+    "registration(P4,D 之後)": true
+   }
+  },
+  {
+   "name": "delayed_first_analysis_same_sealed_set",
+   "pass": true,
+   "proof": {
+    "第一次分析(鏈只到第 3 筆)": "封定 [1, 2]",
+    "拖晚分析(鏈到第 5 筆)": "封定 [1, 2](同一個)"
+   }
+  },
+  {
+   "name": "late_archived_evidence_rejected",
+   "pass": true,
+   "proof": "第 4 筆簽住的上一個證據 commit 和實際的不同 → 鏈被改過或晚補"
+  },
+  {
+   "name": "modified_or_deleted_evidence_rejected",
+   "pass": true,
+   "proof": "證據 commit 7e52840a6e 改了或刪了既有的檔(只能新增)"
+  },
+  {
+   "name": "time_not_increasing_rejected",
+   "pass": true,
+   "proof": "第 3 筆的簽證時間沒有晚於上一筆 → 矛盾"
+  },
+  {
+   "name": "commit_without_exactly_one_record_rejected",
+   "pass": true,
+   "proof": "證據 commit 044954fb0d 不是剛好新增一筆 manifest + bundle"
+  }
+ ]
+}
