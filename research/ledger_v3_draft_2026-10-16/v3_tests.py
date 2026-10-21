@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""v3 草案 4 的離線測試(Claude 2026-10-21;草案 3 的 71 項 + Astra v0.7.5 的反例)
+"""v3 草案 5 的離線測試(Claude 2026-10-21;草案 4 的 102 項 + Astra v0.7.6 的結案截止反例)
    草案 3:草案 2 的 39 項(行為改了的照新規則改寫)+ Astra v0.7.4 的反例:統計反例(原樣重現草案 2 的 PASS,新版要 NO_PASS)、
    零訊號蓋掉鎖定事件、單列錯誤整批照收、改過的回條快取、重疊行情不一致、只改訊號日收盤、整段縮放後再捨入取消原買點
    草案 4(Astra v0.7.5):半日市(13:00 收盤)的凍結錨點與出場紀錄時間、正式模式遇到本機快取壞掉要停(不寫登記與判定)+ 修復、
@@ -491,7 +491,8 @@ def remote_fx(td):
     org = os.path.join(td, 'origin.git'); subprocess.run(['git', 'init', '-q', '--bare', '-b', 'main', org], check=True)
     for n_, s_ in (('post-receive', POST), ('pre-receive', PRE)):
         p_ = os.path.join(org, 'hooks', n_); open(p_, 'w').write(s_); os.chmod(p_, 0o755)
-    open(CLK, 'w').write('2027-08-02T22:05:00Z'); GIT(w, 'remote', 'add', 'origin', org); GIT(w, 'push', '-q', 'origin', 'main', 'astra-ledger')
+    open(CLK, 'w').write('2026-10-16T06:00:00Z'); GIT(w, 'remote', 'add', 'origin', org); GIT(w, 'push', '-q', 'origin', 'main', 'astra-ledger')   # 截止前收件
+    open(CLK, 'w').write('2027-08-02T22:05:00Z')                                                                  # 之後的 push(登記等)= 截止後
     return X, man, rc, org
 def remote_state(repo, exp, look_path):
     g = V.Git(repo); rm, rl = V.fetch_remote(g, 'origin')
@@ -516,7 +517,7 @@ try:
         look, info = V.formal_run(X.td, evdir=ev, me_path=VPATH); s1 = remote_state(X.td, exp, lpath)
         ok('repaired_cache_then_one_persisted_look', rep['status'] == 'repaired' and info['mode'] == 'FIRST' and info['status'] == 'PERSISTED' and look['status']['counts']['eligible'] == 1
            and look['status']['batch_coverage']['by_date']['2026-10-14']['accepted'] and look['decision'] == 'INSUFFICIENT' and len(s1['registration']) == 1 and len(s1['look']) == 1
-           and look['registration']['record']['evidence_repairs'][0]['name'] == name and look['analysis_time_utc'] == '2027-08-02T22:05:00Z',
+           and look['registration']['record']['evidence_repairs'][0]['name'] == name and look['analysis_time_utc'] == '2027-06-21T20:00:00Z',
            {'info': info, 'eligible': look['status']['counts']['eligible'], 'decision': look['decision']})
         shutil.rmtree(ev); look2, info2 = V.formal_run(X.td, evdir=os.path.join(td, 'ev2'), me_path=VPATH); s2 = remote_state(X.td, exp, lpath)
         ok('rerun_after_deleting_local_files_replays_identical', info2['mode'] == 'REPLAY' and info2['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info2['look_sha256'] == info['look_sha256']
@@ -526,7 +527,7 @@ try:
         ok('other_checkout_replays_identical', info3['status'] == 'ALREADY_PERSISTED_IDENTICAL' and info3['look_sha256'] == info['look_sha256'], info3)
         push_edit(org, td, 'astra-ledger', 'scores.json', lambda b: b.replace(b'{"marks":{}}', b'{"marks":{},"note":"after registration"}'))
         look4, info4 = V.formal_run(X.td, evdir=os.path.join(td, 'ev2'), me_path=VPATH); s4 = remote_state(X.td, exp, lpath)
-        L0 = look['registration']['record']['ledger_input_commit']
+        L0 = look['registration']['record']['ledger_view_commit']
         ok('new_ledger_data_after_registration_ignored', info4['look_sha256'] == info['look_sha256'] and look4['status']['refs']['ledger'] == L0 and s4['ledger'] != L0, {'L0': L0[:10], 'head': s4['ledger'][:10]})
         push_edit(org, td, 'main', lpath, lambda b: b.replace(b'"decision": "INSUFFICIENT"', b'"decision": "PASS"', 1))
         msg = must_stop(lambda: V.formal_run(X.td, evdir=os.path.join(td, 'ev2'), me_path=VPATH), '不同')
@@ -548,6 +549,87 @@ try:
         msg = must_stop(lambda: V.formal_run(X.td, evdir=ev, me_path=VPATH), '開跑登記被改過'); ok('tampered_registration_stops', not msg.startswith(('DID', 'WRONG')), msg[:60])
 finally:
     V.clock, V.time.sleep = old_clock, old_sleep
+
+# ---- 12. 結案截止的時間反例(Astra v0.7.6 §3):① 截止日早上就判缺漏 ② 截止前算好、截止後才上傳;另驗試跑同語義、收件 run ID
+def draft4():
+    b = real_show('c72f2f7', 'research/ledger_v3_draft_2026-10-16/v3_verify.py'); assert H(b) == 'e957328e058296d0984ad5f9894e53ac32a94855cad34ac16ecc93f80d43a413'
+    p_ = os.path.join(tempfile.mkdtemp(prefix='v3d4_'), 'v3_verify_draft4.py'); open(p_, 'wb').write(b)
+    sp_ = importlib.util.spec_from_file_location('v3_verify_draft4', p_); m_ = importlib.util.module_from_spec(sp_); sp_.loader.exec_module(m_); return m_
+D4 = draft4()
+def cfg_cut(target, msha):          # 收案 1 天(2026-10-14),把截止日調到 target(第 k 個交易日)
+    k = len(V.sessions('2026-10-14', target))
+    return dict(V.SPEC, start='2026-10-14', cohort_sessions=1, horizon_sessions=k - 11, unresolved_after=10, v2_manifest_sha256=msha)
+for name, target, close in (('missing_waits_for_close_half_day', '2026-11-27', '2026-11-27T18:00:00Z'), ('missing_waits_for_close_normal_day', '2026-11-30', '2026-11-30T21:00:00Z')):
+    with tempfile.TemporaryDirectory() as td:
+        X = Fx(td); X.lock('2026-10-14', [('ADI', SNAP, 'disagree')]); cfg = cfg_cut(target, X.msha); res = {}
+        for label, t in (('morning', target + 'T14:00:00Z'), ('one_second_before', V.ts(V.P(close) - dt.timedelta(seconds=1))), ('at_close', close)):
+            pub, cl, mi, *_ = V.collect(X.g, 'astra-ledger', 'main', cfg, target, V.P(t), X.store())
+            res[label] = (pub['status'], len(cl), len(mi), pub['counts']['pending'])
+        po, clo, mio, *_ = D4.collect(X.g, 'astra-ledger', 'main', cfg, target, V.P(target + 'T14:00:00Z'), X.store())
+        res['draft4_morning'] = (po['status'], len(clo), len(mio), po['counts']['pending'])
+        ok(name, pub['cohort']['resolve_by'] == target and res['morning'] == res['one_second_before'] == ('MATURING', 0, 0, 1) and res['at_close'] == ('READY', 0, 1, 0)
+           and res['draft4_morning'] == ('READY', 0, 1, 0), res)
+with tempfile.TemporaryDirectory() as td:          # 截止視圖:截止前 1 秒算好、截止後 2 秒才收件 → 不算;任何更晚的 head 選出同一個視圖;準時收件 → 算
+    X = Fx(td); lc, rc = X.lock('2026-10-14', [('ADI', SNAP, REAL['v'])]); H0 = GIT(td, 'rev-parse', 'HEAD')
+    cut = V.close_utc(V.add_sessions(V.add_sessions('2026-10-14', 120), 52))
+    WR(td, 'scores.json', json.dumps({'marks': {REAL['id']: dict(rec, closed_utc=V.ts(cut - dt.timedelta(seconds=1)))}}).encode()); S1 = COMMIT(td, 'score: closed 1 s before cutoff')
+    fake_db(run_api(rc['run_id'], lc, rc['remote_received_utc']), run_api(9000, H0, '2026-10-15T06:00:00Z'), run_api(9001, S1, V.ts(cut + dt.timedelta(seconds=2))))
+    def classify(view, evd):
+        cfg = dict(V.SPEC, start='2026-10-14', v2_manifest_sha256=X.msha)
+        pub, cl, mi, *_ = V.collect(X.g, view, 'main', cfg, cut.astimezone(V.ET).date().isoformat(), cut, V.Evidence(os.path.join(td, evd), online=True))
+        return pub['status'], [k_[2] for k_ in cl], [k_[2] for k_ in mi]
+    v1 = V.cutoff_view(X.g, S1, cut, V.Evidence(os.path.join(td, 'e1'), online=True)); c1 = classify(v1[0], 'e2')
+    WR(td, 'notes.txt', b'later'); S2 = COMMIT(td, 'later commit')
+    def add_run(i, head, t):
+        db = json.load(open(DB)); db['runs'][str(i)] = dict(run_api(i, head, t), repository={'full_name': V.OWNER_REPO}, status='completed', conclusion='success'); json.dump(db, open(DB, 'w'))
+    add_run(9002, S2, '2027-07-21T05:00:00Z'); v2 = V.cutoff_view(X.g, S2, cut, V.Evidence(os.path.join(td, 'e3'), online=True))
+    ok('late_upload_excluded_even_with_old_local_time', v1 == (H0, '2026-10-15T06:00:00Z') and c1 == ('READY', [], ['ADI']), {'view': v1, 'class': c1})
+    ok('same_cutoff_view_from_later_head', v2 == v1 and classify(v2[0], 'e4') == c1, {'v2': v2})
+    cfgD = dict(V.SPEC, start='2026-10-14', v2_manifest_sha256=X.msha)        # 試跑和正式同一個截止語義(草案 5 補)
+    def dry(t, analyze, evd):
+        return V.dry_collect(X.g, S2, 'main', cfgD, t.astimezone(V.ET).date().isoformat(), t, V.Evidence(os.path.join(td, evd), online=True), analyze)
+    pd_, cld, mid, *_ = dry(cut + dt.timedelta(hours=25), True, 'd1')
+    ok('dry_run_after_settle_uses_cutoff_view', pd_['cutoff_view'] == {'commit': H0, 'received_utc': '2026-10-15T06:00:00Z', 'receipt_run_id': 9000}
+       and pd_['status'] == 'READY' and [k_[2] for k_ in cld] == [] and [k_[2] for k_ in mid] == ['ADI'], pd_['cutoff_view'])
+    pw, clw, miw, *_ = dry(cut + dt.timedelta(hours=1), False, 'd2'); msg = must_stop(lambda: dry(cut + dt.timedelta(hours=1), True, 'd3'), '還沒定案')
+    ok('dry_run_within_settle_window_counts_only', not msg.startswith(('DID', 'WRONG')) and 'cutoff_view' not in pw and '只供參考' in pw.get('note', '') and len(clw) == 1,
+       {'analyze_stop': msg[:50], 'status_closed_by_local_time': len(clw), 'note': pw.get('note', '')[:36]})
+    pe, cle, mie, *_ = V.collect(X.g, S1, 'main', cfgD, cut.astimezone(V.ET).date().isoformat(), cut - dt.timedelta(seconds=1), V.Evidence(os.path.join(td, 'd4'), online=True))
+    ok('early_ready_labeled_info_only', pe['status'] == 'READY' and len(cle) == 1 and '提早資訊' in pe.get('note', '') and pe['cohort']['formal_earliest_utc'] == V.ts(cut + dt.timedelta(hours=24)),
+       {'status': pe['status'], 'note': pe.get('note', '')[:30], 'formal_earliest_utc': pe['cohort']['formal_earliest_utc']})
+    good_db = open(DB).read(); open(DB, 'w').write('{broken')          # 選截止視圖時 GitHub API 查詢失敗(假 gh 讀不到資料 → 非 0 結束)→ 停,不當缺漏
+    m1 = must_stop(lambda: V.dry_collect(X.g, S2, 'main', cfgD, '2027-06-23', cut + dt.timedelta(hours=25), V.Evidence(os.path.join(td, 'd5'), online=True), True), '查不到')
+    m2 = must_stop(lambda: V.cutoff_view(X.g, S2, cut, V.Evidence(os.path.join(td, 'd6'), online=True, strict=True)), 'GitHub API 查詢失敗')
+    open(DB, 'w').write(good_db)
+    ok('cutoff_view_api_failure_stops_not_missing', not m1.startswith(('DID', 'WRONG')) and not m2.startswith(('DID', 'WRONG')), {'dry_run': m1[:60], 'formal': m2[:60]})
+    add_run(9001, S1, V.ts(cut - dt.timedelta(minutes=15))); v3 = V.cutoff_view(X.g, S2, cut, V.Evidence(os.path.join(td, 'e5'), online=True))
+    ok('on_time_upload_included', v3[0] == S1 and classify(v3[0], 'e6') == ('READY', ['ADI'], []), {'v3': v3})
+old_clock = V.clock
+try:                                               # 正式入口:截止 + 24 小時前不能登記;截止後才上傳的結果不算、準時的算(和登記時間無關)
+    with tempfile.TemporaryDirectory() as td:
+        X, man, rc, org = remote_fx(td); V.clock = lambda: V.P('2027-06-22T19:00:00Z')
+        msg = must_stop(lambda: V.formal_run(X.td, evdir=os.path.join(td, 'ev'), me_path=VPATH), '還不能判定'); s0 = remote_state(X.td, man['experiment_id'], man['look_path'])
+        ok('formal_refuses_before_cutoff_settle', not msg.startswith(('DID', 'WRONG')) and s0['registration'] == [] and s0['look'] == [], msg[:70])
+    out = {}
+    for label, t_push in (('late', '2027-06-21T20:00:02Z'), ('on_time', '2027-06-21T19:45:00Z')):
+        with tempfile.TemporaryDirectory() as td:
+            X, man, rc, org = remote_fx(td); open(CLK, 'w').write(t_push)
+            body = json.dumps({'marks': {REAL['id']: dict(rec, closed_utc='2027-06-21T19:59:59Z')}}).encode()
+            push_edit(org, td, 'astra-ledger', 'scores.json', lambda b: body); open(CLK, 'w').write('2027-08-02T22:05:00Z')
+            V.clock = lambda: V.P('2027-08-02T22:00:00Z'); look, info = V.formal_run(X.td, evdir=os.path.join(td, 'ev'), me_path=VPATH)
+            rg = look['registration']['record']; run_ = json.load(open(DB))['runs'].get(str(rg['ledger_view_receipt_run_id'])) or {}
+            st_ = look['status']; out[label] = {'closed': st_['counts']['closed_reproducible'], 'missing': st_['counts']['missing_or_unreproducible'],
+                                                 'view_received': rg['ledger_view_received_utc'], 'status': info['status'], 'view_run_id': rg['ledger_view_receipt_run_id'],
+                                                 'run_matches': run_.get('head_sha') == rg['ledger_view_commit'] and run_.get('created_at') == rg['ledger_view_received_utc']}
+            if label == 'on_time':          # 登記之後 GitHub 那邊的收件證據變了(同一 commit、同一時間多一筆 run)→ 重播停
+                add_run(1, rg['ledger_view_commit'], rg['ledger_view_received_utc'])
+                out['receipt_changed_stop'] = must_stop(lambda: V.formal_run(X.td, evdir=os.path.join(td, 'ev_new'), me_path=VPATH), '截止視圖')
+    ok('formal_excludes_result_received_after_cutoff', out['late']['closed'] == 0 and out['late']['missing'] == 1 and out['late']['view_received'] == '2026-10-16T06:00:00Z', out['late'])
+    ok('formal_includes_result_received_before_cutoff', out['on_time']['closed'] == 1 and out['on_time']['missing'] == 0 and out['on_time']['view_received'] == '2027-06-21T19:45:00Z', out['on_time'])
+    ok('registration_records_view_receipt_run_id', out['late']['run_matches'] and out['on_time']['run_matches'], {k: out[k]['view_run_id'] for k in ('late', 'on_time')})
+    ok('changed_view_receipt_after_registration_stops', not out['receipt_changed_stop'].startswith(('DID', 'WRONG')), out['receipt_changed_stop'][:70])
+finally:
+    V.clock = old_clock
 
 json.dump({'tests': len(R), 'all_pass': True, 'verifier_sha256': H(open(os.path.join(HERE, 'v3_verify.py'), 'rb').read()), 'results': R},
           open(os.path.join(HERE, 'v3_tests_result.json'), 'w'), ensure_ascii=False, indent=1, default=str)

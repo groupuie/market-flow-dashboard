@@ -169,15 +169,15 @@
    "scripts/astra_data.py": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
   },
   "experiment_id": "LV3-20260202-S120-C1-L5-none",
-  "manifest_sha256": "5d7769b27b16953de2f28d47ddfe2c096adbaab7bfa01afd2a5aec6e3ac595b1"
+  "manifest_sha256": "8e96457320ccb3f93f74d40aeaca57aae8c257072565526d527cdbb1969fc8c4"
  },
  "stops": {
-  "not_mature_yet": "狀態是 MATURING,還不能判定(沒有寫任何登記或判定)",
-  "github_api_down_no_look": "GitHub API 查詢失敗(runs-for-200a24f21f01c445535c56f9da08a53ac425385d.json)→ 停,不寫判定;之後再跑:HTTP 502",
+  "not_mature_yet": "還沒過結案截止(2026-10-06T20:00:00Z)+ 24 小時 → 還不能判定(沒有寫任何登記或判定)",
+  "github_api_down_no_look": "GitHub API 查詢失敗(runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json)→ 停,不寫判定;之後再跑:HTTP 502",
   "modified_verifier": "正在執行的程式不是凍結的驗證程式(指紋不同)→ 停",
-  "local_cache_damaged_no_registration": "本機收件快取 run-900000004.json 有問題(evidence_cache_corrupt),GitHub 這次查得到原件 → 這是本機檔案故障、不是研究資料 → 停,不寫登記、不寫判定。修復:python3 -I v3_verify.py repair-evidence --evidence /tmp/",
-  "registration_push_rejected": "開跑登記沒有送到遠端(沒有做任何判定)→ 停;直接重跑即可:remote: rejected by fixture\nTo /tmp/v3full_d9yr_avj/origin.git\n ! [remote rejected] HEAD -> astra-ledger (pre-receive hook decline",
-  "look_push_rejected_after_registration": "判定已算出,但 push 到遠端 main 一直失敗 → 狀態:未持久完成(不算已保存)。重跑會照同一份登記重播、得到同一份結果,再試一次保存:remote: rejected by fixture\nTo /tmp/v3full_d9yr_avj/origin.git\n ! [remote rejected] HEAD",
+  "local_cache_damaged_no_registration": "本機收件快取 runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json 有問題(evidence_cache_corrupt),GitHub 這次查得到原件 → 這是本機檔案故障、不是研究資料 → 停,不寫登記、不寫判定。修復:python3 -I v3_verify",
+  "registration_push_rejected": "開跑登記沒有送到遠端(沒有做任何判定)→ 停;直接重跑即可:remote: rejected by fixture\nTo /tmp/v3full_stloka9t/origin.git\n ! [remote rejected] HEAD -> astra-ledger (pre-receive hook decline",
+  "look_push_rejected_after_registration": "判定已算出,但 push 到遠端 main 一直失敗 → 狀態:未持久完成(不算已保存)。重跑會照同一份登記重播、得到同一份結果,再試一次保存:remote: rejected by fixture\nTo /tmp/v3full_stloka9t/origin.git\n ! [remote rejected] HEAD",
   "remote_look_tampered": "遠端 main 已經有這個實驗的判定檔,但和照登記重播的結果不同(或被改過)→ 停,要查原因;沒有寫任何東西",
   "registration_tampered": "開跑登記被改過(不只一個 commit 碰過)→ 停",
   "manifest_edited_after_freeze": "manifest 被 2 個 commit 改過(凍結後不能改)→ 停",
@@ -250,7 +250,7 @@
    "events": 0,
    "rejected_events": 0,
    "no_signals_evidence": {
-    "prep_commit": "1b2754d15d02ffb26075f8a1e48df82639f47085",
+    "prep_commit": "21480681531fd9a13e2d8a7bf94cd49d3b19475b",
     "remote_received_utc": "2026-04-16T05:14:00Z"
    }
   },
@@ -281,11 +281,11 @@
    "2026-06-08:DAL": "rescaled f=0.49999845(可行區間 0.49999392–0.50000606,8 個重疊價格)"
   },
   "unreproducible": {},
-  "look_sha256": "9b64854979c011dae97e3f812e063c65bb2cb784e8588781ee448bb1ac85ae75",
+  "look_sha256": "4719bf3e89061e596f8d619ecd3e080daf58406beb0ab1a5e4ff7fb299cac48c",
   "same_as_dry_run_decide": true,
-  "evidence_files_used": 121,
+  "evidence_files_used": 124,
   "registration": {
-   "commit": "ebf9be9813233dd5b0a0291206028cd7e1e4ea66",
+   "commit": "0e8feb32dc0113bb46ae0839bd0f6a31e98e5be1",
    "remote_received_utc": "2026-10-08T05:16:00Z",
    "record": {
     "environment": {
@@ -294,84 +294,159 @@
     },
     "evidence_repairs": [
      {
-      "api_subset_sha256": "e2706b46084b22fc0c00ee7995a857efc1c23e7cd1f4db9028fc6c0edbd1efd8",
-      "name": "run-900000004.json",
-      "new_sha256": "9c32236139fc460ec3469efc4db5ab95a716d549032483581a9aabd72781853a",
+      "api_subset_sha256": "ab285b498942057b2d0ea92f005171b4242999f08444394a73f9508ee6cc5e36",
+      "name": "runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json",
+      "new_sha256": "d9a9959002408960d233d8a6043e30c7938e19cb7eb82dff96c98518cc7bfea1",
       "old_sha256": "555c24b1922e8e34d2cccf61b30005e14cb5e4c26d7d498961dcc09af80a0634",
-      "quarantined_as": "quarantine/run-900000004.json.20261006T203000Z.bad",
+      "quarantined_as": "quarantine/runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json.20261007T210000Z.bad",
       "reason": "evidence_cache_corrupt",
-      "repaired_utc": "2026-10-06T20:30:00Z",
+      "repaired_utc": "2026-10-07T21:00:00Z",
       "schema": "v3-evidence-repair-1",
-      "source": "GET repos/groupuie/market-flow-dashboard/actions/runs/900000004"
+      "source": "GET repos/groupuie/market-flow-dashboard/actions/runs?branch=astra-ledger&event=push&head_sha=20ac1b6a5a211a0697b14a8387442b47f0fc1e9b&per_page=100"
      }
     ],
     "experiment_id": "LV3-20260202-S120-C1-L5-none",
-    "freeze_commit": "08a31c221ce19bd3991540d5c1ff481a9e110abe",
-    "ledger_input_commit": "556679860abd2226303b4785dab7db3798c316d1",
-    "main_input_commit": "08a31c221ce19bd3991540d5c1ff481a9e110abe",
-    "manifest_sha256": "5d7769b27b16953de2f28d47ddfe2c096adbaab7bfa01afd2a5aec6e3ac595b1",
-    "registered_local_utc": "2026-10-06T20:30:00Z",
+    "freeze_commit": "2df7faab9d815549d92546febc06a567506efc9c",
+    "ledger_input_commit": "318a2c2d098fd482ee7587aec953815bad9f0296",
+    "ledger_view_commit": "04451583e5659f433597aa9f94172f7265f7f280",
+    "ledger_view_receipt_run_id": 900000514,
+    "ledger_view_received_utc": "2026-10-06T05:16:00Z",
+    "main_input_commit": "2df7faab9d815549d92546febc06a567506efc9c",
+    "manifest_sha256": "8e96457320ccb3f93f74d40aeaca57aae8c257072565526d527cdbb1969fc8c4",
+    "registered_local_utc": "2026-10-07T21:00:00Z",
     "schema": "ledger-v3-start-1",
-    "verifier_sha256": "e957328e058296d0984ad5f9894e53ac32a94855cad34ac16ecc93f80d43a413"
+    "verifier_sha256": "e54d0bf9332d886b4f9058559648d5b73524d3adfa0ad81282a10143f2718e31"
    }
   },
   "persistence": {
    "mode": "REPLAY",
    "status": "PERSISTED",
-   "look_commit": "22ef65107fe5fe0771b68e1dbf6aa580d7f9355a",
+   "look_commit": "f01d83892d3db2a5559fd9c614e2799b1158db62",
    "look_path": "research/ledger_v3/looks/LV3-20260202-S120-C1-L5-none.json"
   },
   "replays": {
    "after_failed_save": {
     "mode": "REPLAY",
     "status": "PERSISTED",
-    "look_sha256": "9b64854979c011dae97e3f812e063c65bb2cb784e8588781ee448bb1ac85ae75"
+    "look_sha256": "4719bf3e89061e596f8d619ecd3e080daf58406beb0ab1a5e4ff7fb299cac48c"
    },
    "second_run": {
     "mode": "REPLAY",
     "status": "ALREADY_PERSISTED_IDENTICAL",
-    "look_sha256": "9b64854979c011dae97e3f812e063c65bb2cb784e8588781ee448bb1ac85ae75"
+    "look_sha256": "4719bf3e89061e596f8d619ecd3e080daf58406beb0ab1a5e4ff7fb299cac48c"
    },
    "other_checkout": {
     "mode": "REPLAY",
     "status": "ALREADY_PERSISTED_IDENTICAL",
-    "look_sha256": "9b64854979c011dae97e3f812e063c65bb2cb784e8588781ee448bb1ac85ae75"
+    "look_sha256": "4719bf3e89061e596f8d619ecd3e080daf58406beb0ab1a5e4ff7fb299cac48c"
    },
-   "ledger_input_commit": "556679860abd2226303b4785dab7db3798c316d1",
-   "ledger_head_now": "71931812297b2971a41be58b3e46a2ee72369ba8"
+   "ledger_input_commit": "318a2c2d098fd482ee7587aec953815bad9f0296",
+   "ledger_view_commit": "04451583e5659f433597aa9f94172f7265f7f280",
+   "ledger_view_received_utc": "2026-10-06T05:16:00Z",
+   "ledger_head_now": "46c49f66db36c25b0a7799da31bb444bcdc080f6"
   },
   "cache_repair": {
    "schema": "v3-evidence-repair-1",
-   "name": "run-900000004.json",
-   "repaired_utc": "2026-10-06T20:30:00Z",
+   "name": "runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json",
+   "repaired_utc": "2026-10-07T21:00:00Z",
    "reason": "evidence_cache_corrupt",
    "old_sha256": "555c24b1922e8e34d2cccf61b30005e14cb5e4c26d7d498961dcc09af80a0634",
-   "quarantined_as": "quarantine/run-900000004.json.20261006T203000Z.bad",
-   "new_sha256": "9c32236139fc460ec3469efc4db5ab95a716d549032483581a9aabd72781853a",
-   "api_subset_sha256": "e2706b46084b22fc0c00ee7995a857efc1c23e7cd1f4db9028fc6c0edbd1efd8",
-   "source": "GET repos/groupuie/market-flow-dashboard/actions/runs/900000004",
+   "quarantined_as": "quarantine/runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json.20261007T210000Z.bad",
+   "new_sha256": "d9a9959002408960d233d8a6043e30c7938e19cb7eb82dff96c98518cc7bfea1",
+   "api_subset_sha256": "ab285b498942057b2d0ea92f005171b4242999f08444394a73f9508ee6cc5e36",
+   "source": "GET repos/groupuie/market-flow-dashboard/actions/runs?branch=astra-ledger&event=push&head_sha=20ac1b6a5a211a0697b14a8387442b47f0fc1e9b&per_page=100",
    "status": "repaired"
   },
-  "analysis_time_utc": "2026-10-08T05:16:00Z",
-  "resolve_by": "2026-10-06"
+  "analysis_time_utc": "2026-10-06T20:00:00Z",
+  "resolve_by": "2026-10-06",
+  "formal_earliest_utc": "2026-10-07T20:00:00Z",
+  "cutoff_view": {
+   "commit": "04451583e5659f433597aa9f94172f7265f7f280",
+   "received_utc": "2026-10-06T05:16:00Z",
+   "receipt_run_id": 900000514
+  },
+  "classification_vs_local_time_rule": {
+   "closed_view_only": [],
+   "closed_local_rule_only": [],
+   "missing_view_only": [],
+   "missing_local_rule_only": [],
+   "counts_view_closed_missing": [
+    773,
+    1
+   ],
+   "counts_local_rule_closed_missing": [
+    773,
+    1
+   ],
+   "closed_after_cutoff_flags_local_rule": [],
+   "missing_keys_view": [
+    [
+     "2026-04-29",
+     "stock",
+     "AMC",
+     "agree"
+    ]
+   ]
+  },
+  "ledger_commits_after_view": [
+   {
+    "commit": "d9475b64f7",
+    "receipts_utc": [
+     "2026-10-07T05:16:00Z"
+    ],
+    "files": [
+     "scores.json",
+     "summary.md"
+    ]
+   },
+   {
+    "commit": "318a2c2d09",
+    "receipts_utc": [
+     "2026-10-08T05:16:00Z"
+    ],
+    "files": [
+     "scores.json",
+     "summary.md"
+    ]
+   },
+   {
+    "commit": "0e8feb32dc",
+    "receipts_utc": [
+     "2026-10-08T05:16:00Z"
+    ],
+    "files": [
+     "v3_freeze/LV3-20260202-S120-C1-L5-none.start.json"
+    ]
+   },
+   {
+    "commit": "46c49f66db",
+    "receipts_utc": [
+     "2026-10-08T06:16:00Z"
+    ],
+    "files": [
+     "notes_after_registration.txt"
+    ]
+   }
+  ]
  },
  "meta": {
-  "seconds": 405,
-  "verifier_sha256": "e957328e058296d0984ad5f9894e53ac32a94855cad34ac16ecc93f80d43a413",
+  "seconds": 594,
+  "verifier_sha256": "e54d0bf9332d886b4f9058559648d5b73524d3adfa0ad81282a10143f2718e31",
   "log": [
-   "v2 freeze 2b6490b7d55c universe 101",
-   "v3 frozen LV3-20260202-S120-C1-L5-none F 08a31c221c anchor 200a24f21f",
+   "v2 freeze ab9c57a926ea universe 101",
+   "v3 frozen LV3-20260202-S120-C1-L5-none F 2df7faab9d anchor 20ac1b6a5a",
    "prep stop 2026-02-10 SPY/QQQ 日K還沒有 2026-02-10 → 這次不判讀(已記失敗批次;下一次排程會再試)",
    "prep stop 2026-03-03 SPY/QQQ 日K還沒有 2026-03-03 → 這次不判讀(已記失敗批次;下一次排程會再試)",
    "prep stop 2026-03-03 SPY/QQQ 日K還沒有 2026-03-03 → 這次不判讀(已記失敗批次;下一次排程會再試)",
    "collector done {'locked': 109, 'no_signals': 9, 'failed': 1, 'late': 1, 'marks': 777} last 2026-10-07 scores {'locked': 777, 'agree': 331, 'disagree': 446, 'late': 3, 'days': 110, 'closed': 776, 'open': 1, 'no_data': 0, 'unresolved': 0}",
-   "stop ok not_mature_yet | 狀態是 MATURING,還不能判定(沒有寫任何登記或判定)",
-   "stop ok github_api_down_no_look | GitHub API 查詢失敗(runs-for-200a24f21f01c445535c56f9da08a53ac425385d.json",
+   "stop ok not_mature_yet | 還沒過結案截止(2026-10-06T20:00:00Z)+ 24 小時 → 還不能判定(沒有寫任何登記或判定)",
+   "stop ok github_api_down_no_look | GitHub API 查詢失敗(runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json",
    "stop ok modified_verifier | 正在執行的程式不是凍結的驗證程式(指紋不同)→ 停",
-   "stop ok local_cache_damaged_no_registration | 本機收件快取 run-900000004.json 有問題(evidence_cache_corrupt),GitHub 這次查得到原件 →",
+   "stop ok local_cache_damaged_no_registration | 本機收件快取 runs-for-20ac1b6a5a211a0697b14a8387442b47f0fc1e9b.json 有問題(evid",
    "stop ok registration_push_rejected | 開跑登記沒有送到遠端(沒有做任何判定)→ 停;直接重跑即可:remote: rejected by fixture\nTo /tmp/v3fu",
    "stop ok look_push_rejected_after_registration | 判定已算出,但 push 到遠端 main 一直失敗 → 狀態:未持久完成(不算已保存)。重跑會照同一份登記重播、得到同一份結果,再試一次保",
-   "FORMAL NO_PASS go_live False coverage 118 / 120 counts {'marks_in_window': 777, 'eligible': 774, 'rejected': 3, 'closed_reproducible': 773, 'missing_or_unreproducible': 1, 'pending': 0, 'not_eligible_reasons': {'late_remote': 3}, 'agree_eligible': 331} | registration ebf9be9813 look 22ef65107f",
+   "FORMAL NO_PASS go_live False coverage 118 / 120 counts {'marks_in_window': 777, 'eligible': 774, 'rejected': 3, 'closed_reproducible': 773, 'missing_or_unreproducible': 1, 'pending': 0, 'not_eligible_reasons': {'late_remote': 3}, 'agree_eligible': 331} | registration 0e8feb32dc look f01d83892d",
+   "cutoff view 04451583e5 2026-10-06T05:16:00Z run 900000514 | commits after view 4 | changes vs local-time rule {'closed_view_only': 0, 'closed_local_rule_only': 0, 'missing_view_only': 0, 'missing_local_rule_only': 0} [773, 1] [773, 1]",
    "stop ok remote_look_tampered | 遠端 main 已經有這個實驗的判定檔,但和照登記重播的結果不同(或被改過)→ 停,要查原因;沒有寫任何東西",
    "stop ok registration_tampered | 開跑登記被改過(不只一個 commit 碰過)→ 停",
    "stop ok manifest_edited_after_freeze | manifest 被 2 個 commit 改過(凍結後不能改)→ 停",
