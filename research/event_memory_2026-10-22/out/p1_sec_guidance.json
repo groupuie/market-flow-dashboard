@@ -1,0 +1,2312 @@
+[
+ {
+  "ticker": "AAPL",
+  "cik": 320193,
+  "accession": "0000320193-26-000018",
+  "filingDate": "2026-07-30",
+  "reportDate": "2026-07-30",
+  "acceptanceDateTime_raw": "2026-07-31T00:30:28.000Z",
+  "accepted_ET_index_page": "2026-07-30 16:30:28",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a8-kex991q3202606272026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "f63de61659e70f933cf98f11fe872cf955828db30f3c62241547ffa412a57a4e",
+  "ex99_saved": "AAPL_0000320193-26-000018_a8-kex991q3202606272026.htm.gz",
+  "n_chars": 10456,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AAPL",
+  "cik": 320193,
+  "accession": "0000320193-26-000011",
+  "filingDate": "2026-04-30",
+  "reportDate": "2026-04-30",
+  "acceptanceDateTime_raw": "2026-05-01T00:30:41.000Z",
+  "accepted_ET_index_page": "2026-04-30 16:30:41",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a8-kex991q2202603282026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "32807ee23104ca8cf733cd957caa027bd9a1f23a16bf99a19fa5ca3700950e84",
+  "ex99_saved": "AAPL_0000320193-26-000011_a8-kex991q2202603282026.htm.gz",
+  "n_chars": 10787,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AAPL",
+  "cik": 320193,
+  "accession": "0000320193-26-000005",
+  "filingDate": "2026-01-29",
+  "reportDate": "2026-01-29",
+  "acceptanceDateTime_raw": "2026-01-30T02:30:33.000Z",
+  "accepted_ET_index_page": "2026-01-29 16:30:33",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a8-kex991q1202612272025.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "cf02488393baf593a1fdc3a00ba1251e788c50c91eb2209f2fa072b7bfc43d34",
+  "ex99_saved": "AAPL_0000320193-26-000005_a8-kex991q1202612272025.htm.gz",
+  "n_chars": 9895,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AAPL",
+  "cik": 320193,
+  "accession": "0000320193-25-000077",
+  "filingDate": "2025-10-30",
+  "reportDate": "2025-10-30",
+  "acceptanceDateTime_raw": "2025-10-31T00:30:35.000Z",
+  "accepted_ET_index_page": "2025-10-30 16:30:35",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a8-kex991q4202509272025.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "a865532422352bca5e7614f7d46580681b3be460bcdbac551a4f9ecf03eacefb",
+  "ex99_saved": "AAPL_0000320193-25-000077_a8-kex991q4202509272025.htm.gz",
+  "n_chars": 13522,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MSFT",
+  "cik": 789019,
+  "accession": "0001193125-26-323632",
+  "filingDate": "2026-07-29",
+  "reportDate": "2026-07-29",
+  "acceptanceDateTime_raw": "2026-07-30T00:04:53.000Z",
+  "accepted_ET_index_page": "2026-07-29 16:04:53",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "msft-ex99_1.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "17008a1e27f1674ed086ec456e7b47a9564b1911790b74e363f80722d74b17c6",
+  "ex99_saved": "MSFT_0001193125-26-323632_msft-ex99_1.htm.gz",
+  "n_chars": 23159,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MSFT",
+  "cik": 789019,
+  "accession": "0001193125-26-191457",
+  "filingDate": "2026-04-29",
+  "reportDate": "2026-04-29",
+  "acceptanceDateTime_raw": "2026-04-30T00:03:31.000Z",
+  "accepted_ET_index_page": "2026-04-29 16:03:31",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "msft-ex99_1.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "5e5766e123042cba16d75429e6c34fb316c1ae6da8ab2c749424539d47379590",
+  "ex99_saved": "MSFT_0001193125-26-191457_msft-ex99_1.htm.gz",
+  "n_chars": 19717,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MSFT",
+  "cik": 789019,
+  "accession": "0001193125-26-027198",
+  "filingDate": "2026-01-28",
+  "reportDate": "2026-01-28",
+  "acceptanceDateTime_raw": "2026-01-29T02:04:38.000Z",
+  "accepted_ET_index_page": "2026-01-28 16:04:38",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "msft-ex99_1.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "4d6c35ad0c560495a0d1fda4f76ab81d36a62b8480ca40ef1a871b464071b62a",
+  "ex99_saved": "MSFT_0001193125-26-027198_msft-ex99_1.htm.gz",
+  "n_chars": 20071,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MSFT",
+  "cik": 789019,
+  "accession": "0001193125-25-256310",
+  "filingDate": "2025-10-29",
+  "reportDate": "2025-10-28",
+  "acceptanceDateTime_raw": "2025-10-30T00:07:42.000Z",
+  "accepted_ET_index_page": "2025-10-29 16:07:42",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "msft-ex99_1.htm",
+   "msft-ex99_2.htm",
+   "msft-ex99_3.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2",
+   "EX-99.3"
+  ],
+  "ex99_sha256": "0ad2cdf0b3816e6b1874626b43420c292a17dd368a4e2bb246feb7d665086e36",
+  "ex99_saved": "MSFT_0001193125-25-256310_msft-ex99_1.htm.gz",
+  "n_chars": 18542,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NVDA",
+  "cik": 1045810,
+  "accession": "0001045810-26-000073",
+  "filingDate": "2026-08-26",
+  "reportDate": "2026-08-26",
+  "acceptanceDateTime_raw": "2026-08-27T00:21:19.000Z",
+  "accepted_ET_index_page": "2026-08-26 16:21:19",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "q2fy27pr.htm",
+   "q2fy27cfocommentary.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "189c891afeb0d3f14fc10857dd36512c5de341e67e74a6ad38d330b2bc222456",
+  "ex99_saved": "NVDA_0001045810-26-000073_q2fy27pr.htm.gz",
+  "n_chars": 22347,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the full year fiscal 2027, NVIDIA expects GAAP and non-GAAP tax rates to be between 16.0% and 18.0%, excluding any discrete items and material changes to NVIDIA’s tax environment."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook NVIDIA’s outlook for the third quarter of fiscal 2027 is as follows: • Revenue is expected to be $108.0 billion, plus or minus 2%. NVIDIA is not assuming any Data Center compute revenue from China in its outlook. • GAAP and non-GAAP gross margins are expected to be 74.0%, plus or minus 50 basis points. • GAAP and non-GAAP operating expenses are expected to be approximately $9.2 billion and",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NVDA",
+  "cik": 1045810,
+  "accession": "0001045810-26-000051",
+  "filingDate": "2026-05-20",
+  "reportDate": "2026-05-20",
+  "acceptanceDateTime_raw": "2026-05-21T00:21:19.000Z",
+  "accepted_ET_index_page": "2026-05-20 16:21:19",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "q1fy27pr.htm",
+   "q1fy27cfocommentary.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "169a5dd0c2c0571f5a79f6ff7591c75fe9db90722957ee77f678a39f8c42ad2d",
+  "ex99_saved": "NVDA_0001045810-26-000051_q1fy27pr.htm.gz",
+  "n_chars": 20790,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the full year fiscal 2027, NVIDIA expects GAAP and non-GAAP tax rates to be between 16.0% and 18.0%, excluding any discrete items and material changes to NVIDIA’s tax environment."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook NVIDIA’s outlook for the second quarter of fiscal 2027 is as follows: • Revenue is expected to be $91.0 billion, plus or minus 2%. NVIDIA is not assuming any Data Center compute revenue from China in its outlook. • GAAP and non-GAAP gross margins are expected to be 74.9% and 75.0%, respectively, plus or minus 50 basis points. • GAAP and non-GAAP operating expenses are expected to be approx",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NVDA",
+  "cik": 1045810,
+  "accession": "0001045810-26-000019",
+  "filingDate": "2026-02-25",
+  "reportDate": "2026-02-25",
+  "acceptanceDateTime_raw": "2026-02-26T02:31:25.000Z",
+  "accepted_ET_index_page": "2026-02-25 16:31:25",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "q4fy26pr.htm",
+   "q4fy26cfocommentary.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "c4a94272d38e4678eb2813714db756cff0ab6de1ce04d5558675a8c7633dfede",
+  "ex99_saved": "NVDA_0001045810-26-000019_q4fy26pr.htm.gz",
+  "n_chars": 26085,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "NVIDIA’s outlook for the first quarter of fiscal 2027 is as follows: • Revenue is expected to be $78.0 billion, plus or minus 2%.",
+   "For the full year fiscal 2027, GAAP and non-GAAP tax rates are expected to be between 17.0% and 19.0%, excluding any discrete items and material changes to NVIDIA’s tax environment.",
+   "NVIDIA CORPORATION RECONCILIATION OF GAAP TO NON-GAAP OUTLOOK Q1 FY2027 Outlook ($ in millions) GAAP gross margin 74.9 % Impact of acquisition-related costs and other costs 0.1 % Non-GAAP gross margin* 75.0 % GAAP operating expenses $ 7,700 Acquisition-related"
+  ],
+  "n_outlook_blocks_with_numbers": 2,
+  "outlook_block_sample": "Outlook Beginning in the first quarter of fiscal 2027, NVIDIA will include stock-based compensation expense in non-GAAP financial measures. Stock-based compensation is a foundational component of NVIDIA’s compensation program to attract and retain world-class talent. NVIDIA’s outlook for the first quarter of fiscal 2027 is as follows: • Revenue is expected to be $78.0 billion, plus or minus 2%. NV",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NVDA",
+  "cik": 1045810,
+  "accession": "0001045810-25-000228",
+  "filingDate": "2025-11-19",
+  "reportDate": "2025-11-19",
+  "acceptanceDateTime_raw": "2025-11-20T02:20:44.000Z",
+  "accepted_ET_index_page": "2025-11-19 16:20:44",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "q3fy26pr.htm",
+   "q3fy26cfocommentary.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "7457cf78ef6ec988482b0f212c0a5c06168c268baa2530d8b3d1dbfe5d071334",
+  "ex99_saved": "NVDA_0001045810-25-000228_q3fy26pr.htm.gz",
+  "n_chars": 23711,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook NVIDIA’s outlook for the fourth quarter of fiscal 2026 is as follows: • Revenue is expected to be $65.0 billion, plus or minus 2%. • GAAP and non-GAAP gross margins are expected to be 74.8% and 75.0%, respectively, plus or minus 50 basis points. • GAAP and non-GAAP operating expenses are expected to be approximately $6.7 billion and $5.0 billion, respectively. • GAAP and non-GAAP other inc",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMZN",
+  "cik": 1018724,
+  "accession": "0001018724-26-000024",
+  "filingDate": "2026-07-30",
+  "reportDate": "2026-07-30",
+  "acceptanceDateTime_raw": "2026-07-31T00:06:23.000Z",
+  "accepted_ET_index_page": "2026-07-30 16:06:23",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "amzn-20260630xex991.htm",
+   "amzn-20260630xex992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "ac80dedd5871729507c3fce51b0f833d94e8053f238dde272bbf18b39ddc7fcc",
+  "ex99_saved": "AMZN_0001018724-26-000024_amzn-20260630xex991.htm.gz",
+  "n_chars": 37812,
+  "n_guidance_sentences": 2,
+  "guidance_snippets": [
+   "Third Quarter 2026 Guidance • Net sales are expected to be between $197.0 billion and $202.0 billion, or to grow between 9% and 12% compared with third quarter 2025.",
+   "• Operating income is expected to be between $22.5 billion and $26.5 billion, compared with $17.4 billion in third quarter 2025."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Guidance • Net sales are expected to be between $197.0 billion and $202.0 billion, or to grow between 9% and 12% compared with third quarter 2025. Excluding the impact of Prime Day in both 2025 and 2026, third quarter 2026 year-over-year growth would be nearly 400 basis points higher. This guidance anticipates an unfavorable impact of approximately 80 basis points from foreign exchange rates. • Op",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMZN",
+  "cik": 1018724,
+  "accession": "0001018724-26-000012",
+  "filingDate": "2026-04-29",
+  "reportDate": "2026-04-29",
+  "acceptanceDateTime_raw": "2026-04-30T00:18:55.000Z",
+  "accepted_ET_index_page": "2026-04-29 16:18:55",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "amzn-20260331xex991.htm",
+   "amzn-20260331xex992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "c91234408d8d004d23127fc7a294e132b5064a8766531ce29c02db9bd9e0e5ba",
+  "ex99_saved": "AMZN_0001018724-26-000012_amzn-20260331xex991.htm.gz",
+  "n_chars": 36092,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "We also hit exciting milestones with delivery speed (more than 1 billion items same-day or overnight in 2026 and counting), Project Hail Mary (nearly $615 million at the box office to date and the second most successful non-sequel, non-franchise opening of rec",
+   "Second Quarter 2026 Guidance • Net sales are expected to be between $194.0 billion and $199.0 billion, or to grow between 16% and 19% compared with second quarter 2025.",
+   "• Operating income is expected to be between $20.0 billion and $24.0 billion, compared with $19.2 billion in second quarter 2025."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Guidance • Net sales are expected to be between $194.0 billion and $199.0 billion, or to grow between 16% and 19% compared with second quarter 2025. This guidance anticipates an unfavorable impact of approximately 10 basis points from foreign exchange rates. • Operating income is expected to be between $20.0 billion and $24.0 billion, compared with $19.2 billion in second quarter 2025. • This guid",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMZN",
+  "cik": 1018724,
+  "accession": "0001018724-26-000002",
+  "filingDate": "2026-02-05",
+  "reportDate": "2026-02-05",
+  "acceptanceDateTime_raw": "2026-02-06T02:25:12.000Z",
+  "accepted_ET_index_page": "2026-02-05 16:25:12",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "amzn-20251231xex991.htm",
+   "amzn-20251231xex992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "4c25c65d183d286a36933140318aa6ee7025d66abe5e078587a8e6415a97a75d",
+  "ex99_saved": "AMZN_0001018724-26-000002_amzn-20251231xex991.htm.gz",
+  "n_chars": 36290,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "First Quarter 2026 Guidance • Net sales are expected to be between $173.5 billion and $178.5 billion, or to grow between 11% and 15% compared with first quarter 2025.",
+   "• Operating income is expected to be between $16.5 billion and $21.5 billion, compared with $18.4 billion in first quarter 2025.",
+   "This guidance includes approximately $1 billion of higher year-over-year Amazon Leo costs as we scale in 2026, as well as investment in quick commerce and even sharper prices in our international stores business."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Guidance • Net sales are expected to be between $173.5 billion and $178.5 billion, or to grow between 11% and 15% compared with first quarter 2025. This guidance anticipates a favorable impact of approximately 180 basis points from foreign exchange rates. • Operating income is expected to be between $16.5 billion and $21.5 billion, compared with $18.4 billion in first quarter 2025. This guidance i",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMZN",
+  "cik": 1018724,
+  "accession": "0001018724-25-000121",
+  "filingDate": "2025-10-30",
+  "reportDate": "2025-10-30",
+  "acceptanceDateTime_raw": "2025-10-31T00:13:01.000Z",
+  "accepted_ET_index_page": "2025-10-30 16:13:01",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "amzn-20250930xex991.htm",
+   "amzn-20250930xex992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "8626d304841850478c6672491312e4c5397665fb43b8e383822039175c7f0167",
+  "ex99_saved": "AMZN_0001018724-25-000121_amzn-20250930xex991.htm.gz",
+  "n_chars": 34207,
+  "n_guidance_sentences": 2,
+  "guidance_snippets": [
+   "Fourth Quarter 2025 Guidance • Net sales are expected to be between $206.0 billion and $213.0 billion, or to grow between 10% and 13% compared with fourth quarter 2024.",
+   "• Operating income is expected to be between $21.0 billion and $26.0 billion, compared with $21.2 billion in fourth quarter 2024."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Guidance • Net sales are expected to be between $206.0 billion and $213.0 billion, or to grow between 10% and 13% compared with fourth quarter 2024. This guidance anticipates a favorable impact of approximately 190 basis points from foreign exchange rates. • Operating income is expected to be between $21.0 billion and $26.0 billion, compared with $21.2 billion in fourth quarter 2024. • This guidan",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "GOOGL",
+  "cik": 1652044,
+  "accession": "0001652044-26-000066",
+  "filingDate": "2026-07-22",
+  "reportDate": "2026-07-22",
+  "acceptanceDateTime_raw": "2026-07-23T00:01:36.000Z",
+  "accepted_ET_index_page": "2026-07-22 16:01:36",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "googexhibit991q22026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "b9aa31a0a61142a66eb21d6cb46203ce05161a36b66860e55a83bc604c435c05",
+  "ex99_saved": "GOOGL_0001652044-26-000066_googexhibit991q22026.htm.gz",
+  "n_chars": 24819,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "GOOGL",
+  "cik": 1652044,
+  "accession": "0001652044-26-000043",
+  "filingDate": "2026-04-29",
+  "reportDate": "2026-04-29",
+  "acceptanceDateTime_raw": "2026-04-30T00:01:35.000Z",
+  "accepted_ET_index_page": "2026-04-29 16:01:35",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "googexhibit991q12026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "0c5b230b43382ccd8b9b95a03a977da4d29160b201a91668b3ab8360337f8942",
+  "ex99_saved": "GOOGL_0001652044-26-000043_googexhibit991q12026.htm.gz",
+  "n_chars": 22168,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "GOOGL",
+  "cik": 1652044,
+  "accession": "0001652044-26-000012",
+  "filingDate": "2026-02-04",
+  "reportDate": "2026-02-04",
+  "acceptanceDateTime_raw": "2026-02-05T02:01:37.000Z",
+  "accepted_ET_index_page": "2026-02-04 16:01:37",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "googexhibit991q42025.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "a5e320208f77bb3e908f07c47543bd1d02f6b520adea317eb1b2dc4b7870016a",
+  "ex99_saved": "GOOGL_0001652044-26-000012_googexhibit991q42025.htm.gz",
+  "n_chars": 24900,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "GOOGL",
+  "cik": 1652044,
+  "accession": "0001652044-25-000087",
+  "filingDate": "2025-10-29",
+  "reportDate": "2025-10-29",
+  "acceptanceDateTime_raw": "2025-10-30T00:01:48.000Z",
+  "accepted_ET_index_page": "2025-10-29 16:01:48",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "googexhibit991q32025.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "74fe8bf18fdfc740cc79b51df50c2e69d89c63d45afd3e724d353d45c40231b8",
+  "ex99_saved": "GOOGL_0001652044-25-000087_googexhibit991q32025.htm.gz",
+  "n_chars": 25440,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "• With the growth across our business and demand from Cloud customers, we now expect 2025 capital expenditures to be in a range of $91 billion to $93 billion. “Alphabet had a terrific quarter, with double-digit growth across every major part of our business."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "META",
+  "cik": 1326801,
+  "accession": "0001628280-26-050596",
+  "filingDate": "2026-07-29",
+  "reportDate": "2026-07-29",
+  "acceptanceDateTime_raw": "2026-07-30T00:03:23.000Z",
+  "accepted_ET_index_page": "2026-07-29 16:03:23",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "meta-06302026xexhibit991.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "1e1495a06606b1511cf57a2079b1916a1e2d1e3bf0f0a115a7b3790d3740f1b8",
+  "ex99_saved": "META_0001628280-26-050596_meta-06302026xexhibit991.htm.gz",
+  "n_chars": 18574,
+  "n_guidance_sentences": 6,
+  "guidance_snippets": [
+   "Our reported headcount includes approximately 8,000 employees impacted by the May 2026 headcount reduction, the majority of whom will no longer be reflected in our headcount by the end of the third quarter of 2026. ____________________________________ (1) For ",
+   "Our guidance assumes foreign currency is an approximately 1% headwind to year-over-year total revenue growth, based on current exchange rates.",
+   "We are raising the lower-end of our expense outlook to incorporate the $2.4 billion charges related to legal proceedings recognized in the second quarter."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook Commentary We expect third quarter 2026 total revenue to be in the range of $61-64 billion. Our guidance assumes foreign currency is an approximately 1% headwind to year-over-year total revenue growth, based on current exchange rates. We are raising the lower-end of our expense outlook to incorporate the $2.4 billion charges related to legal proceedings recognized in the second quarter. We",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "META",
+  "cik": 1326801,
+  "accession": "0001628280-26-028364",
+  "filingDate": "2026-04-29",
+  "reportDate": "2026-04-29",
+  "acceptanceDateTime_raw": "2026-04-30T00:05:41.000Z",
+  "accepted_ET_index_page": "2026-04-29 16:05:41",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "meta-03312026xexhibit991.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "65259058e833cc97249a00b2e86b847fa6a158afe3bf51567df4ee7be57799bf",
+  "ex99_saved": "META_0001628280-26-028364_meta-03312026xexhibit991.htm.gz",
+  "n_chars": 17556,
+  "n_guidance_sentences": 5,
+  "guidance_snippets": [
+   "(1) • Headcount – Headcount was 77,986 as of March 31, 2026, an increase of 1% year-over-year. ____________________________________ (1) For more information on our free cash flow non-GAAP financial measure, see the sections entitled \"Non-GAAP Financial Measure",
+   "Our guidance assumes foreign currency is an approximately 2% tailwind to year-over-year total revenue growth, based on current exchange rates.",
+   "We expect full year 2026 total expenses to be in the range of $162-169 billion, unchanged from our prior outlook."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook Commentary We expect second quarter 2026 total revenue to be in the range of $58-61 billion. Our guidance assumes foreign currency is an approximately 2% tailwind to year-over-year total revenue growth, based on current exchange rates. We expect full year 2026 total expenses to be in the range of $162-169 billion, unchanged from our prior outlook. We continue to expect to deliver operating",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "META",
+  "cik": 1326801,
+  "accession": "0001628280-26-003832",
+  "filingDate": "2026-01-28",
+  "reportDate": "2026-01-28",
+  "acceptanceDateTime_raw": "2026-01-29T02:04:20.000Z",
+  "accepted_ET_index_page": "2026-01-28 16:04:20",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "meta-12312025xexhibit991.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "ab7d1b2e388b7664a5fa3f0d84bba7287ae0dc34835d4ddfb2bc78f84a196a6e",
+  "ex99_saved": "META_0001628280-26-003832_meta-12312025xexhibit991.htm.gz",
+  "n_chars": 19989,
+  "n_guidance_sentences": 5,
+  "guidance_snippets": [
+   "• Headcount – Headcount was 78,865 as of December 31, 2025, an increase of 6% year-over-year. ____________________________________ (1) For more information on our free cash flow non-GAAP financial measure, see the sections entitled \"Non-GAAP Financial Measures",
+   "Our guidance assumes foreign currency is an approximately 4% tailwind to year-over-year total revenue growth, based on current exchange rates.",
+   "We expect full year 2026 total expenses to be in the range of $162-169 billion."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook Commentary We expect first quarter 2026 total revenue to be in the range of $53.5-56.5 billion. Our guidance assumes foreign currency is an approximately 4% tailwind to year-over-year total revenue growth, based on current exchange rates. We expect full year 2026 total expenses to be in the range of $162-169 billion. • The majority of expense growth will be driven by infrastructure costs, ",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "META",
+  "cik": 1326801,
+  "accession": "0001628280-25-047114",
+  "filingDate": "2025-10-29",
+  "reportDate": "2025-10-29",
+  "acceptanceDateTime_raw": "2025-10-30T00:08:34.000Z",
+  "accepted_ET_index_page": "2025-10-29 16:08:34",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "meta-09302025xexhibit991.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "a6d814600b8d1eaa98038566c7fc224da14854956d3e19ebaa630097db9f3206",
+  "ex99_saved": "META_0001628280-25-047114_meta-09302025xexhibit991.htm.gz",
+  "n_chars": 21570,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "(1) • Headcount – Headcount was 78,450 as of September 30, 2025, an increase of 8% year-over-year. ____________________________________ (1) For more information on our free cash flow non-GAAP financial measure, see the sections entitled \"Non-GAAP Financial Mea",
+   "Our guidance assumes foreign currency is an approximately 1% tailwind to year-over-year total revenue growth, based on current exchange rates.",
+   "We expect full year 2025 total expenses to be in the range of $116-118 billion, updated from our prior outlook of $114-118 billion and reflecting a growth rate of 22-24% year-over-year."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook Commentary We expect fourth quarter 2025 total revenue to be in the range of $56-59 billion. Our guidance assumes foreign currency is an approximately 1% tailwind to year-over-year total revenue growth, based on current exchange rates. Our outlook reflects an expectation for continued strong ad revenue growth, partially offset by lower year-over-year Reality Labs revenue in the fourth quar",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JPM",
+  "cik": 19617,
+  "accession": "0001628280-26-065582",
+  "filingDate": "2026-10-13",
+  "reportDate": "2026-10-13",
+  "acceptanceDateTime_raw": "2026-10-13T14:30:38.000Z",
+  "accepted_ET_index_page": "2026-10-13 06:30:38",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a3q26erfexhibit991narrative.htm",
+   "a3q26erfex992supplement.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "6649587d9989d9190021315a995751d8c721d873a283bdb3dc8cd87e165eb4dd",
+  "ex99_saved": "JPM_0001628280-26-065582_a3q26erfexhibit991narrative.htm.gz",
+  "n_chars": 23521,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JPM",
+  "cik": 19617,
+  "accession": "0001628280-26-048078",
+  "filingDate": "2026-07-14",
+  "reportDate": "2026-07-14",
+  "acceptanceDateTime_raw": "2026-07-14T14:30:38.000Z",
+  "accepted_ET_index_page": "2026-07-14 06:30:38",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2q26erfexhibit991narrative.htm",
+   "a2q26erfex992supplement.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "12ed04d5b64694006bd4f61b1954649670d2a4adc6b70cb04646bcee749d12e7",
+  "ex99_saved": "JPM_0001628280-26-048078_a2q26erfexhibit991narrative.htm.gz",
+  "n_chars": 25170,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JPM",
+  "cik": 19617,
+  "accession": "0001628280-26-024990",
+  "filingDate": "2026-04-14",
+  "reportDate": "2026-04-14",
+  "acceptanceDateTime_raw": "2026-04-14T14:32:42.000Z",
+  "accepted_ET_index_page": "2026-04-14 06:32:42",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a1q26erfexhibit991narrative.htm",
+   "a1q26erfex992supplement.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "51a53de2d0f3a38efd0e01dd5789f21082341a56764cda5cd0440316c580dc60",
+  "ex99_saved": "JPM_0001628280-26-024990_a1q26erfexhibit991narrative.htm.gz",
+  "n_chars": 22462,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JPM",
+  "cik": 19617,
+  "accession": "0001628280-26-001902",
+  "filingDate": "2026-01-13",
+  "reportDate": "2026-01-13",
+  "acceptanceDateTime_raw": "2026-01-13T16:41:09.000Z",
+  "accepted_ET_index_page": "2026-01-13 06:41:09",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a4q25erfexhibit991narrative.htm",
+   "a4q25erfex992supplement.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "91412e70b8484383458e334d66d902d26c9c3fa751d5ddb265898232eaa1e073",
+  "ex99_saved": "JPM_0001628280-26-001902_a4q25erfexhibit991narrative.htm.gz",
+  "n_chars": 24610,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "XOM",
+  "cik": 34088,
+  "accession": "0000034088-26-000065",
+  "filingDate": "2026-05-01",
+  "reportDate": "2026-05-01",
+  "acceptanceDateTime_raw": "2026-05-01T10:31:52.000Z",
+  "accepted_ET_index_page": "2026-05-01 06:31:52",
+  "items": "2.02,7.01",
+  "ex99_files": [
+   "livef8k1q26991.htm",
+   "livef8k1q26992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "f2eb80b68f1ceb3040bee2b23260a770c5ac4f7939081b52608ac9ec5c370a7d",
+  "ex99_saved": "XOM_0000034088-26-000065_livef8k1q26991.htm.gz",
+  "n_chars": 51022,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "• The company's industry-leading debt-to-capital and net-debt-to-capital ratios were 15.4% and 13.1% , respectively, with a period-end cash balance of $8.4 billion . 2 • Cash capital expenditures totaled $6.2 billion, consistent with the company's full-year gu"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "XOM",
+  "cik": 34088,
+  "accession": "0000034088-26-000033",
+  "filingDate": "2026-01-30",
+  "reportDate": "2026-01-30",
+  "acceptanceDateTime_raw": "2026-01-30T11:31:24.000Z",
+  "accepted_ET_index_page": "2026-01-30 06:31:24",
+  "items": "2.02,7.01",
+  "ex99_files": [
+   "livef8k4q25991.htm",
+   "livef8k4q25992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "810ddcaf88cc23c15316c7bdba7de86d5addae7f5c1bd92b5bdd815ef596c8d7",
+  "ex99_saved": "XOM_0000034088-26-000033_livef8k4q25991.htm.gz",
+  "n_chars": 55463,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "The company expects cash capital expenditures of $27-$29 billion in 2026. 4 1 ROCE for ExxonMobil is 2025 full-year."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "XOM",
+  "cik": 34088,
+  "accession": "0000034088-25-000059",
+  "filingDate": "2025-10-31",
+  "reportDate": "2025-10-31",
+  "acceptanceDateTime_raw": "2025-10-31T10:31:49.000Z",
+  "accepted_ET_index_page": "2025-10-31 06:31:49",
+  "items": "2.02,7.01",
+  "ex99_files": [
+   "livef8k3q25991.htm",
+   "livef8k3q25992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "8c95bbfb85fcbbbbd044c910c666970977c54486cfa8b3ad7ac7a688cd376c15",
+  "ex99_saved": "XOM_0000034088-25-000059_livef8k3q25991.htm.gz",
+  "n_chars": 48146,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "Excluding acquisitions, the company expects full-year cash capital expenditures slightly below the lower end of the $27 billion to $29 billion guidance range. 1 Net debt is total debt of $42.0 billion less $13.8 billion of cash and cash equivalents excluding r"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "XOM",
+  "cik": 34088,
+  "accession": "0000034088-25-000040",
+  "filingDate": "2025-08-01",
+  "reportDate": "2025-08-01",
+  "acceptanceDateTime_raw": "2025-08-01T10:32:05.000Z",
+  "accepted_ET_index_page": "2025-08-01 06:32:05",
+  "items": "2.02,7.01",
+  "ex99_files": [
+   "livef8k2q25991.htm",
+   "livef8k2q25992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "2d4267bd78396e4e27bb042e273fa0066034f01937212082b54ec80ef0222578",
+  "ex99_saved": "XOM_0000034088-25-000040_livef8k2q25991.htm.gz",
+  "n_chars": 47498,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "Since 2019, we've delivered $13.5 billion in structural cost savings, more than all other IOCs combined. 4 And our 2030 structural cost savings plan exceeds their cumulative cost savings targets. 4 We began start-up operations for the first six of ten key proj",
+   "Collectively, these projects are expected to improve our earnings power by more than $3 billion in 2026 at constant prices and margins. 5 These results demonstrate how our competitive advantages are delivering industry-leading value today and providing a long ",
+   "The company expects full-year cash capital expenditures of $27 billion to $29 billion, consistent with previous guidance. 1 Net debt is total debt of $39.0 billion less $14.4 billion of cash and cash equivalents excluding restricted cash."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JNJ",
+  "cik": 200406,
+  "accession": "0000200406-26-000189",
+  "filingDate": "2026-10-13",
+  "reportDate": "2026-10-13",
+  "acceptanceDateTime_raw": "2026-10-13T16:12:35.000Z",
+  "accepted_ET_index_page": "2026-10-13 08:12:35",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2026q3exhibit991.htm",
+   "a2026q3exhibit992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "d616741add979824413a0d0eb74458ae71c6040ee2d74173f0485ecff673619a",
+  "ex99_saved": "JNJ_0000200406-26-000189_a2026q3exhibit991.htm.gz",
+  "n_chars": 16412,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JNJ",
+  "cik": 200406,
+  "accession": "0000200406-26-000146",
+  "filingDate": "2026-07-15",
+  "reportDate": "2026-07-15",
+  "acceptanceDateTime_raw": "2026-07-15T15:49:04.000Z",
+  "accepted_ET_index_page": "2026-07-15 07:49:04",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2026q2exhibit991.htm",
+   "a2026q2exhibit992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "e3c89131a368f682a8c765a4a62a5848964873c86c750021845ef42da7ce695f",
+  "ex99_saved": "JNJ_0000200406-26-000146_a2026q2exhibit991.htm.gz",
+  "n_chars": 17780,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JNJ",
+  "cik": 200406,
+  "accession": "0000200406-26-000076",
+  "filingDate": "2026-04-14",
+  "reportDate": "2026-04-14",
+  "acceptanceDateTime_raw": "2026-04-14T15:35:25.000Z",
+  "accepted_ET_index_page": "2026-04-14 07:35:25",
+  "items": "2.02,8.01,9.01",
+  "ex99_files": [
+   "a2026q1exhibit991.htm",
+   "a2026q1exhibit992.htm",
+   "a2026q1exhibit993.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2",
+   "EX-99.3"
+  ],
+  "ex99_sha256": "353fe63f5c4405ceb255cd81c49805709ee81328f10505c5f696f789315e9906",
+  "ex99_saved": "JNJ_0000200406-26-000076_a2026q1exhibit991.htm.gz",
+  "n_chars": 16056,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "JNJ",
+  "cik": 200406,
+  "accession": "0000200406-26-000002",
+  "filingDate": "2026-01-21",
+  "reportDate": "2026-01-21",
+  "acceptanceDateTime_raw": "2026-01-21T17:46:18.000Z",
+  "accepted_ET_index_page": "2026-01-21 07:46:18",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2025q4exhibit991.htm",
+   "a2025q4exhibit992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "eaa8dabb0c96d344ea769684ba82988f9de2e44e5b8ca3bf8b45f402bac05e7e",
+  "ex99_saved": "JNJ_0000200406-26-000002_a2025q4exhibit991.htm.gz",
+  "n_chars": 17470,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "WMT",
+  "cik": 104169,
+  "accession": "0000104169-26-000145",
+  "filingDate": "2026-08-20",
+  "reportDate": "2026-08-20",
+  "acceptanceDateTime_raw": "2026-08-20T14:59:01.000Z",
+  "accepted_ET_index_page": "2026-08-20 06:59:01",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "earningsreleasefy27q2.htm",
+   "earningspresentationfy27.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "37ce97938f45d6e94c62cc0b1977303d58eecca0a8ac0e25d120335c0142f647",
+  "ex99_saved": "WMT_0000104169-26-000145_earningsreleasefy27q2.htm.gz",
+  "n_chars": 46218,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "Adjusted EPS 1 of $0.81 • Company issues guidance for Q3; raises outlook for FY27 “ BENTONVILLE, Ark., August 20, 2026 – Walmart Inc.",
+   "Third quarter The Company’s third quarter fiscal 2027 guidance is based on the following Q3 FY26 figures: Net sales: $177.8 billion, adjusted operating income 1 : $7.3 billion, and adjusted EPS 1 : $0.62.",
+   "Consolidated metric Q3 FY27 Net sales (cc) Increase 3.0% to 3.75% Operating income (cc) Increase 2.0% to 4.0% Adjusted EPS $0.62 to $0.64 Fiscal year 2027 The Company’s fiscal year guidance is based on the following FY26 figures: Net sales: $706.4 billion, adj"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": false
+ },
+ {
+  "ticker": "WMT",
+  "cik": 104169,
+  "accession": "0000104169-26-000095",
+  "filingDate": "2026-05-21",
+  "reportDate": "2026-05-21",
+  "acceptanceDateTime_raw": "2026-05-21T14:59:53.000Z",
+  "accepted_ET_index_page": "2026-05-21 06:59:53",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "earningsreleasefy27q1.htm",
+   "earningspresentationfy27.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "1ddefe9fb956581b823d180d44855e985783ebf05c11df9505909e6248109212",
+  "ex99_saved": "WMT_0000104169-26-000095_earningsreleasefy27q1.htm.gz",
+  "n_chars": 40678,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "Adjusted EPS 1 of $0.66 • Company issues guidance for Q2; reiterates outlook for FY27 “ BENTONVILLE, Ark., May 21, 2026 – Walmart Inc.",
+   "Looking ahead, the Company issues guidance for the second quarter with net sales expected to grow 4% to 5% and adjusted operating income to grow 7% to 10%, both in constant currency (“cc”) 1 .",
+   "Second quarter The Company’s second quarter fiscal 2027 guidance is based on the following Q2 FY26 figures: Net sales: $175.8 billion, adjusted operating income 1 : $7.9 billion, and adjusted EPS 1 : $0.68."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": false
+ },
+ {
+  "ticker": "WMT",
+  "cik": 104169,
+  "accession": "0000104169-26-000032",
+  "filingDate": "2026-02-19",
+  "reportDate": "2026-02-19",
+  "acceptanceDateTime_raw": "2026-02-19T16:59:55.000Z",
+  "accepted_ET_index_page": "2026-02-19 06:59:55",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "earningsreleasefy26q4.htm",
+   "earningspresentationfy26.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "d371f6837b579731e66d23e138910d13e37f5e382afce3c4084366986da2ffe4",
+  "ex99_saved": "WMT_0000104169-26-000032_earningsreleasefy26q4.htm.gz",
+  "n_chars": 47570,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "Adjusted EPS 1 of $0.74 • Company announces new $30 billion share repurchase authorization • Company provides outlook for Q1 and FY27 “ BENTONVILLE, Ark., February 19, 2026 – Walmart Inc.",
+   "First quarter The Company’s first quarter fiscal 2027 guidance is based on the following Q1 FY26 figures: Net sales: $164.0 billion, operating income: $7.1 billion, and adjusted EPS 1 : $0.61.",
+   "Consolidated metric Q1 FY27 Net sales (cc) Increase 3.5% to 4.5% Operating income (cc) Increase 4.0% to 6.0% Adjusted EPS $0.63 to $0.65 Fiscal year 2027 The Company’s fiscal year guidance is based on the following FY26 figures: Net sales: $706.4 billion, adju"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": false
+ },
+ {
+  "ticker": "WMT",
+  "cik": 104169,
+  "accession": "0000104169-25-000177",
+  "filingDate": "2025-11-20",
+  "reportDate": "2025-11-19",
+  "acceptanceDateTime_raw": "2025-11-20T16:58:46.000Z",
+  "accepted_ET_index_page": "2025-11-20 06:58:46",
+  "items": "2.02,3.01,7.01,9.01",
+  "ex99_files": [
+   "earningsreleasefy26q3.htm",
+   "earningspresentationfy26.htm",
+   "pressrelease-transfertonas.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2",
+   "EX-99.3"
+  ],
+  "ex99_sha256": "d5e20fb19596750fff9281cd74b27b0aa56d30668ec4192df16704c463861023",
+  "ex99_saved": "WMT_0000104169-25-000177_earningsreleasefy26q3.htm.gz",
+  "n_chars": 47061,
+  "n_guidance_sentences": 2,
+  "guidance_snippets": [
+   "For fiscal year 2026, the Company raises outlook for growth in net sales to 4.8% to 5.1% and adjusted operating income to 4.8% to 5.5%, both in constant currency (“cc”) 1 .",
+   "Fiscal year 2026 The Company’s fiscal year guidance is based on the following FY25 figures: Net sales: $674.5 billion, adjusted operating income 1 : $29.5 billion, and adjusted EPS 1 : $2.51."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": false
+ },
+ {
+  "ticker": "CAT",
+  "cik": 18230,
+  "accession": "0000018230-26-000040",
+  "filingDate": "2026-08-04",
+  "reportDate": "2026-08-04",
+  "acceptanceDateTime_raw": "2026-08-04T14:31:44.000Z",
+  "accepted_ET_index_page": "2026-08-04 06:31:44",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "ex991toformcat2q2026earnin.htm",
+   "ex992toformcat2q2026retail.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "c94f036bcbf598b73b4af88314633c0b363ff841206d5429875d66dab7f0406c",
+  "ex99_saved": "CAT_0000018230-26-000040_ex991toformcat2q2026earnin.htm.gz",
+  "n_chars": 53467,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "Operating profit in the second quarter of 2026 included $392 million of expected International Emergency Economic Power Act (IEEPA) tariff recoveries."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "CAT",
+  "cik": 18230,
+  "accession": "0000018230-26-000017",
+  "filingDate": "2026-04-30",
+  "reportDate": "2026-04-30",
+  "acceptanceDateTime_raw": "2026-04-30T14:31:34.000Z",
+  "accepted_ET_index_page": "2026-04-30 06:31:34",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "ex991toformcat1q2026earnin.htm",
+   "ex992toformcat1q2026retail.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "3f373da4cd99b1ed406756c2082b0c869d3250b379c4e07ab9e1907be1d7bb72",
+  "ex99_saved": "CAT_0000018230-26-000017_ex991toformcat1q2026earnin.htm.gz",
+  "n_chars": 48311,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "CAT",
+  "cik": 18230,
+  "accession": "0000018230-26-000003",
+  "filingDate": "2026-01-29",
+  "reportDate": "2026-01-29",
+  "acceptanceDateTime_raw": "2026-01-29T16:31:34.000Z",
+  "accepted_ET_index_page": "2026-01-29 06:31:34",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "cat_exx991x4qx2025xearning.htm",
+   "ex992toformxretailstatisti.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "3a8f5ee41305a92c463edb7838dc7045b4e72734f698e6d4296f11ed59cacfe2",
+  "ex99_saved": "CAT_0000018230-26-000003_cat_exx991x4qx2025xearning.htm.gz",
+  "n_chars": 59782,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "CAT",
+  "cik": 18230,
+  "accession": "0000018230-25-000043",
+  "filingDate": "2025-10-29",
+  "reportDate": "2025-10-29",
+  "acceptanceDateTime_raw": "2025-10-29T14:32:45.000Z",
+  "accepted_ET_index_page": "2025-10-29 06:32:45",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "ex991toformcat3q2025earnin.htm",
+   "ex992toformcat3q2025retail.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "290c961ad9f6b0c29461ed79b4823deda7b49e2643a595360d850e3695efb2f9",
+  "ex99_saved": "CAT_0000018230-25-000043_ex991toformcat3q2025earnin.htm.gz",
+  "n_chars": 54889,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NKE",
+  "cik": 320187,
+  "accession": "0000320187-26-000184",
+  "filingDate": "2026-10-01",
+  "reportDate": "2026-10-01",
+  "acceptanceDateTime_raw": "2026-10-02T00:15:15.000Z",
+  "accepted_ET_index_page": "2026-10-01 16:15:15",
+  "items": "2.02,2.05,9.01",
+  "ex99_files": [
+   "q1fy27exhibit991er.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "217677822a8dab5de360d0bd1ea9a0f35f074dfd4a392dac37ad5369c1f2257e",
+  "ex99_saved": "NKE_0000320187-26-000184_q1fy27exhibit991er.htm.gz",
+  "n_chars": 18392,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "NIKE expects Pace to deliver approximately $2.5 billion in cumulative savings through fiscal 2031, with approximately $1.0 billion of pre-tax charges, primarily consisting of employee-related costs, through fiscal 2031, in addition to approximately $0.3 billio",
+   "NIKE expects approximately $0.3 billion to be recognized in fiscal 2027.",
+   "• Effective tax rate for fiscal 2027 is expected to be in the mid-20 percent range, subject to changes in earnings mix and discrete tax items."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook • Revenues are expected to decline high-single digits in fiscal 2027 . • Effective tax rate for fiscal 2027 is expected to be in the mid-20 percent range, subject to changes in earnings mix and discrete tax items. • Adjusted Diluted earnings per share** is expected to be in the range of $1.15 to $1.35, which excludes approximately $0.15 of restructuring expenses related to Pace for fiscal ",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NKE",
+  "cik": 320187,
+  "accession": "0000320187-26-000076",
+  "filingDate": "2026-06-30",
+  "reportDate": "2026-06-30",
+  "acceptanceDateTime_raw": "2026-07-01T00:15:28.000Z",
+  "accepted_ET_index_page": "2026-06-30 16:15:28",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "q4fy26exhibit991er.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "3d500db11c4f3f38b59d3f8838d7c5ad2a3bca7199c024d676048fdc5eff5364",
+  "ex99_saved": "NKE_0000320187-26-000076_q4fy26exhibit991er.htm.gz",
+  "n_chars": 18290,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the three and twelve months ended May 31, 2026, North America and Converse include a $965 million and $21 million benefit, respectively, for the expected recovery of the IEEPA tariffs paid on goods imported into the U.S."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NKE",
+  "cik": 320187,
+  "accession": "0000320187-26-000070",
+  "filingDate": "2026-06-23",
+  "reportDate": "2026-06-16",
+  "acceptanceDateTime_raw": "2026-06-24T00:24:58.000Z",
+  "accepted_ET_index_page": "2026-06-23 16:24:58",
+  "items": "2.02,5.02,7.01,9.01",
+  "ex99_files": [
+   "pressrelease062326.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "4a1b7e10ada435c75c9b20346dd745662ae64ce070f1fe573c70ad37234348be",
+  "ex99_saved": "NKE_0000320187-26-000070_pressrelease062326.htm.gz",
+  "n_chars": 4466,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": false,
+  "has_outlook_header": false,
+  "mentions_call": false
+ },
+ {
+  "ticker": "NKE",
+  "cik": 320187,
+  "accession": "0000320187-26-000026",
+  "filingDate": "2026-03-31",
+  "reportDate": "2026-03-31",
+  "acceptanceDateTime_raw": "2026-04-01T00:15:22.000Z",
+  "accepted_ET_index_page": "2026-03-31 16:15:22",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "q3fy26exhibit991er.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "dc6057971a8b1fe7929e4d4e5cb0d002e49b7998d6cfb3bdca8eef8a1271fb04",
+  "ex99_saved": "NKE_0000320187-26-000026_q3fy26exhibit991er.htm.gz",
+  "n_chars": 14195,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "LMT",
+  "cik": 936468,
+  "accession": "0001628280-26-049277",
+  "filingDate": "2026-07-23",
+  "reportDate": "2026-07-23",
+  "acceptanceDateTime_raw": "2026-07-23T10:30:57.000Z",
+  "accepted_ET_index_page": "2026-07-23 06:30:57",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991q22026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "ecbcffca0ec3ebeb16c1d5ec36d9a332994a595bd99ca242836482d9c54db69d",
+  "ex99_saved": "LMT_0001628280-26-049277_ex991q22026.htm.gz",
+  "n_chars": 33110,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "We now anticipate accelerated year‑over‑year sales growth of approximately 8%, driving 28% higher segment operating profit, and increased free cash flow, now projected to be over $7 billion” said Lockheed Martin Chairman, President and CEO Jim Taiclet. “These ",
+   "The company's cash activities during the second quarter of 2026 included capital expenditures of $318 million and independent research and development of $558 million. 2 2026 Financial Outlook The following guidance table contains forward-looking statements, w",
+   "Department of Treasury issued Notice 2026-7 (the Notice) providing additional interim guidance regarding the application of the CAMT."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "LMT",
+  "cik": 936468,
+  "accession": "0001628280-26-026683",
+  "filingDate": "2026-04-23",
+  "reportDate": "2026-04-23",
+  "acceptanceDateTime_raw": "2026-04-23T10:36:10.000Z",
+  "accepted_ET_index_page": "2026-04-23 06:36:10",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991q12026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "cc258987a389e7cb6362dd934e6c7775f8e5a42f8b0aaa1c91255470ce46554f",
+  "ex99_saved": "LMT_0001628280-26-026683_ex991q12026.htm.gz",
+  "n_chars": 31765,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "• cash dividends of $816 million; and • scheduled long-term debt repayments of $1.0 billion. 2 2026 Financial Outlook The company’s financial outlook and other sections of this news release contain forward-looking statements, which reflect the company's judgme",
+   "(in millions, except per share data) 2026 Outlook Sales $77,500 - $80,000 Business segment operating profit 1 $8,425 - $8,675 Total FAS/CAS pension adjustment ~$1,365 Diluted earnings per share $29.35 - $30.25 Cash from operations $9,150 - $9,450 Capital expen",
+   "Department of Treasury issued Notice 2026-7 (the Notice) providing additional interim guidance regarding the application of the CAMT."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "LMT",
+  "cik": 936468,
+  "accession": "0001628280-26-003970",
+  "filingDate": "2026-01-29",
+  "reportDate": "2026-01-29",
+  "acceptanceDateTime_raw": "2026-01-29T12:25:24.000Z",
+  "accepted_ET_index_page": "2026-01-29 07:25:24",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991q42025.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "712923acd7c12f8628159da72f39a2206d5176226293833caa37a4ab2ed83adc",
+  "ex99_saved": "LMT_0001628280-26-003970_ex991q42025.htm.gz",
+  "n_chars": 40716,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "We expect sales and reported segment operating profit growth of approximately 5% and 25% year-over-year, respectively, and free cash flow between $6.5 to $6.8 billion, an increase compared to our prior expectation.",
+   "Fourth quarter of 2025 also includes $109 million benefit as a result of the favorable resolution of certain federal income tax audit items with the Internal Revenue Service. 3 2026 Financial Outlook The company’s financial outlook and other sections of this n",
+   "(in millions, except per share data) 2026 Outlook Sales $77,500 - $80,000 Business segment operating profit 1 $8,425 - $8,675 Total FAS/CAS pension adjustment ~$1,365 Diluted earnings per share $29.35 - $30.25 Cash from operations $9,150 - $9,450 Capital expen"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "LMT",
+  "cik": 936468,
+  "accession": "0001628280-25-045582",
+  "filingDate": "2025-10-21",
+  "reportDate": "2025-10-21",
+  "acceptanceDateTime_raw": "2025-10-21T11:34:11.000Z",
+  "accepted_ET_index_page": "2025-10-21 07:34:11",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991q32025.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "68d6b35c4e2221d9f0660d433761fad2a345c407efd2799d36d97ff2fd45d964",
+  "ex99_saved": "LMT_0001628280-25-045582_ex991q32025.htm.gz",
+  "n_chars": 33877,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "Additionally, on Oct. 9, 2025, the company authorized a fourth quarter dividend payment of $3.45 per share, representing an increase of $0.15 per share, or 5%, over the prior quarterly dividend payment. 2 2025 Financial Outlook The company’s financial outlook "
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "NFLX",
+  "cik": 1065280,
+  "accession": "0001065280-26-000290",
+  "filingDate": "2026-10-20",
+  "reportDate": "2026-10-20",
+  "acceptanceDateTime_raw": "2026-10-21T00:01:55.000Z",
+  "accepted_ET_index_page": "2026-10-20 16:01:55",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991_q326.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "91cb1fb33d0fc0fb894c09d030a0cf59db7b1ca45624ce7541346f4db1618038",
+  "ex99_saved": "NFLX_0001065280-26-000290_ex991_q326.htm.gz",
+  "n_chars": 32741,
+  "n_guidance_sentences": 10,
+  "guidance_snippets": [
+   "EX-99.1 2 ex991_q326.htm EX-99.1 Document Exhibit 99.1 October 20, 2026 Fellow shareholders, • We delivered our Q3 forecast and expect to deliver on our full year 2026 guidance. ◦ Q3 revenue grew 12% year over year (11% on a F/X neutral basis 1 ) to $12.9B, co",
+   "Operating margin was 34.6%, up from 28.2% in Q3’25 and ahead of our forecast primarily due to the timing of expenses. ◦ For 2026, we expect revenue of $51.1B (+13% year over year) and an operating margin of 31.5%.",
+   "Assumes foreign exchange rates remained constant with foreign exchange rates from each of the corresponding months of the prior-year period. 1 Q3 Results and Forecast Revenue in Q3 grew 12% year over year (+11% on a foreign exchange (F/X) neutral basis), and w"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": false
+ },
+ {
+  "ticker": "NFLX",
+  "cik": 1065280,
+  "accession": "0001065280-26-000211",
+  "filingDate": "2026-07-16",
+  "reportDate": "2026-07-16",
+  "acceptanceDateTime_raw": "2026-07-17T00:03:19.000Z",
+  "accepted_ET_index_page": "2026-07-16 16:03:19",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991_q226.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "d216d73eda1568a0e2468a69168d68e5a2d9acb498aa10c58f6d3058bf2a0aa5",
+  "ex99_saved": "NFLX_0001065280-26-000211_ex991_q226.htm.gz",
+  "n_chars": 37398,
+  "n_guidance_sentences": 11,
+  "guidance_snippets": [
+   "Both were in-line with our guidance. ◦ For 2026, we’ve narrowed our forecasted revenue range to $51.0-$51.4B and continue to forecast an operating margin of 31.5%, both consistent with our prior guidance.",
+   "Assumes foreign exchange rates remained constant with foreign exchange rates from each of the corresponding months of the prior-year period. 1 Q2 Results and Forecast Q2 revenue of $12.6B was in-line with forecast and grew 13% year over year (+12% on a foreign",
+   "In UCAN, Q2 revenue growth of 10% reflects only a partial quarter impact from our recent price change, which has gone well and as expected."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": false
+ },
+ {
+  "ticker": "NFLX",
+  "cik": 1065280,
+  "accession": "0001065280-26-000137",
+  "filingDate": "2026-04-16",
+  "reportDate": "2026-04-10",
+  "acceptanceDateTime_raw": "2026-04-17T00:01:58.000Z",
+  "accepted_ET_index_page": "2026-04-16 16:01:58",
+  "items": "2.02,5.02,9.01",
+  "ex99_files": [
+   "ex991_q126.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "0af2f30b532dcf7c3e18f8d2a399d4627efd419146e86d720f60dda03a12c4a7",
+  "ex99_saved": "NFLX_0001065280-26-000137_ex991_q126.htm.gz",
+  "n_chars": 36060,
+  "n_guidance_sentences": 7,
+  "guidance_snippets": [
+   "We continue to project 2026 revenue of $50.7-$51.7B and an operating margin of 31.5%.",
+   "Assumes foreign exchange rates remained constant with foreign exchange rates from each of the corresponding months of the prior-year period. 1 Q1 Results and Forecast Revenue in Q1 grew 16% year over year (+14% on a foreign exchange (F/X) neutral basis), drive",
+   "Diluted EPS for the quarter amounted to $1.23 vs. $0.66 in Q1’25 (+86% year over year), above our forecast of $0.76, driven by higher-than-projected operating income and the $2.8B termination fee related to the Warner Bros. transaction, which was recognized in"
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": false
+ },
+ {
+  "ticker": "NFLX",
+  "cik": 1065280,
+  "accession": "0001065280-26-000033",
+  "filingDate": "2026-01-20",
+  "reportDate": "2026-01-20",
+  "acceptanceDateTime_raw": "2026-01-21T02:07:54.000Z",
+  "accepted_ET_index_page": "2026-01-20 16:07:54",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "ex991_q425.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "225a9e4f2ca413265bf15be4f2ae122f54e5024b3251bcc0c2ea5f8f25f172ee",
+  "ex99_saved": "NFLX_0001065280-26-000033_ex991_q425.htm.gz",
+  "n_chars": 48493,
+  "n_guidance_sentences": 9,
+  "guidance_snippets": [
+   "Assumes foreign exchange rates remained constant with foreign exchange rates from each of the corresponding months of the prior-year period. 1 Q4 Results and Forecast Q4 revenue grew 18% year over year (+17% on a foreign exchange (F/X) neutral basis), driven p",
+   "Despite unfavorable F/X movements during the quarter, revenue was 1% above our guidance due to stronger-than-forecasted membership growth and ad sales.",
+   "Operating income in Q4 was $3.0B, up 30% year over year, and operating margin expanded two percentage points year over year to 25% - both slightly ahead of our forecast due primarily to the revenue upside."
+  ],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": false
+ },
+ {
+  "ticker": "AMD",
+  "cik": 2488,
+  "accession": "0000002488-26-000121",
+  "filingDate": "2026-08-04",
+  "reportDate": "2026-08-04",
+  "acceptanceDateTime_raw": "2026-08-05T00:16:24.000Z",
+  "accepted_ET_index_page": "2026-08-04 16:16:24",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "q22026991.htm",
+   "amdq22026earningsslidesf.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "300092cf72d99580e6d7d02e3e397325fd15b41c719616bc902260cba5901eb0",
+  "ex99_saved": "AMD_0000002488-26-000121_q22026991.htm.gz",
+  "n_chars": 32031,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the third quarter of 2026, AMD expects revenue to be approximately $13 billion, plus or minus $300 million."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook AMD’s outlook statements are based on current expectations. The following statements are forward-looking and actual results could differ materially depending on market conditions and the factors set forth under “Cautionary Statement” below. For the third quarter of 2026, AMD expects revenue to be approximately $13 billion, plus or minus $300 million. The mid-point of the revenue range repr",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMD",
+  "cik": 2488,
+  "accession": "0000002488-26-000072",
+  "filingDate": "2026-05-05",
+  "reportDate": "2026-05-05",
+  "acceptanceDateTime_raw": "2026-05-06T00:16:06.000Z",
+  "accepted_ET_index_page": "2026-05-05 16:16:06",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "q12026991.htm",
+   "amdq126earningsslidesfin.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "f5d72b25ca8acbfc33a188979d95e5c134e979f47ba495749745b60f69c46ca3",
+  "ex99_saved": "AMD_0000002488-26-000072_q12026991.htm.gz",
+  "n_chars": 28365,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the second quarter of 2026, AMD expects revenue to be approximately $11.2 billion, plus or minus $300 million."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook AMD’s outlook statements are based on current expectations. The following statements are forward-looking and actual results could differ materially depending on market conditions and the factors set forth under “Cautionary Statement” below. For the second quarter of 2026, AMD expects revenue to be approximately $11.2 billion, plus or minus $300 million. The mid-point of the revenue range r",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMD",
+  "cik": 2488,
+  "accession": "0000002488-26-000014",
+  "filingDate": "2026-02-03",
+  "reportDate": "2026-02-03",
+  "acceptanceDateTime_raw": "2026-02-04T02:16:18.000Z",
+  "accepted_ET_index_page": "2026-02-03 16:16:18",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "q42025991.htm",
+   "amdq425earningsslidesfin.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "d1644b8ef6b0dda21e31d209e3018731c3e085695bc90f9a2cfb53b67d5151d4",
+  "ex99_saved": "AMD_0000002488-26-000014_q42025991.htm.gz",
+  "n_chars": 34914,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the first quarter of 2026, AMD expects revenue to be approximately $9.8 billion, plus or minus $300 million, including approximately $100 million of AMD Instinct MI308 sales to China."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook AMD’s outlook statements are based on current expectations. The following statements are forward-looking and actual results could differ materially depending on market conditions and the factors set forth under “Cautionary Statement” below. For the first quarter of 2026, AMD expects revenue to be approximately $9.8 billion, plus or minus $300 million, including approximately $100 million o",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AMD",
+  "cik": 2488,
+  "accession": "0000002488-25-000163",
+  "filingDate": "2025-11-04",
+  "reportDate": "2025-11-04",
+  "acceptanceDateTime_raw": "2025-11-05T02:16:10.000Z",
+  "accepted_ET_index_page": "2025-11-04 16:16:10",
+  "items": "2.02,7.01,9.01",
+  "ex99_files": [
+   "q32025991.htm",
+   "amdq325earningsslidesfin.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "ac0b5a555c38f4e5cf889d6c9359adb3ce2aa151ef6ee1012401d956ddb6a09b",
+  "ex99_saved": "AMD_0000002488-25-000163_q32025991.htm.gz",
+  "n_chars": 34150,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "For the fourth quarter of 2025, AMD expects revenue to be approximately $9.6 billion, plus or minus $300 million."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook AMD’s outlook statements are based on current expectations. The following statements are forward-looking and actual results could differ materially depending on market conditions and the factors set forth under “Cautionary Statement” below. For the fourth quarter of 2025, AMD expects revenue to be approximately $9.6 billion, plus or minus $300 million. At the mid-point of the revenue range",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MU",
+  "cik": 723125,
+  "accession": "0000723125-26-000018",
+  "filingDate": "2026-09-30",
+  "reportDate": "2026-09-30",
+  "acceptanceDateTime_raw": "2026-10-01T00:02:22.000Z",
+  "accepted_ET_index_page": "2026-09-30 16:02:22",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2026q4ex991-pressrelease.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "fdb50894b285c2deeaf574039e73ef6d56b697095ebc4b3838f925ce5c2ba0c4",
+  "ex99_saved": "MU_0000723125-26-000018_a2026q4ex991-pressrelease.htm.gz",
+  "n_chars": 18826,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Business Outlook The following table presents Micron’s guidance for the first quarter of 2027: FQ1-27 GAAP (1) Outlook Non-GAAP (2) Outlook Revenue $61.5 billion ± $1.5 billion $61.5 billion ± $1.5 billion Gross margin Approximately 85.95% Approximately 86.25% Operating expenses Approximately $2.31 billion Approximately $2.06 billion Diluted earnings per share $37.84 ± $1.00 $38.15 ± $1.00 Further",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MU",
+  "cik": 723125,
+  "accession": "0000723125-26-000013",
+  "filingDate": "2026-06-24",
+  "reportDate": "2026-06-24",
+  "acceptanceDateTime_raw": "2026-06-25T00:02:01.000Z",
+  "accepted_ET_index_page": "2026-06-24 16:02:01",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2026q3ex991-pressrelease.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "2354de5dd4c6d2b286e648f3cac1d13c0a5d1b137fad9952a4801415c123994d",
+  "ex99_saved": "MU_0000723125-26-000013_a2026q3ex991-pressrelease.htm.gz",
+  "n_chars": 17661,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Business Outlook The following table presents Micron’s guidance for the fourth quarter of 2026: FQ4-26 GAAP (1) Outlook Non-GAAP (2) Outlook Revenue $50.0 billion ± $1.0 billion $50.0 billion ± $1.0 billion Gross margin Approximately 86% Approximately 86% Operating expenses Approximately $1.86 billion Approximately $1.65 billion Diluted earnings per share $30.73 ± $1.00 $31.00 ± $1.00 Further info",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MU",
+  "cik": 723125,
+  "accession": "0000723125-26-000004",
+  "filingDate": "2026-03-18",
+  "reportDate": "2026-03-18",
+  "acceptanceDateTime_raw": "2026-03-19T00:02:14.000Z",
+  "accepted_ET_index_page": "2026-03-18 16:02:14",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2026q2ex991-pressrelease.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "bf6c32693a78581d24c1571fb0d42448fe246901a6ec5cd6e1bfff30f2fdf178",
+  "ex99_saved": "MU_0000723125-26-000004_a2026q2ex991-pressrelease.htm.gz",
+  "n_chars": 16483,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 3,
+  "outlook_block_sample": "Business Outlook The following table presents Micron’s guidance for the third quarter of 2026: FQ3-26 GAAP (1) Outlook Non-GAAP (2) Outlook Revenue $33.5 billion ± $750 million $33.5 billion ± $750 million Gross margin Approximately 81% Approximately 81% Operating expenses Approximately $1.60 billion Approximately $1.40 billion Diluted earnings per share $18.90 ± $0.40 $19.15 ± $0.40 Further infor",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "MU",
+  "cik": 723125,
+  "accession": "0000723125-25-000044",
+  "filingDate": "2025-12-17",
+  "reportDate": "2025-12-17",
+  "acceptanceDateTime_raw": "2025-12-18T02:03:26.000Z",
+  "accepted_ET_index_page": "2025-12-17 16:03:26",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a2026q1ex991-pressrelease.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "11ca54091870ca0322b0e64cb39166770ade3722f051d49b7a02c0c4d35f27d9",
+  "ex99_saved": "MU_0000723125-25-000044_a2026q1ex991-pressrelease.htm.gz",
+  "n_chars": 15976,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 3,
+  "outlook_block_sample": "Business Outlook The following table presents Micron’s guidance for the second quarter of 2026: FQ2-26 GAAP (1) Outlook Non-GAAP (2) Outlook Revenue $18.70 billion ± $400 million $18.70 billion ± $400 million Gross margin 67.0% ± 1.0% 68.0% ± 1.0% Operating expenses $1.56 billion ± $20 million $1.38 billion ± $20 million Diluted earnings per share $8.19 ± $0.20 $8.42 ± $0.20 Further information re",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "TSLA",
+  "cik": 1318605,
+  "accession": "0001628280-26-064366",
+  "filingDate": "2026-10-02",
+  "reportDate": "2026-10-02",
+  "acceptanceDateTime_raw": "2026-10-02T17:04:26.000Z",
+  "accepted_ET_index_page": "2026-10-02 09:04:26",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "exhibit991111111.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "ae556135944f50f21b184f5f6d460469cd11c66f2d1d0a15bb9546249581ea56",
+  "ex99_saved": "TSLA_0001628280-26-064366_exhibit991111111.htm.gz",
+  "n_chars": 2079,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "TSLA",
+  "cik": 1318605,
+  "accession": "0001628280-26-049213",
+  "filingDate": "2026-07-22",
+  "reportDate": "2026-07-22",
+  "acceptanceDateTime_raw": "2026-07-23T00:35:52.000Z",
+  "accepted_ET_index_page": "2026-07-22 16:35:52",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "exhibit991.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "a2e832f644d98aeb0c279fb6adeca3ebd16f20c482a4401a4cf9b54af438b88d",
+  "ex99_saved": "TSLA_0001628280-26-049213_exhibit991.htm.gz",
+  "n_chars": 41681,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook 10 Photos & Charts 11 Key Metrics 23 Financial Statements 26 Additional Information 32 2 S U M M A R YH I G H L I G H T S (1) Refer to the Reconciliation of GAAP to Non–GAAP Financial Information slide (2) Free cash flow = operating cash flow less capex; (3) Includes cash, cash equivalents and short-term investments; (4)Active driver supervision required; does not make the vehicle autonomo",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "TSLA",
+  "cik": 1318605,
+  "accession": "0001628280-26-046717",
+  "filingDate": "2026-07-02",
+  "reportDate": "2026-07-02",
+  "acceptanceDateTime_raw": "2026-07-02T17:01:26.000Z",
+  "accepted_ET_index_page": "2026-07-02 09:01:26",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "exhibit99111111.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "2339eff0b68009d9f74a6123903e210312d87de2f0c9b08f2082beec3479c91e",
+  "ex99_saved": "TSLA_0001628280-26-046717_exhibit99111111.htm.gz",
+  "n_chars": 1983,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "TSLA",
+  "cik": 1318605,
+  "accession": "0001628280-26-026551",
+  "filingDate": "2026-04-22",
+  "reportDate": "2026-04-22",
+  "acceptanceDateTime_raw": "2026-04-23T00:10:44.000Z",
+  "accepted_ET_index_page": "2026-04-22 16:10:44",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "exhibit991.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "be7677bae061025d74124bb7ca658c12a1196e4516cd8f2ab6b2e2dc2f5b53a9",
+  "ex99_saved": "TSLA_0001628280-26-026551_exhibit991.htm.gz",
+  "n_chars": 40106,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "FX impact1), inclusive of mix impact + increase in energy one-time benefits related to tariffs + positive FX impact of $0.2B1 + higher automotive ancillary sales, primarily driven by an increase in FSD sales and subscriptions + lower average cost per vehicle d"
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook 10 Photos & Charts 11 Key Metrics 21 Financial Statements 24 Additional Information 30 2 S U M M A R YH I G H L I G H T S (1) Excludes SBC (stock-based compensation) & Digital assets gains and losses, net of tax; (2) Free cash flow = operating cash flow less capex; (3) Includes cash, cash equivalents and short-term investments; (4)Active driver supervision required; does not make the vehic",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AVGO",
+  "cik": 1730168,
+  "accession": "0001730168-26-000076",
+  "filingDate": "2026-09-02",
+  "reportDate": "2026-09-02",
+  "acceptanceDateTime_raw": "2026-09-02T20:26:04.000Z",
+  "accepted_ET_index_page": "2026-09-02 16:26:04",
+  "items": "2.02,8.01,9.01",
+  "ex99_files": [
+   "avgo-08022026x8kxex99.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "e652a014c5f40a26c6562859bf58d8be2916eda864f383b23f09d2879670dfc8",
+  "ex99_saved": "AVGO_0001730168-26-000076_avgo-08022026x8kxex99.htm.gz",
+  "n_chars": 23160,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "Non-GAAP diluted EPS of $3.32 for the third quarter • Cash from operations of $14.2 billion for the third quarter, less capital expenditures of $0.5 billion, resulted in $13.7 billion of free cash flow, or 46 percent of revenue • Quarterly common stock dividen",
+   "Q3 AI semiconductor revenue of $16.7 billion grew 221% year-over-year, and 54% quarter-over-quarter,” said Hock Tan, President and CEO of Broadcom Inc. “In Q4 the momentum continues, and we expect AI semiconductor revenue to accelerate to $21.7 billion, up 236",
+   "Fourth Quarter Fiscal Year 2026 Business Outlook Based on current business trends and conditions, the outlook for the fourth quarter of fiscal year 2026, ending November 1, 2026, is expected to be as follows: • Fourth quarter revenue guidance of approximately "
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Business Outlook Based on current business trends and conditions, the outlook for the fourth quarter of fiscal year 2026, ending November 1, 2026, is expected to be as follows: • Fourth quarter revenue guidance of approximately $34.8 billion; • Fourth quarter non-GAAP operating income guidance of approximately 66 percent of projected revenue. The guidance provided above is only an estimate of what",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AVGO",
+  "cik": 1730168,
+  "accession": "0001730168-26-000051",
+  "filingDate": "2026-06-03",
+  "reportDate": "2026-06-03",
+  "acceptanceDateTime_raw": "2026-06-03T20:21:35.000Z",
+  "accepted_ET_index_page": "2026-06-03 16:21:35",
+  "items": "2.02,8.01,9.01",
+  "ex99_files": [
+   "avgo-05032026x8kxex99.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "7f2bdd4438cbd62602e58867ddf6e3d3b8f812be19af9f3aef869ff8395ce376",
+  "ex99_saved": "AVGO_0001730168-26-000051_avgo-05032026x8kxex99.htm.gz",
+  "n_chars": 24131,
+  "n_guidance_sentences": 4,
+  "guidance_snippets": [
+   "Q2 semiconductor revenue from AI of $10.8 billion grew 143% year-over-year, above our forecast, driven by increasing demand for custom AI accelerators and AI networking,” said Hock Tan, President and CEO of Broadcom Inc. “The momentum continues and in Q3 we ex",
+   "Third Quarter Fiscal Year 2026 Business Outlook Based on current business trends and conditions, the outlook for the third quarter of fiscal year 2026, ending August 2, 2026, is expected to be as follows: • Third quarter revenue guidance of approximately $29.4",
+   "• Third quarter non-GAAP operating income guidance of approximately 67 percent of projected revenue;"
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Business Outlook Based on current business trends and conditions, the outlook for the third quarter of fiscal year 2026, ending August 2, 2026, is expected to be as follows: • Third quarter revenue guidance of approximately $29.4 billion; • Third quarter non-GAAP operating income guidance of approximately 67 percent of projected revenue; • Third quarter Adjusted EBITDA guidance of approximately 68",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AVGO",
+  "cik": 1730168,
+  "accession": "0001730168-26-000011",
+  "filingDate": "2026-03-04",
+  "reportDate": "2026-03-04",
+  "acceptanceDateTime_raw": "2026-03-04T21:16:10.000Z",
+  "accepted_ET_index_page": "2026-03-04 16:16:10",
+  "items": "2.02,8.01,9.01",
+  "ex99_files": [
+   "avgo-02012026x8kxex99.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "b5c21f6bec782156160a941443287477f11c1c78ececdca95b5d5606fe870b19",
+  "ex99_saved": "AVGO_0001730168-26-000011_avgo-02012026x8kxex99.htm.gz",
+  "n_chars": 23705,
+  "n_guidance_sentences": 2,
+  "guidance_snippets": [
+   "Q1 AI revenue of $8.4 billion grew 106% year-over-year, above our forecast, driven by robust demand for custom AI accelerators and AI networking,” said Hock Tan, President and CEO of Broadcom Inc. “Our AI revenue growth is accelerating, and we expect AI semico",
+   "Second Quarter Fiscal Year 2026 Business Outlook Based on current business trends and conditions, the outlook for the second quarter of fiscal year 2026, ending May 3, 2026, is expected to be as follows: • Second quarter revenue guidance of approximately $22.0"
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Business Outlook Based on current business trends and conditions, the outlook for the second quarter of fiscal year 2026, ending May 3, 2026, is expected to be as follows: • Second quarter revenue guidance of approximately $22.0 billion; and • Second quarter Adjusted EBITDA guidance of approximately 68 percent of projected revenue. The guidance provided above is only an estimate of what the Compan",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "AVGO",
+  "cik": 1730168,
+  "accession": "0001730168-25-000116",
+  "filingDate": "2025-12-11",
+  "reportDate": "2025-12-11",
+  "acceptanceDateTime_raw": "2025-12-11T21:17:37.000Z",
+  "accepted_ET_index_page": "2025-12-11 16:17:37",
+  "items": "2.02,8.01,9.01",
+  "ex99_files": [
+   "avgo-11022025x8kxex99.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1"
+  ],
+  "ex99_sha256": "8b8a6e83d19c413ad514296f6c9b6f5ddbd9f453aba86adf5953aa8419b33d8f",
+  "ex99_saved": "AVGO_0001730168-25-000116_avgo-11022025x8kxex99.htm.gz",
+  "n_chars": 26610,
+  "n_guidance_sentences": 1,
+  "guidance_snippets": [
+   "We forecast Q1’26 total revenue of $19.1 billion and adjusted EBITDA of 67%.” “In fiscal year 2025 adjusted EBITDA increased 35% year-over-year to a record $43.0 billion, and free cash flow was strong at $26.9 billion,” said Kirsten Spears, CFO of Broadcom Inc"
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Business Outlook Based on current business trends and conditions, the outlook for the first quarter of fiscal year 2026, ending February 1, 2026, is expected to be as follows: • First quarter revenue guidance of approximately $19.1 billion; and • First quarter Adjusted EBITDA guidance of 67 percent of projected revenue. The guidance provided above is only an estimate of what the Company believes i",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "COST",
+  "cik": 909832,
+  "accession": "0000909832-26-000084",
+  "filingDate": "2026-09-24",
+  "reportDate": "2026-09-24",
+  "acceptanceDateTime_raw": "2026-09-25T00:17:37.000Z",
+  "accepted_ET_index_page": "2026-09-24 16:17:37",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "costex9918-k92426.htm",
+   "costex9928-k92426.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "9d5b8b7059b8f803c6ee62463e2e6c5c4f9a1d844f6253f3e61f0cadbf6126cf",
+  "ex99_saved": "COST_0000909832-26-000084_costex9918-k92426.htm.gz",
+  "n_chars": 8708,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "COST",
+  "cik": 909832,
+  "accession": "0000909832-26-000046",
+  "filingDate": "2026-05-28",
+  "reportDate": "2026-05-28",
+  "acceptanceDateTime_raw": "2026-05-29T00:17:32.000Z",
+  "accepted_ET_index_page": "2026-05-28 16:17:32",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "costex9918-k52826.htm",
+   "costex9928-k52826.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "29e6413ac69e39297e4fb12647c82b658403d17fdd0aef741f612e04df0b6f95",
+  "ex99_saved": "COST_0000909832-26-000046_costex9918-k52826.htm.gz",
+  "n_chars": 8405,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "COST",
+  "cik": 909832,
+  "accession": "0000909832-26-000025",
+  "filingDate": "2026-03-05",
+  "reportDate": "2026-03-05",
+  "acceptanceDateTime_raw": "2026-03-06T02:19:07.000Z",
+  "accepted_ET_index_page": "2026-03-05 16:19:07",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "costex9918-k3526.htm",
+   "costex9928-k3526.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "74d2004bd34514fe0c7351f95a7cd2ad220b5a23cd5797b92ef63e85ce81bad0",
+  "ex99_saved": "COST_0000909832-26-000025_costex9918-k3526.htm.gz",
+  "n_chars": 9277,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "COST",
+  "cik": 909832,
+  "accession": "0000909832-25-000164",
+  "filingDate": "2025-12-11",
+  "reportDate": "2025-12-11",
+  "acceptanceDateTime_raw": "2025-12-12T02:22:04.000Z",
+  "accepted_ET_index_page": "2025-12-11 16:22:04",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "costex9918-k121125.htm",
+   "costex9928-k121125.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "60babd5f5ad82465364ef7570410ba6eb54c1c38c4d32926a11dac281537b3d8",
+  "ex99_saved": "COST_0000909832-25-000164_costex9918-k121125.htm.gz",
+  "n_chars": 7849,
+  "n_guidance_sentences": 0,
+  "guidance_snippets": [],
+  "n_outlook_blocks_with_numbers": 0,
+  "outlook_block_sample": "",
+  "is_earnings_release": true,
+  "has_outlook_header": false,
+  "mentions_call": true
+ },
+ {
+  "ticker": "UNH",
+  "cik": 731766,
+  "accession": "0000731766-26-000255",
+  "filingDate": "2026-10-13",
+  "reportDate": "2026-10-13",
+  "acceptanceDateTime_raw": "2026-10-13T14:14:45.000Z",
+  "accepted_ET_index_page": "2026-10-13 06:14:45",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "earningsrelease3q26unh.htm",
+   "uhgearnings_q32026vfinal.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "8459d5728f249c10508655b067f59dc4e201763673e740f34eb6935764c89a91",
+  "ex99_saved": "UNH_0000731766-26-000255_earningsrelease3q26unh.htm.gz",
+  "n_chars": 46619,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "Earnings from Operations of $6.6 Billion • Earnings of $4.56 Per Share and Adjusted Earnings of $4.69 Per Share • Cash Flows from Operations Were $5.1 Billion, or 1.2x Net Income • Updated Full Year 2026 Earnings Outlook to At Least $19.50 Per Share;",
+   "The company now expects full year 2026 adjusted net earnings of at least $20.50 per share, incorporating experience through the third quarter 2026.",
+   "• Leading an industrywide effort to standardize prior approval requirements for electronic submissions, with more than 70% of UnitedHealthcare prior approvals expected to be included by the end of 2026."
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook to At Least $19.50 Per Share; Adjusted Earnings of At Least $20.50 Per Share To view this information in a different format, including graphics, published on our website, click here: https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf (October 13, 2026) UnitedHealth Group (NYSE: UNH) today reported third quarter 2026 results and r",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "UNH",
+  "cik": 731766,
+  "accession": "0000731766-26-000191",
+  "filingDate": "2026-07-16",
+  "reportDate": "2026-07-16",
+  "acceptanceDateTime_raw": "2026-07-16T14:00:59.000Z",
+  "accepted_ET_index_page": "2026-07-16 06:00:59",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "earningsrelease2q26_7152.htm",
+   "uhgearnings_q22026vpower.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "a7f6757b083df1adb7756616dc4d315f13403c680e050297ee37ece2e5ae26a6",
+  "ex99_saved": "UNH_0000731766-26-000191_earningsrelease2q26_7152.htm.gz",
+  "n_chars": 48673,
+  "n_guidance_sentences": 3,
+  "guidance_snippets": [
+   "Earnings from Operations of $8.0 Billion • Earnings of $6.04 Per Share and Adjusted Earnings of $6.38 Per Share • Updated Full Year 2026 Earnings Outlook Range to $18.45 to $18.95 Per Share;",
+   "The company now expects full year 2026 adjusted net earnings between $19.50 to $20.00 per share resulting from performance year-to-date and an improved outlook for the remainder of the year.",
+   "• Leading an industry-wide effort to standardize prior approval requirements for electronic submissions, with more than 70% of UnitedHealthcare prior approvals expected to be included by the end of 2026."
+  ],
+  "n_outlook_blocks_with_numbers": 3,
+  "outlook_block_sample": "Outlook Range to $18.45 to $18.95 Per Share; Adjusted Earnings Range of $19.50 to $20.00 Per Share To view this information in a different format, including graphics, published on our website, click here: https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-second-quarter-2026-results.pdf (July 16, 2026) UnitedHealth Group (NYSE: UNH) today reported second quarter 2026 ",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "UNH",
+  "cik": 731766,
+  "accession": "0000731766-26-000121",
+  "filingDate": "2026-04-21",
+  "reportDate": "2026-04-21",
+  "acceptanceDateTime_raw": "2026-04-21T14:02:24.000Z",
+  "accepted_ET_index_page": "2026-04-21 06:02:24",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "earningsrelease1q26press.htm",
+   "uhgearningsreleaseq12026.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "c5b0015fffb770f6d3dcd27b57b9008ab22ff7985f4100258dcb19ef09fcd233",
+  "ex99_saved": "UNH_0000731766-26-000121_earningsrelease1q26press.htm.gz",
+  "n_chars": 44900,
+  "n_guidance_sentences": 6,
+  "guidance_snippets": [
+   "EX-99.1 2 earningsrelease1q26press.htm EX-99.1 earningsrelease1q26press Page 1 of 16 UnitedHealth Group Reports First Quarter 2026 Results • First Quarter 2026 Revenues of $111.7 Billion Grew 2% Year-over-Year • Earnings of $6.90 Per Share and Adjusted Earning",
+   "The company expects full year 2026 adjusted net earnings of greater than $18.25 per share.",
+   "UnitedHealth Group also completed the sale of the Optum UK Page 2 of 16 business, with $400 million in net proceeds committed to the United Health Foundation, and entered into an arrangement to buy back at least $2 billion of its common stock, which it expects"
+  ],
+  "n_outlook_blocks_with_numbers": 1,
+  "outlook_block_sample": "Outlook Raised to Greater Than $17.35 Per Share; Adjusted Earnings of Greater Than $18.25 Per Share To view this information in a different format, including graphics, published on our website, click here: https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-first-quarter-2026-results.pdf (April 21, 2026) UnitedHealth Group (NYSE: UNH) today reported first quarter 2026 ",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ },
+ {
+  "ticker": "UNH",
+  "cik": 731766,
+  "accession": "0000731766-26-000025",
+  "filingDate": "2026-01-27",
+  "reportDate": "2026-01-27",
+  "acceptanceDateTime_raw": "2026-01-27T16:02:29.000Z",
+  "accepted_ET_index_page": "2026-01-27 06:02:29",
+  "items": "2.02,9.01",
+  "ex99_files": [
+   "a991unherq42025.htm",
+   "q42025er992.htm"
+  ],
+  "ex99_types": [
+   "EX-99.1",
+   "EX-99.2"
+  ],
+  "ex99_sha256": "6b15a1814f8b6d75688ceb9ae020bc100f710219cd22a870f19014a1ad1ec289",
+  "ex99_saved": "UNH_0000731766-26-000025_a991unherq42025.htm.gz",
+  "n_chars": 60764,
+  "n_guidance_sentences": 10,
+  "guidance_snippets": [
+   "EX-99.1 2 a991unherq42025.htm EX-99.1 a991unherq42025 Page 1 of 21 UnitedHealth Group Reports 2025 Results and Issues 2026 Outlook • Full Year 2025 Revenues of $447.6 Billion Grew 12% Year-Over-Year;",
+   "Adjusted Earnings of $16.35 Per Share • Full Year 2026 Revenue Outlook Greater Than $439.0 Billion;",
+   "Adjusted Earnings Greater Than $17.75 Per Share To view this information in a different format, including graphics, published on our website, click here: https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2025/unh-reports-2025-results-and-issues-2"
+  ],
+  "n_outlook_blocks_with_numbers": 9,
+  "outlook_block_sample": "Outlook • Full Year 2025 Revenues of $447.6 Billion Grew 12% Year-Over-Year; Earnings of $13.23 Per Share; Adjusted Earnings of $16.35 Per Share • Full Year 2026 Revenue Outlook Greater Than $439.0 Billion; Earnings Outlook Greater Than $17.10 Per Share; Adjusted Earnings Greater Than $17.75 Per Share To view this information in a different format, including graphics, published on our website, cli",
+  "is_earnings_release": true,
+  "has_outlook_header": true,
+  "mentions_call": true
+ }
+]

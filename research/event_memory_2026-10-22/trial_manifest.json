@@ -1,0 +1,163 @@
+{
+ "title": "event_memory 試驗清單 v0.1",
+ "version": "0.1",
+ "created_tw": "2026-10-22 01:40:00",
+ "note": "E0–E5 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
+ "inputs_sha256": {
+  "walk7 S7.pkl": "642438a6e10e1e53…",
+  "walk7 daily.pkl.gz(解壓後)": "0a0fd0801c4092c0…(= walk7 daily_manifest.json)",
+  "walk8 ea_events.pkl": "5a0c0d342c43207b…",
+  "fl3_rows.pkl(x2 產生)": "71dda4f7a3dc1bda…",
+  "walk7 pred_M2_real.pkl(x6 用)": "2ba21dd734b069b4…"
+ },
+ "trials": [
+  {
+   "id": "CLAUDE-E0",
+   "date_tw": "2026-10-21",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "事後診斷:波動收縮後大動是不是 ATR20 尺造成的(換 ATR60 / ATR250 / 固定 6%)",
+   "data": "walk7 某檔某天 2016-10 ~ 2026-09(重點 2021–2025)",
+   "script": [
+    "scripts/x1_atr_scale.py",
+    "scripts/x6_overlap.py"
+   ],
+   "output": [
+    "out/x1_atr_scale.json",
+    "out/x6_overlap.json"
+   ],
+   "key_results": "安靜組 ATR20 尺 73.3% vs 62.0%;ATR60 尺 62.0% vs 69.1%;固定 6% 50.6% vs 51.9%;4 個波動數字的買方同一天內 AUC 0.5196(M2 0.516);重疊檢查:M2 扣掉波動模型後殘差 AUC 0.502,兩者合用 0.521",
+   "uses_holdout_H_labels": true,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x1_atr_scale.py": "e87a3a0b393fb007…",
+    "scripts/x6_overlap.py": "55d18ae46cf3adbc…",
+    "out/x1_atr_scale.json": "27248f2f225e36d1…",
+    "out/x6_overlap.json": "d346f0dd5c89c4bc…"
+   },
+   "holdout_note": "全期平均裡含 2026-07 ~ 09(保留季 H)的日子;H 另外至少在 I1、I3–I6、I10、I11 用過(含 Claude 判讀)→ H 只算半新;之後不再看 H 的 FL3"
+  },
+  {
+   "id": "CLAUDE-E1",
+   "date_tw": "2026-10-21",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "開發描述:FL3 基準率、發動日、事件數、群聚、成本",
+   "data": "同上 + walk8 財報事件(反應日用 walk8 的量比規則)",
+   "script": [
+    "scripts/x2_fast_launch.py"
+   ],
+   "output": [
+    "out/x2_fast_launch.json"
+   ],
+   "key_results": "事件窗 FL3_A60 23.6%、A20 21.9%、固定 2% 26.6%;每季中位 446 件;同一事件 5 天 34% 變異在事件間",
+   "uses_holdout_H_labels": true,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x2_fast_launch.py": "3c117ed1b22faf63…",
+    "out/x2_fast_launch.json": "a18d0010a65f4156…"
+   },
+   "holdout_note": "全期平均裡含 2026-07 ~ 09(保留季 H)的日子;H 另外至少在 I1、I3–I6、I10、I11 用過(含 Claude 判讀)→ H 只算半新;之後不再看 H 的 FL3"
+  },
+  {
+   "id": "CLAUDE-E2",
+   "date_tw": "2026-10-21",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "功效錨點:常數 / 第幾天 / R 的 Brier 與群聚標準誤",
+   "data": "訓練 2021 前、測試 2021–2025 事件窗(FL3_A20)",
+   "script": [
+    "scripts/x3_power_anchor.py"
+   ],
+   "output": [
+    "out/x3_power_anchor.json"
+   ],
+   "key_results": "Brier(常數) − Brier(簡化 R) = 0.00795(R 較準);日期群標準誤 0.0012;一季標準誤 0.0055",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x3_power_anchor.py": "6afbc2772ffbfab5…",
+    "out/x3_power_anchor.json": "50e073bef7275492…"
+   }
+  },
+  {
+   "id": "CLAUDE-E3",
+   "date_tw": "2026-10-21",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "可行性:EX-99.1 數字指引與時間戳(不看股價)",
+   "data": "20 檔 × 4 份 8-K 2.02,申報日 2025-08-01 ~ 2026-10-20",
+   "script": [
+    "scripts/p1b_sec_guidance.py"
+   ],
+   "output": [
+    "out/p1_sec_guidance.json"
+   ],
+   "key_results": "JSON acceptanceDateTime 17 / 20 家錯 4 / 5 小時;77 份財報 盤前 28、盤後 49、盤中 0(另 3 份不是財報);像指引的句子 50 / 80,但誤抓很多",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/p1b_sec_guidance.py": "7f5398cdb46fbd40…",
+    "out/p1_sec_guidance.json": "23df68e52288b896…"
+   }
+  },
+  {
+   "id": "CLAUDE-E4",
+   "date_tw": "2026-10-21",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "答案重算 + 虛無模擬(B、C 同分布,真差 0)",
+   "data": "2021–2025 事件窗(FL3_A60、FL3_A20)",
+   "script": [
+    "scripts/x4_checks.py"
+   ],
+   "output": [
+    "out/x4_checks.json"
+   ],
+   "key_results": "重算 0 / 5,000 不符;不分群 t 誤報 31–36%,日期群 5–8%,翻轉 4–8%",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x4_checks.py": "c122ff023d6cdea8…",
+    "out/x4_checks.json": "af8e4716412fb934…"
+   }
+  },
+  {
+   "id": "CLAUDE-E5",
+   "date_tw": "2026-10-21",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "事後檢查:網站 R8(5 天急跌)/ R4(RSI < 30)換尺 + 扣同日平均",
+   "data": "walk7 某檔某天 2016-10 ~ 2026-09",
+   "script": [
+    "scripts/x5_rule_ruler.py",
+    "scripts/x5b_r8_years.py"
+   ],
+   "output": [
+    "out/x5_rule_ruler.json",
+    "out/x5b_r8_years.json"
+   ],
+   "key_results": "R8 2021–2025 扣同日平均 +0.26%(10 天),全期 −0.47%,11 年 8 年負;R4 換尺一樣、+0.13%;扣掉 2020 約 −0.1%",
+   "uses_holdout_H_labels": true,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x5_rule_ruler.py": "a829f8c754a92f1c…",
+    "scripts/x5b_r8_years.py": "ab7e179414501480…",
+    "out/x5_rule_ruler.json": "182b6e050fd857a1…",
+    "out/x5b_r8_years.json": "9ba3209cd3482390…"
+   },
+   "holdout_note": "全期平均裡含 2026-07 ~ 09(保留季 H)的日子;H 另外至少在 I1、I3–I6、I10、I11 用過(含 Claude 判讀)→ H 只算半新;之後不再看 H 的 FL3"
+  }
+ ],
+ "planned": [
+  {
+   "id": "PLAN-P0",
+   "what": "試做一輪(one_day_example):2025 年隨機 8 個財報日 × 每天 4 件 = 32 件,只做 d0;A / B / C + 32 份抽取 + 示範起始記憶約 200 張",
+   "status": "等使用者同意判讀成本(約 300–350 萬 tokens)"
+  },
+  {
+   "id": "PLAN-H1",
+   "what": "保留季 H(反應日 2026-07-01 ~ 09-30,半新)正式評分:Δ = Brier(B) − Brier(C)",
+   "status": "凍結後才做"
+  },
+  {
+   "id": "PLAN-F1",
+   "what": "往前段 F(凍結後公布的財報)確認",
+   "status": "依停止規則"
+  }
+ ]
+}

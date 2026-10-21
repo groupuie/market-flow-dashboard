@@ -1,0 +1,342 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "event_memory/case_schema.json",
+ "title": "成熟案例卡 v0.1(草案)",
+ "description": "一個財報事件一張;r+10 收盤(d0 的 10 天結果也成熟)之後才寫。C 組只能取 usable_from ≤ 決定時間的卡。",
+ "type": "object",
+ "required": [
+  "schema_version",
+  "case_id",
+  "sym",
+  "accession",
+  "event_available_at",
+  "reaction_date",
+  "decision_dates",
+  "features_d0",
+  "event_summary",
+  "outcomes",
+  "lesson",
+  "tags",
+  "matured_at",
+  "usable_from",
+  "written_at",
+  "writer_model",
+  "prompt_sha256"
+ ],
+ "properties": {
+  "schema_version": {
+   "const": "0.1"
+  },
+  "case_id": {
+   "type": "string",
+   "description": "{sym}_{accession}"
+  },
+  "sym": {
+   "type": "string"
+  },
+  "cik": {
+   "type": "integer"
+  },
+  "accession": {
+   "type": "string"
+  },
+  "event_available_at": {
+   "type": "string",
+   "format": "date-time",
+   "description": "索引頁 Accepted(美東)換成 UTC"
+  },
+  "reaction_date": {
+   "type": "string",
+   "format": "date"
+  },
+  "decision_dates": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "format": "date"
+   },
+   "minItems": 5,
+   "maxItems": 5
+  },
+  "features_d0": {
+   "type": "object",
+   "description": "d0 收盤時 R 用的數字特徵(同名同單位)",
+   "additionalProperties": {
+    "type": [
+     "number",
+     "null"
+    ]
+   }
+  },
+  "event_summary": {
+   "$ref": "#/$defs/event_summary"
+  },
+  "judgments": {
+   "type": "array",
+   "description": "選填:當時 B / C 的判讀(起始記憶沒有)",
+   "items": {
+    "type": "object",
+    "properties": {
+     "k": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+     },
+     "group": {
+      "enum": [
+       "B",
+       "C"
+      ]
+     },
+     "p_launch": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "action": {
+      "enum": [
+       "buy_now",
+       "wait",
+       "abandon"
+      ]
+     }
+    },
+    "required": [
+     "k",
+     "group",
+     "p_launch",
+     "action"
+    ]
+   }
+  },
+  "outcomes": {
+   "type": "object",
+   "required": [
+    "FL3_A60",
+    "FL3_A20",
+    "FL3_FIX2"
+   ],
+   "properties": {
+    "FL3_A60": {
+     "$ref": "#/$defs/five01"
+    },
+    "FL3_A20": {
+     "$ref": "#/$defs/five01"
+    },
+    "FL3_FIX2": {
+     "$ref": "#/$defs/five01"
+    },
+    "mae10_d0_pct": {
+     "type": "number"
+    },
+    "ret10_d0_pct": {
+     "type": "number"
+    },
+    "stuck_d0": {
+     "type": "boolean",
+     "description": "t+10 收盤 < e"
+    }
+   }
+  },
+  "lesson": {
+   "type": "string",
+   "maxLength": 40,
+   "description": "一句教訓(中文 ≤ 40 字);只能用 matured_at 之前就有的資訊"
+  },
+  "tags": {
+   "type": "array",
+   "items": {
+    "enum": [
+     "guidance_up",
+     "guidance_down",
+     "guidance_flat",
+     "guidance_none",
+     "gap_big_up",
+     "gap_up",
+     "gap_small",
+     "gap_down",
+     "gap_big_down",
+     "pre_market",
+     "after_close"
+    ]
+   }
+  },
+  "matured_at": {
+   "type": "string",
+   "format": "date-time",
+   "description": "r+10 收盤(d0 的 10 天結果也成熟;FL3 各天在 r+7 收盤前就成熟)"
+  },
+  "usable_from": {
+   "type": "string",
+   "format": "date-time",
+   "description": "matured_at 的下一個交易日收盤(16:00 ET);C 只能用 usable_from ≤ 決定時間的卡"
+  },
+  "written_at": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "writer_model": {
+   "type": "string"
+  },
+  "prompt_sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  }
+ },
+ "$defs": {
+  "five01": {
+   "type": "array",
+   "items": {
+    "enum": [
+     0,
+     1,
+     null
+    ]
+   },
+   "minItems": 5,
+   "maxItems": 5,
+   "description": "d0..d4;缺資料 = null"
+  },
+  "evidence": {
+   "type": "object",
+   "required": [
+    "quote",
+    "start",
+    "end"
+   ],
+   "properties": {
+    "quote": {
+     "type": "string",
+     "maxLength": 300
+    },
+    "start": {
+     "type": "integer"
+    },
+    "end": {
+     "type": "integer"
+    }
+   }
+  },
+  "event_summary": {
+   "type": "object",
+   "required": [
+    "source_sha256",
+    "revenue",
+    "eps",
+    "guidance",
+    "highlights"
+   ],
+   "properties": {
+    "source_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$",
+     "description": "EX-99.1 原檔指紋"
+    },
+    "revenue": {
+     "type": [
+      "object",
+      "null"
+     ],
+     "properties": {
+      "value": {
+       "type": "number"
+      },
+      "unit": {
+       "type": "string"
+      },
+      "yoy_pct": {
+       "type": [
+        "number",
+        "null"
+       ]
+      },
+      "evidence": {
+       "$ref": "#/$defs/evidence"
+      }
+     }
+    },
+    "eps": {
+     "type": [
+      "object",
+      "null"
+     ],
+     "properties": {
+      "value": {
+       "type": "number"
+      },
+      "basis": {
+       "enum": [
+        "GAAP",
+        "non-GAAP",
+        "unknown"
+       ]
+      },
+      "yoy_pct": {
+       "type": [
+        "number",
+        "null"
+       ]
+      },
+      "evidence": {
+       "$ref": "#/$defs/evidence"
+      }
+     }
+    },
+    "guidance": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": [
+       "metric",
+       "period",
+       "evidence"
+      ],
+      "properties": {
+       "metric": {
+        "type": "string"
+       },
+       "period": {
+        "type": "string"
+       },
+       "low": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "high": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "unit": {
+        "type": "string"
+       },
+       "vs_prior": {
+        "enum": [
+         "raised",
+         "lowered",
+         "maintained",
+         "new",
+         "unknown"
+        ]
+       },
+       "evidence": {
+        "$ref": "#/$defs/evidence"
+       }
+      }
+     }
+    },
+    "highlights": {
+     "type": "array",
+     "maxItems": 5,
+     "items": {
+      "type": "string",
+      "maxLength": 80
+     }
+    }
+   }
+  }
+ }
+}
