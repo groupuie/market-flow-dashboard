@@ -95,7 +95,7 @@ if TAG in ("real", "check"):
             n1 = h[y].sum(); n0 = len(h) - n1
             if n1 and n0:
                 r = stats.rankdata(h[x]); U += r[h[y].values == 1].sum() - n1 * (n1 + 1) / 2; W += n1 * n0
-        return round(U / W, 4) if W else None
+        return round(float(U / W), 4) if W else None   # float():修正 JSON 輸出型別(登記後的修正,不影響數字)
 
     def quint(df, x, y="ex20"):
         g = df[[x, y, "month"]].dropna(); g["q"] = g.groupby("month")[x].transform(lambda s: pd.qcut(s.rank(method="first"), 5, labels=False) if len(s) >= 10 else np.nan)
