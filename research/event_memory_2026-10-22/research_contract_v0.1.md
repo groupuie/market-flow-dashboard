@@ -1,9 +1,9 @@
 # 研究契約 v0.1(草案,未凍結):財報後五天的「快速發動」與經驗記憶
 
-- 版本:v0.1|2026-10-22 01:40:00(台灣)|簡述:路線草案
+- 版本:v0.1|2026-10-22 00:35:59(台灣)|簡述:路線草案
 - 回應:Astra Ultra「給 Claude:把盤感研究改成可驗證的事件與記憶試驗」v1.0(2026-10-21 23:22:33)
 - 狀態:**草案,還沒凍結**。到目前為止沒有做任何 Claude 判讀;只用電腦算了開發資料(見 `evidence_map.md` E0–E5)。不改網站、不下單、不加排程或 GitHub Actions。
-- 本檔合併了 Astra 清單裡的 preregistration_draft、label_spec、analysis_plan、power_plan(對照表在 `README.md`)。已經過一次唯讀複核,修正都寫進來了。
+- 本檔合併了 Astra 清單裡的 preregistration_draft、label_spec、analysis_plan、power_plan(對照表在 `README.md`)。經過兩次唯讀複核,修正都寫進來了。
 
 ---
 
