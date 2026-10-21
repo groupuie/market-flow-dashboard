@@ -1,5 +1,5 @@
 {
- "tests": 116,
+ "tests": 117,
  "all_pass": true,
  "verifier_sha256": "e54d0bf9332d886b4f9058559648d5b73524d3adfa0ad81282a10143f2718e31",
  "results": [
@@ -227,7 +227,7 @@
     "events": 0,
     "rejected_events": 0,
     "no_signals_evidence": {
-     "prep_commit": "97bdc384c122171453402eaccf76de8bf9c2e054",
+     "prep_commit": "dad41aa652e836366163e6cc226c4bdb1af9547d",
      "remote_received_utc": "2026-10-16T05:30:00Z"
     }
    }
@@ -339,8 +339,8 @@
    "pass": true,
    "proof": {
     "reason": "evidence_cache_differs_from_api",
-    "quarantined_as": "quarantine/run-777.json.20261021T052024Z.bad",
-    "new_sha256": "aa7a5880f3071011bc6a71b449e218a2217339f7d2f25c7b9418f687d9b32aa9"
+    "quarantined_as": "quarantine/run-777.json.20261021T055532Z.bad",
+    "new_sha256": "16d0aebf100f96474c5a263eaddee9a48f8ec8aecc7bbd5900f3f651e611499d"
    }
   },
   {
@@ -363,11 +363,11 @@
    "pass": true,
    "proof": {
     "scripts/astra_data.py": {
-     "loaded_from": "git:9b2096c0dc8636d521da08269329b89957178e5e:scripts/astra_data.py",
+     "loaded_from": "git:be5c372aee23c1a490695762aace835bc9fcde23:scripts/astra_data.py",
      "executed_file_sha256": "506e35f1485b96bfc4795a1a339379b769d905d4fdaccbb27d33a9d331560e0a"
     },
     "scripts/astra_trades.py": {
-     "loaded_from": "git:9b2096c0dc8636d521da08269329b89957178e5e:scripts/astra_trades.py",
+     "loaded_from": "git:be5c372aee23c1a490695762aace835bc9fcde23:scripts/astra_trades.py",
      "executed_file_sha256": "9e325b1ecb191a033cc476db72bc7ebc36956f1b54154e0d8e0571bceb29f5e2"
     }
    }
@@ -728,8 +728,8 @@
    "proof": {
     "stop": "本機收件快取 run-777.json 有問題(evidence_cache_corrupt),GitHub 這次查得到原件 → 這是本機檔",
     "state": {
-     "main": "829b0662c7c438fd05ffbe1948770e1832ad0b99",
-     "ledger": "90739c3561435847a1f169b7bbd77bc143d71613",
+     "main": "3298c6338803f513ab45d75a1d92cbe1a641768d",
+     "ledger": "b5ef5b54d9cc7a4df0c0e2971ad9e3eba8ebc331",
      "registration": [],
      "look": []
     }
@@ -741,12 +741,12 @@
    "proof": {
     "info": {
      "status": "PERSISTED",
-     "look_commit": "34689b89b6510e12e1cc66a6a3c0eff23adfc723",
-     "remote_main": "34689b89b6510e12e1cc66a6a3c0eff23adfc723",
+     "look_commit": "e5b2caf1095103ced167f11b5bc5f5682c3cc394",
+     "remote_main": "e5b2caf1095103ced167f11b5bc5f5682c3cc394",
      "mode": "FIRST",
      "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
-     "registration_commit": "258ab8a5aafac55888486c5ffc46436e865d8e1f",
-     "look_sha256": "a582e628735a2b691e821d25a952e58f654ec8eb7ff9cd0ef2204eec16f81204"
+     "registration_commit": "90c09d9af2910168e2232fb56e9573f86d387c32",
+     "look_sha256": "c305e8c88a47a9c49331e84c4b663cec513288ae2b4eb19e9fd04003a30f2488"
     },
     "eligible": 1,
     "decision": "INSUFFICIENT"
@@ -757,12 +757,12 @@
    "pass": true,
    "proof": {
     "status": "ALREADY_PERSISTED_IDENTICAL",
-    "look_commit": "34689b89b6510e12e1cc66a6a3c0eff23adfc723",
-    "remote_main": "34689b89b6510e12e1cc66a6a3c0eff23adfc723",
+    "look_commit": "e5b2caf1095103ced167f11b5bc5f5682c3cc394",
+    "remote_main": "e5b2caf1095103ced167f11b5bc5f5682c3cc394",
     "mode": "REPLAY",
     "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
-    "registration_commit": "258ab8a5aafac55888486c5ffc46436e865d8e1f",
-    "look_sha256": "a582e628735a2b691e821d25a952e58f654ec8eb7ff9cd0ef2204eec16f81204"
+    "registration_commit": "90c09d9af2910168e2232fb56e9573f86d387c32",
+    "look_sha256": "c305e8c88a47a9c49331e84c4b663cec513288ae2b4eb19e9fd04003a30f2488"
    }
   },
   {
@@ -770,20 +770,20 @@
    "pass": true,
    "proof": {
     "status": "ALREADY_PERSISTED_IDENTICAL",
-    "look_commit": "34689b89b6510e12e1cc66a6a3c0eff23adfc723",
-    "remote_main": "34689b89b6510e12e1cc66a6a3c0eff23adfc723",
+    "look_commit": "e5b2caf1095103ced167f11b5bc5f5682c3cc394",
+    "remote_main": "e5b2caf1095103ced167f11b5bc5f5682c3cc394",
     "mode": "REPLAY",
     "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
-    "registration_commit": "258ab8a5aafac55888486c5ffc46436e865d8e1f",
-    "look_sha256": "a582e628735a2b691e821d25a952e58f654ec8eb7ff9cd0ef2204eec16f81204"
+    "registration_commit": "90c09d9af2910168e2232fb56e9573f86d387c32",
+    "look_sha256": "c305e8c88a47a9c49331e84c4b663cec513288ae2b4eb19e9fd04003a30f2488"
    }
   },
   {
    "name": "new_ledger_data_after_registration_ignored",
    "pass": true,
    "proof": {
-    "L0": "90739c3561",
-    "head": "6ba8fb3058"
+    "L0": "b5ef5b54d9",
+    "head": "9c191b62e4"
    }
   },
   {
@@ -799,7 +799,7 @@
   {
    "name": "registration_without_receipt_stops_no_look",
    "pass": true,
-   "proof": "開跑登記 4188964de4 已送到 GitHub,但還查不到 ledger-receipt 收件紀錄(online)→ 停,沒有寫判定。"
+   "proof": "開跑登記 d76713927e 已送到 GitHub,但還查不到 ledger-receipt 收件紀錄(online)→ 停,沒有寫判定。"
   },
   {
    "name": "look_push_rejected_not_persisted",
@@ -811,12 +811,12 @@
    "pass": true,
    "proof": {
     "status": "PERSISTED",
-    "look_commit": "a488a75387f349d888bcc4f4f8d1324899cc77e9",
-    "remote_main": "a488a75387f349d888bcc4f4f8d1324899cc77e9",
+    "look_commit": "646377f0a135c286d6214b243dcdaf14f5980115",
+    "remote_main": "646377f0a135c286d6214b243dcdaf14f5980115",
     "mode": "REPLAY",
     "look_path": "research/ledger_v3/looks/LV3-20261014-S120-C1-L5-none.json",
-    "registration_commit": "4188964de47fe610bcc6b6888a3ca8691fa2a059",
-    "look_sha256": "2cba0094ebaef314cb0b0e66008431a5500999ac26c5fd7c55f2266ff89df028"
+    "registration_commit": "d76713927eafb03ea0f2956216ec306b02e32c0b",
+    "look_sha256": "523669733ef87a0d9856b90735a020733c65fe129f29297a734bad0d0e18b13f"
    }
   },
   {
@@ -889,7 +889,7 @@
    "pass": true,
    "proof": {
     "view": [
-     "50e54db2149a883be230d9467e62f8edf146af6c",
+     "b5d68ee2b7310910512bc143befcb2eb54e13269",
      "2026-10-15T06:00:00Z"
     ],
     "class": [
@@ -906,7 +906,7 @@
    "pass": true,
    "proof": {
     "v2": [
-     "50e54db2149a883be230d9467e62f8edf146af6c",
+     "b5d68ee2b7310910512bc143befcb2eb54e13269",
      "2026-10-15T06:00:00Z"
     ]
    }
@@ -915,7 +915,7 @@
    "name": "dry_run_after_settle_uses_cutoff_view",
    "pass": true,
    "proof": {
-    "commit": "50e54db2149a883be230d9467e62f8edf146af6c",
+    "commit": "b5d68ee2b7310910512bc143befcb2eb54e13269",
     "received_utc": "2026-10-15T06:00:00Z",
     "receipt_run_id": 9000
    }
@@ -942,8 +942,26 @@
    "name": "cutoff_view_api_failure_stops_not_missing",
    "pass": true,
    "proof": {
-    "dry_run": "截止視圖:98d5a60fef 的收件紀錄查不到(api_error)→ 停,不寫判定",
-    "formal": "GitHub API 查詢失敗(runs-for-98d5a60fef70a06ca1ac23d9aa8cdf4b64e"
+    "dry_run": "截止視圖:fca769a58a 的收件紀錄查不到(api_error)→ 停,不寫判定",
+    "formal": "GitHub API 查詢失敗(runs-for-fca769a58adde37d22ecedf423a0d9b8d21"
+   }
+  },
+  {
+   "name": "draft4_counts_late_upload_draft5_does_not",
+   "pass": true,
+   "proof": {
+    "draft4_latest_ledger": {
+     "closed": [
+      "ADI"
+     ],
+     "missing": []
+    },
+    "draft5_cutoff_view": {
+     "closed": [],
+     "missing": [
+      "ADI"
+     ]
+    }
    }
   },
   {
@@ -951,7 +969,7 @@
    "pass": true,
    "proof": {
     "v3": [
-     "ada3ba14c4340f26a5c424ec853a964e090b6b85",
+     "d87ce64ef89bb60edab689150eaf0dfb56e16213",
      "2027-06-21T19:45:00Z"
     ]
    }

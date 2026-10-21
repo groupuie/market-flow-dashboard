@@ -602,6 +602,10 @@ with tempfile.TemporaryDirectory() as td:          # 截止視圖:截止前 1 �
     m2 = must_stop(lambda: V.cutoff_view(X.g, S2, cut, V.Evidence(os.path.join(td, 'd6'), online=True, strict=True)), 'GitHub API 查詢失敗')
     open(DB, 'w').write(good_db)
     ok('cutoff_view_api_failure_stops_not_missing', not m1.startswith(('DID', 'WRONG')) and not m2.startswith(('DID', 'WRONG')), {'dry_run': m1[:60], 'formal': m2[:60]})
+    # §3.2 反例在草案 4 原碼上:同一份資料(截止前 1 秒的本機時間、截止後 2 秒才到 GitHub),截止 + 25 小時判 → 草案 4 照收、草案 5 不算
+    p4, cl4, mi4, *_ = D4.collect(X.g, S2, 'main', cfgD, '2027-06-22', cut + dt.timedelta(hours=25), V.Evidence(os.path.join(td, 'd7'), online=True))
+    ok('draft4_counts_late_upload_draft5_does_not', [k_[2] for k_ in cl4] == ['ADI'] and not mi4 and not cld and [k_[2] for k_ in mid] == ['ADI'],
+       {'draft4_latest_ledger': {'closed': [k_[2] for k_ in cl4], 'missing': [k_[2] for k_ in mi4]}, 'draft5_cutoff_view': {'closed': [k_[2] for k_ in cld], 'missing': [k_[2] for k_ in mid]}})
     add_run(9001, S1, V.ts(cut - dt.timedelta(minutes=15))); v3 = V.cutoff_view(X.g, S2, cut, V.Evidence(os.path.join(td, 'e5'), online=True))
     ok('on_time_upload_included', v3[0] == S1 and classify(v3[0], 'e6') == ('READY', ['ADI'], []), {'v3': v3})
 old_clock = V.clock
