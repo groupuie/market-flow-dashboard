@@ -1,8 +1,8 @@
 {
  "title": "event_memory 試驗清單 v0.1",
- "version": "0.5",
- "created_tw": "2026-10-23 00:15:10",
- "note": "E0–E5 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
+ "version": "0.6",
+ "created_tw": "2026-10-23 00:24:30",
+ "note": "E0–E9b 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
  "inputs_sha256": {
   "walk7 S7.pkl": "642438a6e10e1e53…",
   "walk7 daily.pkl.gz(解壓後)": "0a0fd0801c4092c0…(= walk7 daily_manifest.json)",
@@ -226,6 +226,26 @@
    "sha256": {
     "scripts/x8_pit_trend.py": "ce5fb02986943474…",
     "out/x8_pit_trend.json": "a5e0748323683a4c…"
+   }
+  },
+  {
+   "id": "CLAUDE-E9b",
+   "date_tw": "2026-10-23",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "接 E9:同一套趨勢 / 動能規則用當年名單逐年跑 2017 ~ 2026 上半年,另跑 2017–2023 連續",
+   "data": "walk7 日 K 與每年名單;最晚 2026-06-30(不碰保留季價格)",
+   "script": [
+    "scripts/x8b_pit_trend_years.py"
+   ],
+   "output": [
+    "out/x8b_pit_trend_years.json"
+   ],
+   "key_results": "2017–2023 連續:SPY +137.6%、TSMOM_LONG +99.8%、MOM12_1 +154.5%、名單等權 +117.4%;TSMOM 10 段裡 5 段贏 SPY;2026 上半年 TSMOM +85.7%",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x8b_pit_trend_years.py": "899e2263f476b743…",
+    "out/x8b_pit_trend_years.json": "898b075256a5334a…"
    }
   }
  ],
