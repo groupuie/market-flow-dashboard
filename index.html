@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-21T14:55Z">
+<meta name="build" content="2026-10-22T04:51Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
@@ -526,6 +526,60 @@ html.cpOff #wsxWinSlot,html.cpOff #wsxDestSlot{display:none}
   body.wsxFit #wsxTopSlot .wsxChip{padding:3px 10px;flex:0 0 auto}
 }
 @media (max-width:1359px){.wsxStrip{display:none!important}}
+
+/* ===== v19(2026-10-22 使用者:「K線圖上的說明字精簡,現金池欄精簡,整體視覺統一」)=====
+   ① 整體視覺統一:一套冷灰底色(仿富途牛牛暗色,跟自選股欄同一套)、同樣的面板框(底 --surface、1px --line、圓角 8)、
+      同樣的平面按鈕(底 --surface2、圓角 6、選中 = 藍框淡藍底;取代 v16 的玻璃漸層);圖表底色 = 面板底色(JS 的 C.bg 同步改)。
+   ② 現金池欄精簡:時間視窗只留一排按鈕;長標題、提示句、說明段落藏起來,改放現金池標題列「ⓘ」。
+   ③ K線右上角「ⓘ 圖例」(樣式同「ⓘ 詳情」,只有點了才開)。
+   只改外觀(顯示/顏色/間距),不刪任何元素;具名 id/class 選擇器,無 universal selector(地雷25)。 */
+:root{--bg:#0f1013;--surface:#17181c;--surface2:#1f2125;--line:#2a2c31;--ink2:#c0c3ca;--muted:#80838b;--acc:#3b82f6;--accbg:rgba(59,130,246,.18);--ctl:#2f3238}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue","Segoe UI","Microsoft JhengHei",Arial,sans-serif}
+#sec-chips .wlPane,#sec-chips .wsxP,#sec-chips #wsxCpHead,#sec-chips #wsxLeft .card,#sec-chips .wsxStrip{background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:none}
+#sec-chips .wsxStrip:hover{background:#1c1e23;border-color:rgba(138,180,248,.55)}
+#sec-chips .tab,#sec-chips .wsxChip,#sec-chips .wsxPill,#sec-chips .wsxTab{background:var(--surface2);border:1px solid var(--ctl);border-radius:6px;box-shadow:none;text-shadow:none;color:var(--ink2)}
+#sec-chips .tab.active,#sec-chips .wsxChip.on,#sec-chips .wsxTab.on{background:var(--accbg);border-color:var(--acc);color:#fff;box-shadow:none;text-shadow:none}
+@media(hover:hover){
+  #sec-chips .tab:hover,#sec-chips .wsxChip:hover,#sec-chips .wsxPill:hover{border-color:#4a4e57;color:#fff;box-shadow:none}
+  #sec-chips .tab.active:hover,#sec-chips .wsxChip.on:hover{border-color:#60a5fa}
+}
+#sec-chips #wsxWarn.err{border-color:rgba(248,113,113,.6);color:#fca5a5;background:rgba(248,113,113,.1)}   /* 資料警示膠囊保留紅/黃(上面的平面樣式不能蓋掉) */
+#sec-chips #wsxWarn.warn{border-color:rgba(251,191,36,.55);color:#fcd34d;background:rgba(251,191,36,.08)}
+.idxchip,.fidxchip,.cidxchip,.cidxchip2,.cidxchip3,.cidxchip6,.cidxchip8,.cidxchip9,.cidxchipC,.cidxchipB,.cidxchipQ,.cidxchipA,.ddsym,.ddclose{border-radius:6px!important;box-shadow:none!important}
+#ckLkBtn,#chipFreeBtn,#chipLkBtn,#chipAddBtn,#chipTokBtn{border-radius:6px!important;box-shadow:none!important}
+#chipSym,#chipInput,#addsym,#chipTokIn,#winFrom,#winTo,#optTrendSym,#wlIn{background:var(--surface2)!important;border:1px solid var(--ctl)!important;border-radius:6px!important;box-shadow:none!important}
+#chipSym:focus,#chipInput:focus,#addsym:focus,#chipTokIn:focus,#winFrom:focus,#winTo:focus,#optTrendSym:focus,#wlIn:focus{border-color:var(--acc)!important;box-shadow:none!important}
+#sec-chips .cidxind{background:var(--surface2)!important;border-color:var(--ctl)!important}
+#sec-chips #wsxRail{background:var(--surface);border-color:var(--line);border-radius:8px;box-shadow:none}
+#sec-chips .wsxT th{background:var(--surface)}
+.wsxQL{color:var(--muted)}
+.sbar .sbi{background:linear-gradient(90deg,rgba(23,24,28,0),var(--surface) 12px)}
+#stripPop{background:#1b1d22;border-radius:8px}
+#stripPop .spx{background:#1b1d22}
+#stripPop .lgt{font-weight:700;color:#e6e9ef;margin:0 26px 4px 0}
+#stripPop .lg{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:3px 10px;align-items:baseline}
+#stripPop .lgk{white-space:nowrap}
+#stripPop .lgh{font-size:10.5px;color:var(--muted);margin:8px 0 3px;letter-spacing:.04em}
+#ckLegWrap{position:relative;height:0;z-index:7}
+#ckLegBtn{position:absolute;right:8px;top:6px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;color:#8ab4f8;font-weight:700;font-size:11px;
+  border:1px solid rgba(138,180,248,.55);border-radius:6px;padding:0 7px;line-height:17px;background:rgba(23,24,28,.85);white-space:nowrap}
+#ckLegBtn:hover{background:rgba(138,180,248,.2);color:#c7dbff}
+#ckLegBtn.sbon{background:rgba(138,180,248,.25);color:#e6eeff}
+#cpInfoBtn{color:#8ab4f8;font-size:12.5px}
+#cpInfoBtn.sbon{background:rgba(138,180,248,.25);color:#e6eeff}
+#wsxLeft .card{padding:8px 10px;margin:0 0 8px}
+@media(max-width:680px){#wsxLeft .card{padding:8px 6px}}   /* 手機貼邊(2026-08-08 使用者指定)照舊 */
+#wsxLeft #winCard h2{font-size:0;margin:0;gap:4px!important}
+#wsxLeft #winCard h2>*{font-size:12px}
+#wsxLeft #winnote,#wsxLeft #winCard .note,#wsxLeft #destCard>h2,#wsxLeft #destCard>.note,#wsxLeft #destDrill .ddhint{display:none!important}
+#wsxLeft #winbar{gap:4px!important}
+#wsxLeft #winbar .tab{padding:2px 8px!important;font-size:11.5px!important}
+#wsxLeft #destDrill{min-height:0!important;margin:0 0 4px 2px!important}
+#wsxLeft #idxtoggle{margin:4px 0 0 2px!important;gap:6px!important}
+#wsxLeft #idxtoggle .idxchip{padding:1px 9px!important}
+#wsxLeft #pooloffs{margin:2px 0 0 2px!important;gap:8px!important}
+#wsxLeft #pooloffs>span:first-child{display:none}
+#wsxLeft #pooloffs .offsl{width:74px!important}
 </style>
 </head>
 <body>
@@ -739,7 +793,7 @@ html.cpOff #wsxWinSlot,html.cpOff #wsxDestSlot{display:none}
 <aside id="wsxLeft" class="wsxCol">
   <div class="wsxStrip" data-pan="l" title="展開現金池"><span>«</span><b>現金池</b></div>
   <div class="wsxPanHead" id="wsxCpHead"><span class="t">現金池</span><span class="s">離開股票的錢去了哪</span>
-    <span class="wsxPanBtns"><span class="wsxPanBtn" data-pan="l" title="收起現金池"><i class="dk">»</i><i class="mb">▾</i></span></span></div>
+    <span class="wsxPanBtns"><span class="wsxPanBtn" id="cpInfoBtn" role="button" tabindex="0" title="現金池怎麼看">ⓘ</span><span class="wsxPanBtn" data-pan="l" title="收起現金池"><i class="dk">»</i><i class="mb">▾</i></span></span></div>
   <div id="wsxWinSlot"></div>
   <div id="wsxDestSlot"></div>
 </aside>
@@ -760,6 +814,7 @@ html.cpOff #wsxWinSlot,html.cpOff #wsxDestSlot{display:none}
     <div id="fcstrip" style="display:none"></div>
     <div id="tjstrip" style="display:none"></div>
     <div id="posstrip" style="display:none"></div>
+    <div id="ckLegWrap"><span id="ckLegBtn" role="button" tabindex="0" title="點一下看圖例" style="display:none">ⓘ 圖例</span></div>
     <div id="cockpit" style="height:660px"></div>
   </div>
   <div id="wsxInfoRow">
@@ -834,13 +889,13 @@ html.cpOff #wsxWinSlot,html.cpOff #wsxDestSlot{display:none}
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-21T14:55Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-22T04:51Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
-const C={bg:'#1a1a19',ink:'#fff',ink2:'#c3c2b7',muted:'#898781',line:'#2c2c2a',
+const C={bg:'#17181c',ink:'#fff',ink2:'#c0c3ca',muted:'#80838b',line:'#2a2c31',   // v19(2026-10-22 整體視覺統一):圖底 = 面板底 --surface;原暖灰 #1a1a19/#c3c2b7/#898781/#2c2c2a
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
 // 觸控裝置:關閉 Plotly 拖曳框選縮放/雙擊縮放(單指滑動=捲頁、雙指捏合=瀏覽器原生平滑縮放;搭配 CSS touch-action)
 const TOUCH=(navigator.maxTouchPoints||0)>0||('ontouchstart' in window);
-const PBASE={paper_bgcolor:C.bg,plot_bgcolor:C.bg,font:{color:C.ink,size:11,family:'system-ui,-apple-system,sans-serif'},
+const PBASE={paper_bgcolor:C.bg,plot_bgcolor:C.bg,font:{color:C.ink,size:11,family:'-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue","Segoe UI","Microsoft JhengHei",Arial,sans-serif'},   // v19:字型同自選股欄
   margin:{l:50,r:14,t:8,b:34},...(TOUCH?{dragmode:false}:{})};
 const CFG={displayModeBar:false,responsive:true,...(TOUCH?{doubleClick:false,scrollZoom:false}:{})};
 const fmt=(x,d=2)=>x==null?'–':(+x).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -1118,8 +1173,9 @@ function fmtShares(n){ if(n==null||isNaN(n))return '—';
   return Math.round(n)+'股'; }
 // 佔位訊息:先 purge 既有 Plotly 實例(否則直接覆寫 innerHTML 會殘留 Plotly 狀態,換股後 Plotly.react 失效→卡「載入中」)
 function chartMsg(el,msg,pad){ if(!el)return;
-  try{ if(window.Plotly&&(el._fullLayout||el.data)){Plotly.purge(el);el._vbpBind=0;el._tdzBind=0;} }catch(e){}   // 2026-10-12:purge 會清掉 plotly_relayout 監聽 → 旗標歸零讓下次渲染重掛(原本換股經過「載入中」後,VbP 縮放重分箱與九轉縮放就失效)
-  el.innerHTML='<div class="miss" style="padding:'+(pad||24)+'px">'+msg+'</div>'; }
+  try{ if(window.Plotly&&(el._fullLayout||el.data)){Plotly.purge(el);el._vbpBind=0;el._tdzBind=0;el._legBind=0;} }catch(e){}   // 2026-10-12:purge 會清掉 plotly_relayout 監聽 → 旗標歸零讓下次渲染重掛(原本換股經過「載入中」後,VbP 縮放重分箱與九轉縮放就失效)
+  el.innerHTML='<div class="miss" style="padding:'+(pad||24)+'px">'+msg+'</div>';
+  if(el.id==='cockpit'){try{ckLegSet(null);}catch(_){}} }   // v19:K線區改放訊息時,「ⓘ 圖例」跟著藏
 // 訊息→圖 轉場前清掉佔位訊息:否則訊息 div 殘留在圖下方,溢出固定高容器、疊到下一個區塊的文字上(手機曾見)
 function freshPlot(id){ const e=document.getElementById(id);
   if(e&&e.firstChild&&!e.querySelector('.plot-container'))e.innerHTML=''; return e; }
@@ -1375,7 +1431,7 @@ function spPlace(){
   if(!b.isConnected||!b.offsetParent){spHide();return;}
   const r=b.getBoundingClientRect(),vw=document.documentElement.clientWidth||innerWidth,vh=innerHeight;
   if(r.bottom<0||r.top>vh){spHide();return;}
-  const w=Math.min(660,vw-16); p.style.width=w+'px';
+  const w=Math.min(b._w||660,vw-16); p.style.width=w+'px';   // v19:圖例/現金池說明用較窄的框(b._w)
   p.style.left=Math.min(Math.max(8,r.left),vw-w-8)+'px';
   const below=vh-r.bottom-12, above=r.top-12;
   if(below>=240||below>=above){p.style.top=(r.bottom+4)+'px';p.style.bottom='auto';p.style.maxHeight=Math.max(170,below)+'px';}
@@ -1414,6 +1470,118 @@ function stripSet(host,o){   // host=#fcstrip/#tjstrip/#posstrip;o={bar:一行�
     else spHide();
   }
 }
+// ===== v19(2026-10-22 使用者「K線圖上的說明字精簡」「現金池欄精簡」)=====
+// K線圖上只留短標題(代號 名稱 · 根數);原本整排圖例收進K線右上角「ⓘ 圖例」,現金池的說明收進標題列「ⓘ」。
+// 兩顆都跟「ⓘ 詳情」同一套:只有點了才開(不會滑過就跳出),再點/點外面/✕/Esc 關。圖例只列「現在打開的圖層」。
+function spToggle(b,mk){   // b=錨點元素;mk=產生內容的函式(開的當下才算 → 內容永遠是最新的)
+  const open=SPOP.cur===b&&SPOP.el&&SPOP.el.style.display!=='none';
+  if(open){spHide();return;}
+  if(mk){try{b._pop=mk();}catch(_){}}
+  if(b._pop)spShow(b,true);
+}
+function ckName(s){   // 名稱(自選清單同一份:富途繁中名,沒有就英文名);太長截斷
+  try{const n=window.__wlName?String(window.__wlName(s)||''):''; if(!n||n===s)return '';
+    const t=n.length>16?n.slice(0,15)+'…':n; return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}catch(_){return '';}
+}
+function ckLegPos(){   // 「ⓘ 圖例」對齊K線標題那一行(標題位置隨圖高變,畫完/視窗縮放後重算)
+  const b=document.getElementById('ckLegBtn'),w=document.getElementById('ckLegWrap'),ck=document.getElementById('cockpit'); if(!b||!w||!ck)return;
+  const has=!!(window.__ckLegend&&ck.querySelector('.main-svg'));
+  b.style.display=has?'':'none'; if(!has){if(SPOP.cur===b)spHide();return;}
+  let top=6;
+  try{const a=ck.querySelector('.annotation[data-index="0"]');
+    if(a){const ra=a.getBoundingClientRect(),rw=w.getBoundingClientRect();
+      if(ra.height>0)top=Math.max(0,Math.round(ra.top-rw.top+(ra.height-(b.offsetHeight||19))/2));}}catch(_){}
+  b.style.top=top+'px';
+}
+function ckLegSet(html){
+  window.__ckLegend=html||null;
+  const b=document.getElementById('ckLegBtn'); if(!b)return;
+  b._pop=html||''; b._acc='rgba(138,180,248,.45)'; b._w=460;
+  if(SPOP.cur===b&&SPOP.el&&SPOP.el.style.display!=='none'){   // 開著時圖重畫 → 原地換內容,不關
+    if(html){const st=SPOP.el.scrollTop;spFill(b);SPOP.el.scrollTop=st;spPlace();}else spHide();}
+  ckLegPos();
+}
+function ckLegendHTML(o){   // o=目前圖上有什麼(由 renderCockpit / renderCockpitMax 填);只列有畫出來的
+  const k=(c,t)=>'<b style="color:'+c+'">'+t+'</b>', it=(a,b)=>'<span class="lgk">'+a+'</span><span>'+b+'</span>';
+  const A=[],B=[];
+  if(o.max){
+    A.push(it('全史月K','一根 = 一個月,價格用對數座標'));
+    if(o.tl)A.push(it(k(CPAL.up,'─撐')+' '+k(CPAL.dn,'─壓'),'長期趨勢線;圈 = 以前碰過的點,虛線 + ✂ = 已突破'));
+    if(o.building)A.push(it(k('#f59e0b','建置中'),'全史資料還在補,先用 5 年日K 合成月線'));
+    A.push(it('副圖','全史不顯示(切回 10–250 日才有)'));
+  }else{
+    if(o.pd==='d'&&o.q){
+      A.push(it(k('#fab219','頂K'),'當晚先賣一小部分'),it(k('#fb923c','減碼'),'再賣一部分'),it(k('#f87171','出'),'賣掉大部分'),
+        it(k('#22c55e','抄底'),'分批買'),it(k('#4ade80','買'),'參考,小量'),it(k('#2dd4bf','加'),'穩健上漲中回檔 + 大盤也跌:分兩筆加碼'),
+        it(k(QGRAY,'熱'),'過熱提醒(不是賣)'),it(k(QGRAY,'灰色字'),'較弱(過去不太準)'),it('字後有 ?','盤中暫定,收盤才算'));
+    }else if(o.pd==='d'){
+      A.push(o.shortH?it(k(CPAL.dia,'◇')+' '+k(CPAL.star,'☆'),'上市未滿一年的短史版(沒有回測),只供關注')
+        :it(k(CPAL.dia,'◆減碼')+' '+k(CPAL.star,'★抄底'),'4 項條件有 3 項同時成立;長期回測接近擲硬幣,只當位置參考'));
+    }else A.push(it('量化記號','只在日K顯示'));
+    A.push(it(k(CPAL.tdS,'橘')+' / '+k(CPAL.tdB,'青')+' 數字','TD 賣 / 買計數:數到 9 可能轉折,13 以上更強(沒數到 9 就斷的段不畫)'));
+    if(o.c)A.push(it(k(CPAL.cbot,'C▲')+' '+k(CPAL.ctop,'C▼'),'Claude 參考:吸籌突破 / 極端吸收警戒'));
+    if(o.ai)A.push(it(k('#e6e9ef','AI▲▼'),'模型看圖判讀,只當參考(10/21 研究:沒有比亂猜好)'));
+    if(o.cta)A.push(it(k(CPAL.brake1,'┈CTA'),'四條虛線 = 煞車線:短 50 日、中 100 日、長 200 日、動 63 日;◯ = 碰到 200 日線'));
+    if(o.tl)A.push(it(k(CPAL.up,'─撐')+' '+k(CPAL.dn,'─壓'),'趨勢線(碰過 3 次以上);✂ = 已突破'));
+    if(o.tj)A.push(it(k('#f472b6','技判'),k('#4ade80','買')+' = 進場路徑成立 · '+k('#f87171','出')+' = 波段頂確認 · '+k('#fab219','⚠頂K')+' = 高點警訊'));
+    if(o.fc)A.push(it(k('#22c55e','▲抄底')+' '+k('#f97316','▼減碼'),'個股轉折 × 全球資金氣候;K線底部色帶 '+k('#f87171','紅')+' = 資金緊、'+k('#22c55e','綠')+' = 資金鬆'));
+    if(o.bb)A.push(it(k(CPAL.bbMid,'布林'),'BB(20,2):中線 = 20 日均線,上下 = ±2 倍標準差'));
+    if(o.pat)A.push(it(k('#a78bfa','型態'),'含三角收斂、VCP:✔ = 已確認、… = 還在形成;只是辨識,不是預測'));
+    if(o.vbp)A.push(it(k(CPAL.volHot,'VbP'),'右側灰柱 = 各價位成交量;POC = 量最多的價位'));
+    if(o.fib)A.push(it(k('#facc15','Fib'),'這段最大波段的回撤位'));
+    if(o.vwap)A.push(it(k(CPAL.vwapHi,'aVWAP'),'高錨 / 低錨 = 從最高 / 最低那天起算的量加權均價(用日K近似,不是逐筆)'));
+    if(o.sw==='trade')A.push(it(k(SW_C.bot,'買')+' '+k(SW_C.top,'賣')+' Astra','研究用:一次一筆,每個買配一個賣;'+k(AX_GOLD,'金邊')+' = 那天大盤恐慌;灰色賣 = 轉弱提醒(未驗證)'));
+    else if(o.sw)A.push(it(k(SW_C.bot,'▲底 △回檔')+' '+k(SW_C.top,'▼頂')+' Astra','研究用;'+k(AX_GOLD,'強')+' = 那天大盤恐慌'));
+    if(o.ovl)A.push(it(k(CPAL.idxSpy,'SPY')+' '+k(CPAL.idxQqq,'QQQ')+' 點線','指數換算到這檔的價位(同一天起算);指數「落後」= 這檔比較強、「領先」= 這檔比較弱;「形狀」= 已縮放,只比轉折形狀'));
+    if(o.ins)A.push(it(k('#4ade80','B')+' '+k('#f87171','S'),'內部人買 / 賣(滑過看金額)'));
+    if(o.spot)A.push(it(k('#fbbf24','淡琥珀圓'),'事件或財報日'));
+    if(o.pos)A.push(it('成本 / 回本','你存在這台裝置的持倉'));
+    B.push(it('成交量',k(CPAL.volHot,'琥珀')+' = 爆量(≥ 平常 1.75 倍)'));
+    const IND={rv:k(CPAL.rv,'RVPOS')+' = 近 20 天波動在這檔近兩年的位置,紅帶 ≥ 90 = 波動到頂;'+k(CPAL.rsi,'RSI14')+' = 灰線'+(o.shortH?'(上市未滿一年,樣本短)':''),
+      macd:'MACD(12,26,9):'+k('#38bdf8','DIF')+'、'+k('#fbbf24','DEA')+',柱 = (DIF − DEA) × 2',
+      adx:'ADX(14):'+k('#e6e9ef','ADX')+' > 25 = 趨勢明確;'+k('#4ade80','+DI')+' / '+k('#f87171','−DI'),
+      atr:'ATR(14) 佔股價 % ≈ 每天平均波動',cci:'CCI(20):±100 內 = 常態,超過 ±200 = 極端',
+      stoch:'KD(14,3,3):'+k('#38bdf8','%K')+' / '+k('#fbbf24','%D')+';20 以下超賣、80 以上超買'};
+    const INDK={rv:'RVPOS · RSI',macd:'MACD',adx:'ADX',atr:'ATR',cci:'CCI',stoch:'KD'};   // 左欄 = 圖上那格的標籤
+    B.push(it(INDK[o.ind]||INDK.rv,IND[o.ind]||IND.rv));
+    B.push(it('檔位','CTA 趨勢檔位:+100 = 六檔全咬合(最強),負 = 倒車'));
+    B.push(it('⑦現金池',k(CPAL.poolA,'黃線')+' = 全單累積、'+k(CPAL.poolM,'橘點線')+' = 大單累積;柱 = 當日進出(綠進紅出,另一把尺,滑過看真值)'
+      +(o.fi7?';這檔的資金資料從 '+o.fi7+' 起(回補中)':'')));
+  }
+  return '<div class="lgt">圖例 <span class="spmut" style="font-weight:400">只列現在打開的</span></div>'
+    +'<div class="lg">'+A.join('')+'</div>'+(B.length?'<div class="lgh">副圖(由上到下)</div><div class="lg">'+B.join('')+'</div>':'')
+    +'<div class="spmut" style="margin-top:6px">滑過圖上的字或記號,可看那一次的說明</div>';
+}
+function winShort(){ return WIN.mode==='live'?'即時':WIN.mode==='nd'?('過去 '+WIN.n+' 日'):(String(WIN.from).slice(5)+'→'+String(WIN.to).slice(5)); }
+function cpInfoHTML(){   // 現金池欄「ⓘ」:怎麼看(開的當下才組 → 日檔天數/MMF 狀態永遠是最新的)
+  const k=(c,t)=>'<b style="color:'+c+'">'+t+'</b>', it=(a,b)=>'<span class="lgk">'+a+'</span><span>'+b+'</span>';
+  const nD=(function(){try{return dailyDates().length;}catch(_){return 0;}})();
+  const mmf=(DATA&&DATA.cash_pool&&DATA.cash_pool.mmf)||null;
+  let mm='';
+  if(mmf&&mmf.total_bn){const iso=String(mmf.asof_iso||''), age=iso?(Date.now()-Date.parse(iso+'T00:00:00Z'))/864e5:99;
+    mm=it('MMF','$'+(mmf.total_bn/1000).toFixed(2)+'T('+iso.slice(5)+')'
+      +(age>14?' <span style="color:#fbbf24">停在這天:資料源 ICI 擋掉抓取,之後沒更新</span>':''));}
+  return '<div class="lgt">現金池怎麼看</div><div class="lg">'
+    +it(k('#4ade80','右')+' / '+k('#f87171','左'),'流入(買) / 流出(賣)')
+    +it('深 / 淺','大單(機構) / 散戶')
+    +it(k('#fbbf24','⚡'),'大單和散戶方向相反,常在轉折附近')
+    +it(k('#f59e0b','Σ池'),'上面全部加總:右伸 = 現金去買股(進場)、左伸 = 賣股回池(了結)')
+    +it('期權做多 / 做空','新增未平倉的資金(隔天更新、另一把尺、不算進池)')
+    +it('點長條 / 板塊名','列出那個板塊資金前 10 檔,點代號就換K線;再點一次收起')
+    +it('場內資金',k('#fab219','黃線')+' = 全單累積、'+k('#c2703e','橘虛線')+' = 大單累積;跟 SPY / QQQ 同方向 = 資金確認,價漲但線降 = 小心')
+    +it('SPY↕ QQQ↕','把指數線上下移,方便比形狀')
+    +it('即時 / N 日','今天盤中累計(休市時 = 上一個交易日) / 最近 N 個交易日加總'+(nD?'(已累積 '+nD+' 個交易日)':''))
+    +mm+'</div>'
+    +'<div class="spmut" style="margin-top:6px">方向參考,不是帳務:每筆賣出都有買方;只算得到有觀測的股票。</div>';
+}
+(function(){   // v19:兩顆 ⓘ 只認「點擊 / Enter / 空白鍵」;滑過不開
+  const bind=(b,mk)=>{ if(!b)return;
+    b.addEventListener('click',()=>spToggle(b,mk));
+    b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();spToggle(b,mk);}}); };
+  const lb=document.getElementById('ckLegBtn'); bind(lb,()=>window.__ckLegend||'');
+  const cb=document.getElementById('cpInfoBtn'); if(cb){cb._acc='rgba(245,158,11,.45)';cb._w=400;} bind(cb,cpInfoHTML);
+  let _t=null; window.addEventListener('resize',()=>{clearTimeout(_t);_t=setTimeout(()=>{try{ckLegPos();}catch(_){}},350);});
+})();
 function fcStrip(a){
   const strip=document.getElementById('fcstrip'); if(!strip)return;
   if(a!==undefined)_FCST=a; a=_FCST;
@@ -2644,7 +2812,7 @@ function renderCockpitMax(el,MB){
     chartMsg(el,'全史月K'+(CHIPKM[CHIP_SYM+'_none']?'建置中(Mac 每月盤後自動抓取;日K亦不足以聚合)…':'載入中…'));return;}
   el.style.height=MB?'560px':'640px';
   const R=bars.map(b=>({d:b[0],o:+b[1],h:+b[2],l:+b[3],c:+b[4],v:+(b[5]||0)}));
-  const sig='max:'+CHIP_SYM+':'+R.length+':'+R[R.length-1].c+(building?':b':'')+(MB?':m':':d')+(CHIP_TL?':t1':':t0');
+  const sig='max:'+CHIP_SYM+':'+R.length+':'+R[R.length-1].c+(building?':b':'')+(MB?':m':':d')+(CHIP_TL?':t1':':t0')+':n'+ckName(CHIP_SYM);
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   const x=R.map(r=>r.d.slice(0,7));
@@ -2674,18 +2842,22 @@ function renderCockpitMax(el,MB){
         text:['✂'],textfont:{size:12,color:'rgba('+col+',.95)'},showlegend:false,hoverinfo:'skip',meta:'tl'});
     });
   }catch(e){}}
+  const _nmK=ckName(CHIP_SYM);   // v19:標題精簡(趨勢線說明、副圖隱藏原因收進 ⓘ 圖例)
   const ann=[
     {xref:'paper',yref:'paper',x:0,y:1.008,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:MB?10.5:12,color:CPAL.ttl},
-     text:'<b>'+CHIP_SYM+' 全史月K</b> · '+R.length+'月 · 對數軸 · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>長期趨勢線(log空間·容忍×2)· ◯歷史觸線'
-       +(building?' · <span style="color:#f59e0b">全史資料建置中(暫以 5 年日K月線;Mac 每月盤後補齊)</span>':'')},
+     text:'<b>'+CHIP_SYM+'</b>'+(_nmK?' <span style="color:'+CPAL.mut+'">'+_nmK+'</span>':'')+' · 全史月K · '+R.length+'月'
+       +(building?' · <span style="color:#f59e0b">資料建置中</span>':'')},
     {xref:'paper',yref:'paper',x:0,y:-0.085,xanchor:'left',showarrow:false,font:{size:8.5,color:CPAL.mut},
-     text:'全史模式:轉速/檔位/⑦現金池副圖無對應資料已隱藏(切回 10–250 日視窗恢復)'}];
+     text:'全史不顯示副圖'}];
   freshPlot('cockpit');
-  Plotly.react('cockpit',traces,{...PBASE,showlegend:false,
+  try{window.__ckLegO={max:true,tl:CHIP_TL&&R.length>=50,building:building}; ckLegSet(ckLegendHTML(window.__ckLegO));}catch(e){try{ckLegSet(null);}catch(_){}}
+  const _ckPr=Plotly.react('cockpit',traces,{...PBASE,showlegend:false,
     margin:{l:MB?40:52,r:MB?44:64,t:MB?54:46,b:44},
     xaxis:{type:'category',gridcolor:CPAL.grid,tickfont:{size:8.5,color:CPAL.mut},nticks:MB?6:12,rangeslider:{visible:false}},
     yaxis:{type:'log',gridcolor:CPAL.grid,tickfont:{size:9,color:CPAL.mut},side:'right'},
     annotations:ann},CFG);
+  try{ckLegPos(); if(_ckPr&&_ckPr.then)_ckPr.then(function(){try{ckLegPos();}catch(_){}});}catch(_){}
+  if(!el._legBind&&el.on){el._legBind=1; el.on('plotly_afterplot',function(){try{ckLegPos();}catch(_){}});}
   el._HL=null;   // 對數軸下自動 y 適應交給 Plotly autorange(不用線性 HL 邏輯)
   bindPinch('cockpit',()=>null);
 }
@@ -3474,6 +3646,7 @@ function cockpitReset(modeChanged){
   try{ if(window.Plotly&&(e._fullLayout||e.data))Plotly.purge(e); }catch(_){}
   if(modeChanged)e._vbpBind=0;
   e._tdzBind=0;   // purge 清掉 plotly_relayout 監聽 → 九轉縮放綁定必須重掛(2026-08-08)
+  e._legBind=0;   // v19:ⓘ 圖例 的 plotly_afterplot 監聽同理
   e.dataset.sig=''; e.innerHTML='';
   try{renderCockpit();}catch(_){}
   try{buildChipIdxRangeActive();}catch(_){}
@@ -3527,7 +3700,8 @@ function renderCockpit(){
       try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':q'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':Q0')
     +(CHIP_IDX.SPY?(SPYK?':S1':':S0'):':S-')+(CHIP_IDX.QQQ?(QQQK?':Q1':':Q0'):':Q-')+(CHIP_Q?':k'+qqqSig():'')   // 📊量化「加」要 QQQ 日K:到了、或有新收盤(含當日快照)就重畫(2026-10-11)   // P7:疊加/布林/縮放/回測 均入快取鍵(否則按鈕無反應)
     +(CHIP_ASTRA?':A2:x'+((AXR&&AXR.gen)||'0')+(ASTRA_LEGACY?':A1r'+ASTRA_UI.rev+':A3r'+ASTRA3.rev:'')+(CHIP_PD==='d'?':q'+(function(){try{ensureQQQK();}catch(_){}return qqqSig();})():'')+(function(){const u=CHIP_PD==='d'?TK_UL[CHIP_SYM]:null;if(!u)return '';   // 🧪 Astra:槓桿ETF看正股 → 正股日K變動也要重繪
-      try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':w'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':A0');   // 🧪 Astra:開關 + QQQ(個股的底分強弱)+ 正股日K;第一版(ASTRA_LEGACY)另加計算版次與 v0.3 事件檔
+      try{ensureChipK(u);}catch(_){}const ub=chipBars(u,'d');return ':w'+(ub&&ub.length?ub.length+'_'+ub[ub.length-1][4]:'0');})():':A0')   // 🧪 Astra:開關 + QQQ(個股的底分強弱)+ 正股日K;第一版(ASTRA_LEGACY)另加計算版次與 v0.3 事件檔
+    +':n'+ckName(CHIP_SYM);   // v19:標題的名稱晚到(自選模組/Astra 名稱表後載入)時也要重畫一次
   if(el.dataset.sig===sig&&el.querySelector('.plot-container'))return;
   el.dataset.sig=sig;
   // x 類別標籤必須唯一(2026-08-08 使用者揪出:週/月K跨年後 'MM-DD' 重複 → category 軸同名互撞、K棒疊格錯亂)
@@ -4194,7 +4368,7 @@ function renderCockpit(){
         hovertemplate:nm+' 同起點換算價 %{customdata:.2f}'+ampT+'<extra></extra>'});
       // 領先/落後寫進標題列圖例(不放右緣 —— 右緣已被 CTA 四條煞車線標價佔滿,會疊字)
       if(rel!=null)_ovlLeg.push('<span style="color:'+col+'">'+nm+(rel>=0?' 落後 ':' 領先 ')
-        +Math.abs(rel).toFixed(1)+'%'+(fit?'·線=形狀對照':'')+'</span>');
+        +Math.abs(rel).toFixed(1)+'%'+(fit?'·形狀':'')+'</span>');   // v19:「線=形狀對照」縮成「形狀」,意思寫在 ⓘ 圖例
     };
     _ovlQ=_ovl;   // 供 ann 建立後補畫(ann 尚未宣告 → 延後執行)
   }catch(e){}}
@@ -4218,19 +4392,21 @@ function renderCockpit(){
     .map(p=>'<span style="color:'+p[2]+'">'+p[0]+_fvC(p[1])+'</span>').join(' '):'';
   const XR=0.998;   // 右緣標註錨點(2026-10-12:VbP 改畫在K棒下一層、不再佔右軌 → 不必退讓)
   const XW=1;       // 橫跨全寬的 paper 色帶
-  const QLEG='<span style="color:#8ab4f8">量化</span> <span style="color:#fab219">頂K</span> <span style="color:#fb923c">減碼</span> <span style="color:#f87171">出</span> <span style="color:#22c55e">抄底</span> <span style="color:#4ade80">買</span> <span style="color:#2dd4bf">加</span> <span style="color:'+QGRAY+'">熱=過熱提醒</span> <span style="color:'+QGRAY+'">灰=較弱</span>';   // 📊量化圖例
-  const SWLEG=(_sw&&_sw.n&&_sw.info&&_sw.info.trade)?'<span style="color:'+SW_C.bot+'">買</span> <span style="color:'+SW_C.top+'">賣</span><span style="color:'+MUT2+'">=Astra(<b style="color:'+AX_GOLD+'">金邊</b>=那天大盤恐慌;<span style="color:#8b8fa3">灰賣</span>=轉弱提醒,未驗證)</span>'
-    :(_sw&&_sw.n)?'<span style="color:'+SW_C.bot+'">▲底 △回檔</span> <span style="color:'+SW_C.top+'">▼頂</span><span style="color:'+MUT2+'">=Astra(<b style="color:'+AX_GOLD+'">強</b>=大盤恐慌)</span>':'';   // 🧪 Astra 圖例(放標題列前段,桌機長標題被切也看得到)
+  // v19(2026-10-22 使用者「K線圖上的說明字精簡」):標題只留「代號 名稱 · 根數」(+CTA 數值、Astra 色鍵、SPY/QQQ 強弱這種會變的數字);
+  //   原本整排圖例(TD/量化/◆★/C/AI/趨勢線/技判/資金氣候/布林/型態…)收進右上角「ⓘ 圖例」(ckLegendHTML,只列現在打開的)
+  const SWKEY=(_sw&&_sw.n)?((_sw.info&&_sw.info.trade)?'<span style="color:'+SW_C.bot+'">買</span><span style="color:'+SW_C.top+'">賣</span><span style="color:'+MUT2+'">=Astra</span>'
+    :'<span style="color:'+SW_C.bot+'">▲△</span><span style="color:'+SW_C.top+'">▼</span><span style="color:'+MUT2+'">=Astra</span>'):'';   // 🧪 Astra 色鍵(買/賣 跟 量化的「買」顏色不同,留一個色鍵免得看混)
+  const _nmK=ckName(CHIP_SYM);
+  const TTL='<b>'+CHIP_SYM+'</b>'+(_nmK?' <span style="color:'+MUT2+'">'+_nmK+'</span>':'')+' · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+(SWKEY?' · '+SWKEY:'');
+  const _mbT=CHIP_CTA?58:42;   // 手機:沒有 CTA 數值列時,上邊距從 58 收到 42(圖例行已收進「ⓘ 圖例」)
   const ann=[
-    MB?{xref:'paper',yref:'paper',x:0,y:1.058,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+(SWLEG?' · '+SWLEG:'')}
+    MB?{xref:'paper',yref:'paper',x:0,y:CHIP_CTA?1.058:1+14/(600-_mbT-26),yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:11.5,color:CPAL.ttl},text:TTL}
       :{xref:'paper',yref:'paper',x:0,y:1.022,xanchor:'left',showarrow:false,font:{size:12.5,color:CPAL.ttl},
-        text:'<b>'+CHIP_SYM+' 駕駛艙</b> · '+R.length+PD_LAB[CHIP_PD]+(CHIP_PD==='d'?'':'K')+' · '+(SWLEG?SWLEG+' · ':'')+(CHIP_CTA&&_ctaVals?'<span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals+'<span style="color:'+MUT2+'">(◯=碰到200D)</span> · ':'')+'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">TD買</span> 1→9·13+(未達9的段隱藏·進行中照數) ·'+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C訊號=日K限定</span>':(CHIP_Q?QLEG+'(滑過字看說明)':(shortH?'<span style="color:'+CPAL.dia+'">◇減碼</span> <span style="color:'+CPAL.star+'">☆抄底</span>(短史版2/3·未回測)':'<span style="color:'+CPAL.dia+'">◆減碼(TOP≥3)</span> <span style="color:'+CPAL.star+'">★抄底(BOT≥3)</span>'))+' ·<span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span>Claude參考(⑦資金組合)·<span style="color:#e6e9ef">AI▲▼</span>判讀')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>趨勢線(觸及≥3·✂破)':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判 <span style="color:#4ade80">買</span>=進場路徑成立·<span style="color:#f87171">出</span>=波段頂確認</span>':'')+(CHIP_FC&&CHIP_PD==='d'?' · <span style="color:#22c55e">▲抄底</span><span style="color:#f97316">▼減碼</span>=個股轉折×🌐資金氣候(底部色帶:<span style="color:#f87171">緊</span>/<span style="color:#22c55e">鬆</span>)':'')
-        +(CHIP_BB?' · <span style="color:'+CPAL.bbMid+'">布林 BB(20,2)</span>':'')+(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>(含三角收斂·VCP;✔=已確認/…=形成中·型態辨識非預測)':'')},
-    {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量(琥珀=爆量≥1.75×)'},
-    {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span>(紅帶≥90'+(shortH?'·短史樣本':'')+')· <span style="color:'+CPAL.rsi+'">RSI</span>14'},
-    {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:MB?'檔位 ±100/67/33(負=倒車)':'檔位 score(±100/67/33 · +100=六檔全咬合 · 負=倒車)'},
-    {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+CPAL.poolA+'">全單累積</span>·<span style="color:'+CPAL.poolM+'">大單累積</span>·柱=當日(<span style="color:'+CPAL.poolUp2+'">綠進</span>/<span style="color:'+CPAL.poolDn2+'">紅出</span>·獨立縮放,hover 為真值)'+((fi7>0&&fi7<R.length)?' · <span style="color:'+CPAL.volHot+'">自 '+R[fi7].d.slice(5)+' 起·回補中</span>':'')},
+        text:TTL+(CHIP_CTA&&_ctaVals?' · <span style="color:'+CPAL.brake1+'">┈CTA</span> '+_ctaVals:'')},
+    {xref:'paper',yref:'y7 domain',x:0.004,y:0.9,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'成交量'},
+    {xref:'paper',yref:'y8 domain',x:0.004,y:0.92,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'<span style="color:'+CPAL.rv+'">RVPOS</span> · <span style="color:'+CPAL.rsi+'">RSI</span>'},
+    {xref:'paper',yref:'y9 domain',x:0.004,y:0.88,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'檔位'},
+    {xref:'paper',yref:'y10 domain',x:0.004,y:0.96,xanchor:'left',showarrow:false,font:{size:9.5,color:MUT2},text:'⑦現金池 <span style="color:'+CPAL.poolA+'">全單</span>·<span style="color:'+CPAL.poolM+'">大單</span>'+((fi7>0&&fi7<R.length)?' · <span style="color:'+CPAL.volHot+'">自 '+R[fi7].d.slice(5)+' 起</span>':'')},
   ];
   if(pa[li]!=null)ann.push({x:x[li],y:pa[li],xref:'x',yref:'y10',text:(pa[li]>0?'+':'')+pa[li].toFixed(0)+'M',showarrow:false,xanchor:'left',xshift:5,font:{size:9,color:CPAL.poolA}});
   if(_ovlQ){try{_ovlQ(SPYK,CHIP_IDX.SPY,CPAL.idxSpy,'SPY'); _ovlQ(QQQK,CHIP_IDX.QQQ,CPAL.idxQqq,'QQQ');
@@ -4258,12 +4434,9 @@ function renderCockpit(){
     text:'檔位 '+(R[li].sc>0?'+':'')+R[li].sc,font:{size:9.5,color:R[li].sc>0?CPAL.up:R[li].sc<0?CPAL.dn:CPAL.sc},bgcolor:CPAL.bgc});
   else ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y9',y:0,yanchor:'middle',showarrow:false,
     text:'檔位 —(需一年歷史)',font:{size:8.5,color:MUT2},bgcolor:CPAL.bgc});
-  // 直立手機:標題精簡成三行(圖例行 + CTA 數值行;2026-08-08 仿富途 CTAS/CTAM/CTAL 標頭 ——
-  // 右緣標籤蓋最新K棒問題根治:數值上移圖頂,虛線照畫)
+  // 直立手機:標題一行(2026-10-22 v19:原本第二行的圖例收進「ⓘ 圖例」);CTA 開著時第三行照舊放 CTA 數值
+  //   (2026-08-08 仿富途 CTAS/CTAM/CTAL 標頭 —— 右緣標籤蓋最新K棒問題根治:數值上移圖頂,虛線照畫)
   if(MB){
-    ann.push({xref:'paper',yref:'paper',x:0,y:1.030,yanchor:'bottom',xanchor:'left',showarrow:false,font:{size:8.5,color:MUT2},
-      text:'<span style="color:'+CPAL.tdS+'">TD賣</span>/<span style="color:'+CPAL.tdB+'">買</span>1→9·13+ · '+(CHIP_PD!=='d'?'<span style="color:'+MUT2+'">◆★/C=日K限定</span>':(CHIP_Q?QLEG:(shortH?'<span style="color:'+CPAL.dia+'">◇</span><span style="color:'+CPAL.star+'">☆短史版</span>':'<span style="color:'+CPAL.dia+'">◆減碼</span> <span style="color:'+CPAL.star+'">★抄底</span>'))+' <span style="color:'+CPAL.cbot+'">C▲</span><span style="color:'+CPAL.ctop+'">C▼</span> <span style="color:#e6e9ef">AI▲▼</span>')+(CHIP_TL?' · <span style="color:'+CPAL.up+'">─撐</span><span style="color:'+CPAL.dn+'">─壓</span>✂':'')+(CHIP_TJ&&CHIP_PD==='d'?' · <span style="color:#f472b6">技判</span><span style="color:#fab219">·⚠頂K</span>':'')+(CHIP_FC&&CHIP_PD==='d'?' · <span style="color:#22c55e">▲</span><span style="color:#f97316">▼</span>🌐':'')
-        +(CHIP_PAT?' · <span style="color:#a78bfa">型態</span>':'')});
     if(CHIP_CTA&&_ctaVals)ann.push({xref:'paper',yref:'paper',x:0,y:1.004,yanchor:'bottom',xanchor:'left',showarrow:false,
       font:{size:9,color:MUT2},text:'┈CTA '+_ctaVals});
   }
@@ -4482,7 +4655,7 @@ function renderCockpit(){
       var mv=M5.dif.concat(M5.dea,M5.hist).filter(function(v){return v!=null;});
       var mx5=Math.max.apply(null,mv.map(Math.abs))||1;
       _y8={range:[-mx5*1.15,mx5*1.15],tickvals:null,zero:true};
-      _y8lab='MACD(12,26,9) <span style="color:#38bdf8">DIF</span>/<span style="color:#fbbf24">DEA</span>·柱=(DIF−DEA)×2';
+      _y8lab='MACD <span style="color:#38bdf8">DIF</span>/<span style="color:#fbbf24">DEA</span>';   // v19:參數與算法說明收進 ⓘ 圖例
     }else if(CHIP_IND==='adx'){
       var A5=indADX(R,14);
       traces.push({type:'scatter',mode:'lines',x:x,y:A5.pdi,yaxis:'y8',meta:'ind',showlegend:false,
@@ -4492,7 +4665,7 @@ function renderCockpit(){
       traces.push({type:'scatter',mode:'lines',x:x,y:A5.adx,yaxis:'y8',meta:'ind',showlegend:false,
         line:{color:'#e6e9ef',width:1.7},hovertemplate:'ADX %{y}<extra></extra>'});
       _y8={range:[0,Math.max(60,Math.max.apply(null,(A5.adx.concat(A5.pdi,A5.ndi)).filter(function(v){return v!=null;}))*1.1)],tickvals:[0,20,25,40,60],zero:false};
-      _y8lab='ADX(14) <span style="color:#e6e9ef">ADX</span>/<span style="color:#4ade80">+DI</span>/<span style="color:#f87171">−DI</span>(ADX>25=趨勢明確)';
+      _y8lab='<span style="color:#e6e9ef">ADX</span>/<span style="color:#4ade80">+DI</span>/<span style="color:#f87171">−DI</span>';
     }else if(CHIP_IND==='atr'){
       var T5=indATR(R,14), pxl=R[R.length-1].c;
       var pct5=T5.map(function(v,i){return v==null?null:+(100*v/R[i].c).toFixed(2);});
@@ -4501,7 +4674,7 @@ function renderCockpit(){
         hovertemplate:'ATR14 %{y}%(佔價)<extra></extra>'});
       var av5=pct5.filter(function(v){return v!=null;});
       _y8={range:[0,(Math.max.apply(null,av5)||1)*1.2],tickvals:null,zero:false};
-      _y8lab='ATR(14) 佔價% · 現值 '+(pct5[R.length-1]||0)+'%(≈日均波動)';
+      _y8lab='ATR 佔價 '+(pct5[R.length-1]||0)+'%';
     }else if(CHIP_IND==='cci'){
       var C5=indCCI(R,20);
       traces.push({type:'scatter',mode:'lines',x:x,y:C5,yaxis:'y8',meta:'ind',showlegend:false,
@@ -4509,7 +4682,7 @@ function renderCockpit(){
       var cv5=C5.filter(function(v){return v!=null;}).map(Math.abs);
       var cm5=Math.max(220,Math.max.apply(null,cv5)||220);
       _y8={range:[-cm5*1.1,cm5*1.1],tickvals:[-200,-100,0,100,200],zero:true};
-      _y8lab='CCI(20)(±100 為常態帶、±200 為極端)';
+      _y8lab='CCI';
     }else if(CHIP_IND==='stoch'){
       var S5=indStoch(R,14,3,3);
       traces.push({type:'scatter',mode:'lines',x:x,y:S5.k,yaxis:'y8',meta:'ind',showlegend:false,
@@ -4517,7 +4690,7 @@ function renderCockpit(){
       traces.push({type:'scatter',mode:'lines',x:x,y:S5.d,yaxis:'y8',meta:'ind',showlegend:false,
         line:{color:'#fbbf24',width:1.2},hovertemplate:'%D %{y}<extra></extra>'});
       _y8={range:[0,100],tickvals:[0,20,50,80,100],zero:false};
-      _y8lab='Stochastic(14,3,3) <span style="color:#38bdf8">%K</span>/<span style="color:#fbbf24">%D</span>(20/80 超賣超買)';
+      _y8lab='KD <span style="color:#38bdf8">%K</span>/<span style="color:#fbbf24">%D</span>';
     }
   }catch(e){}}
   // ===== P5A Fibonacci 自動回撤(預設關):可視區間最大 swing 自動錨定 =====
@@ -4550,8 +4723,7 @@ function renderCockpit(){
       if(last5!=null)ann.push({xref:'paper',x:XR,xanchor:'right',yref:'y',y:last5,yanchor:'middle',showarrow:false,
         text:'aVWAP·'+av[2],font:{size:8,color:av[1]},bgcolor:CPAL.bgc});
     });
-    ann.push({xref:'paper',yref:'paper',x:0.5,y:1.001,xanchor:'center',yanchor:'bottom',showarrow:false,
-      font:{size:7.5,color:CPAL.mut},text:'aVWAP=日K近似(典型價×量累積),非逐筆 VWAP'});
+    // v19:「aVWAP=日K近似(典型價×量累積),非逐筆 VWAP」這行說明收進 ⓘ 圖例(K線上方不再放字)
   }catch(e){}}
   // (2026-08-01 使用者指定移除:P5C MTFA 週線疊加 與 P3A 財報營收階梯 —— chip 與繪製層皆已下架。
   //  weeklyAgg/weeklyMA 保留為工具函式(其他層可能引用);引擎 computed_fund.rev_q 仍照常採集供場次判讀引用,只是不再上圖。)
@@ -4598,7 +4770,7 @@ function renderCockpit(){
             .concat((function(){try{return (_sw&&_sw.info&&_sw.info.d200)?axD200Shapes(_sw.info.d200,DOM.y):[];}catch(_){return [];}})());   // 🧪 Astra 200 日線虛線/細條
   const _ckLay={...PBASE,...(CHIP_ZOOM?{dragmode:'pan'}:{}),showlegend:false,   // P7-1 縮放模式:拖曳=平移
     ...(MB?{boxgap:0}:{}),   // 燭身加寬(見上方 K 棒註解;本圖無其他 box 族 trace,無副作用)
-    margin:{l:MB?6:10,r:MB?8:50,t:MB?58:34,b:MB?26:30},   // MB t58:三行標頭(標題/圖例/CTA數值列,2026-08-08)
+    margin:{l:MB?6:10,r:MB?8:50,t:MB?_mbT:34,b:MB?26:30},   // MB:標題一行 t42;CTA 數值列開著 t58(2026-10-22 v19;原三行標頭 2026-08-08)
     xaxis:{type:'category',gridcolor:GRID2,tickfont:{size:8.5,color:MUT2},nticks:MB?6:14,rangeslider:{visible:false},anchor:'y10',
       // 顯式初始範圍(2026-08-05):TD文字/光暈圈/◆★等 trace 的「像素 padding」會把 autorange 撐大
       // (桌機 ~±2 槽看不出;手機 310px 窄圖實測 [-10.6,131.7]=100根塞進142槽,兩側空白吃掉 30% 寬)。
@@ -4624,9 +4796,21 @@ function renderCockpit(){
     ...(_a3?{yaxis12:{domain:[DOM.y7[1],DOM.y[0]],range:[0,1],fixedrange:true,showgrid:false,zeroline:false,showline:false,showticklabels:false,ticks:''}}:{}),   // 🧪 Astra v0.3 只標日期軌道(固定 0–1,沒有價格)
     shapes:_baseShapes.concat(_vbShapes),   // 固定 shapes 在前、VbP 在後(縮放重分箱時只換後段)
     annotations:ann};
+  // v19:「ⓘ 圖例」內容 —— 只列這張圖真的有畫出來的圖層(C▲▼/AI▲▼/內部人 依實際 trace 判斷)
+  try{
+    const _tn=new Set(traces.map(t=>t&&t.name).filter(Boolean));
+    window.__ckLegO={pd:CHIP_PD,q:CHIP_Q,shortH:shortH,c:_tn.has('C▲')||_tn.has('C▼'),ai:_tn.has('AI▲')||_tn.has('AI▼'),
+      cta:CHIP_CTA,tl:CHIP_TL&&R.length>=50,tj:CHIP_TJ&&CHIP_PD==='d',fc:CHIP_FC&&CHIP_PD==='d',bb:CHIP_BB,pat:CHIP_PAT,vbp:!!(_vb&&_vbShapes.length),
+      fib:CHIP_FIB&&R.length>=20,vwap:CHIP_VWAP&&R.length>=20,sw:(_sw&&_sw.n)?((_sw.info&&_sw.info.trade)?'trade':'legacy'):'',
+      ovl:_ovlLeg.length>0,ins:traces.some(t=>t&&t.meta==='ins'),spot:_spot.length>0,pos:!!(_POSLV&&_POSLV.length),
+      ind:CHIP_IND,fi7:(fi7>0&&fi7<R.length)?R[fi7].d.slice(5):''};
+    ckLegSet(ckLegendHTML(window.__ckLegO));
+  }catch(e){try{ckLegSet(null);}catch(_){}}
   // P7-1 縮放模式時改用專屬 config(scrollZoom 開、雙擊還原);關閉時完全沿用既有 CFG(行為不變)
-  Plotly.react('cockpit',traces,_ckLay,
+  const _ckPr=Plotly.react('cockpit',traces,_ckLay,
     CHIP_ZOOM?{displayModeBar:false,responsive:true,scrollZoom:false,doubleClick:'reset'}:CFG);   // 滾輪由 bindWheelZoom 自行處理
+  try{ckLegPos(); if(_ckPr&&_ckPr.then)_ckPr.then(function(){try{ckLegPos();}catch(_){}});}catch(_){}   // v19:ⓘ 圖例 對齊標題列
+  if(!el._legBind&&el.on){el._legBind=1; el.on('plotly_afterplot',function(){try{ckLegPos();}catch(_){}});}   // 版面變動(其他欄位/收起/視窗縮放)重畫後也對齊
   // VbP 縮放重算:bindPinch 的 relayout 觸發 plotly_relayout → 依可視範圍重分箱(只換 shapes,不動 traces/軸)
   el._vbp=_vb?{R:R,base:_baseShapes,NB:_vbNB,pocAnn:_vbPocAnn}:null;
   if(!el._vbpBind&&el.on){el._vbpBind=1;
@@ -6264,18 +6448,10 @@ function renderDest(catSplit, subtitle, fixRange){
   const pNet=poolM+poolR2, pPos=Math.max(0,poolM)+Math.max(0,poolR2), pNeg=Math.min(0,poolM)+Math.min(0,poolR2);
   const pDv=poolM*poolR2<0&&Math.min(Math.abs(poolM),Math.abs(poolR2))>2e6;
   ann.push(tipLab(pNet,pPos,pNeg,Mp,'y2','Σ 即時現金池',(pNet>=0?'<span style="color:#4ade80">(出池·買股進場)</span>':'<span style="color:#f87171">(入池·賣股回池)</span>')+(pDv?' ⚡':''),MB?9.5:11.5,C.amber));
-  // 上緣資訊:圖例(左上)與 MMF 錨定(右上),手機用精簡文案
-  ann.push({text:'【'+(subtitle||winLabel())+'】'+((MB||NRD)?'深=大單 淺=散戶|⚡=反向|下軌=池'
-      :'深色=大單(機構)・淺色=中小單(散戶)|紅=流出(賣) 綠=流入(買)|⚡=大小單反向(轉折觀察)|下軌=池專屬刻度')
-      +(hasOpt?(MB?' |◇期權新資金自軌T+1':' |◇期權做多(青)/做空(紫)=新增未平倉資金 ΔOI×權利金(T+1·自屬刻度·不入池)'):''),
-    xref:'paper',yref:'paper',x:0.01,y:1.035,showarrow:false,font:{size:MB?8.5:10,color:C.muted},xanchor:'left'});
-  const mmf=(DATA.cash_pool||{}).mmf||null;
-  if(mmf&&mmf.total_bn){
-    const short='MMF $'+(mmf.total_bn/1000).toFixed(2)+'T';
-    ann.push({text:(MB||NRD)?short+'('+String(mmf.asof_iso||'').slice(5)+')'
-        :'池基準水位:'+short+'('+(mmf.asof||'')+',週 '+(mmf.chg_bn>0?'+':'')+fmt(mmf.chg_bn,1)+'B)',
-      xref:'paper',yref:'paper',x:0.99,y:1.10,showarrow:false,font:{size:MB?8.5:10.5,color:C.ink2},xanchor:'right'});
-  }
+  // 上緣:一行短色鍵(2026-10-22 v19「現金池欄精簡」:長說明、期權說明、MMF 基準水位都收進現金池標題列的 ⓘ;
+  //   MMF 自 07-22 起 ICI 擋抓取沒有更新,放在圖上會誤導 → 只在 ⓘ 裡寫日期並註明停更)
+  ann.push({text:'【'+(subtitle||winShort())+'】深=大單 淺=散戶 <span style="color:#fbbf24">⚡</span>=反向',
+    xref:'paper',yref:'paper',x:0.01,y:1.035,showarrow:false,font:{size:MB?9:10,color:C.muted},xanchor:'left'});
   if(subtitle)ann.push({text:'<b>'+subtitle+'</b>',xref:'paper',yref:'paper',x:0.97,y:0.20,showarrow:false,
     font:{size:MB?14:20,color:'#9db4e0'},xanchor:'right'});
   const traces=[
@@ -6291,7 +6467,7 @@ function renderDest(catSplit, subtitle, fixRange){
   if(hasOpt)traces.push({type:'bar',orientation:'h',x:oV,y:oCats,xaxis:'x3',yaxis:'y3',
      marker:{color:oCol},hovertemplate:'%{y}:%{x:,.0f}<extra></extra>'});
   const layout={...PBASE,barmode:'relative',dragmode:false,   // v17:本圖固定範圍、無縮放需求;關拖曳→板塊名(y刻度)可點擊下鑽
-     margin:{l:MB?60:(NRD?4:96),r:MB?14:(NRD?8:56),t:MB?46:52,b:MB?32:40},
+     margin:{l:MB?60:(NRD?4:96),r:MB?14:(NRD?8:56),t:30,b:MB?32:40},   // v19:上緣只剩一行色鍵(MMF 收進 ⓘ)→ t 52/46 → 30
      annotations:ann,showlegend:false,
      xaxis:{gridcolor:C.line,zerolinecolor:'#777',zerolinewidth:1.5,tickformat:'~s',tickfont:{size:MB?8:9},
        range:[-Mc,Mc],anchor:'y'},
@@ -6329,8 +6505,8 @@ function destDrillData(cat){
 }
 function destDrillRender(){
   const el=document.getElementById('destDrill'); if(!el)return;
-  if(!DEST_DRILL){
-    el.innerHTML='<span class="sub" style="font-size:10.5px;opacity:.8">點下方板塊柱(或左側板塊名)→ 此處列出該板塊 ⑦ 資金前 10 檔個股,點代號直達個股籌碼K線</span>';
+  if(!DEST_DRILL){   // v19:現金池欄裡這行提示藏起來(class ddhint;說明改放標題列 ⓘ)
+    el.innerHTML='<span class="sub ddhint" style="font-size:10.5px;opacity:.8">點下方板塊柱(或左側板塊名)→ 此處列出該板塊 ⑦ 資金前 10 檔個股,點代號直達個股籌碼K線</span>';
     return;
   }
   const rows=destDrillData(DEST_DRILL);
@@ -6431,18 +6607,17 @@ function renderPoolTide(){
     traces.push({type:'scatter',mode:'lines',name:'SPY',x:x,y:poff(idxSPY,'SPY'),yaxis:'y2',connectgaps:true,line:{color:'#8ab4f8',width:1.6},hovertemplate:'%{x} SPY %{y:+.2f}%<extra></extra>'});}
   if(IDX_SHOW.QQQ&&idxQQQ.some(v=>v!=null)){POOL_TREND.QQQ={idx:traces.length,base:idxQQQ,span:pS};
     traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:poff(idxQQQ,'QQQ'),yaxis:'y2',connectgaps:true,line:{color:'#c084fc',width:1.6},hovertemplate:'%{x} QQQ %{y:+.2f}%<extra></extra>'});}
+  // v19(2026-10-22「現金池欄精簡」):標題一律用短版(怎麼看收進現金池標題列 ⓘ);手機也不放直立的軸標題(原本在手機被切掉)
+  const _tMB=(window.innerWidth||1024)<680, _tSh=_tMB||NRP;
   Plotly.react('pooltide',traces,
-    {...PBASE,margin:{l:((window.innerWidth||1024)<680)?60:(NRP?4:96),r:((window.innerWidth||1024)<680)?14:(NRP?4:80),t:26,b:26},showlegend:false,
-     annotations:[{text:(((window.innerWidth||1024)<680)||NRP)
-        ?'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>'
-        :'<b>場內資金線</b>(現金池反向·'+mode+')· 全單 '+(lastA>0?'+':'')+fmtM(lastA)
-       +' · <span style="color:#c2703e">大單 '+(lastM>0?'+':'')+fmtM(lastM)+'</span> · <span style="color:#8ab4f8">藍=SPY</span>·<span style="color:#c084fc">紫=QQQ</span>(%改) · 柱=當日淨進出(綠進紅出) — 線=累積(<b>+y=現金離池進場、−y=現金入池了結</b>),與 SPY 同向=資金確認;背離(線降·指數升)=價漲⑦撤=轉折警訊',
+    {...PBASE,margin:{l:_tSh?4:96,r:_tSh?4:80,t:26,b:26},showlegend:false,
+     annotations:[{text:'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>',
        xref:'paper',yref:'paper',x:0.01,y:1.14,showarrow:false,
-       font:{size:(((window.innerWidth||1024)<680)||NRP)?9.5:11.5,color:C.amber},xanchor:'left'}],
+       font:{size:_tSh?9.5:11.5,color:C.amber},xanchor:'left'}],
      xaxis:{type:'category',gridcolor:C.line,tickfont:{size:9.5}},
-     yaxis:Object.assign({gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',automargin:true},NRP?{}:{title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}}),
+     yaxis:Object.assign({gridcolor:C.line,zerolinecolor:'#777',tickformat:'~s',automargin:true},_tSh?{}:{title:{text:'↑進場買貨(現金離池) / ↓了結(現金入池)',font:{size:10,color:C.ink2}}}),
      yaxis2:Object.assign({overlaying:'y',side:'right',showgrid:false,automargin:true,tickfont:{size:9,color:'#8ab4f8'}},
-       NRP?{}:{title:{text:'指數 %',font:{size:10,color:'#9db4e0'}}}, py2?{range:py2.range}:{})},CFG);
+       _tSh?{}:{title:{text:'指數 %',font:{size:10,color:'#9db4e0'}}}, py2?{range:py2.range}:{})},CFG);
   buildPoolOffs();
 }
 // ===== 逐日播放動畫 =====
@@ -8354,6 +8529,7 @@ try{
 render(true);
 setInterval(function(){if(!document.hidden)render(false);},1000);
 window.__wlRender=function(){render(true);};
+window.__wlName=nameOf;   /* v19:K線標題「代號 名稱」用同一份名稱表 */
 })();
 
 </script>
