@@ -1,7 +1,7 @@
 {
  "title": "event_memory 試驗清單 v0.1",
- "version": "0.4",
- "created_tw": "2026-10-22 12:41:58",
+ "version": "0.5",
+ "created_tw": "2026-10-23 00:15:10",
  "note": "E0–E5 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
  "inputs_sha256": {
   "walk7 S7.pkl": "642438a6e10e1e53…",
@@ -206,6 +206,26 @@
     "scripts/p3_ts_audit.py": "a1bc3d5ddaa1fbfc…",
     "out/sec_ts_audit_2_02.csv": "d0150fdb1be70de9…",
     "out/sec_ts_audit_summary.json": "cd981563d3b35cd5…"
+   }
+  },
+  {
+   "id": "CLAUDE-E9",
+   "date_tw": "2026-10-23",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "趨勢 / 動能帳戶:當年名單(PIT)vs 2026 名單(END)同規則對照(回應 Codex R6)",
+   "data": "walk7 日 K 與每年名單;2024-01-02 ~ 2026-06-30(不碰保留季價格)",
+   "script": [
+    "scripts/x8_pit_trend.py"
+   ],
+   "output": [
+    "out/x8_pit_trend.json"
+   ],
+   "key_results": "TSMOM_LONG PIT +193.2% vs END +403.0%;MOM12_1 PIT +182.0% vs END +534.0%;等權 +39.6% vs +57.2%;SPY +62.6%",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x8_pit_trend.py": "ce5fb02986943474…",
+    "out/x8_pit_trend.json": "a5e0748323683a4c…"
    }
   }
  ],
