@@ -1,8 +1,8 @@
 {
  "title": "event_memory 試驗清單 v0.1",
- "version": "0.6",
- "created_tw": "2026-10-23 00:23:24",
- "note": "E0–E9b 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
+ "version": "0.7",
+ "created_tw": "2026-10-23 04:58:17",
+ "note": "E0–E11 是開發 / 事後檢查與資料稽核,S1 是合成自測;都不是任何方法的成績;沒有任何 Claude 判讀。",
  "inputs_sha256": {
   "walk7 S7.pkl": "642438a6e10e1e53…",
   "walk7 daily.pkl.gz(解壓後)": "0a0fd0801c4092c0…(= walk7 daily_manifest.json)",
@@ -247,17 +247,125 @@
     "scripts/x8b_pit_trend_years.py": "899e2263f476b743…",
     "out/x8b_pit_trend_years.json": "898b075256a5334a…"
    }
+  },
+  {
+   "id": "CLAUDE-E9c",
+   "date_tw": "2026-10-23",
+   "type": "開發 / 事後(沒有預先登記);E9 / E9b 原版保留",
+   "what": "資料修正規則(跑之前寫定;複核後 R0 只用在當年名單類、R3 一律用之後第一根有交易的開盤)後重跑 E9 / E9b,再換成 R6 的 341 名單(固定 vs 每年交集)",
+   "data": "walk7 日 K 與名單;codex_r6/symbols_341.txt;最晚 2026-06-30(不碰保留季價格)",
+   "script": [
+    "scripts/x8c_pit_trend_fixed.py"
+   ],
+   "output": [
+    "out/x8c_pit_trend_fixed.json"
+   ],
+   "key_results": "不套修正 = 原版(18 / 18);E9 動能類不變;TSMOM PIT 2017–2023 +99.8% → +111.4%;341:TSMOM 固定 +71.0% vs 交集 +41.3%(2024-01 ~ 2026-06);MOM12_1 固定 +193.3%(2017–2023)",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x8c_pit_trend_fixed.py": "f862e03b2cd89f9f…",
+    "out/x8c_pit_trend_fixed.json": "bf2f2d91f35d64a0…",
+    "codex_r6/symbols_341.txt": "0b4c23eec9dbbba8…"
+   }
+  },
+  {
+   "id": "CLAUDE-E9d",
+   "date_tw": "2026-10-23",
+   "type": "開發 / 事後(沒有預先登記)",
+   "what": "E9 TSMOM PIT 同一帳戶的半年分段淨值(兩種切法)與 2026-01-06 起各股金額貢獻(淨與正)",
+   "data": "同 E9",
+   "script": [
+    "scripts/x8d_segments.py"
+   ],
+   "output": [
+    "out/x8d_segments.json"
+   ],
+   "key_results": "2026 上半年從 2026-01-06 起 ×1.695(49.0%);含 2025-12 那期 ×1.861(57.7%);SNDK、MU、STX、WDC 佔淨獲利 51.9%、正獲利 45.9%",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x8d_segments.py": "3fb539c252d18ec1…",
+    "out/x8d_segments.json": "345e8e08ff2d140b…"
+   }
+  },
+  {
+   "id": "CLAUDE-E10",
+   "date_tw": "2026-10-23",
+   "type": "資料稽核(不看任何預測好壞)",
+   "what": "walk7 日 K 的補值上界(開 / 高 / 低)、沒有交易的列、序列中斷、代號重用與名單覆蓋;E9 / E9b / FL3 / E6 實際用到幾次",
+   "data": "walk7 日 K、universe.json、sp500_jan1.json、fl3_rows.pkl;只用 2026-07-01 以前的列",
+   "script": [
+    "scripts/x9_price_audit.py"
+   ],
+   "output": [
+    "out/x9_price_audit.json",
+    "out/x9_identity.csv",
+    "out/x9_flagged_picks.csv"
+   ],
+   "key_results": "開 = 收 22,150 / 2,022,992 列(1.09%)、高 / 低上界各約 5.1%;接錯 PARA 2021–2025、IR 2017–2020、SE 2017;FL3 事件窗基準率 23.56% → 23.59%;E6 大跳空 0 個受影響;E9 / E9b 缺價變現 0 次",
+   "uses_holdout_H_labels": false,
+   "deviation": "第一次執行的 FL3 彙總誤含保留季 2,377 / 86,030 列(只看到含 H 的合併比率 23.62% 與兩個衍生比率,沒有 H 單獨結果);已改成只用 2026-07-01 以前重算,試驗帳記錄",
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/x9_price_audit.py": "f4eb90706b1aff74…",
+    "out/x9_price_audit.json": "76734d2cf7dbacc4…",
+    "out/x9_identity.csv": "cf282a7488230735…",
+    "out/x9_flagged_picks.csv": "729bb8bb576928ea…"
+   }
+  },
+  {
+   "id": "CLAUDE-E11",
+   "date_tw": "2026-10-23",
+   "type": "資料稽核 + 開發描述(不看保留季)",
+   "what": "重抓價格層 v0.2(原始回應、缺值不補);比對 walk7 上界旗標;用契約 v0.2 的 FL3 與准入、不用 W1 重算事件窗基準率",
+   "data": "Yahoo 日 K 737 / 737(2026-10-23 04:38–04:39 台灣時間);walk8 事件;答案在 2026-07-01 以前成熟",
+   "script": [
+    "scripts/p4_price_v02.py",
+    "scripts/x10_price_v02_check.py"
+   ],
+   "output": [
+    "out/x10_price_v02_check.json",
+    "out/price_v02_manifest.json"
+   ],
+   "key_results": "原始開 / 高 / 低 / 收缺值各 1 列(FISV 整列);walk7 上界旗標列 0 列是缺值;FL3_A60 v0.2 基準率 23.38%(94,288 列);W1 共同列答案 0 筆不同",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/p4_price_v02.py": "f3889397b3baed9e…",
+    "scripts/x10_price_v02_check.py": "e6e998d78142e062…",
+    "out/x10_price_v02_check.json": "8dd072c6bbf7b40a…",
+    "out/price_v02_manifest.json": "b128dbe14b53c2c9…",
+    "SCRATCH/pv2/bars_v02.pkl.gz 解壓後的 pickle(不進 repo)": "d83283589aab6ebd…"
+   }
+  },
+  {
+   "id": "CLAUDE-S1",
+   "date_tw": "2026-10-23",
+   "type": "合成自測(只用假資料)",
+   "what": "契約 v0.2 規則的參考實作是否前後一致:FL3 v0.2 與准入、反應日與 usable_from(給定日曆)、C0(以事件為單位、freeze_salt、測試向量)、P1 封存順序、固定順序門檻、Holm、精度、配對恆等式、證據等級、兩個 v0.2 schema;不代表方法有效",
+   "data": "無(假資料)",
+   "script": [
+    "scripts/v02_selftest.py"
+   ],
+   "output": [],
+   "key_results": "45 / 45 通過(第一次跑時抓到我自己寫錯的兩個 Holm 預期值,已改)",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/v02_selftest.py": "1878ee5bf2405095…"
+   }
   }
  ],
  "planned": [
   {
    "id": "PLAN-P0",
-   "what": "試做一輪(one_day_example):2025 年隨機 8 個財報日 × 每天 4 件 = 32 件,只做 d0;A / B / C + 32 份抽取 + 示範起始記憶約 200 張",
-   "status": "等使用者同意判讀成本(約 300–350 萬 tokens)"
+   "what": "試做一輪(契約 v0.2 §8 第 1 步):2025 年隨機 8 個財報日 × 每天 4 件 = 32 件,只做 d0;A / B / C / C0 + P1 第二回合;抽取 + 起始卡",
+   "status": "等使用者選版本並同意;每開一個子代理固定約 5.9 萬 tokens(實測),估計見 trial_cost_manifest.json(約 530 萬 – 2,110 萬,看版本)"
   },
   {
    "id": "PLAN-H1",
-   "what": "保留季 H(反應日 2026-07-01 ~ 09-30,半新)正式評分:Δ = Brier(B) − Brier(C)",
+   "what": "保留季 H(反應日 2026-07-01 ~ 09-30,半新)正式評分:H1 D1 = Brier(B) − Brier(C),過了才檢 H1b(C0 vs C)",
    "status": "凍結後才做"
   },
   {

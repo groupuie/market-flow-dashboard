@@ -1,7 +1,7 @@
-# 資料字典與來源稽核 v0.2
+# 資料字典與來源稽核 v0.3
 
-- 版本:v0.2|2026-10-22 11:49:10(台灣)|簡述:資料來源
-- v0.1 經過兩次唯讀複核。v0.2 變更:加 `issuer_first_public_time`(回應 Codex v1.1:SEC 受理時間不等於公司第一次公開的時間)、時間戳稽核擴大到 107 家(E7)。
+- 版本:v0.3|2026-10-23 04:58:17(台灣)|簡述:資料來源
+- v0.1 經過兩次唯讀複核。v0.2 變更:加 `issuer_first_public_time`(回應 Codex v1.1:SEC 受理時間不等於公司第一次公開的時間)、時間戳稽核擴大到 107 家(E7)。v0.3 變更:日 K 的補值與證券身份問題(E10;回應 Codex 2026-10-23 02:39:18),正式版改用契約 v0.2 §2b 的價格層。
 - 合併 Astra 清單的 data_dictionary 與 provenance_audit。稽核數字來自 E3(`scripts/p1b_sec_guidance.py`、`out/p1_sec_guidance.json`)。
 
 ## 1. 每一筆資料都要有的四個時間
@@ -9,7 +9,7 @@
 | 欄位 | 意思 | 例 |
 |---|---|---|
 | `published_at` | 來源說的發布時間(SEC = 索引頁 Accepted,美東 → UTC) | 2026-07-30T20:30:28Z |
-| `available_at` | 我們規定「從這時起可以用」;財報 = published_at;價格 = 該日 16:00 ET;案例卡 = usable_from(matured_at = r+10 收盤,usable_from = 下一個交易日收盤) | |
+| `available_at` | 我們規定「從這時起可以用」;財報 = published_at;價格 = 該日 close_time(一般 16:00 ET,提早收盤日 13:00 ET);案例卡 = usable_from(matured_at = close_time(r+10),usable_from = 下一個交易日 close_time) | |
 | `issuer_first_public_time` | 公司第一次公開(新聞稿 / 通訊社)的時間;**沒有原文證據就填 unknown**,不拿 SEC 受理時間代替。8-K 封面的「事件日」(Date of earliest event reported)可以給**日期**,不給時刻 | unknown |
 | `first_seen_at` | 我們第一次抓到的時間(回溯抓的就等於 retrieved_at) | |
 | `retrieved_at` | 這一份檔案這次抓下來的時間;原檔另存 SHA-256 | |
@@ -20,7 +20,7 @@
 
 | 層 | 來源 | 主要欄位 | available_at | 備註 |
 |---|---|---|---|---|
-| 日 K | walk7 `d3_daily.py`(專案 `scripts/astra_data.py`) | 日期、還原開高低收、只還原分割的收盤、量 | 當天 16:00 ET | 被併購 / 下市的成分股抓不到(2016 年 404 / 504 檔、2026 年 486 / 501)→ 倖存者偏差,沿用 walk7 的說明 |
+| 日 K | walk7 `d3_daily.py`(專案 `scripts/astra_data.py`);正式版改用價格層 v0.2(`p4_price_v02.py`,E11) | 日期、還原開高低收、只還原分割的收盤、量(v0.2 另存原始開高低收量與缺值旗標) | 當天 close_time | 被併購 / 下市的成分股抓不到(2016 年 404 / 504 檔、2026 年 486 / 501)→ 倖存者偏差;另有不是下市的缺:股別合併時對到被丟掉的那一類(Alphabet、Fox、News Corp、Under Armour 從 S&P 名單消失)、改代號(MMC、EQR);**原始開 / 高 / 低缺值時用當天收盤補**(`d3_daily.py` 第 61 行;原始回應沒保存;E11 用 2026-10-23 重抓的原始資料核對:2026-07-01 以前實際缺值只有 1 列,walk7 的「開盤 = 收盤」列都是真的相等);**代號重用接錯公司**:PARA 2021–2025、IR 2017–2020、SE 2017(E10) |
 | 名單 | walk7(每年 1 月 1 日 S&P 500 ∪ 前一年成交金額前 100) | 年、代號、CIK | 當年 1 月 1 日 | |
 | 財報事件 | EDGAR:submissions JSON(找 8-K 2.02)+ 索引頁(時間、附件類型)+ EX-99.1 原檔(要含當季營收與 EPS,排除交車量等) | cik、accession、items、filingDate、`accepted_et`、`accepted_utc`、附件檔名、SHA-256 | `accepted_utc` | **不用** JSON 的 acceptanceDateTime(見 §3) |
 | 財報摘要 | Claude 從 EX-99.1 抽取 | 營收、EPS、年增率、指引(期間 / 低 / 高 / 單位)、和上次比、重點 ≤ 5;每項附原文片段與字元位置 | = 該財報的 `accepted_utc`(內容只來自那份檔) | 另記模型 ID、提示詞指紋、抽取時間;抽取時看不到股價 |
@@ -43,5 +43,6 @@
 ## 4. 還沒解決
 
 - 還原價會因之後的分割 / 配息改變;FL3 是比例,分割不影響,窗內除息有小差異 → 正式版存未還原價 + 當時已知的調整因子。
+- 價格層 v0.2(契約 v0.2 §2b):保存原始回應、補值旗標(缺值留空,不用收盤補)、`no_trade`、`security_id` 與代號有效期間、名單年份的名稱 + CIK 檢查。
 - 有些公司用 8-K Item 7.01 或別的附件發財報;海外公司(6-K)不在範圍。
 - 市場共識預估、法說會逐字稿:沒有免費、可回溯時間的來源,這版不用(B 組的資訊因此比專業投資人少)。
