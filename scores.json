@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-10-22T00:40:14Z",
+ "gen_utc": "2026-10-22T05:16:44Z",
  "data_asof": "2026-10-21",
  "protocol": "v2",
  "status": "COLLECTING",
@@ -10,13 +10,13 @@
   "end_reason": null
  },
  "counts": {
-  "locked": 63,
-  "agree": 25,
-  "disagree": 38,
+  "locked": 101,
+  "agree": 39,
+  "disagree": 62,
   "late": 0,
-  "days": 5,
+  "days": 6,
   "closed": 3,
-  "open": 60,
+  "open": 98,
   "no_data": 0,
   "unresolved": 0
  },
@@ -39,8 +39,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": 0.003690689855658791
+   "elapsed_sessions": 5,
+   "unreal": 0.02621400945423291
   },
   "2026-10-14:CSCO": {
    "id": "2026-10-14:CSCO",
@@ -60,8 +60,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.048676116608718956
+   "elapsed_sessions": 5,
+   "unreal": -0.043772844789159326
   },
   "2026-10-14:DDOG": {
    "id": "2026-10-14:DDOG",
@@ -81,8 +81,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.016469523327349966
+   "elapsed_sessions": 5,
+   "unreal": 0.04742946564182815
   },
   "2026-10-14:GOOG": {
    "id": "2026-10-14:GOOG",
@@ -102,8 +102,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.012128153172994982
+   "elapsed_sessions": 5,
+   "unreal": -0.028132616803218435
   },
   "2026-10-14:GOOGL": {
    "id": "2026-10-14:GOOGL",
@@ -123,8 +123,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.01282274441543374
+   "elapsed_sessions": 5,
+   "unreal": -0.028836669567740003
   },
   "2026-10-14:OKTA": {
    "id": "2026-10-14:OKTA",
@@ -213,8 +213,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.06874999999999998
+   "elapsed_sessions": 5,
+   "unreal": -0.060718750000000044
   },
   "2026-10-14:SNPS": {
    "id": "2026-10-14:SNPS",
@@ -234,8 +234,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.049174756250398244
+   "elapsed_sessions": 5,
+   "unreal": -0.04159143530811216
   },
   "2026-10-14:SPY": {
    "id": "2026-10-14:SPY",
@@ -255,8 +255,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": 0.0036541598694941335
+   "elapsed_sessions": 5,
+   "unreal": 0.008926590538335999
   },
   "2026-10-14:T": {
    "id": "2026-10-14:T",
@@ -276,8 +276,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": 0.0
+   "elapsed_sessions": 5,
+   "unreal": -0.06447480785653292
   },
   "2026-10-14:TLN": {
    "id": "2026-10-14:TLN",
@@ -297,8 +297,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.005011532219026726
+   "elapsed_sessions": 5,
+   "unreal": 0.02363393035109196
   },
   "2026-10-14:TWLO": {
    "id": "2026-10-14:TWLO",
@@ -318,8 +318,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 4,
-   "unreal": -0.020855412566237685
+   "elapsed_sessions": 5,
+   "unreal": 0.009386828160484528
   },
   "2026-10-15:ALLY": {
    "id": "2026-10-15:ALLY",
@@ -339,8 +339,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.0028886554621848637
+   "elapsed_sessions": 4,
+   "unreal": 0.016018907563025264
   },
   "2026-10-15:APP": {
    "id": "2026-10-15:APP",
@@ -360,8 +360,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.026493970522554755
+   "elapsed_sessions": 4,
+   "unreal": -0.04278695846359992
   },
   "2026-10-15:BA": {
    "id": "2026-10-15:BA",
@@ -381,8 +381,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.001788250144637793
+   "elapsed_sessions": 4,
+   "unreal": 0.011308052385210043
   },
   "2026-10-15:BAC": {
    "id": "2026-10-15:BAC",
@@ -402,8 +402,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.028768699654775576
+   "elapsed_sessions": 4,
+   "unreal": -0.026083621020329906
   },
   "2026-10-15:BMNR": {
    "id": "2026-10-15:BMNR",
@@ -423,8 +423,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.005664488017429137
+   "elapsed_sessions": 4,
+   "unreal": 0.04400871459694988
   },
   "2026-10-15:BMY": {
    "id": "2026-10-15:BMY",
@@ -444,8 +444,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.00949263502454989
+   "elapsed_sessions": 4,
+   "unreal": 0.00032733224222569746
   },
   "2026-10-15:CRML": {
    "id": "2026-10-15:CRML",
@@ -465,8 +465,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.061583577712609916
+   "elapsed_sessions": 4,
+   "unreal": -0.026392961876832932
   },
   "2026-10-15:CVNA": {
    "id": "2026-10-15:CVNA",
@@ -486,8 +486,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.009777339577684674
+   "elapsed_sessions": 4,
+   "unreal": -0.027360118314025184
   },
   "2026-10-15:DASH": {
    "id": "2026-10-15:DASH",
@@ -507,8 +507,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.011143785791673189
+   "elapsed_sessions": 4,
+   "unreal": -0.04839292163235842
   },
   "2026-10-15:IONQ": {
    "id": "2026-10-15:IONQ",
@@ -528,8 +528,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.05364495035117445
+   "elapsed_sessions": 4,
+   "unreal": -0.022765802857834694
   },
   "2026-10-15:KKR": {
    "id": "2026-10-15:KKR",
@@ -549,8 +549,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.0016842578037277178
+   "elapsed_sessions": 4,
+   "unreal": 0.00909499214013021
   },
   "2026-10-15:LCID": {
    "id": "2026-10-15:LCID",
@@ -631,8 +631,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.030799315570765096
+   "elapsed_sessions": 4,
+   "unreal": -0.02517721828403796
   },
   "2026-10-15:MCHP": {
    "id": "2026-10-15:MCHP",
@@ -652,8 +652,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.03705222860267976
+   "elapsed_sessions": 4,
+   "unreal": 0.054826360404703456
   },
   "2026-10-15:NCLH": {
    "id": "2026-10-15:NCLH",
@@ -673,8 +673,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.011635423400129241
+   "elapsed_sessions": 4,
+   "unreal": 0.007756948933419494
   },
   "2026-10-15:NEM": {
    "id": "2026-10-15:NEM",
@@ -694,8 +694,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.012832740830659883
+   "elapsed_sessions": 4,
+   "unreal": 0.016040926038324965
   },
   "2026-10-15:NXPI": {
    "id": "2026-10-15:NXPI",
@@ -715,8 +715,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.040416867364364784
+   "elapsed_sessions": 4,
+   "unreal": 0.06126023558260729
   },
   "2026-10-15:OPEN": {
    "id": "2026-10-15:OPEN",
@@ -805,8 +805,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.003350515463917514
+   "elapsed_sessions": 4,
+   "unreal": 0.00195876288659802
   },
   "2026-10-15:RDDT": {
    "id": "2026-10-15:RDDT",
@@ -826,8 +826,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.02718749999999992
+   "elapsed_sessions": 4,
+   "unreal": -0.04200000000000004
   },
   "2026-10-15:RGTI": {
    "id": "2026-10-15:RGTI",
@@ -847,8 +847,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.0535714285714286
+   "elapsed_sessions": 4,
+   "unreal": -0.021915584415584388
   },
   "2026-10-15:SOFI": {
    "id": "2026-10-15:SOFI",
@@ -868,8 +868,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.02620232172470971
+   "elapsed_sessions": 4,
+   "unreal": -0.011608623548922004
   },
   "2026-10-15:SOUN": {
    "id": "2026-10-15:SOUN",
@@ -889,8 +889,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.03688524590163933
+   "elapsed_sessions": 4,
+   "unreal": -0.055327868852458884
   },
   "2026-10-15:UPST": {
    "id": "2026-10-15:UPST",
@@ -910,8 +910,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": -0.04444444444444451
+   "elapsed_sessions": 4,
+   "unreal": -0.04404040404040399
   },
   "2026-10-15:VRTX": {
    "id": "2026-10-15:VRTX",
@@ -931,8 +931,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 3,
-   "unreal": 0.007024615505028642
+   "elapsed_sessions": 4,
+   "unreal": 0.02633741635033071
   },
   "2026-10-16:AA": {
    "id": "2026-10-16:AA",
@@ -953,8 +953,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": -0.023929169657812888
+   "elapsed_sessions": 3,
+   "unreal": -0.02536491983728173
   },
   "2026-10-16:AI": {
    "id": "2026-10-16:AI",
@@ -975,8 +975,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": 0.029049295774647987
+   "elapsed_sessions": 3,
+   "unreal": 0.03785211267605626
   },
   "2026-10-16:BKR": {
    "id": "2026-10-16:BKR",
@@ -997,8 +997,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": -0.004294149221685473
+   "elapsed_sessions": 3,
+   "unreal": 0.0019681517266059156
   },
   "2026-10-16:C": {
    "id": "2026-10-16:C",
@@ -1019,8 +1019,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": -0.013050833803270656
+   "elapsed_sessions": 3,
+   "unreal": -0.0022556996697011833
   },
   "2026-10-16:CLF": {
    "id": "2026-10-16:CLF",
@@ -1041,8 +1041,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": -0.03873239436619713
+   "elapsed_sessions": 3,
+   "unreal": -0.011971830985915477
   },
   "2026-10-16:META": {
    "id": "2026-10-16:META",
@@ -1063,8 +1063,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": -0.0182561230838848
+   "elapsed_sessions": 3,
+   "unreal": -0.01363199275977145
   },
   "2026-10-16:MSTR": {
    "id": "2026-10-16:MSTR",
@@ -1085,8 +1085,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": 0.0258032056350177
+   "elapsed_sessions": 3,
+   "unreal": 0.10314094731546031
   },
   "2026-10-16:PLTR": {
    "id": "2026-10-16:PLTR",
@@ -1107,8 +1107,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": 0.029974063477633095
+   "elapsed_sessions": 3,
+   "unreal": 0.07874542100056159
   },
   "2026-10-16:ROK": {
    "id": "2026-10-16:ROK",
@@ -1129,8 +1129,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": -0.009080590238365494
+   "elapsed_sessions": 3,
+   "unreal": 0.015798373833074697
   },
   "2026-10-16:ZS": {
    "id": "2026-10-16:ZS",
@@ -1151,8 +1151,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 2,
-   "unreal": 0.021914153684912563
+   "elapsed_sessions": 3,
+   "unreal": 0.10204373302844094
   },
   "2026-10-19:AMZN": {
    "id": "2026-10-19:AMZN",
@@ -1173,8 +1173,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": -0.005490760375643666
+   "elapsed_sessions": 2,
+   "unreal": -0.006475310511966037
   },
   "2026-10-19:CLF": {
    "id": "2026-10-19:CLF",
@@ -1195,8 +1195,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": -0.002192982456140302
+   "elapsed_sessions": 2,
+   "unreal": 0.025584795321637488
   },
   "2026-10-19:GME": {
    "id": "2026-10-19:GME",
@@ -1217,8 +1217,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": 0.028760202098717436
+   "elapsed_sessions": 2,
+   "unreal": 0.0217644772638943
   },
   "2026-10-19:MPWR": {
    "id": "2026-10-19:MPWR",
@@ -1239,8 +1239,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": 0.012888834813643335
+   "elapsed_sessions": 2,
+   "unreal": 0.04093766476051419
   },
   "2026-10-19:MXL": {
    "id": "2026-10-19:MXL",
@@ -1261,8 +1261,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": -0.015007369690472894
+   "elapsed_sessions": 2,
+   "unreal": 0.015543347179418632
   },
   "2026-10-19:SKHY": {
    "id": "2026-10-19:SKHY",
@@ -1283,8 +1283,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": 0.015841871956979725
+   "elapsed_sessions": 2,
+   "unreal": 0.04098539350337904
   },
   "2026-10-19:SNDK": {
    "id": "2026-10-19:SNDK",
@@ -1305,8 +1305,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": 0.021253361157547168
+   "elapsed_sessions": 2,
+   "unreal": 0.03085720269416181
   },
   "2026-10-19:SPCX": {
    "id": "2026-10-19:SPCX",
@@ -1327,8 +1327,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": 0.0110829855647534
+   "elapsed_sessions": 2,
+   "unreal": 0.08989532735855521
   },
   "2026-10-19:WDC": {
    "id": "2026-10-19:WDC",
@@ -1349,8 +1349,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 1,
-   "unreal": 0.044255904609034724
+   "elapsed_sessions": 2,
+   "unreal": 0.08492891538637926
   },
   "2026-10-20:AAPL": {
    "id": "2026-10-20:AAPL",
@@ -1367,11 +1367,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": 0.0136433286185762
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -1388,11 +1389,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": 0.00043835616438370195
   },
   "2026-10-20:MSTR": {
    "id": "2026-10-20:MSTR",
@@ -1409,11 +1411,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": 0.04907723855092261
   },
   "2026-10-20:ON": {
    "id": "2026-10-20:ON",
@@ -1430,16 +1433,125 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": 0.007068062827225052
+  },
+  "2026-10-20:RUN": {
+   "id": "2026-10-20:RUN",
+   "date": "2026-10-20",
+   "sym": "RUN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "panic_sc_filled_after": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": -0.009102730819245841
+  },
+  "2026-10-20:SBET": {
+   "id": "2026-10-20:SBET",
+   "date": "2026-10-20",
+   "sym": "SBET",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.45,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "panic_sc_filled_after": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": 0.03213844252163156
+  },
+  "2026-10-20:TSLA": {
+   "id": "2026-10-20:TSLA",
+   "date": "2026-10-20",
+   "sym": "TSLA",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.58,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "panic_sc_filled_after": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-21",
+   "elapsed_sessions": 1,
+   "unreal": 0.013213433657551787
+  },
+  "2026-10-21:ADI": {
+   "id": "2026-10-21:ADI",
+   "date": "2026-10-21",
+   "sym": "ADI",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.64,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
    "sig_ok": true,
    "status": "open",
    "entry": null,
    "elapsed_sessions": 0,
    "unreal": null
   },
-  "2026-10-20:RUN": {
-   "id": "2026-10-20:RUN",
-   "date": "2026-10-20",
-   "sym": "RUN",
+  "2026-10-21:AMD": {
+   "id": "2026-10-21:AMD",
+   "date": "2026-10-21",
+   "sym": "AMD",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.58,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:AMKR": {
+   "id": "2026-10-21:AMKR",
+   "date": "2026-10-21",
+   "sym": "AMKR",
    "kind": "底",
    "type": "stock",
    "style": "b",
@@ -1457,10 +1569,682 @@
    "elapsed_sessions": 0,
    "unreal": null
   },
-  "2026-10-20:SBET": {
-   "id": "2026-10-20:SBET",
-   "date": "2026-10-20",
-   "sym": "SBET",
+  "2026-10-21:APLD": {
+   "id": "2026-10-21:APLD",
+   "date": "2026-10-21",
+   "sym": "APLD",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.4,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:ASML": {
+   "id": "2026-10-21:ASML",
+   "date": "2026-10-21",
+   "sym": "ASML",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:BE": {
+   "id": "2026-10-21:BE",
+   "date": "2026-10-21",
+   "sym": "BE",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:CAT": {
+   "id": "2026-10-21:CAT",
+   "date": "2026-10-21",
+   "sym": "CAT",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.47,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:CDNS": {
+   "id": "2026-10-21:CDNS",
+   "date": "2026-10-21",
+   "sym": "CDNS",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:CEG": {
+   "id": "2026-10-21:CEG",
+   "date": "2026-10-21",
+   "sym": "CEG",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:COHR": {
+   "id": "2026-10-21:COHR",
+   "date": "2026-10-21",
+   "sym": "COHR",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:CRWD": {
+   "id": "2026-10-21:CRWD",
+   "date": "2026-10-21",
+   "sym": "CRWD",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:CSCO": {
+   "id": "2026-10-21:CSCO",
+   "date": "2026-10-21",
+   "sym": "CSCO",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.58,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:DELL": {
+   "id": "2026-10-21:DELL",
+   "date": "2026-10-21",
+   "sym": "DELL",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:DJT": {
+   "id": "2026-10-21:DJT",
+   "date": "2026-10-21",
+   "sym": "DJT",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.35,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:ETN": {
+   "id": "2026-10-21:ETN",
+   "date": "2026-10-21",
+   "sym": "ETN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.53,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:GEV": {
+   "id": "2026-10-21:GEV",
+   "date": "2026-10-21",
+   "sym": "GEV",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.53,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:GLW": {
+   "id": "2026-10-21:GLW",
+   "date": "2026-10-21",
+   "sym": "GLW",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.46,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:GLXY": {
+   "id": "2026-10-21:GLXY",
+   "date": "2026-10-21",
+   "sym": "GLXY",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.38,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:HOOD": {
+   "id": "2026-10-21:HOOD",
+   "date": "2026-10-21",
+   "sym": "HOOD",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:IBKR": {
+   "id": "2026-10-21:IBKR",
+   "date": "2026-10-21",
+   "sym": "IBKR",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.57,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:LWLG": {
+   "id": "2026-10-21:LWLG",
+   "date": "2026-10-21",
+   "sym": "LWLG",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.35,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:META": {
+   "id": "2026-10-21:META",
+   "date": "2026-10-21",
+   "sym": "META",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:MS": {
+   "id": "2026-10-21:MS",
+   "date": "2026-10-21",
+   "sym": "MS",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:NET": {
+   "id": "2026-10-21:NET",
+   "date": "2026-10-21",
+   "sym": "NET",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:NOK": {
+   "id": "2026-10-21:NOK",
+   "date": "2026-10-21",
+   "sym": "NOK",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:NVDA": {
+   "id": "2026-10-21:NVDA",
+   "date": "2026-10-21",
+   "sym": "NVDA",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.63,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:PANW": {
+   "id": "2026-10-21:PANW",
+   "date": "2026-10-21",
+   "sym": "PANW",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:QQQ": {
+   "id": "2026-10-21:QQQ",
+   "date": "2026-10-21",
+   "sym": "QQQ",
+   "kind": "底",
+   "type": "idx",
+   "style": "c",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.78,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:RKLB": {
+   "id": "2026-10-21:RKLB",
+   "date": "2026-10-21",
+   "sym": "RKLB",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.4,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:SCHW": {
+   "id": "2026-10-21:SCHW",
+   "date": "2026-10-21",
+   "sym": "SCHW",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.47,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:SMCI": {
+   "id": "2026-10-21:SMCI",
+   "date": "2026-10-21",
+   "sym": "SMCI",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:TER": {
+   "id": "2026-10-21:TER",
+   "date": "2026-10-21",
+   "sym": "TER",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:TLN": {
+   "id": "2026-10-21:TLN",
+   "date": "2026-10-21",
+   "sym": "TLN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.53,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:TSM": {
+   "id": "2026-10-21:TSM",
+   "date": "2026-10-21",
+   "sym": "TSM",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:TXN": {
+   "id": "2026-10-21:TXN",
+   "date": "2026-10-21",
+   "sym": "TXN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:VRT": {
+   "id": "2026-10-21:VRT",
+   "date": "2026-10-21",
+   "sym": "VRT",
    "kind": "底",
    "type": "stock",
    "style": "b",
@@ -1478,16 +2262,37 @@
    "elapsed_sessions": 0,
    "unreal": null
   },
-  "2026-10-20:TSLA": {
-   "id": "2026-10-20:TSLA",
-   "date": "2026-10-20",
-   "sym": "TSLA",
+  "2026-10-21:WOLF": {
+   "id": "2026-10-21:WOLF",
+   "date": "2026-10-21",
+   "sym": "WOLF",
    "kind": "底",
    "type": "stock",
    "style": "b",
    "displayed_buy": true,
-   "v": "agree",
-   "p": 0.58,
+   "v": "disagree",
+   "p": 0.38,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-21:WULF": {
+   "id": "2026-10-21:WULF",
+   "date": "2026-10-21",
+   "sym": "WULF",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.4,
    "model": "claude-opus-5-5",
    "protocol": "v2",
    "late": false,
