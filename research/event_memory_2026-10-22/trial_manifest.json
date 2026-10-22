@@ -1,7 +1,7 @@
 {
  "title": "event_memory 試驗清單 v0.1",
  "version": "0.3",
- "created_tw": "2026-10-22 11:49:10",
+ "created_tw": "2026-10-22 12:03:08",
  "note": "E0–E5 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
  "inputs_sha256": {
   "walk7 S7.pkl": "642438a6e10e1e53…",
@@ -166,7 +166,7 @@
    "id": "CLAUDE-E7",
    "date_tw": "2026-10-22",
    "type": "資料標註(不看股價結果)",
-   "what": "Codex R2 的 408 個跳空事件:SEC 8-K 2.02 有無、索引頁 Accepted、其他 8-K 項目",
+   "what": "Codex R2 的 408 個跳空事件:跳空前有沒有 SEC 8-K 2.02(索引頁 Accepted)、其他 8-K 項目;v2(複核後:B 分盤中 / 收盤後並檢查封面事件日、只算跳空前的項目、提早收盤日、取最早的 2.02、加當時公司名)",
    "data": "Codex v1.1 內嵌清單(163 測試 + 245 案例庫);SEC submissions 與索引頁;SPY 交易日曆",
    "script": [
     "scripts/p2_tag_r2_events.py"
@@ -176,13 +176,13 @@
     "out/r2_event_tags.json",
     "codex_r2/r2_events_408.json"
    ],
-   "key_results": "測試 126 / 163 跳空前有 2.02;案例庫 93 / 245,2020 年 119 / 141 沒有 2.02(六個大盤日 77 件);JSON 時間戳 59 / 107 家多 4 / 5 小時",
+   "key_results": "測試 A 126 / 163(77%);案例庫 A 93 / 245(38%);A 不證明跳空是財報造成的(測試 42 件、案例庫 30 件同時有其他重大項目);2020 年 119 / 141 跳空前沒有 2.02;六個大盤日 77 件只有 1 件跳空前有 2.02;JSON 時間戳 59 / 107 家多 4 / 5 小時、0 家混用",
    "uses_holdout_H_labels": false,
    "claude_judgments": 0,
    "sha256": {
-    "scripts/p2_tag_r2_events.py": "cfc53f87848d8655…",
-    "out/r2_event_tags.csv": "4fe70a82f9572c53…",
-    "out/r2_event_tags.json": "7be1341c8f20604f…",
+    "scripts/p2_tag_r2_events.py": "9cab6a8bbc83ab99…",
+    "out/r2_event_tags.csv": "9b8c990f231bd450…",
+    "out/r2_event_tags.json": "1a42ef3db1628c11…",
     "codex_r2/r2_events_408.json": "982c64e6c90ec771…"
    }
   }

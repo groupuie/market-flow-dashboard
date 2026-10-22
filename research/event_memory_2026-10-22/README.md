@@ -36,7 +36,7 @@
   - `w7/`:walk7 工作資料夾(`out/S7.pkl`、`data/daily.pkl.gz`、x6 另外要 `out/pred_M2_real.pkl`;由 `research/walk7_2026-10-21/` 的 d0–d3、w1 重建;日 K 解壓後 SHA-256 `0a0fd080…` = `research/walk7_2026-10-21/data/daily_manifest.json`)
   - `w8/`:walk8 工作資料夾(`out/ea_events.pkl`、`data/cik_map.json`、`raw/subs/`;由 `research/walk8_2026-10-21/` 的 e0、f2 重建)
   - `w8/.sec_ua`:SEC 要求的 User-Agent(含聯絡 email;只存在本機,不進 repo)
-- 順序:x1 → x2(產生 `em/out/fl3_rows.pkl`,8,400 萬位元組,不進 repo)→ x3、x4 → x5、x5b、x6、x7;p1b 獨立(會抓 SEC,約 160 次請求);p2 讀 `codex_r2/r2_events_408.json`(Codex 提供的事件清單)抓 SEC 標註,不用任何股價結果。
+- 順序:x1 → x2(產生 `em/out/fl3_rows.pkl`,8,400 萬位元組,不進 repo)→ x3、x4 → x5、x5b、x6、x7;p1b 獨立(會抓 SEC,約 160 次請求);p2 讀 `SCRATCH/em/r2tag/r2_events_408.json`(= repo 的 `codex_r2/r2_events_408.json`,Codex 提供的事件清單)、`w8/`(CIK 對照、`.sec_ua`)與 `w7/data/daily.pkl.gz`(只用 SPY 的日期),抓 SEC 標註,不用任何股價結果。
 - 輸入檔指紋見 `trial_manifest.json`。
 
 不是投資建議。
