@@ -1,0 +1,13 @@
+PASS 斷線:沒有標壞代號 snapbad=0
+PASS 斷線:每批只打 1 次(不拆) calls=[200, 140]
+PASS 斷線:錯誤 2 筆、寫明下一輪再抓 ['snap: RuntimeError 連線問題,這批 200 檔下一輪再抓:網絡中斷']
+PASS 壞代號:只有 S007 被標 ['S007']
+PASS 壞代號:其他 339 檔都有當日棒 n=339
+04:08:06 snapbad: 清掉斷線誤標 170 檔
+PASS 誤標清除:170 檔放回、S300 仍擋 snapbad=['S300'] n=339
+PASS Yahoo null 收盤:補上當天(10-22,101.5) ['2026-10-22', 100.5, 102.5, 99.5, 101.5, 3, None]
+PASS Yahoo null 收盤但報價是前一天:照舊跳過 ['2026-10-21', 100.0, 102.0, 99.0, 101.0, 2, None]
+PASS Yahoo 正常收盤:不變 ['2026-10-22', 100.5, 102.5, 99.5, 102.0, 3, None]
+PASS Linux:caf=n/a {'caf': 'n/a'}
+PASS macOS:caf=ok、參數 -i -s -t 420 {'caf': 'ok', 'caf_utc': '2026-10-22 04:08:06'} args=-i -s -t 420
+ALL PASS

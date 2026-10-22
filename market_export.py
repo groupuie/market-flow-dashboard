@@ -514,7 +514,8 @@ def yahoo_ohlc(sym, rng="5y", adjust=False, complete_only=False):
     q = urllib.parse.quote(sym)
     d = http_json(f"https://query1.finance.yahoo.com/v8/finance/chart/{q}?range={rng}&interval=1d&events=div%7Csplit", 15)
     r = d["chart"]["result"][0]; ind = r["indicators"]["quote"][0]; ts = r.get("timestamp") or []
-    off = r.get("meta", {}).get("gmtoffset", -14400)
+    meta = r.get("meta", {}) or {}
+    off = meta.get("gmtoffset", -14400)
     adjc = ((r.get("indicators", {}).get("adjclose") or [{}])[0] or {}).get("adjclose") or []
     ld = last_done_session() if complete_only else None
     bars = []
@@ -522,6 +523,14 @@ def yahoo_ohlc(sym, rng="5y", adjust=False, complete_only=False):
         o = (ind.get("open") or [None]*len(ts))[i]; h = (ind.get("high") or [None]*len(ts))[i]
         l = (ind.get("low") or [None]*len(ts))[i]; c = (ind.get("close") or [None]*len(ts))[i]
         v = (ind.get("volume") or [None]*len(ts))[i]
+        # 2026-10-22:Yahoo 收盤後約美東 20:00–22:00 把當天 close 暫時清成 null(開高低量還在)→ 原本整根跳過,
+        #   那晚剛好日更的檔就少一天(10/22:STX、DELL 少 10/21)。最後一根、同一個美東日 → 用 meta.regularMarketPrice(=當天收盤)
+        if c is None and i == len(ts) - 1 and None not in (o, h, l):
+            try:
+                if (meta.get("regularMarketPrice") and meta.get("regularMarketTime") and
+                        datetime.fromtimestamp(t + off, timezone.utc).date() == datetime.fromtimestamp(meta["regularMarketTime"] + off, timezone.utc).date()):
+                    c = float(meta["regularMarketPrice"]); h = max(h, c); l = min(l, c)
+            except Exception: pass
         if None in (o, h, l, c) or not c: continue
         dt = datetime.fromtimestamp(t + off, timezone.utc).strftime("%Y-%m-%d")
         if ld and dt > ld: continue                       # 未收盤(盤前/盤中)當日棒不入日K檔
@@ -583,14 +592,24 @@ def _snap_rows(d, out):
         h = max(h, o, c); l = min(l, o, c)
         out[sym] = [dt, o, h, l, c, int(v or 0), tr]
 
+def _snap_neterr(msg):
+    """2026-10-22:斷線/逾時/限流這類錯誤 ≠ 代號錯。10/21 16:11(台灣)Mac 斷網一次:每檔單獨重試都回「網絡中斷」,
+       170 檔核心股(SPY/NVDA/MU…)全被標成壞代號、擋 24 小時 → 整個 10/21 美股盤中這些股票沒有當日即時K棒。"""
+    m = str(msg or "").lower()
+    return any(k in m for k in ("網絡", "网络", "網路", "network", "中斷", "中断", "斷開", "断开", "斷線", "断线",
+                                 "連接", "连接", "connect", "timeout", "timed out", "超時", "超时", "頻率", "频率"))
+
 def _snap_batch(q, fs, out, depth=0):
     """get_market_snapshot 一批裡有任一無效代碼=整批失敗且原版無記錄(2026-08-12 實案:
        訪客免token加入 AVGG/NEBX/LITX 等手滑代號 → kline_today 整包靜默變空、盤中棒全站消失)。
-       → 失敗即二分遞迴:壞代碼隔離到單檔逐一記 snap-bad(gist errors 可見),好代碼照常回傳。"""
+       → 失敗即二分遞迴:壞代碼隔離到單檔逐一記 snap-bad(gist errors 可見),好代碼照常回傳。
+       2026-10-22:斷線類錯誤(_snap_neterr)不拆、不標,整批留給下一輪(否則幾百次重試+把好代號誤擋 24 小時)。"""
     from futu import RET_OK
     ret, d = q.get_market_snapshot(fs)
     if ret == RET_OK:
         _snap_rows(d, out); return
+    if _snap_neterr(d):
+        err("snap", RuntimeError("連線問題,這批 %d 檔下一輪再抓:%s" % (len(fs), str(d)[:50]))); return
     if len(fs) == 1:
         SNAP_BAD.add(fs[0])
         err("snap-bad", RuntimeError(fs[0] + " " + str(d)[:50])); return
@@ -619,6 +638,16 @@ def snapshot_today(kl_syms, args=None):
     try: sbad = json.load(open(badp)) if badp else {}
     except Exception: sbad = {}
     now = time.time()
+    try:   # 2026-10-22:舊版在斷網那一輪會把整批代號用同一個時間戳一次標壞(10/21 一次 170 檔)→ 同一時間戳 ≥15 檔 = 誤標,立刻放回
+        _cnt = {}
+        for _v in sbad.values():
+            if isinstance(_v, (int, float)): _cnt[_v] = _cnt.get(_v, 0) + 1
+        _mass = {v for v, n in _cnt.items() if n >= 15}
+        if _mass:
+            sbad = {k: v for k, v in sbad.items() if v not in _mass}
+            if badp: json.dump(sbad, open(badp, "w"))
+            log(f"snapbad: 清掉斷線誤標 {sum(_cnt[v] for v in _mass)} 檔")
+    except Exception: pass
     syms = [s for s in kl_syms if now - (sbad.get(s) or 0) > 24*3600]
     q = OpenQuoteContext(host="127.0.0.1", port=11111)
     out = {}
@@ -986,7 +1015,7 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 #       掃描標記」(.klscan)的快取檔入列(判讀核心優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
 #       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
 KLQ_BATCH = 8
-KLQ_VER = "2026-10-16a"   # 也當採集器版本戳:gist market_data.meta.klq.ver 看得到 Mac 是否已自動套用 repo 最新版(10-16a = Yahoo 晚間 null 補價 + 日更看門狗重設)
+KLQ_VER = "2026-10-22a"   # 也當採集器版本戳:gist market_data.meta.klq.ver 看得到 Mac 是否已自動套用 repo 最新版(10-22a = 斷線不誤標壞代號 + Yahoo 日K null 補價 + Mac 不自動睡眠;10-16a = Yahoo 晚間 null 補價 + 日更看門狗重設)
 def klq_pushed_load(args):
     try: return json.load(open(args.config + ".klpushedmt.json"))
     except Exception: return {}
@@ -1066,6 +1095,7 @@ def _klq_meta(args):
     try:
         kdir = args.config + ".klines"
         st = dict(KLQ_STAT); st["ver"] = KLQ_VER
+        st.update(CAF_STAT)   # 2026-10-22:防睡眠狀態(caf=ok 表示這輪有叫 caffeinate)
         try: st["queue"] = len(klq_load(args))
         except Exception: pass
         try: st["klscan"] = datetime.fromtimestamp(os.path.getmtime(args.config + ".klscan"), timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
@@ -2159,6 +2189,26 @@ def push_full(cfg, data, fsnap, a):
         except Exception as e: log("gz64 backfill error:",type(e).__name__,e)
     return files["market_data.json"]
 
+CAF_STAT = {}
+def keep_awake(sec=420):
+    """2026-10-22:Mac 每晚約 01:00(台灣)自動睡著 → 美股後半場沒有 ⑦/即時價(10/21 01:13–06:43、10/22 00:55–08:38)。
+       使用者:24 小時不睡也可以,但螢幕要能自動關。→ 每輪開頭叫 macOS 內建 caffeinate 撐 420 秒:
+       -i 擋「閒置自動睡眠」、-s 插電時擋系統睡眠;不擋螢幕關閉(螢幕照「鎖定畫面」的設定自己關)。
+       launchd 每 5 分一輪 → 一棒接一棒不中斷;不改任何系統設定;採集器停掉 7 分鐘後就回到原本的睡眠行為。
+       合上 MacBook 蓋子、手動選「睡眠」照樣會睡。start_new_session:不跟著這一輪的程式一起結束。"""
+    try:
+        if sys.platform != "darwin":
+            CAF_STAT["caf"] = "n/a"; return
+        import shutil, subprocess
+        exe = shutil.which("caffeinate") or ("/usr/bin/caffeinate" if os.path.exists("/usr/bin/caffeinate") else None)
+        if not exe:
+            CAF_STAT["caf"] = "none"; return
+        subprocess.Popen([exe, "-i", "-s", "-t", str(int(sec))], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, close_fds=True, start_new_session=True)
+        CAF_STAT["caf"] = "ok"; CAF_STAT["caf_utc"] = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    except Exception as e:
+        CAF_STAT["caf"] = "err:" + type(e).__name__
+
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--config",default=os.path.join(os.path.dirname(os.path.abspath(__file__)),"config.json"))
@@ -2178,6 +2228,8 @@ def main():
     except Exception: pass
     if a.public_out:
         a.no_futu=True; a.no_push=True   # 備援模式:純公開源
+    else:
+        keep_awake()   # 2026-10-22 使用者:「24 小時也無所謂,但要讓 Mac 可以自動關螢幕、不睡眠」
     cfg=json.load(open(a.config)) if os.path.exists(a.config) else {}
 
     # 公開源備援:單次全量,寫檔不推 gist
