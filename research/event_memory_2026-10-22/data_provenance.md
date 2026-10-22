@@ -1,7 +1,7 @@
-# 資料字典與來源稽核 v0.1
+# 資料字典與來源稽核 v0.2
 
-- 版本:v0.1|2026-10-22 00:35:59(台灣)|簡述:資料來源
-- 經過兩次唯讀複核,修正都寫進來了。
+- 版本:v0.2|2026-10-22 11:49:10(台灣)|簡述:資料來源
+- v0.1 經過兩次唯讀複核。v0.2 變更:加 `issuer_first_public_time`(回應 Codex v1.1:SEC 受理時間不等於公司第一次公開的時間)、時間戳稽核擴大到 107 家(E7)。
 - 合併 Astra 清單的 data_dictionary 與 provenance_audit。稽核數字來自 E3(`scripts/p1b_sec_guidance.py`、`out/p1_sec_guidance.json`)。
 
 ## 1. 每一筆資料都要有的四個時間
@@ -10,10 +10,11 @@
 |---|---|---|
 | `published_at` | 來源說的發布時間(SEC = 索引頁 Accepted,美東 → UTC) | 2026-07-30T20:30:28Z |
 | `available_at` | 我們規定「從這時起可以用」;財報 = published_at;價格 = 該日 16:00 ET;案例卡 = usable_from(matured_at = r+10 收盤,usable_from = 下一個交易日收盤) | |
+| `issuer_first_public_time` | 公司第一次公開(新聞稿 / 通訊社)的時間;**沒有原文證據就填 unknown**,不拿 SEC 受理時間代替。8-K 封面的「事件日」(Date of earliest event reported)可以給**日期**,不給時刻 | unknown |
 | `first_seen_at` | 我們第一次抓到的時間(回溯抓的就等於 retrieved_at) | |
 | `retrieved_at` | 這一份檔案這次抓下來的時間;原檔另存 SHA-256 | |
 
-規則:決定時間 d_k(收盤)只能用 `available_at ≤ d_k` 的資料。
+規則:決定時間 d_k(收盤)只能用 `available_at ≤ d_k` 的資料。財報用 SEC 受理時間當 available_at 是**偏保守**的(只會晚、不會早);但反應日 r 可能因此晚一天(新聞稿在收盤前、受理在收盤後),所以兩個時間都要記,不一致的列要標出來。
 
 ## 2. 資料層
 
@@ -29,7 +30,7 @@
 
 ## 3. 來源稽核(E3:20 檔 × 4 份 = 80 份,申報日 2025-08-01 ~ 2026-10-20)
 
-1. **時間戳**:索引頁「Accepted」是美東時間。submissions JSON 的 `acceptanceDateTime` 有兩種:
+1. **時間戳**:索引頁「Accepted」是美東時間(SGML 檔頭的 ACCEPTANCE-DATETIME 也是;Codex 獨立核對 AAPL 一例相同)。E7 擴大到 107 家、231 份 2.02 8-K:48 家 JSON 是真 UTC、59 家多 4 / 5 小時;同一家公司前後一致(0 家混用),2019–2026 每年都有兩種 → **不能用固定小時數修正,一律用索引頁 / SGML**。E3 的 20 家:
    - 17 家(AAPL、MSFT、NVDA、AMZN、GOOGL、META、JPM、JNJ、WMT、CAT、NKE、NFLX、AMD、MU、TSLA、COST、UNH):比索引頁多 8(夏令)/ 10(冬令)小時 = 比真 UTC 多 4 / 5 小時。
    - 3 家(XOM、LMT、AVGO):比索引頁多 4 / 5 小時 = 真 UTC。
    - JSON 的日期部分可能跳到隔天(盤後財報),`filingDate` 才是美東日期。
