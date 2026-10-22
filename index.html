@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-22T04:51Z">
+<meta name="build" content="2026-10-22T05:02Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
@@ -889,7 +889,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue"
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-22T04:51Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-22T05:02Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#17181c',ink:'#fff',ink2:'#c0c3ca',muted:'#80838b',line:'#2a2c31',   // v19(2026-10-22 整體視覺統一):圖底 = 面板底 --surface;原暖灰 #1a1a19/#c3c2b7/#898781/#2c2c2a
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -6407,7 +6407,7 @@ function renderDest(catSplit, subtitle, fixRange){
   const MB=(window.innerWidth||1024)<680;   // 手機模式:字縮、文案精簡、長柱標籤入柱
   const order=['半導體','記憶體','光通信','軟體平台','加密股','電動車','太空','國防','金融傳產','正股','大盤','板塊ETF','槓桿','反向','國債','信用債','金','油','銀','Crypto','自訂','闖入','◇期權做多','◇期權做空'];
   const all=order.filter(c=>catSplit[c]).map(c=>({c,m:catSplit[c].m||0,r:catSplit[c].r||0,opt:!!catSplit[c]._opt}));
-  if(!all.length){el.innerHTML='<div class="miss" style="padding:30px">無 ⑦ 資料</div>';return;}
+  if(!all.length){chartMsg(el,'無 ⑦ 資料',30);el._ddBound=0;return;}   // v19:改走 chartMsg(先清掉舊圖狀態;purge 會拿掉點擊監聽 → 旗標歸零下次重掛),配合下方 freshPlot → 資料到了訊息不會殘留在圖下面
   const rows=all.filter(x=>!x.opt), optRows=all.filter(x=>x.opt);   // 期權=自屬刻度(量級遠大於 ⑦ 淨流),與類別/池各自獨立
   const hasOpt=optRows.length>0;
   // 池向與類別同向(2026-07-27 使用者定案):右=出池(現金離池買股進場)、左=入池(賣股現金回池)—— 與場內資金線 +y=進場 同一語意
@@ -6484,6 +6484,7 @@ function renderDest(catSplit, subtitle, fixRange){
     layout.yaxis3={domain:[0.15,0.27],autorange:'reversed',tickmode:'array',tickvals:oCats,automargin:true,
       ticktext:oCats.map(c=>(MB||NRD)?c.replace('◇',''):c),tickfont:{size:MB?9:10.5,color:'#9d8bc4'}};
   }
+  freshPlot('dest');   // v19:先清掉「無 ⑦ 資料」佔位字(原本資料晚到時這行字會留在圖下面)
   Plotly.react('dest',traces,layout,CFG);
   try{destDrillBind();destDrillRender();}catch(_){}
 }
@@ -6587,7 +6588,7 @@ function renderPoolTide(){
     ensureSpyK(); ensureQQQK();
     idxSPY=toPct(use.map(d=>SPYK&&SPYK[d]!=null?SPYK[d]:null)); idxQQQ=toPct(use.map(d=>QQQK&&QQQK[d]!=null?QQQK[d]:null));
   }
-  if(x.length<2){el.innerHTML='<div class="miss" style="padding:20px">場內資金線累積中(每次採集自動加點)</div>';return;}
+  if(x.length<2){chartMsg(el,'場內資金線累積中(每次採集自動加點)',20);return;}   // v19:同 renderDest(訊息不殘留)
   const lastA=yAll[yAll.length-1], lastM=yMain[yMain.length-1];
   const traces=[
     {type:'bar',name:'當日淨進出',x:x,y:barA,
@@ -6609,6 +6610,7 @@ function renderPoolTide(){
     traces.push({type:'scatter',mode:'lines',name:'QQQ',x:x,y:poff(idxQQQ,'QQQ'),yaxis:'y2',connectgaps:true,line:{color:'#c084fc',width:1.6},hovertemplate:'%{x} QQQ %{y:+.2f}%<extra></extra>'});}
   // v19(2026-10-22「現金池欄精簡」):標題一律用短版(怎麼看收進現金池標題列 ⓘ);手機也不放直立的軸標題(原本在手機被切掉)
   const _tMB=(window.innerWidth||1024)<680, _tSh=_tMB||NRP;
+  freshPlot('pooltide');   // v19:先清掉「場內資金線累積中」佔位字(線上 1440 實測:資料晚到時這行字壓在微調滑桿上)
   Plotly.react('pooltide',traces,
     {...PBASE,margin:{l:_tSh?4:96,r:_tSh?4:80,t:26,b:26},showlegend:false,
      annotations:[{text:'<b>場內資金</b> 全單'+(lastA>0?'+':'')+fmtM(lastA)+'·<span style="color:#c2703e">大單'+(lastM>0?'+':'')+fmtM(lastM)+'</span>',

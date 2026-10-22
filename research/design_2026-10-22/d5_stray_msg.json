@@ -1,0 +1,36 @@
+{
+ "old": {
+  "pt_placeholder": true,
+  "pt_after": {
+   "miss": true,
+   "plot": false,
+   "traces": 5
+  },
+  "dest_placeholder": true,
+  "dest_after": {
+   "miss": true,
+   "plot": false,
+   "traces": 5,
+   "ddBound": 1
+  },
+  "drill_by_bar": 6,
+  "errors": []
+ },
+ "new": {
+  "pt_placeholder": true,
+  "pt_after": {
+   "miss": false,
+   "plot": true,
+   "traces": 5
+  },
+  "dest_placeholder": true,
+  "dest_after": {
+   "miss": false,
+   "plot": true,
+   "traces": 5,
+   "ddBound": 1
+  },
+  "drill_by_bar": 6,
+  "errors": []
+ }
+}

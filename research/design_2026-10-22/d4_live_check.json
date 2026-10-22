@@ -1,0 +1,179 @@
+{
+ "d1920": {
+  "build": "2026-10-22T04:51Z",
+  "cls": "wsxFocus wsxFit",
+  "title": "NVDA 英偉達 · 100日",
+  "sub": [
+   "成交量",
+   "RVPOS · RSI",
+   "檔位",
+   "⑦現金池 全單·大單"
+  ],
+  "leg": {
+   "vis": true,
+   "x": 1425,
+   "y": 165,
+   "w": 52,
+   "h": 19
+  },
+  "dy": 0,
+  "popOpen": false,
+  "wl": {
+   "vis": true,
+   "x": 10,
+   "y": 4,
+   "w": 340,
+   "h": 1070
+  },
+  "center": {
+   "vis": true,
+   "x": 357,
+   "y": 4,
+   "w": 1131,
+   "h": 1070
+  },
+  "cp": {
+   "vis": true,
+   "x": 1495,
+   "y": 4,
+   "w": 415,
+   "h": 1070
+  },
+  "cpInfo": {
+   "vis": true,
+   "x": 1851,
+   "y": 7,
+   "w": 24,
+   "h": 24
+  },
+  "btnRows": 1,
+  "destKey": [
+   "【即時】深=大單 淺=散戶 ⚡=反向"
+  ],
+  "paper": "#17181c",
+  "rows": 8,
+  "ts": "2026-10-22 04:55:40",
+  "session": "closed",
+  "errors": [],
+  "bad": [],
+  "legOpens": true
+ },
+ "d1440": {
+  "build": "2026-10-22T04:51Z",
+  "cls": "wsxFocus wsxFit",
+  "title": "NVDA 英偉達 · 100日",
+  "sub": [
+   "成交量",
+   "RVPOS · RSI",
+   "檔位",
+   "⑦現金池 全單·大單"
+  ],
+  "leg": {
+   "vis": true,
+   "x": 945,
+   "y": 252,
+   "w": 52,
+   "h": 19
+  },
+  "dy": 0,
+  "popOpen": false,
+  "wl": {
+   "vis": true,
+   "x": 10,
+   "y": 4,
+   "w": 340,
+   "h": 890
+  },
+  "center": {
+   "vis": true,
+   "x": 357,
+   "y": 4,
+   "w": 651,
+   "h": 890
+  },
+  "cp": {
+   "vis": true,
+   "x": 1015,
+   "y": 4,
+   "w": 415,
+   "h": 890
+  },
+  "cpInfo": {
+   "vis": true,
+   "x": 1371,
+   "y": 7,
+   "w": 24,
+   "h": 24
+  },
+  "btnRows": 1,
+  "destKey": [
+   "【即時】深=大單 淺=散戶 ⚡=反向"
+  ],
+  "paper": "#17181c",
+  "rows": 8,
+  "ts": "2026-10-22 04:55:40",
+  "session": "closed",
+  "errors": [],
+  "bad": [],
+  "legOpens": true
+ },
+ "m390": {
+  "build": "2026-10-22T04:51Z",
+  "cls": "wsxFocus",
+  "title": "NVDA 英偉達 · 100日",
+  "sub": [
+   "成交量",
+   "RVPOS · RSI",
+   "檔位",
+   "⑦現金池 全單·大單"
+  ],
+  "leg": {
+   "vis": true,
+   "x": 325,
+   "y": 443,
+   "w": 52,
+   "h": 19
+  },
+  "dy": 1,
+  "popOpen": false,
+  "wl": {
+   "vis": true,
+   "x": 4,
+   "y": 1054,
+   "w": 382,
+   "h": 529
+  },
+  "center": {
+   "vis": true,
+   "x": 4,
+   "y": 141,
+   "w": 382,
+   "h": 903
+  },
+  "cp": {
+   "vis": true,
+   "x": 4,
+   "y": 1593,
+   "w": 382,
+   "h": 889
+  },
+  "cpInfo": {
+   "vis": true,
+   "x": 330,
+   "y": 1596,
+   "w": 24,
+   "h": 24
+  },
+  "btnRows": 1,
+  "destKey": [
+   "【即時】深=大單 淺=散戶 ⚡=反向"
+  ],
+  "paper": "#17181c",
+  "rows": 8,
+  "ts": "2026-10-22 04:55:40",
+  "session": "closed",
+  "errors": [],
+  "bad": [],
+  "legOpens": true
+ }
+}
