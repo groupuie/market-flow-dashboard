@@ -30,7 +30,7 @@
 
 ## 3. 來源稽核(E3:20 檔 × 4 份 = 80 份,申報日 2025-08-01 ~ 2026-10-20)
 
-1. **時間戳**:索引頁「Accepted」是美東時間(SGML 檔頭的 ACCEPTANCE-DATETIME 也是;Codex 獨立核對 AAPL 一例相同)。E7 擴大到 107 家、231 份 2.02 8-K:48 家 JSON 是真 UTC、59 家多 4 / 5 小時;同一家公司前後一致(0 家混用),2019–2026 每年都有兩種 → **不能用固定小時數修正,一律用索引頁 / SGML**。E3 的 20 家:
+1. **時間戳**:索引頁「Accepted」是美東時間(SGML 檔頭的 ACCEPTANCE-DATETIME 也是;Codex 獨立核對 AAPL 一例相同)。E7 擴大到 107 家、231 份 2.02 8-K:48 家 JSON 是真 UTC、59 家多 4 / 5 小時;同一家公司前後一致(0 家混用),2019–2026 每年都有兩種 → **不能用固定小時數修正,一律用索引頁 / SGML**。E8 逐份稽核(`out/sec_ts_audit_2_02.csv`):索引頁與 SGML 231 / 231 相同。E3 的 20 家:
    - 17 家(AAPL、MSFT、NVDA、AMZN、GOOGL、META、JPM、JNJ、WMT、CAT、NKE、NFLX、AMD、MU、TSLA、COST、UNH):比索引頁多 8(夏令)/ 10(冬令)小時 = 比真 UTC 多 4 / 5 小時。
    - 3 家(XOM、LMT、AVGO):比索引頁多 4 / 5 小時 = 真 UTC。
    - JSON 的日期部分可能跳到隔天(盤後財報),`filingDate` 才是美東日期。

@@ -1,7 +1,7 @@
 {
  "title": "event_memory 試驗清單 v0.1",
- "version": "0.3",
- "created_tw": "2026-10-22 12:03:08",
+ "version": "0.4",
+ "created_tw": "2026-10-22 12:41:58",
  "note": "E0–E5 是開發 / 事後檢查,不是任何方法的成績;沒有任何 Claude 判讀。",
  "inputs_sha256": {
   "walk7 S7.pkl": "642438a6e10e1e53…",
@@ -184,6 +184,28 @@
     "out/r2_event_tags.csv": "9b8c990f231bd450…",
     "out/r2_event_tags.json": "1a42ef3db1628c11…",
     "codex_r2/r2_events_408.json": "982c64e6c90ec771…"
+   }
+  },
+  {
+   "id": "CLAUDE-E8",
+   "date_tw": "2026-10-22",
+   "type": "資料稽核(不看股價結果)",
+   "what": "E7 用到的 231 份 8-K 2.02:索引頁 / SGML / submissions JSON 三種時間逐份對照",
+   "data": "SEC 索引頁(快取)、SGML 檔頭、submissions JSON",
+   "script": [
+    "scripts/p3_ts_audit.py"
+   ],
+   "output": [
+    "out/sec_ts_audit_2_02.csv",
+    "out/sec_ts_audit_summary.json"
+   ],
+   "key_results": "索引頁 = SGML 231 / 231;JSON 差 0 小時 111 份、+4 小時 77 份、+5 小時 43 份;公司 48 都對、59 都錯、0 混用",
+   "uses_holdout_H_labels": false,
+   "claude_judgments": 0,
+   "sha256": {
+    "scripts/p3_ts_audit.py": "a1bc3d5ddaa1fbfc…",
+    "out/sec_ts_audit_2_02.csv": "d0150fdb1be70de9…",
+    "out/sec_ts_audit_summary.json": "cd981563d3b35cd5…"
    }
   }
  ],
