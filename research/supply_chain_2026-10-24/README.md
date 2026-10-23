@@ -5,6 +5,8 @@
 - 程式(依序;需要 `openpyxl`、`xlrd`):
   1. `scripts/sc_map.py SCRATCH` → BEA 產業 → French 49 的對照(`out/sc1_map_detail.csv`、`out/sc1_map_summary.csv`)、49 × 49 流量表(`out/sc1_flows.npz`,每張表一個矩陣 + 各產業國內總產出)、檢查(`out/sc1_map_qa.json`)。只用表格,沒有報酬。`sc_bea_parse.py` 解析 BEA 的「NAICS Codes」表。
   2. `scripts/sc1_run.py SCRATCH [--synthetic]` → `out/sc1_results{_synthetic}.json`、`out/sc1_monthly{_synthetic}.csv`(每月一列:各 IC、前 10 名、Fama–MacBeth 係數)。
+- **SC1 結果**(登記 `f6b709b`,2026-10-24 00:22:48;真實報酬只跑一次):`out/sc1_results.json`、`out/sc1_monthly.csv`。H1 IC_1m(CM) +0.019(NW p 0.149,區塊自助 p 0.055)、H2 融合 − S0 +0.005(p 0.635),Holm 0.299 / 0.635,不成立;次要 5 個 Holm 都 ≥ 0.31(S4 IC_3m +0.029,NW p 0.063);只報告的安慰劑:真正的客戶權重比 1,000 次隨機重排裡的 97.3% 好。
+- 對照程式在登記前改過 2 處(都在看任何報酬之前,只看了對照表本身):6 碼 NAICS 等權 → CBP 就業人數加權;NAICS → SIC 等分 → 每個 SIC 平分到它對到的 NAICS,並刪掉未分類 > 50% 的 BEA 產業(總公司、郵局)。
 - 目錄假設:`SCRATCH/sc/bea/`(AllTablesIO.zip 解出的兩個 Use 表)、`SCRATCH/sc/raw/`(Census 對照表)、`SCRATCH/sc/cbp/`(CBP 解壓後的 txt)、`SCRATCH/sc/x/Siccodes49.txt`、`SCRATCH/sr/raw/49_Industry_Portfolios_CSV.zip`。
 
 不是投資建議。
