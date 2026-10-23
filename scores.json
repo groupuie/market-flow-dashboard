@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-10-23T00:43:34Z",
+ "gen_utc": "2026-10-23T05:15:40Z",
  "data_asof": "2026-10-22",
  "protocol": "v2",
  "status": "COLLECTING",
@@ -10,13 +10,13 @@
   "end_reason": null
  },
  "counts": {
-  "locked": 101,
-  "agree": 39,
-  "disagree": 62,
+  "locked": 107,
+  "agree": 42,
+  "disagree": 65,
   "late": 0,
-  "days": 6,
+  "days": 7,
   "closed": 3,
-  "open": 98,
+  "open": 104,
   "no_data": 0,
   "unresolved": 0
  },
@@ -39,8 +39,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": 0.02621400945423291
+   "elapsed_sessions": 6,
+   "unreal": -0.02484895978159196
   },
   "2026-10-14:CSCO": {
    "id": "2026-10-14:CSCO",
@@ -60,8 +60,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": -0.043772844789159326
+   "elapsed_sessions": 6,
+   "unreal": -0.06490148881162527
   },
   "2026-10-14:DDOG": {
    "id": "2026-10-14:DDOG",
@@ -81,8 +81,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": 0.04742946564182815
+   "elapsed_sessions": 6,
+   "unreal": -0.011406698270968518
   },
   "2026-10-14:GOOG": {
    "id": "2026-10-14:GOOG",
@@ -102,8 +102,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": -0.028132616803218435
+   "elapsed_sessions": 6,
+   "unreal": -0.058056558893489485
   },
   "2026-10-14:GOOGL": {
    "id": "2026-10-14:GOOGL",
@@ -123,8 +123,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": -0.028836669567740003
+   "elapsed_sessions": 6,
+   "unreal": -0.05941398317377422
   },
   "2026-10-14:OKTA": {
    "id": "2026-10-14:OKTA",
@@ -213,8 +213,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": -0.060718750000000044
+   "elapsed_sessions": 6,
+   "unreal": -0.1368124999999999
   },
   "2026-10-14:SNPS": {
    "id": "2026-10-14:SNPS",
@@ -234,8 +234,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": -0.04159143530811216
+   "elapsed_sessions": 6,
+   "unreal": -0.10257662977674864
   },
   "2026-10-14:SPY": {
    "id": "2026-10-14:SPY",
@@ -255,8 +255,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": 0.008926590538335999
+   "elapsed_sessions": 6,
+   "unreal": -0.0029885807504077544
   },
   "2026-10-14:T": {
    "id": "2026-10-14:T",
@@ -276,8 +276,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": -0.06447480785653292
+   "elapsed_sessions": 6,
+   "unreal": -0.029035012809564664
   },
   "2026-10-14:TLN": {
    "id": "2026-10-14:TLN",
@@ -297,8 +297,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": 0.02363393035109196
+   "elapsed_sessions": 6,
+   "unreal": -0.05629431361940829
   },
   "2026-10-14:TWLO": {
    "id": "2026-10-14:TWLO",
@@ -318,8 +318,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 5,
-   "unreal": 0.009386828160484528
+   "elapsed_sessions": 6,
+   "unreal": -0.04000757002271005
   },
   "2026-10-15:ALLY": {
    "id": "2026-10-15:ALLY",
@@ -339,8 +339,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.016018907563025264
+   "elapsed_sessions": 5,
+   "unreal": 0.03230042016806722
   },
   "2026-10-15:APP": {
    "id": "2026-10-15:APP",
@@ -360,8 +360,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.04278695846359992
+   "elapsed_sessions": 5,
+   "unreal": -0.05572130415364007
   },
   "2026-10-15:BA": {
    "id": "2026-10-15:BA",
@@ -381,8 +381,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.011308052385210043
+   "elapsed_sessions": 5,
+   "unreal": -0.01356966286225203
   },
   "2026-10-15:BAC": {
    "id": "2026-10-15:BAC",
@@ -402,8 +402,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.026083621020329906
+   "elapsed_sessions": 5,
+   "unreal": -0.020329881089374835
   },
   "2026-10-15:BMNR": {
    "id": "2026-10-15:BMNR",
@@ -423,8 +423,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.04400871459694988
+   "elapsed_sessions": 5,
+   "unreal": -0.019607843137254832
   },
   "2026-10-15:BMY": {
    "id": "2026-10-15:BMY",
@@ -444,8 +444,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.00032733224222569746
+   "elapsed_sessions": 5,
+   "unreal": 0.03109656301145658
   },
   "2026-10-15:CRML": {
    "id": "2026-10-15:CRML",
@@ -465,8 +465,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.026392961876832932
+   "elapsed_sessions": 5,
+   "unreal": -0.09237536656891498
   },
   "2026-10-15:CVNA": {
    "id": "2026-10-15:CVNA",
@@ -486,8 +486,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.027360118314025184
+   "elapsed_sessions": 5,
+   "unreal": -0.03508339495522139
   },
   "2026-10-15:DASH": {
    "id": "2026-10-15:DASH",
@@ -507,8 +507,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.04839292163235842
+   "elapsed_sessions": 5,
+   "unreal": -0.04070577310013934
   },
   "2026-10-15:IONQ": {
    "id": "2026-10-15:IONQ",
@@ -528,8 +528,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.022765802857834694
+   "elapsed_sessions": 5,
+   "unreal": -0.05667231775248238
   },
   "2026-10-15:KKR": {
    "id": "2026-10-15:KKR",
@@ -549,8 +549,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.00909499214013021
+   "elapsed_sessions": 5,
+   "unreal": 0.04525039299348754
   },
   "2026-10-15:LCID": {
    "id": "2026-10-15:LCID",
@@ -631,8 +631,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.02517721828403796
+   "elapsed_sessions": 5,
+   "unreal": 0.02737716939623569
   },
   "2026-10-15:MCHP": {
    "id": "2026-10-15:MCHP",
@@ -652,8 +652,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.054826360404703456
+   "elapsed_sessions": 5,
+   "unreal": 0.018867924528301883
   },
   "2026-10-15:NCLH": {
    "id": "2026-10-15:NCLH",
@@ -673,8 +673,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.007756948933419494
+   "elapsed_sessions": 5,
+   "unreal": 0.004524886877828038
   },
   "2026-10-15:NEM": {
    "id": "2026-10-15:NEM",
@@ -694,8 +694,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.016040926038324965
+   "elapsed_sessions": 5,
+   "unreal": -0.010578340414462817
   },
   "2026-10-15:NXPI": {
    "id": "2026-10-15:NXPI",
@@ -715,8 +715,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.06126023558260729
+   "elapsed_sessions": 5,
+   "unreal": 0.041248850549546745
   },
   "2026-10-15:OPEN": {
    "id": "2026-10-15:OPEN",
@@ -805,8 +805,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.00195876288659802
+   "elapsed_sessions": 5,
+   "unreal": 0.0
   },
   "2026-10-15:RDDT": {
    "id": "2026-10-15:RDDT",
@@ -826,8 +826,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.04200000000000004
+   "elapsed_sessions": 5,
+   "unreal": -0.06087500000000001
   },
   "2026-10-15:RGTI": {
    "id": "2026-10-15:RGTI",
@@ -847,8 +847,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.021915584415584388
+   "elapsed_sessions": 5,
+   "unreal": -0.06818181818181812
   },
   "2026-10-15:SOFI": {
    "id": "2026-10-15:SOFI",
@@ -868,8 +868,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.011608623548922004
+   "elapsed_sessions": 5,
+   "unreal": -0.020232172470978416
   },
   "2026-10-15:SOUN": {
    "id": "2026-10-15:SOUN",
@@ -889,8 +889,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.055327868852458884
+   "elapsed_sessions": 5,
+   "unreal": -0.07786885245901642
   },
   "2026-10-15:UPST": {
    "id": "2026-10-15:UPST",
@@ -910,8 +910,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": -0.04404040404040399
+   "elapsed_sessions": 5,
+   "unreal": -0.036363636363636265
   },
   "2026-10-15:VRTX": {
    "id": "2026-10-15:VRTX",
@@ -931,8 +931,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 4,
-   "unreal": 0.02633741635033071
+   "elapsed_sessions": 5,
+   "unreal": 0.047176456776112374
   },
   "2026-10-16:AA": {
    "id": "2026-10-16:AA",
@@ -953,8 +953,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": -0.02536491983728173
+   "elapsed_sessions": 4,
+   "unreal": -0.0739411342426417
   },
   "2026-10-16:AI": {
    "id": "2026-10-16:AI",
@@ -975,8 +975,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": 0.03785211267605626
+   "elapsed_sessions": 4,
+   "unreal": 0.05897887323943651
   },
   "2026-10-16:BKR": {
    "id": "2026-10-16:BKR",
@@ -997,8 +997,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": 0.0019681517266059156
+   "elapsed_sessions": 4,
+   "unreal": -0.04061549472177495
   },
   "2026-10-16:C": {
    "id": "2026-10-16:C",
@@ -1019,8 +1019,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": -0.0022556996697011833
+   "elapsed_sessions": 4,
+   "unreal": -0.013050833803270656
   },
   "2026-10-16:CLF": {
    "id": "2026-10-16:CLF",
@@ -1041,8 +1041,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": -0.011971830985915477
+   "elapsed_sessions": 4,
+   "unreal": -0.08098591549295764
   },
   "2026-10-16:META": {
    "id": "2026-10-16:META",
@@ -1063,8 +1063,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": -0.01363199275977145
+   "elapsed_sessions": 4,
+   "unreal": -0.08245658691102431
   },
   "2026-10-16:MSTR": {
    "id": "2026-10-16:MSTR",
@@ -1085,8 +1085,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": 0.10314094731546031
+   "elapsed_sessions": 4,
+   "unreal": 0.04794077481492143
   },
   "2026-10-16:PLTR": {
    "id": "2026-10-16:PLTR",
@@ -1107,8 +1107,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": 0.07874542100056159
+   "elapsed_sessions": 4,
+   "unreal": 0.04917243776571567
   },
   "2026-10-16:ROK": {
    "id": "2026-10-16:ROK",
@@ -1129,8 +1129,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": 0.015798373833074697
+   "elapsed_sessions": 4,
+   "unreal": -0.018114850934698445
   },
   "2026-10-16:ZS": {
    "id": "2026-10-16:ZS",
@@ -1151,8 +1151,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 3,
-   "unreal": 0.10204373302844094
+   "elapsed_sessions": 4,
+   "unreal": 0.132675908722786
   },
   "2026-10-19:AMZN": {
    "id": "2026-10-19:AMZN",
@@ -1173,8 +1173,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": -0.006475310511966037
+   "elapsed_sessions": 3,
+   "unreal": -0.05187821872159948
   },
   "2026-10-19:CLF": {
    "id": "2026-10-19:CLF",
@@ -1195,8 +1195,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.025584795321637488
+   "elapsed_sessions": 3,
+   "unreal": -0.046052631578947345
   },
   "2026-10-19:GME": {
    "id": "2026-10-19:GME",
@@ -1217,8 +1217,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.0217644772638943
+   "elapsed_sessions": 3,
+   "unreal": -0.013214146910221491
   },
   "2026-10-19:MPWR": {
    "id": "2026-10-19:MPWR",
@@ -1239,8 +1239,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.04093766476051419
+   "elapsed_sessions": 3,
+   "unreal": -0.05265847426694237
   },
   "2026-10-19:MXL": {
    "id": "2026-10-19:MXL",
@@ -1261,8 +1261,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.015543347179418632
+   "elapsed_sessions": 3,
+   "unreal": -0.12528473804100226
   },
   "2026-10-19:SKHY": {
    "id": "2026-10-19:SKHY",
@@ -1283,8 +1283,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.04098539350337904
+   "elapsed_sessions": 3,
+   "unreal": -0.043020129351064695
   },
   "2026-10-19:SNDK": {
    "id": "2026-10-19:SNDK",
@@ -1305,8 +1305,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.03085720269416181
+   "elapsed_sessions": 3,
+   "unreal": -0.05687134666950877
   },
   "2026-10-19:SPCX": {
    "id": "2026-10-19:SPCX",
@@ -1327,8 +1327,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.08989532735855521
+   "elapsed_sessions": 3,
+   "unreal": -0.009714715741944269
   },
   "2026-10-19:WDC": {
    "id": "2026-10-19:WDC",
@@ -1349,8 +1349,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 2,
-   "unreal": 0.08492891538637926
+   "elapsed_sessions": 3,
+   "unreal": 0.015220132997018965
   },
   "2026-10-20:AAPL": {
    "id": "2026-10-20:AAPL",
@@ -1371,8 +1371,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": 0.0136433286185762
+   "elapsed_sessions": 2,
+   "unreal": 0.0261079679396512
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -1393,8 +1393,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": 0.00043835616438370195
+   "elapsed_sessions": 2,
+   "unreal": -0.017315068493150676
   },
   "2026-10-20:MSTR": {
    "id": "2026-10-20:MSTR",
@@ -1415,8 +1415,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": 0.04907723855092261
+   "elapsed_sessions": 2,
+   "unreal": -0.0034176349965823194
   },
   "2026-10-20:ON": {
    "id": "2026-10-20:ON",
@@ -1437,8 +1437,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": 0.007068062827225052
+   "elapsed_sessions": 2,
+   "unreal": -0.041492146596858626
   },
   "2026-10-20:RUN": {
    "id": "2026-10-20:RUN",
@@ -1459,8 +1459,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": -0.009102730819245841
+   "elapsed_sessions": 2,
+   "unreal": 0.0013003901170349774
   },
   "2026-10-20:SBET": {
    "id": "2026-10-20:SBET",
@@ -1481,8 +1481,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": 0.03213844252163156
+   "elapsed_sessions": 2,
+   "unreal": -0.028430160692212603
   },
   "2026-10-20:TSLA": {
    "id": "2026-10-20:TSLA",
@@ -1503,8 +1503,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 1,
-   "unreal": 0.013213433657551787
+   "elapsed_sessions": 2,
+   "unreal": -0.01795873423695049
   },
   "2026-10-21:ADI": {
    "id": "2026-10-21:ADI",
@@ -1521,11 +1521,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.03080247223757593
   },
   "2026-10-21:AMD": {
    "id": "2026-10-21:AMD",
@@ -1542,11 +1543,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.030852890669719524
   },
   "2026-10-21:AMKR": {
    "id": "2026-10-21:AMKR",
@@ -1563,11 +1565,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.05607928450568045
   },
   "2026-10-21:APLD": {
    "id": "2026-10-21:APLD",
@@ -1584,11 +1587,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.045499999999999985
   },
   "2026-10-21:ASML": {
    "id": "2026-10-21:ASML",
@@ -1605,11 +1609,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.038448741173426004
   },
   "2026-10-21:BE": {
    "id": "2026-10-21:BE",
@@ -1626,11 +1631,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.04549638395792244
   },
   "2026-10-21:CAT": {
    "id": "2026-10-21:CAT",
@@ -1647,11 +1653,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.024009870108266274
   },
   "2026-10-21:CDNS": {
    "id": "2026-10-21:CDNS",
@@ -1668,11 +1675,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.027542239809057345
   },
   "2026-10-21:CEG": {
    "id": "2026-10-21:CEG",
@@ -1689,11 +1697,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.05062867346179589
   },
   "2026-10-21:COHR": {
    "id": "2026-10-21:COHR",
@@ -1710,11 +1719,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.0686981850773023
   },
   "2026-10-21:CRWD": {
    "id": "2026-10-21:CRWD",
@@ -1731,11 +1741,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.019208573784006533
   },
   "2026-10-21:CSCO": {
    "id": "2026-10-21:CSCO",
@@ -1752,11 +1763,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.017607942305891133
   },
   "2026-10-21:DELL": {
    "id": "2026-10-21:DELL",
@@ -1773,11 +1785,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.017696428184164392
   },
   "2026-10-21:DJT": {
    "id": "2026-10-21:DJT",
@@ -1794,11 +1807,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": 0.01692307692307704
   },
   "2026-10-21:ETN": {
    "id": "2026-10-21:ETN",
@@ -1815,11 +1829,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.028871460153700346
   },
   "2026-10-21:GEV": {
    "id": "2026-10-21:GEV",
@@ -1836,11 +1851,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.07654017857142859
   },
   "2026-10-21:GLW": {
    "id": "2026-10-21:GLW",
@@ -1857,11 +1873,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.03883720930232559
   },
   "2026-10-21:GLXY": {
    "id": "2026-10-21:GLXY",
@@ -1878,11 +1895,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.058207576224207025
   },
   "2026-10-21:HOOD": {
    "id": "2026-10-21:HOOD",
@@ -1899,11 +1917,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.012221938123242237
   },
   "2026-10-21:IBKR": {
    "id": "2026-10-21:IBKR",
@@ -1920,11 +1939,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.011532916866890841
   },
   "2026-10-21:LWLG": {
    "id": "2026-10-21:LWLG",
@@ -1941,11 +1961,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.02132701421800942
   },
   "2026-10-21:META": {
    "id": "2026-10-21:META",
@@ -1962,11 +1983,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.040659421896946824
   },
   "2026-10-21:MS": {
    "id": "2026-10-21:MS",
@@ -1983,11 +2005,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": 0.003217362853092043
   },
   "2026-10-21:NET": {
    "id": "2026-10-21:NET",
@@ -2004,11 +2027,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.03462639109697929
   },
   "2026-10-21:NOK": {
    "id": "2026-10-21:NOK",
@@ -2025,11 +2049,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.08051341890315056
   },
   "2026-10-21:NVDA": {
    "id": "2026-10-21:NVDA",
@@ -2046,11 +2071,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.02265923640215528
   },
   "2026-10-21:PANW": {
    "id": "2026-10-21:PANW",
@@ -2067,11 +2093,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.004655336810813759
   },
   "2026-10-21:QQQ": {
    "id": "2026-10-21:QQQ",
@@ -2088,11 +2115,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.012808116478188358
   },
   "2026-10-21:RKLB": {
    "id": "2026-10-21:RKLB",
@@ -2109,11 +2137,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.008805031446540879
   },
   "2026-10-21:SCHW": {
    "id": "2026-10-21:SCHW",
@@ -2130,11 +2159,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": 0.0027415286763898816
   },
   "2026-10-21:SMCI": {
    "id": "2026-10-21:SMCI",
@@ -2151,11 +2181,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.02119013062409303
   },
   "2026-10-21:TER": {
    "id": "2026-10-21:TER",
@@ -2172,11 +2203,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.04606686028548479
   },
   "2026-10-21:TLN": {
    "id": "2026-10-21:TLN",
@@ -2193,11 +2225,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.0574483817757806
   },
   "2026-10-21:TSM": {
    "id": "2026-10-21:TSM",
@@ -2214,11 +2247,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.01678628484227085
   },
   "2026-10-21:TXN": {
    "id": "2026-10-21:TXN",
@@ -2235,11 +2269,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.016606853845612668
   },
   "2026-10-21:VRT": {
    "id": "2026-10-21:VRT",
@@ -2256,11 +2291,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.03938902804380928
   },
   "2026-10-21:WOLF": {
    "id": "2026-10-21:WOLF",
@@ -2277,11 +2313,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.038657604078164876
   },
   "2026-10-21:WULF": {
    "id": "2026-10-21:WULF",
@@ -2293,6 +2330,133 @@
    "displayed_buy": true,
    "v": "disagree",
    "p": 0.4,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "panic_sc_filled_after": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-22",
+   "elapsed_sessions": 1,
+   "unreal": -0.08562197092084012
+  },
+  "2026-10-22:ADI": {
+   "id": "2026-10-22:ADI",
+   "date": "2026-10-22",
+   "sym": "ADI",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-22:DVN": {
+   "id": "2026-10-22:DVN",
+   "date": "2026-10-22",
+   "sym": "DVN",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.58,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-22:MRNA": {
+   "id": "2026-10-22:MRNA",
+   "date": "2026-10-22",
+   "sym": "MRNA",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.4,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-22:MSFT": {
+   "id": "2026-10-22:MSFT",
+   "date": "2026-10-22",
+   "sym": "MSFT",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-22:SHOP": {
+   "id": "2026-10-22:SHOP",
+   "date": "2026-10-22",
+   "sym": "SHOP",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-22:T": {
+   "id": "2026-10-22:T",
+   "date": "2026-10-22",
+   "sym": "T",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.48,
    "model": "claude-opus-5-5",
    "protocol": "v2",
    "late": false,
