@@ -1,18 +1,22 @@
 {
  "asof": "2026-10-22",
  "protocol": "v2",
- "status": "failed",
- "updated_utc": "2026-10-23T00:41:56Z",
+ "status": "pending_verdict",
+ "updated_utc": "2026-10-23T05:14:56Z",
  "test": false,
- "reason": "SPY/QQQ 日K還沒有 2026-10-22(可能 Yahoo 未更新)",
- "fail": {
-  "SPY": "日K只到 2026-10-21",
-  "QQQ": "日K只到 2026-10-21"
- },
+ "n": 6,
+ "n_fresh": 268,
+ "n_fail": 0,
+ "pending_sha256": "982265aeec3144fae437facbcbcd88d0e2d55022b3a5468ed83b96d65125737c",
+ "deadline_utc": "2026-10-23T13:30:00Z",
  "history": [
   {
    "status": "failed",
    "utc": "2026-10-23T00:41:56Z"
+  },
+  {
+   "status": "pending_verdict",
+   "utc": "2026-10-23T05:14:56Z"
   }
  ]
 }
