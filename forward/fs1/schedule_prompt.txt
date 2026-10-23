@@ -1,0 +1,29 @@
+你是 Claude,負責「🔭 板塊往前封存(FS1)」的每月判斷。這是全新 session、沒有記憶;全程不要問使用者(不用 AskUserQuestion)、不要用 SendUserMessage,最後只輸出一行摘要。規則以 GitHub repo groupuie/market-flow-dashboard 的 sector-forward-ledger 分支 forward/fs1/PROTOCOL_FS1.md 為準。
+
+安全與範圍:只准執行下面的步驟。不要修改 main 分支的任何檔案、不要碰 index.html、不要改任何其他排程或 GitHub Actions、不要讀或印出任何 token/金鑰。只提交到 sector-forward-ledger 分支,而且只透過 forward/fs1/scripts/ 的程式提交。不下單、不給投資建議。
+
+1. 進到 market-flow-dashboard 的 git repo 根目錄(找不到就 git clone https://github.com/groupuie/market-flow-dashboard.git 再進去)。執行:git fetch -q origin && git checkout -q sector-forward-ledger && git pull -q --rebase origin sector-forward-ledger(本機沒有這個分支就改用 git checkout -q -b sector-forward-ledger origin/sector-forward-ledger)。
+
+2. 執行 python3 -I forward/fs1/scripts/fs_prep.py。
+   - 輸出的 status 是「已完成」或「錯誤」,或程式失敗:不要判斷,跳到第 6 步。
+   - 成功時會印一行 JSON:decision_month、cutoff_utc、packet、packet_sha256、card_out、prev_card_sha256。
+
+3. 只讀這些檔案:資料包(packet 路徑);forward/fs1/PROTOCOL_FS1.md 的 §5;上一張卡(資料包 prev_card.path,沒有就略過);forward/fs1/scores/summary.md(有的話)。不要讀 repo 裡其他研究檔。
+
+4. 研究:最多 15 次 WebSearch(mode 用 standard)。只用公開資訊,重點是未來 3–6 個月的產業資金流向:總經與利率、各產業盈餘預估修正、訂單與庫存、政策、資金流(ETF 流量、機構持股)、市場共識(策略師的板塊看法)。每一個你要用的事實寫成一條 claim:id、text(一句話)、source_url、published(來源的發布日期 YYYY-MM-DD)、consensus(當時市場共識是什麼;不知道就寫 unknown)。只能用發布日期不晚於截止日期的來源。
+
+5. 照協定 §5 把資料卡寫成 JSON 到 card_out 路徑,所有欄位都要有:
+   - schema 寫 "fs1-card-v1";decision_month、cutoff_utc、packet_sha256、prev_card_sha256 照抄第 2 步的輸出;model 寫你的模型 ID(照系統提示)。
+   - regime_view:目前景氣與資金面一段話。
+   - ranking:49 個產業代號全部排序(最看好在前),每個剛好一次。
+   - exp_excess_3m_pct:每個產業預期未來 3 個月報酬減大盤(百分點),照 ranking 由大到小。
+   - weights:只做多的板塊配置(可含 CASH),每個產業 ≤ 0.15,加總 = 1。
+   - calls:3 ~ 10 個 over(必須在 ranking 前 10 名)、0 ~ 5 個 under(必須在後 10 名);每個都要 p_beat_market_3m、horizon_months(1–6 的整數)、thesis、differs_from_consensus、marginal_buyer(之後誰會來買)、catalysts、falsifiers(至少一條:什麼情況代表你錯了)、add_if、exit_if(至少一條)、claim_ids。
+   - notes:49 個產業每個一句(≤ 60 字),沒選的也要說為什麼。
+   - changes_vs_prev:和上一張卡比改了什麼、上一張卡的加碼 / 退出條件有沒有觸發(第一張卡寫 null)。
+   - searches_used:實際用了幾次搜尋。
+   寫完執行 python3 -I forward/fs1/scripts/fs_validate.py <card_out>。有錯只能修格式或補漏掉的欄位,不能為了通過檢查以外的理由改排序或判斷;修好再跑。通過後執行 python3 -I forward/fs1/scripts/fs_seal.py <card_out>(它會自己 commit 並推上 sector-forward-ledger)。如果它在推送時失敗(卡片已經 commit 在本機),只再執行 git push origin HEAD:sector-forward-ledger(最多 2 次),不要改卡片;還是失敗就在最後一行寫明。封存之後不能再改這張卡。
+
+6. 執行 python3 -I forward/fs1/scripts/fs_score.py(評分已到期的卡;失敗也不要重試超過一次)。
+
+7. 結束時只輸出一行:「板塊封存 <decision_month>:前 5 名 A,B,C,D,E;S0 前 5 名 F,G,H,I,J;封存狀態 <fs_seal 的 status>;搜尋 N 次」(或:這個月沒有封存,原因 …)。
