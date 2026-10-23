@@ -80,6 +80,32 @@ if PH == "fts":
                 print("fts", k, done, flush=True)
     print("fts done", done, flush=True)
 
+elif PH == "fts2":
+    # 第一輪 0 筆的 CUSIP:很多申報把 CUSIP 寫成「931142 10 3」或「931142-10-3」,用分段的寫法再查一次(實測 Walmart 0 → 23 筆)
+    from concurrent.futures import ThreadPoolExecutor
+    os.makedirs(os.path.join(RAW, "fts2"), exist_ok=True)
+    def zero(c):
+        try:
+            return json.load(open(os.path.join(RAW, "fts", f"{c}.json")))["hits"]["total"]["value"] == 0
+        except Exception:                                       # noqa: BLE001
+            return True
+    todo = [c for c in U["cusip"] if zero(c)]
+
+    def one2(c):
+        q, _ = normalize(c); out = os.path.join(RAW, "fts2", f"{c}.json")
+        if os.path.exists(out) or len(q) != 9:
+            return 0
+        url = "https://efts.sec.gov/LATEST/search-index?" + urllib.parse.urlencode({"q": f'"{q[:6]} {q[6:8]} {q[8]}"', "forms": "SC 13G,SC 13G/A,SC 13D,SC 13D/A"})
+        try:
+            b = sec_get(url)
+        except Exception as e:                                  # noqa: BLE001
+            b = json.dumps({"error": str(e)}).encode()
+        open(out, "wb").write(b); time.sleep(0.4)
+        return 1
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        n = sum(ex.map(one2, todo))
+    print("fts2 done", len(todo), n, flush=True)
+
 elif PH == "figi":
     figi_p = os.path.join(F, "map", "openfigi.json"); figi = json.load(open(figi_p)) if os.path.exists(figi_p) else {}
     full_p = os.path.join(CM, "openfigi_full.json"); full = json.load(open(full_p)) if os.path.exists(full_p) else {}
@@ -129,12 +155,15 @@ elif PH == "combine":
     for c in U["cusip"]:
         cn, how = normalize(c); nm = names.get(c, "")
         # ① FTS
-        p = os.path.join(RAW, "fts", f"{c}.json"); fts_cik = None; sic_hist = []; nhit = 0; share = None
-        if os.path.exists(p):
-            try:
-                js = json.load(open(p)); hits = js.get("hits", {}).get("hits", [])
-            except Exception:                                   # noqa: BLE001
-                hits = []
+        fts_cik = None; sic_hist = []; nhit = 0; share = None; hits = []
+        for sub_ in ("fts", "fts2"):
+            p = os.path.join(RAW, sub_, f"{c}.json")
+            if os.path.exists(p):
+                try:
+                    hits += json.load(open(p)).get("hits", {}).get("hits", [])
+                except Exception:                               # noqa: BLE001
+                    pass
+        if hits:
             nhit = len(hits); cnt = collections.Counter(); disp = {}
             for h in hits:
                 src = h.get("_source", {})
@@ -152,7 +181,7 @@ elif PH == "combine":
                     src = h.get("_source", {})
                     if fts_cik in src.get("ciks", []):
                         j = src["ciks"].index(fts_cik); sics = src.get("sics", [])
-                        if j < len(sics) and sics[j] and sics[j] != "0000":
+                        if len(sics) == len(src["ciks"]) and sics[j] and sics[j] != "0000":     # 只在 SIC 與 CIK 一一對應時採用(有的結果少列沒有 SIC 的申報人,位置會錯開)
                             sic_hist.append((src.get("file_date"), sics[j]))
         # ② OpenFIGI + 今天的代號
         fl = full.get(c) or []
@@ -183,7 +212,7 @@ elif PH == "final":
     for f in glob.glob(os.path.join(RAW, "sub", "*.json")):
         js = json.load(open(f)); cur[os.path.basename(f)[:-5]] = js.get("sic") if "error" not in js else None
     M["sic_current"] = [cur.get(c) if isinstance(c, str) else None for c in M["cik"]]
-    M["has_sic"] = [(len(json.loads(h)) > 0) or (sc not in (None, "", "0000")) for h, sc in zip(M["sic_hist"], M["sic_current"])]
+    M["has_sic"] = [isinstance(c, str) and ((len(json.loads(h)) > 0) or (isinstance(sc, str) and sc not in ("", "0000"))) for c, h, sc in zip(M["cik"], M["sic_hist"], M["sic_current"])]
     M.to_parquet(os.path.join(CM, "cusip_map.parquet"))
     con = duckdb.connect(); SN = os.path.join(F, "snap"); con.register("M", M[["cusip", "etf", "cik", "has_sic"]])
     CL = "typ = 'SH' AND putcall = '' AND shares > 0 AND value_fixed > 0 AND NOT coalesce(price_outlier, false) AND NOT unit_undetermined"
