@@ -290,8 +290,8 @@ def ic(score, R, h):
         s, f = score.loc[t], fut.loc[t]; m = s.notna() & f.notna()
         if m.sum() >= 5:
             vals.append(s[m].rank().corr(f[m].rank()))
-    v = np.array(vals); se = nw_se(v, h)
-    return {"平均 IC": round(float(v.mean()), 4), "NW t": round(float(v.mean() / se), 2) if se > 0 else None, "月數": int(len(v))}
+    v = np.array(vals); nan = int(np.isnan(v).sum()); v = v[~np.isnan(v)]; se = nw_se(v, h)   # v1.1 更正:分數全部同分的月份相關係數是 NaN,跳過並計數
+    return {"平均 IC": round(float(v.mean()), 4), "NW t": round(float(v.mean() / se), 2) if se > 0 else None, "月數": int(len(v)), "全部同分跳過的月數": nan}
 
 
 def ac1(R, sig):
