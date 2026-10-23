@@ -8,6 +8,7 @@
   3. `scripts/em_b_firmq.py`:每家公司每季的當季與去年同季淨利(10-K 的第 4 季 = 全年 − 9 個月)(`out/firmq_qa.json`)。
   4. `scripts/em_c_industry.py`:每個月底、每個產業的 G / B(`out/em1_signals.csv`、`out/em1_signals_qa.json`,含 Apple、Microsoft、Exxon、JPMorgan 抽查)。只用財報與申報時間,沒有報酬。
   5. `scripts/em1_run.py SCRATCH [--synthetic]` → `out/em1_results{_synthetic}.json`、`out/em1_monthly{_synthetic}.csv`;`scripts/em1_check.py SCRATCH syn|real` 用另寫的程式重算 3 個月份的 IC 與 H2 差。
+- **EM1 結果**(登記 `c5480f5`,2026-10-24 00:50:35;真實報酬只跑一次):`out/em1_results.json`、`out/em1_monthly.csv`。H1 IC_3m(G) +0.011(NW p 0.570)、H2 融合 − S0 −0.009(p 0.446),Holm 都 0.892,不成立;次要 5 個 Holm 都 ≥ 0.53;只報告:同期 IC(G 和 t−2 ~ t 的報酬)+0.076(p < 0.001)—— 盈餘好的產業股價同時就在漲,之後沒有領先。
 - 目錄假設:`SCRATCH/ern/zips/`、`SCRATCH/ern/ext/`、`SCRATCH/ern/out/`、`SCRATCH/sc/x/Siccodes49.txt`、`SCRATCH/sr/raw/49_Industry_Portfolios_CSV.zip`。
 
 不是投資建議。
