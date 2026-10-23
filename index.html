@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-22T05:02Z">
+<meta name="build" content="2026-10-23T13:53Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
@@ -889,7 +889,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue"
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-22T05:02Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-23T13:53Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#17181c',ink:'#fff',ink2:'#c0c3ca',muted:'#80838b',line:'#2a2c31',   // v19(2026-10-22 整體視覺統一):圖底 = 面板底 --surface;原暖灰 #1a1a19/#c3c2b7/#898781/#2c2c2a
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1520,7 +1520,7 @@ function ckLegendHTML(o){   // o=目前圖上有什麼(由 renderCockpit / rende
     }else A.push(it('量化記號','只在日K顯示'));
     A.push(it(k(CPAL.tdS,'橘')+' / '+k(CPAL.tdB,'青')+' 數字','TD 賣 / 買計數:數到 9 可能轉折,13 以上更強(沒數到 9 就斷的段不畫)'));
     if(o.c)A.push(it(k(CPAL.cbot,'C▲')+' '+k(CPAL.ctop,'C▼'),'Claude 參考:吸籌突破 / 極端吸收警戒'));
-    if(o.ai)A.push(it(k('#e6e9ef','AI▲▼'),'模型看圖判讀,只當參考(10/21 研究:沒有比亂猜好)'));
+    if(o.ai)A.push(it(k('#e6e9ef','AI▲▼'),'模型看圖判讀，僅供參考（已測樣本未取得穩定方向優勢）'));
     if(o.cta)A.push(it(k(CPAL.brake1,'┈CTA'),'四條虛線 = 煞車線:短 50 日、中 100 日、長 200 日、動 63 日;◯ = 碰到 200 日線'));
     if(o.tl)A.push(it(k(CPAL.up,'─撐')+' '+k(CPAL.dn,'─壓'),'趨勢線(碰過 3 次以上);✂ = 已突破'));
     if(o.tj)A.push(it(k('#f472b6','技判'),k('#4ade80','買')+' = 進場路徑成立 · '+k('#f87171','出')+' = 波段頂確認 · '+k('#fab219','⚠頂K')+' = 高點警訊'));
@@ -3824,7 +3824,7 @@ function renderCockpit(){
           +'<br>'+String(m.why||'').replace(/</g,'&lt;')
           +(m.invalid?'<br>失效條件:'+m.invalid:'')
           +'<br>⚠ 模型主觀判讀·非機械規則·發訊日起前瞻評分·非買賣建議'
-          +'<br>⚠ 10/21 研究:Claude 看 K 線判漲跌,2,000 張圖沒有比亂猜好 → 只當參考';
+          +'<br>⚠ 10/21 已測樣本未取得穩定方向優勢；人工判讀僅供參考，尚未驗證能改善交易績效';
         if(m.k==='抄底'){yb[i]=R[i].l-o3*2.8;hb[i]=h;anyB=true;}
         else{yt2[i]=R[i].h+o3*2.8;ht[i]=h;anyT=true;}});
       const out=[];
@@ -6211,35 +6211,76 @@ function swLayerTrade(R,x,o3,MB,TR){   // 🧪 Astra 買 / 賣 → {traces, n, i
   return {traces:Tr,n:P.b.x.length+P.s.x.length+(P.g?P.g.x.length:0),info:{trade:true,state:state,gInfo:gInfo,gG:gG,sty:sty,ul:ul,lev:lev,G:G,gs:gs,line:line,D:W.D,
     own:{n:cn,w:cw,avg:cn?cs/cn:null},yrs:yrs,d200:d200,rg:axRegAt(lastDone)}};
 }
-// ===== 🧪 研究結論(2026-10-21;和 Astra 討論累積到這裡的結果 → 寫給使用者:短、先講怎麼做)=====
-// 只用已收盤的日K(cockpitRows 同一份;和 📊量化 分開算、互不影響)。條件照研究原檔的定義:
-//   波動高 = RVPOS(近 20 天實現波動在自己近 2 年的百分位)≥ 80;5 天急跌 = 5 天報酬 ≤ −2 ×(ATR20 ÷ 收盤)× √5(walk7 R8);RSI14 < 30(walk7 R4)
+// ===== Astra research information: closed daily bars, descriptive only =====
 const AX_RES_DATE='2026-10-21';
-function axResearch(sym){
-  let R=null; try{R=cockpitRows(sym);}catch(_){R=null;}
-  if(!R||R.length<22)return null;
-  const n=R.length, L=R[n-1]; let tr=0;
-  for(let i=n-20;i<n;i++){const p=R[i-1].c; tr+=Math.max(R[i].h,p)-Math.min(R[i].l,p);}
-  const a=L.c>0?tr/20/L.c:null, r5=(L.c5>0)?L.c/L.c5-1:null, z5=(a&&r5!=null)?r5/(a*Math.sqrt(5)):null;
-  return {d:L.d, rv:L.rv, rsi:L.rsi, r5:r5, z5:z5, hiVol:L.rv!=null&&L.rv>=80, loVol:L.rv!=null&&L.rv<=20, drop:z5!=null&&z5<=-2, os:L.rsi!=null&&L.rsi<30};
+// Review-only candidate for Claude; not deployed. It changes research information only.
+// Preserves the site's existing numeric conventions (including RSI seed, rounded
+// RVPOS and the inclusive current+504 predecessor reference window).
+// These fields are NOT walk7 R4/R8 research features and carry no return claim.
+function axResearchFromClosedBars(rawBars, lastDone, sourceSymbol){
+  if(!Array.isArray(rawBars)||!lastDone)return null;
+  const bars=rawBars.filter(b=>String(b[0])<=lastDone);
+  if(bars.length<30)return null;
+  if(bars.some(b=>![b[1],b[2],b[3],b[4]].every(x=>Number.isFinite(+x)&&+x>0)))return null;
+  const n=bars.length, C=bars.map(b=>+b[4]), rv=new Array(n).fill(null);
+  for(let i=20;i<n;i++){
+    const rets=[]; for(let j=i-19;j<=i;j++)rets.push(Math.log(C[j]/C[j-1]));
+    const m=rets.reduce((a,b)=>a+b,0)/rets.length;
+    const va=rets.reduce((a,x)=>a+(x-m)*(x-m),0)/(rets.length-1);
+    rv[i]=Math.sqrt(va)*Math.sqrt(252)*100;
+  }
+  const i=n-1, start=Math.max(20,i-504);let count=0,le=0;
+  for(let j=start;j<=i;j++)if(rv[j]!=null){count++;if(rv[j]<=rv[i])le++;}
+  const minReference=n>=260?60:15;
+  const rvp=count>=minReference?Math.round(100*le/count):null;
+  // Compatibility with cockpitRows. Do not silently change the existing chart RSI.
+  let ag=null,al=null,rsi=null;
+  for(let k=1;k<n;k++){
+    const ch=C[k]-C[k-1],g=Math.max(ch,0),l=Math.max(-ch,0);
+    if(k<14){ag=ag==null?g:ag+g;al=al==null?l:al+l;if(k===13){ag/=14;al/=14;rsi=100-100/(1+ag/(al||1e-9));}}
+    else{ag=(ag*13+g)/14;al=(al*13+l)/14;rsi=100-100/(1+ag/(al||1e-9));}
+  }
+  let tr=0;
+  for(let k=n-20;k<n;k++){const p=C[k-1];tr+=Math.max(+bars[k][2],p)-Math.min(+bars[k][3],p);}
+  const a=tr/20/C[i],r5=C[i]/C[i-5]-1,z5=a?r5/(a*Math.sqrt(5)):null;
+  return {
+    d:String(bars[i][0]),rv:rvp,rsi:rsi,r5:r5,z5:z5,
+    hiVol:rvp!=null&&rvp>=80,loVol:rvp!=null&&rvp<=20,
+    drop:z5!=null&&z5<=-2,os:rsi!=null&&rsi<30,
+    rvReferenceCount:count,rvReferenceStart:String(bars[start][0]),
+    rvReferenceEnd:String(bars[i][0]),hasFullReference:count===505,
+    sourceSymbol:sourceSymbol||null,dataScope:'closed-daily',barCount:n,
+    rsiMethod:'website-compatible-seed',z5Method:'simple-return-SMA20TR',
+    warning:'資訊指標；RSI 與急跌尺度不是 walk7 R4/R8，未承接其反彈成績。'
+  };
 }
+function axResearch(sym){
+  try{return axResearchFromClosedBars(chipBars(sym,'d'),tjLastDone(),sym);}
+  catch(_){return null;}
+}
+
+// Candidate research-only wording. Does not change trading exits or chart signals.
 function axResearchPop(RS){
   let now='';
   if(RS){
-    const vol=RS.rv==null?'波動:歷史太短,先不判斷'
-      :RS.hiVol?'波動<b style="color:#fbbf24">高</b>(比自己近 2 年 '+RS.rv+'% 的日子都大)→ 接下來 20 天大動(上或下)的機會高:<b>部位小一點、停損放寬</b>'
-      :RS.loVol?'波動低(近 2 年只有 '+RS.rv+'% 的日子比現在小)→ 大動的機會較低;方向一樣看不出來'
-      :'波動普通(第 '+RS.rv+' 百分位)→ 部位照常';
-    now='<div>· '+vol+'</div>'
-      +(RS.drop?'<div>· <b>5 天急跌</b>('+(RS.r5*100).toFixed(1)+'%):歷史上之後短線反彈的機會比平常高一些(平均現象,不保證)</div>':'')
-      +(RS.os?'<div>· <b>RSI14 &lt; 30</b>('+RS.rsi.toFixed(0)+'):歷史上短線偏反彈一點點(平均現象,很小)</div>':'');
+    const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const vol=RS.rv==null?'波動：可用歷史不足，先不判斷'
+      :'近 20 日實現波動處於自身歷史'+(RS.hiVol?'高檔':RS.loVol?'低檔':'中間區間')+'（第 '+esc(RS.rv)+' 百分位）';
+    const sample=RS.rv!=null&&RS.rvReferenceCount?'；參考 '+esc(RS.rvReferenceStart)+' 至 '+esc(RS.rvReferenceEnd)+'，共 '+esc(RS.rvReferenceCount)+' 個有效值（含當天）'+(RS.hasFullReference?'':'，短史樣本'):'';
+    now='<div>· '+vol+sample+'</div>'
+      +'<div class="spmut">這是自身歷史排序，不是未來大漲、大跌或反彈機率。此版尚未驗證依它調整部位或放寬停損能改善績效；圖上原訂出場規則不變。</div>'
+      +(RS.drop?'<div>· 近 5 日急跌（'+(RS.r5*100).toFixed(1)+'%）：價格狀態提醒，尚未驗證這個網站條件有反彈優勢。</div>':'')
+      +(RS.os?'<div>· 網站 RSI14 低於 30（'+RS.rsi.toFixed(1)+'）：價格狀態提醒，尚未驗證這個網站條件有反彈優勢。</div>':'');
   }
-  return '<div><b>研究結論</b><span class="spmut">('+AX_RES_DATE+' 和 Astra 討論到這裡)</span></div>'
-    +(now?'<div style="margin:2px 0 1px">這檔現在('+String(RS.d||'').slice(5)+' 收盤):</div>'+now:'')
-    +'<div class="spmut">圖上的買/賣是規則,不是 AI 預測。Claude 看 K 線判漲跌:2,000 張圖沒有比亂猜好;再加財報、公告、內部人、空單,方向還是看不出來。學得到的只有「會不會大動」→ 用來決定買多少、停損放多寬</div>'
-    +'<div class="spmut">Claude 每天替新買點判「同意/不同意」:只當紀錄,還沒證明有用;正式考試還沒開始(要先有不會過期的收件郵戳:10/21 試驗成功,等 Astra 複核)</div>'
+  return '<div><b>研究摘要與歷史狀態</b><span class="spmut">（研究截至 '+AX_RES_DATE+'）</span></div>'
+    +(now?'<div style="margin:2px 0 1px">最新可用已完成日K（'+String(RS.d||'')+'）：</div>'+now:'<div class="spmut">已完成日K或有效歷史不足，暫不顯示個股狀態。</div>')
+    +'<div class="spmut">圖上買／賣來自既定規則，並非 AI 預測。已測的大型股、20 日研究尚未取得穩定的方向預測優勢；部分波動目標較有訊息，但本頁沒有部署該預測模型。這不代表所有市場、期間或方法都無法判斷方向。</div>'
+    +'<div class="spmut">盤感正式考試進度以獨立凍結文件為準；本摘要不代表已通過正式考試。</div>'
     +'<div class="sphr"></div>';
 }
+const AX_RESEARCH_STATUS_CANDIDATE='歷史波動高（未改出場規則）';
+const AX_AI_HOVER_CANDIDATE='⚠ 10/21 已測樣本未取得穩定方向優勢；人工判讀僅供參考，尚未驗證能改善交易績效';
+
 function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + 「ⓘ 詳情」
   const host=document.getElementById('astrastrip'); if(!host)return;
   const ACC='rgba(244,114,182,.30)',BG='rgba(244,114,182,.05)';
@@ -6261,7 +6302,7 @@ function astraSwStripTrade(sw){   // 🧪 Astra 買 / 賣 的一行狀態列 + �
   if(rg)bar+=mut(' · 大盤')+(rg.sc>=2?'<b style="color:'+AX_GOLD+'">恐慌 '+rg.sc+'/3</b>':mut('平靜 '+rg.sc+'/3'))+(rg.pv?mut('(資料到 '+rg.d.slice(5)+')'):'');
   if(d2&&d2.cur&&d2.cur.up===0)bar+=mut(' · ')+'<span style="color:#f9a8d4">'+d2.nm+' 在 200 日線下 → 兩倍最多 1/3(可選)</span>';
   let RS=null; try{RS=axResearch(CHIP_SYM);}catch(_){RS=null;}   // 🧪 研究結論(10/21):波動高才在一行狀態列加一句;其餘在 ⓘ 詳情
-  if(RS&&RS.hiVol)bar+=mut(' · ')+'<span style="color:#fbbf24">波動高 → 部位小、停損寬</span>';
+  if(RS&&RS.hiVol)bar+=mut(' · ')+'<span style="color:#fbbf24">歷史波動高（未改出場規則）</span>';
   const why=G&&G.why?Object.keys(G.why).sort((a,b)=>G.why[b]-G.why[a]).map(k=>k+' '+Math.round(G.why[k])+'%').join('、'):'';
   const st=G&&G.st, x1=G&&G.x1, c1=G&&G.c1;
   const pop=axResearchPop(RS)+'<div>'+BUY+' = 跌過頭後轉向,或上行中的回檔 → 隔天開盤買;<b style="color:'+AX_GOLD+'">金邊</b> = 那天大盤恐慌條件成立(3 個至少 2 個);加碼效果尚未驗證,只是市況資訊</div>'
