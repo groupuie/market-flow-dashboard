@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """SR1 板塊輪動(協定 PROTOCOL_SR1.md v1.0):高手規則 × 量化 × 融合;French 12 / 49 產業月報酬;持有月 1975-01 ~ 2026-06。
+程式 v1.2(2026-10-23,回應 Codex R8;協定規則不變,更正前的程式凍結在 sr1_run_v1.1.py):
+  ① E7「前一半」= S0 前 ⌊n/2⌋ 名(v1.1 用百分位 ≥ 0.5,12 產業選了 7 個);
+  ② F1 的複合百分位改用精確分數(v1.1 用浮點平均,數學上同分時會被浮點誤差排出先後,沒有照「同分照欄位順序」)。
 用法:python3 -I sr1_run.py SCRATCH [--synthetic]
   SCRATCH/sr/unz/  = French 三個 CSV(解壓後);SCRATCH/sr/raw/ = FRED 四個 CSV
   --synthetic:報酬換成亂數(同樣的日期與欄位),只用來除錯;輸出檔名加 _synthetic
@@ -80,8 +83,12 @@ def signals(R, BM, nind):
     sig["E4"] = np.exp(cl - cl.rolling(12, min_periods=12).max()).where(ok)
     sig["E5"] = -cum(R, 59, 12)
     sig["E6"] = -cum(R, 2, 0)
-    s0r = sig["S0"].rank(axis=1, pct=True)
-    sig["E7"] = (-R).where(s0r >= 0.5)
+    S0v = sig["S0"].values; keep = np.zeros(S0v.shape, bool)       # v1.2:S0 前 ⌊n/2⌋ 名(n = 當月有 S0 的產業數;同分照欄位順序)
+    for ti in range(S0v.shape[0]):
+        ok = np.where(~np.isnan(S0v[ti]))[0]
+        for j in sorted(ok, key=lambda j: (-S0v[ti, j], j))[:len(ok) // 2]:
+            keep[ti, j] = True
+    sig["E7"] = (-R).where(keep)
     sig["E8"] = cum(R, 5, 0) - cum(R, 11, 6)
     se = pd.DataFrame(np.nan, index=R.index, columns=R.columns)
     for k in range(len(R)):
@@ -192,12 +199,27 @@ def topk(score_row, avail_row, k):
     return {s.index[j]: 1 / k for j in order[:k]}
 
 
+def exact_rank_topk(parts, avail_row, k):
+    """v1.2:多個分數的橫斷面百分位平均,用精確分數(Fraction)算;平均名次是 0.5 的倍數,百分位 = 名次 / 有值的個數。
+    任何一個成分缺值 → 那個產業不能選(同 v1.1 的 skipna=False);同分照欄位順序。排序只看總和(除以成分數不改變順序)。"""
+    from fractions import Fraction
+    ex = []
+    for p in parts:
+        v = p.dropna(); rk = v.rank(method="average"); n = len(v)
+        ex.append({c: Fraction(int(round(2 * rk[c])), 2 * n) for c in v.index})
+    cols = list(avail_row.index)
+    sc = {c: sum((e[c] for e in ex), Fraction(0)) for c in cols if avail_row[c] and all(c in e for e in ex)}
+    if len(sc) < k:
+        return None
+    order = sorted(sc, key=lambda c: (-sc[c], cols.index(c)))
+    return {c: 1 / k for c in order[:k]}
+
+
 def run_universe(nind, cost_key="10bp", ml=None, sig=None, R=None):
     k = 3 if nind == 12 else 10; c = COST[cost_key]
     months = [t for t in R.index if SIM0 - 1 <= t <= LAST - 1]
     avail = R.notna()
     reg = regime_sets() if nind == 12 else {}
-    pct = {n: sig[n].rank(axis=1, pct=True) for n in ("S0", "E4")}
     res = {}
 
     def from_score(name):
@@ -231,14 +253,12 @@ def run_universe(nind, cost_key="10bp", ml=None, sig=None, R=None):
     def f1(t):
         if t < EVAL0 - 1 or pd.isna(ml["Q1"].loc[t]).all():
             return None
-        parts = [pct["S0"].loc[t], pct["E4"].loc[t], ml["Q1"].loc[t].rank(pct=True)]
+        parts = [sig["S0"].loc[t], sig["E4"].loc[t], ml["Q1"].loc[t]]
         if nind == 12:
             if t not in reg:
                 return None
-            mem = pd.Series([1.0 if i in reg[t][1] else 0.0 for i in R.columns], index=R.columns)
-            parts.append(mem.rank(pct=True))
-        sc = pd.concat(parts, axis=1).mean(axis=1, skipna=False)
-        return topk(sc, avail.loc[t], k)
+            parts.append(pd.Series([1.0 if i in reg[t][1] else 0.0 for i in R.columns], index=R.columns))
+        return exact_rank_topk(parts, avail.loc[t], k)                  # v1.2:精確分數(v1.1 是浮點平均)
     res["F1"] = simulate(R, f1, c, [t for t in months if t >= EVAL0 - 1])
     res["B1"] = simulate(R, lambda t: (lambda a: {i: 1 / len(a) for i in a})(list(R.columns[avail.loc[t].values])), c, months)
     return res
@@ -334,7 +354,7 @@ def ac1(R, sig):
 
 
 # ---------------- 主程式 ----------------
-result = {"協定": "PROTOCOL_SR1.md v1.0", "合成資料": SYN, "評分期": [str(EVAL0), str(LAST)]}
+result = {"協定": "PROTOCOL_SR1.md v1.0", "程式": "sr1_run.py v1.2(E7 候選數、F1 精確分數)", "合成資料": SYN, "評分期": [str(EVAL0), str(LAST)]}
 monthly = {}
 for nind in (12, 49):
     R, BM = load(nind)

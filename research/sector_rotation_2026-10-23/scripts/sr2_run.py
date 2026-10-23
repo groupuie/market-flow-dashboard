@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """SR2 產業領先落後(協定 PROTOCOL_SR2.md v1.0):LASSO(BIC)用所有產業的當月報酬預測每個產業的下月報酬;和 S0 簡單動能比。
 資料、組合、成本、評分期同 SR1(sr1_run.py 的函式直接載入,不重寫)。
+程式 v1.1(2026-10-23,回應 Codex R8;協定規則不變,更正前凍結在 sr2_run_v1.0.py):F2 的複合百分位改用精確分數(sr1_run.py 的 exact_rank_topk)。
 用法:python3 -I sr2_run.py SCRATCH [--synthetic]   → SCRATCH/sr/out/sr2_results{_synthetic}.json"""
 import json, os, sys, warnings
 import numpy as np, pandas as pd
@@ -46,7 +47,7 @@ def leadlag(R, nind):
                   "樣本外 R² 中位數%": round(100 * float(np.median(list(r2os.values()))), 3), "樣本外 R² > 0 的產業數": int(sum(v > 0 for v in r2os.values())), "產業數": len(r2os)}
 
 
-result = {"協定": "PROTOCOL_SR2.md v1.0", "合成資料": SYN, "評分期": [str(EVAL0), str(LAST)]}
+result = {"協定": "PROTOCOL_SR2.md v1.0", "程式": "sr2_run.py v1.1(F2 精確分數)", "合成資料": SYN, "評分期": [str(EVAL0), str(LAST)]}
 for nind in (49, 12):
     R, BM = G["load"](nind)
     sig = G["signals"](R, BM, nind)
@@ -57,7 +58,7 @@ for nind in (49, 12):
     for ck, c in COST.items():
         res = {"S0": G["simulate"](R, lambda t: G["topk"](sig["S0"].loc[t], avail.loc[t], k), c, months),
                "Q3": G["simulate"](R, lambda t: G["topk"](q3.loc[t], avail.loc[t], k), c, months),
-               "F2": G["simulate"](R, lambda t: G["topk"](pd.concat([pct_s0.loc[t], q3.loc[t].rank(pct=True)], axis=1).mean(axis=1, skipna=False), avail.loc[t], k), c, months),
+               "F2": G["simulate"](R, lambda t: G["exact_rank_topk"]([sig["S0"].loc[t], q3.loc[t]], avail.loc[t], k), c, months),   # v1.1:精確分數
                "B1": G["simulate"](R, lambda t: (lambda a: {i: 1 / len(a) for i in a})(list(R.columns[avail.loc[t].values])), c, months)}
         U[f"{ck} 每個規則"] = {n: G["stats"](v[0]) for n, v in res.items()}
         if ck == "10bp":
