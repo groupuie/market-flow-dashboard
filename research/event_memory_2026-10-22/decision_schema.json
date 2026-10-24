@@ -1,0 +1,110 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "event_memory/decision_schema.json",
+ "title": "判讀紀錄 v0.1(草案)",
+ "description": "A / B / C 每列一筆;R 也用同一格式(reason 留空)。判讀者只拿到資料包,不能上網。",
+ "type": "object",
+ "required": [
+  "schema_version",
+  "row_id",
+  "case_id",
+  "sym",
+  "k",
+  "decision_at",
+  "group",
+  "model",
+  "packet_sha256",
+  "p_launch",
+  "action",
+  "judged_at"
+ ],
+ "properties": {
+  "schema_version": {
+   "const": "0.1"
+  },
+  "row_id": {
+   "type": "string",
+   "description": "{case_id}_d{k}"
+  },
+  "case_id": {
+   "type": "string"
+  },
+  "sym": {
+   "type": "string"
+  },
+  "k": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 4,
+   "description": "d0..d4"
+  },
+  "decision_at": {
+   "type": "string",
+   "format": "date-time",
+   "description": "r+k 收盤(16:00 ET)換成 UTC"
+  },
+  "group": {
+   "enum": [
+    "R",
+    "A",
+    "B",
+    "C"
+   ]
+  },
+  "model": {
+   "type": "string",
+   "description": "釘住的模型 ID,例如 claude-opus-5-5;R = 係數檔指紋"
+  },
+  "packet_sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$",
+   "description": "資料包內容指紋(提示詞 + 數字 + 摘要 + 卡)"
+  },
+  "p_launch": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 1,
+   "description": "明天開盤買,三天內 FL3 = 1 的機率(兩位小數)"
+  },
+  "action": {
+   "enum": [
+    "buy_now",
+    "wait",
+    "abandon"
+   ],
+   "description": "現在買 / 再等 / 放棄這個事件"
+  },
+  "reason": {
+   "type": "string",
+   "maxLength": 60
+  },
+  "used_cards": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "maxItems": 5,
+   "description": "只有 C 組"
+  },
+  "judged_at": {
+   "type": "string",
+   "format": "date-time"
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "group": {
+      "const": "C"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "used_cards"
+    ]
+   }
+  }
+ ]
+}
