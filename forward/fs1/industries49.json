@@ -1,0 +1,296 @@
+[
+{
+"no": 1,
+"code": "Agric",
+"name": "Agriculture",
+"zh": "農業"
+},
+{
+"no": 2,
+"code": "Food",
+"name": "Food Products",
+"zh": "食品"
+},
+{
+"no": 3,
+"code": "Soda",
+"name": "Candy & Soda",
+"zh": "糖果與汽水"
+},
+{
+"no": 4,
+"code": "Beer",
+"name": "Beer & Liquor",
+"zh": "啤酒與烈酒"
+},
+{
+"no": 5,
+"code": "Smoke",
+"name": "Tobacco Products",
+"zh": "菸草"
+},
+{
+"no": 6,
+"code": "Toys",
+"name": "Recreation",
+"zh": "休閒用品"
+},
+{
+"no": 7,
+"code": "Fun",
+"name": "Entertainment",
+"zh": "娛樂"
+},
+{
+"no": 8,
+"code": "Books",
+"name": "Printing and Publishing",
+"zh": "印刷出版"
+},
+{
+"no": 9,
+"code": "Hshld",
+"name": "Consumer Goods",
+"zh": "家用消費品"
+},
+{
+"no": 10,
+"code": "Clths",
+"name": "Apparel",
+"zh": "服飾"
+},
+{
+"no": 11,
+"code": "Hlth",
+"name": "Healthcare",
+"zh": "醫療服務"
+},
+{
+"no": 12,
+"code": "MedEq",
+"name": "Medical Equipment",
+"zh": "醫療器材"
+},
+{
+"no": 13,
+"code": "Drugs",
+"name": "Pharmaceutical Products",
+"zh": "製藥"
+},
+{
+"no": 14,
+"code": "Chems",
+"name": "Chemicals",
+"zh": "化學"
+},
+{
+"no": 15,
+"code": "Rubbr",
+"name": "Rubber and Plastic Products",
+"zh": "橡膠塑膠"
+},
+{
+"no": 16,
+"code": "Txtls",
+"name": "Textiles",
+"zh": "紡織"
+},
+{
+"no": 17,
+"code": "BldMt",
+"name": "Construction Materials",
+"zh": "建材"
+},
+{
+"no": 18,
+"code": "Cnstr",
+"name": "Construction",
+"zh": "營建"
+},
+{
+"no": 19,
+"code": "Steel",
+"name": "Steel Works Etc",
+"zh": "鋼鐵"
+},
+{
+"no": 20,
+"code": "FabPr",
+"name": "Fabricated Products",
+"zh": "金屬製品"
+},
+{
+"no": 21,
+"code": "Mach",
+"name": "Machinery",
+"zh": "機械"
+},
+{
+"no": 22,
+"code": "ElcEq",
+"name": "Electrical Equipment",
+"zh": "電機設備"
+},
+{
+"no": 23,
+"code": "Autos",
+"name": "Automobiles and Trucks",
+"zh": "汽車卡車"
+},
+{
+"no": 24,
+"code": "Aero",
+"name": "Aircraft",
+"zh": "航空器"
+},
+{
+"no": 25,
+"code": "Ships",
+"name": "Shipbuilding, Railroad Equipment",
+"zh": "造船與鐵路設備"
+},
+{
+"no": 26,
+"code": "Guns",
+"name": "Defense",
+"zh": "國防"
+},
+{
+"no": 27,
+"code": "Gold",
+"name": "Precious Metals",
+"zh": "貴金屬"
+},
+{
+"no": 28,
+"code": "Mines",
+"name": "Non-Metallic and Industrial Metal Mining",
+"zh": "非金屬與工業金屬採礦"
+},
+{
+"no": 29,
+"code": "Coal",
+"name": "Coal",
+"zh": "煤"
+},
+{
+"no": 30,
+"code": "Oil",
+"name": "Petroleum and Natural Gas",
+"zh": "石油天然氣"
+},
+{
+"no": 31,
+"code": "Util",
+"name": "Utilities",
+"zh": "公用事業"
+},
+{
+"no": 32,
+"code": "Telcm",
+"name": "Communication",
+"zh": "通訊"
+},
+{
+"no": 33,
+"code": "PerSv",
+"name": "Personal Services",
+"zh": "個人服務"
+},
+{
+"no": 34,
+"code": "BusSv",
+"name": "Business Services",
+"zh": "商業服務"
+},
+{
+"no": 35,
+"code": "Hardw",
+"name": "Computers",
+"zh": "電腦硬體"
+},
+{
+"no": 36,
+"code": "Softw",
+"name": "Computer Software",
+"zh": "軟體"
+},
+{
+"no": 37,
+"code": "Chips",
+"name": "Electronic Equipment",
+"zh": "電子設備(含半導體)"
+},
+{
+"no": 38,
+"code": "LabEq",
+"name": "Measuring and Control Equipment",
+"zh": "量測與控制設備"
+},
+{
+"no": 39,
+"code": "Paper",
+"name": "Business Supplies",
+"zh": "商業用品(紙)"
+},
+{
+"no": 40,
+"code": "Boxes",
+"name": "Shipping Containers",
+"zh": "包裝容器"
+},
+{
+"no": 41,
+"code": "Trans",
+"name": "Transportation",
+"zh": "運輸"
+},
+{
+"no": 42,
+"code": "Whlsl",
+"name": "Wholesale",
+"zh": "批發"
+},
+{
+"no": 43,
+"code": "Rtail",
+"name": "Retail",
+"zh": "零售"
+},
+{
+"no": 44,
+"code": "Meals",
+"name": "Restaurants, Hotels, Motels",
+"zh": "餐飲旅館"
+},
+{
+"no": 45,
+"code": "Banks",
+"name": "Banking",
+"zh": "銀行"
+},
+{
+"no": 46,
+"code": "Insur",
+"name": "Insurance",
+"zh": "保險"
+},
+{
+"no": 47,
+"code": "RlEst",
+"name": "Real Estate",
+"zh": "不動產"
+},
+{
+"no": 48,
+"code": "Fin",
+"name": "Trading",
+"zh": "交易與金融服務"
+},
+{
+"no": 49,
+"code": "Other",
+"name": "Almost Nothing",
+"zh": "其他"
+}
+]
