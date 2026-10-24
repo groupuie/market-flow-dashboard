@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-10-24T00:52:44Z",
+ "gen_utc": "2026-10-24T05:14:58Z",
  "data_asof": "2026-10-23",
  "protocol": "v2",
  "status": "COLLECTING",
@@ -10,13 +10,13 @@
   "end_reason": null
  },
  "counts": {
-  "locked": 107,
-  "agree": 42,
-  "disagree": 65,
+  "locked": 111,
+  "agree": 43,
+  "disagree": 68,
   "late": 0,
-  "days": 7,
-  "closed": 3,
-  "open": 104,
+  "days": 8,
+  "closed": 15,
+  "open": 96,
   "no_data": 0,
   "unresolved": 0
  },
@@ -39,8 +39,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.02484895978159196
+   "elapsed_sessions": 7,
+   "unreal": -0.011425971333956841
   },
   "2026-10-14:CSCO": {
    "id": "2026-10-14:CSCO",
@@ -60,8 +60,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.06490148881162527
+   "elapsed_sessions": 7,
+   "unreal": -0.0505482749398235
   },
   "2026-10-14:DDOG": {
    "id": "2026-10-14:DDOG",
@@ -81,8 +81,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.011406698270968518
+   "elapsed_sessions": 7,
+   "unreal": 0.0342354367070159
   },
   "2026-10-14:GOOG": {
    "id": "2026-10-14:GOOG",
@@ -102,8 +102,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.058056558893489485
+   "elapsed_sessions": 7,
+   "unreal": -0.06827592282618267
   },
   "2026-10-14:GOOGL": {
    "id": "2026-10-14:GOOGL",
@@ -123,8 +123,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.05941398317377422
+   "elapsed_sessions": 7,
+   "unreal": -0.07104728749637368
   },
   "2026-10-14:OKTA": {
    "id": "2026-10-14:OKTA",
@@ -211,10 +211,90 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.1368124999999999
+   "exit": "2026-10-23",
+   "hold": 6,
+   "entry_open": 640.0,
+   "exit_open": 543.02,
+   "ret0": -0.15153125,
+   "ret": -0.1532264922577421,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-13",
+     682.92,
+     691.17,
+     665.04,
+     688.88,
+     1036200
+    ],
+    [
+     "2026-10-14",
+     682.2,
+     685.3,
+     648.31,
+     660.53,
+     1067900
+    ],
+    [
+     "2026-10-15",
+     640.0,
+     647.67,
+     613.0,
+     642.21,
+     1386100
+    ],
+    [
+     "2026-10-16",
+     639.38,
+     640.57,
+     627.07,
+     631.86,
+     917000
+    ],
+    [
+     "2026-10-19",
+     643.7,
+     645.0,
+     613.92,
+     618.41,
+     1054600
+    ],
+    [
+     "2026-10-20",
+     609.0,
+     612.38,
+     587.23,
+     596.0,
+     1586700
+    ],
+    [
+     "2026-10-21",
+     604.6,
+     615.78,
+     596.91,
+     601.14,
+     1637900
+    ],
+    [
+     "2026-10-22",
+     588.38,
+     588.38,
+     543.06,
+     552.44,
+     2007100
+    ],
+    [
+     "2026-10-23",
+     543.02,
+     555.54,
+     527.07,
+     546.43,
+     1620800
+    ]
+   ]
   },
   "2026-10-14:SNPS": {
    "id": "2026-10-14:SNPS",
@@ -232,10 +312,90 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.10257662977674864
+   "exit": "2026-10-23",
+   "hold": 6,
+   "entry_open": 470.77,
+   "exit_open": 419.42,
+   "ret0": -0.10907661915585098,
+   "ret": -0.11085668585084418,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-13",
+     497.29,
+     503.98,
+     490.62,
+     494.51,
+     2520300
+    ],
+    [
+     "2026-10-14",
+     492.99,
+     495.83,
+     476.73,
+     479.93,
+     3203000
+    ],
+    [
+     "2026-10-15",
+     470.77,
+     472.17,
+     454.49,
+     468.11,
+     3174800
+    ],
+    [
+     "2026-10-16",
+     464.25,
+     469.03,
+     448.19,
+     454.63,
+     2516100
+    ],
+    [
+     "2026-10-19",
+     462.0,
+     462.5,
+     453.05,
+     454.58,
+     1997300
+    ],
+    [
+     "2026-10-20",
+     450.88,
+     452.0,
+     441.09,
+     447.62,
+     1782200
+    ],
+    [
+     "2026-10-21",
+     451.8,
+     459.88,
+     450.01,
+     451.19,
+     1337700
+    ],
+    [
+     "2026-10-22",
+     442.13,
+     444.05,
+     422.1,
+     422.48,
+     2587200
+    ],
+    [
+     "2026-10-23",
+     419.42,
+     433.71,
+     417.6,
+     430.14,
+     1362500
+    ]
+   ]
   },
   "2026-10-14:SPY": {
    "id": "2026-10-14:SPY",
@@ -255,8 +415,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.0029885807504077544
+   "elapsed_sessions": 7,
+   "unreal": -0.008195758564437106
   },
   "2026-10-14:T": {
    "id": "2026-10-14:T",
@@ -276,8 +436,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.029035012809564664
+   "elapsed_sessions": 7,
+   "unreal": -0.10631938514090533
   },
   "2026-10-14:TLN": {
    "id": "2026-10-14:TLN",
@@ -297,8 +457,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.05629431361940829
+   "elapsed_sessions": 7,
+   "unreal": -0.06628890344258087
   },
   "2026-10-14:TWLO": {
    "id": "2026-10-14:TWLO",
@@ -318,8 +478,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 6,
-   "unreal": -0.04000757002271005
+   "elapsed_sessions": 7,
+   "unreal": -0.00912187736563197
   },
   "2026-10-15:ALLY": {
    "id": "2026-10-15:ALLY",
@@ -339,8 +499,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.03230042016806722
+   "elapsed_sessions": 6,
+   "unreal": 0.02573529411764719
   },
   "2026-10-15:APP": {
    "id": "2026-10-15:APP",
@@ -360,8 +520,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.05572130415364007
+   "elapsed_sessions": 6,
+   "unreal": -0.07012058954890577
   },
   "2026-10-15:BA": {
    "id": "2026-10-15:BA",
@@ -381,8 +541,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.01356966286225203
+   "elapsed_sessions": 6,
+   "unreal": -0.009362015463104223
   },
   "2026-10-15:BAC": {
    "id": "2026-10-15:BAC",
@@ -402,8 +562,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.020329881089374835
+   "elapsed_sessions": 6,
+   "unreal": -0.030303030303030276
   },
   "2026-10-15:BMNR": {
    "id": "2026-10-15:BMNR",
@@ -423,8 +583,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.019607843137254832
+   "elapsed_sessions": 6,
+   "unreal": -0.023965141612200425
   },
   "2026-10-15:BMY": {
    "id": "2026-10-15:BMY",
@@ -444,8 +604,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.03109656301145658
+   "elapsed_sessions": 6,
+   "unreal": 0.00621931260229136
   },
   "2026-10-15:CRML": {
    "id": "2026-10-15:CRML",
@@ -463,10 +623,82 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.09237536656891498
+   "exit": "2026-10-23",
+   "hold": 5,
+   "entry_open": 6.82,
+   "exit_open": 6.06,
+   "ret0": -0.11143695014662769,
+   "ret": -0.11321230089558532,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-14",
+     6.79,
+     6.81,
+     6.16,
+     6.26,
+     8024000
+    ],
+    [
+     "2026-10-15",
+     6.01,
+     6.96,
+     5.9,
+     6.95,
+     10900700
+    ],
+    [
+     "2026-10-16",
+     6.82,
+     7.3,
+     6.72,
+     6.97,
+     6357000
+    ],
+    [
+     "2026-10-19",
+     7.1,
+     7.148,
+     6.485,
+     6.51,
+     5452000
+    ],
+    [
+     "2026-10-20",
+     6.36,
+     6.545,
+     6.055,
+     6.4,
+     5619900
+    ],
+    [
+     "2026-10-21",
+     6.48,
+     6.69,
+     6.44,
+     6.64,
+     4428000
+    ],
+    [
+     "2026-10-22",
+     6.39,
+     6.54,
+     5.93,
+     6.19,
+     5128600
+    ],
+    [
+     "2026-10-23",
+     6.06,
+     6.445,
+     6.051,
+     6.36,
+     3229400
+    ]
+   ]
   },
   "2026-10-15:CVNA": {
    "id": "2026-10-15:CVNA",
@@ -486,8 +718,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.03508339495522139
+   "elapsed_sessions": 6,
+   "unreal": -0.05003697313285671
   },
   "2026-10-15:DASH": {
    "id": "2026-10-15:DASH",
@@ -507,8 +739,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.04070577310013934
+   "elapsed_sessions": 6,
+   "unreal": -0.07454986328225777
   },
   "2026-10-15:IONQ": {
    "id": "2026-10-15:IONQ",
@@ -528,8 +760,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.05667231775248238
+   "elapsed_sessions": 6,
+   "unreal": -0.05334221361104374
   },
   "2026-10-15:KKR": {
    "id": "2026-10-15:KKR",
@@ -549,8 +781,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.04525039299348754
+   "elapsed_sessions": 6,
+   "unreal": 0.02560071861666291
   },
   "2026-10-15:LCID": {
    "id": "2026-10-15:LCID",
@@ -631,8 +863,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.02737716939623569
+   "elapsed_sessions": 6,
+   "unreal": 0.02053287704717688
   },
   "2026-10-15:MCHP": {
    "id": "2026-10-15:MCHP",
@@ -650,10 +882,82 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "頂",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.018867924528301883
+   "exit": "2026-10-23",
+   "hold": 5,
+   "entry_open": 73.14,
+   "exit_open": 74.21,
+   "ret0": 0.01462947771397305,
+   "ret": 0.012602245990269045,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-14",
+     72.82,
+     73.3,
+     70.49,
+     71.25,
+     14377200
+    ],
+    [
+     "2026-10-15",
+     69.97,
+     74.37,
+     69.76,
+     74.26,
+     14556600
+    ],
+    [
+     "2026-10-16",
+     73.14,
+     76.81,
+     72.64,
+     73.85,
+     18577000
+    ],
+    [
+     "2026-10-19",
+     75.16,
+     76.08,
+     73.26,
+     74.43,
+     10295900
+    ],
+    [
+     "2026-10-20",
+     73.47,
+     77.17,
+     73.31,
+     75.85,
+     9600400
+    ],
+    [
+     "2026-10-21",
+     76.55,
+     77.74,
+     75.57,
+     77.15,
+     9598500
+    ],
+    [
+     "2026-10-22",
+     75.14,
+     75.94,
+     73.61,
+     74.52,
+     17070500
+    ],
+    [
+     "2026-10-23",
+     74.21,
+     75.5,
+     73.67,
+     74.05,
+     7183500
+    ]
+   ]
   },
   "2026-10-15:NCLH": {
    "id": "2026-10-15:NCLH",
@@ -673,8 +977,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.004524886877828038
+   "elapsed_sessions": 6,
+   "unreal": -0.023917259211376884
   },
   "2026-10-15:NEM": {
    "id": "2026-10-15:NEM",
@@ -694,8 +998,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.010578340414462817
+   "elapsed_sessions": 6,
+   "unreal": -0.05601317957166385
   },
   "2026-10-15:NXPI": {
    "id": "2026-10-15:NXPI",
@@ -715,8 +1019,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.041248850549546745
+   "elapsed_sessions": 6,
+   "unreal": 0.028681525594429935
   },
   "2026-10-15:OPEN": {
    "id": "2026-10-15:OPEN",
@@ -805,8 +1109,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.0
+   "elapsed_sessions": 6,
+   "unreal": -0.0010309278350515427
   },
   "2026-10-15:RDDT": {
    "id": "2026-10-15:RDDT",
@@ -826,8 +1130,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.06087500000000001
+   "elapsed_sessions": 6,
+   "unreal": -0.09843749999999996
   },
   "2026-10-15:RGTI": {
    "id": "2026-10-15:RGTI",
@@ -847,8 +1151,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.06818181818181812
+   "elapsed_sessions": 6,
+   "unreal": -0.06493506493506496
   },
   "2026-10-15:SOFI": {
    "id": "2026-10-15:SOFI",
@@ -868,8 +1172,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.020232172470978416
+   "elapsed_sessions": 6,
+   "unreal": -0.03051409618573797
   },
   "2026-10-15:SOUN": {
    "id": "2026-10-15:SOUN",
@@ -889,8 +1193,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.07786885245901642
+   "elapsed_sessions": 6,
+   "unreal": -0.09221311475409844
   },
   "2026-10-15:UPST": {
    "id": "2026-10-15:UPST",
@@ -910,8 +1214,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": -0.036363636363636265
+   "elapsed_sessions": 6,
+   "unreal": -0.03919191919191911
   },
   "2026-10-15:VRTX": {
    "id": "2026-10-15:VRTX",
@@ -931,8 +1235,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 5,
-   "unreal": 0.047176456776112374
+   "elapsed_sessions": 6,
+   "unreal": 0.025182953077916403
   },
   "2026-10-16:AA": {
    "id": "2026-10-16:AA",
@@ -953,8 +1257,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": -0.0739411342426417
+   "elapsed_sessions": 5,
+   "unreal": -0.09284517827231398
   },
   "2026-10-16:AI": {
    "id": "2026-10-16:AI",
@@ -975,8 +1279,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": 0.05897887323943651
+   "elapsed_sessions": 5,
+   "unreal": 0.096830985915493
   },
   "2026-10-16:BKR": {
    "id": "2026-10-16:BKR",
@@ -997,8 +1301,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": -0.04061549472177495
+   "elapsed_sessions": 5,
+   "unreal": -0.0005367686527106841
   },
   "2026-10-16:C": {
    "id": "2026-10-16:C",
@@ -1019,8 +1323,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": -0.013050833803270656
+   "elapsed_sessions": 5,
+   "unreal": -0.0282768065737532
   },
   "2026-10-16:CLF": {
    "id": "2026-10-16:CLF",
@@ -1039,10 +1343,74 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": -0.08098591549295764
+   "exit": "2026-10-23",
+   "hold": 4,
+   "entry_open": 14.2,
+   "exit_open": 13.11,
+   "ret0": -0.0767605633802817,
+   "ret": -0.07860519761928197,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-15",
+     12.35,
+     12.52,
+     11.67,
+     12.15,
+     24295400
+    ],
+    [
+     "2026-10-16",
+     12.07,
+     12.69,
+     11.98,
+     12.12,
+     24937100
+    ],
+    [
+     "2026-10-19",
+     14.2,
+     14.58,
+     12.94,
+     14.1,
+     88398600
+    ],
+    [
+     "2026-10-20",
+     13.68,
+     13.84,
+     12.63,
+     13.65,
+     43527100
+    ],
+    [
+     "2026-10-21",
+     13.63,
+     14.15,
+     13.4,
+     14.03,
+     23098600
+    ],
+    [
+     "2026-10-22",
+     13.9,
+     13.9,
+     13.02,
+     13.05,
+     34972400
+    ],
+    [
+     "2026-10-23",
+     13.11,
+     14.06,
+     13.07,
+     13.9,
+     27913400
+    ]
+   ]
   },
   "2026-10-16:META": {
    "id": "2026-10-16:META",
@@ -1061,10 +1429,74 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": -0.08245658691102431
+   "exit": "2026-10-23",
+   "hold": 4,
+   "entry_open": 707.16,
+   "exit_open": 638.18,
+   "ret0": -0.09754511001753496,
+   "ret": -0.09934821669082661,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-15",
+     726.56,
+     743.97,
+     715.58,
+     736.72,
+     16891500
+    ],
+    [
+     "2026-10-16",
+     736.7,
+     738.49,
+     702.71,
+     709.33,
+     20643800
+    ],
+    [
+     "2026-10-19",
+     707.16,
+     708.83,
+     693.86,
+     705.44,
+     16260900
+    ],
+    [
+     "2026-10-20",
+     694.98,
+     696.51,
+     681.05,
+     694.25,
+     17049100
+    ],
+    [
+     "2026-10-21",
+     697.6,
+     713.22,
+     689.68,
+     697.52,
+     29203900
+    ],
+    [
+     "2026-10-22",
+     676.35,
+     681.07,
+     639.69,
+     648.85,
+     40571000
+    ],
+    [
+     "2026-10-23",
+     638.18,
+     648.04,
+     633.27,
+     642.62,
+     14761500
+    ]
+   ]
   },
   "2026-10-16:MSTR": {
    "id": "2026-10-16:MSTR",
@@ -1085,8 +1517,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": 0.04794077481492143
+   "elapsed_sessions": 5,
+   "unreal": 0.04945015453173296
   },
   "2026-10-16:PLTR": {
    "id": "2026-10-16:PLTR",
@@ -1107,8 +1539,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": 0.04917243776571567
+   "elapsed_sessions": 5,
+   "unreal": 0.052167170245193795
   },
   "2026-10-16:ROK": {
    "id": "2026-10-16:ROK",
@@ -1127,10 +1559,74 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "頂",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": -0.018114850934698445
+   "exit": "2026-10-23",
+   "hold": 4,
+   "entry_open": 431.69,
+   "exit_open": 418.71,
+   "ret0": -0.03006787277907763,
+   "ret": -0.032005799107191146,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-15",
+     419.0,
+     422.61,
+     412.65,
+     422.03,
+     1316400
+    ],
+    [
+     "2026-10-16",
+     423.21,
+     434.37,
+     421.5,
+     426.23,
+     1351600
+    ],
+    [
+     "2026-10-19",
+     431.69,
+     432.0,
+     423.64,
+     424.47,
+     668000
+    ],
+    [
+     "2026-10-20",
+     418.86,
+     429.24,
+     413.85,
+     427.77,
+     687600
+    ],
+    [
+     "2026-10-21",
+     431.44,
+     441.39,
+     428.57,
+     438.51,
+     726800
+    ],
+    [
+     "2026-10-22",
+     430.52,
+     431.09,
+     417.62,
+     423.87,
+     1472100
+    ],
+    [
+     "2026-10-23",
+     418.71,
+     429.46,
+     415.71,
+     426.11,
+     1158400
+    ]
+   ]
   },
   "2026-10-16:ZS": {
    "id": "2026-10-16:ZS",
@@ -1151,8 +1647,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 4,
-   "unreal": 0.132675908722786
+   "elapsed_sessions": 5,
+   "unreal": 0.21552093754466206
   },
   "2026-10-19:AMZN": {
    "id": "2026-10-19:AMZN",
@@ -1173,8 +1669,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.05187821872159948
+   "elapsed_sessions": 4,
+   "unreal": -0.06089063920024229
   },
   "2026-10-19:CLF": {
    "id": "2026-10-19:CLF",
@@ -1195,8 +1691,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.046052631578947345
+   "elapsed_sessions": 4,
+   "unreal": 0.016081871345029253
   },
   "2026-10-19:GME": {
    "id": "2026-10-19:GME",
@@ -1217,8 +1713,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.013214146910221491
+   "elapsed_sessions": 4,
+   "unreal": -0.03536727555382824
   },
   "2026-10-19:MPWR": {
    "id": "2026-10-19:MPWR",
@@ -1239,8 +1735,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.05265847426694237
+   "elapsed_sessions": 4,
+   "unreal": -0.07521596301253197
   },
   "2026-10-19:MXL": {
    "id": "2026-10-19:MXL",
@@ -1259,10 +1755,66 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.12528473804100226
+   "exit": "2026-10-23",
+   "hold": 3,
+   "entry_open": 74.63,
+   "exit_open": 64.18,
+   "ret0": -0.1400241189870024,
+   "ret": -0.1417423525154996,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-16",
+     74.59,
+     74.77,
+     70.34,
+     71.32,
+     2382300
+    ],
+    [
+     "2026-10-19",
+     76.4,
+     80.95,
+     74.9,
+     77.11,
+     4052700
+    ],
+    [
+     "2026-10-20",
+     74.63,
+     77.05,
+     71.13,
+     73.51,
+     2605400
+    ],
+    [
+     "2026-10-21",
+     76.31,
+     77.65,
+     73.58,
+     75.79,
+     3655200
+    ],
+    [
+     "2026-10-22",
+     71.02,
+     71.6,
+     63.49,
+     65.28,
+     5258400
+    ],
+    [
+     "2026-10-23",
+     64.18,
+     66.16,
+     58.44,
+     63.46,
+     7126200
+    ]
+   ]
   },
   "2026-10-19:SKHY": {
    "id": "2026-10-19:SKHY",
@@ -1283,8 +1835,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.043020129351064695
+   "elapsed_sessions": 4,
+   "unreal": -0.00428747910762306
   },
   "2026-10-19:SNDK": {
    "id": "2026-10-19:SNDK",
@@ -1305,8 +1857,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.05687134666950877
+   "elapsed_sessions": 4,
+   "unreal": -0.073999693335278
   },
   "2026-10-19:SPCX": {
    "id": "2026-10-19:SPCX",
@@ -1325,10 +1877,66 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "頂",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": -0.009714715741944269
+   "exit": "2026-10-23",
+   "hold": 3,
+   "entry_open": 146.17,
+   "exit_open": 147.93,
+   "ret0": 0.012040774440719826,
+   "ret": 0.010018714951328,
+   "closed_utc": "2026-10-24T05:14:56Z",
+   "bars_used": [
+    [
+     "2026-10-16",
+     147.8,
+     147.92,
+     142.95,
+     146.03,
+     88552900
+    ],
+    [
+     "2026-10-19",
+     149.23,
+     151.01,
+     146.83,
+     147.96,
+     74037800
+    ],
+    [
+     "2026-10-20",
+     146.17,
+     148.66,
+     143.27,
+     147.79,
+     117204900
+    ],
+    [
+     "2026-10-21",
+     160.56,
+     166.18,
+     156.93,
+     159.31,
+     220785200
+    ],
+    [
+     "2026-10-22",
+     154.21,
+     154.26,
+     143.21,
+     144.75,
+     197046500
+    ],
+    [
+     "2026-10-23",
+     147.93,
+     149.75,
+     144.09,
+     147.49,
+     110352500
+    ]
+   ]
   },
   "2026-10-19:WDC": {
    "id": "2026-10-19:WDC",
@@ -1349,8 +1957,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 3,
-   "unreal": 0.015220132997018965
+   "elapsed_sessions": 4,
+   "unreal": -0.01493350149048378
   },
   "2026-10-20:AAPL": {
    "id": "2026-10-20:AAPL",
@@ -1371,8 +1979,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": 0.0261079679396512
+   "elapsed_sessions": 3,
+   "unreal": 0.024664073550212162
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -1393,8 +2001,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": -0.017315068493150676
+   "elapsed_sessions": 3,
+   "unreal": -0.034356164383561705
   },
   "2026-10-20:MSTR": {
    "id": "2026-10-20:MSTR",
@@ -1415,8 +2023,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": -0.0034176349965823194
+   "elapsed_sessions": 3,
+   "unreal": -0.001982228298017863
   },
   "2026-10-20:ON": {
    "id": "2026-10-20:ON",
@@ -1437,8 +2045,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": -0.041492146596858626
+   "elapsed_sessions": 3,
+   "unreal": -0.05431937172774881
   },
   "2026-10-20:RUN": {
    "id": "2026-10-20:RUN",
@@ -1459,8 +2067,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": 0.0013003901170349774
+   "elapsed_sessions": 3,
+   "unreal": -0.014304291287386306
   },
   "2026-10-20:SBET": {
    "id": "2026-10-20:SBET",
@@ -1481,8 +2089,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": -0.028430160692212603
+   "elapsed_sessions": 3,
+   "unreal": -0.056860321384425205
   },
   "2026-10-20:TSLA": {
    "id": "2026-10-20:TSLA",
@@ -1501,10 +2109,58 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "頂",
    "entry": "2026-10-21",
-   "elapsed_sessions": 2,
-   "unreal": -0.01795873423695049
+   "exit": "2026-10-23",
+   "hold": 2,
+   "entry_open": 381.43,
+   "exit_open": 373.2,
+   "ret0": -0.0215766982146135,
+   "ret": -0.023531589926472307,
+   "closed_utc": "2026-10-24T05:14:57Z",
+   "bars_used": [
+    [
+     "2026-10-19",
+     357.5,
+     369.58,
+     354.47,
+     368.06,
+     38817900
+    ],
+    [
+     "2026-10-20",
+     370.28,
+     377.59,
+     363.64,
+     373.71,
+     32123300
+    ],
+    [
+     "2026-10-21",
+     381.43,
+     388.84,
+     380.51,
+     386.47,
+     48875800
+    ],
+    [
+     "2026-10-22",
+     374.29,
+     388.86,
+     373.71,
+     374.58,
+     51610900
+    ],
+    [
+     "2026-10-23",
+     373.2,
+     377.32,
+     365.27,
+     372.22,
+     34689700
+    ]
+   ]
   },
   "2026-10-21:ADI": {
    "id": "2026-10-21:ADI",
@@ -1525,8 +2181,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.03080247223757593
+   "elapsed_sessions": 2,
+   "unreal": -0.017461434098788975
   },
   "2026-10-21:AMD": {
    "id": "2026-10-21:AMD",
@@ -1547,8 +2203,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.030852890669719524
+   "elapsed_sessions": 2,
+   "unreal": -0.013947719900782363
   },
   "2026-10-21:AMKR": {
    "id": "2026-10-21:AMKR",
@@ -1569,8 +2225,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.05607928450568045
+   "elapsed_sessions": 2,
+   "unreal": -0.050036258158085545
   },
   "2026-10-21:APLD": {
    "id": "2026-10-21:APLD",
@@ -1591,8 +2247,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.045499999999999985
+   "elapsed_sessions": 2,
+   "unreal": -0.08750000000000002
   },
   "2026-10-21:ASML": {
    "id": "2026-10-21:ASML",
@@ -1613,8 +2269,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.038448741173426004
+   "elapsed_sessions": 2,
+   "unreal": -0.03151071512193926
   },
   "2026-10-21:BE": {
    "id": "2026-10-21:BE",
@@ -1635,8 +2291,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.04549638395792244
+   "elapsed_sessions": 2,
+   "unreal": -0.15275038351961423
   },
   "2026-10-21:CAT": {
    "id": "2026-10-21:CAT",
@@ -1657,8 +2313,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.024009870108266274
+   "elapsed_sessions": 2,
+   "unreal": -0.04764545240306639
   },
   "2026-10-21:CDNS": {
    "id": "2026-10-21:CDNS",
@@ -1679,8 +2335,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.027542239809057345
+   "elapsed_sessions": 2,
+   "unreal": -0.006061177061742362
   },
   "2026-10-21:CEG": {
    "id": "2026-10-21:CEG",
@@ -1701,8 +2357,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.05062867346179589
+   "elapsed_sessions": 2,
+   "unreal": -0.057175805371624144
   },
   "2026-10-21:COHR": {
    "id": "2026-10-21:COHR",
@@ -1723,8 +2379,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.0686981850773023
+   "elapsed_sessions": 2,
+   "unreal": -0.06211068787810892
   },
   "2026-10-21:CRWD": {
    "id": "2026-10-21:CRWD",
@@ -1745,8 +2401,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.019208573784006533
+   "elapsed_sessions": 2,
+   "unreal": 0.06170651277823569
   },
   "2026-10-21:CSCO": {
    "id": "2026-10-21:CSCO",
@@ -1767,8 +2423,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.017607942305891133
+   "elapsed_sessions": 2,
+   "unreal": -0.0025288002247821906
   },
   "2026-10-21:DELL": {
    "id": "2026-10-21:DELL",
@@ -1789,8 +2445,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.017696428184164392
+   "elapsed_sessions": 2,
+   "unreal": -0.010127735247554837
   },
   "2026-10-21:DJT": {
    "id": "2026-10-21:DJT",
@@ -1811,8 +2467,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": 0.01692307692307704
+   "elapsed_sessions": 2,
+   "unreal": -0.01538461538461533
   },
   "2026-10-21:ETN": {
    "id": "2026-10-21:ETN",
@@ -1833,8 +2489,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.028871460153700346
+   "elapsed_sessions": 2,
+   "unreal": -0.036451205390040986
   },
   "2026-10-21:GEV": {
    "id": "2026-10-21:GEV",
@@ -1855,8 +2511,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.07654017857142859
+   "elapsed_sessions": 2,
+   "unreal": -0.0904017857142857
   },
   "2026-10-21:GLW": {
    "id": "2026-10-21:GLW",
@@ -1877,8 +2533,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.03883720930232559
+   "elapsed_sessions": 2,
+   "unreal": -0.04116279069767448
   },
   "2026-10-21:GLXY": {
    "id": "2026-10-21:GLXY",
@@ -1899,8 +2555,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.058207576224207025
+   "elapsed_sessions": 2,
+   "unreal": -0.09578072066522947
   },
   "2026-10-21:HOOD": {
    "id": "2026-10-21:HOOD",
@@ -1921,8 +2577,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.012221938123242237
+   "elapsed_sessions": 2,
+   "unreal": -0.027665558680644464
   },
   "2026-10-21:IBKR": {
    "id": "2026-10-21:IBKR",
@@ -1943,8 +2599,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.011532916866890841
+   "elapsed_sessions": 2,
+   "unreal": -0.035559827006246936
   },
   "2026-10-21:LWLG": {
    "id": "2026-10-21:LWLG",
@@ -1965,8 +2621,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.02132701421800942
+   "elapsed_sessions": 2,
+   "unreal": -0.049763033175355464
   },
   "2026-10-21:META": {
    "id": "2026-10-21:META",
@@ -1987,8 +2643,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.040659421896946824
+   "elapsed_sessions": 2,
+   "unreal": -0.049870629112146125
   },
   "2026-10-21:MS": {
    "id": "2026-10-21:MS",
@@ -2009,8 +2665,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": 0.003217362853092043
+   "elapsed_sessions": 2,
+   "unreal": -0.021212782200894287
   },
   "2026-10-21:NET": {
    "id": "2026-10-21:NET",
@@ -2031,8 +2687,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.03462639109697929
+   "elapsed_sessions": 2,
+   "unreal": 0.03570747217806036
   },
   "2026-10-21:NOK": {
    "id": "2026-10-21:NOK",
@@ -2051,10 +2707,50 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.08051341890315056
+   "exit": "2026-10-23",
+   "hold": 1,
+   "entry_open": 8.57,
+   "exit_open": 8.08,
+   "ret0": -0.0571761960326721,
+   "ret": -0.05905995987676249,
+   "closed_utc": "2026-10-24T05:14:57Z",
+   "bars_used": [
+    [
+     "2026-10-20",
+     8.88,
+     9.21,
+     8.82,
+     9.02,
+     66785700
+    ],
+    [
+     "2026-10-21",
+     9.31,
+     9.33,
+     9.14,
+     9.25,
+     73704500
+    ],
+    [
+     "2026-10-22",
+     8.57,
+     8.62,
+     7.78,
+     7.88,
+     207395800
+    ],
+    [
+     "2026-10-23",
+     8.08,
+     8.27,
+     8.04,
+     8.14,
+     84564400
+    ]
+   ]
   },
   "2026-10-21:NVDA": {
    "id": "2026-10-21:NVDA",
@@ -2075,8 +2771,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.02265923640215528
+   "elapsed_sessions": 2,
+   "unreal": -0.028416156219776112
   },
   "2026-10-21:PANW": {
    "id": "2026-10-21:PANW",
@@ -2097,8 +2793,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.004655336810813759
+   "elapsed_sessions": 2,
+   "unreal": 0.06722194178024576
   },
   "2026-10-21:QQQ": {
    "id": "2026-10-21:QQQ",
@@ -2119,8 +2815,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.012808116478188358
+   "elapsed_sessions": 2,
+   "unreal": -0.012906209273973235
   },
   "2026-10-21:RKLB": {
    "id": "2026-10-21:RKLB",
@@ -2141,8 +2837,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.008805031446540879
+   "elapsed_sessions": 2,
+   "unreal": 0.017900338655055803
   },
   "2026-10-21:SCHW": {
    "id": "2026-10-21:SCHW",
@@ -2163,8 +2859,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": 0.0027415286763898816
+   "elapsed_sessions": 2,
+   "unreal": -0.006689329970391511
   },
   "2026-10-21:SMCI": {
    "id": "2026-10-21:SMCI",
@@ -2185,8 +2881,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.02119013062409303
+   "elapsed_sessions": 2,
+   "unreal": -0.04383164005805529
   },
   "2026-10-21:TER": {
    "id": "2026-10-21:TER",
@@ -2207,8 +2903,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.04606686028548479
+   "elapsed_sessions": 2,
+   "unreal": -0.045757894086386974
   },
   "2026-10-21:TLN": {
    "id": "2026-10-21:TLN",
@@ -2229,8 +2925,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.0574483817757806
+   "elapsed_sessions": 2,
+   "unreal": -0.06743074910414648
   },
   "2026-10-21:TSM": {
    "id": "2026-10-21:TSM",
@@ -2251,8 +2947,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.01678628484227085
+   "elapsed_sessions": 2,
+   "unreal": -0.0020982856052838006
   },
   "2026-10-21:TXN": {
    "id": "2026-10-21:TXN",
@@ -2273,8 +2969,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.016606853845612668
+   "elapsed_sessions": 2,
+   "unreal": 0.0016536485820841662
   },
   "2026-10-21:VRT": {
    "id": "2026-10-21:VRT",
@@ -2295,8 +2991,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.03938902804380928
+   "elapsed_sessions": 2,
+   "unreal": -0.04562644270910088
   },
   "2026-10-21:WOLF": {
    "id": "2026-10-21:WOLF",
@@ -2317,8 +3013,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.038657604078164876
+   "elapsed_sessions": 2,
+   "unreal": -0.025913338997451074
   },
   "2026-10-21:WULF": {
    "id": "2026-10-21:WULF",
@@ -2337,10 +3033,50 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-22",
-   "elapsed_sessions": 1,
-   "unreal": -0.08562197092084012
+   "exit": "2026-10-23",
+   "hold": 1,
+   "entry_open": 12.38,
+   "exit_open": 11.28,
+   "ret0": -0.08885298869143787,
+   "ret": -0.09067346224050576,
+   "closed_utc": "2026-10-24T05:14:57Z",
+   "bars_used": [
+    [
+     "2026-10-20",
+     11.69,
+     12.59,
+     11.49,
+     12.01,
+     38164100
+    ],
+    [
+     "2026-10-21",
+     12.7,
+     13.06,
+     12.37,
+     12.76,
+     43866000
+    ],
+    [
+     "2026-10-22",
+     12.38,
+     12.6,
+     11.09,
+     11.32,
+     50168400
+    ],
+    [
+     "2026-10-23",
+     11.28,
+     11.95,
+     11.07,
+     11.32,
+     36282000
+    ]
+   ]
   },
   "2026-10-22:ADI": {
    "id": "2026-10-22:ADI",
@@ -2357,11 +3093,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-23",
+   "elapsed_sessions": 1,
+   "unreal": 0.02141719121372776
   },
   "2026-10-22:DVN": {
    "id": "2026-10-22:DVN",
@@ -2378,11 +3115,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-23",
+   "elapsed_sessions": 1,
+   "unreal": 0.036088709677419395
   },
   "2026-10-22:MRNA": {
    "id": "2026-10-22:MRNA",
@@ -2399,11 +3137,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-23",
+   "elapsed_sessions": 1,
+   "unreal": 0.01733692612740856
   },
   "2026-10-22:MSFT": {
    "id": "2026-10-22:MSFT",
@@ -2420,11 +3159,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-23",
+   "elapsed_sessions": 1,
+   "unreal": 0.013056494447126976
   },
   "2026-10-22:SHOP": {
    "id": "2026-10-22:SHOP",
@@ -2441,11 +3181,12 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-23",
+   "elapsed_sessions": 1,
+   "unreal": 0.008550074738415514
   },
   "2026-10-22:T": {
    "id": "2026-10-22:T",
@@ -2457,6 +3198,91 @@
    "displayed_buy": false,
    "v": "disagree",
    "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "panic_sc_filled_after": 1,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-23",
+   "elapsed_sessions": 1,
+   "unreal": -0.037258509659613526
+  },
+  "2026-10-23:ACHR": {
+   "id": "2026-10-23:ACHR",
+   "date": "2026-10-23",
+   "sym": "ACHR",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-23:AMC": {
+   "id": "2026-10-23:AMC",
+   "date": "2026-10-23",
+   "sym": "AMC",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-23:AVAV": {
+   "id": "2026-10-23:AVAV",
+   "date": "2026-10-23",
+   "sym": "AVAV",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-23:TMO": {
+   "id": "2026-10-23:TMO",
+   "date": "2026-10-23",
+   "sym": "TMO",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.66,
    "model": "claude-opus-5-5",
    "protocol": "v2",
    "late": false,
