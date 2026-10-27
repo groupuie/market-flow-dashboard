@@ -1,7 +1,7 @@
 {
- "updated_utc": "2026-10-24 00:53:21",
+ "updated_utc": "2026-10-27 01:33:58",
  "spec": "手冊 v0.2 技術判斷(確定性規則引擎)",
- "latest_session": "2026-10-23",
+ "latest_session": "2026-10-26",
  "symbols": {
   "MU": {
    "insufficient": false,
@@ -24,10 +24,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -889.3,
-    "flow20_norm": -33.0676,
-    "slope5_musd": -224.4,
-    "vol20": 26893412.0
+    "flow20_musd": -896.5,
+    "flow20_norm": -33.3254,
+    "slope5_musd": -231.6,
+    "vol20": 26901418.0
    },
    "div": {
     "accum": false,
@@ -55,7 +55,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-33.0676"
+      "v": "now=-33.3254"
      }
     ],
     "cycle": [
@@ -77,7 +77,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-33.0676,20日漲跌=-18.9%"
+      "v": "flow20=-33.3254,20日漲跌=-18.9%"
      }
     ],
     "disaster": [
@@ -99,7 +99,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-224.4$M"
+      "v": "-231.6$M"
      }
     ]
    },
@@ -112,7 +112,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=877.55,max20×0.99=1086.24,flow20=-33.0676"
+     "v": "C=877.55,max20×0.99=1086.24,flow20=-33.3254"
     }
    },
    "swing_top": {
@@ -147,7 +147,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 825 附近",
    "earnings_src": "yahoo"
   },
@@ -172,10 +172,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -157.4,
-    "flow20_norm": -19.6174,
-    "slope5_musd": -86.4,
-    "vol20": 8023491.0
+    "flow20_musd": -210.1,
+    "flow20_norm": -26.1701,
+    "slope5_musd": -139.1,
+    "vol20": 8028246.0
    },
    "div": {
     "accum": false,
@@ -203,7 +203,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-19.6174"
+      "v": "now=-26.1701"
      }
     ],
     "cycle": [
@@ -225,7 +225,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-19.6174,20日漲跌=-30.4%"
+      "v": "flow20=-26.1701,20日漲跌=-30.4%"
      }
     ],
     "disaster": [
@@ -247,7 +247,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-86.4$M"
+      "v": "-139.1$M"
      }
     ]
    },
@@ -260,7 +260,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=1238.03,max20×0.99=1769.81,flow20=-19.6174"
+     "v": "C=1238.03,max20×0.99=1769.81,flow20=-26.1701"
     }
    },
    "swing_top": {
@@ -295,7 +295,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;進場全數被否決(財報否決(未來5交易日內:2026-10-29))",
    "earnings_src": "yahoo"
   },
@@ -320,10 +320,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -31.4,
-    "flow20_norm": -3.1756,
-    "slope5_musd": 41.1,
-    "vol20": 9887796.0
+    "flow20_musd": -22.8,
+    "flow20_norm": -2.3043,
+    "slope5_musd": 49.7,
+    "vol20": 9894594.0
    },
    "div": {
     "accum": false,
@@ -351,7 +351,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-3.1756"
+      "v": "now=-2.3043"
      }
     ],
     "cycle": [
@@ -373,7 +373,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-3.1756,20日漲跌=-24.8%"
+      "v": "flow20=-2.3043,20日漲跌=-24.8%"
      }
     ],
     "disaster": [
@@ -395,7 +395,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "41.1$M"
+      "v": "49.7$M"
      }
     ]
    },
@@ -408,7 +408,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=343.67,max20×0.99=457.93,flow20=-3.1756"
+     "v": "C=343.67,max20×0.99=457.93,flow20=-2.3043"
     }
    },
    "swing_top": {
@@ -441,7 +441,7 @@
     "disaster": true
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;災後路徑 成立",
    "earnings_src": "yahoo"
   },
@@ -466,10 +466,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -63.8,
-    "flow20_norm": -3.1173,
-    "slope5_musd": -23.5,
-    "vol20": 20466324.0
+    "flow20_musd": -57.8,
+    "flow20_norm": -2.8236,
+    "slope5_musd": -17.5,
+    "vol20": 20470075.0
    },
    "div": {
     "accum": false,
@@ -497,7 +497,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=-3.1173"
+      "v": "now=-2.8236"
      }
     ],
     "cycle": [
@@ -519,7 +519,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-3.1173,20日漲跌=-12.7%"
+      "v": "flow20=-2.8236,20日漲跌=-12.7%"
      }
     ],
     "disaster": [
@@ -541,7 +541,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-23.5$M"
+      "v": "-17.5$M"
      }
     ]
    },
@@ -554,7 +554,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=228.51,max20×0.99=284.08,flow20=-3.1173"
+     "v": "C=228.51,max20×0.99=284.08,flow20=-2.8236"
     }
    },
    "swing_top": {
@@ -589,7 +589,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 219 附近",
    "earnings_src": "yahoo"
   },
@@ -614,10 +614,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -372.3,
-    "flow20_norm": -75.9394,
-    "slope5_musd": 3.4,
-    "vol20": 4902596.0
+    "flow20_musd": -354.0,
+    "flow20_norm": -72.1573,
+    "slope5_musd": 21.7,
+    "vol20": 4905946.0
    },
    "div": {
     "accum": false,
@@ -645,7 +645,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-75.9394"
+      "v": "now=-72.1573"
      }
     ],
     "cycle": [
@@ -667,7 +667,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-75.9394,20日漲跌=-19.7%"
+      "v": "flow20=-72.1573,20日漲跌=-19.7%"
      }
     ],
     "disaster": [
@@ -689,7 +689,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "3.4$M"
+      "v": "21.7$M"
      }
     ]
    },
@@ -702,7 +702,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=756.17,max20×0.99=1122.07,flow20=-75.9394"
+     "v": "C=756.17,max20×0.99=1122.07,flow20=-72.1573"
     }
    },
    "swing_top": {
@@ -738,7 +738,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 714 附近",
    "earnings_src": "yahoo"
   },
@@ -763,10 +763,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -142.9,
-    "flow20_norm": -19.3779,
-    "slope5_musd": -29.7,
-    "vol20": 7374383.0
+    "flow20_musd": -134.6,
+    "flow20_norm": -18.2436,
+    "slope5_musd": -21.4,
+    "vol20": 7377922.0
    },
    "div": {
     "accum": false,
@@ -794,7 +794,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-19.3779"
+      "v": "now=-18.2436"
      }
     ],
     "cycle": [
@@ -816,7 +816,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-19.3779,20日漲跌=-29.3%"
+      "v": "flow20=-18.2436,20日漲跌=-29.3%"
      }
     ],
     "disaster": [
@@ -838,7 +838,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-29.7$M"
+      "v": "-21.4$M"
      }
     ]
    },
@@ -851,7 +851,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=209.29,max20×0.99=334.98,flow20=-19.3779"
+     "v": "C=209.29,max20×0.99=334.98,flow20=-18.2436"
     }
    },
    "swing_top": {
@@ -884,7 +884,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 194 附近",
    "earnings_src": "yahoo"
   },
@@ -909,10 +909,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -45.5,
-    "flow20_norm": -3.9448,
-    "slope5_musd": 12.1,
-    "vol20": 11534202.0
+    "flow20_musd": -39.1,
+    "flow20_norm": -3.3881,
+    "slope5_musd": 18.5,
+    "vol20": 11540387.0
    },
    "div": {
     "accum": false,
@@ -940,7 +940,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-3.9448"
+      "v": "now=-3.3881"
      }
     ],
     "cycle": [
@@ -962,7 +962,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-3.9448,20日漲跌=-33.4%"
+      "v": "flow20=-3.3881,20日漲跌=-33.4%"
      }
     ],
     "disaster": [
@@ -984,7 +984,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "12.1$M"
+      "v": "18.5$M"
      }
     ]
    },
@@ -997,7 +997,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=67.51,max20×0.99=128.86,flow20=-3.9448"
+     "v": "C=67.51,max20×0.99=128.86,flow20=-3.3881"
     }
    },
    "swing_top": {
@@ -1033,7 +1033,7 @@
     "disaster": true
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;災後路徑 成立",
    "earnings_src": "yahoo"
   },
@@ -1058,10 +1058,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -566.1,
-    "flow20_norm": -5.3829,
-    "slope5_musd": -402.2,
-    "vol20": 105167037.0
+    "flow20_musd": -658.0,
+    "flow20_norm": -6.2485,
+    "slope5_musd": -494.1,
+    "vol20": 105304700.0
    },
    "div": {
     "accum": false,
@@ -1089,7 +1089,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=-5.3829"
+      "v": "now=-6.2485"
      }
     ],
     "cycle": [
@@ -1111,7 +1111,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-5.3829,20日漲跌=-6.3%"
+      "v": "flow20=-6.2485,20日漲跌=-6.3%"
      }
     ],
     "disaster": [
@@ -1133,7 +1133,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-402.2$M"
+      "v": "-494.1$M"
      }
     ]
    },
@@ -1146,7 +1146,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=210.96,max20×0.99=236.85,flow20=-5.3829"
+     "v": "C=210.96,max20×0.99=236.85,flow20=-6.2485"
     }
    },
    "swing_top": {
@@ -1179,7 +1179,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 209 附近",
    "earnings_src": "yahoo"
   },
@@ -1204,10 +1204,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -523.7,
-    "flow20_norm": -24.1656,
-    "slope5_musd": -73.4,
-    "vol20": 21671314.0
+    "flow20_musd": -538.5,
+    "flow20_norm": -24.8353,
+    "slope5_musd": -88.2,
+    "vol20": 21682808.0
    },
    "div": {
     "accum": false,
@@ -1235,7 +1235,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": false,
-      "v": "now=-24.1656"
+      "v": "now=-24.8353"
      }
     ],
     "cycle": [
@@ -1257,7 +1257,7 @@
      {
       "k": "當日吸籌背離",
       "ok": false,
-      "v": "flow20=-24.1656,20日漲跌=-8.8%"
+      "v": "flow20=-24.8353,20日漲跌=-8.8%"
      }
     ],
     "disaster": [
@@ -1279,7 +1279,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-73.4$M"
+      "v": "-88.2$M"
      }
     ]
    },
@@ -1292,7 +1292,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=321.68,max20×0.99=372.74,flow20=-24.1656"
+     "v": "C=321.68,max20×0.99=372.74,flow20=-24.8353"
     }
    },
    "swing_top": {
@@ -1325,7 +1325,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 319 附近",
    "earnings_src": "yahoo"
   },
@@ -1350,10 +1350,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 284.7,
-    "flow20_norm": 34.1492,
-    "slope5_musd": -12.7,
-    "vol20": 8336952.0
+    "flow20_musd": 281.2,
+    "flow20_norm": 33.7184,
+    "slope5_musd": -16.2,
+    "vol20": 8339668.0
    },
    "div": {
     "accum": true,
@@ -1381,7 +1381,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=34.1492"
+      "v": "now=33.7184"
      }
     ],
     "cycle": [
@@ -1403,7 +1403,7 @@
      {
       "k": "當日吸籌背離",
       "ok": true,
-      "v": "flow20=34.1492,20日漲跌=-13.1%"
+      "v": "flow20=33.7184,20日漲跌=-13.1%"
      }
     ],
     "disaster": [
@@ -1425,7 +1425,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": false,
-      "v": "-12.7$M"
+      "v": "-16.2$M"
      }
     ]
    },
@@ -1438,7 +1438,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=527.20,max20×0.99=627.56,flow20=34.1492"
+     "v": "C=527.20,max20×0.99=627.56,flow20=33.7184"
     }
    },
    "swing_top": {
@@ -1471,7 +1471,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;循環路徑 成立",
    "earnings_src": "無"
   },
@@ -1496,13 +1496,13 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": -75.3,
-    "flow20_norm": -8.946,
-    "slope5_musd": -28.1,
-    "vol20": 8417152.0
+    "flow20_musd": 44.4,
+    "flow20_norm": 5.2705,
+    "slope5_musd": 91.6,
+    "vol20": 8424252.0
    },
    "div": {
-    "accum": false,
+    "accum": true,
     "dist": false,
     "chg20_pct": -16.5,
     "max20_close": 589.51
@@ -1527,7 +1527,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=-8.946"
+      "v": "now=5.2705"
      }
     ],
     "cycle": [
@@ -1548,8 +1548,8 @@
      },
      {
       "k": "當日吸籌背離",
-      "ok": false,
-      "v": "flow20=-8.946,20日漲跌=-16.5%"
+      "ok": true,
+      "v": "flow20=5.2705,20日漲跌=-16.5%"
      }
     ],
     "disaster": [
@@ -1570,8 +1570,8 @@
      },
      {
       "k": "五日斜率>0(近5日⑦淨額)",
-      "ok": false,
-      "v": "-28.1$M"
+      "ok": true,
+      "v": "91.6$M"
      }
     ]
    },
@@ -1584,7 +1584,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=478.20,max20×0.99=583.61,flow20=-8.946"
+     "v": "C=478.20,max20×0.99=583.61,flow20=5.2705"
     }
    },
    "swing_top": {
@@ -1608,17 +1608,17 @@
    "veto_reason": "",
    "path_pass": {
     "trend": false,
-    "cycle": false,
-    "disaster": false
+    "cycle": true,
+    "disaster": true
    },
    "path_raw_pass": {
     "trend": false,
-    "cycle": false,
-    "disaster": false
+    "cycle": true,
+    "disaster": true
    },
    "exit_on": false,
-   "stale": false,
-   "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 466 附近",
+   "stale": true,
+   "conclusion": "循環 regime;循環路徑+災後路徑 成立",
    "earnings_src": "無"
   },
   "SPY": {
@@ -1642,10 +1642,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 2096.8,
-    "flow20_norm": 51.7077,
-    "slope5_musd": 624.1,
-    "vol20": 40551054.0
+    "flow20_musd": 2152.6,
+    "flow20_norm": 53.0325,
+    "slope5_musd": 679.9,
+    "vol20": 40590238.0
    },
    "div": {
     "accum": true,
@@ -1673,7 +1673,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=51.7077"
+      "v": "now=53.0325"
      }
     ],
     "cycle": [
@@ -1695,7 +1695,7 @@
      {
       "k": "當日吸籌背離",
       "ok": true,
-      "v": "flow20=51.7077,20日漲跌=-1.5%"
+      "v": "flow20=53.0325,20日漲跌=-1.5%"
      }
     ],
     "disaster": [
@@ -1717,7 +1717,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "624.1$M"
+      "v": "679.9$M"
      }
     ]
    },
@@ -1730,7 +1730,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=759.97,max20×0.99=771.30,flow20=51.7077"
+     "v": "C=759.97,max20×0.99=771.30,flow20=53.0325"
     }
    },
    "swing_top": {
@@ -1763,7 +1763,7 @@
     "disaster": false
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 758 附近",
    "earnings_src": "無"
   },
@@ -1788,10 +1788,10 @@
    "flow": {
     "cov20": 20,
     "ok": true,
-    "flow20_musd": 631.5,
-    "flow20_norm": 17.1949,
-    "slope5_musd": 18.4,
-    "vol20": 36726081.0
+    "flow20_musd": 661.1,
+    "flow20_norm": 17.9815,
+    "slope5_musd": 48.0,
+    "vol20": 36765580.0
    },
    "div": {
     "accum": true,
@@ -1819,7 +1819,7 @@
      {
       "k": "近10日 flow20>0",
       "ok": true,
-      "v": "now=17.1949"
+      "v": "now=17.9815"
      }
     ],
     "cycle": [
@@ -1841,7 +1841,7 @@
      {
       "k": "當日吸籌背離",
       "ok": true,
-      "v": "flow20=17.1949,20日漲跌=-5.4%"
+      "v": "flow20=17.9815,20日漲跌=-5.4%"
      }
     ],
     "disaster": [
@@ -1863,7 +1863,7 @@
      {
       "k": "五日斜率>0(近5日⑦淨額)",
       "ok": true,
-      "v": "18.4$M"
+      "v": "48.0$M"
      }
     ]
    },
@@ -1876,7 +1876,7 @@
     "b": {
      "k": "出貨背離(收盤≥近20日最高收盤×0.99 且 flow20≤0)",
      "ok": false,
-     "v": "C=704.40,max20×0.99=752.06,flow20=17.1949"
+     "v": "C=704.40,max20×0.99=752.06,flow20=17.9815"
     }
    },
    "swing_top": {
@@ -1909,7 +1909,7 @@
     "disaster": true
    },
    "exit_on": false,
-   "stale": false,
+   "stale": true,
    "conclusion": "循環 regime;循環路徑+災後路徑 成立",
    "earnings_src": "無"
   }
@@ -1974,7 +1974,7 @@
   {
    "source": "judge SOXX",
    "ok": true,
-   "note": "循環 regime;三條路徑皆不成立,空手觀望;災後路徑觀察價位=下軌 466 附近"
+   "note": "循環 regime;循環路徑+災後路徑 成立"
   },
   {
    "source": "judge SPY",
