@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="2026-10-23T13:53Z">
+<meta name="build" content="2026-10-28T19:23Z">
 <!-- ⚠ 每次改 index.html 都要把上面的 build 戳改成更新的 UTC 時間(下方 const BUILD 的備用值一起改):已開著的頁面/手機主畫面 App 只在偵測到「更新的」build 才自動換新版。2026-10-14~16 連 5 次部署漏改 → 開著的頁面一直停在 10/13 版 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <title>全市場資金部位地圖</title>
@@ -889,7 +889,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Helvetica Neue"
 // ===== 設定：資料來源（你的 gist raw；具 CORS,瀏覽器可直接讀）=====
 const DATA_URL = "https://gist.githubusercontent.com/groupuie/147672e7493b26aec57f42f5e12cb524/raw/market_data.json";
 const REFRESH_SEC = 20;   // 盤中 Mac 每 ~60s 推一次;20s 輪詢 + 15s cache-buster bucket 破 CDN 5 分快取
-const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-23T13:53Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
+const BUILD=((document.querySelector('meta[name=build]')||{}).content)||'2026-10-28T19:23Z';   // 部署版本戳(單一來源=<head> 的 meta build,位於檔頭 200 bytes 內 → 版本檢查只需抓檔頭)
 
 const C={bg:'#17181c',ink:'#fff',ink2:'#c0c3ca',muted:'#80838b',line:'#2a2c31',   // v19(2026-10-22 整體視覺統一):圖底 = 面板底 --surface;原暖灰 #1a1a19/#c3c2b7/#898781/#2c2c2a
   blue:'#3987e5',green:'#0ca30c',red:'#d03b3b',amber:'#fab219',violet:'#9085e9',aqua:'#199e70'};
@@ -1521,7 +1521,7 @@ function ckLegendHTML(o){   // o=目前圖上有什麼(由 renderCockpit / rende
     A.push(it(k(CPAL.tdS,'橘')+' / '+k(CPAL.tdB,'青')+' 數字','TD 賣 / 買計數:數到 9 可能轉折,13 以上更強(沒數到 9 就斷的段不畫)'));
     if(o.c)A.push(it(k(CPAL.cbot,'C▲')+' '+k(CPAL.ctop,'C▼'),'Claude 參考:吸籌突破 / 極端吸收警戒'));
     if(o.ai)A.push(it(k('#e6e9ef','AI▲▼'),'模型看圖判讀，僅供參考（已測樣本未取得穩定方向優勢）'));
-    if(o.cta)A.push(it(k(CPAL.brake1,'┈CTA'),'四條虛線 = 煞車線:短 50 日、中 100 日、長 200 日、動 63 日;◯ = 碰到 200 日線'));
+    if(o.cta)A.push(it(k(CPAL.brake1,'┈CTA'),'三條虛線 = 趨勢翻轉價:短 50 日、中 100 日、長 200 日(跌破 = 趨勢基金開始賣);◯ = 碰到 200 日線'));
     if(o.tl)A.push(it(k(CPAL.up,'─撐')+' '+k(CPAL.dn,'─壓'),'趨勢線(碰過 3 次以上);✂ = 已突破'));
     if(o.tj)A.push(it(k('#f472b6','技判'),k('#4ade80','買')+' = 進場路徑成立 · '+k('#f87171','出')+' = 波段頂確認 · '+k('#fab219','⚠頂K')+' = 高點警訊'));
     if(o.fc)A.push(it(k('#22c55e','▲抄底')+' '+k('#f97316','▼減碼'),'個股轉折 × 全球資金氣候;K線底部色帶 '+k('#f87171','紅')+' = 資金緊、'+k('#22c55e','綠')+' = 資金鬆'));
@@ -1672,17 +1672,17 @@ function fcStrip(a){
 }
 let CHIP_IDX={SPY:false,QQQ:false};   // P7-3 K線圖(駕駛艙)疊加 SPY/QQQ 相對強弱(預設關,使用者可切)
 let CHIP_TL=false;  // 駕駛艙自動趨勢線層開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
-let CHIP_VBP=false; // VbP 量價分佈開關(2026-08-02 使用者指定:預設關 —— 預設畫面只留 CTA)
+let CHIP_VBP=true;  // VbP 量價分佈(2026-10-28 使用者:預設開)
 let CHIP_PAT=false; // 古典型態層開關(預設關)
 let CHIP_FIB=false; // Fibonacci 自動回撤(預設關)
 let CHIP_VWAP=false;// 錨定 VWAP(日K近似;預設關)
-let CHIP_CTA=false; // CTA 煞車線×4(2026-10-10 起併入 📊量化,不再單獨顯示;程式保留)
-let CHIP_BB=false;  // P7-2 布林通道 BB(20,2) 上/中/下軌(預設關)
+let CHIP_CTA=true;  // CTA 三線 短/中/長(2026-10-28 使用者:重新加回按鈕、預設開;動 63D 不畫)
+let CHIP_BB=true;   // P7-2 布林通道 BB(20,2)(2026-10-28 使用者:預設開)
 let CHIP_TJ=false;  // 📐 技術判斷層(手冊 v0.2;2026-09-01):路徑成立/出貨證據上圖+警示條(預設關 —— 預設畫面只留 CTA)
 let CHIP_FC=false;  // 🌐 全球資金氣候 ▲▼ 舊版獨立層(2026-10-10 起併入 📊量化;程式保留)
 let CHIP_Q=true;    // 📊 量化整合層(2026-10-10 使用者:CTA+技判+資金整合,K線上直接標 頂K/減碼/出/抄底/買;預設開)
 const SW_C={bot:'#38bdf8',top:'#a78bfa'};   // 🧪 Astra 底/頂 顏色:底=天藍、頂=淡紫(避開 量化 的綠/橘/紅/琥珀)
-let CHIP_ASTRA=false;   // 🧪 Astra 研究層(預設關)。2026-10-12 使用者:「量化 = 我的邏輯;Astra = 不設限的新識別法;短線與 Astra 合併、預設關」
+let CHIP_ASTRA=true;    // 🧪 Astra 研究層(2026-10-28 使用者:預設開;原 2026-10-12 預設關)。2026-10-12 使用者:「量化 = 我的邏輯;Astra = 不設限的新識別法;短線與 Astra 合併、預設關」
                         //   → 圖上 ▲底 △回 ▼頂(原「短線」);與 📊量化 完全獨立:不讀寫 CHIP_Q、不改量化的程式,也不改量化字的位置
 const SW_TRADE=true;   // 🧪 Astra 買/賣(2026-10-14 使用者「全做」= Claude v2.4 I1 + I2):圖上只畫「買 / 賣」,一次一筆、每個買配一個賣;false = 回到 ▲底 △回 ▼頂 原始記號
 const ASTRA_LEGACY=false;   // 🧪 Astra 第一版(A候/A進/A出、K 線下方 v0.3 研究軌道):2026-10-12 使用者選「收起來,只留新的」→ 不畫、不載入;程式與資料留著,改成 true 可恢復
@@ -1703,7 +1703,8 @@ function buildChipIdx(){
     +' <span class="cidxchip8" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #facc15;'+(CHIP_FIB?'background:rgba(250,204,21,.15);color:#facc15':'color:var(--muted);opacity:.55')+'">Fib</span>'
     +' <span class="cidxchip9" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #38bdf8;'+(CHIP_VWAP?'background:rgba(56,189,248,.15);color:#38bdf8':'color:var(--muted);opacity:.55')+'">aVWAP</span>'
     +' <span class="cidxchipQ" title="CTA+技判+資金 整合:K線上直接標 頂K/減碼/出/抄底/買,滑過字看說明" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid #8ab4f8;'+(CHIP_Q?'background:rgba(138,180,248,.15);color:#8ab4f8':'color:var(--muted);opacity:.55')+'">📊量化</span>'
-    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="'+(SW_TRADE?'Astra 研究用(預設關):圖上只有「買」和「賣」,一次一筆、每個買一定配一個賣。買 = 跌過頭後轉向,或上行中的回檔(隔天開盤買);賣:指數 SPY/QQQ = 第一個頂,40 天內沒頂就第 40 天;其他 = 頂到了、收盤跌破買價 8%、或第 20 天,先到先賣(隔天開盤賣);金邊 = 那天大盤恐慌條件成立(加碼效果尚未驗證);灰色賣 = Astra 策略空手時出現的頂(轉弱提醒;照它減碼有沒有幫助還沒驗證);QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);滑過看過去同樣的點的成績 · 不是投資建議':'Astra 研究用(預設關):▲底/▼頂 = 近 3 天超賣/超買(RSI2、布林、九轉)+ 今天真的轉向;△回檔 = 上行中(50 日線上且向上、200 日線上)收到 7 天最低,下行時只標底。底/回檔買一小份(大盤恐慌的「強」買多一點)、每個頂減一小部分;大盤恐慌時(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)的 底/回 標金色「強」;QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);破底中的第幾個買點標 ②③;滑過看這檔過去的成績 · 不是投資建議')+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
+    +' <span class="cidxchipA" role="button" tabindex="0" aria-pressed="'+CHIP_ASTRA+'" title="'+(SW_TRADE?'Astra 研究用:圖上只有「買」和「賣」,一次一筆、每個買一定配一個賣。買 = 跌過頭後轉向,或上行中的回檔(隔天開盤買);賣:指數 SPY/QQQ = 第一個頂,40 天內沒頂就第 40 天;其他 = 頂到了、收盤跌破買價 8%、或第 20 天,先到先賣(隔天開盤賣);金邊 = 那天大盤恐慌條件成立(加碼效果尚未驗證);灰色賣 = Astra 策略空手時出現的頂(轉弱提醒;照它減碼有沒有幫助還沒驗證);QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);滑過看過去同樣的點的成績 · 不是投資建議':'Astra 研究用:▲底/▼頂 = 近 3 天超賣/超買(RSI2、布林、九轉)+ 今天真的轉向;△回檔 = 上行中(50 日線上且向上、200 日線上)收到 7 天最低,下行時只標底。底/回檔買一小份(大盤恐慌的「強」買多一點)、每個頂減一小部分;大盤恐慌時(造市商負 gamma、寬度差、信用轉弱 3 個至少 2 個)的 底/回 標金色「強」;QQQ 跌破/站回 200 日線的日子標虛線(兩倍 ETF 最多留 1/3,可以選);破底中的第幾個買點標 ②③;滑過看這檔過去的成績 · 不是投資建議')+'" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+ASTRA_C+';'+(CHIP_ASTRA?'background:rgba(244,114,182,.15);color:'+ASTRA_C:'color:var(--muted);opacity:.55')+'">Astra</span>'   // 名稱縮短:「Astra資金」在 390 寬手機/768 iPad 會讓工具列多一行、把 K 線往下擠
+    +' <span class="cidxchipC" title="CTA 三線:短 50 日、中 100 日、長 200 日的趨勢翻轉價(虛線);◯ = K棒碰到 200 日線;數值在K線標題" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.brake2+';'+(CHIP_CTA?'background:rgba(96,165,250,.15);color:'+CPAL.brake2:'color:var(--muted);opacity:.55')+'">CTA</span>'   // 2026-10-28 使用者:重新加回 CTA 三線按鈕
     +' <span class="cidxchipB" style="cursor:pointer;padding:2px 10px;border-radius:10px;border:1px solid '+CPAL.bbMid+';'+(CHIP_BB?'background:rgba(148,163,184,.15);color:'+CPAL.bbMid:'color:var(--muted);opacity:.55')+'">布林</span>'
     +' <span style="color:var(--muted);margin-left:2px">副圖</span> <select class="cidxind" style="background:#12141a;color:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:1px 4px;font-size:11px">'
       +[['rv','RVPOS RSI'],['macd','MACD'],['adx','ADX'],['atr','ATR'],['cci','CCI'],['stoch','KD']].map(function(o){
@@ -3778,8 +3779,8 @@ function renderCockpit(){
     ...(CHIP_CTA?[
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t50),line:{color:CPAL.brake1,width:1.3,dash:'dot'},name:'短50D',hovertemplate:'短期煞車線(50D觸發) %{y:.1f}<extra></extra>'},
     {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t100),line:{color:CPAL.brake2,width:1.3,dash:'dot'},name:'中100D',hovertemplate:'中期煞車線(100D觸發) %{y:.1f}<extra></extra>'},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t200),line:{color:CPAL.brake3,width:1.3,dash:'dot'},name:'長200D',hovertemplate:'長期煞車線(200D觸發) %{y:.1f}<extra></extra>'},
-    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t63),line:{color:CPAL.brake4,width:1.2,dash:'dash'},name:'動63D',hovertemplate:'動能煞車線(=63日前收盤) %{y:.1f}<extra></extra>'}]:[]),
+    {type:'scatter',mode:'lines',x:x,y:R.map(r=>r.t200),line:{color:CPAL.brake3,width:1.3,dash:'dot'},name:'長200D',hovertemplate:'長期煞車線(200D觸發) %{y:.1f}<extra></extra>'}]:[]),
+    // 2026-10-28 使用者「重新加回 CTA 三線的按鈕」:只畫 短/中/長 三條;動 63D 那條不再畫(資料照算,檔位 score 仍用)
     {type:'scatter',mode:'text',x:x,y:tsY,text:tsT,textfont:{size:tsS,color:tsC},hoverinfo:'skip',showlegend:false,name:'tdTxtS'},
     {type:'scatter',mode:'text',x:x,y:tbY,text:tbT,textfont:{size:tbS,color:tbC},hoverinfo:'skip',showlegend:false,name:'tdTxtB'},
     ...(CHIP_Q?[]:[   // ◆★:📊量化開啟時不畫(長史複驗≈擲硬幣,且「減碼/抄底」二字改由量化層的有效訊號使用)
@@ -4387,7 +4388,7 @@ function renderCockpit(){
   const li=R.length-1;
   // CTA 數值列(2026-08-08:兩平台皆入標題,右緣標籤全退場 —— 桌機也會蓋住最新K棒)
   const _fvC=v=>(v>=1000?v.toFixed(0):v.toFixed(1));
-  const _ctaVals=CHIP_CTA?[['短',R[li].t50,CPAL.brake1],['中',R[li].t100,CPAL.brake2],['長',R[li].t200,CPAL.brake3],['動',R[li].t63,CPAL.brake4lab]]
+  const _ctaVals=CHIP_CTA?[['短',R[li].t50,CPAL.brake1],['中',R[li].t100,CPAL.brake2],['長',R[li].t200,CPAL.brake3]]   // 2026-10-28:三線(動 63D 不畫、不標)
     .filter(p=>p[1]!=null&&isFinite(p[1]))
     .map(p=>'<span style="color:'+p[2]+'">'+p[0]+_fvC(p[1])+'</span>').join(' '):'';
   const XR=0.998;   // 右緣標註錨點(2026-10-12:VbP 改畫在K棒下一層、不再佔右軌 → 不必退讓)

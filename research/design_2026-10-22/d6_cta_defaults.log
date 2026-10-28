@@ -1,0 +1,6 @@
+錯誤 舊 [] 新 []
+舊版預設 {'flags': {'q': True, 'astra': False, 'cta': False, 'vbp': False, 'bb': False}, 'cta': [], 'bb': 0, 'vbp': 3, 'astra': 0, 'title': 'NVDA 英偉達 · 100日', 'chipOn': None, 'legendCTA': True, 'astraStrip': False}
+新版預設 {'flags': {'q': True, 'astra': True, 'cta': True, 'vbp': True, 'bb': True}, 'cta': ['短50D', '中100D', '長200D'], 'bb': 3, 'vbp': 106, 'astra': 5, 'title': 'NVDA 英偉達 · 100日 · 買賣=Astra · ┈CTA 短222.9 中214.4 長203.0', 'chipOn': True, 'legendCTA': True, 'astraStrip': True}
+按 CTA 關 → 線 [] 鈕亮=False 標題「NVDA 英偉達 · 100日 · 買賣=Astra」
+再按開 → 線 ['短50D', '中100D', '長200D'] 鈕亮=True
+四層關掉後 flags {'q': True, 'astra': False, 'cta': False, 'vbp': False, 'bb': False} | trace 與舊版預設相同 = True

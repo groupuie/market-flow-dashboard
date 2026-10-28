@@ -1,0 +1,101 @@
+{
+ "old": {
+  "default": {
+   "flags": {
+    "q": true,
+    "astra": false,
+    "cta": false,
+    "vbp": false,
+    "bb": false
+   },
+   "cta": [],
+   "bb": 0,
+   "vbp": 3,
+   "astra": 0,
+   "title": "NVDA 英偉達 · 100日",
+   "chipOn": null,
+   "legendCTA": true,
+   "astraStrip": false
+  },
+  "errors": []
+ },
+ "new": {
+  "default": {
+   "flags": {
+    "q": true,
+    "astra": true,
+    "cta": true,
+    "vbp": true,
+    "bb": true
+   },
+   "cta": [
+    "短50D",
+    "中100D",
+    "長200D"
+   ],
+   "bb": 3,
+   "vbp": 106,
+   "astra": 5,
+   "title": "NVDA 英偉達 · 100日 · 買賣=Astra · ┈CTA 短222.9 中214.4 長203.0",
+   "chipOn": true,
+   "legendCTA": true,
+   "astraStrip": true
+  },
+  "cta_off": {
+   "flags": {
+    "q": true,
+    "astra": true,
+    "cta": false,
+    "vbp": true,
+    "bb": true
+   },
+   "cta": [],
+   "bb": 3,
+   "vbp": 106,
+   "astra": 5,
+   "title": "NVDA 英偉達 · 100日 · 買賣=Astra",
+   "chipOn": false,
+   "legendCTA": true,
+   "astraStrip": true
+  },
+  "cta_on": {
+   "flags": {
+    "q": true,
+    "astra": true,
+    "cta": true,
+    "vbp": true,
+    "bb": true
+   },
+   "cta": [
+    "短50D",
+    "中100D",
+    "長200D"
+   ],
+   "bb": 3,
+   "vbp": 106,
+   "astra": 5,
+   "title": "NVDA 英偉達 · 100日 · 買賣=Astra · ┈CTA 短222.9 中214.4 長203.0",
+   "chipOn": true,
+   "legendCTA": true,
+   "astraStrip": true
+  },
+  "stripped": {
+   "flags": {
+    "q": true,
+    "astra": false,
+    "cta": false,
+    "vbp": false,
+    "bb": false
+   },
+   "cta": [],
+   "bb": 0,
+   "vbp": 3,
+   "astra": 0,
+   "title": "NVDA 英偉達 · 100日",
+   "chipOn": false,
+   "legendCTA": true,
+   "astraStrip": false
+  },
+  "errors": []
+ }
+}
