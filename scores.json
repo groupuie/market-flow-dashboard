@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-10-28T00:38:12Z",
+ "gen_utc": "2026-10-28T05:15:46Z",
  "data_asof": "2026-10-27",
  "protocol": "v2",
  "status": "COLLECTING",
@@ -10,13 +10,13 @@
   "end_reason": null
  },
  "counts": {
-  "locked": 128,
-  "agree": 50,
-  "disagree": 78,
+  "locked": 159,
+  "agree": 62,
+  "disagree": 97,
   "late": 0,
-  "days": 9,
-  "closed": 25,
-  "open": 103,
+  "days": 10,
+  "closed": 31,
+  "open": 128,
   "no_data": 0,
   "unresolved": 0
  },
@@ -39,8 +39,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": 0.031193912889607933
+   "elapsed_sessions": 9,
+   "unreal": 0.0752294041810968
   },
   "2026-10-14:CSCO": {
    "id": "2026-10-14:CSCO",
@@ -60,8 +60,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": -0.017206026566818244
+   "elapsed_sessions": 9,
+   "unreal": -0.007042881340821983
   },
   "2026-10-14:DDOG": {
    "id": "2026-10-14:DDOG",
@@ -81,8 +81,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": 0.07485310136389445
+   "elapsed_sessions": 9,
+   "unreal": 0.07707767600988014
   },
   "2026-10-14:GOOG": {
    "id": "2026-10-14:GOOG",
@@ -102,8 +102,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": -0.0773500132146947
+   "elapsed_sessions": 9,
+   "unreal": -0.06959739230023787
   },
   "2026-10-14:GOOGL": {
    "id": "2026-10-14:GOOGL",
@@ -121,10 +121,106 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": -0.08093994778067881
+   "exit": "2026-10-27",
+   "hold": 8,
+   "entry_open": 344.7,
+   "exit_open": 317.0,
+   "ret0": -0.08035973310124744,
+   "ret": -0.08219717619195421,
+   "closed_utc": "2026-10-28T05:15:43Z",
+   "bars_used": [
+    [
+     "2026-10-13",
+     356.23,
+     358.58,
+     351.6,
+     353.78,
+     23207700
+    ],
+    [
+     "2026-10-14",
+     355.57,
+     359.4,
+     346.34,
+     347.64,
+     28018500
+    ],
+    [
+     "2026-10-15",
+     344.7,
+     352.15,
+     340.61,
+     349.22,
+     21328200
+    ],
+    [
+     "2026-10-16",
+     348.28,
+     350.66,
+     339.08,
+     340.59,
+     28641900
+    ],
+    [
+     "2026-10-19",
+     343.67,
+     346.58,
+     341.85,
+     344.18,
+     19808300
+    ],
+    [
+     "2026-10-20",
+     343.65,
+     344.77,
+     338.36,
+     340.28,
+     18316900
+    ],
+    [
+     "2026-10-21",
+     336.98,
+     337.27,
+     330.38,
+     334.76,
+     29165500
+    ],
+    [
+     "2026-10-22",
+     330.46,
+     331.43,
+     322.0,
+     324.22,
+     27748100
+    ],
+    [
+     "2026-10-23",
+     321.15,
+     324.53,
+     320.18,
+     320.21,
+     17569600
+    ],
+    [
+     "2026-10-26",
+     320.89,
+     321.48,
+     316.6,
+     316.8,
+     23991800
+    ],
+    [
+     "2026-10-27",
+     317.0,
+     323.88,
+     316.86,
+     320.58,
+     28527400
+    ]
+   ]
   },
   "2026-10-14:OKTA": {
    "id": "2026-10-14:OKTA",
@@ -415,8 +511,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": -0.0011484502446982292
+   "elapsed_sessions": 9,
+   "unreal": 0.004450244698205541
   },
   "2026-10-14:T": {
    "id": "2026-10-14:T",
@@ -545,8 +641,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": -0.03818445855519814
+   "elapsed_sessions": 9,
+   "unreal": -0.015547139724935155
   },
   "2026-10-14:TWLO": {
    "id": "2026-10-14:TWLO",
@@ -566,8 +662,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 8,
-   "unreal": -0.00208175624526874
+   "elapsed_sessions": 9,
+   "unreal": -0.03648750946252832
   },
   "2026-10-15:ALLY": {
    "id": "2026-10-15:ALLY",
@@ -587,8 +683,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": 0.019170168067226934
+   "elapsed_sessions": 8,
+   "unreal": 0.01680672268907557
   },
   "2026-10-15:APP": {
    "id": "2026-10-15:APP",
@@ -608,8 +704,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.0683698079499776
+   "elapsed_sessions": 8,
+   "unreal": -0.06093791871371146
   },
   "2026-10-15:BA": {
    "id": "2026-10-15:BA",
@@ -629,8 +725,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.009572397833061519
+   "elapsed_sessions": 8,
+   "unreal": -0.11544732551412185
   },
   "2026-10-15:BAC": {
    "id": "2026-10-15:BAC",
@@ -650,8 +746,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.031070195627157626
+   "elapsed_sessions": 8,
+   "unreal": -0.028001534330648226
   },
   "2026-10-15:BMNR": {
    "id": "2026-10-15:BMNR",
@@ -669,10 +765,98 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.08714596949891062
+   "exit": "2026-10-27",
+   "hold": 7,
+   "entry_open": 22.95,
+   "exit_open": 21.0,
+   "ret0": -0.08496732026143783,
+   "ret": -0.08679555738379263,
+   "closed_utc": "2026-10-28T05:15:44Z",
+   "bars_used": [
+    [
+     "2026-10-14",
+     23.02,
+     23.125,
+     21.93,
+     22.25,
+     41044400
+    ],
+    [
+     "2026-10-15",
+     21.18,
+     23.59,
+     20.55,
+     23.36,
+     46653900
+    ],
+    [
+     "2026-10-16",
+     22.95,
+     23.36,
+     21.465,
+     21.66,
+     37157700
+    ],
+    [
+     "2026-10-19",
+     22.05,
+     22.15,
+     21.371,
+     21.57,
+     22167400
+    ],
+    [
+     "2026-10-20",
+     21.32,
+     23.46,
+     21.27,
+     22.82,
+     32739900
+    ],
+    [
+     "2026-10-21",
+     23.36,
+     24.54,
+     23.045,
+     23.96,
+     36026200
+    ],
+    [
+     "2026-10-22",
+     22.71,
+     23.15,
+     21.95,
+     22.5,
+     35402100
+    ],
+    [
+     "2026-10-23",
+     22.375,
+     23.031,
+     22.295,
+     22.4,
+     22984000
+    ],
+    [
+     "2026-10-26",
+     21.76,
+     22.03,
+     20.93,
+     20.95,
+     34104500
+    ],
+    [
+     "2026-10-27",
+     21.0,
+     21.7,
+     20.845,
+     21.62,
+     30869600
+    ]
+   ]
   },
   "2026-10-15:BMY": {
    "id": "2026-10-15:BMY",
@@ -692,8 +876,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": 0.008346972176759282
+   "elapsed_sessions": 8,
+   "unreal": 0.0073649754500817455
   },
   "2026-10-15:CRML": {
    "id": "2026-10-15:CRML",
@@ -806,8 +990,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.06975597732314509
+   "elapsed_sessions": 8,
+   "unreal": -0.02670281817434883
   },
   "2026-10-15:DASH": {
    "id": "2026-10-15:DASH",
@@ -825,10 +1009,98 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.1309910746530466
+   "exit": "2026-10-27",
+   "hold": 7,
+   "entry_open": 193.83,
+   "exit_open": 168.77,
+   "ret0": -0.1292885518237631,
+   "ret": -0.13102823503690242,
+   "closed_utc": "2026-10-28T05:15:44Z",
+   "bars_used": [
+    [
+     "2026-10-14",
+     189.51,
+     190.74,
+     178.97,
+     184.01,
+     3922800
+    ],
+    [
+     "2026-10-15",
+     184.01,
+     193.46,
+     183.75,
+     193.05,
+     3309900
+    ],
+    [
+     "2026-10-16",
+     193.83,
+     195.77,
+     186.1,
+     189.15,
+     3020500
+    ],
+    [
+     "2026-10-19",
+     189.555,
+     194.69,
+     187.04,
+     193.53,
+     2587500
+    ],
+    [
+     "2026-10-20",
+     194.66,
+     197.24,
+     190.41,
+     191.67,
+     2589900
+    ],
+    [
+     "2026-10-21",
+     190.16,
+     192.61,
+     183.91,
+     184.45,
+     3103900
+    ],
+    [
+     "2026-10-22",
+     182.37,
+     187.46,
+     181.0,
+     185.94,
+     4112300
+    ],
+    [
+     "2026-10-23",
+     183.59,
+     185.255,
+     178.01,
+     179.38,
+     2704500
+    ],
+    [
+     "2026-10-26",
+     177.94,
+     178.525,
+     163.68,
+     168.44,
+     7924500
+    ],
+    [
+     "2026-10-27",
+     168.77,
+     174.865,
+     165.5,
+     170.56,
+     6854300
+    ]
+   ]
   },
   "2026-10-15:IONQ": {
    "id": "2026-10-15:IONQ",
@@ -848,8 +1120,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.06878178735771356
+   "elapsed_sessions": 8,
+   "unreal": -0.0024824412690722664
   },
   "2026-10-15:KKR": {
    "id": "2026-10-15:KKR",
@@ -869,8 +1141,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": 0.028744666516954842
+   "elapsed_sessions": 8,
+   "unreal": 0.0321131821244105
   },
   "2026-10-15:LCID": {
    "id": "2026-10-15:LCID",
@@ -951,8 +1223,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": 0.047421168418479764
+   "elapsed_sessions": 8,
+   "unreal": 0.061843070153996704
   },
   "2026-10-15:MCHP": {
    "id": "2026-10-15:MCHP",
@@ -1065,8 +1337,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.014221073044602517
+   "elapsed_sessions": 8,
+   "unreal": 0.018099547511312153
   },
   "2026-10-15:NEM": {
    "id": "2026-10-15:NEM",
@@ -1086,8 +1358,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.04283360790774293
+   "elapsed_sessions": 8,
+   "unreal": -0.023324373536807386
   },
   "2026-10-15:NXPI": {
    "id": "2026-10-15:NXPI",
@@ -1479,8 +1751,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.07142857142857151
+   "elapsed_sessions": 8,
+   "unreal": 0.009740259740259605
   },
   "2026-10-15:SOFI": {
    "id": "2026-10-15:SOFI",
@@ -1500,8 +1772,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.040796019900497416
+   "elapsed_sessions": 8,
+   "unreal": 0.08789386401326693
   },
   "2026-10-15:SOUN": {
    "id": "2026-10-15:SOUN",
@@ -1622,8 +1894,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": -0.07070707070707072
+   "elapsed_sessions": 8,
+   "unreal": -0.04202020202020196
   },
   "2026-10-15:VRTX": {
    "id": "2026-10-15:VRTX",
@@ -1641,10 +1913,98 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "頂",
    "entry": "2026-10-16",
-   "elapsed_sessions": 7,
-   "unreal": 0.012581692951903811
+   "exit": "2026-10-27",
+   "hold": 7,
+   "entry_open": 511.06,
+   "exit_open": 514.84,
+   "ret0": 0.007396391813094372,
+   "ret": 0.005383611809471889,
+   "closed_utc": "2026-10-28T05:15:44Z",
+   "bars_used": [
+    [
+     "2026-10-14",
+     490.45,
+     502.94,
+     487.54,
+     498.5,
+     2089700
+    ],
+    [
+     "2026-10-15",
+     514.91,
+     517.68,
+     507.21,
+     508.75,
+     2262500
+    ],
+    [
+     "2026-10-16",
+     511.06,
+     512.21,
+     497.49,
+     499.74,
+     1413000
+    ],
+    [
+     "2026-10-19",
+     500.0,
+     505.83,
+     499.5,
+     501.95,
+     1298700
+    ],
+    [
+     "2026-10-20",
+     507.89,
+     515.74,
+     505.0,
+     514.65,
+     1230000
+    ],
+    [
+     "2026-10-21",
+     512.79,
+     528.57,
+     510.48,
+     524.52,
+     1448600
+    ],
+    [
+     "2026-10-22",
+     527.18,
+     537.81,
+     521.3,
+     535.17,
+     1641200
+    ],
+    [
+     "2026-10-23",
+     531.66,
+     533.08,
+     522.91,
+     523.93,
+     832600
+    ],
+    [
+     "2026-10-26",
+     526.86,
+     529.66,
+     509.33,
+     517.49,
+     1189000
+    ],
+    [
+     "2026-10-27",
+     514.84,
+     521.43,
+     509.21,
+     521.03,
+     1019700
+    ]
+   ]
   },
   "2026-10-16:AA": {
    "id": "2026-10-16:AA",
@@ -1759,8 +2119,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 6,
-   "unreal": 0.12588028169014076
+   "elapsed_sessions": 7,
+   "unreal": 0.08186619718309851
   },
   "2026-10-16:BKR": {
    "id": "2026-10-16:BKR",
@@ -1781,8 +2141,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 6,
-   "unreal": 0.0021470746108427363
+   "elapsed_sessions": 7,
+   "unreal": 0.0556450169976741
   },
   "2026-10-16:C": {
    "id": "2026-10-16:C",
@@ -1803,8 +2163,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 6,
-   "unreal": -0.024893257069201535
+   "elapsed_sessions": 7,
+   "unreal": -0.01160074115846288
   },
   "2026-10-16:CLF": {
    "id": "2026-10-16:CLF",
@@ -1997,8 +2357,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 6,
-   "unreal": 0.004959390498095351
+   "elapsed_sessions": 7,
+   "unreal": 0.016315675986487532
   },
   "2026-10-16:PLTR": {
    "id": "2026-10-16:PLTR",
@@ -2019,8 +2379,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 6,
-   "unreal": 0.06334393967753149
+   "elapsed_sessions": 7,
+   "unreal": 0.06275568865477688
   },
   "2026-10-16:ROK": {
    "id": "2026-10-16:ROK",
@@ -2127,8 +2487,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 6,
-   "unreal": 0.2407698537468439
+   "elapsed_sessions": 7,
+   "unreal": 0.23934066981087132
   },
   "2026-10-19:AMZN": {
    "id": "2026-10-19:AMZN",
@@ -2149,8 +2509,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": -0.056763102090275575
+   "elapsed_sessions": 6,
+   "unreal": -0.041578309603150565
   },
   "2026-10-19:CLF": {
    "id": "2026-10-19:CLF",
@@ -2171,8 +2531,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": -0.021929824561403466
+   "elapsed_sessions": 6,
+   "unreal": 0.016081871345029253
   },
   "2026-10-19:GME": {
    "id": "2026-10-19:GME",
@@ -2193,8 +2553,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": -0.07112320248736892
+   "elapsed_sessions": 6,
+   "unreal": -0.09211037699183833
   },
   "2026-10-19:MPWR": {
    "id": "2026-10-19:MPWR",
@@ -2215,8 +2575,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": -0.053193819199415904
+   "elapsed_sessions": 6,
+   "unreal": -0.017001257249462443
   },
   "2026-10-19:MXL": {
    "id": "2026-10-19:MXL",
@@ -2315,8 +2675,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": 0.03640723784608668
+   "elapsed_sessions": 6,
+   "unreal": 0.056318581498437714
   },
   "2026-10-19:SNDK": {
    "id": "2026-10-19:SNDK",
@@ -2337,8 +2697,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": -0.060872947309765
+   "elapsed_sessions": 6,
+   "unreal": -0.024028302909949062
   },
   "2026-10-19:SPCX": {
    "id": "2026-10-19:SPCX",
@@ -2437,8 +2797,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 5,
-   "unreal": 0.020780784223801918
+   "elapsed_sessions": 6,
+   "unreal": 0.09172208209126342
   },
   "2026-10-20:AAPL": {
    "id": "2026-10-20:AAPL",
@@ -2459,8 +2819,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 4,
-   "unreal": 0.013407590759076049
+   "elapsed_sessions": 5,
+   "unreal": 0.02280763790664775
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -2481,8 +2841,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 4,
-   "unreal": -0.04810958904109586
+   "elapsed_sessions": 5,
+   "unreal": -0.045917808219178013
   },
   "2026-10-20:MSTR": {
    "id": "2026-10-20:MSTR",
@@ -2503,8 +2863,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 4,
-   "unreal": -0.044292549555707605
+   "elapsed_sessions": 5,
+   "unreal": -0.03349282296650724
   },
   "2026-10-20:ON": {
    "id": "2026-10-20:ON",
@@ -2525,8 +2885,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 4,
-   "unreal": -0.03062827225130893
+   "elapsed_sessions": 5,
+   "unreal": 0.029712041884816687
   },
   "2026-10-20:RUN": {
    "id": "2026-10-20:RUN",
@@ -2547,8 +2907,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 4,
-   "unreal": -0.054616384915474714
+   "elapsed_sessions": 5,
+   "unreal": -0.020806241872561748
   },
   "2026-10-20:SBET": {
    "id": "2026-10-20:SBET",
@@ -2567,10 +2927,74 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-21",
-   "elapsed_sessions": 4,
-   "unreal": -0.1124845488257108
+   "exit": "2026-10-27",
+   "hold": 4,
+   "entry_open": 8.09,
+   "exit_open": 7.27,
+   "ret0": -0.1013597033374537,
+   "ret": -0.10315518844567051,
+   "closed_utc": "2026-10-28T05:15:44Z",
+   "bars_used": [
+    [
+     "2026-10-19",
+     7.71,
+     7.74,
+     7.41,
+     7.46,
+     7221400
+    ],
+    [
+     "2026-10-20",
+     7.39,
+     8.04,
+     7.38,
+     7.87,
+     5150600
+    ],
+    [
+     "2026-10-21",
+     8.09,
+     8.53,
+     7.89,
+     8.35,
+     8475100
+    ],
+    [
+     "2026-10-22",
+     7.86,
+     8.08,
+     7.71,
+     7.86,
+     6888200
+    ],
+    [
+     "2026-10-23",
+     7.89,
+     8.02,
+     7.61,
+     7.63,
+     7148200
+    ],
+    [
+     "2026-10-26",
+     7.37,
+     7.46,
+     7.17,
+     7.18,
+     6536500
+    ],
+    [
+     "2026-10-27",
+     7.27,
+     7.45,
+     7.19,
+     7.45,
+     10109700
+    ]
+   ]
   },
   "2026-10-20:TSLA": {
    "id": "2026-10-20:TSLA",
@@ -2661,8 +3085,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.024898246319280393
+   "elapsed_sessions": 4,
+   "unreal": 0.0686648912114971
   },
   "2026-10-21:AMD": {
    "id": "2026-10-21:AMD",
@@ -2683,8 +3107,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.01369967563442076
+   "elapsed_sessions": 4,
+   "unreal": 0.06899446670482723
   },
   "2026-10-21:AMKR": {
    "id": "2026-10-21:AMKR",
@@ -2703,10 +3127,66 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.1102248005801304
+   "exit": "2026-10-27",
+   "hold": 3,
+   "entry_open": 41.37,
+   "exit_open": 38.58,
+   "ret0": -0.0674401740391588,
+   "ret": -0.0693034304346849,
+   "closed_utc": "2026-10-28T05:15:44Z",
+   "bars_used": [
+    [
+     "2026-10-20",
+     40.79,
+     42.39,
+     39.92,
+     41.7,
+     3007200
+    ],
+    [
+     "2026-10-21",
+     44.5,
+     44.5,
+     42.87,
+     43.73,
+     4258100
+    ],
+    [
+     "2026-10-22",
+     41.37,
+     41.77,
+     38.69,
+     39.05,
+     6388100
+    ],
+    [
+     "2026-10-23",
+     38.59,
+     40.19,
+     38.52,
+     39.3,
+     4878200
+    ],
+    [
+     "2026-10-26",
+     38.67,
+     39.14,
+     36.37,
+     36.81,
+     21618600
+    ],
+    [
+     "2026-10-27",
+     38.58,
+     40.07,
+     37.36,
+     39.94,
+     12661600
+    ]
+   ]
   },
   "2026-10-21:APLD": {
    "id": "2026-10-21:APLD",
@@ -2797,8 +3277,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.019741949794816804
+   "elapsed_sessions": 4,
+   "unreal": 0.009119009865559358
   },
   "2026-10-21:BE": {
    "id": "2026-10-21:BE",
@@ -2889,8 +3369,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.03825150279716205
+   "elapsed_sessions": 4,
+   "unreal": -0.008820856573539149
   },
   "2026-10-21:CDNS": {
    "id": "2026-10-21:CDNS",
@@ -2911,8 +3391,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.011776898436027805
+   "elapsed_sessions": 4,
+   "unreal": 0.07744488411531925
   },
   "2026-10-21:CEG": {
    "id": "2026-10-21:CEG",
@@ -2933,8 +3413,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.06078416784465446
+   "elapsed_sessions": 4,
+   "unreal": -0.036604419314039016
   },
   "2026-10-21:COHR": {
    "id": "2026-10-21:COHR",
@@ -2955,8 +3435,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.007394129509298741
+   "elapsed_sessions": 4,
+   "unreal": 0.05664351333183948
   },
   "2026-10-21:CRWD": {
    "id": "2026-10-21:CRWD",
@@ -2977,8 +3457,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.07926628194558938
+   "elapsed_sessions": 4,
+   "unreal": 0.10478153338829355
   },
   "2026-10-21:CSCO": {
    "id": "2026-10-21:CSCO",
@@ -2999,8 +3479,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.03249976585183112
+   "elapsed_sessions": 4,
+   "unreal": 0.043176922356467085
   },
   "2026-10-21:DELL": {
    "id": "2026-10-21:DELL",
@@ -3021,8 +3501,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.01296870594868893
+   "elapsed_sessions": 4,
+   "unreal": 0.08859057491704792
   },
   "2026-10-21:DJT": {
    "id": "2026-10-21:DJT",
@@ -3043,8 +3523,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.055384615384615477
+   "elapsed_sessions": 4,
+   "unreal": -0.021538461538461506
   },
   "2026-10-21:ETN": {
    "id": "2026-10-21:ETN",
@@ -3065,8 +3545,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.021160122118117575
+   "elapsed_sessions": 4,
+   "unreal": 0.011159069375723751
   },
   "2026-10-21:GEV": {
    "id": "2026-10-21:GEV",
@@ -3157,8 +3637,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.009767441860465187
+   "elapsed_sessions": 4,
+   "unreal": -0.020930232558139528
   },
   "2026-10-21:GLXY": {
    "id": "2026-10-21:GLXY",
@@ -3249,8 +3729,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.050473024801841015
+   "elapsed_sessions": 4,
+   "unreal": -0.03288161595499872
   },
   "2026-10-21:IBKR": {
    "id": "2026-10-21:IBKR",
@@ -3271,8 +3751,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.031835655934646656
+   "elapsed_sessions": 4,
+   "unreal": -0.011893320518981176
   },
   "2026-10-21:LWLG": {
    "id": "2026-10-21:LWLG",
@@ -3293,8 +3773,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.026066350710900354
+   "elapsed_sessions": 4,
+   "unreal": 0.09004739336492884
   },
   "2026-10-21:META": {
    "id": "2026-10-21:META",
@@ -3315,8 +3795,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.06770163376949812
+   "elapsed_sessions": 4,
+   "unreal": -0.08303393213572852
   },
   "2026-10-21:MS": {
    "id": "2026-10-21:MS",
@@ -3337,8 +3817,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.000599847311593571
+   "elapsed_sessions": 4,
+   "unreal": 0.019249645544770377
   },
   "2026-10-21:NET": {
    "id": "2026-10-21:NET",
@@ -3359,8 +3839,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.055198728139904674
+   "elapsed_sessions": 4,
+   "unreal": 0.04228934817170105
   },
   "2026-10-21:NOK": {
    "id": "2026-10-21:NOK",
@@ -3443,8 +3923,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.0052042555151291525
+   "elapsed_sessions": 4,
+   "unreal": 0.003730484041818194
   },
   "2026-10-21:PANW": {
    "id": "2026-10-21:PANW",
@@ -3465,8 +3945,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.09501374165685128
+   "elapsed_sessions": 4,
+   "unreal": 0.12653541982163885
   },
   "2026-10-21:QQQ": {
    "id": "2026-10-21:QQQ",
@@ -3487,8 +3967,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.0019758691722369104
+   "elapsed_sessions": 4,
+   "unreal": 0.010706127997085257
   },
   "2026-10-21:RKLB": {
    "id": "2026-10-21:RKLB",
@@ -3509,8 +3989,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.04150943396226414
+   "elapsed_sessions": 4,
+   "unreal": 0.12839864537977763
   },
   "2026-10-21:SCHW": {
    "id": "2026-10-21:SCHW",
@@ -3531,8 +4011,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.01601052747011722
+   "elapsed_sessions": 4,
+   "unreal": -0.020725956793508082
   },
   "2026-10-21:SMCI": {
    "id": "2026-10-21:SMCI",
@@ -3553,8 +4033,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.05108853410740222
+   "elapsed_sessions": 4,
+   "unreal": 0.01857764876632806
   },
   "2026-10-21:TER": {
    "id": "2026-10-21:TER",
@@ -3575,8 +4055,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.04529444478774025
+   "elapsed_sessions": 4,
+   "unreal": 6.179323981947427e-05
   },
   "2026-10-21:TLN": {
    "id": "2026-10-21:TLN",
@@ -3597,8 +4077,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.03936067345429739
+   "elapsed_sessions": 4,
+   "unreal": -0.016751038052442935
   },
   "2026-10-21:TSM": {
    "id": "2026-10-21:TSM",
@@ -3619,8 +4099,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.01187438899353821
+   "elapsed_sessions": 4,
+   "unreal": 0.04167958225041146
   },
   "2026-10-21:TXN": {
    "id": "2026-10-21:TXN",
@@ -3641,8 +4121,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": 0.04890577721483358
+   "elapsed_sessions": 4,
+   "unreal": 0.08686932657800295
   },
   "2026-10-21:VRT": {
    "id": "2026-10-21:VRT",
@@ -3663,8 +4143,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.018810470998477546
+   "elapsed_sessions": 4,
+   "unreal": 0.024311183144246407
   },
   "2026-10-21:WOLF": {
    "id": "2026-10-21:WOLF",
@@ -3685,8 +4165,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 3,
-   "unreal": -0.00679694137638065
+   "elapsed_sessions": 4,
+   "unreal": 0.0709430756159728
   },
   "2026-10-21:WULF": {
    "id": "2026-10-21:WULF",
@@ -3769,8 +4249,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 2,
-   "unreal": 0.06545302583122203
+   "elapsed_sessions": 3,
+   "unreal": 0.11095149789745862
   },
   "2026-10-22:DVN": {
    "id": "2026-10-22:DVN",
@@ -3791,8 +4271,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 2,
-   "unreal": 0.04112903225806441
+   "elapsed_sessions": 3,
+   "unreal": 0.03286290322580632
   },
   "2026-10-22:MRNA": {
    "id": "2026-10-22:MRNA",
@@ -3813,8 +4293,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 2,
-   "unreal": 0.010981747928211938
+   "elapsed_sessions": 3,
+   "unreal": 0.05734912806955106
   },
   "2026-10-22:MSFT": {
    "id": "2026-10-22:MSFT",
@@ -3835,8 +4315,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 2,
-   "unreal": 0.028681796233703594
+   "elapsed_sessions": 3,
+   "unreal": 0.026228874939642655
   },
   "2026-10-22:SHOP": {
    "id": "2026-10-22:SHOP",
@@ -3857,8 +4337,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 2,
-   "unreal": 0.005560538116591962
+   "elapsed_sessions": 3,
+   "unreal": -0.008609865470851963
   },
   "2026-10-22:T": {
    "id": "2026-10-22:T",
@@ -3879,8 +4359,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 2,
-   "unreal": -0.0409383624655012
+   "elapsed_sessions": 3,
+   "unreal": -0.03679852805887751
   },
   "2026-10-23:ACHR": {
    "id": "2026-10-23:ACHR",
@@ -3901,8 +4381,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 1,
-   "unreal": 0.020725388601036343
+   "elapsed_sessions": 2,
+   "unreal": 0.09585492227979286
   },
   "2026-10-23:AMC": {
    "id": "2026-10-23:AMC",
@@ -3923,8 +4403,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 1,
-   "unreal": -0.0034482758620688614
+   "elapsed_sessions": 2,
+   "unreal": 0.031034482758620863
   },
   "2026-10-23:AVAV": {
    "id": "2026-10-23:AVAV",
@@ -3945,8 +4425,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 1,
-   "unreal": 0.025002042650543288
+   "elapsed_sessions": 2,
+   "unreal": 0.035460413432470084
   },
   "2026-10-23:TMO": {
    "id": "2026-10-23:TMO",
@@ -3967,8 +4447,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 1,
-   "unreal": 0.013360755185985118
+   "elapsed_sessions": 2,
+   "unreal": 0.02538987364247025
   },
   "2026-10-26:AAOI": {
    "id": "2026-10-26:AAOI",
@@ -3987,9 +4467,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.05022519448614715
   },
   "2026-10-26:AMAT": {
    "id": "2026-10-26:AMAT",
@@ -4008,9 +4488,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.011496308407633604
   },
   "2026-10-26:ANET": {
    "id": "2026-10-26:ANET",
@@ -4029,9 +4509,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.03543743078626793
   },
   "2026-10-26:BKR": {
    "id": "2026-10-26:BKR",
@@ -4050,9 +4530,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.04907539118065429
   },
   "2026-10-26:CMG": {
    "id": "2026-10-26:CMG",
@@ -4071,9 +4551,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": -0.014441704825642887
   },
   "2026-10-26:ENTG": {
    "id": "2026-10-26:ENTG",
@@ -4092,9 +4572,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.0476722272632093
   },
   "2026-10-26:FUTU": {
    "id": "2026-10-26:FUTU",
@@ -4113,9 +4593,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.008472906403940828
   },
   "2026-10-26:GE": {
    "id": "2026-10-26:GE",
@@ -4134,9 +4614,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.022148964664675086
   },
   "2026-10-26:GFS": {
    "id": "2026-10-26:GFS",
@@ -4155,9 +4635,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.02277704774419642
   },
   "2026-10-26:KTOS": {
    "id": "2026-10-26:KTOS",
@@ -4176,9 +4656,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.014485637122514161
   },
   "2026-10-26:LITE": {
    "id": "2026-10-26:LITE",
@@ -4197,9 +4677,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.023399793235858724
   },
   "2026-10-26:LRCX": {
    "id": "2026-10-26:LRCX",
@@ -4218,9 +4698,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": -0.0003320466525547072
   },
   "2026-10-26:MA": {
    "id": "2026-10-26:MA",
@@ -4239,9 +4719,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": -0.0026819735400415157
   },
   "2026-10-26:MSFT": {
    "id": "2026-10-26:MSFT",
@@ -4260,9 +4740,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": -0.0019160326852634135
   },
   "2026-10-26:MTSI": {
    "id": "2026-10-26:MTSI",
@@ -4281,9 +4761,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.017550841724041755
   },
   "2026-10-26:PWR": {
    "id": "2026-10-26:PWR",
@@ -4302,9 +4782,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.007098738581992281
   },
   "2026-10-26:SNPS": {
    "id": "2026-10-26:SNPS",
@@ -4316,6 +4796,657 @@
    "displayed_buy": true,
    "v": "agree",
    "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-27",
+   "elapsed_sessions": 1,
+   "unreal": 0.03585152838427952
+  },
+  "2026-10-27:AA": {
+   "id": "2026-10-27:AA",
+   "date": "2026-10-27",
+   "sym": "AA",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:ACN": {
+   "id": "2026-10-27:ACN",
+   "date": "2026-10-27",
+   "sym": "ACN",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:AFRM": {
+   "id": "2026-10-27:AFRM",
+   "date": "2026-10-27",
+   "sym": "AFRM",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:ALAB": {
+   "id": "2026-10-27:ALAB",
+   "date": "2026-10-27",
+   "sym": "ALAB",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:AMZN": {
+   "id": "2026-10-27:AMZN",
+   "date": "2026-10-27",
+   "sym": "AMZN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:BTBT": {
+   "id": "2026-10-27:BTBT",
+   "date": "2026-10-27",
+   "sym": "BTBT",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.4,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CI": {
+   "id": "2026-10-27:CI",
+   "date": "2026-10-27",
+   "sym": "CI",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CIFR": {
+   "id": "2026-10-27:CIFR",
+   "date": "2026-10-27",
+   "sym": "CIFR",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CLSK": {
+   "id": "2026-10-27:CLSK",
+   "date": "2026-10-27",
+   "sym": "CLSK",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.43,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CME": {
+   "id": "2026-10-27:CME",
+   "date": "2026-10-27",
+   "sym": "CME",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:COST": {
+   "id": "2026-10-27:COST",
+   "date": "2026-10-27",
+   "sym": "COST",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CRDO": {
+   "id": "2026-10-27:CRDO",
+   "date": "2026-10-27",
+   "sym": "CRDO",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.46,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CRM": {
+   "id": "2026-10-27:CRM",
+   "date": "2026-10-27",
+   "sym": "CRM",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CRWV": {
+   "id": "2026-10-27:CRWV",
+   "date": "2026-10-27",
+   "sym": "CRWV",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:CVNA": {
+   "id": "2026-10-27:CVNA",
+   "date": "2026-10-27",
+   "sym": "CVNA",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:FCX": {
+   "id": "2026-10-27:FCX",
+   "date": "2026-10-27",
+   "sym": "FCX",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:GME": {
+   "id": "2026-10-27:GME",
+   "date": "2026-10-27",
+   "sym": "GME",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:JD": {
+   "id": "2026-10-27:JD",
+   "date": "2026-10-27",
+   "sym": "JD",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.57,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:KLAC": {
+   "id": "2026-10-27:KLAC",
+   "date": "2026-10-27",
+   "sym": "KLAC",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:KO": {
+   "id": "2026-10-27:KO",
+   "date": "2026-10-27",
+   "sym": "KO",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.63,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:MAR": {
+   "id": "2026-10-27:MAR",
+   "date": "2026-10-27",
+   "sym": "MAR",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:NBIS": {
+   "id": "2026-10-27:NBIS",
+   "date": "2026-10-27",
+   "sym": "NBIS",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.45,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:NEM": {
+   "id": "2026-10-27:NEM",
+   "date": "2026-10-27",
+   "sym": "NEM",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:NRG": {
+   "id": "2026-10-27:NRG",
+   "date": "2026-10-27",
+   "sym": "NRG",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:OKLO": {
+   "id": "2026-10-27:OKLO",
+   "date": "2026-10-27",
+   "sym": "OKLO",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.4,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:RIOT": {
+   "id": "2026-10-27:RIOT",
+   "date": "2026-10-27",
+   "sym": "RIOT",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.43,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:RIVN": {
+   "id": "2026-10-27:RIVN",
+   "date": "2026-10-27",
+   "sym": "RIVN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:SMR": {
+   "id": "2026-10-27:SMR",
+   "date": "2026-10-27",
+   "sym": "SMR",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.38,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:SNAP": {
+   "id": "2026-10-27:SNAP",
+   "date": "2026-10-27",
+   "sym": "SNAP",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:SNDK": {
+   "id": "2026-10-27:SNDK",
+   "date": "2026-10-27",
+   "sym": "SNDK",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-27:V": {
+   "id": "2026-10-27:V",
+   "date": "2026-10-27",
+   "sym": "V",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.64,
    "model": "claude-opus-5-5",
    "protocol": "v2",
    "late": false,
