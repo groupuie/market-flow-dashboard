@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-10-29T00:38:48Z",
+ "gen_utc": "2026-10-29T05:15:08Z",
  "data_asof": "2026-10-28",
  "protocol": "v2",
  "status": "COLLECTING",
@@ -10,13 +10,13 @@
   "end_reason": null
  },
  "counts": {
-  "locked": 159,
-  "agree": 62,
-  "disagree": 97,
+  "locked": 173,
+  "agree": 69,
+  "disagree": 104,
   "late": 0,
-  "days": 10,
-  "closed": 31,
-  "open": 128,
+  "days": 11,
+  "closed": 35,
+  "open": 138,
   "no_data": 0,
   "unresolved": 0
  },
@@ -39,8 +39,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": 0.0752294041810968
+   "elapsed_sessions": 10,
+   "unreal": 0.08261078389241394
   },
   "2026-10-14:CSCO": {
    "id": "2026-10-14:CSCO",
@@ -60,8 +60,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": -0.007042881340821983
+   "elapsed_sessions": 10,
+   "unreal": -0.016760274583221824
   },
   "2026-10-14:DDOG": {
    "id": "2026-10-14:DDOG",
@@ -81,8 +81,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": 0.07707767600988014
+   "elapsed_sessions": 10,
+   "unreal": 0.06783418480845649
   },
   "2026-10-14:GOOG": {
    "id": "2026-10-14:GOOG",
@@ -102,8 +102,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": -0.06959739230023787
+   "elapsed_sessions": 10,
+   "unreal": -0.05473820221419545
   },
   "2026-10-14:GOOGL": {
    "id": "2026-10-14:GOOGL",
@@ -511,8 +511,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": 0.004450244698205541
+   "elapsed_sessions": 10,
+   "unreal": 0.007908646003262465
   },
   "2026-10-14:T": {
    "id": "2026-10-14:T",
@@ -641,8 +641,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": -0.015547139724935155
+   "elapsed_sessions": 10,
+   "unreal": -0.009795267519006834
   },
   "2026-10-14:TWLO": {
    "id": "2026-10-14:TWLO",
@@ -662,8 +662,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 9,
-   "unreal": -0.03648750946252832
+   "elapsed_sessions": 10,
+   "unreal": -0.039477668433005264
   },
   "2026-10-15:ALLY": {
    "id": "2026-10-15:ALLY",
@@ -683,8 +683,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.01680672268907557
+   "elapsed_sessions": 9,
+   "unreal": 0.018907563025210017
   },
   "2026-10-15:APP": {
    "id": "2026-10-15:APP",
@@ -704,8 +704,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.06093791871371146
+   "elapsed_sessions": 9,
+   "unreal": -0.0711210361768646
   },
   "2026-10-15:BA": {
    "id": "2026-10-15:BA",
@@ -723,10 +723,106 @@
    "late_verified": true,
    "panic_sc": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.11544732551412185
+   "exit": "2026-10-28",
+   "hold": 8,
+   "entry_open": 190.13,
+   "exit_open": 167.99,
+   "ret0": -0.1164466417714195,
+   "ret": -0.1182119831465015,
+   "closed_utc": "2026-10-29T05:15:07Z",
+   "bars_used": [
+    [
+     "2026-10-14",
+     185.56,
+     187.18,
+     183.38,
+     184.66,
+     5163300
+    ],
+    [
+     "2026-10-15",
+     185.65,
+     188.79,
+     184.38,
+     188.73,
+     5894500
+    ],
+    [
+     "2026-10-16",
+     190.13,
+     191.93,
+     187.67,
+     190.21,
+     7300200
+    ],
+    [
+     "2026-10-19",
+     190.02,
+     192.54,
+     188.72,
+     191.42,
+     5497100
+    ],
+    [
+     "2026-10-20",
+     190.54,
+     192.67,
+     189.4,
+     190.47,
+     7447300
+    ],
+    [
+     "2026-10-21",
+     191.85,
+     193.28,
+     189.12,
+     192.28,
+     5843900
+    ],
+    [
+     "2026-10-22",
+     191.49,
+     193.19,
+     186.76,
+     187.55,
+     6472700
+    ],
+    [
+     "2026-10-23",
+     185.81,
+     189.09,
+     182.4,
+     188.35,
+     6580000
+    ],
+    [
+     "2026-10-26",
+     188.26,
+     189.66,
+     186.08,
+     188.31,
+     7764300
+    ],
+    [
+     "2026-10-27",
+     183.5,
+     187.86,
+     167.41,
+     168.18,
+     47270800
+    ],
+    [
+     "2026-10-28",
+     167.99,
+     170.2,
+     165.01,
+     167.14,
+     20968900
+    ]
+   ]
   },
   "2026-10-15:BAC": {
    "id": "2026-10-15:BAC",
@@ -746,8 +842,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.028001534330648226
+   "elapsed_sessions": 9,
+   "unreal": -0.02474108170310696
   },
   "2026-10-15:BMNR": {
    "id": "2026-10-15:BMNR",
@@ -876,8 +972,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.0073649754500817455
+   "elapsed_sessions": 9,
+   "unreal": -0.008674304418985312
   },
   "2026-10-15:CRML": {
    "id": "2026-10-15:CRML",
@@ -990,8 +1086,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.02670281817434883
+   "elapsed_sessions": 9,
+   "unreal": -0.029660668802892087
   },
   "2026-10-15:DASH": {
    "id": "2026-10-15:DASH",
@@ -1120,8 +1216,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.0024824412690722664
+   "elapsed_sessions": 9,
+   "unreal": -0.018224751755873014
   },
   "2026-10-15:KKR": {
    "id": "2026-10-15:KKR",
@@ -1141,8 +1237,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.0321131821244105
+   "elapsed_sessions": 9,
+   "unreal": 0.04468897372557823
   },
   "2026-10-15:LCID": {
    "id": "2026-10-15:LCID",
@@ -1223,8 +1319,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.061843070153996704
+   "elapsed_sessions": 9,
+   "unreal": 0.0625763871913958
   },
   "2026-10-15:MCHP": {
    "id": "2026-10-15:MCHP",
@@ -1337,8 +1433,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.018099547511312153
+   "elapsed_sessions": 9,
+   "unreal": 0.03813833225597918
   },
   "2026-10-15:NEM": {
    "id": "2026-10-15:NEM",
@@ -1358,8 +1454,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.023324373536807386
+   "elapsed_sessions": 9,
+   "unreal": -0.012225786872452904
   },
   "2026-10-15:NXPI": {
    "id": "2026-10-15:NXPI",
@@ -1751,8 +1847,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.009740259740259605
+   "elapsed_sessions": 9,
+   "unreal": 0.006493506493506551
   },
   "2026-10-15:SOFI": {
    "id": "2026-10-15:SOFI",
@@ -1772,8 +1868,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": 0.08789386401326693
+   "elapsed_sessions": 9,
+   "unreal": 0.13698175787728029
   },
   "2026-10-15:SOUN": {
    "id": "2026-10-15:SOUN",
@@ -1894,8 +1990,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 8,
-   "unreal": -0.04202020202020196
+   "elapsed_sessions": 9,
+   "unreal": -0.024646464646464583
   },
   "2026-10-15:VRTX": {
    "id": "2026-10-15:VRTX",
@@ -2117,10 +2213,98 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "頂",
    "entry": "2026-10-19",
-   "elapsed_sessions": 7,
-   "unreal": 0.08186619718309851
+   "exit": "2026-10-28",
+   "hold": 7,
+   "entry_open": 11.36,
+   "exit_open": 12.34,
+   "ret0": 0.08626760563380276,
+   "ret": 0.0840972407873819,
+   "closed_utc": "2026-10-29T05:15:07Z",
+   "bars_used": [
+    [
+     "2026-10-15",
+     11.435,
+     12.245,
+     11.34,
+     12.16,
+     5939600
+    ],
+    [
+     "2026-10-16",
+     12.19,
+     12.39,
+     10.961,
+     11.32,
+     9728900
+    ],
+    [
+     "2026-10-19",
+     11.36,
+     11.52,
+     11.23,
+     11.28,
+     3551500
+    ],
+    [
+     "2026-10-20",
+     11.3,
+     11.818,
+     11.16,
+     11.69,
+     3717000
+    ],
+    [
+     "2026-10-21",
+     11.77,
+     11.97,
+     11.53,
+     11.79,
+     3330800
+    ],
+    [
+     "2026-10-22",
+     11.71,
+     12.3,
+     11.628,
+     12.03,
+     4703800
+    ],
+    [
+     "2026-10-23",
+     11.91,
+     12.5,
+     11.83,
+     12.46,
+     5846700
+    ],
+    [
+     "2026-10-26",
+     12.37,
+     13.04,
+     12.35,
+     12.79,
+     5154500
+    ],
+    [
+     "2026-10-27",
+     12.73,
+     12.855,
+     11.74,
+     12.29,
+     5976100
+    ],
+    [
+     "2026-10-28",
+     12.34,
+     12.559,
+     12.025,
+     12.33,
+     4238100
+    ]
+   ]
   },
   "2026-10-16:BKR": {
    "id": "2026-10-16:BKR",
@@ -2141,8 +2325,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 7,
-   "unreal": 0.0556450169976741
+   "elapsed_sessions": 8,
+   "unreal": -0.022007514761138047
   },
   "2026-10-16:C": {
    "id": "2026-10-16:C",
@@ -2163,8 +2347,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 7,
-   "unreal": -0.01160074115846288
+   "elapsed_sessions": 8,
+   "unreal": -0.0001611214049785925
   },
   "2026-10-16:CLF": {
    "id": "2026-10-16:CLF",
@@ -2357,8 +2541,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 7,
-   "unreal": 0.016315675986487532
+   "elapsed_sessions": 8,
+   "unreal": 0.043340760439876336
   },
   "2026-10-16:PLTR": {
    "id": "2026-10-16:PLTR",
@@ -2379,8 +2563,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 7,
-   "unreal": 0.06275568865477688
+   "elapsed_sessions": 8,
+   "unreal": 0.0524880344394234
   },
   "2026-10-16:ROK": {
    "id": "2026-10-16:ROK",
@@ -2487,8 +2671,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-19",
-   "elapsed_sessions": 7,
-   "unreal": 0.23934066981087132
+   "elapsed_sessions": 8,
+   "unreal": 0.2186175027392694
   },
   "2026-10-19:AMZN": {
    "id": "2026-10-19:AMZN",
@@ -2509,8 +2693,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": -0.041578309603150565
+   "elapsed_sessions": 7,
+   "unreal": -0.03589821266282944
   },
   "2026-10-19:CLF": {
    "id": "2026-10-19:CLF",
@@ -2531,8 +2715,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": 0.016081871345029253
+   "elapsed_sessions": 7,
+   "unreal": 0.01900584795321625
   },
   "2026-10-19:GME": {
    "id": "2026-10-19:GME",
@@ -2551,10 +2735,90 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": -0.09211037699183833
+   "exit": "2026-10-28",
+   "hold": 6,
+   "entry_open": 25.73,
+   "exit_open": 23.24,
+   "ret0": -0.09677419354838712,
+   "ret": -0.09857884051432442,
+   "closed_utc": "2026-10-29T05:15:07Z",
+   "bars_used": [
+    [
+     "2026-10-16",
+     28.04,
+     28.08,
+     26.72,
+     26.81,
+     13042900
+    ],
+    [
+     "2026-10-19",
+     26.65,
+     27.16,
+     26.15,
+     26.44,
+     6777200
+    ],
+    [
+     "2026-10-20",
+     25.73,
+     26.48,
+     25.3,
+     26.47,
+     9140600
+    ],
+    [
+     "2026-10-21",
+     26.39,
+     26.86,
+     25.95,
+     26.29,
+     6488300
+    ],
+    [
+     "2026-10-22",
+     26.0,
+     26.25,
+     24.62,
+     25.39,
+     11843100
+    ],
+    [
+     "2026-10-23",
+     25.34,
+     25.61,
+     24.68,
+     24.82,
+     8375500
+    ],
+    [
+     "2026-10-26",
+     24.82,
+     24.99,
+     23.78,
+     23.9,
+     8390600
+    ],
+    [
+     "2026-10-27",
+     23.73,
+     24.04,
+     23.32,
+     23.36,
+     5533900
+    ],
+    [
+     "2026-10-28",
+     23.24,
+     23.78,
+     23.1,
+     23.33,
+     5031700
+    ]
+   ]
   },
   "2026-10-19:MPWR": {
    "id": "2026-10-19:MPWR",
@@ -2575,8 +2839,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": -0.017001257249462443
+   "elapsed_sessions": 7,
+   "unreal": -0.017544713468791717
   },
   "2026-10-19:MXL": {
    "id": "2026-10-19:MXL",
@@ -2675,8 +2939,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": 0.056318581498437714
+   "elapsed_sessions": 7,
+   "unreal": 0.1968606932635708
   },
   "2026-10-19:SNDK": {
    "id": "2026-10-19:SNDK",
@@ -2697,8 +2961,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": -0.024028302909949062
+   "elapsed_sessions": 7,
+   "unreal": 0.05071561334814301
   },
   "2026-10-19:SPCX": {
    "id": "2026-10-19:SPCX",
@@ -2797,8 +3061,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-20",
-   "elapsed_sessions": 6,
-   "unreal": 0.09172208209126342
+   "elapsed_sessions": 7,
+   "unreal": 0.13626461820683344
   },
   "2026-10-20:AAPL": {
    "id": "2026-10-20:AAPL",
@@ -2819,8 +3083,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 5,
-   "unreal": 0.02280763790664775
+   "elapsed_sessions": 6,
+   "unreal": 0.013171852899575676
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -2841,8 +3105,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 5,
-   "unreal": -0.045917808219178013
+   "elapsed_sessions": 6,
+   "unreal": -0.035726027397260385
   },
   "2026-10-20:MSTR": {
    "id": "2026-10-20:MSTR",
@@ -2863,8 +3127,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 5,
-   "unreal": -0.03349282296650724
+   "elapsed_sessions": 6,
+   "unreal": -0.007792207792207906
   },
   "2026-10-20:ON": {
    "id": "2026-10-20:ON",
@@ -2885,8 +3149,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 5,
-   "unreal": 0.029712041884816687
+   "elapsed_sessions": 6,
+   "unreal": -0.010078534031413788
   },
   "2026-10-20:RUN": {
    "id": "2026-10-20:RUN",
@@ -2907,8 +3171,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 5,
-   "unreal": -0.020806241872561748
+   "elapsed_sessions": 6,
+   "unreal": -0.035110533159948054
   },
   "2026-10-20:SBET": {
    "id": "2026-10-20:SBET",
@@ -3085,8 +3349,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.0686648912114971
+   "elapsed_sessions": 5,
+   "unreal": 0.07600120596954918
   },
   "2026-10-21:AMD": {
    "id": "2026-10-21:AMD",
@@ -3107,8 +3371,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.06899446670482723
+   "elapsed_sessions": 5,
+   "unreal": 0.1036825033390576
   },
   "2026-10-21:AMKR": {
    "id": "2026-10-21:AMKR",
@@ -3277,8 +3541,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.009119009865559358
+   "elapsed_sessions": 5,
+   "unreal": 0.025950308183046555
   },
   "2026-10-21:BE": {
    "id": "2026-10-21:BE",
@@ -3369,8 +3633,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.008820856573539149
+   "elapsed_sessions": 5,
+   "unreal": -0.008723588148815131
   },
   "2026-10-21:CDNS": {
    "id": "2026-10-21:CDNS",
@@ -3391,8 +3655,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.07744488411531925
+   "elapsed_sessions": 5,
+   "unreal": 0.07549777024056259
   },
   "2026-10-21:CEG": {
    "id": "2026-10-21:CEG",
@@ -3413,8 +3677,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.036604419314039016
+   "elapsed_sessions": 5,
+   "unreal": -0.03995238449520133
   },
   "2026-10-21:COHR": {
    "id": "2026-10-21:COHR",
@@ -3435,8 +3699,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.05664351333183948
+   "elapsed_sessions": 5,
+   "unreal": 0.07367241765628507
   },
   "2026-10-21:CRWD": {
    "id": "2026-10-21:CRWD",
@@ -3457,8 +3721,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.10478153338829355
+   "elapsed_sessions": 5,
+   "unreal": 0.09917559769167372
   },
   "2026-10-21:CSCO": {
    "id": "2026-10-21:CSCO",
@@ -3479,8 +3743,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.043176922356467085
+   "elapsed_sessions": 5,
+   "unreal": 0.03296806218975368
   },
   "2026-10-21:DELL": {
    "id": "2026-10-21:DELL",
@@ -3501,8 +3765,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.08859057491704792
+   "elapsed_sessions": 5,
+   "unreal": 0.07087245993363833
   },
   "2026-10-21:DJT": {
    "id": "2026-10-21:DJT",
@@ -3523,8 +3787,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.021538461538461506
+   "elapsed_sessions": 5,
+   "unreal": -0.08153846153846156
   },
   "2026-10-21:ETN": {
    "id": "2026-10-21:ETN",
@@ -3545,8 +3809,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.011159069375723751
+   "elapsed_sessions": 5,
+   "unreal": 0.03400357932413933
   },
   "2026-10-21:GEV": {
    "id": "2026-10-21:GEV",
@@ -3637,8 +3901,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.020930232558139528
+   "elapsed_sessions": 5,
+   "unreal": 0.01705426356589146
   },
   "2026-10-21:GLXY": {
    "id": "2026-10-21:GLXY",
@@ -3729,8 +3993,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.03288161595499872
+   "elapsed_sessions": 5,
+   "unreal": -0.0648938890309384
   },
   "2026-10-21:IBKR": {
    "id": "2026-10-21:IBKR",
@@ -3751,8 +4015,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.011893320518981176
+   "elapsed_sessions": 5,
+   "unreal": 0.003604036520903575
   },
   "2026-10-21:LWLG": {
    "id": "2026-10-21:LWLG",
@@ -3773,8 +4037,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.09004739336492884
+   "elapsed_sessions": 5,
+   "unreal": 0.11611374407582953
   },
   "2026-10-21:META": {
    "id": "2026-10-21:META",
@@ -3793,10 +4057,74 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.08303393213572852
+   "exit": "2026-10-28",
+   "hold": 4,
+   "entry_open": 676.35,
+   "exit_open": 621.85,
+   "ret0": -0.0805795815775856,
+   "ret": -0.08241658541059727,
+   "closed_utc": "2026-10-29T05:15:07Z",
+   "bars_used": [
+    [
+     "2026-10-20",
+     694.98,
+     696.51,
+     681.05,
+     694.25,
+     17049100
+    ],
+    [
+     "2026-10-21",
+     697.6,
+     713.22,
+     689.68,
+     697.52,
+     29203900
+    ],
+    [
+     "2026-10-22",
+     676.35,
+     681.07,
+     639.69,
+     648.85,
+     40571000
+    ],
+    [
+     "2026-10-23",
+     638.18,
+     648.04,
+     633.27,
+     642.62,
+     14791600
+    ],
+    [
+     "2026-10-26",
+     638.36,
+     647.69,
+     627.8,
+     630.56,
+     30913600
+    ],
+    [
+     "2026-10-27",
+     627.07,
+     628.46,
+     619.21,
+     620.19,
+     51334100
+    ],
+    [
+     "2026-10-28",
+     621.85,
+     624.42,
+     609.0,
+     612.49,
+     35004200
+    ]
+   ]
   },
   "2026-10-21:MS": {
    "id": "2026-10-21:MS",
@@ -3817,8 +4145,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.019249645544770377
+   "elapsed_sessions": 5,
+   "unreal": 0.036808812302323135
   },
   "2026-10-21:NET": {
    "id": "2026-10-21:NET",
@@ -3839,8 +4167,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.04228934817170105
+   "elapsed_sessions": 5,
+   "unreal": 0.013418124006359333
   },
   "2026-10-21:NOK": {
    "id": "2026-10-21:NOK",
@@ -3923,8 +4251,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.003730484041818194
+   "elapsed_sessions": 5,
+   "unreal": -0.008059687744669142
   },
   "2026-10-21:PANW": {
    "id": "2026-10-21:PANW",
@@ -3945,8 +4273,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.12653541982163885
+   "elapsed_sessions": 5,
+   "unreal": 0.10631555331201992
   },
   "2026-10-21:QQQ": {
    "id": "2026-10-21:QQQ",
@@ -3967,8 +4295,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.010706127997085257
+   "elapsed_sessions": 5,
+   "unreal": 0.01681590784882503
   },
   "2026-10-21:RKLB": {
    "id": "2026-10-21:RKLB",
@@ -3989,8 +4317,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.12839864537977763
+   "elapsed_sessions": 5,
+   "unreal": 0.13401064344460578
   },
   "2026-10-21:SCHW": {
    "id": "2026-10-21:SCHW",
@@ -4011,8 +4339,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.020725956793508082
+   "elapsed_sessions": 5,
+   "unreal": -0.02664765873451025
   },
   "2026-10-21:SMCI": {
    "id": "2026-10-21:SMCI",
@@ -4033,8 +4361,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.01857764876632806
+   "elapsed_sessions": 5,
+   "unreal": 0.03947750362844693
   },
   "2026-10-21:TER": {
    "id": "2026-10-21:TER",
@@ -4055,8 +4383,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 6.179323981947427e-05
+   "elapsed_sessions": 5,
+   "unreal": -0.03219427794599272
   },
   "2026-10-21:TLN": {
    "id": "2026-10-21:TLN",
@@ -4077,8 +4405,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": -0.016751038052442935
+   "elapsed_sessions": 5,
+   "unreal": -0.011006199874864953
   },
   "2026-10-21:TSM": {
    "id": "2026-10-21:TSM",
@@ -4099,8 +4427,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.04167958225041146
+   "elapsed_sessions": 5,
+   "unreal": 0.047974439066262864
   },
   "2026-10-21:TXN": {
    "id": "2026-10-21:TXN",
@@ -4121,8 +4449,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.08686932657800295
+   "elapsed_sessions": 5,
+   "unreal": 0.09010625571740194
   },
   "2026-10-21:VRT": {
    "id": "2026-10-21:VRT",
@@ -4143,8 +4471,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.024311183144246407
+   "elapsed_sessions": 5,
+   "unreal": 0.19316340061883008
   },
   "2026-10-21:WOLF": {
    "id": "2026-10-21:WOLF",
@@ -4165,8 +4493,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 4,
-   "unreal": 0.0709430756159728
+   "elapsed_sessions": 5,
+   "unreal": 0.13169073916737473
   },
   "2026-10-21:WULF": {
    "id": "2026-10-21:WULF",
@@ -4249,8 +4577,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 3,
-   "unreal": 0.11095149789745862
+   "elapsed_sessions": 4,
+   "unreal": 0.11857810745161546
   },
   "2026-10-22:DVN": {
    "id": "2026-10-22:DVN",
@@ -4271,8 +4599,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 3,
-   "unreal": 0.03286290322580632
+   "elapsed_sessions": 4,
+   "unreal": 0.0336693548387097
   },
   "2026-10-22:MRNA": {
    "id": "2026-10-22:MRNA",
@@ -4293,8 +4621,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 3,
-   "unreal": 0.05734912806955106
+   "elapsed_sessions": 4,
+   "unreal": 0.08884539122476998
   },
   "2026-10-22:MSFT": {
    "id": "2026-10-22:MSFT",
@@ -4315,8 +4643,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 3,
-   "unreal": 0.026228874939642655
+   "elapsed_sessions": 4,
+   "unreal": 0.025610816030902983
   },
   "2026-10-22:SHOP": {
    "id": "2026-10-22:SHOP",
@@ -4337,8 +4665,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 3,
-   "unreal": -0.008609865470851963
+   "elapsed_sessions": 4,
+   "unreal": 0.005799701046337757
   },
   "2026-10-22:T": {
    "id": "2026-10-22:T",
@@ -4359,8 +4687,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-23",
-   "elapsed_sessions": 3,
-   "unreal": -0.03679852805887751
+   "elapsed_sessions": 4,
+   "unreal": -0.047838086476540864
   },
   "2026-10-23:ACHR": {
    "id": "2026-10-23:ACHR",
@@ -4381,8 +4709,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 2,
-   "unreal": 0.09585492227979286
+   "elapsed_sessions": 3,
+   "unreal": 0.12435233160621761
   },
   "2026-10-23:AMC": {
    "id": "2026-10-23:AMC",
@@ -4403,7 +4731,7 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 2,
+   "elapsed_sessions": 3,
    "unreal": 0.031034482758620863
   },
   "2026-10-23:AVAV": {
@@ -4425,8 +4753,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 2,
-   "unreal": 0.035460413432470084
+   "elapsed_sessions": 3,
+   "unreal": 0.02908734373723343
   },
   "2026-10-23:TMO": {
    "id": "2026-10-23:TMO",
@@ -4447,8 +4775,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-26",
-   "elapsed_sessions": 2,
-   "unreal": 0.02538987364247025
+   "elapsed_sessions": 3,
+   "unreal": 0.041857781197289334
   },
   "2026-10-26:AAOI": {
    "id": "2026-10-26:AAOI",
@@ -4468,8 +4796,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.05022519448614715
+   "elapsed_sessions": 2,
+   "unreal": 0.12215094854647202
   },
   "2026-10-26:AMAT": {
    "id": "2026-10-26:AMAT",
@@ -4489,8 +4817,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.011496308407633604
+   "elapsed_sessions": 2,
+   "unreal": 0.06276984390567919
   },
   "2026-10-26:ANET": {
    "id": "2026-10-26:ANET",
@@ -4510,8 +4838,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.03543743078626793
+   "elapsed_sessions": 2,
+   "unreal": 0.03388704318936875
   },
   "2026-10-26:BKR": {
    "id": "2026-10-26:BKR",
@@ -4531,8 +4859,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.04907539118065429
+   "elapsed_sessions": 2,
+   "unreal": -0.028093883357041327
   },
   "2026-10-26:CMG": {
    "id": "2026-10-26:CMG",
@@ -4552,8 +4880,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": -0.014441704825642887
+   "elapsed_sessions": 2,
+   "unreal": 0.011976047904191711
   },
   "2026-10-26:ENTG": {
    "id": "2026-10-26:ENTG",
@@ -4573,8 +4901,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.0476722272632093
+   "elapsed_sessions": 2,
+   "unreal": 0.11276409987777192
   },
   "2026-10-26:FUTU": {
    "id": "2026-10-26:FUTU",
@@ -4594,8 +4922,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.008472906403940828
+   "elapsed_sessions": 2,
+   "unreal": 0.003251231527093612
   },
   "2026-10-26:GE": {
    "id": "2026-10-26:GE",
@@ -4615,8 +4943,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.022148964664675086
+   "elapsed_sessions": 2,
+   "unreal": 0.03406476425946914
   },
   "2026-10-26:GFS": {
    "id": "2026-10-26:GFS",
@@ -4636,8 +4964,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.02277704774419642
+   "elapsed_sessions": 2,
+   "unreal": 0.009855453350854138
   },
   "2026-10-26:KTOS": {
    "id": "2026-10-26:KTOS",
@@ -4657,8 +4985,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.014485637122514161
+   "elapsed_sessions": 2,
+   "unreal": 0.01080284802357001
   },
   "2026-10-26:LITE": {
    "id": "2026-10-26:LITE",
@@ -4678,8 +5006,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.023399793235858724
+   "elapsed_sessions": 2,
+   "unreal": 0.07984049623393896
   },
   "2026-10-26:LRCX": {
    "id": "2026-10-26:LRCX",
@@ -4699,8 +5027,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": -0.0003320466525547072
+   "elapsed_sessions": 2,
+   "unreal": 0.05350101689287334
   },
   "2026-10-26:MA": {
    "id": "2026-10-26:MA",
@@ -4720,8 +5048,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": -0.0026819735400415157
+   "elapsed_sessions": 2,
+   "unreal": -0.0019297126690543953
   },
   "2026-10-26:MSFT": {
    "id": "2026-10-26:MSFT",
@@ -4741,8 +5069,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": -0.0019160326852634135
+   "elapsed_sessions": 2,
+   "unreal": -0.0025171409786794996
   },
   "2026-10-26:MTSI": {
    "id": "2026-10-26:MTSI",
@@ -4762,8 +5090,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.017550841724041755
+   "elapsed_sessions": 2,
+   "unreal": 0.038404903092291276
   },
   "2026-10-26:PWR": {
    "id": "2026-10-26:PWR",
@@ -4783,8 +5111,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.007098738581992281
+   "elapsed_sessions": 2,
+   "unreal": 0.05591996520226172
   },
   "2026-10-26:SNPS": {
    "id": "2026-10-26:SNPS",
@@ -4804,8 +5132,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 1,
-   "unreal": 0.03585152838427952
+   "elapsed_sessions": 2,
+   "unreal": 0.052161572052401795
   },
   "2026-10-27:AA": {
    "id": "2026-10-27:AA",
@@ -4824,9 +5152,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.007769423558897204
   },
   "2026-10-27:ACN": {
    "id": "2026-10-27:ACN",
@@ -4845,9 +5173,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.043113053912745336
   },
   "2026-10-27:AFRM": {
    "id": "2026-10-27:AFRM",
@@ -4866,9 +5194,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.0071428571428571175
   },
   "2026-10-27:ALAB": {
    "id": "2026-10-27:ALAB",
@@ -4887,9 +5215,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.022324653434694364
   },
   "2026-10-27:AMZN": {
    "id": "2026-10-27:AMZN",
@@ -4908,9 +5236,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.006324110671936722
   },
   "2026-10-27:BTBT": {
    "id": "2026-10-27:BTBT",
@@ -4929,9 +5257,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.02441613588110414
   },
   "2026-10-27:CI": {
    "id": "2026-10-27:CI",
@@ -4950,9 +5278,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.003513038778543476
   },
   "2026-10-27:CIFR": {
    "id": "2026-10-27:CIFR",
@@ -4971,9 +5299,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.01836969001148092
   },
   "2026-10-27:CLSK": {
    "id": "2026-10-27:CLSK",
@@ -4992,9 +5320,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.033734939759036076
   },
   "2026-10-27:CME": {
    "id": "2026-10-27:CME",
@@ -5013,9 +5341,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.006986301369863002
   },
   "2026-10-27:COST": {
    "id": "2026-10-27:COST",
@@ -5034,9 +5362,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.0011992966836397168
   },
   "2026-10-27:CRDO": {
    "id": "2026-10-27:CRDO",
@@ -5055,9 +5383,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.012769679300291603
   },
   "2026-10-27:CRM": {
    "id": "2026-10-27:CRM",
@@ -5076,9 +5404,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.01932468844728863
   },
   "2026-10-27:CRWV": {
    "id": "2026-10-27:CRWV",
@@ -5097,9 +5425,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.05582163501238657
   },
   "2026-10-27:CVNA": {
    "id": "2026-10-27:CVNA",
@@ -5118,9 +5446,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.006991814461118739
   },
   "2026-10-27:FCX": {
    "id": "2026-10-27:FCX",
@@ -5139,9 +5467,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.009549795361528002
   },
   "2026-10-27:GME": {
    "id": "2026-10-27:GME",
@@ -5160,9 +5488,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.0038726333907057597
   },
   "2026-10-27:JD": {
    "id": "2026-10-27:JD",
@@ -5181,9 +5509,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.004692999608916781
   },
   "2026-10-27:KLAC": {
    "id": "2026-10-27:KLAC",
@@ -5202,9 +5530,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.020635124710722597
   },
   "2026-10-27:KO": {
    "id": "2026-10-27:KO",
@@ -5223,9 +5551,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.0097974460590049
   },
   "2026-10-27:MAR": {
    "id": "2026-10-27:MAR",
@@ -5244,9 +5572,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.01193072482360491
   },
   "2026-10-27:NBIS": {
    "id": "2026-10-27:NBIS",
@@ -5265,9 +5593,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.05101158568217179
   },
   "2026-10-27:NEM": {
    "id": "2026-10-27:NEM",
@@ -5286,9 +5614,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.017324522236113582
   },
   "2026-10-27:NRG": {
    "id": "2026-10-27:NRG",
@@ -5307,9 +5635,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.00268845000517004
   },
   "2026-10-27:OKLO": {
    "id": "2026-10-27:OKLO",
@@ -5328,9 +5656,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.003307607497243681
   },
   "2026-10-27:RIOT": {
    "id": "2026-10-27:RIOT",
@@ -5349,9 +5677,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.0532069970845479
   },
   "2026-10-27:RIVN": {
    "id": "2026-10-27:RIVN",
@@ -5370,9 +5698,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.00596252129471897
   },
   "2026-10-27:SMR": {
    "id": "2026-10-27:SMR",
@@ -5391,9 +5719,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.00874125874125875
   },
   "2026-10-27:SNAP": {
    "id": "2026-10-27:SNAP",
@@ -5412,9 +5740,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": -0.013245033112582738
   },
   "2026-10-27:SNDK": {
    "id": "2026-10-27:SNDK",
@@ -5433,9 +5761,9 @@
    "panic_sc": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.03550788736547261
   },
   "2026-10-27:V": {
    "id": "2026-10-27:V",
@@ -5447,6 +5775,300 @@
    "displayed_buy": true,
    "v": "agree",
    "p": 0.64,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-10-28",
+   "elapsed_sessions": 1,
+   "unreal": 0.013535736875395443
+  },
+  "2026-10-28:BABA": {
+   "id": "2026-10-28:BABA",
+   "date": "2026-10-28",
+   "sym": "BABA",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:BNTX": {
+   "id": "2026-10-28:BNTX",
+   "date": "2026-10-28",
+   "sym": "BNTX",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.5,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:COIN": {
+   "id": "2026-10-28:COIN",
+   "date": "2026-10-28",
+   "sym": "COIN",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.47,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:DIS": {
+   "id": "2026-10-28:DIS",
+   "date": "2026-10-28",
+   "sym": "DIS",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:F": {
+   "id": "2026-10-28:F",
+   "date": "2026-10-28",
+   "sym": "F",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.57,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:GOOG": {
+   "id": "2026-10-28:GOOG",
+   "date": "2026-10-28",
+   "sym": "GOOG",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "agree",
+   "p": 0.63,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:GOOGL": {
+   "id": "2026-10-28:GOOGL",
+   "date": "2026-10-28",
+   "sym": "GOOGL",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.63,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:HIMS": {
+   "id": "2026-10-28:HIMS",
+   "date": "2026-10-28",
+   "sym": "HIMS",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.48,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:MARA": {
+   "id": "2026-10-28:MARA",
+   "date": "2026-10-28",
+   "sym": "MARA",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:NIO": {
+   "id": "2026-10-28:NIO",
+   "date": "2026-10-28",
+   "sym": "NIO",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.47,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:PFE": {
+   "id": "2026-10-28:PFE",
+   "date": "2026-10-28",
+   "sym": "PFE",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.62,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:ROKU": {
+   "id": "2026-10-28:ROKU",
+   "date": "2026-10-28",
+   "sym": "ROKU",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.63,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:UNH": {
+   "id": "2026-10-28:UNH",
+   "date": "2026-10-28",
+   "sym": "UNH",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-10-28:UPST": {
+   "id": "2026-10-28:UPST",
+   "date": "2026-10-28",
+   "sym": "UPST",
+   "kind": "底",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": false,
+   "v": "disagree",
+   "p": 0.46,
    "model": "claude-opus-5-5",
    "protocol": "v2",
    "late": false,
