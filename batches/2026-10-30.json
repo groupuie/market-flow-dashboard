@@ -1,0 +1,18 @@
+{
+ "asof": "2026-10-30",
+ "protocol": "v2",
+ "status": "failed",
+ "updated_utc": "2026-10-31T00:36:47Z",
+ "test": false,
+ "reason": "SPY/QQQ 日K還沒有 2026-10-30(可能 Yahoo 未更新)",
+ "fail": {
+  "SPY": "日K只到 2026-10-29",
+  "QQQ": "日K只到 2026-10-29"
+ },
+ "history": [
+  {
+   "status": "failed",
+   "utc": "2026-10-31T00:36:47Z"
+  }
+ ]
+}
