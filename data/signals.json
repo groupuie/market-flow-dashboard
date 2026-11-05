@@ -1,17 +1,17 @@
 {
- "updated_utc": "2026-11-04 02:30:18",
+ "updated_utc": "2026-11-05 02:38:02",
  "mode": "full",
  "market": {
   "regime_light": "🟡",
-  "vix": 20.83,
+  "vix": 16.61,
   "spy_vs_20dma": -1.4,
   "spy_vs_50dma": -1.31,
   "notes": [
    "SPY 低於 20DMA -1.4%",
-   "VIX 20.83",
+   "VIX 16.61",
    "SMH-SPY 20日相對 -14.8%"
   ],
-  "asof": "2026-11-04 02:30:18",
+  "asof": "2026-11-05 02:38:02",
   "cta": {
    "SPY": {
     "score": 0,
@@ -53,8 +53,8 @@
     "boll_lo": 800.367,
     "boll_bw_pctile": 39.0,
     "obv_above_ma": false,
-    "vol_pace": 0.76,
-    "turnover_rate": 0.018,
+    "vol_pace": 0.8,
+    "turnover_rate": 0.019,
     "chg1d": 2.58,
     "chg5d": -7.93,
     "chg20d": -18.2,
@@ -508,23 +508,22 @@
     ]
    },
    "gamma": {
-    "spot": 851.0,
-    "gex_bn": -0.02,
+    "spot": 780.25,
+    "gex_bn": -0.443,
     "flip": null,
-    "call_wall": 900.0,
-    "put_wall": 800.0,
-    "max_pain": 840.0,
-    "atm_iv": 62.5,
-    "pc_vol": 0.82,
-    "call_share": 0.549,
-    "zero_dte_share": 0.515,
-    "squeeze_score": 55,
+    "call_wall": 800.0,
+    "put_wall": 700.0,
+    "max_pain": 850.0,
+    "atm_iv": 63.6,
+    "pc_vol": 0.932,
+    "call_share": 0.518,
+    "zero_dte_share": 0.0,
+    "squeeze_score": 45,
     "squeeze_why": [
      "dealer 空gamma(+30)",
-     "距call牆<6%(+15)",
-     "0DTE佔比高(+10)"
+     "距call牆<6%(+15)"
     ],
-    "asof": "2026-11-04 02:30:20"
+    "asof": "2026-11-05 02:38:03"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -563,13 +562,13 @@
       "val": 446095
      }
     ],
-    "asof": "2026-11-04 02:30:26",
+    "asof": "2026-11-05 02:38:06",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "futu7": {
-    "d1": 1234436.0,
-    "d5": -22.8,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -387071702.0,
+    "d5": -503.9,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -724,7 +723,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:30:27",
+   "engine_updated_utc": "2026-11-05 02:38:07",
    "stance": "觀望(9/30財報前⑦-121M雙負;不押事件)",
    "conf": 2,
    "stance_note": "觸發=財報2天內(2026-09-30):事件風險為主軸,不押注方向。⑦今日-121.1M、5日-89.8M雙負(前次今日+49.4M回流、5日-92.1M)=財報前大單續退場;GEX 0.44Bn正gamma較前次1.13Bn縮、ATM IV 66.1高=事件波動大。結構面:收1082.28(2026-09-25,K線止於09-25)守翻轉1050上、CTA 67、逆頭肩(confirmed,多)、OBV在均上True;但20D+15.70%漲多、RSI6 71.6、TD setup 7、上升楔形+頭肩頂(confirmed,空)並存、內部人90日0買/91賣$135.8M。財報後依實際反應再評。",
@@ -809,7 +808,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:30:27"
+    "asof": "2026-11-05 02:38:07"
    },
    "computed_fund": {
     "rev_q": [
@@ -934,8 +933,8 @@
     "boll_lo": 1050.346,
     "boll_bw_pctile": 59.0,
     "obv_above_ma": false,
-    "vol_pace": 0.93,
-    "turnover_rate": 0.059,
+    "vol_pace": 0.96,
+    "turnover_rate": 0.061,
     "chg1d": 4.78,
     "chg5d": -13.67,
     "chg20d": -32.16,
@@ -1331,22 +1330,21 @@
     ]
    },
    "gamma": {
-    "spot": 1119.0,
-    "gex_bn": -0.062,
+    "spot": 1010.69,
+    "gex_bn": -0.095,
     "flip": null,
-    "call_wall": 1200.0,
+    "call_wall": 1080.0,
     "put_wall": 1000.0,
-    "max_pain": 1285.0,
-    "atm_iv": 76.8,
-    "pc_vol": 0.717,
-    "call_share": 0.582,
+    "max_pain": 1160.0,
+    "atm_iv": 78.1,
+    "pc_vol": 0.905,
+    "call_share": 0.525,
     "zero_dte_share": 0.0,
-    "squeeze_score": 50,
+    "squeeze_score": 30,
     "squeeze_why": [
-     "dealer 空gamma(+30)",
-     "call量佔比58%(+20)"
+     "dealer 空gamma(+30)"
     ],
-    "asof": "2026-11-04 02:30:29"
+    "asof": "2026-11-05 02:38:07"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -1385,14 +1383,14 @@
       "val": 1428737
      }
     ],
-    "asof": "2026-11-04 02:30:32",
+    "asof": "2026-11-05 02:38:10",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -67770345.0,
-    "d5": -198.7,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -64542021.0,
+    "d5": -329.1,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -1537,7 +1535,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:30:33",
+   "engine_updated_utc": "2026-11-05 02:38:11",
    "stance": "觀望(價過1782.5但⑦今日-91.9M大出)",
    "conf": 2,
    "stance_note": "觸發=價達目標1:收1787.69(1D+2.75%)收復前關1782.5,20D+15.08%、CTA 100、上升三角(confirmed,多)+逆頭肩(confirmed,多)。但資金與量能不配合:⑦今日-91.9M大額流出、5日-88.0M仍負,量倍0.97×無放量;內部人90日0買/64賣$118.5M、頭肩頂(confirmed,空)未消;GEX -0.07Bn負gamma、帶寬位階3+擠壓60=壓縮待變盤、ATM IV 64.4高。10/29財報在前。缺:⑦5日轉正+放量;價漲而大單出的背離未解前,維持觀望。",
@@ -1621,7 +1619,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:30:33"
+    "asof": "2026-11-05 02:38:11"
    },
    "computed_fund": {
     "rev_q": [
@@ -1684,9 +1682,15 @@
       "end_d": "2026-07-03",
       "rev": 8965000000,
       "yoy": 371.6
+     },
+     {
+      "q": "2026-10",
+      "end_d": "2026-10-02",
+      "rev": 11031000000,
+      "yoy": 377.9
      }
     ],
-    "asof": "2026-10-29 01:53:46",
+    "asof": "2026-11-05 02:38:10",
     "src": "SEC companyfacts",
     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
    },
@@ -1711,7 +1715,7 @@
     "boll_lo": 326.757,
     "boll_bw_pctile": 23.0,
     "obv_above_ma": false,
-    "vol_pace": 0.58,
+    "vol_pace": 0.59,
     "turnover_rate": 0.014,
     "chg1d": 2.59,
     "chg5d": -8.8,
@@ -2115,21 +2119,22 @@
     ]
    },
    "gamma": {
-    "spot": 350.6,
-    "gex_bn": -0.02,
+    "spot": 325.84,
+    "gex_bn": -0.035,
     "flip": null,
-    "call_wall": 400.0,
+    "call_wall": 340.0,
     "put_wall": 300.0,
-    "max_pain": 380.0,
-    "atm_iv": 73.0,
-    "pc_vol": 1.529,
-    "call_share": 0.395,
+    "max_pain": 372.5,
+    "atm_iv": 72.6,
+    "pc_vol": 1.138,
+    "call_share": 0.468,
     "zero_dte_share": 0.0,
-    "squeeze_score": 30,
+    "squeeze_score": 45,
     "squeeze_why": [
-     "dealer 空gamma(+30)"
+     "dealer 空gamma(+30)",
+     "距call牆<6%(+15)"
     ],
-    "asof": "2026-11-04 02:30:34"
+    "asof": "2026-11-05 02:38:11"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -2168,13 +2173,13 @@
       "val": 95842
      }
     ],
-    "asof": "2026-11-04 02:30:38",
+    "asof": "2026-11-05 02:38:14",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "futu7": {
-    "d1": 15613093.0,
-    "d5": 21.4,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -4778394.0,
+    "d5": 28.1,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -2280,7 +2285,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:30:38",
+   "engine_updated_utc": "2026-11-05 02:38:15",
    "stance": "觀望(440停損/MaxPain攻防;⑦淨賣續深)",
    "conf": 1,
    "stance_note": "收441.57貼原停損440=MaxPain 440攻防,距60日高-44.8%;⑦今日-16.6M、5日-88.5M淨賣續深,OBV在均上False、量倍0.75×、CTA 0、TD setup -4,接手證據不足。型態矛盾續存:下降三角confirmed多+逆頭肩confirmed多 vs 頭肩頂confirmed空。帶寬位階2極度壓縮+RV20 63.8(位階60)=變盤待發,方向未決。下方EMA200 391、put牆400、擺盪區間下緣407.48為檢驗位。缺:⑦轉正+收復440之上站穩,之前僅視為觀察區。",
@@ -2358,7 +2363,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:30:38"
+    "asof": "2026-11-05 02:38:15"
    },
    "computed_fund": {
     "rev_q": [
@@ -2459,7 +2464,7 @@
       "yoy": 55.5
      }
     ],
-    "asof": "2026-10-29 01:53:51",
+    "asof": "2026-11-05 02:38:15",
     "src": "SEC companyfacts",
     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
    },
@@ -2485,8 +2490,8 @@
     "boll_lo": 176.778,
     "boll_bw_pctile": 79.0,
     "obv_above_ma": false,
-    "vol_pace": 1.51,
-    "turnover_rate": 0.044,
+    "vol_pace": 1.55,
+    "turnover_rate": 0.045,
     "chg1d": 0.33,
     "chg5d": -29.4,
     "chg20d": -40.07,
@@ -2826,22 +2831,21 @@
     ]
    },
    "gamma": {
-    "spot": 169.91,
+    "spot": 157.0,
     "gex_bn": -0.078,
     "flip": null,
-    "call_wall": 190.0,
-    "put_wall": 160.0,
-    "max_pain": 195.0,
-    "atm_iv": 72.1,
-    "pc_vol": 0.722,
-    "call_share": 0.581,
+    "call_wall": 180.0,
+    "put_wall": 150.0,
+    "max_pain": 180.0,
+    "atm_iv": 73.8,
+    "pc_vol": 0.765,
+    "call_share": 0.566,
     "zero_dte_share": 0.0,
-    "squeeze_score": 50,
+    "squeeze_score": 30,
     "squeeze_why": [
-     "dealer 空gamma(+30)",
-     "call量佔比58%(+20)"
+     "dealer 空gamma(+30)"
     ],
-    "asof": "2026-11-04 02:30:39"
+    "asof": "2026-11-05 02:38:16"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -2880,14 +2884,14 @@
       "val": 2620500
      }
     ],
-    "asof": "2026-11-04 02:30:44",
+    "asof": "2026-11-05 02:38:19",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -47432496.0,
-    "d5": -51.4,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -40039038.0,
+    "d5": -103.1,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -2989,7 +2993,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:30:44",
+   "engine_updated_utc": "2026-11-05 02:38:19",
    "stance": "觀望偏多(站回翻轉267.5;⑦5日未轉正)",
    "conf": 2,
    "stance_note": "觸發=gamma翻轉位易手:翻轉降至267.50,收268.08(1D+1.46%)改居翻轉上=前次「價居翻轉下」的壓制解除。多方:CTA 100、對稱三角(confirmed,多)、OBV在均上True、GEX 0.18Bn正gamma。保留:⑦今日-4.3M、5日-43.9M仍負=資金證據未跟上;RSI6 70.9偏熱、20D+29.83%、vsEMA50 +14.25%乖離大;貼區間頂270.28(距60日高-0.8%)、量倍1.00×無放量。缺:⑦5日轉正+收過270.28;資金未確認前,站回翻轉的多方優勢打折,觀望偏多。",
@@ -3071,7 +3075,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:30:44"
+    "asof": "2026-11-05 02:38:19"
    },
    "computed_fund": {
     "rev_q": [
@@ -3198,8 +3202,8 @@
     "boll_lo": 640.279,
     "boll_bw_pctile": 99.0,
     "obv_above_ma": false,
-    "vol_pace": 1.21,
-    "turnover_rate": 0.078,
+    "vol_pace": 1.23,
+    "turnover_rate": 0.079,
     "chg1d": -0.62,
     "chg5d": -21.48,
     "chg20d": -39.99,
@@ -3727,22 +3731,22 @@
     ]
    },
    "gamma": {
-    "spot": 674.0,
-    "gex_bn": -0.047,
+    "spot": 633.0,
+    "gex_bn": -0.067,
     "flip": null,
-    "call_wall": 750.0,
+    "call_wall": 700.0,
     "put_wall": 600.0,
-    "max_pain": 775.0,
-    "atm_iv": 76.9,
-    "pc_vol": 0.6,
-    "call_share": 0.625,
+    "max_pain": 727.5,
+    "atm_iv": 75.2,
+    "pc_vol": 0.611,
+    "call_share": 0.621,
     "zero_dte_share": 0.0,
     "squeeze_score": 50,
     "squeeze_why": [
      "dealer 空gamma(+30)",
-     "call量佔比63%(+20)"
+     "call量佔比62%(+20)"
     ],
-    "asof": "2026-11-04 02:30:45"
+    "asof": "2026-11-05 02:38:20"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -3781,14 +3785,14 @@
       "val": 460535
      }
     ],
-    "asof": "2026-11-04 02:30:50",
+    "asof": "2026-11-05 02:38:23",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 13375238.0,
-    "d5": 69.9,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -61522290.0,
+    "d5": 4.9,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -3835,7 +3839,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:30:50",
+   "engine_updated_utc": "2026-11-05 02:38:23",
    "stance": "觀望偏多(1078/1080關前;RSI6 77.7過熱)",
    "conf": 2,
    "stance_note": "觸發=價達目標1:收1045.78(1D+7.67%、5D+12.57%、量倍1.63×)已越前標970/1000,距60日高-3.0%。多方:CTA 100、⑦今日+8.8M、5日+50.8M雙正、OBV在均上True、逆頭肩(confirmed,多)+上升楔形(confirmed,多)。保留:RSI6 77.7偏熱、vsEMA20 +11.75%乖離大、雙重頂(confirmed,空)未消、內部人90日0買/24賣$36.1M、ATM IV 76.3高;上方區間頂1078.04+翻轉1080+call牆1100三關密集。缺:放量收過1080的確認;關前乖離大,先觀望偏多等整理或突破確認,11/5財報在前。",
@@ -3920,9 +3924,10 @@
    "review": {
     "due": true,
     "why": [
-     "價觸停損"
+     "價觸停損",
+     "⑦與5日反向"
     ],
-    "asof": "2026-11-04 02:30:50"
+    "asof": "2026-11-05 02:38:23"
    },
    "computed_fund": {
     "rev_q": [
@@ -4037,8 +4042,8 @@
     "boll_lo": 171.613,
     "boll_bw_pctile": 95.0,
     "obv_above_ma": false,
-    "vol_pace": 0.7,
-    "turnover_rate": 0.028,
+    "vol_pace": 0.74,
+    "turnover_rate": 0.03,
     "chg1d": 3.77,
     "chg5d": -12.0,
     "chg20d": -38.68,
@@ -4492,21 +4497,22 @@
     ]
    },
    "gamma": {
-    "spot": 207.91,
-    "gex_bn": -0.02,
+    "spot": 210.62,
+    "gex_bn": -0.025,
     "flip": null,
-    "call_wall": 230.0,
+    "call_wall": 240.0,
     "put_wall": 200.0,
-    "max_pain": 237.5,
-    "atm_iv": 98.9,
-    "pc_vol": 1.085,
-    "call_share": 0.48,
+    "max_pain": 240.0,
+    "atm_iv": 100.8,
+    "pc_vol": 0.753,
+    "call_share": 0.57,
     "zero_dte_share": 0.0,
-    "squeeze_score": 30,
+    "squeeze_score": 40,
     "squeeze_why": [
-     "dealer 空gamma(+30)"
+     "dealer 空gamma(+30)",
+     "IV>100%(+10)"
     ],
-    "asof": "2026-11-04 02:30:51"
+    "asof": "2026-11-05 02:38:23"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -4545,14 +4551,14 @@
       "val": 629062
      }
     ],
-    "asof": "2026-11-04 02:30:55",
+    "asof": "2026-11-05 02:38:27",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -11032946.0,
-    "d5": -22.1,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -17140349.0,
+    "d5": -43.7,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -4630,8 +4636,8 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:30:56",
-   "earnings_note_auto": "下季日期公司尚未公告(最近一次 2026-05-06)",
+   "engine_updated_utc": "2026-11-05 02:38:27",
+   "earnings_note_auto": "下季日期公司尚未公告(最近一次 2026-11-04)",
    "stance": "觀望偏多(放量破MA50;330.27/337.5在上)",
    "conf": 2,
    "stance_note": "觸發=價達目標1+CTA短期線易手:收319.19(1D+10.90%、量倍1.77×)放量突破MA50 296.09與前標300,CTA 33轉正;⑦今日+13.4M、5日+17.7M雙正、OBV在均上True、收盤已站EMA200 278.09上。保留:MA100 330.27(+3.5%)與gamma翻轉337.5在上、對稱三角(forming,空)+頭肩頂(forming,空)未解、內部人90日0買/7賣$7.2M、ATM IV 82.4高、距60日高-18.4%。單日乖離大,回測296.09–300(MA50/put牆)不破較有依據;缺:收過330.27–337.5一帶的確認。",
@@ -4721,14 +4727,12 @@
    "updated_note": "盤中即時建議(12:5x ET);盤後場次將更新為隔日完整計畫",
    "claude_updated_utc": "2026-10-02 22:14:03",
    "claude_checkpoint": "盤後",
-   "next_earnings": "2026-11-04",
    "review": {
     "due": true,
     "why": [
-     "價觸停損",
-     "財報0天內"
+     "價觸停損"
     ],
-    "asof": "2026-11-04 02:30:56"
+    "asof": "2026-11-05 02:38:27"
    },
    "computed_fund": {
     "rev_q": [
@@ -4853,8 +4857,8 @@
     "boll_lo": 50.842,
     "boll_bw_pctile": 95.0,
     "obv_above_ma": false,
-    "vol_pace": 0.86,
-    "turnover_rate": 0.134,
+    "vol_pace": 0.91,
+    "turnover_rate": 0.142,
     "chg1d": 2.35,
     "chg5d": -16.87,
     "chg20d": -50.85,
@@ -5291,23 +5295,24 @@
     ]
    },
    "gamma": {
-    "spot": 64.49,
+    "spot": 59.75,
     "gex_bn": -0.002,
     "flip": null,
-    "call_wall": 70.0,
-    "put_wall": 60.0,
-    "max_pain": 74.0,
-    "atm_iv": 142.2,
-    "pc_vol": 0.722,
-    "call_share": 0.581,
+    "call_wall": 60.0,
+    "put_wall": 55.0,
+    "max_pain": 68.0,
+    "atm_iv": 152.4,
+    "pc_vol": 0.675,
+    "call_share": 0.597,
     "zero_dte_share": 0.0,
-    "squeeze_score": 60,
+    "squeeze_score": 75,
     "squeeze_why": [
      "dealer 空gamma(+30)",
-     "call量佔比58%(+20)",
+     "call量佔比60%(+20)",
+     "距call牆<6%(+15)",
      "IV>100%(+10)"
     ],
-    "asof": "2026-11-04 02:30:57"
+    "asof": "2026-11-05 02:38:28"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -5340,15 +5345,15 @@
       "val": 3545676
      }
     ],
-    "asof": "2026-11-04 02:31:01",
+    "asof": "2026-11-05 02:38:30",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "next_earnings": "2026-11-05",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 5478588.0,
-    "d5": -16.7,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -17622837.0,
+    "d5": -37.9,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -5412,7 +5417,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:02",
+   "engine_updated_utc": "2026-11-05 02:38:31",
    "stance": "觀望(反彈站回EMA200;108.37/113未過)",
    "conf": 1,
    "stance_note": "觸發=價達目標1:收107.32(1D+8.12%、量倍1.62×)升破前標107.04並站回EMA200 105.49。但上方壓力密集:MA200 108.37(+1.0%)、MA50 111.15(+3.6%)、gamma翻轉113未收復;CTA -33、頭肩頂(confirmed,空)+對稱三角(forming,空)未解;⑦今日+4.6M小轉正、5日-9.9M仍負;內部人90日0買/5賣$6.0M、ATM IV 102.7極高、距60日高-33.3%。帶寬位階4+擠壓55=壓縮待變盤。缺:收復108.37–113一帶+⑦5日轉正;11/5財報前不確定性高,先觀望。",
@@ -5482,10 +5487,10 @@
     "due": true,
     "why": [
      "價觸停損",
-     "⑦與5日反向",
-     "財報1天內"
+     "財報0天內",
+     "擠壓≥70首見"
     ],
-    "asof": "2026-11-04 02:31:02"
+    "asof": "2026-11-05 02:38:31"
    },
    "computed_fund": {
     "rev_q": [
@@ -5586,35 +5591,35 @@
       "yoy": 86.4
      }
     ],
-    "asof": "2026-10-30 02:04:21",
+    "asof": "2026-11-05 02:38:31",
     "src": "SEC companyfacts",
     "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
    }
   },
   "NVDA": {
    "computed_tech": {
-    "close": 206.648,
+    "close": 206.69,
     "d": "2026-11-03",
-    "ema5": 207.861,
-    "ema10": 211.287,
-    "ema20": 215.687,
-    "ema50": 218.302,
-    "ema120": 213.139,
-    "ema200": 205.347,
-    "vs_ema20_pct": -4.19,
-    "vs_ema50_pct": -5.34,
-    "rsi6": 37.1,
-    "rsi12": 38.2,
-    "boll_mid": 217.988,
-    "boll_up": 235.66,
-    "boll_lo": 200.315,
+    "ema5": 207.875,
+    "ema10": 211.294,
+    "ema20": 215.691,
+    "ema50": 218.303,
+    "ema120": 213.14,
+    "ema200": 205.348,
+    "vs_ema20_pct": -4.17,
+    "vs_ema50_pct": -5.32,
+    "rsi6": 37.2,
+    "rsi12": 38.3,
+    "boll_mid": 217.99,
+    "boll_up": 235.657,
+    "boll_lo": 200.323,
     "boll_bw_pctile": 76.0,
     "obv_above_ma": false,
-    "vol_pace": 0.88,
+    "vol_pace": 0.91,
     "turnover_rate": 0.004,
-    "chg1d": 2.27,
-    "chg5d": -5.18,
-    "chg20d": -13.62,
+    "chg1d": 2.29,
+    "chg5d": -5.16,
+    "chg20d": -13.61,
     "off_60d_high_pct": -15.1,
     "swing_hi": 243.37,
     "swing_lo": 200.92,
@@ -5637,27 +5642,27 @@
      "triggers": {
       "ma50": {
        "px": 221.71,
-       "dist_pct": 7.29
+       "dist_pct": 7.27
       },
       "ma100": {
        "px": 214.49,
-       "dist_pct": 3.79
+       "dist_pct": 3.77
       },
       "ma200": {
        "px": 204.26,
-       "dist_pct": -1.16
+       "dist_pct": -1.18
       },
       "mom63": {
        "px": 218.97,
-       "dist_pct": 5.96
+       "dist_pct": 5.94
       },
       "mom126": {
        "px": 196.05,
-       "dist_pct": -5.13
+       "dist_pct": -5.15
       },
       "mom252": {
        "px": 202.01,
-       "dist_pct": -2.24
+       "dist_pct": -2.26
       }
      },
      "events_30d": [
@@ -5996,7 +6001,7 @@
       "kind": "line",
       "touches": 5,
       "err_pct": 0.148,
-      "score": 6.02,
+      "score": 6.019,
       "active": true
      },
      {
@@ -6028,22 +6033,21 @@
     ]
    },
    "gamma": {
-    "spot": 206.15,
-    "gex_bn": 0.402,
-    "flip": 237.5,
+    "spot": 200.61,
+    "gex_bn": -0.355,
+    "flip": null,
     "call_wall": 220.0,
     "put_wall": 200.0,
     "max_pain": 200.0,
-    "atm_iv": 45.7,
-    "pc_vol": 0.756,
-    "call_share": 0.57,
-    "zero_dte_share": 0.403,
-    "squeeze_score": 25,
+    "atm_iv": 47.4,
+    "pc_vol": 0.805,
+    "call_share": 0.554,
+    "zero_dte_share": 0.0,
+    "squeeze_score": 30,
     "squeeze_why": [
-     "價在翻轉位下(波動放大區,+15)",
-     "0DTE佔比高(+10)"
+     "dealer 空gamma(+30)"
     ],
-    "asof": "2026-11-04 02:31:02"
+    "asof": "2026-11-05 02:38:32"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -6082,15 +6086,15 @@
       "val": 2204199
      }
     ],
-    "asof": "2026-11-04 02:31:06",
+    "asof": "2026-11-05 02:38:35",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "next_earnings": "2026-11-17",
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": 12729346.0,
-    "d5": -420.1,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -244090803.0,
+    "d5": -608.4,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -6186,7 +6190,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:07",
+   "engine_updated_utc": "2026-11-05 02:38:35",
    "stance": "觀望偏多(站上翻轉230;234.5關前)",
    "conf": 2,
    "stance_note": "觸發=價達目標1:收230.86(1D+1.09%)收復前標=gamma翻轉230,距60日高-1.6%。多方:⑦今日+162.0M、5日+361.4M雙大額流入(前次5日仍負,資金證據明顯翻正)、CTA 100、GEX 2.55Bn正gamma、雙重底(confirmed,多)、OBV在均上True、ATM IV 34.6不高。保留:量倍0.86×縮量、上升楔形(confirmed,空)+頭肩頂(confirmed,空)未消、內部人90日0買/15賣$550.2M、帶寬位階8+RV20位階4=低波壓縮待擇向。區間頂234.5在即;缺:放量收過234.5的確認,觀望偏多。",
@@ -6266,11 +6270,9 @@
    "review": {
     "due": true,
     "why": [
-     "價觸停損",
-     "⑦與5日反向",
-     "CTA長期線易手"
+     "價觸停損"
     ],
-    "asof": "2026-11-04 02:31:07"
+    "asof": "2026-11-05 02:38:35"
    },
    "computed_fund": {
     "rev_q": [
@@ -6395,7 +6397,7 @@
     "boll_lo": 311.836,
     "boll_bw_pctile": 62.0,
     "obv_above_ma": false,
-    "vol_pace": 0.76,
+    "vol_pace": 0.78,
     "turnover_rate": 0.004,
     "chg1d": 3.07,
     "chg5d": -2.98,
@@ -6814,22 +6816,21 @@
     ]
    },
    "gamma": {
-    "spot": 330.11,
-    "gex_bn": -0.09,
+    "spot": 325.08,
+    "gex_bn": -0.163,
     "flip": null,
     "call_wall": 350.0,
     "put_wall": 300.0,
     "max_pain": 350.0,
-    "atm_iv": 51.3,
-    "pc_vol": 0.795,
-    "call_share": 0.557,
-    "zero_dte_share": 0.31,
-    "squeeze_score": 40,
+    "atm_iv": 49.1,
+    "pc_vol": 0.88,
+    "call_share": 0.532,
+    "zero_dte_share": 0.0,
+    "squeeze_score": 30,
     "squeeze_why": [
-     "dealer 空gamma(+30)",
-     "0DTE佔比高(+10)"
+     "dealer 空gamma(+30)"
     ],
-    "asof": "2026-11-04 02:31:08"
+    "asof": "2026-11-05 02:38:36"
    },
    "insider_90d": {
     "p_cnt": 0,
@@ -6868,14 +6869,14 @@
       "val": 1634623
      }
     ],
-    "asof": "2026-11-04 02:31:10",
+    "asof": "2026-11-05 02:38:37",
     "src": "SEC Form 4 (90天,前10筆申報)"
    },
    "earnings_src": "yahoo",
    "futu7": {
-    "d1": -16218514.0,
-    "d5": -77.1,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -36669740.0,
+    "d5": -131.4,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -6953,7 +6954,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:10",
+   "engine_updated_utc": "2026-11-05 02:38:38",
    "stance": "觀望(MA200下+⑦續出;9/2財報已落地)",
    "conf": 2,
    "stance_note": "前次課題「9/2財報結果未入資料」已解:最近季營收2026-08 29.59B、YoY+85.5%已入,ATM IV 37.6(前次62.4)=事件波動落地。惟價仍弱:收354.99(1D-2.62%)在MA200 368.09(+3.7%)與EMA200 363.72下方、CTA -33、gamma翻轉380在上;⑦今日-46.8M/5日-146.4M續出、內部人90日0買/27賣$280.5M、距60日高-18.0%。對稱三角confirmed空+頭肩頂forming空,對抗逆頭肩confirmed多、OBV在均上True。缺:收復MA200 368.09+⑦轉正;失守擺盪區間底335.20則弱勢確認。12/9財報。",
@@ -7035,7 +7036,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:31:10"
+    "asof": "2026-11-05 02:38:38"
    },
    "computed_fund": {
     "rev_q": [
@@ -7162,8 +7163,8 @@
     "boll_lo": 495.648,
     "boll_bw_pctile": 89.0,
     "obv_above_ma": false,
-    "vol_pace": 0.91,
-    "turnover_rate": 0.068,
+    "vol_pace": 0.95,
+    "turnover_rate": 0.072,
     "chg1d": 2.01,
     "chg5d": -7.07,
     "chg20d": -18.02,
@@ -7562,26 +7563,26 @@
     ]
    },
    "gamma": {
-    "spot": 517.35,
-    "gex_bn": -0.459,
+    "spot": 500.3,
+    "gex_bn": -0.827,
     "flip": null,
     "call_wall": 550.0,
     "put_wall": 500.0,
     "max_pain": 550.0,
-    "atm_iv": 48.7,
-    "pc_vol": 1.361,
-    "call_share": 0.423,
-    "zero_dte_share": 0.188,
+    "atm_iv": 52.7,
+    "pc_vol": 2.25,
+    "call_share": 0.308,
+    "zero_dte_share": 0.0,
     "squeeze_score": 30,
     "squeeze_why": [
      "dealer 空gamma(+30)"
     ],
-    "asof": "2026-11-04 02:31:11"
+    "asof": "2026-11-05 02:38:38"
    },
    "futu7": {
-    "d1": 34731873.0,
-    "d5": 65.9,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -13611031.0,
+    "d5": -47.1,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -7674,7 +7675,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:13",
+   "engine_updated_utc": "2026-11-05 02:38:40",
    "stance": "觀望偏多(⑦5日+181.7M轉正;625未復)",
    "conf": 2,
    "stance_note": "觸發=gamma翻轉位易手:翻轉自640降至625.00,收617.81(1D+1.45%)仍居翻轉下、貼區間頂620.91(距60日高-0.5%)。改善:⑦今日+23.9M、5日+181.7M雙轉正(前次5日仍負);CTA 100、下降楔形(confirmed,多)+逆頭肩(confirmed,多)、OBV在均上True。保留:RSI6 76.7偏熱、量倍0.79×縮量、OBV背離True、P/C 3.24避險極重、擠壓0、頭肩頂(confirmed,空)未消。缺:放量收過620.91–625一帶;收復翻轉前觀望偏多,資金面已是本輪最明確的改善項。",
@@ -7739,7 +7740,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:31:13"
+    "asof": "2026-11-05 02:38:40"
    }
   },
   "SOXX": {
@@ -7761,8 +7762,8 @@
     "boll_lo": 443.25,
     "boll_bw_pctile": 90.0,
     "obv_above_ma": false,
-    "vol_pace": 1.3,
-    "turnover_rate": 0.139,
+    "vol_pace": 1.35,
+    "turnover_rate": 0.14,
     "chg1d": 2.5,
     "chg5d": -9.01,
     "chg20d": -21.11,
@@ -8159,26 +8160,26 @@
     ]
    },
    "gamma": {
-    "spot": 464.1,
-    "gex_bn": -0.132,
+    "spot": 444.99,
+    "gex_bn": -0.181,
     "flip": null,
     "call_wall": 500.0,
-    "put_wall": 450.0,
+    "put_wall": 400.0,
     "max_pain": 500.0,
-    "atm_iv": 49.8,
-    "pc_vol": 1.14,
-    "call_share": 0.467,
+    "atm_iv": 47.0,
+    "pc_vol": 3.175,
+    "call_share": 0.24,
     "zero_dte_share": 0.0,
     "squeeze_score": 30,
     "squeeze_why": [
      "dealer 空gamma(+30)"
     ],
-    "asof": "2026-11-04 02:31:13"
+    "asof": "2026-11-05 02:38:40"
    },
    "futu7": {
-    "d1": 25527238.0,
-    "d5": 64.2,
-    "asof": "2026-11-04 02:26:59"
+    "d1": -26359026.0,
+    "d5": -24.1,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -8268,7 +8269,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:15",
+   "engine_updated_utc": "2026-11-05 02:38:42",
    "stance": "觀望(⑦今日-54M轉出;雙背離+RSI76偏熱)",
    "conf": 2,
    "stance_note": "觸發=⑦與5日反向:⑦今日-54.0M轉出、5日+136.2M仍正(ETF申贖口徑參考性打折)。收572.68(2026-09-25,1D+1.17%)仍在gamma翻轉635之下(翻轉自600上移=課題加深),RSI6 75.9且RSI/OBV背離皆True、量倍0.63×縮、TD setup 6。多方結構未變:CTA 67、OBV在均上True、下降楔形(confirmed,多)+逆頭肩(confirmed,多)、5D+7.43%/20D+9.06%。無把握點:過熱+雙背離下缺回檔實測與⑦持續流入證據,先觀望。",
@@ -8342,7 +8343,7 @@
     "why": [
      "價觸停損"
     ],
-    "asof": "2026-11-04 02:31:15"
+    "asof": "2026-11-05 02:38:42"
    }
   },
   "SPY": {
@@ -8364,8 +8365,8 @@
     "boll_lo": 752.58,
     "boll_bw_pctile": 55.0,
     "obv_above_ma": false,
-    "vol_pace": 0.81,
-    "turnover_rate": 0.03,
+    "vol_pace": 0.83,
+    "turnover_rate": 0.031,
     "chg1d": 0.3,
     "chg5d": -1.99,
     "chg20d": -3.18,
@@ -8750,26 +8751,27 @@
     ]
    },
    "gamma": {
-    "spot": 752.1,
-    "gex_bn": -12.741,
+    "spot": 767.45,
+    "gex_bn": -0.022,
     "flip": null,
     "call_wall": 800.0,
     "put_wall": 700.0,
     "max_pain": 760.0,
-    "atm_iv": 22.2,
-    "pc_vol": 1.123,
-    "call_share": 0.471,
-    "zero_dte_share": 0.091,
-    "squeeze_score": 30,
+    "atm_iv": 17.4,
+    "pc_vol": 1.27,
+    "call_share": 0.441,
+    "zero_dte_share": 0.108,
+    "squeeze_score": 45,
     "squeeze_why": [
-     "dealer 空gamma(+30)"
+     "dealer 空gamma(+30)",
+     "距call牆<6%(+15)"
     ],
-    "asof": "2026-11-04 02:31:17"
+    "asof": "2026-11-05 02:38:45"
    },
    "futu7": {
-    "d1": 679146286.0,
-    "d5": 3144.0,
-    "asof": "2026-11-04 02:26:59"
+    "d1": 475940250.0,
+    "d5": 2957.5,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -8859,7 +8861,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:19",
+   "engine_updated_utc": "2026-11-05 02:38:46",
    "stance": "觀望偏多(⑦5日+1034.6M;空gamma深化-10.1Bn)",
    "conf": 2,
    "stance_note": "觸發=價達目標1:收771.35(2026-09-25,1D+0.54%)近區間頂777.44=前標1、距60日高-0.8%,達標區不追。重大事實:GEX -10.07Bn空gamma較前次-5.15Bn深化且無翻轉位=波動放大環境;⑦今日+30.4M、5日+1034.6M大額雙正;CTA 100、雙重底(confirmed,多)+雙重底(forming,多)。保留:OBV在均上False、上升三角(confirmed,空)並存、RSI6 62.6。缺:OBV回均上與空gamma收斂;波動環境守前停730。",
@@ -8921,7 +8923,7 @@
    "review": {
     "due": false,
     "why": [],
-    "asof": "2026-11-04 02:31:19"
+    "asof": "2026-11-05 02:38:46"
    }
   },
   "QQQ": {
@@ -8943,8 +8945,8 @@
     "boll_lo": 678.619,
     "boll_bw_pctile": 92.0,
     "obv_above_ma": false,
-    "vol_pace": 0.85,
-    "turnover_rate": 0.052,
+    "vol_pace": 0.92,
+    "turnover_rate": 0.055,
     "chg1d": 0.62,
     "chg5d": -4.99,
     "chg20d": -9.79,
@@ -9401,26 +9403,27 @@
     ]
    },
    "gamma": {
-    "spot": 681.4,
-    "gex_bn": -6.459,
+    "spot": 690.9,
+    "gex_bn": -5.546,
     "flip": null,
-    "call_wall": 750.0,
+    "call_wall": 720.0,
     "put_wall": 670.0,
     "max_pain": 710.0,
-    "atm_iv": 36.1,
-    "pc_vol": 1.118,
-    "call_share": 0.472,
-    "zero_dte_share": 0.084,
-    "squeeze_score": 30,
+    "atm_iv": 25.8,
+    "pc_vol": 1.136,
+    "call_share": 0.468,
+    "zero_dte_share": 0.088,
+    "squeeze_score": 45,
     "squeeze_why": [
-     "dealer 空gamma(+30)"
+     "dealer 空gamma(+30)",
+     "距call牆<6%(+15)"
     ],
-    "asof": "2026-11-04 02:31:21"
+    "asof": "2026-11-05 02:38:48"
    },
    "futu7": {
-    "d1": -210344644.0,
-    "d5": 136.0,
-    "asof": "2026-11-04 02:26:59"
+    "d1": 17939525.0,
+    "d5": -4.3,
+    "asof": "2026-11-05 02:34:34"
    },
    "marks": [
     {
@@ -9546,7 +9549,7 @@
      "conf": 1
     }
    ],
-   "engine_updated_utc": "2026-11-04 02:31:22",
+   "engine_updated_utc": "2026-11-05 02:38:50",
    "stance": "觀望偏多(748.35/749關前;GEX回正)",
    "conf": 2,
    "stance_note": "觸發=價達目標1:收742.03(1D+0.31%)貼近區間頂748.35與gamma翻轉749,距60日高-0.8%、關前未過。重大變化:GEX自前次-5.12Bn空gamma回到+14.54Bn正gamma=波動再受抑;⑦今日+191.4M、5日+588.5M雙大額為正(前次5日大幅收斂後回升)。多方:CTA 100、上升三角(confirmed,多)+VCP 波動收縮(forming,多)+逆頭肩(forming,多)、OBV在均上True。保留:RSI背離True、TD setup -4、ATM IV 21.2低=保護薄、量倍1.06×平平。缺:放量收過748.35–749;過關前維持觀望偏多。",
@@ -9618,7 +9621,7 @@
      "價觸停損",
      "⑦與5日反向"
     ],
-    "asof": "2026-11-04 02:31:22"
+    "asof": "2026-11-05 02:38:50"
    }
   }
  },
@@ -9626,7 +9629,7 @@
   {
    "source": "market_data",
    "ok": true,
-   "note": "ts=2026-11-04 02:26:59"
+   "note": "ts=2026-11-05 02:34:34"
   },
   {
    "source": "kline",
