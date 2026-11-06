@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-06T00:14:32Z",
+ "gen_utc": "2026-11-06T05:13:51Z",
  "data_asof": "2026-11-05",
  "protocol": "v2",
  "status": "COLLECTING",
@@ -7974,7 +7974,7 @@
    "status": "open",
    "entry": "2026-10-22",
    "elapsed_sessions": 11,
-   "unreal": -0.09597156398104256
+   "unreal": -0.09478672985781988
   },
   "2026-10-21:META": {
    "id": "2026-10-21:META",
@@ -14416,7 +14416,7 @@
    "status": "open",
    "entry": "2026-11-05",
    "elapsed_sessions": 1,
-   "unreal": -0.029010499661653366
+   "unreal": -0.029031694752466586
   },
   "2026-11-04:HOOD": {
    "id": "2026-11-04:HOOD",
@@ -14526,7 +14526,7 @@
    "status": "open",
    "entry": "2026-11-05",
    "elapsed_sessions": 1,
-   "unreal": -0.03424725418292229
+   "unreal": -0.03425595559880368
   },
   "2026-11-04:NUE": {
    "id": "2026-11-04:NUE",
@@ -14851,6 +14851,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -14872,6 +14873,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -14893,6 +14895,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
