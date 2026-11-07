@@ -1,0 +1,18 @@
+{
+ "asof": "2026-11-06",
+ "protocol": "v2",
+ "status": "pending_verdict",
+ "updated_utc": "2026-11-07T00:14:37Z",
+ "test": false,
+ "n": 20,
+ "n_fresh": 268,
+ "n_fail": 0,
+ "pending_sha256": "0c354f0d2322c1ade30ee2d76be764cd744ce249f1ae2c698e249ed64e60d41b",
+ "deadline_utc": "2026-11-09T14:30:00Z",
+ "history": [
+  {
+   "status": "pending_verdict",
+   "utc": "2026-11-07T00:14:37Z"
+  }
+ ]
+}
