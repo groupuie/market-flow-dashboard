@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-12T00:15:31Z",
+ "gen_utc": "2026-11-12T05:14:37Z",
  "data_asof": "2026-11-11",
  "protocol": "v2",
  "status": "MATURING",
@@ -14584,7 +14584,7 @@
    "status": "open",
    "entry": "2026-10-28",
    "elapsed_sessions": 11,
-   "unreal": 0.08172945205479465
+   "unreal": 0.08174657534246577
   },
   "2026-10-27:COST": {
    "id": "2026-10-27:COST",
@@ -22405,7 +22405,7 @@
    "status": "open",
    "entry": "2026-11-11",
    "elapsed_sessions": 1,
-   "unreal": 0.17553793884484725
+   "unreal": 0.17155756207674955
   },
   "2026-11-10:DVN": {
    "id": "2026-11-10:DVN",
@@ -22510,6 +22510,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22531,6 +22532,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22552,6 +22554,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22573,6 +22576,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22594,6 +22598,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22615,6 +22620,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
