@@ -1,0 +1,15 @@
+{
+ "說明": "SC1 用到的免費公開資料(原檔不放進 repo;下載時間是台灣時間,SHA-256 是下載到的檔案)",
+ "files": {
+  "AllTablesIO.zip": {"source": "https://apps.bea.gov/industry/iTables%20Static%20Files/AllTablesIO.zip", "retrieved_tw": "2026-10-23 23:55:39", "bytes": 16335444, "sha256": "ab316fa88157f8a96270334b1a6afa664fcf39a6c94f9c8e4ad061d930e81918",
+                      "used_members": ["IOUse_Before_Redefinitions_PRO_2017_Detail.xlsx", "IOUse_Before_Redefinitions_PRO_1997-2023_Summary.xlsx"]},
+  "2017_to_2012_NAICS.xlsx": {"source": "https://www.census.gov/naics/concordances/2017_to_2012_NAICS.xlsx", "retrieved_tw": "2026-10-23 23:56:05", "bytes": 60189, "sha256": "cc2f10ce185c8dbc2c0d6bd0b4f7965cc5ca90fc951c1d5c1e1dee04f026b0dc"},
+  "2012_to_2007_NAICS.xls": {"source": "https://www.census.gov/naics/concordances/2012_to_2007_NAICS.xls", "retrieved_tw": "2026-10-23 23:56:05", "bytes": 176128, "sha256": "8d9eda559bb84bff9990955c4586b8c94e70508a84f811de30dffc933f3c1ae3"},
+  "2007_to_2002_NAICS.xls": {"source": "https://www.census.gov/naics/concordances/2007_to_2002_NAICS.xls", "retrieved_tw": "2026-10-23 23:56:06", "bytes": 161280, "sha256": "c87176cbac1ad050324b09468c2e981c5f9ff79c573661e37518da97a9de5c5f"},
+  "2002_NAICS_to_1987_SIC.xls": {"source": "https://www.census.gov/naics/concordances/2002_NAICS_to_1987_SIC.xls", "retrieved_tw": "2026-10-23 23:56:04", "bytes": 406016, "sha256": "5377749fee12d719c23a1553b9518ddc7a06ae85e9dfa93cc55dbbe70d4bed42"},
+  "cbp12us.zip": {"source": "https://www2.census.gov/programs-surveys/cbp/datasets/2012/cbp12us.zip", "retrieved_tw": "2026-10-24 00:09:59", "bytes": 647569, "sha256": "c11e1ad3000ebe411ddb591480968c017a5b96c671afdcb1a7fa1f7c7542f5d9"},
+  "cbp17us.zip": {"source": "https://www2.census.gov/programs-surveys/cbp/datasets/2017/cbp17us.zip", "retrieved_tw": "2026-10-24 00:09:59", "bytes": 780324, "sha256": "6dfd18b42eb6211652acf0df59ab8f644fb9bff6bc8c801efee395bc7ca77e76"},
+  "Siccodes49.zip": {"source": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Siccodes49.zip", "retrieved_tw": "2026-10-23 20:56:15", "bytes": 9587, "sha256": "36761b4009107e11cd15cff0eb75f8837ef49f024524b7378634629bf90905d5"},
+  "49_Industry_Portfolios_CSV.zip": {"source": "同 research/sector_rotation_2026-10-23/data_manifest.json(202608 CRSP)", "retrieved_tw": "2026-10-23 10:29:27", "bytes": 489433, "sha256": "16b3f20bf5bd1db8f5cd7a1b29f5cab1350eb0d5106c5309f77a6629590b1c0e"}
+ }
+}
