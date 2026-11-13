@@ -1,6 +1,6 @@
 {
- "gen_utc": "2026-11-12T05:14:37Z",
- "data_asof": "2026-11-11",
+ "gen_utc": "2026-11-13T00:15:54Z",
+ "data_asof": "2026-11-12",
  "protocol": "v2",
  "status": "MATURING",
  "cohort": {
@@ -11,13 +11,13 @@
   "fixed_utc": "2026-11-10T00:15:28Z"
  },
  "counts": {
-  "locked": 340,
-  "agree": 123,
-  "disagree": 217,
+  "locked": 349,
+  "agree": 129,
+  "disagree": 220,
   "late": 0,
-  "days": 21,
-  "closed": 185,
-  "open": 155,
+  "days": 22,
+  "closed": 186,
+  "open": 163,
   "no_data": 0,
   "unresolved": 0
  },
@@ -1008,8 +1008,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-15",
-   "elapsed_sessions": 20,
-   "unreal": -0.008404567699836885
+   "elapsed_sessions": 21,
+   "unreal": -0.011915171288743864
   },
   "2026-10-14:T": {
    "id": "2026-10-14:T",
@@ -2101,8 +2101,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-16",
-   "elapsed_sessions": 19,
-   "unreal": 0.029623567921440275
+   "elapsed_sessions": 20,
+   "unreal": 0.019967266775777315
   },
   "2026-10-15:CRML": {
    "id": "2026-10-15:CRML",
@@ -6708,8 +6708,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 16,
-   "unreal": 0.047943187175860436
+   "elapsed_sessions": 17,
+   "unreal": 0.04573314474304557
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -6730,8 +6730,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-21",
-   "elapsed_sessions": 16,
-   "unreal": -0.03945205479452052
+   "elapsed_sessions": 17,
+   "unreal": -0.06805479452054786
   },
   "2026-10-20:MSTR": {
    "id": "2026-10-20:MSTR",
@@ -7976,8 +7976,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 15,
-   "unreal": 0.034043087745744494
+   "elapsed_sessions": 16,
+   "unreal": 0.04679354311915063
   },
   "2026-10-21:CEG": {
    "id": "2026-10-21:CEG",
@@ -10072,8 +10072,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 15,
-   "unreal": -0.03255279494401708
+   "elapsed_sessions": 16,
+   "unreal": -0.035649724639509106
   },
   "2026-10-21:RKLB": {
    "id": "2026-10-21:RKLB",
@@ -10204,8 +10204,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-22",
-   "elapsed_sessions": 15,
-   "unreal": 0.017436122381840224
+   "elapsed_sessions": 16,
+   "unreal": 0.0058120407939468155
   },
   "2026-10-21:SMCI": {
    "id": "2026-10-21:SMCI",
@@ -12835,8 +12835,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-27",
-   "elapsed_sessions": 12,
-   "unreal": -0.03448275862068961
+   "elapsed_sessions": 13,
+   "unreal": -0.0579310344827586
   },
   "2026-10-26:GE": {
    "id": "2026-10-26:GE",
@@ -13866,8 +13866,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-28",
-   "elapsed_sessions": 11,
-   "unreal": 0.028571428571428692
+   "elapsed_sessions": 12,
+   "unreal": 0.013784461152882344
   },
   "2026-10-27:ACN": {
    "id": "2026-10-27:ACN",
@@ -13887,8 +13887,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-28",
-   "elapsed_sessions": 11,
-   "unreal": 0.08708322619353726
+   "elapsed_sessions": 12,
+   "unreal": 0.07118368046627244
   },
   "2026-10-27:AFRM": {
    "id": "2026-10-27:AFRM",
@@ -14583,8 +14583,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-28",
-   "elapsed_sessions": 11,
-   "unreal": 0.08174657534246577
+   "elapsed_sessions": 12,
+   "unreal": 0.08047945205479445
   },
   "2026-10-27:COST": {
    "id": "2026-10-27:COST",
@@ -15521,8 +15521,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-28",
-   "elapsed_sessions": 11,
-   "unreal": 0.07408630559225005
+   "elapsed_sessions": 12,
+   "unreal": 0.07265521796565388
   },
   "2026-10-27:MAR": {
    "id": "2026-10-27:MAR",
@@ -15542,8 +15542,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-28",
-   "elapsed_sessions": 11,
-   "unreal": 0.10116741500962156
+   "elapsed_sessions": 12,
+   "unreal": 0.08957023733162295
   },
   "2026-10-27:NBIS": {
    "id": "2026-10-27:NBIS",
@@ -16602,8 +16602,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-29",
-   "elapsed_sessions": 10,
-   "unreal": -0.009604519774011222
+   "elapsed_sessions": 11,
+   "unreal": -0.039096045197740015
   },
   "2026-10-28:COIN": {
    "id": "2026-10-28:COIN",
@@ -16801,8 +16801,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-29",
-   "elapsed_sessions": 10,
-   "unreal": 0.05340098030785101
+   "elapsed_sessions": 11,
+   "unreal": 0.02330380944191246
   },
   "2026-10-28:GOOG": {
    "id": "2026-10-28:GOOG",
@@ -16822,8 +16822,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-29",
-   "elapsed_sessions": 10,
-   "unreal": 0.02392192784667424
+   "elapsed_sessions": 11,
+   "unreal": 0.040551014656144524
   },
   "2026-10-28:GOOGL": {
    "id": "2026-10-28:GOOGL",
@@ -16843,8 +16843,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-29",
-   "elapsed_sessions": 10,
-   "unreal": 0.0229015616285555
+   "elapsed_sessions": 11,
+   "unreal": 0.041201896263245885
   },
   "2026-10-28:HIMS": {
    "id": "2026-10-28:HIMS",
@@ -17010,8 +17010,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-29",
-   "elapsed_sessions": 10,
-   "unreal": -0.012195121951219412
+   "elapsed_sessions": 11,
+   "unreal": -0.07012195121951215
   },
   "2026-10-28:PFE": {
    "id": "2026-10-28:PFE",
@@ -17217,8 +17217,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-29",
-   "elapsed_sessions": 10,
-   "unreal": -0.02603272823958802
+   "elapsed_sessions": 11,
+   "unreal": -0.02073916511566065
   },
   "2026-10-28:UPST": {
    "id": "2026-10-28:UPST",
@@ -17307,8 +17307,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-30",
-   "elapsed_sessions": 9,
-   "unreal": 0.020105201636469783
+   "elapsed_sessions": 10,
+   "unreal": 0.0026300409117476775
   },
   "2026-10-29:BKNG": {
    "id": "2026-10-29:BKNG",
@@ -17530,8 +17530,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-30",
-   "elapsed_sessions": 9,
-   "unreal": -0.010546181172291336
+   "elapsed_sessions": 10,
+   "unreal": -0.04207371225577261
   },
   "2026-10-29:DIS": {
    "id": "2026-10-29:DIS",
@@ -17745,8 +17745,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-30",
-   "elapsed_sessions": 9,
-   "unreal": 0.023205480789572075
+   "elapsed_sessions": 10,
+   "unreal": 0.014808546646921883
   },
   "2026-10-29:NVO": {
    "id": "2026-10-29:NVO",
@@ -17859,8 +17859,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-30",
-   "elapsed_sessions": 9,
-   "unreal": 0.03422138000222952
+   "elapsed_sessions": 10,
+   "unreal": 0.02240552892654124
   },
   "2026-10-29:TEAM": {
    "id": "2026-10-29:TEAM",
@@ -18050,8 +18050,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-30",
-   "elapsed_sessions": 9,
-   "unreal": -0.054142114384748696
+   "elapsed_sessions": 10,
+   "unreal": -0.0573310225303294
   },
   "2026-10-29:WDAY": {
    "id": "2026-10-29:WDAY",
@@ -18071,8 +18071,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-10-30",
-   "elapsed_sessions": 9,
-   "unreal": -0.04453441295546556
+   "elapsed_sessions": 10,
+   "unreal": -0.04713350327385424
   },
   "2026-10-30:AI": {
    "id": "2026-10-30:AI",
@@ -18092,8 +18092,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-02",
-   "elapsed_sessions": 8,
-   "unreal": 0.03392705682782027
+   "elapsed_sessions": 9,
+   "unreal": 0.02374893977947412
   },
   "2026-10-30:SHOP": {
    "id": "2026-10-30:SHOP",
@@ -18182,8 +18182,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-02",
-   "elapsed_sessions": 8,
-   "unreal": 0.07209302325581413
+   "elapsed_sessions": 9,
+   "unreal": 0.04883720930232549
   },
   "2026-11-02:AAPL": {
    "id": "2026-11-02:AAPL",
@@ -18204,8 +18204,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": 0.09229682412924634
+   "elapsed_sessions": 8,
+   "unreal": 0.08999324282818355
   },
   "2026-11-02:ABNB": {
    "id": "2026-11-02:ABNB",
@@ -18422,8 +18422,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": -0.05042016806722682
+   "elapsed_sessions": 8,
+   "unreal": -0.035266565642650516
   },
   "2026-11-02:CRWD": {
    "id": "2026-11-02:CRWD",
@@ -18522,8 +18522,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": -0.05086556005518228
+   "elapsed_sessions": 8,
+   "unreal": -0.03720350674202311
   },
   "2026-11-02:DHR": {
    "id": "2026-11-02:DHR",
@@ -18544,8 +18544,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": 0.02890249234805431
+   "elapsed_sessions": 8,
+   "unreal": 0.015128989943157034
   },
   "2026-11-02:DJT": {
    "id": "2026-11-02:DJT",
@@ -18714,8 +18714,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": -0.04599999999999993
+   "elapsed_sessions": 8,
+   "unreal": -0.026666666666666727
   },
   "2026-11-02:PINS": {
    "id": "2026-11-02:PINS",
@@ -18736,8 +18736,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": -0.038980509745127456
+   "elapsed_sessions": 8,
+   "unreal": -0.04447776111944035
   },
   "2026-11-02:TWLO": {
    "id": "2026-11-02:TWLO",
@@ -18758,8 +18758,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": 0.0577349397590361
+   "elapsed_sessions": 8,
+   "unreal": 0.02269879518072293
   },
   "2026-11-02:XOM": {
    "id": "2026-11-02:XOM",
@@ -18780,8 +18780,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-03",
-   "elapsed_sessions": 7,
-   "unreal": -0.06342696629213473
+   "elapsed_sessions": 8,
+   "unreal": -0.046179775280898894
   },
   "2026-11-02:ZS": {
    "id": "2026-11-02:ZS",
@@ -18958,8 +18958,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.612886515779407
+   "elapsed_sessions": 7,
+   "unreal": 0.5686962065667835
   },
   "2026-11-03:CORZ": {
    "id": "2026-11-03:CORZ",
@@ -19050,8 +19050,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.04947245017584989
+   "elapsed_sessions": 7,
+   "unreal": 0.052637749120750366
   },
   "2026-11-03:HUT": {
    "id": "2026-11-03:HUT",
@@ -19134,8 +19134,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": -0.019857926388653024
+   "elapsed_sessions": 7,
+   "unreal": -0.033875750743339594
   },
   "2026-11-03:IREN": {
    "id": "2026-11-03:IREN",
@@ -19226,8 +19226,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.029367497522117425
+   "elapsed_sessions": 7,
+   "unreal": 0.04078411218384037
   },
   "2026-11-03:PTC": {
    "id": "2026-11-03:PTC",
@@ -19248,8 +19248,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.00667214124409754
+   "elapsed_sessions": 7,
+   "unreal": 0.007236707041675228
   },
   "2026-11-03:RBLX": {
    "id": "2026-11-03:RBLX",
@@ -19270,8 +19270,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.14121475054229937
+   "elapsed_sessions": 7,
+   "unreal": 0.11540130151843808
   },
   "2026-11-03:RDDT": {
    "id": "2026-11-03:RDDT",
@@ -19292,8 +19292,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.07926455566904989
+   "elapsed_sessions": 7,
+   "unreal": 0.016853932584269593
   },
   "2026-11-03:TLN": {
    "id": "2026-11-03:TLN",
@@ -19314,8 +19314,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-04",
-   "elapsed_sessions": 6,
-   "unreal": 0.11908631541621095
+   "elapsed_sessions": 7,
+   "unreal": 0.14263762891167509
   },
   "2026-11-03:WULF": {
    "id": "2026-11-03:WULF",
@@ -19398,8 +19398,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.004916782050919721
+   "elapsed_sessions": 6,
+   "unreal": 0.002797479442764761
   },
   "2026-11-04:ADI": {
    "id": "2026-11-04:ADI",
@@ -19420,8 +19420,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.05637185280826329
+   "elapsed_sessions": 6,
+   "unreal": 0.05691413815364754
   },
   "2026-11-04:AI": {
    "id": "2026-11-04:AI",
@@ -19442,8 +19442,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.022651006711409405
+   "elapsed_sessions": 6,
+   "unreal": 0.012583892617449743
   },
   "2026-11-04:ANET": {
    "id": "2026-11-04:ANET",
@@ -19464,8 +19464,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.1752614281446072
+   "elapsed_sessions": 6,
+   "unreal": 0.23471765760382435
   },
   "2026-11-04:BAC": {
    "id": "2026-11-04:BAC",
@@ -19486,8 +19486,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": -0.037606837606837584
+   "elapsed_sessions": 6,
+   "unreal": -0.04064577397910729
   },
   "2026-11-04:BMNR": {
    "id": "2026-11-04:BMNR",
@@ -19632,8 +19632,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": -0.048240635641316754
+   "elapsed_sessions": 6,
+   "unreal": -0.050161529730201715
   },
   "2026-11-04:HOOD": {
    "id": "2026-11-04:HOOD",
@@ -19716,8 +19716,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.06534934779801094
+   "elapsed_sessions": 6,
+   "unreal": 0.0503680743897712
   },
   "2026-11-04:LCID": {
    "id": "2026-11-04:LCID",
@@ -19800,8 +19800,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.03609035326086962
+   "elapsed_sessions": 6,
+   "unreal": 0.025968070652174102
   },
   "2026-11-04:MSFT": {
    "id": "2026-11-04:MSFT",
@@ -20086,8 +20086,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": -0.020864381520119157
+   "elapsed_sessions": 6,
+   "unreal": -0.023845007451564815
   },
   "2026-11-04:QCOM": {
    "id": "2026-11-04:QCOM",
@@ -20108,8 +20108,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.17666266826602683
+   "elapsed_sessions": 6,
+   "unreal": 0.18046114887378373
   },
   "2026-11-04:QQQ": {
    "id": "2026-11-04:QQQ",
@@ -20130,8 +20130,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.010627708162548322
+   "elapsed_sessions": 6,
+   "unreal": 0.007392551821056248
   },
   "2026-11-04:RIOT": {
    "id": "2026-11-04:RIOT",
@@ -20152,8 +20152,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.2253653304732539
+   "elapsed_sessions": 6,
+   "unreal": 0.1952004290119318
   },
   "2026-11-04:SBET": {
    "id": "2026-11-04:SBET",
@@ -20236,8 +20236,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": -0.017056305564702057
+   "elapsed_sessions": 6,
+   "unreal": -0.03338821205136644
   },
   "2026-11-04:SOUN": {
    "id": "2026-11-04:SOUN",
@@ -20344,8 +20344,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": -0.007394149999346955
+   "elapsed_sessions": 6,
+   "unreal": -0.010908330829425106
   },
   "2026-11-04:SWKS": {
    "id": "2026-11-04:SWKS",
@@ -20366,8 +20366,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-05",
-   "elapsed_sessions": 5,
-   "unreal": 0.08788480635551132
+   "elapsed_sessions": 6,
+   "unreal": 0.11755213505461759
   },
   "2026-11-04:TSLA": {
    "id": "2026-11-04:TSLA",
@@ -20512,8 +20512,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-06",
-   "elapsed_sessions": 4,
-   "unreal": 0.072489539748954
+   "elapsed_sessions": 5,
+   "unreal": 0.0451882845188285
   },
   "2026-11-05:TXN": {
    "id": "2026-11-05:TXN",
@@ -20534,8 +20534,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-06",
-   "elapsed_sessions": 4,
-   "unreal": 0.0955866751538299
+   "elapsed_sessions": 5,
+   "unreal": 0.10502864417568447
   },
   "2026-11-05:UNH": {
    "id": "2026-11-05:UNH",
@@ -20556,8 +20556,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-06",
-   "elapsed_sessions": 4,
-   "unreal": 0.03746234455058062
+   "elapsed_sessions": 5,
+   "unreal": 0.04310100672004946
   },
   "2026-11-06:ACHR": {
    "id": "2026-11-06:ACHR",
@@ -20578,8 +20578,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.07760532150776056
+   "elapsed_sessions": 4,
+   "unreal": -0.039911308203991025
   },
   "2026-11-06:AVAV": {
    "id": "2026-11-06:AVAV",
@@ -20600,8 +20600,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.09008061689449698
+   "elapsed_sessions": 4,
+   "unreal": 0.05888538380651953
   },
   "2026-11-06:CBRS": {
    "id": "2026-11-06:CBRS",
@@ -20622,8 +20622,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.13090176773327378
+   "elapsed_sessions": 4,
+   "unreal": 0.09364511076303428
   },
   "2026-11-06:CI": {
    "id": "2026-11-06:CI",
@@ -20644,8 +20644,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.02186440677966095
+   "elapsed_sessions": 4,
+   "unreal": 0.004305084745762633
   },
   "2026-11-06:COHR": {
    "id": "2026-11-06:COHR",
@@ -20666,8 +20666,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.18739240506329113
+   "elapsed_sessions": 4,
+   "unreal": 0.17508860759493672
   },
   "2026-11-06:LLY": {
    "id": "2026-11-06:LLY",
@@ -20688,8 +20688,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.05265123773253255
+   "elapsed_sessions": 4,
+   "unreal": 0.045320052731800065
   },
   "2026-11-06:LUNR": {
    "id": "2026-11-06:LUNR",
@@ -20710,8 +20710,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.1205151793928243
+   "elapsed_sessions": 4,
+   "unreal": 0.19871205151793925
   },
   "2026-11-06:LWLG": {
    "id": "2026-11-06:LWLG",
@@ -20730,10 +20730,66 @@
    "panic_sc": null,
    "panic_sc_filled_after": 0,
    "sig_ok": true,
-   "status": "open",
+   "status": "closed",
+   "exit_why": "停損",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": -0.1839080459770115
+   "exit": "2026-11-12",
+   "hold": 3,
+   "entry_open": 4.35,
+   "exit_open": 3.4,
+   "ret0": -0.2183908045977011,
+   "ret": -0.2199524613317716,
+   "closed_utc": "2026-11-13T00:15:53Z",
+   "bars_used": [
+    [
+     "2026-11-05",
+     4.1,
+     4.12,
+     3.55,
+     3.82,
+     5726300
+    ],
+    [
+     "2026-11-06",
+     4.0,
+     4.38,
+     3.77,
+     4.37,
+     3180900
+    ],
+    [
+     "2026-11-09",
+     4.35,
+     4.97,
+     4.21,
+     4.91,
+     3845200
+    ],
+    [
+     "2026-11-10",
+     4.78,
+     4.87,
+     4.25,
+     4.39,
+     4565000
+    ],
+    [
+     "2026-11-11",
+     3.71,
+     3.9,
+     3.35,
+     3.55,
+     9818200
+    ],
+    [
+     "2026-11-12",
+     3.4,
+     3.645,
+     3.2,
+     3.39,
+     4493225
+    ]
+   ]
   },
   "2026-11-06:NET": {
    "id": "2026-11-06:NET",
@@ -20754,8 +20810,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.1351351351351351
+   "elapsed_sessions": 4,
+   "unreal": 0.1477477477477478
   },
   "2026-11-06:NRG": {
    "id": "2026-11-06:NRG",
@@ -20776,8 +20832,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.04278074866310155
+   "elapsed_sessions": 4,
+   "unreal": 0.048663101604278
   },
   "2026-11-06:OKLO": {
    "id": "2026-11-06:OKLO",
@@ -20798,8 +20854,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.08930075821398487
+   "elapsed_sessions": 4,
+   "unreal": 0.029907329401853477
   },
   "2026-11-06:PFE": {
    "id": "2026-11-06:PFE",
@@ -20820,8 +20876,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": -0.004731328151402536
+   "elapsed_sessions": 4,
+   "unreal": -0.025684352821899292
   },
   "2026-11-06:PL": {
    "id": "2026-11-06:PL",
@@ -20842,8 +20898,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.11595330739299614
+   "elapsed_sessions": 4,
+   "unreal": 0.08171206225680949
   },
   "2026-11-06:POET": {
    "id": "2026-11-06:POET",
@@ -20864,8 +20920,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.10039370078740162
+   "elapsed_sessions": 4,
+   "unreal": 0.025590551181102317
   },
   "2026-11-06:QBTS": {
    "id": "2026-11-06:QBTS",
@@ -20886,8 +20942,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": -0.0056022408963586345
+   "elapsed_sessions": 4,
+   "unreal": -0.08123249299719892
   },
   "2026-11-06:RGTI": {
    "id": "2026-11-06:RGTI",
@@ -20908,8 +20964,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": -0.06046511627906981
+   "elapsed_sessions": 4,
+   "unreal": -0.12642706131078219
   },
   "2026-11-06:RKLB": {
    "id": "2026-11-06:RKLB",
@@ -20930,8 +20986,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.21811987846422998
+   "elapsed_sessions": 4,
+   "unreal": 0.17981769634471956
   },
   "2026-11-06:SMCI": {
    "id": "2026-11-06:SMCI",
@@ -20952,8 +21008,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.08214793741109516
+   "elapsed_sessions": 4,
+   "unreal": -0.04018492176386923
   },
   "2026-11-06:SPCX": {
    "id": "2026-11-06:SPCX",
@@ -20974,8 +21030,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.023734524943227697
+   "elapsed_sessions": 4,
+   "unreal": 0.025126364368910803
   },
   "2026-11-06:VST": {
    "id": "2026-11-06:VST",
@@ -20996,8 +21052,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-09",
-   "elapsed_sessions": 3,
-   "unreal": 0.04257812499999991
+   "elapsed_sessions": 4,
+   "unreal": 0.05085937499999993
   },
   "2026-11-09:AAOI": {
    "id": "2026-11-09:AAOI",
@@ -21018,8 +21074,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.13145635001012757
+   "elapsed_sessions": 3,
+   "unreal": 0.0704881506988051
   },
   "2026-11-09:ACN": {
    "id": "2026-11-09:ACN",
@@ -21040,8 +21096,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.001105059594285196
+   "elapsed_sessions": 3,
+   "unreal": -0.013536980029994483
   },
   "2026-11-09:ADI": {
    "id": "2026-11-09:ADI",
@@ -21062,8 +21118,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.05243118085927456
+   "elapsed_sessions": 3,
+   "unreal": 0.05297144327244663
   },
   "2026-11-09:ALAB": {
    "id": "2026-11-09:ALAB",
@@ -21084,8 +21140,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.08225534308211468
+   "elapsed_sessions": 3,
+   "unreal": 0.06763217097862761
   },
   "2026-11-09:AMAT": {
    "id": "2026-11-09:AMAT",
@@ -21106,8 +21162,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.08303407439896926
+   "elapsed_sessions": 3,
+   "unreal": 0.04429945996326645
   },
   "2026-11-09:AMD": {
    "id": "2026-11-09:AMD",
@@ -21128,8 +21184,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.09964200477326957
+   "elapsed_sessions": 3,
+   "unreal": 0.16408114558472553
   },
   "2026-11-09:AMKR": {
    "id": "2026-11-09:AMKR",
@@ -21150,8 +21206,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.10884749708963914
+   "elapsed_sessions": 3,
+   "unreal": 0.08032596041909201
   },
   "2026-11-09:APLD": {
    "id": "2026-11-09:APLD",
@@ -21172,8 +21228,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.09944751381215466
+   "elapsed_sessions": 3,
+   "unreal": 0.0405156537753224
   },
   "2026-11-09:ARM": {
    "id": "2026-11-09:ARM",
@@ -21194,8 +21250,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.11856109567943673
+   "elapsed_sessions": 3,
+   "unreal": 0.09886966805093356
   },
   "2026-11-09:ASML": {
    "id": "2026-11-09:ASML",
@@ -21216,8 +21272,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.01980566521779603
+   "elapsed_sessions": 3,
+   "unreal": -0.004984647286358057
   },
   "2026-11-09:ASTS": {
    "id": "2026-11-09:ASTS",
@@ -21238,8 +21294,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.07076023391812858
+   "elapsed_sessions": 3,
+   "unreal": 0.008771929824561209
   },
   "2026-11-09:AVGO": {
    "id": "2026-11-09:AVGO",
@@ -21260,8 +21316,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.09001926052224452
+   "elapsed_sessions": 3,
+   "unreal": 0.1504530958921413
   },
   "2026-11-09:BBAI": {
    "id": "2026-11-09:BBAI",
@@ -21282,8 +21338,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": -0.03361344537815125
+   "elapsed_sessions": 3,
+   "unreal": -0.13025210084033612
   },
   "2026-11-09:BE": {
    "id": "2026-11-09:BE",
@@ -21304,8 +21360,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.13227027027027027
+   "elapsed_sessions": 3,
+   "unreal": 0.09151351351351344
   },
   "2026-11-09:BKR": {
    "id": "2026-11-09:BKR",
@@ -21326,8 +21382,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.04549301735082523
+   "elapsed_sessions": 3,
+   "unreal": 0.03385526872619549
   },
   "2026-11-09:CAT": {
    "id": "2026-11-09:CAT",
@@ -21348,8 +21404,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.0559192628345766
+   "elapsed_sessions": 3,
+   "unreal": 0.062360684510750275
   },
   "2026-11-09:CIEN": {
    "id": "2026-11-09:CIEN",
@@ -21370,8 +21426,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.12344882547151914
+   "elapsed_sessions": 3,
+   "unreal": 0.11566923456415323
   },
   "2026-11-09:CLF": {
    "id": "2026-11-09:CLF",
@@ -21392,8 +21448,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.08415841584158423
+   "elapsed_sessions": 3,
+   "unreal": 0.07838283828382853
   },
   "2026-11-09:CLSK": {
    "id": "2026-11-09:CLSK",
@@ -21414,8 +21470,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.02980625931445613
+   "elapsed_sessions": 3,
+   "unreal": 0.019374068554396384
   },
   "2026-11-09:CRDO": {
    "id": "2026-11-09:CRDO",
@@ -21436,8 +21492,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.10278405989238104
+   "elapsed_sessions": 3,
+   "unreal": 0.0903064805427749
   },
   "2026-11-09:CRML": {
    "id": "2026-11-09:CRML",
@@ -21458,8 +21514,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": -0.050761421319796884
+   "elapsed_sessions": 3,
+   "unreal": -0.10152284263959399
   },
   "2026-11-09:CSCO": {
    "id": "2026-11-09:CSCO",
@@ -21480,8 +21536,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.03524093290866137
+   "elapsed_sessions": 3,
+   "unreal": 0.048083838487619435
   },
   "2026-11-09:ENTG": {
    "id": "2026-11-09:ENTG",
@@ -21502,8 +21558,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.1153540175019887
+   "elapsed_sessions": 3,
+   "unreal": 0.10804946843133001
   },
   "2026-11-09:ETN": {
    "id": "2026-11-09:ETN",
@@ -21524,8 +21580,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.03736731582429598
+   "elapsed_sessions": 3,
+   "unreal": 0.03282225354543633
   },
   "2026-11-09:FCX": {
    "id": "2026-11-09:FCX",
@@ -21546,8 +21602,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.028306571759642463
+   "elapsed_sessions": 3,
+   "unreal": 0.0006621420294654623
   },
   "2026-11-09:FUTU": {
    "id": "2026-11-09:FUTU",
@@ -21568,8 +21624,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": -0.01754385964912286
+   "elapsed_sessions": 3,
+   "unreal": -0.041403508771929776
   },
   "2026-11-09:GD": {
    "id": "2026-11-09:GD",
@@ -21590,8 +21646,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.01467215606089911
+   "elapsed_sessions": 3,
+   "unreal": 0.0032052167665992393
   },
   "2026-11-09:GEV": {
    "id": "2026-11-09:GEV",
@@ -21612,8 +21668,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.06976559501277246
+   "elapsed_sessions": 3,
+   "unreal": 0.08333223035485027
   },
   "2026-11-09:GFS": {
    "id": "2026-11-09:GFS",
@@ -21634,8 +21690,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.07151787946986743
+   "elapsed_sessions": 3,
+   "unreal": 0.06576644161040246
   },
   "2026-11-09:GLW": {
    "id": "2026-11-09:GLW",
@@ -21656,8 +21712,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.06057404472618422
+   "elapsed_sessions": 3,
+   "unreal": 0.052121852438809624
   },
   "2026-11-09:INTC": {
    "id": "2026-11-09:INTC",
@@ -21678,8 +21734,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.0783298826777088
+   "elapsed_sessions": 3,
+   "unreal": 0.05590062111801242
   },
   "2026-11-09:KLAC": {
    "id": "2026-11-09:KLAC",
@@ -21700,8 +21756,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.0812571351823248
+   "elapsed_sessions": 3,
+   "unreal": 0.05634275737022376
   },
   "2026-11-09:KTOS": {
    "id": "2026-11-09:KTOS",
@@ -21722,8 +21778,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": -0.006498781478472826
+   "elapsed_sessions": 3,
+   "unreal": -0.05903059842946112
   },
   "2026-11-09:LHX": {
    "id": "2026-11-09:LHX",
@@ -21744,8 +21800,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.01545634774946758
+   "elapsed_sessions": 3,
+   "unreal": -0.0019825244144211496
   },
   "2026-11-09:LITE": {
    "id": "2026-11-09:LITE",
@@ -21766,8 +21822,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.1269432754842974
+   "elapsed_sessions": 3,
+   "unreal": 0.08623447988036048
   },
   "2026-11-09:LMT": {
    "id": "2026-11-09:LMT",
@@ -21788,8 +21844,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.03907274616341061
+   "elapsed_sessions": 3,
+   "unreal": 0.028921326497589828
   },
   "2026-11-09:LRCX": {
    "id": "2026-11-09:LRCX",
@@ -21810,8 +21866,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.0833103701662532
+   "elapsed_sessions": 3,
+   "unreal": 0.07366583999265175
   },
   "2026-11-09:MDB": {
    "id": "2026-11-09:MDB",
@@ -21832,8 +21888,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.03267973856209139
+   "elapsed_sessions": 3,
+   "unreal": 0.037749679310976614
   },
   "2026-11-09:MRVL": {
    "id": "2026-11-09:MRVL",
@@ -21854,8 +21910,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.12555844502233793
+   "elapsed_sessions": 3,
+   "unreal": 0.0965526438621056
   },
   "2026-11-09:MTSI": {
    "id": "2026-11-09:MTSI",
@@ -21876,8 +21932,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.1130612972202425
+   "elapsed_sessions": 3,
+   "unreal": 0.09479686386315045
   },
   "2026-11-09:MU": {
    "id": "2026-11-09:MU",
@@ -21898,8 +21954,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.13081050944316663
+   "elapsed_sessions": 3,
+   "unreal": 0.11288591539480097
   },
   "2026-11-09:MXL": {
    "id": "2026-11-09:MXL",
@@ -21920,8 +21976,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.11018518518518516
+   "elapsed_sessions": 3,
+   "unreal": 0.09185185185185185
   },
   "2026-11-09:NBIS": {
    "id": "2026-11-09:NBIS",
@@ -21942,8 +21998,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.1250181818181817
+   "elapsed_sessions": 3,
+   "unreal": -0.06443636363636374
   },
   "2026-11-09:NOC": {
    "id": "2026-11-09:NOC",
@@ -21964,8 +22020,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.02488931879906242
+   "elapsed_sessions": 3,
+   "unreal": 0.021485174299639143
   },
   "2026-11-09:NOK": {
    "id": "2026-11-09:NOK",
@@ -21986,8 +22042,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.0317848410757946
+   "elapsed_sessions": 3,
+   "unreal": 0.012224938875305513
   },
   "2026-11-09:ON": {
    "id": "2026-11-09:ON",
@@ -22008,8 +22064,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.09228486646884271
+   "elapsed_sessions": 3,
+   "unreal": 0.09391691394658741
   },
   "2026-11-09:ORCL": {
    "id": "2026-11-09:ORCL",
@@ -22030,8 +22086,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.08879653973369517
+   "elapsed_sessions": 3,
+   "unreal": 0.07802561275549147
   },
   "2026-11-09:PLTR": {
    "id": "2026-11-09:PLTR",
@@ -22052,8 +22108,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.024909339516081097
+   "elapsed_sessions": 3,
+   "unreal": 0.020034480708638114
   },
   "2026-11-09:PWR": {
    "id": "2026-11-09:PWR",
@@ -22074,8 +22130,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.041563870614035325
+   "elapsed_sessions": 3,
+   "unreal": 0.0385142543859649
   },
   "2026-11-09:RDW": {
    "id": "2026-11-09:RDW",
@@ -22096,8 +22152,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.05263157894736836
+   "elapsed_sessions": 3,
+   "unreal": 0.006265664160400863
   },
   "2026-11-09:RTX": {
    "id": "2026-11-09:RTX",
@@ -22118,8 +22174,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.02615212071778128
+   "elapsed_sessions": 3,
+   "unreal": 0.011215334420880962
   },
   "2026-11-09:SKHY": {
    "id": "2026-11-09:SKHY",
@@ -22140,8 +22196,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.08587786259541974
+   "elapsed_sessions": 3,
+   "unreal": 0.051221374045801626
   },
   "2026-11-09:SMR": {
    "id": "2026-11-09:SMR",
@@ -22162,8 +22218,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": -0.005703422053231821
+   "elapsed_sessions": 3,
+   "unreal": -0.08365019011406838
   },
   "2026-11-09:SNOW": {
    "id": "2026-11-09:SNOW",
@@ -22184,8 +22240,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.03733039465527943
+   "elapsed_sessions": 3,
+   "unreal": 0.028652111026930216
   },
   "2026-11-09:SNPS": {
    "id": "2026-11-09:SNPS",
@@ -22206,8 +22262,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.0029298782472817475
+   "elapsed_sessions": 3,
+   "unreal": 0.004166937951689542
   },
   "2026-11-09:TER": {
    "id": "2026-11-09:TER",
@@ -22228,8 +22284,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.10350840772264891
+   "elapsed_sessions": 3,
+   "unreal": 0.09507992526468767
   },
   "2026-11-09:TJX": {
    "id": "2026-11-09:TJX",
@@ -22250,8 +22306,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": -0.0035784707514788794
+   "elapsed_sessions": 3,
+   "unreal": -0.006937851456948918
   },
   "2026-11-09:TSLA": {
    "id": "2026-11-09:TSLA",
@@ -22272,8 +22328,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.05390319536200616
+   "elapsed_sessions": 3,
+   "unreal": 0.07172711338816229
   },
   "2026-11-09:TSM": {
    "id": "2026-11-09:TSM",
@@ -22294,8 +22350,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.06418310076721068
+   "elapsed_sessions": 3,
+   "unreal": 0.043947273569846956
   },
   "2026-11-09:TXN": {
    "id": "2026-11-09:TXN",
@@ -22316,8 +22372,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.07237798546209762
+   "elapsed_sessions": 3,
+   "unreal": 0.08161993769470421
   },
   "2026-11-09:UNH": {
    "id": "2026-11-09:UNH",
@@ -22338,8 +22394,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.010533179515473723
+   "elapsed_sessions": 3,
+   "unreal": 0.016025480262827907
   },
   "2026-11-09:VRT": {
    "id": "2026-11-09:VRT",
@@ -22360,8 +22416,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.09557282686543411
+   "elapsed_sessions": 3,
+   "unreal": 0.11217804185787417
   },
   "2026-11-09:WDC": {
    "id": "2026-11-09:WDC",
@@ -22382,8 +22438,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-10",
-   "elapsed_sessions": 2,
-   "unreal": 0.10694601469756915
+   "elapsed_sessions": 3,
+   "unreal": 0.09952656868287146
   },
   "2026-11-10:DJT": {
    "id": "2026-11-10:DJT",
@@ -22404,8 +22460,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-11",
-   "elapsed_sessions": 1,
-   "unreal": 0.17155756207674955
+   "elapsed_sessions": 2,
+   "unreal": 0.12189616252821667
   },
   "2026-11-10:DVN": {
    "id": "2026-11-10:DVN",
@@ -22426,8 +22482,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-11",
-   "elapsed_sessions": 1,
-   "unreal": 0.022520473157415788
+   "elapsed_sessions": 2,
+   "unreal": 0.05163785259326659
   },
   "2026-11-10:NUE": {
    "id": "2026-11-10:NUE",
@@ -22448,8 +22504,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-11",
-   "elapsed_sessions": 1,
-   "unreal": 0.005346153846153889
+   "elapsed_sessions": 2,
+   "unreal": 0.0028846153846153744
   },
   "2026-11-10:OXY": {
    "id": "2026-11-10:OXY",
@@ -22470,8 +22526,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-11",
-   "elapsed_sessions": 1,
-   "unreal": -0.00034928396786582105
+   "elapsed_sessions": 2,
+   "unreal": 0.01990918616835491
   },
   "2026-11-10:ROK": {
    "id": "2026-11-10:ROK",
@@ -22492,8 +22548,8 @@
    "sig_ok": true,
    "status": "open",
    "entry": "2026-11-11",
-   "elapsed_sessions": 1,
-   "unreal": 0.0011584343882480308
+   "elapsed_sessions": 2,
+   "unreal": -0.0037464261066746385
   },
   "2026-11-11:CVX": {
    "id": "2026-11-11:CVX",
@@ -22513,9 +22569,9 @@
    "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-11-12",
+   "elapsed_sessions": 1,
+   "unreal": 0.006279069767441747
   },
   "2026-11-11:DDOG": {
    "id": "2026-11-11:DDOG",
@@ -22535,9 +22591,9 @@
    "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-11-12",
+   "elapsed_sessions": 1,
+   "unreal": 0.03222123982943681
   },
   "2026-11-11:HAL": {
    "id": "2026-11-11:HAL",
@@ -22557,9 +22613,9 @@
    "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-11-12",
+   "elapsed_sessions": 1,
+   "unreal": -0.0024360535931792215
   },
   "2026-11-11:NOW": {
    "id": "2026-11-11:NOW",
@@ -22579,9 +22635,9 @@
    "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-11-12",
+   "elapsed_sessions": 1,
+   "unreal": -0.00749359100769087
   },
   "2026-11-11:WTI": {
    "id": "2026-11-11:WTI",
@@ -22601,9 +22657,9 @@
    "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
-   "entry": null,
-   "elapsed_sessions": 0,
-   "unreal": null
+   "entry": "2026-11-12",
+   "elapsed_sessions": 1,
+   "unreal": 0.05063291139240489
   },
   "2026-11-11:XOM": {
    "id": "2026-11-11:XOM",
@@ -22621,6 +22677,195 @@
    "late_verified": true,
    "panic_sc": null,
    "panic_sc_filled_after": 0,
+   "sig_ok": true,
+   "status": "open",
+   "entry": "2026-11-12",
+   "elapsed_sessions": 1,
+   "unreal": 0.00909361069836545
+  },
+  "2026-11-12:CCL": {
+   "id": "2026-11-12:CCL",
+   "date": "2026-11-12",
+   "sym": "CCL",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.58,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:ISRG": {
+   "id": "2026-11-12:ISRG",
+   "date": "2026-11-12",
+   "sym": "ISRG",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.45,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:MA": {
+   "id": "2026-11-12:MA",
+   "date": "2026-11-12",
+   "sym": "MA",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.6,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:MDT": {
+   "id": "2026-11-12:MDT",
+   "date": "2026-11-12",
+   "sym": "MDT",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:MRNA": {
+   "id": "2026-11-12:MRNA",
+   "date": "2026-11-12",
+   "sym": "MRNA",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.42,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:PYPL": {
+   "id": "2026-11-12:PYPL",
+   "date": "2026-11-12",
+   "sym": "PYPL",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "disagree",
+   "p": 0.52,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:RCL": {
+   "id": "2026-11-12:RCL",
+   "date": "2026-11-12",
+   "sym": "RCL",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.56,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:SPOT": {
+   "id": "2026-11-12:SPOT",
+   "date": "2026-11-12",
+   "sym": "SPOT",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.57,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
+   "sig_ok": true,
+   "status": "open",
+   "entry": null,
+   "elapsed_sessions": 0,
+   "unreal": null
+  },
+  "2026-11-12:V": {
+   "id": "2026-11-12:V",
+   "date": "2026-11-12",
+   "sym": "V",
+   "kind": "回",
+   "type": "stock",
+   "style": "b",
+   "displayed_buy": true,
+   "v": "agree",
+   "p": 0.58,
+   "model": "claude-opus-5-5",
+   "protocol": "v2",
+   "late": false,
+   "late_verified": true,
+   "panic_sc": null,
    "sig_ok": true,
    "status": "open",
    "entry": null,
