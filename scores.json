@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-13T00:15:54Z",
+ "gen_utc": "2026-11-13T05:14:20Z",
  "data_asof": "2026-11-12",
  "protocol": "v2",
  "status": "MATURING",
@@ -6709,7 +6709,7 @@
    "status": "open",
    "entry": "2026-10-21",
    "elapsed_sessions": 17,
-   "unreal": 0.04573314474304557
+   "unreal": 0.04652877305353553
   },
   "2026-10-20:BNTX": {
    "id": "2026-10-20:BNTX",
@@ -18051,7 +18051,7 @@
    "status": "open",
    "entry": "2026-10-30",
    "elapsed_sessions": 10,
-   "unreal": -0.0573310225303294
+   "unreal": -0.05400610812352602
   },
   "2026-10-29:WDAY": {
    "id": "2026-10-29:WDAY",
@@ -18205,7 +18205,7 @@
    "status": "open",
    "entry": "2026-11-03",
    "elapsed_sessions": 8,
-   "unreal": 0.08999324282818355
+   "unreal": 0.0908207897753992
   },
   "2026-11-02:ABNB": {
    "id": "2026-11-02:ABNB",
@@ -19399,7 +19399,7 @@
    "status": "open",
    "entry": "2026-11-05",
    "elapsed_sessions": 6,
-   "unreal": 0.002797479442764761
+   "unreal": 0.003560308918305166
   },
   "2026-11-04:ADI": {
    "id": "2026-11-04:ADI",
@@ -22307,7 +22307,7 @@
    "status": "open",
    "entry": "2026-11-10",
    "elapsed_sessions": 3,
-   "unreal": -0.006937851456948918
+   "unreal": -0.003429878048780588
   },
   "2026-11-09:TSLA": {
    "id": "2026-11-09:TSLA",
@@ -22698,6 +22698,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22719,6 +22720,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22740,6 +22742,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22761,6 +22764,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22782,6 +22786,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22803,6 +22808,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22824,6 +22830,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22845,6 +22852,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -22866,6 +22874,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
