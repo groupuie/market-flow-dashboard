@@ -1,0 +1,532 @@
+{
+ "schema": "fs1-card-v1",
+ "decision_month": "2026-10",
+ "cutoff_utc": "2026-11-01T00:42:12Z",
+ "packet_sha256": "ccdc02f422119ea0c1d198abeb51b82db10063ddf912f9cf22135e4ed9f92d36",
+ "prev_card_sha256": null,
+ "model": "claude-opus-5-5",
+ "regime_view": "景氣偏「過熱型停滯」:第三季 GDP 3.4%、核心 PCE 3.1%,荷莫茲與曼德海峽中斷讓 Brent 在 100–115 美元;Warsh 領導的 Fed 10 月按兵不動但兩票主張升息,市場定價 12 月升息,10 年期殖利率約 5%。AI 資本支出逾 8000 億美元但雲端業者自由現金流轉負,10 月科技被大舉賣出、資金轉向必需消費、能源、公用與醫療。未來 3 個月預期:油價與利率維持高檔,房市與可選消費承壓,防禦與能源續強,AI 硬體擁擠部位仍有去化風險。",
+ "ranking": [
+  "Oil",
+  "Drugs",
+  "Smoke",
+  "Hlth",
+  "Insur",
+  "Gold",
+  "Util",
+  "Soda",
+  "Mines",
+  "Food",
+  "Banks",
+  "Hshld",
+  "Beer",
+  "Agric",
+  "Coal",
+  "MedEq",
+  "Telcm",
+  "LabEq",
+  "Guns",
+  "Fin",
+  "Softw",
+  "Chems",
+  "Ships",
+  "Whlsl",
+  "Mach",
+  "ElcEq",
+  "BusSv",
+  "Other",
+  "Aero",
+  "PerSv",
+  "Chips",
+  "Hardw",
+  "Boxes",
+  "Paper",
+  "Books",
+  "Steel",
+  "Rubbr",
+  "FabPr",
+  "Txtls",
+  "Toys",
+  "Rtail",
+  "Trans",
+  "Meals",
+  "Fun",
+  "Clths",
+  "RlEst",
+  "Autos",
+  "BldMt",
+  "Cnstr"
+ ],
+ "exp_excess_3m_pct": {
+  "Oil": 4.0,
+  "Drugs": 3.82,
+  "Smoke": 3.65,
+  "Hlth": 3.47,
+  "Insur": 3.29,
+  "Gold": 3.11,
+  "Util": 2.94,
+  "Soda": 2.76,
+  "Mines": 2.58,
+  "Food": 2.41,
+  "Banks": 2.23,
+  "Hshld": 2.05,
+  "Beer": 1.88,
+  "Agric": 1.7,
+  "Coal": 1.52,
+  "MedEq": 1.34,
+  "Telcm": 1.17,
+  "LabEq": 0.99,
+  "Guns": 0.81,
+  "Fin": 0.64,
+  "Softw": 0.46,
+  "Chems": 0.28,
+  "Ships": 0.1,
+  "Whlsl": -0.07,
+  "Mach": -0.25,
+  "ElcEq": -0.43,
+  "BusSv": -0.6,
+  "Other": -0.78,
+  "Aero": -0.96,
+  "PerSv": -1.14,
+  "Chips": -1.31,
+  "Hardw": -1.49,
+  "Boxes": -1.67,
+  "Paper": -1.84,
+  "Books": -2.02,
+  "Steel": -2.2,
+  "Rubbr": -2.38,
+  "FabPr": -2.55,
+  "Txtls": -2.73,
+  "Toys": -2.91,
+  "Rtail": -3.08,
+  "Trans": -3.26,
+  "Meals": -3.44,
+  "Fun": -3.61,
+  "Clths": -3.79,
+  "RlEst": -3.97,
+  "Autos": -4.15,
+  "BldMt": -4.32,
+  "Cnstr": -4.5
+ },
+ "weights": {
+  "Oil": 0.15,
+  "Drugs": 0.14,
+  "Hlth": 0.12,
+  "Smoke": 0.08,
+  "Insur": 0.1,
+  "Gold": 0.06,
+  "Util": 0.08,
+  "Soda": 0.06,
+  "Food": 0.05,
+  "Banks": 0.06,
+  "CASH": 0.1
+ },
+ "calls": [
+  {
+   "industry": "Oil",
+   "side": "over",
+   "p_beat_market_3m": 0.62,
+   "horizon_months": 3,
+   "thesis": "荷莫茲/曼德海峽中斷使 Brent 維持 100 美元以上,能源盈餘上修最多,本益比仍低。",
+   "differs_from_consensus": "共識已看好能源,但仍把高油價當暫時;我認為冬季庫存偏低讓高油價延續到第一季。",
+   "marginal_buyer": "通膨避險的多資產基金與從科技撤出的成長資金",
+   "catalysts": [
+    "OPEC/IEA 月報庫存下降",
+    "第四季財報上調回購"
+   ],
+   "falsifiers": [
+    "荷莫茲恢復通航、Brent 跌破 90 美元",
+    "能源 EPS 預估轉為下修"
+   ],
+   "add_if": [
+    "Brent 站穩 115 美元以上且盈餘再上修"
+   ],
+   "exit_if": [
+    "Brent 連續兩週低於 90 美元",
+    "停火協議確認航道恢復"
+   ],
+   "claim_ids": [
+    "c3",
+    "c4",
+    "c8"
+   ]
+  },
+  {
+   "industry": "Drugs",
+   "side": "over",
+   "p_beat_market_3m": 0.6,
+   "horizon_months": 3,
+   "thesis": "高利率與 AI 去槓桿下,低估值、高現金流的藥廠是防禦性成長;併購活動回溫。",
+   "differs_from_consensus": "市場因醫療第三季盈餘下修而保守;我認為下修已反映,資金輪動才剛開始。",
+   "marginal_buyer": "從大型科技撤出、尋找防禦成長的機構資金",
+   "catalysts": [
+    "12 月 Fed 升息引發成長股再修正",
+    "大型併購"
+   ],
+   "falsifiers": [
+    "藥價政策新打擊(MFN 擴大)",
+    "XLV 連兩月落後大盤"
+   ],
+   "add_if": [
+    "科技再跌 5% 以上而藥廠持穩"
+   ],
+   "exit_if": [
+    "醫療 EPS 預估再下修 3% 以上",
+    "藥價政策負面行政命令"
+   ],
+   "claim_ids": [
+    "c3",
+    "c4",
+    "c5"
+   ]
+  },
+  {
+   "industry": "Smoke",
+   "side": "over",
+   "p_beat_market_3m": 0.57,
+   "horizon_months": 3,
+   "thesis": "菸草定價力強、殖利率高、對景氣與 AI 無敏感度,在鷹派 Fed 下是避險。",
+   "differs_from_consensus": "共識把高殖利率股視為利率輸家;我認為股市波動上升時防禦需求壓過利率因素。",
+   "marginal_buyer": "收益型基金與低波動因子 ETF",
+   "catalysts": [
+    "VIX 走升",
+    "10 年期殖利率回落"
+   ],
+   "falsifiers": [
+    "10 年期殖利率突破 5.3%",
+    "銷量下滑加速"
+   ],
+   "add_if": [
+    "VIX 高於 25 且菸草跑贏"
+   ],
+   "exit_if": [
+    "10 年期殖利率站上 5.3%",
+    "大盤轉向全面風險偏好、防禦股落後 5%"
+   ],
+   "claim_ids": [
+    "c1",
+    "c4",
+    "c5"
+   ]
+  },
+  {
+   "industry": "Hlth",
+   "side": "over",
+   "p_beat_market_3m": 0.56,
+   "horizon_months": 3,
+   "thesis": "醫療服務需求剛性,與油價、房市、AI 支出無關,在輪動中受惠。",
+   "differs_from_consensus": "醫療被視為政策風險區;我認為估值折價足以吸收。",
+   "marginal_buyer": "防禦輪動資金與醫療主題基金",
+   "catalysts": [
+    "第四季財報醫療利用率穩定"
+   ],
+   "falsifiers": [
+    "醫療成本率大幅惡化",
+    "政策削減給付"
+   ],
+   "add_if": [
+    "財報後保險/服務商指引上調"
+   ],
+   "exit_if": [
+    "醫療服務股指引下修",
+    "XLV 跌破 10 月低點"
+   ],
+   "claim_ids": [
+    "c3",
+    "c4"
+   ]
+  },
+  {
+   "industry": "Insur",
+   "side": "over",
+   "p_beat_market_3m": 0.56,
+   "horizon_months": 3,
+   "thesis": "高殖利率提升投資收益,保費續漲,與 AI 及油價關聯低。",
+   "differs_from_consensus": "共識偏重銀行作為金融首選;我偏好受惠高利率且信用風險較低的保險。",
+   "marginal_buyer": "金融板塊內部輪動資金、價值型基金",
+   "catalysts": [
+    "第四季投資收益上升",
+    "颶風季結束損失低於預期"
+   ],
+   "falsifiers": [
+    "重大巨災損失",
+    "殖利率急降至 4.3% 以下"
+   ],
+   "add_if": [
+    "保費定價持續上調"
+   ],
+   "exit_if": [
+    "巨災損失超過預估",
+    "10 年期殖利率跌破 4.3%"
+   ],
+   "claim_ids": [
+    "c1",
+    "c2"
+   ]
+  },
+  {
+   "industry": "Gold",
+   "side": "over",
+   "p_beat_market_3m": 0.54,
+   "horizon_months": 3,
+   "thesis": "地緣風險與通膨黏著支撐金價,金礦 9 月回檔後估值重回合理;Goldman 偏好金礦。",
+   "differs_from_consensus": "10 月金價小幅回落,市場擔心升息壓抑金價;我認為實質利率上升有限、地緣溢價持續。",
+   "marginal_buyer": "避險資金與央行購金帶動的金礦 ETF 流入",
+   "catalysts": [
+    "中東衝突升級",
+    "美元轉弱"
+   ],
+   "falsifiers": [
+    "金價跌破 3800 美元",
+    "美元大幅走強"
+   ],
+   "add_if": [
+    "金價重新站上 4300 美元"
+   ],
+   "exit_if": [
+    "金價跌破 3800 美元",
+    "金礦 ETF 連月流出"
+   ],
+   "claim_ids": [
+    "c8",
+    "c9",
+    "c4"
+   ]
+  },
+  {
+   "industry": "Cnstr",
+   "side": "under",
+   "p_beat_market_3m": 0.35,
+   "horizon_months": 3,
+   "thesis": "建商信心創 2012 年來新低,房貸逾 7%、43% 建商降價,12 月升息風險壓抑需求。",
+   "differs_from_consensus": "共識知道房市弱,但部分人期待殖利率回落帶來反彈;我認為 Fed 升息會讓房貸利率維持高檔。",
+   "marginal_buyer": "目前沒有明顯的邊際買家;空頭回補是唯一來源",
+   "catalysts": [
+    "12 月 FOMC 升息"
+   ],
+   "falsifiers": [
+    "房貸利率跌破 6.5%",
+    "NAHB 回升到 35 以上"
+   ],
+   "add_if": [
+    "新屋銷售與營建許可續降"
+   ],
+   "exit_if": [
+    "10 年期殖利率跌破 4.5%",
+    "NAHB 連兩月回升"
+   ],
+   "claim_ids": [
+    "c1",
+    "c6"
+   ]
+  },
+  {
+   "industry": "BldMt",
+   "side": "under",
+   "p_beat_market_3m": 0.37,
+   "horizon_months": 3,
+   "thesis": "建材需求跟隨新屋與修繕下滑,成本(柴油)上升擠壓毛利。",
+   "differs_from_consensus": "市場預期非住宅與基建支撐;我認為住宅疲弱加上成本上升佔主導。",
+   "marginal_buyer": "無明顯邊際買家",
+   "catalysts": [
+    "建商下修出貨指引"
+   ],
+   "falsifiers": [
+    "基建訂單大增抵銷",
+    "房貸利率大幅回落"
+   ],
+   "add_if": [
+    "建材商第四季指引下修"
+   ],
+   "exit_if": [
+    "NAHB 回升到 35 以上",
+    "10 年期殖利率跌破 4.5%"
+   ],
+   "claim_ids": [
+    "c6",
+    "c1"
+   ]
+  },
+  {
+   "industry": "Autos",
+   "side": "under",
+   "p_beat_market_3m": 0.37,
+   "horizon_months": 3,
+   "thesis": "高油價、高車貸利率壓抑汽車需求;S0 也顯示長期落後。",
+   "differs_from_consensus": "共識認為已跌深便宜;我認為盈餘預估仍需下修。",
+   "marginal_buyer": "無明顯邊際買家",
+   "catalysts": [
+    "月度汽車銷售下滑",
+    "車貸違約上升"
+   ],
+   "falsifiers": [
+    "油價大跌與 Fed 轉鴿",
+    "汽車銷售回升"
+   ],
+   "add_if": [
+    "SAAR 跌破 1500 萬"
+   ],
+   "exit_if": [
+    "汽車銷售連兩月回升",
+    "Brent 跌破 90 美元"
+   ],
+   "claim_ids": [
+    "c1",
+    "c2",
+    "c8"
+   ]
+  },
+  {
+   "industry": "Meals",
+   "side": "under",
+   "p_beat_market_3m": 0.4,
+   "horizon_months": 3,
+   "thesis": "汽油價格高漲擠壓中低收入消費,餐飲客流下滑,且人力成本黏著。",
+   "differs_from_consensus": "共識把餐飲視為防禦消費;我認為油價衝擊對可選消費先打擊餐飲。",
+   "marginal_buyer": "無明顯邊際買家",
+   "catalysts": [
+    "餐飲同店銷售轉負"
+   ],
+   "falsifiers": [
+    "油價快速回落",
+    "實質工資上升帶動客流"
+   ],
+   "add_if": [
+    "大型連鎖下修同店銷售指引"
+   ],
+   "exit_if": [
+    "Brent 跌破 90 美元",
+    "同店銷售回升"
+   ],
+   "claim_ids": [
+    "c2",
+    "c8"
+   ]
+  }
+ ],
+ "claims": [
+  {
+   "id": "c1",
+   "text": "FOMC 10/28 維持利率不變,2 位委員異議主張升息;市場定價 12 月升息 25bp 機率約 72–77%,10 年期殖利率 10 月初創 2002 年以來新高後回落至約 4.9–5.1%。",
+   "source_url": "https://tradingeconomics.com/united-states/government-bond-yield/news/592783",
+   "published": "2026-10-16",
+   "consensus": "共識:Warsh 領導的 Fed 偏鷹,12 月升息是基準情境"
+  },
+  {
+   "id": "c2",
+   "text": "9 月 PCE 月增 0.5%、核心 PCE 年增 3.1%;第三季 GDP 年化成長 3.4% 高於預期。",
+   "source_url": "https://tradingeconomics.com/united-states/government-bond-yield/news/592783",
+   "published": "2026-10-30",
+   "consensus": "共識:通膨黏著、經濟未衰退,降息不在近期選項"
+  },
+  {
+   "id": "c3",
+   "text": "FactSet:S&P 500 第三季混合盈餘成長 29.5%,能源 EPS 預估上修最多、醫療保健唯一年減且被下修;前瞻本益比 18.7,低於 5 年均值。",
+   "source_url": "https://insight.factset.com/sp-500-earnings-season-update-october-23-2026?hs_amp=true",
+   "published": "2026-10-23",
+   "consensus": "共識:盈餘強勁,能源/科技/通訊/原物料領漲盈餘"
+  },
+  {
+   "id": "c4",
+   "text": "10 月至 10/23:XLP +11.65%、XLE +9.87%、XLU +8.7%、XLV +7.65%,XLK −6.8%;Brent 約 114 美元,AI 股因融資成本與資本支出放緩疑慮下跌。",
+   "source_url": "https://investrade.com/?p=1649",
+   "published": "2026-10-23",
+   "consensus": "共識:資金從 AI 擁擠交易轉向防禦與能源"
+  },
+  {
+   "id": "c5",
+   "text": "10/12–16 當週 XLK −7.70%,11 個板塊有 7 個上漲;WTI 漲 7.81% 至 99 美元,VIX 升 34.7%;領漲未擴散,而是擁擠族群被賣出。",
+   "source_url": "https://tapeboard.com/blog/weekly-recap-2026-10-16",
+   "published": "2026-10-16",
+   "consensus": "共識:科技領導地位鬆動,防禦輪動"
+  },
+  {
+   "id": "c6",
+   "text": "NAHB 10 月建商信心 29,為 2012 年 6 月以來最低;房貸利率逾 7%,43% 建商降價,買方來客數 18。",
+   "source_url": "https://www.mpamag.com/us/mortgage-industry/industry-trends/builder-confidence-hits-14-year-low-as-mortgage-rates-top-7/594072",
+   "published": "2026-10-19",
+   "consensus": "共識:房市在高利率下持續疲弱"
+  },
+  {
+   "id": "c7",
+   "text": "Meta 第三季資本支出 349 億美元、自由現金流 −21.2 億美元,股價跌 9.4%;四大雲端業者 2026 資本支出預期逾 8000 億美元。",
+   "source_url": "https://aiweekly.co/alerts/bloomberg-alphabet-microsoft-meta-earnings-this-week-will-judge-whether-800b-ai",
+   "published": "2026-10-26",
+   "consensus": "共識分歧:資本支出仍增,但市場開始懲罰負自由現金流"
+  },
+  {
+   "id": "c8",
+   "text": "伊朗革命衛隊稱荷莫茲海峽完全關閉,胡塞封鎖曼德海峽沙國油輪;Goldman 稱若中斷持續,Brent 第四季可逾 120 美元。",
+   "source_url": "https://www.khaleejtimes.com/business/energy/oil-nears-100-again",
+   "published": "2026-07-23",
+   "consensus": "共識:油價供給衝擊延續,但多數預測高於 100 美元仍屬風險情境"
+  },
+  {
+   "id": "c9",
+   "text": "Goldman 指 AI/半導體動能部位由多轉空,建議金礦與銅礦股;JPMorgan 仍看好半導體估值回落後的機會。",
+   "source_url": "https://www.itiger.com/news/1104954447",
+   "published": "2026-08-25",
+   "consensus": "共識分歧:大行對 AI 硬體看法不一"
+  },
+  {
+   "id": "c10",
+   "text": "Alphabet 第二季自由現金流史上首次轉負,2026 資本支出上限提高到 2050 億美元,記憶體漲價推高雲端業者成本。",
+   "source_url": "https://www.itiger.com/news/1101967665",
+   "published": "2026-07-28",
+   "consensus": "共識:雲端成長強但投資人對支出容忍度下降"
+  }
+ ],
+ "notes": {
+  "Oil": "供給衝擊延續、盈餘上修最多,首選。",
+  "Drugs": "低估值高現金流的防禦成長,承接科技流出。",
+  "Smoke": "定價力強、無景氣敏感度,波動期避險。",
+  "Hlth": "需求剛性,與油價及 AI 無關。",
+  "Insur": "高殖利率推升投資收益,保費續漲。",
+  "Gold": "地緣風險支撐,9 月回檔後估值回到合理。",
+  "Util": "防禦屬性強,但利率高壓抑評價,中性偏多。",
+  "Soda": "必需消費,定價力佳,10 月已大漲略擁擠。",
+  "Mines": "銅與金價支撐,但全球景氣放緩風險。",
+  "Food": "防禦但成本受能源推升,中性偏多。",
+  "Banks": "高利差有利,但信用與房市風險抵銷。",
+  "Hshld": "必需品防禦,但油價推升原料與運費。",
+  "Beer": "需求疲弱但防禦屬性,中性。",
+  "Agric": "糧價受能源與肥料成本支撐,波動大。",
+  "Coal": "能源替代受惠,但 9 月大跌且流動性差。",
+  "MedEq": "醫療設備長期落後,估值修復但動能弱。",
+  "Telcm": "防禦但高負債受高利率壓抑。",
+  "LabEq": "9 月強彈,醫療研發支出回穩,中性。",
+  "Guns": "國防預算支撐,但近月動能弱。",
+  "Fin": "交易活絡但市場波動與信用風險並存。",
+  "Softw": "AI 疑慮下回檔,第三季強但估值仍高。",
+  "Chems": "能源成本上升壓縮毛利,中性偏空。",
+  "Ships": "航線中斷推升運價,但風險高。",
+  "Whlsl": "通膨轉嫁能力尚可,中性。",
+  "Mach": "AI 電力設備帶動,但 12 個月漲多。",
+  "ElcEq": "電網與資料中心需求強,但 AI 支出疑慮。",
+  "BusSv": "人力服務疲弱(如 Robert Half 指引差)。",
+  "Other": "雜項,無明確觀點。",
+  "Aero": "航太訂單穩,但近 3 月落後。",
+  "PerSv": "消費者服務受實質所得壓縮。",
+  "Chips": "AI 資本支出仍增,但動能部位轉空、擁擠。",
+  "Hardw": "12 個月漲 88% 最擁擠,AI 去槓桿風險大。",
+  "Boxes": "包裝需求隨工業放緩。",
+  "Paper": "需求疲弱、能源成本高。",
+  "Books": "結構性衰退,無催化。",
+  "Steel": "3 個月跌 25%,需求放緩、房市拖累。",
+  "Rubbr": "能源原料成本上升,中性偏空。",
+  "FabPr": "工業與營建放緩,中性偏空。",
+  "Txtls": "成本上升、需求弱。",
+  "Toys": "可選消費受油價擠壓。",
+  "Rtail": "中低收入消費受油價衝擊。",
+  "Trans": "燃油成本飆升衝擊航空與貨運。",
+  "Meals": "汽油高價擠壓客流,看空。",
+  "Fun": "可選消費最弱一環,長期落後。",
+  "Clths": "需求弱且關稅成本,長期落後。",
+  "RlEst": "高利率壓抑估值與交易量。",
+  "Autos": "高油價與高車貸利率,看空。",
+  "BldMt": "住宅疲弱加成本上升,看空。",
+  "Cnstr": "建商信心 2012 年來新低,最看空。"
+ },
+ "changes_vs_prev": null,
+ "searches_used": 15
+}
