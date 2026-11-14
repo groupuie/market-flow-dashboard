@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-14T00:15:37Z",
+ "gen_utc": "2026-11-14T05:14:32Z",
  "data_asof": "2026-11-13",
  "protocol": "v2",
  "status": "MATURING",
@@ -10397,7 +10397,7 @@
    "status": "open",
    "entry": "2026-10-22",
    "elapsed_sessions": 17,
-   "unreal": 0.01962934532295213
+   "unreal": 0.023197464565542836
   },
   "2026-10-21:SMCI": {
    "id": "2026-10-21:SMCI",
@@ -18052,7 +18052,7 @@
    "status": "open",
    "entry": "2026-10-30",
    "elapsed_sessions": 11,
-   "unreal": 0.03645078586556694
+   "unreal": 0.040079644730807606
   },
   "2026-10-29:TEAM": {
    "id": "2026-10-29:TEAM",
@@ -21209,7 +21209,7 @@
    "status": "open",
    "entry": "2026-11-09",
    "elapsed_sessions": 5,
-   "unreal": 0.057199355500219706
+   "unreal": 0.058482340906841124
   },
   "2026-11-06:LUNR": {
    "id": "2026-11-06:LUNR",
@@ -21657,7 +21657,7 @@
    "status": "open",
    "entry": "2026-11-09",
    "elapsed_sessions": 5,
-   "unreal": -0.04463015647226187
+   "unreal": -0.04445234708392598
   },
   "2026-11-06:SPCX": {
    "id": "2026-11-06:SPCX",
@@ -22529,7 +22529,7 @@
    "status": "open",
    "entry": "2026-11-10",
    "elapsed_sessions": 4,
-   "unreal": 0.004402183483007471
+   "unreal": 0.006759976701907977
   },
   "2026-11-09:INTC": {
    "id": "2026-11-09:INTC",
@@ -23663,7 +23663,7 @@
    "status": "open",
    "entry": "2026-11-13",
    "elapsed_sessions": 1,
-   "unreal": -0.0068604304775624625
+   "unreal": -0.006803023566029354
   },
   "2026-11-12:PYPL": {
    "id": "2026-11-12:PYPL",
@@ -23685,7 +23685,7 @@
    "status": "open",
    "entry": "2026-11-13",
    "elapsed_sessions": 1,
-   "unreal": 0.01177675371223752
+   "unreal": 0.011258955987717645
   },
   "2026-11-12:RCL": {
    "id": "2026-11-12:RCL",
@@ -23768,6 +23768,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -23789,6 +23790,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -23810,6 +23812,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -23831,6 +23834,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
