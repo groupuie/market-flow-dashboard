@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-17T00:14:50Z",
+ "gen_utc": "2026-11-17T05:14:26Z",
  "data_asof": "2026-11-16",
  "protocol": "v2",
  "status": "MATURING",
@@ -18879,7 +18879,7 @@
    "status": "open",
    "entry": "2026-11-03",
    "elapsed_sessions": 10,
-   "unreal": -0.032098085135693566
+   "unreal": -0.02572955883270578
   },
   "2026-11-02:CRWD": {
    "id": "2026-11-02:CRWD",
@@ -19333,7 +19333,7 @@
    "status": "open",
    "entry": "2026-11-03",
    "elapsed_sessions": 10,
-   "unreal": -0.06252808988764047
+   "unreal": -0.056613373736459915
   },
   "2026-11-02:ZS": {
    "id": "2026-11-02:ZS",
@@ -22073,7 +22073,7 @@
    "status": "open",
    "entry": "2026-11-09",
    "elapsed_sessions": 6,
-   "unreal": -0.11006401137980093
+   "unreal": -0.10988620199146515
   },
   "2026-11-06:SPCX": {
    "id": "2026-11-06:SPCX",
@@ -22457,7 +22457,7 @@
    "status": "open",
    "entry": "2026-11-10",
    "elapsed_sessions": 5,
-   "unreal": -0.06502306230144472
+   "unreal": -0.06501973920325388
   },
   "2026-11-09:ASTS": {
    "id": "2026-11-09:ASTS",
@@ -23117,7 +23117,7 @@
    "status": "open",
    "entry": "2026-11-10",
    "elapsed_sessions": 5,
-   "unreal": -0.033241555301860126
+   "unreal": -0.0317785923260584
   },
   "2026-11-09:KTOS": {
    "id": "2026-11-09:KTOS",
@@ -24213,7 +24213,7 @@
    "status": "open",
    "entry": "2026-11-11",
    "elapsed_sessions": 4,
-   "unreal": -0.0513161786453713
+   "unreal": -0.04788526139247706
   },
   "2026-11-11:CVX": {
    "id": "2026-11-11:CVX",
@@ -24345,7 +24345,7 @@
    "status": "open",
    "entry": "2026-11-12",
    "elapsed_sessions": 3,
-   "unreal": -0.008202080237741383
+   "unreal": -0.0019438380334338978
   },
   "2026-11-12:CCL": {
    "id": "2026-11-12:CCL",
@@ -24609,7 +24609,7 @@
    "status": "open",
    "entry": "2026-11-16",
    "elapsed_sessions": 1,
-   "unreal": -0.013264274886306215
+   "unreal": -0.012515802781289498
   },
   "2026-11-13:UAL": {
    "id": "2026-11-13:UAL",
@@ -24631,7 +24631,7 @@
    "status": "open",
    "entry": "2026-11-16",
    "elapsed_sessions": 1,
-   "unreal": 0.017079889807162463
+   "unreal": 0.022054074005721125
   },
   "2026-11-16:AMZN": {
    "id": "2026-11-16:AMZN",
@@ -24648,6 +24648,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -24669,6 +24670,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -24690,6 +24692,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -24711,6 +24714,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
