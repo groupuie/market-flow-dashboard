@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-19T00:15:09Z",
+ "gen_utc": "2026-11-19T05:14:16Z",
  "data_asof": "2026-11-18",
  "protocol": "v2",
  "status": "MATURING",
@@ -29591,7 +29591,7 @@
    "status": "open",
    "entry": "2026-11-18",
    "elapsed_sessions": 1,
-   "unreal": -0.017464252512284673
+   "unreal": -0.021255484752938036
   },
   "2026-11-17:BLK": {
    "id": "2026-11-17:BLK",
@@ -29723,7 +29723,7 @@
    "status": "open",
    "entry": "2026-11-18",
    "elapsed_sessions": 1,
-   "unreal": 0.01930595178795147
+   "unreal": 0.019290566037735823
   },
   "2026-11-17:ICE": {
    "id": "2026-11-17:ICE",
@@ -29811,7 +29811,7 @@
    "status": "open",
    "entry": "2026-11-18",
    "elapsed_sessions": 1,
-   "unreal": -0.05750798722044714
+   "unreal": -0.060509554140127375
   },
   "2026-11-17:MCO": {
    "id": "2026-11-17:MCO",
@@ -29921,7 +29921,7 @@
    "status": "open",
    "entry": "2026-11-18",
    "elapsed_sessions": 1,
-   "unreal": 0.005808433398492019
+   "unreal": 0.013107560756075776
   },
   "2026-11-17:TME": {
    "id": "2026-11-17:TME",
@@ -29960,6 +29960,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -29981,6 +29982,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30002,6 +30004,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30023,6 +30026,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30044,6 +30048,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30065,6 +30070,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30086,6 +30092,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30107,6 +30114,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30128,6 +30136,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30149,6 +30158,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30170,6 +30180,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30191,6 +30202,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30212,6 +30224,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30233,6 +30246,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -30254,6 +30268,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 0,
    "sig_ok": true,
    "status": "open",
    "entry": null,
