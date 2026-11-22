@@ -1,0 +1,37 @@
+{
+ "retrieved_tw": "2026-10-23 10:29:28",
+ "files": {
+  "12_Industry_Portfolios_CSV.zip": {
+   "bytes": 139026,
+   "sha256": "309eb6b2bdbb5bc45f039b9814753b079cd40bd4038ffda9afb6c5e0563fd120"
+  },
+  "49_Industry_Portfolios_CSV.zip": {
+   "bytes": 489433,
+   "sha256": "16b3f20bf5bd1db8f5cd7a1b29f5cab1350eb0d5106c5309f77a6629590b1c0e"
+  },
+  "F-F_Research_Data_Factors_CSV.zip": {
+   "bytes": 13065,
+   "sha256": "593f4fbef03181bc0b22ff6292f217689dd1fb79355049ca905d95b262040a66"
+  },
+  "fred_AAA.csv": {
+   "bytes": 20790,
+   "sha256": "15248259177710745867656c413bb2bae549c6485ca3acb7eed348a812f497ac"
+  },
+  "fred_BAA.csv": {
+   "bytes": 20869,
+   "sha256": "3396297d0b2f8f4e8bb467207286c33c04d97bfe37b25bc5a97da6bafc615e93"
+  },
+  "fred_GS10.csv": {
+   "bytes": 14206,
+   "sha256": "40323f225e613a19a4eec7eef20523dec10764de21c70cd1416a7379fb7f13b6"
+  },
+  "fred_TB3MS.csv": {
+   "bytes": 17865,
+   "sha256": "631bc444a8c5370c3a2df12f484a67ae7b9a68c00fe8a33215895fb49c8cc08c"
+  }
+ },
+ "sources": {
+  "French": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/{12_Industry_Portfolios_CSV.zip,49_Industry_Portfolios_CSV.zip,F-F_Research_Data_Factors_CSV.zip}(檔頭:202608 CRSP database)",
+  "FRED": "https://fred.stlouisfed.org/graph/fredgraph.csv?id={GS10,TB3MS,BAA,AAA}(月平均)"
+ }
+}

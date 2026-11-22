@@ -1,0 +1,407 @@
+summary,detail,title,naics6_n,unassigned_share_cbp17,top_ff49_cbp17,top_w_cbp17,ff49_weights_cbp17,ff49_weights_cbp12
+111CA,1111A0,Oilseed farming,2,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+111CA,1111B0,Grain farming,6,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+111CA,111200,Vegetable and melon farming,2,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+111CA,111300,Fruit and tree nut farming,9,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+111CA,111400,"Greenhouse, nursery, and floriculture production",4,0.0,Agric,0.875,Agric:0.875; BldMt:0.125,Agric:0.875; BldMt:0.125
+111CA,111900,Other crop farming,7,0.0,Agric,0.959,Agric:0.959; BldMt:0.035; Food:0.006,Agric:0.959; BldMt:0.035; Food:0.006
+111CA,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",3,0.3333,Agric,1.0,Agric:1.000,Agric:1.000
+111CA,112120,Dairy cattle and milk production,1,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+111CA,112A00,"Animal production, except cattle and poultry and eggs",10,0.0,Agric,0.8795,Agric:0.880; Toys:0.106; BldMt:0.012; Food:0.002,Agric:0.880; Toys:0.106; BldMt:0.012; Food:0.002
+111CA,112300,Poultry and egg production,5,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+113FF,113000,Forestry and logging,3,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+113FF,114000,"Fishing, hunting and trapping",4,0.0,Agric,0.7593,Agric:0.759; Toys:0.241,Agric:0.787; Toys:0.213
+113FF,115000,Support activities for agriculture and forestry,8,0.0,Agric,0.8693,Agric:0.869; BldMt:0.121; PerSv:0.010,Agric:0.883; BldMt:0.107; PerSv:0.010
+211,211000,Oil and gas extraction,2,0.0,Oil,0.9818,Oil:0.982; Chems:0.018,Oil:0.955; Chems:0.045
+212,212100,Coal mining,3,0.0,Coal,1.0,Coal:1.000,Coal:1.000
+212,2122A0,"Iron, gold, silver, and other metal ore mining",5,0.0,Gold,0.6475,Gold:0.647; Mines:0.353,Gold:0.568; Mines:0.432
+212,212230,"Copper, nickel, lead, and zinc mining",1,0.0,Mines,1.0,Mines:1.000,Mines:1.000
+212,212310,Stone mining and quarrying,4,0.0,Mines,1.0,Mines:1.000,Mines:1.000
+212,2123A0,Other nonmetallic mineral mining and quarrying,8,0.0,Mines,0.9561,Mines:0.956; BldMt:0.044,Mines:0.946; BldMt:0.054
+213,213111,Drilling oil and gas wells,1,0.0,Oil,1.0,Oil:1.000,Oil:1.000
+213,21311A,Other support activities for mining,4,0.0,Oil,0.9546,Oil:0.955; Mines:0.028; Coal:0.018,Oil:0.933; Coal:0.034; Mines:0.033
+22,221100,"Electric power generation, transmission, and distribution",10,0.0,Util,1.0,Util:1.000,Util:1.000
+22,221200,Natural gas distribution,1,0.0,Util,1.0,Util:1.000,Util:1.000
+22,221300,"Water, sewage and other systems",3,0.0,Other,0.5884,Other:0.588; Util:0.412,Other:0.609; Util:0.391
+23,233210,Health care structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,233262,Educational and vocational structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,2332A0,Office and commercial structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,233240,Power and communication structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,2332C0,Transportation structures and highways and streets,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,233230,Manufacturing structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,2332D0,Other nonresidential structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,233411,Single-family residential structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,233412,Multifamily residential structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,2334A0,Other residential structures,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,230301,Nonresidential maintenance and repair,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+23,230302,Residential maintenance and repair,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+321,321100,Sawmills and wood preservation,2,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+321,321200,"Veneer, plywood, and engineered wood product manufacturing",5,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+321,321910,Millwork,3,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+321,3219A0,All other wood product manufacturing,4,0.0078,BldMt,0.4731,BldMt:0.473; Boxes:0.368; Hshld:0.122; Clths:0.037,BldMt:0.474; Boxes:0.371; Hshld:0.119; Clths:0.036
+327,327100,Clay product and refractory manufacturing,2,0.0,BldMt,0.889,BldMt:0.889; Hshld:0.100; Rtail:0.011,BldMt:0.884; Hshld:0.105; Rtail:0.012
+327,327200,Glass and glass product manufacturing,4,0.0,Hshld,0.7208,Hshld:0.721; Boxes:0.155; BldMt:0.124,Hshld:0.689; Boxes:0.205; BldMt:0.105
+327,327310,Cement manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327320,Ready-mix concrete manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327330,"Concrete pipe, brick, and block manufacturing",2,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327390,Other concrete product manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327400,Lime and gypsum product manufacturing,2,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327910,Abrasive product manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327991,Cut stone and stone product manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327992,Ground or treated mineral and earth manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327993,Mineral wool manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+327,327999,Miscellaneous nonmetallic mineral products,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+331,331110,Iron and steel mills and ferroalloy manufacturing,1,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331200,Steel product manufacturing from purchased steel,3,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331313,Alumina refining and primary aluminum production,1,0.0,Chems,0.5,Chems:0.500; Steel:0.500,Chems:0.500; Steel:0.500
+331,331314,Secondary smelting and alloying of aluminum,1,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,33131B,Aluminum product manufacturing from purchased aluminum,2,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331410,Nonferrous metal (except aluminum) smelting and refining,1,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331420,"Copper rolling, drawing, extruding and alloying",1,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331490,"Nonferrous metal (except copper and aluminum) rolling, drawing, extruding and alloying",2,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331510,Ferrous metal foundries,3,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+331,331520,Nonferrous metal foundries,3,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+332,33211A,"All other forging, stamping, and sintering",3,0.0,FabPr,0.7374,FabPr:0.737; BldMt:0.263,FabPr:0.787; BldMt:0.213
+332,332114,Custom roll forming,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+332,332119,"Metal crown, closure, and other metal stamping (except automotive)",1,0.0,FabPr,1.0,FabPr:1.000,FabPr:1.000
+332,332200,Cutlery and handtool manufacturing,2,0.017,BldMt,0.6944,BldMt:0.694; Mach:0.150; ElcEq:0.060; FabPr:0.055; Hshld:0.041,BldMt:0.696; Mach:0.151; ElcEq:0.061; FabPr:0.053; Hshld:0.039
+332,332310,Plate work and fabricated structural product manufacturing,3,0.0,BldMt,0.7801,BldMt:0.780; FabPr:0.220,BldMt:0.762; FabPr:0.238
+332,332320,Ornamental and architectural metal products manufacturing,3,0.0,FabPr,0.5974,FabPr:0.597; BldMt:0.373; Mach:0.030,FabPr:0.621; BldMt:0.352; Mach:0.027
+332,332410,Power boiler and heat exchanger manufacturing,1,0.0,FabPr,0.6,FabPr:0.600; Mach:0.400,FabPr:0.600; Mach:0.400
+332,332420,Metal tank (heavy gauge) manufacturing,1,0.0,FabPr,1.0,FabPr:1.000,FabPr:1.000
+332,332430,"Metal can, box, and other metal container (light gauge) manufacturing",2,0.0,Boxes,0.7886,Boxes:0.789; FabPr:0.105; Autos:0.060; BldMt:0.046,Boxes:0.785; FabPr:0.107; Autos:0.061; BldMt:0.047
+332,332500,Hardware manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+332,332600,Spring and wire product manufacturing,2,0.0,BldMt,0.633,BldMt:0.633; Steel:0.367,BldMt:0.589; Steel:0.411
+332,332710,Machine shops,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+332,332720,"Turned product and screw, nut, and bolt manufacturing",2,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+332,332800,"Coating, engraving, heat treating and allied activities",3,0.0956,FabPr,0.7147,FabPr:0.715; Steel:0.236; Mach:0.049,FabPr:0.708; Steel:0.240; Mach:0.052
+332,33291A,Valve and fittings other than plumbing,3,0.0,BldMt,0.9134,BldMt:0.913; Aero:0.087,BldMt:0.918; Aero:0.082
+332,332913,Plumbing fixture fitting and trim manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+332,332991,Ball and roller bearing manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+332,33299A,"Ammunition, arms, ordnance, and accessories manufacturing",3,0.0,Guns,0.9435,Guns:0.944; MedEq:0.056,Guns:0.947; MedEq:0.053
+332,332996,Fabricated pipe and pipe fitting manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+332,332999,Other fabricated metal manufacturing,1,0.008,BldMt,0.5723,BldMt:0.572; Mach:0.352; Autos:0.038; Hshld:0.038,BldMt:0.572; Mach:0.352; Autos:0.038; Hshld:0.038
+333,333111,Farm machinery and equipment manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333112,Lawn and garden equipment manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333120,Construction machinery manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333130,Mining and oil and gas field machinery manufacturing,2,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333242,Semiconductor machinery manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,33329A,Other industrial machinery manufacturing,4,0.0,Mach,0.8336,Mach:0.834; Hshld:0.094; LabEq:0.054; MedEq:0.018,Mach:0.843; Hshld:0.089; LabEq:0.052; MedEq:0.017
+333,333314,Optical instrument and lens manufacturing,1,0.0,LabEq,1.0,LabEq:1.000,LabEq:1.000
+333,333316,Photographic and photocopying equipment manufacturing,1,0.0,Hshld,0.5,Hshld:0.500; Hardw:0.500,Hshld:0.500; Hardw:0.500
+333,333318,Other commercial and service industry machinery manufacturing,1,0.0113,Mach,0.6519,Mach:0.652; Hardw:0.316; ElcEq:0.032,Mach:0.652; Hardw:0.316; ElcEq:0.032
+333,333413,Industrial and commercial fan and blower and air purification equipment manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333414,Heating equipment (except warm air furnaces) manufacturing,1,0.0,BldMt,0.6,BldMt:0.600; Mach:0.200; Hshld:0.200,BldMt:0.600; Mach:0.200; Hshld:0.200
+333,333415,"Air conditioning, refrigeration, and warm air heating equipment manufacturing",1,0.0,LabEq,0.2727,LabEq:0.273; FabPr:0.214; Mach:0.214; Hshld:0.136; MedEq:0.091; BldMt:0.071,LabEq:0.273; FabPr:0.214; Mach:0.214; Hshld:0.136; MedEq:0.091; BldMt:0.071
+333,333511,Industrial mold manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333517,Machine tool manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333514,"Special tool, die, jig, and fixture manufacturing",1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,33351B,"Cutting and machine tool accessory, rolling mill, and other metalworking machinery manufacturing",2,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333611,Turbine and turbine generator set units manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333612,"Speed changer, industrial high-speed drive, and gear manufacturing",1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333613,Mechanical power transmission equipment manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333618,Other engine equipment manufacturing,1,0.0,Mach,0.7143,Mach:0.714; ElcEq:0.286,Mach:0.714; ElcEq:0.286
+333,333914,"Measuring, dispensing, and other pumping equipment manufacturing",1,0.0,Mach,0.8333,Mach:0.833; Ships:0.167,Mach:0.833; Ships:0.167
+333,333912,Air and gas compressor manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333920,Material handling equipment manufacturing,4,0.0,Mach,0.6862,Mach:0.686; Autos:0.190; BldMt:0.124,Mach:0.696; Autos:0.183; BldMt:0.121
+333,333991,Power-driven handtool manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,33399A,Other general purpose machinery manufacturing,3,0.0,Mach,0.546,Mach:0.546; LabEq:0.214; Hshld:0.107; MedEq:0.071; ElcEq:0.061,Mach:0.548; LabEq:0.212; Hshld:0.106; MedEq:0.071; ElcEq:0.064
+333,333993,Packaging machinery manufacturing,1,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+333,333994,Industrial process furnace and oven manufacturing,1,0.0,Mach,0.5,Mach:0.500; LabEq:0.273; Hshld:0.136; MedEq:0.091,Mach:0.500; LabEq:0.273; Hshld:0.136; MedEq:0.091
+333,33399B,Fluid power process machinery,2,0.0,Mach,1.0,Mach:1.000,Mach:1.000
+334,334111,Electronic computer manufacturing,1,0.0,Hardw,1.0,Hardw:1.000,Hardw:1.000
+334,334112,Computer storage device manufacturing,1,0.0,Hardw,1.0,Hardw:1.000,Hardw:1.000
+334,334118,Computer terminals and other computer peripheral equipment manufacturing,1,0.0,Hardw,1.0,Hardw:1.000,Hardw:1.000
+334,334210,Telephone apparatus manufacturing,1,0.0,Chips,1.0,Chips:1.000,Chips:1.000
+334,334220,Broadcast and wireless communications equipment,1,0.0,Chips,1.0,Chips:1.000,Chips:1.000
+334,334290,Other communications equipment manufacturing,1,0.0,Chips,1.0,Chips:1.000,Chips:1.000
+334,334413,Semiconductor and related device manufacturing,1,0.0,Chips,1.0,Chips:1.000,Chips:1.000
+334,334418,Printed circuit assembly (electronic assembly) manufacturing,1,0.0,Chips,0.6923,Chips:0.692; Hardw:0.308,Chips:0.692; Hardw:0.308
+334,33441A,Other electronic component manufacturing,4,0.0,Chips,1.0,Chips:1.000,Chips:1.000
+334,334510,Electromedical and electrotherapeutic apparatus manufacturing,1,0.0,MedEq,1.0,MedEq:1.000,MedEq:1.000
+334,334511,"Search, detection, and navigation instruments manufacturing",1,0.0,Chips,1.0,Chips:1.000,Chips:1.000
+334,334512,Automatic environmental control manufacturing,1,0.0,LabEq,1.0,LabEq:1.000,LabEq:1.000
+334,334513,Industrial process variable instruments manufacturing,1,0.0,LabEq,1.0,LabEq:1.000,LabEq:1.000
+334,334514,Totalizing fluid meter and counting device manufacturing,1,0.0,LabEq,1.0,LabEq:1.000,LabEq:1.000
+334,334515,Electricity and signal testing instruments manufacturing,1,0.0,Chips,0.5,Chips:0.500; LabEq:0.500,Chips:0.500; LabEq:0.500
+334,334516,Analytical laboratory instrument manufacturing,1,0.0,LabEq,1.0,LabEq:1.000,LabEq:1.000
+334,334517,Irradiation apparatus manufacturing,1,0.0,MedEq,1.0,MedEq:1.000,MedEq:1.000
+334,33451A,"Watch, clock, and other measuring and controlling device manufacturing",1,0.0,LabEq,0.3646,LabEq:0.365; Hshld:0.278; Mach:0.182; BldMt:0.113; Hardw:0.062,LabEq:0.365; Hshld:0.278; Mach:0.182; BldMt:0.113; Hardw:0.062
+334,334300,Audio and video equipment manufacturing,1,0.0,Toys,0.8,Toys:0.800; Chips:0.200,Toys:0.800; Chips:0.200
+334,334610,Manufacturing and reproducing magnetic and optical media,2,0.0,Softw,0.4687,Softw:0.469; Toys:0.384; Fun:0.085; Hardw:0.063,Softw:0.455; Toys:0.372; Hardw:0.091; Fun:0.083
+335,335110,Electric lamp bulb and part manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335120,Lighting fixture manufacturing,3,0.0108,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335210,Small electrical appliance manufacturing,1,0.0882,Hshld,1.0,Hshld:1.000,Hshld:1.000
+335,335220,Major household appliance manufacturing,1,0.0,Hshld,1.0,Hshld:1.000,Hshld:1.000
+335,335311,"Power, distribution, and specialty transformer manufacturing",1,0.0,ElcEq,0.6667,ElcEq:0.667; Mach:0.333,ElcEq:0.667; Mach:0.333
+335,335312,Motor and generator manufacturing,1,0.0,ElcEq,0.6667,ElcEq:0.667; PerSv:0.333,ElcEq:0.667; PerSv:0.333
+335,335313,Switchgear and switchboard apparatus manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335314,Relay and industrial control manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335911,Storage battery manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335912,Primary battery manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335920,Communication and energy wire and cable manufacturing,2,0.0,Steel,1.0,Steel:1.000,Steel:1.000
+335,335930,Wiring device manufacturing,2,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335991,Carbon and graphite product manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+335,335999,All other miscellaneous electrical equipment and component manufacturing,1,0.0,ElcEq,1.0,ElcEq:1.000,ElcEq:1.000
+3361MV,336111,Automobile manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336112,Light truck and utility vehicle manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336120,Heavy duty truck manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336211,Motor vehicle body manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336212,Truck trailer manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336213,Motor home manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336214,Travel trailer and camper manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,336310,Motor vehicle gasoline engine and engine parts manufacturing,1,0.0,Mach,0.5,Mach:0.500; Autos:0.500,Mach:0.500; Autos:0.500
+3361MV,336320,Motor vehicle electrical and electronic equipment manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+3361MV,3363A0,"Motor vehicle steering, suspension component (except spring), and brake systems manufacturing",2,0.0,Autos,0.7346,Autos:0.735; BldMt:0.265,Autos:0.697; BldMt:0.303
+3361MV,336350,Motor vehicle transmission and power train parts manufacturing,1,0.0,BldMt,0.7,BldMt:0.700; Autos:0.300,BldMt:0.700; Autos:0.300
+3361MV,336360,Motor vehicle seating and interior trim manufacturing,1,0.0,Paper,0.3955,Paper:0.395; Txtls:0.237; Autos:0.198; BldMt:0.169,Paper:0.395; Txtls:0.237; Autos:0.198; BldMt:0.169
+3361MV,336370,Motor vehicle metal stamping,1,0.0,FabPr,1.0,FabPr:1.000,FabPr:1.000
+3361MV,336390,Other motor vehicle parts manufacturing,1,0.0,Mach,0.7803,Mach:0.780; Autos:0.171; BldMt:0.048,Mach:0.780; Autos:0.171; BldMt:0.048
+3364OT,336411,Aircraft manufacturing,1,0.0,Aero,1.0,Aero:1.000,Aero:1.000
+3364OT,336412,Aircraft engine and engine parts manufacturing,1,0.0,Aero,1.0,Aero:1.000,Aero:1.000
+3364OT,336413,Other aircraft parts and auxiliary equipment manufacturing,1,0.0,Aero,1.0,Aero:1.000,Aero:1.000
+3364OT,336414,Guided missile and space vehicle manufacturing,1,0.0,Guns,1.0,Guns:1.000,Guns:1.000
+3364OT,33641A,Propulsion units and parts for space vehicles and guided missiles,2,0.0,Guns,1.0,Guns:1.000,Guns:1.000
+3364OT,336500,Railroad rolling stock manufacturing,1,0.0,Ships,0.6,Ships:0.600; Mach:0.400,Ships:0.600; Mach:0.400
+3364OT,336611,Ship building and repairing,1,0.0,Ships,1.0,Ships:1.000,Ships:1.000
+3364OT,336612,Boat building,1,0.0877,Rubbr,0.6346,Rubbr:0.635; Toys:0.365,Rubbr:0.635; Toys:0.365
+3364OT,336991,"Motorcycle, bicycle, and parts manufacturing",1,0.0,Hshld,0.6667,Hshld:0.667; Toys:0.333,Hshld:0.667; Toys:0.333
+3364OT,336992,"Military armored vehicle, tank, and tank component manufacturing",1,0.0,Guns,0.8333,Guns:0.833; Autos:0.167,Guns:0.833; Autos:0.167
+3364OT,336999,All other transportation equipment manufacturing,1,0.0,Autos,1.0,Autos:1.000,Autos:1.000
+337,337110,Wood kitchen cabinet and countertop manufacturing,1,0.0,BldMt,0.6667,BldMt:0.667; Paper:0.167; Rtail:0.167,BldMt:0.667; Paper:0.167; Rtail:0.167
+337,337121,Upholstered household furniture manufacturing,1,0.0,Hshld,0.88,Hshld:0.880; Rtail:0.120,Hshld:0.880; Rtail:0.120
+337,337122,Nonupholstered wood household furniture manufacturing,1,0.0,Hshld,0.6667,Hshld:0.667; Rtail:0.333,Hshld:0.667; Rtail:0.333
+337,33712N,Other household nonupholstered furniture,2,0.0,Hshld,0.9647,Hshld:0.965; BldMt:0.035,Hshld:0.966; BldMt:0.034
+337,337127,Institutional furniture manufacturing,1,0.018,Paper,0.3628,Paper:0.363; LabEq:0.278; Hshld:0.267; MedEq:0.093,Paper:0.363; LabEq:0.278; Hshld:0.267; MedEq:0.093
+337,33721A,Office furniture and custom architectural woodwork and millwork manufacturing,3,0.0,Paper,1.0,Paper:1.000,Paper:1.000
+337,337215,"Showcase, partition, shelving, and locker manufacturing",1,0.0,Hshld,0.3643,Hshld:0.364; Paper:0.328; BldMt:0.220; Rubbr:0.087,Hshld:0.364; Paper:0.328; BldMt:0.220; Rubbr:0.087
+337,337900,Other furniture related product manufacturing,2,0.0,Hshld,1.0,Hshld:1.000,Hshld:1.000
+339,339112,Surgical and medical instrument manufacturing,1,0.0,MedEq,0.5714,MedEq:0.571; LabEq:0.429,MedEq:0.571; LabEq:0.429
+339,339113,Surgical appliance and supplies manufacturing,1,0.0,MedEq,0.3645,MedEq:0.365; LabEq:0.273; Hshld:0.136; Rubbr:0.113; BldMt:0.061; Rtail:0.052,MedEq:0.365; LabEq:0.273; Hshld:0.136; Rubbr:0.113; BldMt:0.061; Rtail:0.052
+339,339114,Dental equipment and supplies manufacturing,1,0.0,MedEq,1.0,MedEq:1.000,MedEq:1.000
+339,339115,Ophthalmic goods manufacturing,1,0.0,MedEq,0.5,MedEq:0.500; Rtail:0.500,MedEq:0.500; Rtail:0.500
+339,339116,Dental laboratories,1,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+339,339910,Jewelry and silverware manufacturing,1,0.0,Hshld,0.7929,Hshld:0.793; FabPr:0.207,Hshld:0.793; FabPr:0.207
+339,339920,Sporting and athletic goods manufacturing,1,0.0,Toys,0.9,Toys:0.900; Rubbr:0.100,Toys:0.900; Rubbr:0.100
+339,339930,"Doll, toy, and game manufacturing",1,0.0523,Toys,0.9141,Toys:0.914; Rubbr:0.086,Toys:0.914; Rubbr:0.086
+339,339940,Office supplies (except paper) manufacturing,1,0.0,Paper,0.9167,Paper:0.917; Hardw:0.083,Paper:0.917; Hardw:0.083
+339,339950,Sign manufacturing,1,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+339,339990,All other miscellaneous manufacturing,6,0.0418,Hshld,0.3394,Hshld:0.339; Rubbr:0.271; MedEq:0.153; Toys:0.108; BldMt:0.102; Clths:0.028,Hshld:0.340; Rubbr:0.263; MedEq:0.163; BldMt:0.109; Toys:0.101; Clths:0.025
+311FT,311111,Dog and cat food manufacturing,1,0.0,Hshld,1.0,Hshld:1.000,Hshld:1.000
+311FT,311119,Other animal food manufacturing,1,0.0,Agric,1.0,Agric:1.000,Agric:1.000
+311FT,311210,Flour milling and malt manufacturing,3,0.0,Food,0.9538,Food:0.954; Beer:0.046,Food:0.926; Beer:0.074
+311FT,311221,Wet corn milling,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311224,Soybean and other oilseed processing,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311225,Fats and oils refining and blending,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311230,Breakfast cereal manufacturing,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311300,Sugar and confectionery product manufacturing,5,0.0,Soda,0.656,Soda:0.656; Food:0.183; Rtail:0.161,Soda:0.658; Food:0.187; Rtail:0.154
+311FT,311410,Frozen food manufacturing,2,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311420,"Fruit and vegetable canning, pickling, and drying",3,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,31151A,Fluid milk and butter manufacturing,2,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311513,Cheese manufacturing,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311514,"Dry, condensed, and evaporated dairy product manufacturing",1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311520,Ice cream and frozen dessert manufacturing,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,31161A,"Animal (except poultry) slaughtering, rendering, and processing",3,0.0,Food,0.6027,Food:0.603; Agric:0.282; Whlsl:0.115,Food:0.599; Agric:0.290; Whlsl:0.111
+311FT,311615,Poultry processing,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311700,Seafood product preparation and packaging,1,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311810,Bread and bakery product manufacturing,3,0.0,Food,0.6887,Food:0.689; Rtail:0.311,Food:0.723; Rtail:0.277
+311FT,3118A0,"Cookie, cracker, pasta, and tortilla manufacturing",3,0.0,Food,1.0,Food:1.000,Food:1.000
+311FT,311910,Snack food manufacturing,2,0.0,Soda,0.8065,Soda:0.806; Food:0.194,Soda:0.809; Food:0.191
+311FT,311920,Coffee and tea manufacturing,1,0.0,Food,0.8636,Food:0.864; Soda:0.136,Food:0.864; Soda:0.136
+311FT,311930,Flavoring syrup and concentrate manufacturing,1,0.0,Soda,1.0,Soda:1.000,Soda:1.000
+311FT,311940,Seasoning and dressing manufacturing,2,0.0,Food,0.4953,Food:0.495; Beer:0.252; Soda:0.126; Chems:0.126,Food:0.501; Beer:0.249; Soda:0.125; Chems:0.125
+311FT,311990,All other food manufacturing,2,0.0,Food,0.956,Food:0.956; Soda:0.044,Food:0.940; Soda:0.060
+311FT,312110,Soft drink and ice manufacturing,3,0.0,Soda,0.9623,Soda:0.962; Whlsl:0.038,Soda:0.960; Whlsl:0.040
+311FT,312120,Breweries,1,0.0,Beer,1.0,Beer:1.000,Beer:1.000
+311FT,312130,Wineries,1,0.0,Beer,1.0,Beer:1.000,Beer:1.000
+311FT,312140,Distilleries,1,0.0,Beer,1.0,Beer:1.000,Beer:1.000
+311FT,312200,Tobacco manufacturing,1,0.0,Smoke,0.9969,Smoke:0.997; BusSv:0.003,Smoke:0.997; BusSv:0.003
+313TT,313100,"Fiber, yarn, and thread mills",1,0.0,Txtls,1.0,Txtls:1.000,Txtls:1.000
+313TT,313200,Fabric mills,4,0.0,Txtls,1.0,Txtls:1.000,Txtls:1.000
+313TT,313300,Textile and fabric finishing and fabric coating mills,2,0.0,Txtls,0.9373,Txtls:0.937; Whlsl:0.034; Rubbr:0.025; BusSv:0.003,Txtls:0.938; Whlsl:0.035; Rubbr:0.023; BusSv:0.003
+313TT,314110,Carpet and rug mills,1,0.0,Txtls,1.0,Txtls:1.000,Txtls:1.000
+313TT,314120,Curtain and linen mills,1,0.0,Hshld,0.65,Hshld:0.650; Rtail:0.350,Hshld:0.650; Rtail:0.350
+313TT,314900,Other textile product mills,3,0.0,Txtls,0.4719,Txtls:0.472; Clths:0.321; Autos:0.085; Hshld:0.063; Mach:0.041; Rubbr:0.014; BusSv:0.003,Txtls:0.469; Clths:0.328; Autos:0.080; Hshld:0.064; Mach:0.042; Rubbr:0.014; BusSv:0.003
+315AL,315000,Apparel manufacturing,7,0.0,Clths,0.8086,Clths:0.809; Txtls:0.153; Rtail:0.021; Autos:0.011; Rubbr:0.006,Clths:0.813; Txtls:0.151; Rtail:0.018; Autos:0.012; Rubbr:0.006
+315AL,316000,Leather and allied product manufacturing,4,0.0088,Clths,0.6065,Clths:0.607; Hshld:0.393,Clths:0.578; Hshld:0.422
+322,322110,Pulp mills,1,0.0,Paper,1.0,Paper:1.000,Paper:1.000
+322,322120,Paper mills,2,0.0,Paper,1.0,Paper:1.000,Paper:1.000
+322,322130,Paperboard mills,1,0.0,Paper,1.0,Paper:1.000,Paper:1.000
+322,322210,Paperboard container manufacturing,3,0.0,Boxes,0.8796,Boxes:0.880; Paper:0.120,Boxes:0.891; Paper:0.109
+322,322220,Paper bag and coated and treated paper manufacturing,1,0.0,Paper,0.8333,Paper:0.833; BldMt:0.167,Paper:0.833; BldMt:0.167
+322,322230,Stationery product manufacturing,1,0.0,Paper,1.0,Paper:1.000,Paper:1.000
+322,322291,Sanitary paper product manufacturing,1,0.0,Paper,0.8,Paper:0.800; MedEq:0.200,Paper:0.800; MedEq:0.200
+322,322299,All other converted paper product manufacturing,1,0.0,Paper,1.0,Paper:1.000,Paper:1.000
+323,323110,Printing,3,0.0,BusSv,0.585,BusSv:0.585; Books:0.323; Paper:0.066; Autos:0.025,BusSv:0.579; Books:0.331; Paper:0.067; Autos:0.022
+323,323120,Support activities for printing,1,0.0,Books,1.0,Books:1.000,Books:1.000
+324,324110,Petroleum refineries,1,0.0,Oil,1.0,Oil:1.000,Oil:1.000
+324,324121,Asphalt paving mixture and block manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+324,324122,Asphalt shingle and coating materials manufacturing,1,0.0,BldMt,1.0,BldMt:1.000,BldMt:1.000
+324,324190,Other petroleum and coal products manufacturing,2,0.0,Oil,0.9512,Oil:0.951; Steel:0.049,Oil:0.947; Steel:0.053
+325,325110,Petrochemical manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325120,Industrial gas manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325130,Synthetic dye and pigment manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325180,Other basic inorganic chemical manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325190,Other basic organic chemical manufacturing,3,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325211,Plastics material and resin manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,3252A0,Synthetic rubber and artificial and synthetic fibers and filaments manufacturing,2,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325411,Medicinal and botanical manufacturing,1,0.0,Drugs,1.0,Drugs:1.000,Drugs:1.000
+325,325412,Pharmaceutical preparation manufacturing,1,0.0,Drugs,1.0,Drugs:1.000,Drugs:1.000
+325,325413,In-vitro diagnostic substance manufacturing,1,0.0,Drugs,1.0,Drugs:1.000,Drugs:1.000
+325,325414,Biological product (except diagnostic) manufacturing,1,0.0,Drugs,1.0,Drugs:1.000,Drugs:1.000
+325,325310,Fertilizer manufacturing,3,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325320,Pesticide and other agricultural chemical manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325510,Paint and coating manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325520,Adhesive manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,325610,Soap and cleaning compound manufacturing,3,0.0,Hshld,1.0,Hshld:1.000,Hshld:1.000
+325,325620,Toilet preparation manufacturing,1,0.0,Hshld,1.0,Hshld:1.000,Hshld:1.000
+325,325910,Printing ink manufacturing,1,0.0,Chems,1.0,Chems:1.000,Chems:1.000
+325,3259A0,All other chemical product and preparation manufacturing,4,0.0356,Chems,0.411,Chems:0.411; Rubbr:0.280; Paper:0.172; Hshld:0.125; BusSv:0.012,Chems:0.371; Rubbr:0.240; Hshld:0.219; Paper:0.159; BusSv:0.011
+326,326110,Plastics packaging materials and unlaminated film and sheet manufacturing,3,0.0,Paper,0.6437,Paper:0.644; Rubbr:0.356,Paper:0.617; Rubbr:0.383
+326,326120,"Plastics pipe, pipe fitting, and unlaminated profile shape manufacturing",2,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+326,326130,"Laminated plastics plate, sheet (except packaging), and shape manufacturing",1,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+326,326140,Polystyrene foam product manufacturing,1,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+326,326150,Urethane and other foam product (except polystyrene) manufacturing,1,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+326,326160,Plastics bottle manufacturing,1,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+326,326190,Other plastics product manufacturing,2,0.1258,Rubbr,0.508,Rubbr:0.508; BldMt:0.492,Rubbr:0.506; BldMt:0.494
+326,326210,Tire manufacturing,2,0.0,Autos,0.8739,Autos:0.874; PerSv:0.126,Autos:0.868; PerSv:0.132
+326,326220,Rubber and plastics hoses and belting manufacturing,1,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+326,326290,Other rubber product manufacturing,2,0.0,Rubbr,1.0,Rubbr:1.000,Rubbr:1.000
+42,423100,Motor vehicle and motor vehicle parts and supplies,4,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,423400,Professional and commercial equipment and supplies,7,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,423600,Household appliances and electrical and electronic goods,3,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,423800,"Machinery, equipment, and supplies",6,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,423A00,Other durable goods merchant wholesalers,17,0.0,Whlsl,0.9434,Whlsl:0.943; Fun:0.057,Whlsl:0.934; Fun:0.066
+42,424200,Drugs and druggists' sundries,1,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,424400,Grocery and related product wholesalers,9,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,424700,Petroleum and petroleum products,2,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,424A00,Other nondurable goods merchant wholesalers,20,0.0,Whlsl,1.0,Whlsl:1.000,Whlsl:1.000
+42,425000,Wholesale electronic markets and agents and brokers,2,0.0,Whlsl,0.9986,Whlsl:0.999; BusSv:0.001,Whlsl:0.999; BusSv:0.001
+42,4200ID,Customs duties,0,,,,,
+441,441000,Motor vehicle and parts dealers,7,0.0,Rtail,0.8962,Rtail:0.896; Whlsl:0.104,Rtail:0.887; Whlsl:0.113
+445,445000,Food and beverage stores,9,0.0,Whlsl,0.5072,Whlsl:0.507; Rtail:0.493,Whlsl:0.510; Rtail:0.490
+452,452000,General merchandise stores,3,0.0,Rtail,1.0,Rtail:1.000,Rtail:1.000
+4A0,444000,Building material and garden equipment and supplies dealers,6,0.0,Rtail,0.596,Rtail:0.596; Whlsl:0.398; PerSv:0.006,Rtail:0.549; Whlsl:0.442; PerSv:0.009
+4A0,446000,Health and personal care stores,5,0.0,Rtail,0.7331,Rtail:0.733; Whlsl:0.267,Rtail:0.763; Whlsl:0.237
+4A0,447000,Gasoline stations,2,0.0,Rtail,1.0,Rtail:1.000,Rtail:1.000
+4A0,448000,Clothing and clothing accessories stores,9,0.0,Rtail,0.8733,Rtail:0.873; Whlsl:0.108; PerSv:0.019,Rtail:0.862; Whlsl:0.117; PerSv:0.022
+4A0,454000,Nonstore retailers,4,0.0,Rtail,0.9631,Rtail:0.963; Whlsl:0.037,Rtail:0.953; Whlsl:0.047
+4A0,4B0000,All other retail,21,0.0,Rtail,0.7161,Rtail:0.716; Whlsl:0.246; PerSv:0.030; BusSv:0.008,Rtail:0.723; Whlsl:0.235; PerSv:0.031; BusSv:0.011
+481,481000,Air transportation,5,0.0,Trans,0.9902,Trans:0.990; BusSv:0.008; Fun:0.002,Trans:0.990; BusSv:0.008; Fun:0.002
+482,482000,Rail transportation,2,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+483,483000,Water transportation,6,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+484,484000,Truck transportation,6,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+485,485000,Transit and ground passenger transportation,11,0.0,Trans,0.9858,Trans:0.986; Telcm:0.014,Trans:0.988; Telcm:0.012
+486,486000,Pipeline transportation,4,0.0,Util,0.5735,Util:0.573; Trans:0.427,Util:0.679; Trans:0.321
+487OS,48A000,Scenic and sightseeing transportation and support activities,16,0.0012,Trans,0.804,Trans:0.804; PerSv:0.084; Fun:0.058; Other:0.048; Ships:0.005; BusSv:0.001,Trans:0.820; PerSv:0.084; Fun:0.049; Other:0.040; Ships:0.006; BusSv:0.000
+487OS,492000,Couriers and messengers,2,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+493,493000,Warehousing and storage,4,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+511,511110,Newspaper publishers,1,0.0,Books,1.0,Books:1.000,Books:1.000
+511,511120,Periodical publishers,1,0.0,Books,1.0,Books:1.000,Books:1.000
+511,511130,Book publishers,1,0.0,Books,1.0,Books:1.000,Books:1.000
+511,5111A0,"Directory, mailing list, and other publishers",3,0.0,Books,0.7313,Books:0.731; BusSv:0.269,Books:0.529; BusSv:0.471
+511,511200,Software publishers,1,0.0,Softw,1.0,Softw:1.000,Softw:1.000
+512,512100,Motion picture and video industries,6,0.0,Fun,1.0,Fun:1.000,Fun:1.000
+512,512200,Sound recording industries,4,0.0,BusSv,0.5007,BusSv:0.501; Toys:0.208; Books:0.191; Fun:0.100,BusSv:0.505; Books:0.198; Toys:0.186; Fun:0.111
+513,515100,Radio and television broadcasting,3,0.0,Telcm,1.0,Telcm:1.000,Telcm:1.000
+513,515200,Cable and other subscription programming,1,0.0,Telcm,1.0,Telcm:1.000,Telcm:1.000
+513,517110,Wired telecommunications carriers,1,0.0,Telcm,0.6667,Telcm:0.667; Softw:0.333,Telcm:0.667; Softw:0.333
+513,517210,Wireless telecommunications carriers (except satellite),1,0.0,Telcm,1.0,Telcm:1.000,Telcm:1.000
+513,517A00,"Satellite, telecommunications resellers, and all other telecommunications",3,0.0,Telcm,0.7843,Telcm:0.784; Softw:0.216,Telcm:0.763; Softw:0.237
+514,518200,"Data processing, hosting, and related services",1,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+514,519130,Internet publishing and broadcasting and Web search portals,1,0.0,BusSv,0.5317,BusSv:0.532; Books:0.468,BusSv:0.532; Books:0.468
+514,5191A0,"News syndicates, libraries, archives and all other information services",3,0.0,PerSv,0.4679,PerSv:0.468; BusSv:0.376; Fun:0.156,PerSv:0.467; BusSv:0.377; Fun:0.156
+521CI,52A000,Monetary authorities and depository credit intermediation,5,0.0,Banks,1.0,Banks:1.000,Banks:1.000
+521CI,522A00,Nondepository credit intermediation and related activities,10,0.0,Banks,0.9787,Banks:0.979; Rtail:0.013; BusSv:0.008,Banks:0.979; Rtail:0.013; BusSv:0.008
+523,523A00,Securities and commodity contracts intermediation and brokerage,5,0.0,Fin,0.9948,Fin:0.995; Banks:0.005,Fin:0.994; Banks:0.006
+523,523900,Other financial investment activities,5,0.0,Fin,0.8461,Fin:0.846; Insur:0.099; Banks:0.055,Fin:0.839; Insur:0.089; Banks:0.072
+524,524113,Direct life insurance carriers,1,0.0,Insur,1.0,Insur:1.000,Insur:1.000
+524,5241XX,"Insurance carriers, except direct life",5,0.0,Insur,1.0,Insur:1.000,Insur:1.000
+524,524200,"Insurance agencies, brokerages, and related activities",4,0.0,Insur,1.0,Insur:1.000,Insur:1.000
+525,525000,"Funds, trusts, and other financial vehicles",6,0.0,Fin,0.5165,Fin:0.517; Insur:0.483,Fin:0.515; Insur:0.485
+HS,531HSO,Owner-occupied housing,0,,,,,
+HS,531HST,Tenant-occupied housing,9,0.0,RlEst,0.804,RlEst:0.804; Fin:0.183; BusSv:0.013,RlEst:0.799; Fin:0.188; BusSv:0.014
+ORE,531ORE,Other real estate,9,0.0,RlEst,0.804,RlEst:0.804; Fin:0.183; BusSv:0.013,RlEst:0.799; Fin:0.188; BusSv:0.014
+532RL,532100,Automotive equipment rental and leasing,3,0.0,PerSv,0.8236,PerSv:0.824; BusSv:0.176,PerSv:0.826; BusSv:0.174
+532RL,532A00,General and consumer goods rental,7,0.0,BusSv,0.8214,BusSv:0.821; Fun:0.157; PerSv:0.021,BusSv:0.717; Fun:0.265; PerSv:0.018
+532RL,532400,Commercial and industrial machinery and equipment rental and leasing,4,0.0,BusSv,0.8248,BusSv:0.825; Fun:0.154; Trans:0.021,BusSv:0.828; Fun:0.141; Trans:0.030
+532RL,533000,Lessors of nonfinancial intangible assets,1,0.0,Fin,1.0,Fin:1.000,Fin:1.000
+5411,541100,Legal services,4,0.25,PerSv,0.9225,PerSv:0.923; RlEst:0.055; BusSv:0.023,PerSv:0.920; RlEst:0.057; BusSv:0.023
+5412OP,541200,"Accounting, tax preparation, bookkeeping, and payroll services",4,0.0,BusSv,0.7945,BusSv:0.794; PerSv:0.155; Fun:0.051,BusSv:0.761; PerSv:0.155; Fun:0.084
+5412OP,541300,"Architectural, engineering, and related services",8,0.0,BusSv,0.9847,BusSv:0.985; Agric:0.012; Mines:0.002; Oil:0.001,BusSv:0.980; Agric:0.012; Mines:0.004; Oil:0.003
+5412OP,541610,Management consulting services,5,0.0,BusSv,0.9528,BusSv:0.953; Trans:0.047,BusSv:0.933; Trans:0.067
+5412OP,5416A0,Environmental and other technical consulting services,2,0.0,BusSv,0.5975,BusSv:0.597; Agric:0.329; Fun:0.073,BusSv:0.613; Agric:0.317; Fun:0.070
+5412OP,541700,Scientific research and development services,4,0.0,BusSv,0.3914,BusSv:0.391; Guns:0.332; Aero:0.277,BusSv:0.391; Guns:0.332; Aero:0.277
+5412OP,541800,"Advertising, public relations, and related services",8,0.0,BusSv,0.9253,BusSv:0.925; Whlsl:0.075,BusSv:0.930; Whlsl:0.070
+5412OP,541400,Specialized design services,4,0.0,BusSv,0.9246,BusSv:0.925; Hlth:0.075,BusSv:0.928; Hlth:0.072
+5412OP,5419A0,"All other miscellaneous professional, scientific, and technical services",3,0.0,BusSv,0.7119,BusSv:0.712; Trans:0.165; PerSv:0.123,BusSv:0.733; Trans:0.153; PerSv:0.115
+5412OP,541920,Photographic services,2,0.0,PerSv,0.7737,PerSv:0.774; BusSv:0.162; Hlth:0.065,PerSv:0.843; BusSv:0.112; Hlth:0.045
+5412OP,541940,Veterinary services,1,0.0,Agric,0.8,Agric:0.800; BusSv:0.200,Agric:0.800; BusSv:0.200
+5415,541511,Custom computer programming services,1,0.0,Softw,1.0,Softw:1.000,Softw:1.000
+5415,541512,Computer systems design services,1,0.0,Softw,0.75,Softw:0.750; BusSv:0.250,Softw:0.750; BusSv:0.250
+5415,54151A,"Other computer related services, including facilities management",2,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+55,550000,Management of companies and enterprises,3,0.9647,,,,
+561,561300,Employment services,4,0.0,BusSv,0.9874,BusSv:0.987; Fun:0.008; PerSv:0.005,BusSv:0.984; Fun:0.010; PerSv:0.006
+561,561700,Services to buildings and dwellings,5,0.0,BusSv,0.5219,BusSv:0.522; Agric:0.341; Trans:0.091; Other:0.022; PerSv:0.021; Cnstr:0.004,BusSv:0.535; Agric:0.322; Trans:0.094; PerSv:0.024; Other:0.021; Cnstr:0.003
+561,561100,Office administrative services,1,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+561,561200,Facilities support services,1,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+561,561400,Business support services,10,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+561,561500,Travel arrangement and reservation services,4,0.0,Trans,0.7992,Trans:0.799; PerSv:0.081; Fun:0.063; BusSv:0.057,Trans:0.783; PerSv:0.093; Fun:0.072; BusSv:0.052
+561,561600,Investigation and security services,5,0.0,BusSv,0.9835,BusSv:0.984; PerSv:0.016,BusSv:0.982; PerSv:0.018
+561,561900,Other support services,3,0.0,BusSv,0.5561,BusSv:0.556; PerSv:0.444,BusSv:0.529; PerSv:0.471
+562,562000,Waste management and remediation services,11,0.0,Trans,0.5296,Trans:0.530; Other:0.343; Cnstr:0.063; BusSv:0.041; PerSv:0.023,Trans:0.495; Other:0.376; Cnstr:0.068; BusSv:0.039; PerSv:0.022
+61,611100,Elementary and secondary schools,1,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+61,611A00,"Junior colleges, colleges, universities, and professional schools",2,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+61,611B00,Other educational services,14,0.0,PerSv,0.691,PerSv:0.691; Fun:0.219; BusSv:0.090,PerSv:0.739; Fun:0.170; BusSv:0.091
+621,621100,Offices of physicians,2,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+621,621200,Offices of dentists,1,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+621,621300,Offices of other health practitioners,6,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+621,621400,Outpatient care centers,6,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+621,621500,Medical and diagnostic laboratories,2,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+621,621600,Home health care services,1,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+621,621900,Other ambulatory health care services,3,0.0,Trans,0.5615,Trans:0.561; Hlth:0.439,Trans:0.536; Hlth:0.464
+622,622000,Hospitals,3,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+623,623A00,Nursing and community care facilities,3,0.0,Hlth,0.8197,Hlth:0.820; PerSv:0.180,Hlth:0.841; PerSv:0.159
+623,623B00,"Residential mental health, substance abuse, and other residential care facilities",3,0.0,Hlth,0.5043,Hlth:0.504; PerSv:0.496,Hlth:0.501; PerSv:0.499
+624,624100,Individual and family services,3,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+624,624A00,"Community food, housing, and other relief services, including vocational rehabilitation services",5,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+624,624400,Child day care services,1,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+711AS,711100,Performing arts companies,4,0.0,Fun,0.6783,Fun:0.678; Meals:0.322,Fun:0.670; Meals:0.330
+711AS,711200,Spectator sports,3,0.0,Fun,1.0,Fun:1.000,Fun:1.000
+711AS,711A00,Promoters of performing arts and sports and agents for public figures,3,0.0,Fun,0.5728,Fun:0.573; RlEst:0.393; BusSv:0.035,Fun:0.581; RlEst:0.384; BusSv:0.035
+711AS,711500,"Independent artists, writers, and performers",1,0.0,BusSv,0.5069,BusSv:0.507; Fun:0.452; PerSv:0.041,BusSv:0.507; Fun:0.452; PerSv:0.041
+711AS,712000,"Museums, historical sites, zoos, and parks",4,0.0,PerSv,0.9945,PerSv:0.995; Fun:0.005,PerSv:0.995; Fun:0.005
+713,713100,Amusement parks and arcades,2,0.0,Fun,1.0,Fun:1.000,Fun:1.000
+713,713200,Gambling industries (except casino hotels),2,0.0,Fun,1.0,Fun:1.000,Fun:1.000
+713,713900,Other amusement and recreation industries,6,0.0,Fun,0.9802,Fun:0.980; Trans:0.020,Fun:0.978; Trans:0.022
+721,721000,Accommodation,7,0.0,Meals,0.9746,Meals:0.975; PerSv:0.025,Meals:0.975; PerSv:0.025
+722,722110,Full-service restaurants,1,0.0,Meals,1.0,Meals:1.000,Meals:1.000
+722,722211,Limited-service restaurants,1,0.0,Meals,1.0,Meals:1.000,Meals:1.000
+722,722A00,All other food and drinking places,6,0.0,Meals,0.5369,Meals:0.537; Rtail:0.258; Trans:0.206,Meals:0.568; Rtail:0.229; Trans:0.203
+81,811100,Automotive repair and maintenance (including car washes),9,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+81,811200,Electronic and precision equipment repair and maintenance,4,0.0,PerSv,0.7634,PerSv:0.763; BusSv:0.237,PerSv:0.759; BusSv:0.241
+81,811300,Commercial and industrial machinery and equipment repair and maintenance,1,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+81,811400,Personal and household goods repair and maintenance,5,0.0,PerSv,0.7957,PerSv:0.796; Toys:0.177; Trans:0.027,PerSv:0.811; Toys:0.157; Trans:0.032
+81,812100,Personal care services,5,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+81,812200,Death care services,2,0.0,PerSv,0.8435,PerSv:0.844; RlEst:0.156,PerSv:0.853; RlEst:0.147
+81,812300,Dry-cleaning and laundry services,4,0.0,PerSv,0.6389,PerSv:0.639; BusSv:0.224; Meals:0.137,PerSv:0.659; BusSv:0.199; Meals:0.142
+81,812900,Other personal services,5,0.0,PerSv,0.5711,PerSv:0.571; Agric:0.342; Telcm:0.050; BusSv:0.024; Fun:0.014,PerSv:0.619; Agric:0.278; Telcm:0.045; BusSv:0.045; Fun:0.013
+81,813100,Religious organizations,1,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+81,813A00,"Grantmaking, giving, and social advocacy organizations",6,0.0,PerSv,0.7299,PerSv:0.730; Fin:0.270,PerSv:0.713; Fin:0.287
+81,813B00,"Civic, social, professional, and similar organizations",6,0.0,PerSv,0.9596,PerSv:0.960; RlEst:0.040,PerSv:0.960; RlEst:0.040
+81,814000,Private households,1,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+GFGD,S00500,Federal general government (defense),0,,,,,
+GFGN,S00600,Federal general government (nondefense),0,,,,,
+GFE,491000,Postal service,1,0.9767,,,,
+GFE,S00101,Federal electric utilities,0,,,,,
+GFE,S00102,Other federal government enterprises,0,,,,,
+GSLG,GSLGE,State and local government (educational services),0,,,,,
+GSLG,GSLGH,State and local government (hospitals and health services),0,,,,,
+GSLG,GSLGO,State and local government (other services),0,,,,,
+GSLE,S00201,State and local government passenger transit,0,,,,,
+GSLE,S00202,State and local government electric utilities,0,,,,,
+GSLE,S00203,Other state and local government enterprises,0,,,,,
+Used,S00401,Scrap,0,,,,,
+Used,S00402,Used and secondhand goods,0,,,,,
+Other,S00300,Noncomparable imports,0,,,,,
+Other,S00900,Rest of the world adjustment,0,,,,,

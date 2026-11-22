@@ -1,0 +1,74 @@
+summary,title,naics6_n,unassigned_share_cbp17,top_ff49_cbp17,top_w_cbp17,ff49_weights_cbp17,ff49_weights_cbp12
+111CA,Farms,49,0.0204,Agric,0.9585,Agric:0.959; Toys:0.022; BldMt:0.018; Food:0.001,Agric:0.959; Toys:0.022; BldMt:0.018; Food:0.001
+113FF,"Forestry, fishing, and related activities",15,0.0,Agric,0.5778,Agric:0.578; BldMt:0.406; Toys:0.011; PerSv:0.006,Agric:0.585; BldMt:0.398; Toys:0.010; PerSv:0.006
+211,Oil and gas extraction,2,0.0,Oil,0.9818,Oil:0.982; Chems:0.018,Oil:0.955; Chems:0.045
+212,"Mining, except oil and gas",21,0.0,Mines,0.6167,Mines:0.617; Coal:0.291; Gold:0.083; BldMt:0.010,Mines:0.474; Coal:0.441; Gold:0.076; BldMt:0.010
+213,Support activities for mining,5,0.0,Oil,0.9651,Oil:0.965; Mines:0.021; Coal:0.014,Oil:0.951; Coal:0.025; Mines:0.024
+22,Utilities,14,0.0,Util,0.9592,Util:0.959; Other:0.041,Util:0.958; Other:0.042
+23,Construction,31,0.0,Cnstr,0.9052,Cnstr:0.905; BusSv:0.048; Oil:0.016; PerSv:0.012; Mines:0.009; Coal:0.007; RlEst:0.003,Cnstr:0.901; BusSv:0.047; Oil:0.014; PerSv:0.014; RlEst:0.010; Mines:0.008; Coal:0.006
+321,Wood products,14,0.0025,BldMt,0.835,BldMt:0.835; Boxes:0.115; Hshld:0.038; Clths:0.012,BldMt:0.834; Boxes:0.117; Hshld:0.037; Clths:0.011
+327,Nonmetallic mineral products,18,0.0,BldMt,0.7831,BldMt:0.783; Hshld:0.179; Boxes:0.037; Rtail:0.001,BldMt:0.769; Hshld:0.179; Boxes:0.050; Rtail:0.001
+331,Primary metals,18,0.0,Steel,0.9943,Steel:0.994; Chems:0.006,Steel:0.989; Chems:0.011
+332,Fabricated metal products,36,0.0095,BldMt,0.4308,BldMt:0.431; FabPr:0.263; Mach:0.215; Guns:0.031; Steel:0.030; Boxes:0.016; Aero:0.005; Autos:0.003; Hshld:0.003; MedEq:0.002; ElcEq:0.001,BldMt:0.417; FabPr:0.262; Mach:0.233; Steel:0.032; Guns:0.026; Boxes:0.017; Aero:0.005; Autos:0.003; Hshld:0.003; ElcEq:0.002; MedEq:0.001
+333,Machinery,39,0.0006,Mach,0.7875,Mach:0.788; LabEq:0.061; Hshld:0.034; BldMt:0.026; FabPr:0.019; Hardw:0.018; Autos:0.017; ElcEq:0.016; MedEq:0.016; Ships:0.006,Mach:0.795; LabEq:0.060; Hshld:0.033; BldMt:0.025; Hardw:0.019; FabPr:0.017; ElcEq:0.016; MedEq:0.015; Autos:0.014; Ships:0.006
+334,Computer and electronic products,24,0.0,Chips,0.5965,Chips:0.596; LabEq:0.172; MedEq:0.115; Hardw:0.072; Toys:0.013; Hshld:0.012; Mach:0.008; BldMt:0.005; Softw:0.005; Fun:0.001,Chips:0.597; LabEq:0.156; Hardw:0.105; MedEq:0.094; Toys:0.015; Hshld:0.011; Softw:0.008; Mach:0.007; BldMt:0.005; Fun:0.001
+335,"Electrical equipment, appliances, and components",18,0.0036,ElcEq,0.7317,ElcEq:0.732; Hshld:0.149; Steel:0.072; PerSv:0.028; Mach:0.018,ElcEq:0.735; Hshld:0.130; Steel:0.084; PerSv:0.032; Mach:0.019
+3361MV,"Motor vehicles, bodies and trailers, and parts",15,0.0,Autos,0.5917,Autos:0.592; Mach:0.153; FabPr:0.114; BldMt:0.092; Paper:0.030; Txtls:0.018,Autos:0.584; Mach:0.167; FabPr:0.111; BldMt:0.096; Paper:0.026; Txtls:0.015
+3364OT,Other transportation equipment,12,0.0055,Aero,0.5724,Aero:0.572; Ships:0.200; Guns:0.107; Rubbr:0.037; Toys:0.027; Autos:0.026; Mach:0.020; Hshld:0.011,Aero:0.567; Ships:0.215; Guns:0.110; Rubbr:0.028; Autos:0.026; Toys:0.022; Mach:0.020; Hshld:0.012
+337,Furniture and related products,12,0.0012,Hshld,0.3793,Hshld:0.379; Paper:0.313; BldMt:0.188; Rtail:0.087; LabEq:0.018; Rubbr:0.008; MedEq:0.006,Hshld:0.392; Paper:0.313; BldMt:0.172; Rtail:0.087; LabEq:0.021; Rubbr:0.009; MedEq:0.007
+339,Miscellaneous manufacturing,16,0.009,MedEq,0.2549,MedEq:0.255; BusSv:0.141; LabEq:0.130; Hshld:0.123; Toys:0.096; Rubbr:0.079; Hlth:0.077; Rtail:0.032; BldMt:0.030; Paper:0.020; FabPr:0.009; Clths:0.005; Hardw:0.002,MedEq:0.263; LabEq:0.135; Hshld:0.128; BusSv:0.125; Toys:0.092; Rubbr:0.081; Hlth:0.080; BldMt:0.033; Rtail:0.031; Paper:0.018; FabPr:0.009; Clths:0.005; Hardw:0.002
+311FT,Food and beverage and tobacco products,50,0.0,Food,0.6622,Food:0.662; Soda:0.109; Beer:0.081; Agric:0.060; Rtail:0.046; Whlsl:0.020; Hshld:0.013; Smoke:0.008; Chems:0.003; BusSv:0.000,Food:0.692; Soda:0.103; Agric:0.066; Beer:0.052; Rtail:0.043; Whlsl:0.020; Hshld:0.011; Smoke:0.009; Chems:0.003; BusSv:0.000
+313TT,Textile mills and textile product mills,12,0.0,Txtls,0.7376,Txtls:0.738; Clths:0.088; Hshld:0.088; Rtail:0.038; Autos:0.023; Mach:0.011; Rubbr:0.007; Whlsl:0.005; BusSv:0.001,Txtls:0.739; Clths:0.090; Hshld:0.087; Rtail:0.037; Autos:0.022; Mach:0.012; Rubbr:0.007; Whlsl:0.005; BusSv:0.001
+315AL,Apparel and leather and allied products,11,0.002,Clths,0.7629,Clths:0.763; Txtls:0.118; Hshld:0.089; Rtail:0.016; Autos:0.009; Rubbr:0.005,Clths:0.768; Txtls:0.122; Hshld:0.081; Rtail:0.014; Autos:0.010; Rubbr:0.005
+322,Paper products,11,0.0,Paper,0.5962,Paper:0.596; Boxes:0.369; BldMt:0.023; MedEq:0.011,Paper:0.620; Boxes:0.344; BldMt:0.025; MedEq:0.011
+323,Printing and related support activities,4,0.0,BusSv,0.5528,BusSv:0.553; Books:0.361; Paper:0.062; Autos:0.024,BusSv:0.544; Books:0.372; Paper:0.063; Autos:0.021
+324,Petroleum and coal products,5,0.0,Oil,0.7408,Oil:0.741; BldMt:0.252; Steel:0.007,Oil:0.753; BldMt:0.239; Steel:0.008
+325,Chemical products,29,0.0033,Chems,0.4988,Chems:0.499; Drugs:0.320; Hshld:0.140; Rubbr:0.025; Paper:0.015; BusSv:0.001,Chems:0.502; Drugs:0.317; Hshld:0.143; Rubbr:0.022; Paper:0.014; BusSv:0.001
+326,Plastics and rubber products,16,0.0639,Rubbr,0.6046,Rubbr:0.605; BldMt:0.233; Paper:0.090; Autos:0.063; PerSv:0.009,Rubbr:0.607; BldMt:0.225; Paper:0.091; Autos:0.067; PerSv:0.010
+42,Wholesale trade,71,0.0,Whlsl,0.9894,Whlsl:0.989; Fun:0.011; BusSv:0.000,Whlsl:0.988; Fun:0.012; BusSv:0.000
+441,Motor vehicle and parts dealers,7,0.0,Rtail,0.8962,Rtail:0.896; Whlsl:0.104,Rtail:0.887; Whlsl:0.113
+445,Food and beverage stores,9,0.0,Whlsl,0.5072,Whlsl:0.507; Rtail:0.493,Whlsl:0.510; Rtail:0.490
+452,General merchandise stores,3,0.0,Rtail,1.0,Rtail:1.000,Rtail:1.000
+4A0,Other retail,47,0.0,Rtail,0.7916,Rtail:0.792; Whlsl:0.193; PerSv:0.013; BusSv:0.002,Rtail:0.798; Whlsl:0.183; PerSv:0.016; BusSv:0.003
+481,Air transportation,5,0.0,Trans,0.9902,Trans:0.990; BusSv:0.008; Fun:0.002,Trans:0.990; BusSv:0.008; Fun:0.002
+482,Rail transportation,2,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+483,Water transportation,6,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+484,Truck transportation,6,0.0,Trans,1.0,Trans:1.000,Trans:1.000
+485,Transit and ground passenger transportation,11,0.0,Trans,0.9858,Trans:0.986; Telcm:0.014,Trans:0.988; Telcm:0.012
+486,Pipeline transportation,4,0.0,Util,0.5735,Util:0.573; Trans:0.427,Util:0.679; Trans:0.321
+487OS,Other transportation and support activities,18,0.0007,Trans,0.8946,Trans:0.895; PerSv:0.045; Fun:0.031; Other:0.026; Ships:0.003; BusSv:0.000,Trans:0.900; PerSv:0.047; Fun:0.027; Other:0.022; Ships:0.003; BusSv:0.000
+493,Warehousing and storage,4,0.0,BusSv,1.0,BusSv:1.000,BusSv:1.000
+511,"Publishing industries, except internet (includes software)",7,0.0,Softw,0.6378,Softw:0.638; Books:0.351; BusSv:0.011,Books:0.505; Softw:0.469; BusSv:0.027
+512,Motion picture and sound recording industries,10,0.0,Fun,0.9399,Fun:0.940; BusSv:0.033; Toys:0.014; Books:0.013,Fun:0.936; BusSv:0.037; Books:0.014; Toys:0.013
+513,Broadcasting and telecommunications,9,0.0,Telcm,0.8098,Telcm:0.810; Softw:0.190,Telcm:0.785; Softw:0.215
+514,"Data processing, internet publishing, and other information services",5,0.0,BusSv,0.8212,BusSv:0.821; Books:0.147; PerSv:0.024; Fun:0.008,BusSv:0.840; Books:0.117; PerSv:0.033; Fun:0.011
+521CI,"Federal Reserve banks, credit intermediation, and related activities",15,0.0,Banks,0.9933,Banks:0.993; Rtail:0.004; BusSv:0.003,Banks:0.994; Rtail:0.004; BusSv:0.002
+523,"Securities, commodity contracts, and investments",10,0.0,Fin,0.9065,Fin:0.907; Insur:0.059; Banks:0.035,Fin:0.915; Insur:0.045; Banks:0.040
+524,Insurance carriers and related activities,10,0.0,Insur,1.0,Insur:1.000,Insur:1.000
+525,"Funds, trusts, and other financial vehicles",6,0.0,Fin,0.5165,Fin:0.517; Insur:0.483,Fin:0.515; Insur:0.485
+HS,Housing,9,0.0,RlEst,0.804,RlEst:0.804; Fin:0.183; BusSv:0.013,RlEst:0.799; Fin:0.188; BusSv:0.014
+ORE,Other real estate,9,0.0,RlEst,0.804,RlEst:0.804; Fin:0.183; BusSv:0.013,RlEst:0.799; Fin:0.188; BusSv:0.014
+532RL,Rental and leasing services and lessors of intangible assets,15,0.0,BusSv,0.5724,BusSv:0.572; PerSv:0.251; Fun:0.098; Fin:0.071; Trans:0.007,BusSv:0.567; PerSv:0.217; Fun:0.141; Fin:0.065; Trans:0.010
+5411,Legal services,4,0.25,PerSv,0.9225,PerSv:0.923; RlEst:0.055; BusSv:0.023,PerSv:0.920; RlEst:0.057; BusSv:0.023
+5412OP,"Miscellaneous professional, scientific, and technical services",41,0.0,BusSv,0.7792,BusSv:0.779; Agric:0.065; PerSv:0.043; Guns:0.042; Aero:0.035; Trans:0.014; Fun:0.013; Whlsl:0.006; Hlth:0.002; Mines:0.000; Oil:0.000,BusSv:0.770; Agric:0.060; PerSv:0.052; Guns:0.039; Aero:0.032; Fun:0.023; Trans:0.016; Whlsl:0.006; Hlth:0.002; Mines:0.001; Oil:0.001
+5415,Computer systems design and related services,4,0.0,Softw,0.7729,Softw:0.773; BusSv:0.227,Softw:0.706; BusSv:0.294
+55,Management of companies and enterprises,3,0.9647,,,,
+561,Administrative and support services,33,0.0,BusSv,0.8818,BusSv:0.882; Agric:0.058; Trans:0.030; PerSv:0.020; Fun:0.006; Other:0.004; Cnstr:0.001,BusSv:0.871; Agric:0.058; Trans:0.035; PerSv:0.024; Fun:0.007; Other:0.004; Cnstr:0.001
+562,Waste management and remediation services,11,0.0,Trans,0.5296,Trans:0.530; Other:0.343; Cnstr:0.063; BusSv:0.041; PerSv:0.023,Trans:0.495; Other:0.376; Cnstr:0.068; BusSv:0.039; PerSv:0.022
+61,Educational services,17,0.0,PerSv,0.9405,PerSv:0.941; Fun:0.042; BusSv:0.017,PerSv:0.948; Fun:0.034; BusSv:0.018
+621,Ambulatory health care services,21,0.0,Hlth,0.975,Hlth:0.975; Trans:0.025,Hlth:0.975; Trans:0.025
+622,Hospitals,3,0.0,Hlth,1.0,Hlth:1.000,Hlth:1.000
+623,Nursing and residential care facilities,6,0.0,Hlth,0.7373,Hlth:0.737; PerSv:0.263,Hlth:0.759; PerSv:0.241
+624,Social assistance,9,0.0,PerSv,1.0,PerSv:1.000,PerSv:1.000
+711AS,"Performing arts, spectator sports, museums, and related activities",15,0.0,Fun,0.5334,Fun:0.533; PerSv:0.235; RlEst:0.122; Meals:0.061; BusSv:0.049,Fun:0.542; PerSv:0.240; RlEst:0.105; Meals:0.067; BusSv:0.047
+713,"Amusements, gambling, and recreation industries",10,0.0,Fun,0.9843,Fun:0.984; Trans:0.016,Fun:0.983; Trans:0.017
+721,Accommodation,7,0.0,Meals,0.9746,Meals:0.975; PerSv:0.025,Meals:0.975; PerSv:0.025
+722,Food services and drinking places,8,0.0,Meals,0.9215,Meals:0.921; Rtail:0.044; Trans:0.035,Meals:0.927; Rtail:0.038; Trans:0.034
+81,"Other services, except government",49,0.0,PerSv,0.923,PerSv:0.923; Agric:0.020; Fin:0.018; BusSv:0.017; RlEst:0.009; Meals:0.007; Telcm:0.003; Toys:0.002; Fun:0.001; Trans:0.000,PerSv:0.929; BusSv:0.018; Fin:0.017; Agric:0.013; RlEst:0.009; Meals:0.008; Telcm:0.002; Toys:0.002; Fun:0.001; Trans:0.000
+GFGD,Federal general government (defense),0,,,,,
+GFGN,Federal general government (nondefense),0,,,,,
+GFE,Federal government enterprises,1,0.9767,,,,
+GSLG,State and local general government,0,,,,,
+GSLE,State and local government enterprises,0,,,,,
+Used,"Scrap, used and secondhand goods",0,,,,,
+Other,Noncomparable imports and rest-of-the-world adjustment,0,,,,,

@@ -1,0 +1,378 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "event_memory/decision_schema_v0.2.json",
+ "title": "判讀紀錄 v0.2(草案)",
+ "description": "每列每組一筆(R、A、B、C、C0、P1、BLEND);契約 v0.2 §4–§5。判讀者只拿資料包,不能上網或用工具。",
+ "type": "object",
+ "required": [
+  "schema_version",
+  "row_id",
+  "case_id",
+  "sym",
+  "k",
+  "decision_at",
+  "group",
+  "model",
+  "packet_sha256",
+  "p_launch",
+  "action",
+  "judged_at",
+  "issuer_cik",
+  "security_id",
+  "information_available_time",
+  "score_status",
+  "evidence_level",
+  "agent_id"
+ ],
+ "properties": {
+  "schema_version": {
+   "const": "0.2"
+  },
+  "row_id": {
+   "type": "string",
+   "description": "{case_id}_d{k}"
+  },
+  "case_id": {
+   "type": "string"
+  },
+  "sym": {
+   "type": "string"
+  },
+  "k": {
+   "type": "integer",
+   "minimum": 0,
+   "maximum": 4,
+   "description": "d0..d4"
+  },
+  "decision_at": {
+   "type": "string",
+   "format": "date-time",
+   "description": "close_time(r+k) 換成 UTC(一般 16:00 ET,提早收盤日 13:00 ET);k = 第幾天(d0–d4)"
+  },
+  "group": {
+   "enum": [
+    "R",
+    "A",
+    "B",
+    "C",
+    "C0",
+    "P1",
+    "BLEND"
+   ]
+  },
+  "model": {
+   "type": "string",
+   "description": "釘住的模型 ID,例如 claude-opus-5-5;R = 係數檔指紋"
+  },
+  "packet_sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$",
+   "description": "資料包內容指紋(提示詞 + 數字 + 摘要 + 卡)"
+  },
+  "p_launch": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 1,
+   "description": "明天開盤買,三天內 FL3_A60 v0.2 = 1 的機率;Claude 各組兩位小數;R 計分時四捨五入到兩位;BLEND = (p_C + p_R) / 2 不再四捨五入"
+  },
+  "action": {
+   "enum": [
+    "buy_now",
+    "wait",
+    "abandon"
+   ],
+   "description": "現在買 / 再等 / 放棄這個事件"
+  },
+  "reason": {
+   "type": "string",
+   "maxLength": 60
+  },
+  "used_cards": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "maxItems": 5,
+   "description": "C 與 C0 的卡(case_id);C0 照契約 §4:以當前事件 accession + freeze_salt 的雜湊排序抽"
+  },
+  "judged_at": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "issuer_cik": {
+   "type": "string",
+   "description": "申報主體 CIK"
+  },
+  "security_id": {
+   "type": "string",
+   "description": "代號 + 有效起日,例 IR@2020-03-02;同代號不同公司要分開"
+  },
+  "information_available_time": {
+   "type": "string",
+   "format": "date-time",
+   "description": "資料包裡最晚的 available_at(必須 ≤ decision_at)"
+  },
+  "source_ids": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "description": "資料包用到的來源(accession、價格快照指紋、案例卡 case_id…)"
+  },
+  "prior_expectation": {
+   "type": "object",
+   "required": [
+    "company_guidance_prior",
+    "consensus"
+   ],
+   "properties": {
+    "company_guidance_prior": {
+     "type": [
+      "string",
+      "null"
+     ],
+     "description": "上一份新聞稿的公司指引摘要;沒有 = null"
+    },
+    "consensus": {
+     "const": "unknown",
+     "description": "沒有可回溯時間的來源;不准用當天漲跌倒推"
+    }
+   }
+  },
+  "observed_reaction": {
+   "type": "object",
+   "properties": {
+    "gap_over_atr": {
+     "type": [
+      "number",
+      "null"
+     ]
+    },
+    "vol_ratio": {
+     "type": [
+      "number",
+      "null"
+     ]
+    }
+   },
+   "description": "反應日跳空 ÷ 波動、反應日量比(和數字特徵同值,另存方便查)"
+  },
+  "hypothesis_id": {
+   "enum": [
+    "guide_up",
+    "guide_down",
+    "strong_reaction_follow",
+    "reaction_fade",
+    "trend_context",
+    "low_vol_unreachable",
+    "market_driven",
+    "insufficient_info"
+   ],
+   "description": "理由類別(草案 8 類,凍結前定死;R 與 BLEND 不填)"
+  },
+  "invalidation": {
+   "type": "string",
+   "maxLength": 40,
+   "description": "一句:什麼情況代表判斷錯(Claude 各組)"
+  },
+  "skip_reason": {
+   "type": "string",
+   "maxLength": 40,
+   "description": "action = abandon 時必填"
+  },
+  "card_overlap_with_C": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "只有 C0:和同一列 C 重疊的卡數"
+  },
+  "same_issuer_cards": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "C、C0:同公司卡數"
+  },
+  "same_security_cards": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "C、C0:同證券卡數"
+  },
+  "p_R_shown": {
+   "type": "number",
+   "minimum": 0,
+   "maximum": 1,
+   "description": "只有 P1:第二回合給的 R 機率(兩位小數)"
+  },
+  "r_reliability_card_sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$",
+   "description": "只有 P1:R 可靠度卡指紋"
+  },
+  "sealed_first_turn_sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$",
+   "description": "只有 P1:C 第一回合回答的指紋(第二回合之前就寫入)"
+  },
+  "score_status": {
+   "enum": [
+    "scored",
+    "feature_missing",
+    "entry_missing",
+    "label_unresolved",
+    "invalid"
+   ],
+   "description": "契約 §2b 准入;不計分的列也要有紀錄"
+  },
+  "review_time": {
+   "type": "string",
+   "format": "date-time",
+   "description": "答案成熟時間 = close_time(t+3)"
+  },
+  "evidence_level": {
+   "enum": [
+    "即時封存",
+    "封包回放",
+    "保留季H",
+    "開發"
+   ],
+   "description": "契約 §7"
+  },
+  "sealed_commit": {
+   "type": "string",
+   "description": "封存資料包 / 回答指紋的 git commit(即時封存與封包回放必填)"
+  },
+  "tokens_in": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "tokens_out": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "agent_id": {
+   "type": "string",
+   "description": "判讀的子代理 ID(回放時每列只判一次,用這個查)"
+  },
+  "batch_id": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "description": "8 列一批時的批次 ID;每列一個子代理時 = null"
+  },
+  "position_in_batch": {
+   "type": [
+    "integer",
+    "null"
+   ],
+   "minimum": 1,
+   "description": "在批次裡的順序(看污染用)"
+  },
+  "raw_output": {
+   "type": "string",
+   "description": "模型原始輸出的機率文字(四捨五入前)"
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "group": {
+      "enum": [
+       "C",
+       "C0"
+      ]
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "used_cards",
+     "same_issuer_cards",
+     "same_security_cards"
+    ]
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "group": {
+      "const": "C0"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "card_overlap_with_C"
+    ]
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "group": {
+      "const": "P1"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "p_R_shown",
+     "r_reliability_card_sha256",
+     "sealed_first_turn_sha256"
+    ]
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "group": {
+      "enum": [
+       "A",
+       "B",
+       "C",
+       "C0",
+       "P1"
+      ]
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "hypothesis_id",
+     "invalidation",
+     "reason"
+    ]
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "action": {
+      "const": "abandon"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "skip_reason"
+    ]
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "evidence_level": {
+      "enum": [
+       "即時封存",
+       "封包回放"
+      ]
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "sealed_commit"
+    ]
+   }
+  }
+ ]
+}
