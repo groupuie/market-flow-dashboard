@@ -675,6 +675,15 @@ def refresh_klines(cfg, args, kl_syms):
     except OSError: age = 1e9
     sess = market_session()
     daily_due = age > 20*3600 and sess in ("after", "closed")
+    # 2026-11-05:日更只能在「今天這根已經算完成」之後跑。last_done_session 要 ET 16:05 才把當天算完成,但 after 時段 16:00 就開始;
+    #   11/1 美國冬令時間後,每天 21:02 UTC 那輪變成 ET 16:02 → 日更在 16:02 跑、當天那根被 complete_only 濾掉、標記卻寫了 →
+    #   之後 20 小時不再跑,核心日K每天固定少最新一根(11/4 收盤的 NVDA/SPY/QQQ 到 11/5 盤中都還沒有;網頁 📊量化 少算一天)。
+    #   交易日 ET 16:00–16:05 之間 → 這輪先不算 due,下一輪(5 分後)再做。
+    if daily_due and sess == "after":
+        try:
+            _et = _et_now()
+            if (_et.hour, _et.minute) < (16, 5): daily_due = False
+        except Exception: pass
     badp = args.config + ".klbad"
     try: klbad = json.load(open(badp))
     except Exception: klbad = {}
@@ -1015,7 +1024,7 @@ def refresh_kline_max(cfg, args, t0, budget=330):
 #       掃描標記」(.klscan)的快取檔入列(判讀核心優先)→ 首次部署即自動把整批漏推檔補上 gist,之後任何
 #       push 失敗都會在後續輪次自動補齊;(3) 每輪限量(全量輪 6 批、快輪 2 批,每批 8 檔)保護 420s 看門狗。
 KLQ_BATCH = 8
-KLQ_VER = "2026-10-22a"   # 也當採集器版本戳:gist market_data.meta.klq.ver 看得到 Mac 是否已自動套用 repo 最新版(10-22a = 斷線不誤標壞代號 + Yahoo 日K null 補價 + Mac 不自動睡眠;10-16a = Yahoo 晚間 null 補價 + 日更看門狗重設)
+KLQ_VER = "2026-11-05a"   # 也當採集器版本戳(11-05a = 日更改在 ET 16:05 後才跑,修冬令時間後每天少最新一根日K);:gist market_data.meta.klq.ver 看得到 Mac 是否已自動套用 repo 最新版(10-22a = 斷線不誤標壞代號 + Yahoo 日K null 補價 + Mac 不自動睡眠;10-16a = Yahoo 晚間 null 補價 + 日更看門狗重設)
 def klq_pushed_load(args):
     try: return json.load(open(args.config + ".klpushedmt.json"))
     except Exception: return {}
