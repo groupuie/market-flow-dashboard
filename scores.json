@@ -1,5 +1,5 @@
 {
- "gen_utc": "2026-11-26T00:15:14Z",
+ "gen_utc": "2026-11-26T05:13:54Z",
  "data_asof": "2026-11-25",
  "protocol": "v2",
  "status": "MATURING",
@@ -36563,7 +36563,7 @@
    "status": "open",
    "entry": "2026-11-18",
    "elapsed_sessions": 6,
-   "unreal": 0.026192703461178635
+   "unreal": 0.028384703463884664
   },
   "2026-11-17:TLN": {
    "id": "2026-11-17:TLN",
@@ -37901,7 +37901,7 @@
    "status": "open",
    "entry": "2026-11-24",
    "elapsed_sessions": 2,
-   "unreal": 0.015564024390243958
+   "unreal": 0.015579268292682968
   },
   "2026-11-23:AEHR": {
    "id": "2026-11-23:AEHR",
@@ -39153,7 +39153,7 @@
    "status": "open",
    "entry": "2026-11-24",
    "elapsed_sessions": 2,
-   "unreal": -0.009534444253564645
+   "unreal": -0.009448548359388464
   },
   "2026-11-23:MCO": {
    "id": "2026-11-23:MCO",
@@ -39475,7 +39475,7 @@
    "status": "open",
    "entry": "2026-11-24",
    "elapsed_sessions": 2,
-   "unreal": 0.01745235707121351
+   "unreal": 0.02011263073209979
   },
   "2026-11-23:NOK": {
    "id": "2026-11-23:NOK",
@@ -40201,7 +40201,7 @@
    "status": "open",
    "entry": "2026-11-25",
    "elapsed_sessions": 1,
-   "unreal": 0.005636519442174137
+   "unreal": 0.005940930179925141
   },
   "2026-11-24:ACN": {
    "id": "2026-11-24:ACN",
@@ -40245,7 +40245,7 @@
    "status": "open",
    "entry": "2026-11-25",
    "elapsed_sessions": 1,
-   "unreal": 0.013935461394417148
+   "unreal": 0.010108459869848208
   },
   "2026-11-24:BA": {
    "id": "2026-11-24:BA",
@@ -40355,7 +40355,7 @@
    "status": "open",
    "entry": "2026-11-25",
    "elapsed_sessions": 1,
-   "unreal": -0.004871214965251558
+   "unreal": -0.004752747252747325
   },
   "2026-11-24:CRM": {
    "id": "2026-11-24:CRM",
@@ -40619,7 +40619,7 @@
    "status": "open",
    "entry": "2026-11-25",
    "elapsed_sessions": 1,
-   "unreal": 0.025194132873166408
+   "unreal": 0.02484043470760744
   },
   "2026-11-24:NKE": {
    "id": "2026-11-24:NKE",
@@ -40729,7 +40729,7 @@
    "status": "open",
    "entry": "2026-11-25",
    "elapsed_sessions": 1,
-   "unreal": 0.0435018050541518
+   "unreal": 0.04274891774891776
   },
   "2026-11-24:REGN": {
    "id": "2026-11-24:REGN",
@@ -40751,7 +40751,7 @@
    "status": "open",
    "entry": "2026-11-25",
    "elapsed_sessions": 1,
-   "unreal": -0.003177664974619243
+   "unreal": -0.0018197344610942912
   },
   "2026-11-24:RTX": {
    "id": "2026-11-24:RTX",
@@ -40988,6 +40988,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41009,6 +41010,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41030,6 +41032,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41051,6 +41054,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41072,6 +41076,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41093,6 +41098,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41114,6 +41120,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41135,6 +41142,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41156,6 +41164,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
@@ -41177,6 +41186,7 @@
    "late": false,
    "late_verified": true,
    "panic_sc": null,
+   "panic_sc_filled_after": 1,
    "sig_ok": true,
    "status": "open",
    "entry": null,
