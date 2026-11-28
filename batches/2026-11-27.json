@@ -1,18 +1,22 @@
 {
  "asof": "2026-11-27",
  "protocol": "v2",
- "status": "pending_verdict",
- "updated_utc": "2026-11-28T00:14:24Z",
+ "status": "locked",
+ "updated_utc": "2026-11-28T00:14:50Z",
  "test": false,
  "n": 18,
- "n_fresh": 267,
- "n_fail": 1,
- "pending_sha256": "535c4a28585fc915ca4c0ac7e83e5c1b99ab40f394447bd14de576b70baeea18",
- "deadline_utc": "2026-11-30T14:30:00Z",
+ "n_agree": 4,
+ "verdicts_sha256": "232a58c63745bf82e9e324fed38e5d997b68b001aa47779ce8732535199fc305",
+ "locked_local_utc": "2026-11-28T00:14:50Z",
+ "late_local": false,
  "history": [
   {
    "status": "pending_verdict",
    "utc": "2026-11-28T00:14:24Z"
+  },
+  {
+   "status": "locked",
+   "utc": "2026-11-28T00:14:50Z"
   }
  ]
 }
